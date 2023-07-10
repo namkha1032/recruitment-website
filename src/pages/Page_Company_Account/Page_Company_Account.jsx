@@ -6,7 +6,7 @@ const Page_Company_Account = () => {
     const navigate = useNavigate()
     return (
         <>
-            <Typography variant="body1">Page_Company_Account</Typography>
+            <Typography variant="body1">Push Testing</Typography>
         </>
     )
 }
