@@ -1,10 +1,8 @@
 import React from 'react'
-import {Box, Typography} from "@mui/material"
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import {Button,Select,MenuItem} from "@mui/material";
-import { useNavigate, useLocation, useParams, useSearchParams, Navigate } from "react-router-dom";
+import {Box, Button, MenuItem, Select, Typography} from "@mui/material"
+import {DataGrid, GridToolbar} from "@mui/x-data-grid";
+import {useNavigate} from "react-router-dom";
 import {mockDataContacts} from "./mockData";
-import {useNavigation} from "react-router-dom";
 
 const Page_Company_Account = () => {
     const navigate = useNavigate()
@@ -15,7 +13,7 @@ const Page_Company_Account = () => {
                     variant="contained"
                     size="small"
                     color="primary"
-                    style={{ marginLeft: 16 }}
+                    style={{marginLeft: 16}}
                     onClick={() => {
                     }}
                 >
@@ -24,12 +22,12 @@ const Page_Company_Account = () => {
             </strong>
         )
     }
-    const gotoBlacklist = ()=>{
+    const gotoBlacklist = () => {
         navigate("/company/account/blacklist")
     }
     const columns = [
-        { field: "id", headerName: "ID", flex: 0.5 },
-        { field: "registerId", headerName: "Register ID" },
+        {field: "id", headerName: "ID", flex: 0.5},
+        {field: "registerId", headerName: "Register ID"},
         {
             field: "name",
             headerName: "Name",
@@ -77,12 +75,12 @@ const Page_Company_Account = () => {
     ];
 
     return (
-        <Box>
+        <Box m="5px">
             <Box
-                 display="grid"
-                 gridTemplateColumns="repeat(5, 1fr)"
-                 gridAutoRows="50px"
-                 gap="20px"
+                display="grid"
+                gridTemplateColumns="repeat(5, 1fr)"
+                gridAutoRows="40px"
+                gap="20px"
             >
                 <Typography variant="h2"
                             gridColumn="span 4"
@@ -124,7 +122,7 @@ const Page_Company_Account = () => {
             </Box>
             <Box
                 m="20px 0px 0 0px"
-                height="75vh"
+                width="76.5vw"
                 sx={{
                     "& .MuiDataGrid-root": {
                         border: "none",
@@ -157,7 +155,7 @@ const Page_Company_Account = () => {
                 <DataGrid
                     rows={mockDataContacts}
                     columns={columns}
-                    components={{ Toolbar: GridToolbar }}
+                    components={{Toolbar: GridToolbar}}
                 />
             </Box>
         </Box>

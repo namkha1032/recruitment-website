@@ -1,24 +1,24 @@
-import {Box, Typography} from "@mui/material"
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import {Button,Select,MenuItem} from "@mui/material";
+import {Box, Button, Typography} from "@mui/material"
+import {DataGrid, GridToolbar} from "@mui/x-data-grid";
 import {mockDataContacts} from "../Page_Company_Account/mockData";
 
-const Page_Company_Account_Blacklist = () => {    const renderActionButton = (params) => {
-    return (
-        <strong>
-            <Button
-                variant="contained"
-                size="small"
-                color="secondary"
-                style={{ marginLeft: 16 }}
-                onClick={() => {
-                }}
-            >
-                Action
-            </Button>
-        </strong>
-    )
-}
+const Page_Company_Account_Blacklist = () => {
+    const renderActionButton = (params) => {
+        return (
+            <strong>
+                <Button
+                    variant="contained"
+                    size="small"
+                    color="secondary"
+                    style={{marginLeft: 16}}
+                    onClick={() => {
+                    }}
+                >
+                    Action
+                </Button>
+            </strong>
+        )
+    }
     const renderStatusButton = (params) => {
         return (
             <strong>
@@ -26,7 +26,7 @@ const Page_Company_Account_Blacklist = () => {    const renderActionButton = (pa
                     variant="contained"
                     size="small"
                     color="secondary"
-                    style={{ marginLeft: 16 }}
+                    style={{marginLeft: 16}}
                     onClick={() => {
                     }}
                 >
@@ -36,8 +36,8 @@ const Page_Company_Account_Blacklist = () => {    const renderActionButton = (pa
         )
     }
     const columns = [
-        { field: "id", headerName: "ID", flex: 0.5 },
-        { field: "registerId", headerName: "Register ID" },
+        {field: "id", headerName: "ID", flex: 0.5},
+        {field: "registerId", headerName: "Register ID"},
         {
             field: "name",
             headerName: "Name",
@@ -86,16 +86,16 @@ const Page_Company_Account_Blacklist = () => {    const renderActionButton = (pa
     ];
 
     return (
-        <Box m="20px">
-            <Box m="30px"
+        <Box>
+            <Box
                  display="grid"
                  gridTemplateColumns="repeat(5, 1fr)"
-                 gridAutoRows="50px"
+                 gridAutoRows="40px"
                  gap="20px"
             >
                 <Typography variant="h2"
                             gridColumn="span 1"
-                            gridRow="span 1"
+                            gridRow="span 3"
                             display="flex"
                             alignItems="center"
                             justifyContent="left">
@@ -103,8 +103,8 @@ const Page_Company_Account_Blacklist = () => {    const renderActionButton = (pa
                 </Typography>
             </Box>
             <Box
-                m="20px 30px 0 30px"
-                height="75vh"
+                m="20px 0px 0 0px"
+                width="76.5vw"
                 sx={{
                     "& .MuiDataGrid-root": {
                         border: "none",
@@ -138,7 +138,7 @@ const Page_Company_Account_Blacklist = () => {    const renderActionButton = (pa
                 <DataGrid
                     rows={mockDataContacts}
                     columns={columns}
-                    components={{ Toolbar: GridToolbar }}
+                    components={{Toolbar: GridToolbar}}
                 />
             </Box>
         </Box>

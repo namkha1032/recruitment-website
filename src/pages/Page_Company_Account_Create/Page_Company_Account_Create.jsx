@@ -1,42 +1,43 @@
 import React from 'react'
-import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from '@mui/material';
-import { Button } from '@mui/material';
+import {Box, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField} from '@mui/material';
+
 const Page_Company_Account_Create = () => {
     return (
+        <Box
+            display="grid"
+            gridTemplateColumns="repeat(5, 1fr)"
+            gridAutoRows="50px"
+            gap="20px"
+            m="50px 0px 0 0px"
+        >
             <Box
-                display="grid"
-                gridTemplateColumns="repeat(5, 1fr)"
-                gridAutoRows="50px"
-                gap="20px"
+                display="flex"
+                gridColumn="span 5"
+                alignItems="center"
+                justifyContent="left"
             >
-                <Box
-                    display="flex"
-                    gridColumn="span 5"
-                    alignItems="center"
-                    justifyContent="left"
-                >
                 <TextField
                     id="accountemail"
                     label="Email"
                     variant="outlined"
                     fullWidth
                 />
-                </Box>
-                <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="left"
-                    gridColumn="span 5"
-                >
+            </Box>
+            <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="left"
+                gridColumn="span 5"
+            >
                 <TextField
                     id="accountpassword"
                     label="Password"
                     variant="outlined"
                     fullWidth
                 />
-                </Box>
-                <Box gridColumn="span 5" gridRow="span 2">
-                <FormControl  component="fieldset">
+            </Box>
+            <Box gridColumn="span 5" gridRow="span 2">
+                <FormControl component="fieldset">
                     <FormLabel component="legend">Choose Role:</FormLabel>
                     <RadioGroup
                         aria-label="role"
@@ -45,41 +46,42 @@ const Page_Company_Account_Create = () => {
                         alignItems="center"
                         justifyContent="left"
                     >
-                        <FormControlLabel value="recruiter" control={<Radio />} label="Recruiter" />
-                        <FormControlLabel value="interviewer" control={<Radio />} label="Interviewer" />
+                        <FormControlLabel value="recruiter" control={<Radio/>} label="Recruiter"/>
+                        <FormControlLabel value="interviewer" control={<Radio/>} label="Interviewer"/>
                     </RadioGroup>
                 </FormControl>
-                </Box>
-                <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="left"
-                    gridColumn="span 5"
-                >
+            </Box>
+            <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="left"
+                gridColumn="span 5"
+            >
                 <TextField
                     id="accountdepartment"
                     label="Department"
                     variant="outlined"
                     fullWidth
                 />
-                </Box>
-                <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="right"
-                    gridColumn="span 5"
-                    gridRow="6"
-                >
+            </Box>
+            <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="right"
+                gridColumn="span 5"
+                gridRow="6"
+            >
                 <Button
                     variant="contained"
                     size="small"
                     color="primary"
-                    onClick={() => {}}
+                    onClick={() => {
+                    }}
                 >
                     Create
                 </Button>
-                </Box>
             </Box>
+        </Box>
     );
 }
 
