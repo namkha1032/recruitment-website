@@ -77,8 +77,8 @@ const Page_Company_Account = () => {
     ];
 
     return (
-        <Box m="20px">
-            <Box m="30px"
+        <Box>
+            <Box
                  display="grid"
                  gridTemplateColumns="repeat(5, 1fr)"
                  gridAutoRows="50px"
@@ -123,7 +123,7 @@ const Page_Company_Account = () => {
                 </Select>
             </Box>
             <Box
-                m="20px 30px 0 30px"
+                m="20px 0px 0 0px"
                 height="75vh"
                 sx={{
                     "& .MuiDataGrid-root": {

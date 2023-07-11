@@ -3,29 +3,40 @@ import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextF
 import { Button } from '@mui/material';
 const Page_Company_Account_Create = () => {
     return (
-        <Box m="20px" >
-            <Box m="30px" display="grid" gridTemplateColumns="repeat(6, 2fr)" gridAutoRows="60px" gap="20px">
+            <Box
+                display="grid"
+                gridTemplateColumns="repeat(5, 1fr)"
+                gridAutoRows="50px"
+                gap="20px"
+            >
+                <Box
+                    display="flex"
+                    gridColumn="span 5"
+                    alignItems="center"
+                    justifyContent="left"
+                >
                 <TextField
                     id="accountemail"
                     label="Email"
                     variant="outlined"
+                    fullWidth
+                />
+                </Box>
+                <Box
                     display="flex"
                     alignItems="center"
                     justifyContent="left"
                     gridColumn="span 5"
-                    gridRow="1"
-                />
+                >
                 <TextField
                     id="accountpassword"
                     label="Password"
                     variant="outlined"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="left"
-                    gridColumn="span 5"
-                    gridRow="2"
+                    fullWidth
                 />
-                <FormControl component="fieldset" gridColumn="span 5" gridRow="3 / span 2">
+                </Box>
+                <Box gridColumn="span 5" gridRow="span 2">
+                <FormControl  component="fieldset">
                     <FormLabel component="legend">Choose Role:</FormLabel>
                     <RadioGroup
                         aria-label="role"
@@ -33,38 +44,42 @@ const Page_Company_Account_Create = () => {
                         display="flex"
                         alignItems="center"
                         justifyContent="left"
-                        gridColumn="span 5"
                     >
                         <FormControlLabel value="recruiter" control={<Radio />} label="Recruiter" />
                         <FormControlLabel value="interviewer" control={<Radio />} label="Interviewer" />
                     </RadioGroup>
                 </FormControl>
-                <TextField
-                    id="accountdepartment"
-                    label="Department"
-                    variant="outlined"
+                </Box>
+                <Box
                     display="flex"
                     alignItems="center"
                     justifyContent="left"
                     gridColumn="span 5"
-                    gridRow="5"
+                >
+                <TextField
+                    id="accountdepartment"
+                    label="Department"
+                    variant="outlined"
+                    fullWidth
                 />
+                </Box>
+                <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="right"
+                    gridColumn="span 5"
+                    gridRow="6"
+                >
                 <Button
                     variant="contained"
                     size="small"
                     color="primary"
-                    style={{ marginLeft: 16 }}
                     onClick={() => {}}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="left"
-                    gridColumn="span 1"
-                    gridRow="6"
                 >
                     Create
                 </Button>
+                </Box>
             </Box>
-        </Box>
     );
 }
 
