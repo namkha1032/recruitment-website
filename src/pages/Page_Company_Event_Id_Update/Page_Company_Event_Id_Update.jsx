@@ -13,7 +13,7 @@ const Page_Company_Event_Id_Update = () => {
     const [value, setValue] = React.useState(null);
     return (
         <Container sx={{ p: 1 }} className='eventupdate' >
-            <Typography variant='h4' align='center'>Chỉnh sửa sự kiện</Typography>
+            <Typography variant='h4' align='center' sx={{fontWeight: 600, color: 'cornflowerblue'}}>Chỉnh sửa sự kiện</Typography>
                 <Container style={{ border: '2px solid black', background: 'white', margin: 30 }}>
                     <Grid container spacing={3} sx={{
                         p: 1.2,
@@ -54,7 +54,7 @@ const Page_Company_Event_Id_Update = () => {
                         <Grid item xs={9}>
                             <TextField fullWidth placeholder='Nhập địa điểm'></TextField>
                         </Grid>
-                        <Grid item xs={12} align='right'>
+                        <Grid item xs={12} sx={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Button variant="contained" size='large' color="success" sx={{ mx: 5 }}>
                                 <EditIcon sx={{marginRight: 1}}></EditIcon>
                                 Chỉnh sửa
@@ -62,7 +62,7 @@ const Page_Company_Event_Id_Update = () => {
                             <Button variant="contained" size='large'>
                                 <TaskAltIcon sx={{marginRight: 1}}></TaskAltIcon>
                                 Lưu
-                            </Button>
+                            </Button>    
                         </Grid>
                     </Grid>
                 </Container>

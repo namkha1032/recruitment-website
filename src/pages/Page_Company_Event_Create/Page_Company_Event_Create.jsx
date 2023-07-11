@@ -12,10 +12,10 @@ const Page_Company_Event_Create = () => {
     const [value, setValue] = React.useState(null);
     return (
         <Container sx={{ p: 1 }} className='eventcreate' >
-            <Typography variant='h4' align='center'>Tạo sự kiện</Typography>
+            <Typography variant='h4' align='center' sx={{fontWeight: 600, color: 'cornflowerblue'}}>Tạo sự kiện</Typography>
             <form>
-                <Container style={{ border: '2px solid black', background: 'white', margin: 20 }}>
-                    <Grid container spacing={3} sx={{ 
+                <Container style={{ border: '2px solid black', background: 'white', margin: 25 }}>
+                    <Grid container spacing={2.5} sx={{ 
                         p: 1.2,
                         display: "flex",
                         alignItems: "center"
