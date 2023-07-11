@@ -182,6 +182,7 @@ const Page_Company_Interview_Create = () => {
             }
         }
     ]
+    let [thangText, setThangText] = useState("")
     return (
         <>
             <Grid container spacing={4}>
@@ -355,6 +356,8 @@ const Page_Company_Interview_Create = () => {
 
                 </Grid>
             </Grid>
+
+            <TextField id="outlined-basic" value={thangText} label="Outlined" variant="outlined" onChange={(event) => setThangText(event.target.value)} />
         </>
     )
 }

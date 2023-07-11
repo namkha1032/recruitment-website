@@ -1,0 +1,87 @@
+[
+    {
+        "categoryid": 1,
+        "categoryname": "Soft Skills",
+        "questions": [
+            {
+                "questionid": 1,
+                "questiontext": "sk question 1"
+            },
+            {
+                "questionid": 2,
+                "questiontext": "sk question 2"
+            },
+            {
+                "questionid": 3,
+                "questiontext": "sk question 3"
+            },
+            {
+                "questionid": 4,
+                "questiontext": "sk question 4"
+            },
+            {
+                "questionid": 5,
+                "questiontext": "sk question 5"
+            },
+            {
+                "questionid": 6,
+                "questiontext": "sk question 6"
+            }
+        ]
+    },
+    {
+        "categoryid": 2,
+        "categoryname": "Language Skills",
+        "language": {
+            "languageid": 1,
+            "languagename": "English",
+            "questions": [
+                {
+                    "questionid": 1,
+                    "questiontext": "sk question 1"
+                },
+                {
+                    "questionid": 2,
+                    "questiontext": "sk question 2"
+                },
+                {
+                    "questionid": 3,
+                    "questiontext": "sk question 3"
+                },
+                {
+                    "questionid": 4,
+                    "questiontext": "sk question 4"
+                },
+                {
+                    "questionid": 5,
+                    "questiontext": "sk question 5"
+                },
+                {
+                    "questionid": 6,
+                    "questiontext": "sk question 6"
+                }
+            ]
+        }
+    },
+    {
+        "categoryid": 3,
+        "categoryname": "Technical Skills",
+        "skills": [
+            {
+                "skillid": 1,
+                "skillname": "react",
+                "questions": []
+            },
+            {
+                "skillid": 2,
+                "skillname": "java",
+                "questions": []
+            },
+            {
+                "skillid": 3,
+                "skillname": "dotnet",
+                "questions": []
+            }
+        ]
+    }
+]

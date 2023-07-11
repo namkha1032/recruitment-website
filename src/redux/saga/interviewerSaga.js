@@ -5,7 +5,6 @@ import axios from 'axios'
 function* getDepartmentInterviewers(action) {
     const response = yield call(axios.get, 'http://localhost:3000/data/departmentinterviewer.json')
     yield put({ type: "interviewer/setInterviewerArray", payload: response.data })
-
 }
 
 function* interviewerSaga() {
