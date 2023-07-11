@@ -33,7 +33,6 @@ import { useNavigate } from "react-router-dom"
 import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
 import { localeVN } from "../../locale/locale";
 import Grid from "@mui/system/Unstable_Grid/Grid";
-// import "./Company_Recruitment.scss"
 
 function IdNavigate({ id }) {
 
