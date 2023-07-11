@@ -8,29 +8,34 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 const CertButton = (prop) => {
-  
   return (
-    <Grid container spacing={0}>
-      <Grid item xs={12}>
-        <Button
-          variant="contained"
-          className="AddButton"
-          sx={{
-            margin: "auto",
-          }}
-          onClick={() => {
-              prop.onPress();
-          }}
-        > 
-          Add
-        </Button>
-        <Snackbar open={prop.open} autoHideDuration={3000} onClose={prop.handleClose}>
-          <Alert onClose={prop.handleClose} severity="error" sx={{ width: "100%" }}>
-            Lack of certificate's information
-          </Alert>
-        </Snackbar>
-      </Grid>
-    </Grid>
+    <>
+      <Button
+        variant="contained"
+        className="AddButton"
+        sx={{
+          margin: "auto",
+        }}
+        onClick={() => {
+          prop.onPress();
+        }}
+      >
+        Add
+      </Button>
+      <Snackbar
+        open={prop.open}
+        autoHideDuration={3000}
+        onClose={prop.handleClose}
+      >
+        <Alert
+          onClose={prop.handleClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Lack of certificate's information
+        </Alert>
+      </Snackbar>
+    </>
   );
 };
 export default CertButton;

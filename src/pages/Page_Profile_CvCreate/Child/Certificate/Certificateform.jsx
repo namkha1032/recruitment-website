@@ -55,13 +55,13 @@ export default function CertificateForm(prop) {
             setDetail={prop.setDetail}
           />
         </Grid>
-        <Grid item xs={2}>
+
           <CertButton
             open={prop.open}
             onPress={prop.onPress}
             handleClose={prop.handleClose}
           />
-        </Grid>
+
       </Grid>
     </>
   );
