@@ -26,7 +26,6 @@ export default function EmptyTextarea(prop) {
             label="Detail"
             variant="outlined"
             multiline
-            maxRows={10}
           />
         </Box>
       </div>

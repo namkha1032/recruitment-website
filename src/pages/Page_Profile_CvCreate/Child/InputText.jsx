@@ -1,12 +1,10 @@
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import EnterButton from "./Certificate/EnterButton";
 
 const InputText = (prop) => {
   return (
     <>
       <Box
-        component="form"
         sx={{
           "& > :not(style)": {
             m: 1,
@@ -25,16 +23,6 @@ const InputText = (prop) => {
           label={prop.state}
           variant="outlined"
           onChange={prop.handleState}
-          // onKeyDown={(event) =>
-          //   EnterButton(
-          //     event,
-          //     prop.setLink,
-          //     prop.onPress,
-          //     prop.linkError,
-          //     prop.setLinkError,
-              
-          //   )
-          // }
         />
       </Box>
     </>

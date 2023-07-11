@@ -21,16 +21,12 @@ const Certificate = (prop) => {
           organize={prop.organize}
           detail={prop.detail}
           setDetail={prop.setDetail}
-          error={prop.error}
-          setError={prop.setError}
           cvalue={prop.cvalue}
           setCValue={prop.setCValue}
           open={prop.open}
           setOpen={prop.setOpen}
           handleSetOpen={prop.handleSetOpen}
           handleClose={prop.handleClose}
-          linkError={prop.linkError}
-          setLinkError={prop.setLinkError}
         />
       </div>
     </>

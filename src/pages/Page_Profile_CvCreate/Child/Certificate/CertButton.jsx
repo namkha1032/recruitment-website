@@ -19,24 +19,14 @@ const CertButton = (prop) => {
             margin: "auto",
           }}
           onClick={() => {
-            if (prop.error === true) {
-              prop.handleSetOpen();
-            } else {
               prop.onPress();
-              prop.setValue(null);
-              prop.setStart(null);
-              prop.setEnd(null);
-              prop.setOrganize("");
-              prop.setDetail("");
-              prop.setError(true);
-            }
           }}
-        >
+        > 
           Add
         </Button>
         <Snackbar open={prop.open} autoHideDuration={3000} onClose={prop.handleClose}>
           <Alert onClose={prop.handleClose} severity="error" sx={{ width: "100%" }}>
-            Enter Start day
+            Lack of certificate's information
           </Alert>
         </Snackbar>
       </Grid>

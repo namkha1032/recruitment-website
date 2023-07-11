@@ -9,7 +9,6 @@ const DateComp = (prop) => {
   const handleDateChange = (date) => {
     prop.setStart(date);
     console.log(date);
-    prop.setError(false);
   };
   function handleOrg(e) {
     prop.setOrganize(e.target.value);

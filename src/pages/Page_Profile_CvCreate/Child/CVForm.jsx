@@ -24,8 +24,6 @@ function CVForm() {
   const [detail, setDetail] = useState("");
   const [link, setLink] = useState("");
   const [cvalue, setCValue] = useState(null);
-  const [error, setError] = useState(true);
-  const [linkError, setLinkError] = useState(true);
   const [open, setOpen] = useState(false);
   //SKILL COMPS
   const [name, setName] = useState("");
@@ -40,7 +38,6 @@ function CVForm() {
   }
   function handleIntro(e) {
     setIntro(e.target.value);
-    console.log(e.target.value);
   }
   function handleEdu(e) {
     setEducation(e.target.value);
@@ -74,19 +71,17 @@ function CVForm() {
       link: link,
     };
     console.log(newCert);
-    if (error === true) {
-      handleSetOpen();
+    if (Cname !== "" && organize !== "" && startDate !== null && link !== "") {
+      setCerts([...certs, newCert]);
+      setCName("");
+      setOrganize("");
+      setStartDate(null);
+      setEndDate(null);
+      setDetail("");
+      setLink("");
+      setCid((prev) => (prev += 1));
     } else {
-      if (Cname !== "") {
-        setCerts([...certs, newCert]);
-        setCName("");
-        setOrganize("");
-        setStartDate(null);
-        setEndDate(null);
-        setDetail("");
-        setLink("");
-        setCid((prev) => (prev += 1));
-      }
+      handleSetOpen();
     }
   }
   function handleCertDelete(id) {
@@ -117,6 +112,7 @@ function CVForm() {
                 state={"Introduction"}
                 handleState={handleIntro}
                 width="98%"
+                value={intro}
               />
               <Divider variant="middle" />
             </Grid>
@@ -125,6 +121,7 @@ function CVForm() {
                 state={"Education"}
                 handleState={handleEdu}
                 width="98%"
+                value={education}
               />
               <Divider variant="middle" />
             </Grid>
@@ -141,10 +138,6 @@ function CVForm() {
               <div className="parentFlex">
                 <div className="leftFlex">
                   <Certificate
-                    error={error}
-                    setError={setError}
-                    linkError={linkError}
-                    setLinkError={setLinkError}
                     cvalue={cvalue}
                     setCValue={setCValue}
                     open={open}
@@ -175,6 +168,7 @@ function CVForm() {
                 state={"Experience"}
                 handleState={handleExp}
                 width="98%"
+                value={experience}
               />
             </Grid>
             <Grid item xs={12}></Grid>
