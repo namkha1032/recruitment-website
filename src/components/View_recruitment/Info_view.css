@@ -1,0 +1,22 @@
+.Info_view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 20px;
+    margin-right: 20px;
+    
+
+}
+
+p.thick {
+    font-weight: bold;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: #000;
+    display: block;
+    margin: 10px 0;
+}
