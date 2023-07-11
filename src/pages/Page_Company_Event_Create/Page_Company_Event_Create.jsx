@@ -56,7 +56,7 @@ const Page_Company_Event_Create = () => {
                         </Grid>
                         <Grid item xs={12} align='right'>
                             <Button variant="contained" size='large'>
-                                <TaskAltIcon></TaskAltIcon>
+                                <TaskAltIcon sx={{marginRight: 1}}></TaskAltIcon>
                                 Lưu
                             </Button>
                         </Grid>

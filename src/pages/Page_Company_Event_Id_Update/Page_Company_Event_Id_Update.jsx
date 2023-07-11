@@ -56,12 +56,12 @@ const Page_Company_Event_Id_Update = () => {
                             <TextField fullWidth placeholder='Nhập địa điểm'></TextField>
                         </Grid>
                         <Grid item xs={12} align='right'>
-                            <Button variant="contained" size='large' color="success" sx={{ mx: 2 }}>
-                                <EditIcon></EditIcon>
+                            <Button variant="contained" size='large' color="success" sx={{ mx: 5 }}>
+                                <EditIcon sx={{marginRight: 1}}></EditIcon>
                                 Chỉnh sửa
                             </Button>
                             <Button variant="contained" size='large'>
-                                <TaskAltIcon></TaskAltIcon>
+                                <TaskAltIcon sx={{marginRight: 1}}></TaskAltIcon>
                                 Lưu
                             </Button>
                         </Grid>
