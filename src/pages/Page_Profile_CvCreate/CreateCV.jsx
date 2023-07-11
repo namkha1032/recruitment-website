@@ -1,8 +1,7 @@
-
 import CVForm from "./Child/CVForm"
 import "./CreateCV.scss"
 
-const Page_Profile_CvCreate = () => {
+function CreateCV(){
     return(
         <div className="CreateCV">
             <CVForm></CVForm>
@@ -10,4 +9,5 @@ const Page_Profile_CvCreate = () => {
     )
 }
 
-export default Page_Profile_CvCreate
+export default CreateCV
+// hadle enter key

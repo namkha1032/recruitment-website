@@ -1,0 +1,44 @@
+.CreateCV {
+  .CVForm {
+    width: 80%;
+    margin: auto;
+    background-color: #D9D9D9;
+    display: flex;
+    border-radius: 10px;
+    .Container {
+      width: 100%;
+      label {
+        text-align: right;
+      }
+
+    }
+    .parentFlex {
+      display: flex;
+      justify-content: center;
+      .leftFlex {
+        display: flex;
+        flex-wrap: wrap;
+        width:80%;
+        border: black solid 0.5px;
+        padding: 1%;
+        border-radius: 5px;
+        .AutocompBox{
+          width: 100%;
+          margin-top: 8px;
+          
+        }
+
+      }
+    }
+
+  }
+  .InputForm {
+    align-items: center;
+    justify-content: center;
+  }
+  .AddButton {
+    width: 100px;
+    margin: 10px;
+    background-color: #3C6E71;
+  }
+}
