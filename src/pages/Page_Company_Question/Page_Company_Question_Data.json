@@ -17,21 +17,18 @@
         "id": 3,
         "QuestionName": "What is \"Chùa Một Cột\" in English?",
         "Category": "Ngôn ngữ",
-        "Skill": "",
-        "CreatedBy": "Nguyễn Văn A"
+        "Skill": ""
     },
     {
         "id": 4,
         "QuestionName": "Phong thái trong lúc thuyết trình?",
         "Category": "Kỹ năng mềm",
-        "Skill": "",
-        "CreatedBy": "Nguyễn Văn A"
+        "Skill": ""
     },
     {
         "id": 5,
         "QuestionName": "Ngôn ngữ cơ thể trong lúc thuyết trình?",
         "Category": "Kỹ năng mềm",
-        "Skill": "",
-        "CreatedBy": "Nguyễn Văn A"
+        "Skill": ""
     }
   ]

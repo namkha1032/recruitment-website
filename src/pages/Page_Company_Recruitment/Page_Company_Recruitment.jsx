@@ -27,7 +27,6 @@ import {
     DataGrid,
     GridActionsCellItem,
  } from "@mui/x-data-grid"
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Box } from "@mui/system"
 import datasjson from "./Page_Company_Recruitment_Data.json"
 import { useNavigate } from "react-router-dom"
@@ -120,6 +119,8 @@ function Completed() {
 
 export default function Page_Company_Recruitment() {
 
+    const navigate = useNavigate();
+
     const [rows, setRows] = useState(datasjson);
     const [anchorEl, setAnchorEl] = useState(null);
     const [valueSearch, setValueSearch] = useState("");
@@ -140,7 +141,7 @@ export default function Page_Company_Recruitment() {
     }
 
     function handleAddClick() {
-        alert("Navigate to Add position page")
+        navigate("./create")
     }
 
     function handleSearchClick() {
@@ -167,6 +168,7 @@ export default function Page_Company_Recruitment() {
             type: "number",
             headerAlign: "left",
             align: "left",
+            flex: 0.1,
             renderHeader: () => (
                 <span>Mã</span>
             ),
@@ -181,7 +183,7 @@ export default function Page_Company_Recruitment() {
             type: "string",
             headerAlign: "left",
             align: "left",
-            flex: 1,
+            flex: 0.7,
             renderHeader: () => (<span>Tên vị trí</span>),
             renderCell: (params) => {
                 if (params.value === undefined)
@@ -195,8 +197,9 @@ export default function Page_Company_Recruitment() {
             type: "string",
             headerAlign: "left",
             align: "left",
+            flex: 0.5,
             renderHeader: () => (<span>Ngày bắt đầu</span>),
-            minWidth: 180,
+            // minWidth: 180,
             renderCell: (params) => {
                 if (params.value === undefined)
                     return NullString()
@@ -207,8 +210,9 @@ export default function Page_Company_Recruitment() {
             type: "string",
             headerAlign: "left",
             align: "left",
+            flex: 0.5,
             renderHeader: () => (<span>Ngày kết thúc</span>),
-            minWidth: 180,
+            // minWidth: 180,
             renderCell: (params) => {
                 if (params.value === undefined)
                     return NullString()
@@ -219,22 +223,25 @@ export default function Page_Company_Recruitment() {
             type: "number",
             headerAlign: "center",
             align: "center",
+            flex: 0.3,
             renderHeader: () => (<span>Tối đa</span>),
-            minWidth: 100
+            // minWidth: 100
         },
         {
             field: "HiredQty",
             type: "number",
             headerAlign: "center",
             align: "center",
+            flex: 0.3,
             renderHeader: () => (<span>Đã đăng ký</span>),
-            minWidth: 100
+            // minWidth: 100
         },
         {
             field: "status",
-            minWidth: 180,
+            // minWidth: 180,
             headerAlign: "center",
             align: "center",
+            flex: 0.3,
             renderHeader: () => (<span>Trạng thái</span>),
             renderCell: (params) => {
                 const a = randomNumberBetween(params.row.id, 1, 3)
@@ -249,9 +256,10 @@ export default function Page_Company_Recruitment() {
         {
             field: "actions",
             type: "actions",
-            width: 60,
+            // width: 60,
             headerAlign: "right",
             align: "right",
+            flex: 0.1,
             getActions: (params) => [
                 <GridActionsCellItem
                     icon={<InfoIcon variant="outlined" />}
@@ -272,9 +280,9 @@ export default function Page_Company_Recruitment() {
     return (
         <Box>
             <Grid container spacing={2} sx={{
-                marginBottom: 5,
+                marginBottom: 2,
             }}>
-                <Grid xs={12} md={8}>
+                <Grid item xs={12} md={8}>
                     <Box sx={{
                         fontSize: 40,
                         fontWeight: 600,
@@ -284,12 +292,12 @@ export default function Page_Company_Recruitment() {
                     </Box>
                 </Grid>
 
-                <Grid xs={12} md={3.5} sx={{
+                <Grid item xs={12} md={3.5} sx={{
                     display: "flex",
                     justifyContent: "flex-end",
                     alignItems: "center",
                 }}>
-                    <Button variant="contained" href="#" sx={{
+                    <Button variant="contained" sx={{
                         backgroundColor: "#1565C0",
                         textTransform: "none",
                         height: 50,
@@ -335,14 +343,14 @@ export default function Page_Company_Recruitment() {
             </Grid>
 
             <Grid container spacing={2} sx={{
-                marginBottom: 5
+                marginBottom: 2
             }}>
                 <Grid container xs={12} md={8} spacing={2} display="flex" justifyContent="flex-start">
                     <Grid xs={12} md={4}>
                         <Autocomplete
                             disablePortal
                             id="filter-type"
-                            options={["Phòng ban", "Trạng thái", "Thời gian"]}
+                            options={["Phòng ban", "Trạng thái"]}
                             sx={{ width: 250, height: 40 }}
                             renderInput={(params) => <TextField {...params} label="Lọc theo..." />}
                             value={valueChoose}

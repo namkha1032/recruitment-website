@@ -20,6 +20,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import FlagIcon from "@mui/icons-material/Flag";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
+import CodeIcon from "@mui/icons-material/Code";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import { Box } from "@mui/system";
 import datasjson from "./Page_Company_Question_Data.json";
@@ -168,12 +169,12 @@ export default function Page_Company_Question() {
       },
     },
     {
-      field: "EventName",
+      field: "QuestionName",
       type: "string",
       headerAlign: "left",
       align: "left",
       flex: 1,
-      renderHeader: () => <span>Sự kiện</span>,
+      renderHeader: () => <span>Câu hỏi</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
         return <TitleNavigate title={params.value} id={params.row.id} />;
@@ -181,23 +182,24 @@ export default function Page_Company_Question() {
       editable: true,
     },
     {
-      field: "CreatedBy",
+      field: "Category",
       type: "string",
       headerAlign: "center",
       align: "center",
-      flex: 1,
-      renderHeader: () => <span>Tạo bởi</span>,
+      flex: 0.5,
+      renderHeader: () => <span>Loại</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
         return <TitleNavigate title={params.value} id={params.row.id} />;
       },
     },
     {
-      field: "NumOfJoined",
-      type: "number",
+      field: "Skill",
+      type: "string",
       headerAlign: "center",
       align: "center",
-      renderHeader: () => <span>Đã tham gia</span>,
+      minWidth: 50,
+      renderHeader: () => <span>Kỹ năng</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
       },
@@ -379,7 +381,7 @@ export default function Page_Company_Question() {
       <Box
         sx={{
           height: 600,
-          width: "100%",
+          width: "75vw",
         }}
       >
         <DataGrid
