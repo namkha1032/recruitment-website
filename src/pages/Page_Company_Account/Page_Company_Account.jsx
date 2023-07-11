@@ -3,6 +3,7 @@ import {Box, Button, MenuItem, Select, Typography} from "@mui/material"
 import {DataGrid, GridToolbar} from "@mui/x-data-grid";
 import {useNavigate} from "react-router-dom";
 import {mockDataContacts} from "./mockData";
+import {grey, lightBlue, teal} from "@mui/material/colors";
 
 const Page_Company_Account = () => {
     const navigate = useNavigate()
@@ -13,7 +14,6 @@ const Page_Company_Account = () => {
                     variant="contained"
                     size="small"
                     color="primary"
-                    style={{marginLeft: 16}}
                     onClick={() => {
                     }}
                 >
@@ -75,12 +75,12 @@ const Page_Company_Account = () => {
     ];
 
     return (
-        <Box m="5px">
+        <Box m="5px" width="76.5vw">
             <Box
                 display="grid"
                 gridTemplateColumns="repeat(5, 1fr)"
-                gridAutoRows="40px"
-                gap="20px"
+                gridAutoRows="70px"
+                gap="10px"
             >
                 <Typography variant="h2"
                             gridColumn="span 4"
@@ -91,16 +91,17 @@ const Page_Company_Account = () => {
                     Account List
                 </Typography>
                 <Button variant="contained"
-                        size="small"
+                        size="medium"
                         gridColumn="span 1"
                         gridRow="span 1"
+                        xs={1}
                         onClick={() => {
                             navigate("/company/account/create")
                         }}>
-                    Create Advanced Accounts
+                    Create Advanced Account
                 </Button>
                 <Button variant="contained"
-                        size="small"
+                        size="medium"
                         gridColumn="span 1"
                         gridRow="span 1"
                         onClick={() => {
@@ -122,7 +123,6 @@ const Page_Company_Account = () => {
             </Box>
             <Box
                 m="20px 0px 0 0px"
-                width="76.5vw"
                 sx={{
                     "& .MuiDataGrid-root": {
                         border: "none",
@@ -131,24 +131,24 @@ const Page_Company_Account = () => {
                         borderBottom: "none",
                     },
                     "& .name-column--cell": {
-                        color: "white",
+                        color: lightBlue[800],
                     },
                     "& .MuiDataGrid-columnHeaders": {
-                        backgroundColor: "primary",
+                        backgroundColor: lightBlue[600],
                         borderBottom: "none",
                     },
                     "& .MuiDataGrid-virtualScroller": {
-                        backgroundColor: "grey",
+                        backgroundColor: grey[100],
                     },
                     "& .MuiDataGrid-footerContainer": {
                         borderTop: "none",
-                        backgroundColor: "primary",
+                        backgroundColor: lightBlue[600],
                     },
                     "& .MuiCheckbox-root": {
-                        color: `${"lightgreen"} !important`,
+                        color: `${teal[300]} !important`,
                     },
                     "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                        color: `${"grey"} !important`,
+                        color: `${grey[700]} !important`,
                     },
                 }}
             >

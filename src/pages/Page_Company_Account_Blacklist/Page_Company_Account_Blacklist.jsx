@@ -1,6 +1,7 @@
 import {Box, Button, Typography} from "@mui/material"
 import {DataGrid, GridToolbar} from "@mui/x-data-grid";
 import {mockDataContacts} from "../Page_Company_Account/mockData";
+import {grey, red, teal} from "@mui/material/colors";
 
 const Page_Company_Account_Blacklist = () => {
     const renderActionButton = (params) => {
@@ -10,7 +11,6 @@ const Page_Company_Account_Blacklist = () => {
                     variant="contained"
                     size="small"
                     color="secondary"
-                    style={{marginLeft: 16}}
                     onClick={() => {
                     }}
                 >
@@ -26,7 +26,6 @@ const Page_Company_Account_Blacklist = () => {
                     variant="contained"
                     size="small"
                     color="secondary"
-                    style={{marginLeft: 16}}
                     onClick={() => {
                     }}
                 >
@@ -86,52 +85,52 @@ const Page_Company_Account_Blacklist = () => {
     ];
 
     return (
-        <Box>
+        <Box width="76.5vw"
+             alignItems="center"
+             justifyContent="center">
             <Box
-                 display="grid"
-                 gridTemplateColumns="repeat(5, 1fr)"
-                 gridAutoRows="40px"
-                 gap="20px"
+                display="grid"
+                gridTemplateColumns="repeat(5, 1fr)"
+                gridAutoRows="40px"
+                gap="20px"
             >
                 <Typography variant="h2"
-                            gridColumn="span 1"
+                            gridColumn="1"
                             gridRow="span 3"
                             display="flex"
                             alignItems="center"
-                            justifyContent="left">
+                            justifyContent="center">
                     Blacklist
                 </Typography>
             </Box>
             <Box
-                m="20px 0px 0 0px"
-                width="76.5vw"
                 sx={{
                     "& .MuiDataGrid-root": {
                         border: "none",
                     },
                     "& .MuiDataGrid-cell": {
                         borderBottom: "none",
-                        backgroundColor: "grey",
+                        backgroundColor: grey[300],
                     },
                     "& .name-column--cell": {
-                        color: "green",
+                        color: teal[600],
                     },
                     "& .MuiDataGrid-columnHeaders": {
-                        backgroundColor: "lightred",
+                        backgroundColor: red[100],
                         borderBottom: "none",
                     },
                     "& .MuiDataGrid-virtualScroller": {
-                        backgroundColor: "grey",
+                        backgroundColor: grey[100],
                     },
                     "& .MuiDataGrid-footerContainer": {
                         borderTop: "none",
-                        backgroundColor: "red",
+                        backgroundColor: red[100],
                     },
                     "& .MuiCheckbox-root": {
                         color: `${"green"} !important`,
                     },
                     "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                        color: `${"lightgrey"} !important`,
+                        color: `${grey[700]} !important`,
                     },
                 }}
             >
