@@ -14,7 +14,6 @@ const Page_Company_Event_Id_Update = () => {
     return (
         <Container sx={{ p: 1 }} className='eventupdate' >
             <Typography variant='h4' align='center'>Chỉnh sửa sự kiện</Typography>
-            <form>
                 <Container style={{ border: '2px solid black', background: 'white', margin: 30 }}>
                     <Grid container spacing={3} sx={{
                         p: 1.2,
@@ -67,7 +66,6 @@ const Page_Company_Event_Id_Update = () => {
                         </Grid>
                     </Grid>
                 </Container>
-            </form>
         </Container >
     )
 }
