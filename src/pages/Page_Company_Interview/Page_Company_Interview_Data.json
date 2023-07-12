@@ -2,6 +2,7 @@
     {
       "id": 1,
       "InterviewerName": "Nguyễn Văn A",
+      "InterviewerId": 1234,
       "CandidateName": "Trần Thị B",
       "StartTime": "11/07/2023, 09:00 AM",
       "EndTime": "11/07/2023, 09:30 AM",

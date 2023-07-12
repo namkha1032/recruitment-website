@@ -20,14 +20,14 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import FlagIcon from "@mui/icons-material/Flag";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import { DataGrid, GridActionsCellItem, useGridApiContext } from "@mui/x-data-grid";
+import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import { Box } from "@mui/system";
 import datasjson from "./Page_Company_Recruitment_Data.json";
 import { useNavigate } from "react-router-dom";
 import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
 import { localeVN } from "../../locale/locale";
 import Grid from "@mui/material/Grid";
-
+import "./Page_Company_Recruitment.scss";
 
 function IdNavigate({ id }) {
   function handleClick() {
@@ -113,7 +113,6 @@ function Completed() {
 }
 
 export default function Page_Company_Recruitment() {
-
   const navigate = useNavigate();
 
   const [rows, setRows] = useState(datasjson);
@@ -211,9 +210,9 @@ export default function Page_Company_Recruitment() {
       type: "number",
       headerAlign: "center",
       align: "center",
-    //   flex: 0.3,
+      //   flex: 0.3,
       renderHeader: () => <span>Tối đa</span>,
-      minWidth: 100
+      minWidth: 100,
     },
     {
       field: "HiredQty",
@@ -221,6 +220,7 @@ export default function Page_Company_Recruitment() {
       headerAlign: "center",
       align: "center",
       renderHeader: () => <span>Đã đăng ký</span>,
+      minWidth: 100,
     },
     {
       field: "status",
@@ -266,7 +266,7 @@ export default function Page_Company_Recruitment() {
   ]);
 
   return (
-    <Box>
+    <Box className="Page_Company_Recruitment">
       <Grid
         container
         spacing={3}
@@ -293,8 +293,8 @@ export default function Page_Company_Recruitment() {
           sx={{
             display: "flex",
             justifyContent: {
-                md:"flex-end",
-                xs:"flex-start",
+              md: "flex-end",
+              xs: "flex-start",
             },
             alignItems: "center",
           }}
@@ -315,7 +315,7 @@ export default function Page_Company_Recruitment() {
           <MoreVertIcon
             onClick={handleMoreClick}
             sx={{
-                marginLeft: 2,
+              marginLeft: 2,
               cursor: "pointer",
               "&:hover": { opacity: 0.6 },
             }}
@@ -362,7 +362,7 @@ export default function Page_Company_Recruitment() {
             disablePortal
             id="filter-type"
             options={["Phòng ban", "Trạng thái"]}
-            sx={{width: 200, marginRight: 2}}
+            sx={{ width: 200, marginRight: 2 }}
             renderInput={(params) => (
               <TextField {...params} label="Lọc theo..." />
             )}
@@ -374,7 +374,7 @@ export default function Page_Company_Recruitment() {
               disablePortal
               id="filter-type"
               options={["Phòng ban A", "Phòng ban B", "Phòng ban C"]}
-              sx={{ width: 200}}
+              sx={{ width: 200 }}
               renderInput={(params) => (
                 <TextField {...params} label="Phòng ban..." />
               )}
@@ -404,8 +404,8 @@ export default function Page_Company_Recruitment() {
           sx={{
             display: "flex",
             justifyContent: {
-                md:"flex-end",
-                xs:"flex-start"
+              md: "flex-end",
+              xs: "flex-start",
             },
             alignItems: "center",
           }}
@@ -423,10 +423,15 @@ export default function Page_Company_Recruitment() {
               value={valueSearch}
               onChange={(e) => setValueSearch(e.target.value)}
               sx={{
-                width: 250, height: 50
+                width: 250,
+                height: 50,
               }}
             />
-            <IconButton type="button" aria-label="search" onClick={handleSearchClick} >
+            <IconButton
+              type="button"
+              aria-label="search"
+              onClick={handleSearchClick}
+            >
               <SearchIcon />
             </IconButton>
           </Box>
@@ -435,7 +440,7 @@ export default function Page_Company_Recruitment() {
 
       <Box
         sx={{
-            width: "100%",
+          width: "100%",
           height: 600,
         }}
       >
@@ -450,9 +455,9 @@ export default function Page_Company_Recruitment() {
               backgroundColor: "#1565C0",
               color: "white",
               fontWeight: 700,
+              fontSize: 14,
             },
-            "&.MuiDataGrid-root .MuiDataGrid-row": { 
-            },
+            "&.MuiDataGrid-root .MuiDataGrid-row": {},
           }}
           localeText={localeVN}
           slotProps={{
