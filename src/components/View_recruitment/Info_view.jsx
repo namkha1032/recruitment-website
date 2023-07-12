@@ -14,27 +14,11 @@ import WebAssetIcon from '@mui/icons-material/WebAsset';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import './Info_view.css'
 
-let requires = [
-    {
-        id: 0,
-        name: 'Thành thạo về HTML, CSS, Javascript',
-    },
-    {
-        id: 1,
-        name: 'Đã có những dự án liên quan đến ReactJS',
-    },
-    {
-        id: 2,
-        name: 'Có khả năng giao tiếp, hoạt động nhóm tốt',
-    },
-    {
-        id: 3,
-        name: 'Thái độ làm việc chăm chỉ, có trách nhiệm'
-    }
 
-];
 const Info_view = () => {
     const url = "https://fpt.com.vn/en";
+    const requires = require('../../data/View_recruitment/requires.json');
+    
     return (
         <div className="Info_view">
             <Typography variant='h4' >
@@ -58,7 +42,7 @@ const Info_view = () => {
                         <RecommendIcon></RecommendIcon> REQUIREMENT
                     </Typography>
                     <ul>
-                        {requires.map((require, index) => (
+                        {requires.map((require) => (
                             <li key={require.id}>{require.name}</li>
                         ))}
                     </ul>
@@ -73,7 +57,7 @@ const Info_view = () => {
                     </ul>
                 </Grid>
                 <div className='line'></div>
-                <Grid item xs={5}>
+                <Grid item xs={4}>
                     <Typography variant='h5'>
                         <CreditScoreIcon></CreditScoreIcon> SALARY:
                     </Typography>
@@ -107,7 +91,7 @@ const Info_view = () => {
                         <GroupIcon>  </GroupIcon> ITROOM
                     </Typography>
                 </Grid>
-                <Grid item xs={2.5}>
+                <Grid item xs={3}>
                     <Typography align='center' variant='subtitle1'>
                         <PhoneIcon></PhoneIcon>  123456789
                     </Typography>

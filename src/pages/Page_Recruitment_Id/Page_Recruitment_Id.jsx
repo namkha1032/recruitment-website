@@ -22,14 +22,12 @@ const style = {
 };
 const boxDefault = {
     height: 20,
-    padding: 2,
+    padding: 4 ,
     minWidth: 600,
     m: 1,
     display: "flex"
 }
-const height = {
-    height: 300,
-}
+
 let CVlist = [
     {
         id: 1,
@@ -77,7 +75,8 @@ const Page_Recruitment_Id = () => {
     };
     return (
         <Grid container spacing={1}>
-            
+            <Grid item xs ={3}></Grid>
+            {/* <Grid item xs={5}></Grid> */}
             <Grid item xs={6}>
                 <Info_view />
                 <div className="button_register" >
@@ -118,10 +117,10 @@ const Page_Recruitment_Id = () => {
                                             </RadioGroup>
 
                                             <FormHelperText>{helperText}</FormHelperText>
-                                            <Grid item xs = {12}>
-                                            <Button size="large" sx={{ mt: 1, mr: 0, ml: 10 }} type="submit" variant="outlined" onClick={hanldeOut}>
-                                                Submit your CV
-                                            </Button>
+                                            <Grid item xs={12}>
+                                                <Button size="large" sx={{ mt: 1, mr: 0, ml: 10 }} type="submit" variant="outlined" onClick={hanldeOut}>
+                                                    Submit your CV
+                                                </Button>
                                             </Grid>
                                         </FormControl>
                                     </form>
@@ -133,6 +132,7 @@ const Page_Recruitment_Id = () => {
 
                 </div>
             </Grid>
+            <Grid item xs ={3}></Grid>
             {/* <Grid item xs={4} sx={height}>
             <Box sx ={height}>
             
