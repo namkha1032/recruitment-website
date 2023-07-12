@@ -3,29 +3,29 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { skillList } from "./CvState";
+import { language } from "./RecruitData";
 import InputText from "./InputText";
+import EmptyTextarea from "./AutoText";
 
 const filter = createFilterOptions();
-
-export default function FreeSoloCreateOption(prop) {
-  const [value, setValue] = React.useState(null);
-  function handleSExp(e) {
+export default function ChooseLanguage(prop) {
+  
+  function handleRExp(e) {
     console.log(e.target.value);
-    prop.setSExp(e.target.value);
+    prop.setExperience(e.target.value);
   }
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       const inputValue = event.target.value;
-      console.log(value);
+      console.log(prop.value);
       console.log(inputValue);
-      if (value === null) {
+      if (prop.value === null) {
         if (inputValue.trim() !== "") {
-          setValue(null);
+          prop.setInputValue(null);
           prop.handleState(inputValue);
         }
       } else {
-        setValue(null);
+        prop.setInputValue(null);
         return prop.onPress();
       }
     }
@@ -33,26 +33,29 @@ export default function FreeSoloCreateOption(prop) {
   return (
     <>
       <Grid container spacing={0} justifyContent="center" alignItems="center">
-        <Grid item xs={9}>
+        <Grid item xs={12}>
           <Autocomplete
-            value={value}
+            value={prop.inputValue}
             onChange={(event, newValue) => {
               if (typeof newValue === "string") {
-                setValue({
+                return ()=>prop.setValue({
                   name: newValue,
                 });
               } else if (newValue && newValue.inputValue) {
-                setValue({
+                
+                prop.setInputValue({
                   name: newValue.inputValue,
                 });
+                console.log(newValue.name)
                 if (newValue !== null) {
-                  console.log(newValue.name);
-                  prop.handleState(newValue.name);
+                  console.log(newValue);
+                  prop.handleState(newValue);
                 }
               } else {
-                setValue(newValue);
+                prop.setInputValue(newValue);
                 if (newValue !== null) {
-                  console.log(newValue.name);
+                  console.log(newValue);
+                  prop.setSkillId(language.filter((comp) => comp.name === newValue.name)[0].id);
                   prop.handleState(newValue.name);
                 }
               }
@@ -76,7 +79,7 @@ export default function FreeSoloCreateOption(prop) {
             clearOnBlur
             handleHomeEndKeys
             id="free-solo-with-text-demo"
-            options={skillList}
+            options={language}
             getOptionLabel={(option) => {
               if (typeof option === "string") {
                 return option;
@@ -92,7 +95,6 @@ export default function FreeSoloCreateOption(prop) {
                 m: 1,
                 display: "flex",
                 margin: "0",
-                marginTop: "8px",
                 padding: "0",
                 marginRight: "1%",
               },
@@ -103,17 +105,6 @@ export default function FreeSoloCreateOption(prop) {
             )}
           />
         </Grid>
-        <Grid item xs={3}>
-          <InputText
-            state={"Skill Experiece Year"}
-            width="100%"
-            value={prop.SExp}
-            margin="0"
-            marginLeft="1%"
-            handleState={handleSExp}
-          />
-        </Grid>
-        <Grid item xs={12}></Grid>
         <Button
           sx={{
             margin: "auto",
@@ -122,7 +113,6 @@ export default function FreeSoloCreateOption(prop) {
           className="AddButton"
           onClick={() => {
             prop.onPress();
-            setValue(null);
           }}
         >
           Add

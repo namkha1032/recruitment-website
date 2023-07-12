@@ -8,6 +8,7 @@ import Certificate from "./Certificate/Certificate";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 
+
 function CVForm() {
   // CV COMPS
   const [intro, setIntro] = useState(cvinfo.intro);
@@ -28,6 +29,7 @@ function CVForm() {
   //SKILL COMPS
   const [name, setName] = useState("");
   const [Sid, setSid] = useState(0);
+  const [SExp,setSExp] = useState("")
   //FUNCTION
   function handleClick() {
     console.log(intro);
@@ -50,10 +52,12 @@ function CVForm() {
     const newSkill = {
       id: Sid,
       name: name,
+      skillExperienc: SExp,
     };
     if (name !== "") {
       setSkills([...skills, newSkill]);
       setName("");
+      setSExp("")
       setSid((prev) => (prev += 1));
     }
   }
@@ -61,6 +65,7 @@ function CVForm() {
     setSkills(skills.filter((component) => component.id !== id));
   }
   function handleCertificateAdd() {
+    console.log(startDate)
     const newCert = {
       id: Cid,
       name: Cname,
@@ -128,12 +133,20 @@ function CVForm() {
             <Grid item xs={10}>
               <UlList comps={skills} handleDelete={handleSkilltDelete} />
             </Grid>
+            <Grid item xs={12}>
+              <div className="parentFlex">
+                <div className="leftFlex">
             <FreeSoloCreateOptionDialog
+              SExp={SExp}
+              setSExp={setSExp}
               state={"Skill"}
               handleState={setName}
               value={name}
               onPress={handleSkillAdd}
             />
+            </div>
+            </div>
+            </Grid>
             <Grid item xs={12}>
               <div className="parentFlex">
                 <div className="leftFlex">
