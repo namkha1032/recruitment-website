@@ -4,14 +4,14 @@ import axios from 'axios'
 
 function* getAllRelatedQuestion(action) {
     const response = yield call(axios.get, 'http://localhost:3000/data/relatedquestion.json')
-    yield put({ type: "question/setQuestionArray", payload: response.data })
+    yield put({ type: "interviewQuestion/setInterviewQuestionArray", payload: response.data })
 
 }
 
-function* questionSaga() {
+function* interviewQuestionSaga() {
     yield all([
         takeEvery("saga/getAllRelatedQuestion", getAllRelatedQuestion)
     ])
 }
 
-export default questionSaga
+export default interviewQuestionSaga

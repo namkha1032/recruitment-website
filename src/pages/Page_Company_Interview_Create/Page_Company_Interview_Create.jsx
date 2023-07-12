@@ -34,8 +34,11 @@ const Page_Company_Interview_Create = () => {
 
     let [busyInterviewer, setBusyInterviewer] = useState([])
     let [busyRoom, setBusyRoom] = useState([])
+    let [busyShift, setBusyShift] = useState([])
+    const [rowSelectionModel, setRowSelectionModel] = useState([]);
 
     const dispatch = useDispatch()
+    // fetch Data
     useEffect(() => {
         dispatch({ type: "saga/getUpcomingInterviews" })
         dispatch({ type: "saga/getDepartmentInterviewers" })
@@ -47,12 +50,11 @@ const Page_Company_Interview_Create = () => {
     const interviewerList = useSelector(state => state.interviewer)
     const roomList = useSelector(state => state.room)
     const shiftList = useSelector(state => state.shift)
+    // set busyInterviewer and busyRoom
     useEffect(() => {
         setBusyInterviewer(oldList => [])
         setBusyRoom(oldList => [])
         if (chosenShift) {
-            // let busyIn = {}
-            // let busyRo = {}
             for (let interview of interviewList) {
                 for (let interviewer of interviewerList) {
                     if (interview.shiftid == chosenShift.shiftid
@@ -71,18 +73,40 @@ const Page_Company_Interview_Create = () => {
             }
         }
     }, [chosenShift])
+    // // set busyShift wrt chosenInterviewer
+    // useEffect(() => {
+    //     if (chosenDate) {
+    //         for (let interview of interviewList) {
+    //             for (let shift of shiftList) {
+    //                 if (interview.interviewDate == chosenDate
+    //                     && interview.interviewerid == chosenInterviewer.interviewerid
+    //                     && interview.shiftid == shift.shiftid) {
+    //                     let flag = false
+    //                     for (let busyShi of busyShift) {
+    //                         if busyShi.shiftid == intervi
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }, [chosenInterviewer])
+
+    // // set busyShift wrt chosenRoom
+    // useEffect(() => {
+
+    // }, [chosenRoom])
 
     const interviewerRows = interviewerList ? interviewerList.map(inter => (
         {
-            id: inter.interviewerid,
-            name: inter.interviewername,
+            interviewerid: inter.interviewerid,
+            interviewername: inter.interviewername,
             status: "status",
             action: "action"
         }
     )) : []
     const interviewerColumns = [
-        { field: 'id', headerName: 'ID', flex: 1 },
-        { field: 'name', headerName: 'Name', flex: 3 },
+        { field: 'interviewerid', headerName: 'ID', flex: 1 },
+        { field: 'interviewername', headerName: 'Name', flex: 3 },
         {
             field: 'status',
             headerName: 'Status',
@@ -90,7 +114,7 @@ const Page_Company_Interview_Create = () => {
             renderCell: (params) => {
                 if (chosenShift && busyInterviewer.length > 0) {
                     for (let busyIn of busyInterviewer) {
-                        if (busyIn.interviewerid == params.row.id) {
+                        if (busyIn.interviewerid == params.row.interviewerid) {
                             return (<Chip icon={<CloseIcon />} label="Unavailable" color="error" size="small" />)
                         }
 
@@ -106,7 +130,7 @@ const Page_Company_Interview_Create = () => {
             headerName: "Action",
             flex: 2,
             renderCell: (params) => {
-                if (chosenInterviewer && params.row.id == chosenInterviewer.id) {
+                if (chosenInterviewer && params.row.interviewerid == chosenInterviewer.interviewerid) {
                     return (
                         <Button variant="contained" color="success">Chosen</Button>
                     )
@@ -114,7 +138,7 @@ const Page_Company_Interview_Create = () => {
                 else {
                     if (chosenShift && busyInterviewer.length > 0) {
                         for (let busyIn of busyInterviewer) {
-                            if (busyIn.interviewerid == params.row.id) {
+                            if (busyIn.interviewerid == params.row.interviewerid) {
                                 return (<Button disabled variant="outlined">Choose</Button>)
                             }
 
@@ -130,15 +154,15 @@ const Page_Company_Interview_Create = () => {
 
     const roomRows = roomList ? roomList.map(room => (
         {
-            id: room.roomid,
-            name: room.roomname,
+            roomid: room.roomid,
+            roomname: room.roomname,
             status: "free",
             action: "action button"
         }
     )) : []
     const roomColumns = [
-        { field: 'id', headerName: 'ID', flex: 1 },
-        { field: 'name', headerName: 'Name', flex: 3 },
+        { field: 'roomid', headerName: 'ID', flex: 1 },
+        { field: 'roomname', headerName: 'Name', flex: 3 },
         {
             field: 'status',
             headerName: 'Status',
@@ -146,7 +170,7 @@ const Page_Company_Interview_Create = () => {
             renderCell: (params) => {
                 if (chosenShift && busyRoom.length > 0) {
                     for (let busyRo of busyRoom) {
-                        if (busyRo.roomid == params.row.id) {
+                        if (busyRo.roomid == params.row.roomid) {
                             return (<Chip icon={<CloseIcon />} label="Unavailable" color="error" size="small" />)
                         }
                     }
@@ -161,7 +185,7 @@ const Page_Company_Interview_Create = () => {
             headerName: "Action",
             flex: 2,
             renderCell: (params) => {
-                if (chosenRoom && params.row.id == chosenRoom.id) {
+                if (chosenRoom && params.row.roomid == chosenRoom.roomid) {
                     return (
                         <Button variant="contained" color="success">Chosen</Button>
                     )
@@ -169,7 +193,7 @@ const Page_Company_Interview_Create = () => {
                 else {
                     if (chosenShift && busyRoom.length > 0) {
                         for (let busyRo of busyRoom) {
-                            if (busyRo.roomid == params.row.id) {
+                            if (busyRo.roomid == params.row.roomid) {
                                 return (<Button disabled variant="outlined">Choose</Button>)
                             }
 
@@ -182,9 +206,8 @@ const Page_Company_Interview_Create = () => {
             }
         }
     ]
-    let [thangText, setThangText] = useState("")
     return (
-        <>
+        <>{interviewerList &&
             <Grid container spacing={4}>
                 <Grid item md={12}>
                     <Typography variant="h2" sx={{ textAlign: "center" }}>Create an interview</Typography>
@@ -194,14 +217,20 @@ const Page_Company_Interview_Create = () => {
                         <CardHeader title="Choose an interviewer" />
                         <CardContent>
                             <DataGrid
+                                // checkboxSelection
+                                onRowSelectionModelChange={(newRowSelectionModel) => {
+                                    console.log(newRowSelectionModel)
+                                    setRowSelectionModel(newRowSelectionModel);
+                                }}
+                                rowSelectionModel={rowSelectionModel}
                                 sx={{ height: 400 }}
                                 rowHeight={50}
                                 rows={interviewerRows}
                                 columns={interviewerColumns}
+                                getRowId={(row) => row.interviewerid}
                                 disableColumnFilter
                                 disableColumnSelector
                                 disableDensitySelector
-                                disableW
                                 slots={{ toolbar: GridToolbar }}
                                 slotProps={{
                                     toolbar: {
@@ -223,10 +252,10 @@ const Page_Company_Interview_Create = () => {
                                 rowHeight={50}
                                 rows={roomRows}
                                 columns={roomColumns}
+                                getRowId={(row) => row.roomid}
                                 disableColumnFilter
                                 disableColumnSelector
                                 disableDensitySelector
-                                disableW
                                 slots={{ toolbar: GridToolbar }}
                                 slotProps={{
                                     toolbar: {
@@ -273,6 +302,17 @@ const Page_Company_Interview_Create = () => {
                                                     <em>None</em>
                                                 </MenuItem>
                                                 {shiftList ? shiftList.map(shift => {
+                                                    if (chosenInterviewer) {
+                                                        for (let interview of interviewList) {
+                                                            if (interview.interviewerid == chosenInterviewer.interviewerid
+                                                                && interview.interviewdate == chosenDate
+                                                                && interview.shiftid == shift.shiftid) {
+                                                                return (
+                                                                    <MenuItem disabled key={shift.shiftid} value={shift}>Shift {shift.shiftid}: {shift.shiftstart} to {shift.shiftend}</MenuItem>
+                                                                )
+                                                            }
+                                                        }
+                                                    }
                                                     return (
                                                         <MenuItem key={shift.shiftid} value={shift}>Shift {shift.shiftid}: {shift.shiftstart} to {shift.shiftend}</MenuItem>
                                                     )
@@ -292,7 +332,7 @@ const Page_Company_Interview_Create = () => {
                                         <Grid item md={8}>
                                             {chosenInterviewer &&
                                                 <Chip
-                                                    label={chosenInterviewer.name}
+                                                    label={chosenInterviewer.interviewername}
                                                     variant="outlined"
                                                     onDelete={() => { setChosenInterviewer(null) }}
                                                 />}
@@ -334,7 +374,7 @@ const Page_Company_Interview_Create = () => {
                                         <Grid item md={8}>
                                             {chosenRoom &&
                                                 <Chip
-                                                    label={chosenRoom.name}
+                                                    label={chosenRoom.roomname}
                                                     variant="outlined"
                                                     onDelete={() => {
                                                         setChosenRoom(null)
@@ -356,8 +396,7 @@ const Page_Company_Interview_Create = () => {
 
                 </Grid>
             </Grid>
-
-            <TextField id="outlined-basic" value={thangText} label="Outlined" variant="outlined" onChange={(event) => setThangText(event.target.value)} />
+        }
         </>
     )
 }

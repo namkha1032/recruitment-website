@@ -4,7 +4,7 @@ import interviewSaga from "./saga/interviewSaga";
 import interviewerSaga from "./saga/interviewerSaga";
 import roomSaga from "./saga/roomSaga";
 import shiftSaga from "./saga/shiftSaga";
-import questionSaga from "./saga/questionSaga";
+import interviewQuestionSaga from "./saga/interviewQuestionSaga";
 
 // import libraries
 import { all } from "redux-saga/effects"
@@ -16,7 +16,7 @@ function* rootSaga() {
         interviewerSaga(),
         roomSaga(),
         shiftSaga(),
-        questionSaga()
+        interviewQuestionSaga()
     ])
 }
 
