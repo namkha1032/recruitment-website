@@ -28,6 +28,7 @@ import { useNavigate } from "react-router-dom";
 import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
 import { localeVN } from "../../locale/locale";
 import Grid from "@mui/material/Grid";
+import QuestionForm from "./QuestionForm";
 
 const listOfSkills = [
   "React",
@@ -466,6 +467,8 @@ export default function Page_Company_Question() {
           //   }}
         />
       </Box>
+
+      <QuestionForm />
     </Box>
   );
 }
