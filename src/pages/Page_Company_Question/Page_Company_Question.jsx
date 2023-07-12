@@ -27,7 +27,42 @@ import datasjson from "./Page_Company_Question_Data.json";
 import { useNavigate } from "react-router-dom";
 import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
 import { localeVN } from "../../locale/locale";
-import Grid from "@mui/system/Unstable_Grid/Grid";
+import Grid from "@mui/material/Grid";
+
+const listOfSkills = [
+  "React",
+  "Angular",
+  "Java",
+  "Python",
+  "Figma",
+  ".NET",
+  "C",
+  "C++",
+  "React",
+  "Angular",
+  "Java",
+  "Python",
+  "Figma",
+  ".NET",
+  "C",
+  "C++",
+  "React",
+  "Angular",
+  "Java",
+  "Python",
+  "Figma",
+  ".NET",
+  "C",
+  "C++",
+  "React",
+  "Angular",
+  "Java",
+  "Python",
+  "Figma",
+  ".NET",
+  "C",
+  "C++",
+];
 
 function IdNavigate({ id }) {
   function handleClick() {
@@ -231,12 +266,12 @@ export default function Page_Company_Question() {
     <Box>
       <Grid
         container
-        spacing={2}
+        spacing={3}
         sx={{
-          marginBottom: 2,
+          marginBottom: 5,
         }}
       >
-        <Grid xs={12} md={8}>
+        <Grid item xs={12} md={8}>
           <Box
             sx={{
               fontSize: 40,
@@ -249,41 +284,36 @@ export default function Page_Company_Question() {
         </Grid>
 
         <Grid
+          item
           xs={12}
-          md={3.5}
+          md={4}
           sx={{
             display: "flex",
-            justifyContent: "flex-end",
+            justifyContent: {
+              md: "flex-end",
+              xs: "flex-start",
+            },
             alignItems: "center",
           }}
         >
           <Button
             variant="contained"
-            href="#"
             sx={{
               backgroundColor: "#1565C0",
               textTransform: "none",
               height: 50,
+              width: 250,
             }}
             onClick={handleAddClick}
           >
             <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
             Tạo câu hỏi
           </Button>
-        </Grid>
 
-        <Grid
-          xs={12}
-          md={0.5}
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "center",
-          }}
-        >
           <MoreVertIcon
             onClick={handleMoreClick}
             sx={{
+              marginLeft: 2,
               cursor: "pointer",
               "&:hover": { opacity: 0.6 },
             }}
@@ -315,73 +345,88 @@ export default function Page_Company_Question() {
             </MenuItem>
           </Menu>
         </Grid>
-      </Grid>
 
-      <Grid
-        container
-        spacing={2}
-        sx={{
-          marginBottom: 2,
-        }}
-      >
         <Grid
-          container
+          item
           xs={12}
-          md={8}
-          spacing={2}
-          display="flex"
-          justifyContent="flex-start"
+          md={7}
+          sx={{
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+          }}
         >
-          <Grid xs={12} md={4}>
+          <Autocomplete
+            disablePortal
+            id="filter-type"
+            options={["Loại", "Trạng thái"]}
+            sx={{ width: 200, marginRight: 2 }}
+            renderInput={(params) => (
+              <TextField {...params} label="Lọc theo..." />
+            )}
+            value={valueChoose}
+            onChange={(event, value) => handleChooseValue(value)}
+          />
+          {valueChoose === "Loại" && (
             <Autocomplete
               disablePortal
               id="filter-type"
-              options={["Phòng ban", "Trạng thái", "Thời gian"]}
-              sx={{ width: 250, height: 40 }}
+              options={listOfSkills}
+              sx={{ width: 200 }}
               renderInput={(params) => (
-                <TextField {...params} label="Lọc theo..." />
+                <TextField {...params} label="Kỹ năng..." />
               )}
-              value={valueChoose}
-              onChange={(event, value) => handleChooseValue(value)}
+              value={statusChoose}
+              onChange={(event, value) => handleChooseStatus(value)}
             />
-          </Grid>
+          )}
         </Grid>
+
         <Grid
+          item
           xs={12}
-          md={4}
+          md={5}
           sx={{
             display: "flex",
-            justifyContent: "flex-end",
+            justifyContent: {
+              md: "flex-end",
+              xs: "flex-start",
+            },
             alignItems: "center",
           }}
         >
           <Box
             sx={{
-              border: "1px solid gray",
+              border: "1px solid rgb(210,210,210)",
               borderRadius: 1,
-              padding: 1,
-              height: 55,
+              paddingLeft: 2,
             }}
           >
             <Input
               placeholder="Nhập mã, câu hỏi..."
-              disableUnderline="true"
+              disableUnderline
               value={valueSearch}
               onChange={(e) => setValueSearch(e.target.value)}
               sx={{
                 width: 250,
+                height: 50,
               }}
             />
-            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-              <SearchIcon onClick={handleSearchClick} />
+            <IconButton
+              type="button"
+              aria-label="search"
+              onClick={handleSearchClick}
+            >
+              <SearchIcon />
             </IconButton>
           </Box>
         </Grid>
       </Grid>
+
       <Box
         sx={{
           height: 600,
-          width: "75vw",
+          width: "100%",
         }}
       >
         <DataGrid
@@ -405,7 +450,7 @@ export default function Page_Company_Question() {
                 `${from}–${to} của ${count !== -1 ? count : `hơn ${to}`}`,
             },
           }}
-          disableColumnMenu="true"
+          disableColumnMenu
           pagination
           pageSizeOptions={[5, 10, 25, 50, 100]}
           initialState={{
@@ -415,6 +460,10 @@ export default function Page_Company_Question() {
               },
             },
           }}
+          //   onCellClick={(params, event) => {
+          //     if (params.field === "InterviewerName")
+          //         console.log(params.row.InterviewerId)
+          //   }}
         />
       </Box>
     </Box>
