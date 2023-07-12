@@ -49,7 +49,8 @@ const Department = (prop) => {
         </Grid>
         {prop.express ? (
           <>
-            <Grid item xs={4}>
+            <Grid item xs={4}></Grid>
+            <Grid item xs={3}>
               <Typography
                 sx={{ margin: "0", marginLeft: "8px", minWidth: "10%" }}
                 variant="h6"
@@ -58,7 +59,7 @@ const Department = (prop) => {
                 Address
               </Typography>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={5}>
               <Typography
                 sx={{ margin: "0", marginLeft: "2%", minWidth: "10%" }}
                 variant="h6"
@@ -67,7 +68,8 @@ const Department = (prop) => {
                 {prop.departmentAddress}
               </Typography>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={4}></Grid>
+            <Grid item xs={3}>
               <Typography
                 sx={{ margin: "0", marginLeft: "8px", minWidth: "10%" }}
                 variant="h6"
@@ -76,7 +78,7 @@ const Department = (prop) => {
                 Email
               </Typography>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={5}>
               <Typography
                 sx={{ margin: "0", marginLeft: "2%", minWidth: "10%" }}
                 variant="h6"
@@ -85,7 +87,8 @@ const Department = (prop) => {
                 {prop.departmentEmail}
               </Typography>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={4}></Grid>
+            <Grid item xs={3}>
               <Typography
                 sx={{ margin: "0", marginLeft: "8px", minWidth: "10%" }}
                 variant="h6"
@@ -94,7 +97,7 @@ const Department = (prop) => {
                 Phone number
               </Typography>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={5}>
               <Typography
                 sx={{ margin: "0", marginLeft: "2%", minWidth: "10%" }}
                 variant="h6"
@@ -103,7 +106,8 @@ const Department = (prop) => {
                 {prop.departmentPhone}
               </Typography>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={4}></Grid>
+            <Grid item xs={3}>
               <Typography
                 sx={{ margin: "0", marginLeft: "8px", minWidth: "10%" }}
                 variant="h6"
@@ -112,7 +116,7 @@ const Department = (prop) => {
                 Address
               </Typography>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={5}>
               <Typography
                 sx={{ margin: "0", marginLeft: "2%", minWidth: "10%" }}
                 variant="h6"

@@ -4,22 +4,16 @@ export const certificateList = [
   { name: "python" },
   { name: "javaScript" },
 ];
-// export const skillList = [
-//   { name: "html" },
-//   { name: "css" },
-//   { name: "python" },
-//   { name: "javaScript" },
-// ];
 
 const recruitInfo = {
   name: "",
   description: "",
-  salary: 0,
+  salary: "",
   maxHiring: "",
-  hired: 0,
+  hired: "",
   startDate: null,
   endDate: null,
-  departmentId: [],
+  departmentId:null,
   language: [],
   recruiterId: null,
   status: "",

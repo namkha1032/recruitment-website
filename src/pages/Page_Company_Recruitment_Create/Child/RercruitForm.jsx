@@ -21,7 +21,7 @@ function RecruitForm() {
   const [hired, setHired] = useState(recruitInfo.hired);
   const [startDate, setStartDate] = useState(recruitInfo.startDate);
   const [endDate, setEndDate] = useState(recruitInfo.endDate);
-  const [departments, setDepartments] = useState(recruitInfo.departmentId);
+  const [departments, setDepartments] = useState(department.filter((comp)=>comp.id === recruitInfo.departmentId));
   const [languages, setLanguages] = useState(recruitInfo.language);
   const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
   const [status, setStatus] = useState(recruitInfo.status);
@@ -40,13 +40,13 @@ function RecruitForm() {
   const [languageName, setLanguageName] = useState("");
   const [lInputValue, setLInputValue] = useState("");
   // Department comps
-  const [express, setExpress] = useState(false);
-  const [departmentName, setDeparmentName] = useState("");
-  const [departmentId, setDepartmentId] = useState("");
-  const [departmentAddress, setDepartmentAddress] = useState("");
-  const [departmentEmail, setDepartmentEmail] = useState("");
-  const [departmentPhone, setDepartmentPhone] = useState("");
-  const [departmentWeb, setDepartmentWeb] = useState("");
+  const [express, setExpress] = useState(departments[0]?true:false);
+  const [departmentName, setDeparmentName] = useState(departments[0]?departments[0].name:"");
+  const [departmentId, setDepartmentId] = useState(departments[0]?departments[0].id:"");
+  const [departmentAddress, setDepartmentAddress] = useState(departments[0]?departments[0].address:"");
+  const [departmentEmail, setDepartmentEmail] = useState(departments[0]?departments[0].email:"");
+  const [departmentPhone, setDepartmentPhone] = useState(departments[0]?departments[0].phone:"");
+  const [departmentWeb, setDepartmentWeb] = useState(departments[0]?departments[0].website:"");
   //FUNCTION
   function handleClick() {
     console.log("Submit:")
