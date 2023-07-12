@@ -295,7 +295,7 @@ function RecruitForm() {
               className="AddButton"
               onClick={handleClick}
             >
-              Submit
+              Save
             </Button>
           </Grid>
         </div>
