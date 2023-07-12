@@ -1,8 +1,11 @@
-import { Typography } from "@mui/material"
+import RecruitForm from "./Child/RercruitForm"
+import "./UpdateRecruit.scss"
 
 const Page_Company_Recruitment_Id_Update = () => {
-    return (
-        <Typography variant="body1" >Page_Company_Recruitment_Id_Update</Typography>
+    return(
+        <div className="CreateRecruit">
+            <RecruitForm></RecruitForm>
+        </div>
     )
 }
 
