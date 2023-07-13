@@ -148,13 +148,13 @@ export default function Page_Company_Interview_Id_Start() {
 
     let [note, setNote] = useState("")
 
-    console.log("softScoreArray: ", softScoreArray)
-    console.log("langScoreArray: ", langScoreArray)
-    console.log("techScoreArray: ", techScoreArray)
+    // console.log("softScoreArray: ", softScoreArray)
+    // console.log("langScoreArray: ", langScoreArray)
+    // console.log("techScoreArray: ", techScoreArray)
 
-    console.log("softSumString: ", softSumString)
-    console.log("langSumString: ", langSumString)
-    console.log("techSumString: ", techSumString)
+    // console.log("softSumString: ", softSumString)
+    // console.log("langSumString: ", langSumString)
+    // console.log("techSumString: ", techSumString)
 
     useEffect(() => {
         dispatch({ type: "saga/getAllRelatedQuestion" })
@@ -177,330 +177,435 @@ export default function Page_Company_Interview_Id_Start() {
     return (
         leftSoft ?
             <form autoComplete='off' onSubmit={handleSubmit}>
-                {/* Soft Skill Questions */}
                 <Box sx={{ border: "1px solid black", borderRadius: 10 }}>
                     <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
-                        <Box sx={{ borderRight: "1px solid black", borderBottom: "1px solid black", padding: 2, borderRadius: "40px 0px" }}>
+                        <Box onClick={() => { setCurrentCateTab(0) }}
+                            sx={{
+                                cursor: "pointer", zIndex: 3, borderRight: "1px solid black", borderBottom: "1px solid black", padding: 2, borderRadius: "40px 0px",
+                                backgroundColor: currentCateTab == 0 ? "grey.600" : "white",
+                                color: currentCateTab == 0 ? "white" : "black",
+                                "&:hover": {
+                                    backgroundColor: currentCateTab == 0 ? "grey.600" : "grey.300",
+                                }
+                            }}>
                             <Typography variant="h5">Soft Skill Questions</Typography>
                         </Box>
-                        <Box sx={{ position: "relative", left: "-40px", borderRight: "1px solid black", borderBottom: "1px solid black", padding: 2, borderRadius: "40px 0px" }}>
+                        <Box onClick={() => { setCurrentCateTab(1) }}
+                            sx={{
+                                cursor: "pointer", zIndex: 2, position: "relative", left: "-40px", borderRight: "1px solid black", borderBottom: "1px solid black", padding: 2, borderRadius: "40px 0px",
+                                backgroundColor: currentCateTab == 1 ? "grey.600" : "white",
+                                color: currentCateTab == 1 ? "white" : "black",
+                                "&:hover": {
+                                    backgroundColor: currentCateTab == 1 ? "grey.600" : "grey.300",
+                                }
+                            }}>
                             <Typography sx={{ paddingLeft: "40px" }} variant="h5">Language Questions</Typography>
                         </Box>
-                        <Box sx={{ position: "relative", left: "-80px", borderRight: "1px solid black", borderBottom: "1px solid black", padding: 2, borderRadius: "40px 0px" }}>
+                        <Box onClick={() => { setCurrentCateTab(2) }}
+                            sx={{
+                                cursor: "pointer", zIndex: 1, position: "relative", left: "-80px", borderRight: "1px solid black", borderBottom: "1px solid black", padding: 2, borderRadius: "40px 0px",
+                                backgroundColor: currentCateTab == 2 ? "grey.600" : "white",
+                                color: currentCateTab == 2 ? "white" : "black",
+                                "&:hover": {
+                                    backgroundColor: currentCateTab == 2 ? "grey.600" : "grey.300",
+                                }
+                            }}>
                             <Typography sx={{ paddingLeft: "40px" }} variant="h5">Technical Questions</Typography>
                         </Box>
                     </Box>
-                    <Grid container sx={{ padding: 4 }}>
-                        <Grid item md={5}>
-                            <DataGrid
-                                getRowId={(row) => row.questionid}
-                                columns={[
-                                    { field: "questionid", headerName: "ID", flex: 1 },
-                                    { field: "questionstring", headerName: "String", flex: 3 }]}
-                                rows={leftSoft.questions.map(ques => ques)}
-                                onRowSelectionModelChange={(newChosen) => {
-                                    setCurrentSoft(newChosen);
-                                }}
-                                rowSelectionModel={currentSoft}
-                                sx={{
-                                    height: 400,
-                                    '& .MuiDataGrid-row:hover': {
-                                        cursor: 'pointer'
-                                    }
-                                }}
-                            >
-                            </DataGrid>
-                        </Grid>
-                        <Grid item md={2} sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                            <Button
-                                sx={{ my: 0.5 }}
-                                variant="outlined"
-                                size="small"
-                                disabled={currentSoft.length == 0}
-                                onClick={() => {
-                                    let newQues = {
-                                        categoryOrder: 0,
-                                        chosenQuestionId: currentSoft[0]
-                                    }
-                                    dispatch({ type: "interviewQuestion/transferSoftLangQuestion", payload: newQues })
-                                    // handleChosenTech(newQues)
-                                }}
-                            >
-                                &gt;
-                            </Button>
-                            <Button
-                                sx={{ my: 0.5 }}
-                                variant="outlined"
-                                size="small"
-                            >
-                                &lt;
-                            </Button>
-                        </Grid>
-                        <Grid item md={5}>
-                            <DataGrid
-                                getRowId={(row) => row.questionid}
-                                columns={[
-                                    { field: "questionid", headerName: "ID", flex: 1 },
-                                    { field: "questionstring", headerName: "String", flex: 3 },
-                                    {
-                                        field: "score", headerName: "Score", flex: 1,
-                                        renderCell: (params) => {
-                                            return (
-                                                <Box sx={{ display: "flex", alignItems: "center" }}>
-                                                    <TextField required type="number" size="small"
-                                                        value={rightSoft.questions.find(ques => ques.questionid == params.row.questionid).score}
-                                                        onChange={(event) => {
-                                                            let newQues = {
-                                                                categoryOrder: 0,
-                                                                chosenQuestionId: params.row.questionid,
-                                                                newScore: event.target.value
-                                                            }
-                                                            dispatch({ type: "interviewQuestion/updateNewSoftLangScore", payload: newQues })
-                                                        }} />
-                                                </Box>
-                                            )
+                    {/* Soft Skill Questions */}
+                    {currentCateTab == 0
+                        ? <Grid container sx={{ padding: 4 }}>
+                            <Grid item md={5}>
+                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                    <Tabs value={0} onChange={(event, newTab) => { }}>
+                                        <Tab label={"Soft Skills"}></Tab>
+                                    </Tabs>
+                                </Box>
+                                <DataGrid
+                                    getRowId={(row) => row.questionid}
+                                    columns={[
+                                        { field: "questionid", headerName: "ID", flex: 1 },
+                                        { field: "questionstring", headerName: "String", flex: 3 }]}
+                                    rows={leftSoft.questions.map(ques => ques)}
+                                    onRowSelectionModelChange={(newChosen) => {
+                                        setCurrentSoft(newChosen);
+                                    }}
+                                    rowSelectionModel={currentSoft}
+                                    sx={{
+                                        height: 400,
+                                        '& .MuiDataGrid-row:hover': {
+                                            cursor: 'pointer'
                                         }
-                                    }
-                                ]}
-                                rows={rightSoft.questions.map(ques => ques)}
-                                sx={{
-                                    height: 400,
-                                    '& .MuiDataGrid-row:hover': {
-                                        cursor: 'pointer'
-                                    }
-                                }}
-                            >
-                            </DataGrid>
-                        </Grid>
-                    </Grid>
-                </Box>
-                {/* Language Skill */}
-                <Box sx={{ border: "1px solid black", borderRadius: 10, marginTop: 7 }}>
-                    <Box sx={{ borderRight: "1px solid black", borderBottom: "1px solid black", padding: 3, borderRadius: "40px 0px", width: "fit-content" }}>
-                        <Typography variant="h5">Language Questions</Typography>
-                    </Box>
-                    <Grid container sx={{ padding: 4 }}>
-                        <Grid item md={5}>
-                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                <Tabs value={0} onChange={(event, newTab) => { }}>
-                                    <Tab label={leftLang.languagename}></Tab>
-                                </Tabs>
-                            </Box>
-                            <DataGrid
-                                getRowId={(row) => row.questionid}
-                                columns={[
-                                    { field: "questionid", headerName: "ID", flex: 1 },
-                                    { field: "questionstring", headerName: "String", flex: 3 }]}
-                                rows={leftLang.questions.map(ques => ques)}
-                                onRowSelectionModelChange={(newChosen) => {
-                                    setCurrentLang(newChosen);
-                                }}
-                                rowSelectionModel={currentLang}
-                                sx={{
-                                    height: 400,
-                                    '& .MuiDataGrid-row:hover': {
-                                        cursor: 'pointer'
-                                    }
-                                }}
-                            >
-
-                            </DataGrid>
-                        </Grid>
-                        <Grid item md={2} sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                            <Button
-                                sx={{ my: 0.5 }}
-                                variant="outlined"
-                                size="small"
-                                disabled={currentLang.length == 0}
-                                onClick={() => {
-                                    let newQues = {
-                                        categoryOrder: 1,
-                                        chosenQuestionId: currentLang[0]
-                                    }
-                                    dispatch({ type: "interviewQuestion/transferSoftLangQuestion", payload: newQues })
-                                    // handleChosenTech(newQues)
-                                }}
-                            >
-                                &gt;
-                            </Button>
-                            <Button
-                                sx={{ my: 0.5 }}
-                                variant="outlined"
-                                size="small"
-                            >
-                                &lt;
-                            </Button>
-                        </Grid>
-                        <Grid item md={5}>
-                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                <Tabs value={0} onChange={(event, newTab) => { }}>
-                                    <Tab label={leftLang.languagename}></Tab>
-                                </Tabs>
-                            </Box>
-                            <DataGrid
-                                getRowId={(row) => row.questionid}
-                                columns={[
-                                    { field: "questionid", headerName: "ID", flex: 1 },
-                                    { field: "questionstring", headerName: "String", flex: 3 },
-                                    {
-                                        field: "score", headerName: "Score", flex: 1,
-                                        renderCell: (params) => {
-                                            return (
-                                                <Box sx={{ display: "flex", alignItems: "center" }}>
-                                                    <TextField required type="number" size="small"
-                                                        value={rightLang.questions.find(ques => ques.questionid == params.row.questionid).score}
-                                                        onChange={(event) => {
-                                                            let newQues = {
-                                                                categoryOrder: 1,
-                                                                chosenQuestionId: params.row.questionid,
-                                                                newScore: event.target.value
-                                                            }
-                                                            dispatch({ type: "interviewQuestion/updateNewSoftLangScore", payload: newQues })
-                                                        }} />
-                                                </Box>
-                                            )
+                                    }}
+                                    disableColumnFilter
+                                    disableColumnSelector
+                                    disableDensitySelector
+                                    slots={{ toolbar: GridToolbar }}
+                                    slotProps={{
+                                        toolbar: {
+                                            showQuickFilter: true,
+                                            quickFilterProps: { debounceMs: 100 },
+                                            csvOptions: { disableToolbarButton: true },
+                                            printOptions: { disableToolbarButton: true }
+                                        },
+                                    }}
+                                >
+                                </DataGrid>
+                            </Grid>
+                            <Grid item md={2} sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                                <Button
+                                    sx={{ my: 0.5 }}
+                                    variant="contained"
+                                    size="small"
+                                    disabled={currentSoft.length == 0}
+                                    onClick={() => {
+                                        let newQues = {
+                                            categoryOrder: 0,
+                                            chosenQuestionId: currentSoft[0]
                                         }
-                                    }
-                                ]}
-                                rows={rightLang.questions.map(ques => ques)}
-                                sx={{
-                                    height: 400,
-                                    '& .MuiDataGrid-row:hover': {
-                                        cursor: 'pointer'
-                                    }
-                                }}
-                            >
+                                        dispatch({ type: "interviewQuestion/transferSoftLangQuestion", payload: newQues })
+                                        // handleChosenTech(newQues)
+                                    }}
+                                >
+                                    &gt;
+                                </Button>
+                                <Button
+                                    sx={{ my: 0.5 }}
+                                    variant="contained"
+                                    size="small"
+                                    color="error"
+                                >
+                                    &lt;
+                                </Button>
+                            </Grid>
+                            <Grid item md={5}>
+                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                    <Tabs value={0} onChange={(event, newTab) => { }}>
+                                        <Tab label={"Soft Skills"}></Tab>
+                                    </Tabs>
+                                </Box>
+                                <DataGrid
+                                    getRowId={(row) => row.questionid}
+                                    columns={[
+                                        { field: "questionid", headerName: "ID", flex: 1 },
+                                        { field: "questionstring", headerName: "String", flex: 3 },
+                                        {
+                                            field: "score", headerName: "Score", flex: 1,
+                                            renderCell: (params) => {
+                                                return (
+                                                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                                                        <TextField required type="number" size="small"
+                                                            value={rightSoft.questions.find(ques => ques.questionid == params.row.questionid).score}
+                                                            onChange={(event) => {
+                                                                let newQues = {
+                                                                    categoryOrder: 0,
+                                                                    chosenQuestionId: params.row.questionid,
+                                                                    newScore: event.target.value
+                                                                }
+                                                                dispatch({ type: "interviewQuestion/updateNewSoftLangScore", payload: newQues })
+                                                            }} />
+                                                    </Box>
+                                                )
+                                            }
+                                        }
+                                    ]}
+                                    rows={rightSoft.questions.map(ques => ques)}
+                                    sx={{
+                                        height: 400,
+                                        '& .MuiDataGrid-row:hover': {
+                                            cursor: 'pointer'
+                                        }
+                                    }}
+                                    disableColumnFilter
+                                    disableColumnSelector
+                                    disableDensitySelector
+                                    slots={{ toolbar: GridToolbar }}
+                                    slotProps={{
+                                        toolbar: {
+                                            showQuickFilter: true,
+                                            quickFilterProps: { debounceMs: 100 },
+                                            csvOptions: { disableToolbarButton: true },
+                                            printOptions: { disableToolbarButton: true }
+                                        },
+                                    }}
+                                >
+                                </DataGrid>
+                            </Grid>
+                        </Grid>
+                        : null}
+                    {/* Language Skill */}
+                    {currentCateTab == 1
+                        ? <Grid container sx={{ padding: 4 }}>
+                            <Grid item md={5}>
+                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                    <Tabs value={0} onChange={(event, newTab) => { }}>
+                                        <Tab label={leftLang.languagename}></Tab>
+                                    </Tabs>
+                                </Box>
+                                <DataGrid
+                                    getRowId={(row) => row.questionid}
+                                    columns={[
+                                        { field: "questionid", headerName: "ID", flex: 1 },
+                                        { field: "questionstring", headerName: "String", flex: 3 }]}
+                                    rows={leftLang.questions.map(ques => ques)}
+                                    onRowSelectionModelChange={(newChosen) => {
+                                        setCurrentLang(newChosen);
+                                    }}
+                                    rowSelectionModel={currentLang}
+                                    sx={{
+                                        height: 400,
+                                        '& .MuiDataGrid-row:hover': {
+                                            cursor: 'pointer'
+                                        }
+                                    }}
+                                    disableColumnFilter
+                                    disableColumnSelector
+                                    disableDensitySelector
+                                    slots={{ toolbar: GridToolbar }}
+                                    slotProps={{
+                                        toolbar: {
+                                            showQuickFilter: true,
+                                            quickFilterProps: { debounceMs: 100 },
+                                            csvOptions: { disableToolbarButton: true },
+                                            printOptions: { disableToolbarButton: true }
+                                        },
+                                    }}
+                                >
 
-                            </DataGrid>
+                                </DataGrid>
+                            </Grid>
+                            <Grid item md={2} sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                                <Button
+                                    sx={{ my: 0.5 }}
+                                    variant="contained"
+                                    size="small"
+                                    disabled={currentLang.length == 0}
+                                    onClick={() => {
+                                        let newQues = {
+                                            categoryOrder: 1,
+                                            chosenQuestionId: currentLang[0]
+                                        }
+                                        dispatch({ type: "interviewQuestion/transferSoftLangQuestion", payload: newQues })
+                                        // handleChosenTech(newQues)
+                                    }}
+                                >
+                                    &gt;
+                                </Button>
+                                <Button
+                                    sx={{ my: 0.5 }}
+                                    variant="contained"
+                                    color="error"
+                                    size="small"
+                                >
+                                    &lt;
+                                </Button>
+                            </Grid>
+                            <Grid item md={5}>
+                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                    <Tabs value={0} onChange={(event, newTab) => { }}>
+                                        <Tab label={leftLang.languagename}></Tab>
+                                    </Tabs>
+                                </Box>
+                                <DataGrid
+                                    getRowId={(row) => row.questionid}
+                                    columns={[
+                                        { field: "questionid", headerName: "ID", flex: 1 },
+                                        { field: "questionstring", headerName: "String", flex: 3 },
+                                        {
+                                            field: "score", headerName: "Score", flex: 1,
+                                            renderCell: (params) => {
+                                                return (
+                                                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                                                        <TextField required type="number" size="small"
+                                                            value={rightLang.questions.find(ques => ques.questionid == params.row.questionid).score}
+                                                            onChange={(event) => {
+                                                                let newQues = {
+                                                                    categoryOrder: 1,
+                                                                    chosenQuestionId: params.row.questionid,
+                                                                    newScore: event.target.value
+                                                                }
+                                                                dispatch({ type: "interviewQuestion/updateNewSoftLangScore", payload: newQues })
+                                                            }} />
+                                                    </Box>
+                                                )
+                                            }
+                                        }
+                                    ]}
+                                    rows={rightLang.questions.map(ques => ques)}
+                                    sx={{
+                                        height: 400,
+                                        '& .MuiDataGrid-row:hover': {
+                                            cursor: 'pointer'
+                                        }
+                                    }}
+                                    disableColumnFilter
+                                    disableColumnSelector
+                                    disableDensitySelector
+                                    slots={{ toolbar: GridToolbar }}
+                                    slotProps={{
+                                        toolbar: {
+                                            showQuickFilter: true,
+                                            quickFilterProps: { debounceMs: 100 },
+                                            csvOptions: { disableToolbarButton: true },
+                                            printOptions: { disableToolbarButton: true }
+                                        },
+                                    }}
+                                >
+
+                                </DataGrid>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Box>
-                {/* Technical Questions */}
-                <Box sx={{ border: "1px solid black", borderRadius: 10, marginTop: 7 }}>
-                    <Box sx={{ borderRight: "1px solid black", borderBottom: "1px solid black", padding: 3, borderRadius: "40px 0px", width: "fit-content" }}>
-                        <Typography variant="h5">Technical Questions</Typography>
-                    </Box>
-                    <Grid container sx={{ padding: 4 }}>
-                        <Grid item md={5}>
-                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                <Tabs value={currentTechTab} onChange={(event, newTab) => {
-                                    setCurrentTech([])
-                                    setCurrentTechTab(newTab)
-                                }}>
-                                    {leftTech.skills.map(skill => {
-                                        return (<Tab key={skill.skillid} label={skill.skillname}></Tab>)
-                                    })}
-                                </Tabs>
-                            </Box>
-                            {leftTech.skills.map((skill, index) => {
-                                let leftTechColumns = [
-                                    { field: "questionid", headerName: "ID", flex: 1 },
-                                    { field: "questionstring", headerName: "String", flex: 3 }
-                                ]
-                                let leftTechRows = skill.questions.map(ques => ques)
-                                return (
-                                    currentTechTab == index
-                                        ? <DataGrid
-                                            key={skill.skillid}
-                                            columns={leftTechColumns}
-                                            rows={leftTechRows}
-                                            getRowId={(row) => row.questionid}
-                                            onRowSelectionModelChange={(newChosen) => {
-                                                setCurrentTech(newChosen);
-                                            }}
-                                            rowSelectionModel={currentTech}
-                                            sx={{
-                                                height: 400,
-                                                '& .MuiDataGrid-row:hover': {
-                                                    cursor: 'pointer'
-                                                }
-                                            }}
-                                        >
-                                        </DataGrid>
-                                        : null
-                                )
-                            })}
-                        </Grid>
-                        <Grid item md={2} sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                            <Button
-                                sx={{ my: 0.5 }}
-                                variant="outlined"
-                                size="small"
-                                disabled={currentTech.length == 0}
-                                onClick={() => {
-                                    let newQues = {
-                                        categoryOrder: 2,
-                                        skillOrder: currentTechTab,
-                                        chosenQuestionId: currentTech[0]
-                                    }
-                                    dispatch({ type: "interviewQuestion/transferTechQuestion", payload: newQues })
-                                    // handleChosenTech(newQues)
-                                }}
-                            >
-                                &gt;
-                            </Button>
-                            <Button
-                                sx={{ my: 0.5 }}
-                                variant="outlined"
-                                size="small"
-                            >
-                                &lt;
-                            </Button>
-                        </Grid>
-                        <Grid item md={5}>
-                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                <Tabs value={currentTechTab} onChange={(event, newTab) => {
-                                    setCurrentTech([])
-                                    setCurrentTechTab(newTab)
-                                }}>
-                                    {rightTech.skills.map(skill => {
-                                        return (<Tab key={skill.skillid} label={skill.skillname}></Tab>)
-                                    })}
-                                </Tabs>
-                            </Box>
-                            {rightTech.skills.map((skill, index) => {
-                                return (
-                                    currentTechTab == index
-                                        ? <DataGrid
-                                            key={skill.skillid}
-                                            columns={[
-                                                { field: "questionid", headerName: "ID", flex: 1 },
-                                                { field: "questionstring", headerName: "String", flex: 3 },
-                                                {
-                                                    field: "score", headerName: "Score", flex: 1, renderCell: (params) => {
-                                                        return (
-                                                            <Box sx={{ display: "flex", alignItems: "center" }}>
-                                                                <TextField required type="number" size="small"
-                                                                    value={rightTech.skills[currentTechTab].questions.find(ques => ques.questionid == params.row.questionid).score}
-                                                                    onChange={(event) => {
-                                                                        let newQues = {
-                                                                            categoryOrder: 2,
-                                                                            skillOrder: currentTechTab,
-                                                                            chosenQuestionId: params.row.questionid,
-                                                                            newScore: event.target.value
-                                                                        }
-                                                                        dispatch({ type: "interviewQuestion/updateNewTechScore", payload: newQues })
-                                                                    }} />
-                                                            </Box>
-                                                        )
+                        : null}
+                    {/* Technical Questions */}
+                    {currentCateTab == 2
+                        ? <Grid container sx={{ padding: 4 }}>
+                            <Grid item md={5}>
+                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                    <Tabs value={currentTechTab} onChange={(event, newTab) => {
+                                        setCurrentTech([])
+                                        setCurrentTechTab(newTab)
+                                    }}>
+                                        {leftTech.skills.map(skill => {
+                                            return (<Tab key={skill.skillid} label={skill.skillname}></Tab>)
+                                        })}
+                                    </Tabs>
+                                </Box>
+                                {leftTech.skills.map((skill, index) => {
+                                    let leftTechColumns = [
+                                        { field: "questionid", headerName: "ID", flex: 1 },
+                                        { field: "questionstring", headerName: "String", flex: 3 }
+                                    ]
+                                    let leftTechRows = skill.questions.map(ques => ques)
+                                    return (
+                                        currentTechTab == index
+                                            ? <DataGrid
+                                                key={skill.skillid}
+                                                columns={leftTechColumns}
+                                                rows={leftTechRows}
+                                                getRowId={(row) => row.questionid}
+                                                onRowSelectionModelChange={(newChosen) => {
+                                                    setCurrentTech(newChosen);
+                                                }}
+                                                rowSelectionModel={currentTech}
+                                                sx={{
+                                                    height: 400,
+                                                    '& .MuiDataGrid-row:hover': {
+                                                        cursor: 'pointer'
                                                     }
-                                                }
-                                            ]}
-                                            rows={skill.questions.map(ques => ques)}
-                                            getRowId={(row) => row.questionid}
-                                            sx={{
-                                                height: 400,
-                                                '& .MuiDataGrid-row:hover': {
-                                                    cursor: 'pointer'
-                                                }
-                                            }}
-                                        >
-                                        </DataGrid>
-                                        : null
-                                )
-                            })}
+                                                }}
+                                                disableColumnFilter
+                                                disableColumnSelector
+                                                disableDensitySelector
+                                                slots={{ toolbar: GridToolbar }}
+                                                slotProps={{
+                                                    toolbar: {
+                                                        showQuickFilter: true,
+                                                        quickFilterProps: { debounceMs: 100 },
+                                                        csvOptions: { disableToolbarButton: true },
+                                                        printOptions: { disableToolbarButton: true }
+                                                    },
+                                                }}
+                                            >
+                                            </DataGrid>
+                                            : null
+                                    )
+                                })}
+                            </Grid>
+                            <Grid item md={2} sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                                <Button
+                                    sx={{ my: 0.5 }}
+                                    variant="contained"
+                                    size="small"
+                                    disabled={currentTech.length == 0}
+                                    onClick={() => {
+                                        let newQues = {
+                                            categoryOrder: 2,
+                                            skillOrder: currentTechTab,
+                                            chosenQuestionId: currentTech[0]
+                                        }
+                                        dispatch({ type: "interviewQuestion/transferTechQuestion", payload: newQues })
+                                        // handleChosenTech(newQues)
+                                    }}
+                                >
+                                    &gt;
+                                </Button>
+                                <Button
+                                    sx={{ my: 0.5 }}
+                                    variant="contained"
+                                    size="small"
+                                    color="error"
+                                >
+                                    &lt;
+                                </Button>
+                            </Grid>
+                            <Grid item md={5}>
+                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                    <Tabs value={currentTechTab} onChange={(event, newTab) => {
+                                        setCurrentTech([])
+                                        setCurrentTechTab(newTab)
+                                    }}>
+                                        {rightTech.skills.map(skill => {
+                                            return (<Tab key={skill.skillid} label={skill.skillname}></Tab>)
+                                        })}
+                                    </Tabs>
+                                </Box>
+                                {rightTech.skills.map((skill, index) => {
+                                    return (
+                                        currentTechTab == index
+                                            ? <DataGrid
+                                                key={skill.skillid}
+                                                columns={[
+                                                    { field: "questionid", headerName: "ID", flex: 1 },
+                                                    { field: "questionstring", headerName: "String", flex: 3 },
+                                                    {
+                                                        field: "score", headerName: "Score", flex: 1, renderCell: (params) => {
+                                                            return (
+                                                                <Box sx={{ display: "flex", alignItems: "center" }}>
+                                                                    <TextField required type="number" size="small"
+                                                                        value={rightTech.skills[currentTechTab].questions.find(ques => ques.questionid == params.row.questionid).score}
+                                                                        onChange={(event) => {
+                                                                            let newQues = {
+                                                                                categoryOrder: 2,
+                                                                                skillOrder: currentTechTab,
+                                                                                chosenQuestionId: params.row.questionid,
+                                                                                newScore: event.target.value
+                                                                            }
+                                                                            dispatch({ type: "interviewQuestion/updateNewTechScore", payload: newQues })
+                                                                        }} />
+                                                                </Box>
+                                                            )
+                                                        }
+                                                    }
+                                                ]}
+                                                rows={skill.questions.map(ques => ques)}
+                                                getRowId={(row) => row.questionid}
+                                                sx={{
+                                                    height: 400,
+                                                    '& .MuiDataGrid-row:hover': {
+                                                        cursor: 'pointer'
+                                                    }
+                                                }}
+                                                disableColumnFilter
+                                                disableColumnSelector
+                                                disableDensitySelector
+                                                slots={{ toolbar: GridToolbar }}
+                                                slotProps={{
+                                                    toolbar: {
+                                                        showQuickFilter: true,
+                                                        quickFilterProps: { debounceMs: 100 },
+                                                        csvOptions: { disableToolbarButton: true },
+                                                        printOptions: { disableToolbarButton: true }
+                                                    },
+                                                }}
+                                            >
+                                            </DataGrid>
+                                            : null
+                                    )
+                                })}
+                            </Grid>
                         </Grid>
-                    </Grid>
+                        : null}
                 </Box>
                 {/* Note and mark */}
                 <Grid container sx={{ marginTop: 5 }} columnSpacing={7}>
@@ -520,7 +625,8 @@ export default function Page_Company_Interview_Id_Start() {
                                 },
                                 "& .MuiInputBase-root": {
                                     height: "100%",
-                                    borderRadius: 5
+                                    borderRadius: 5,
+                                    border: "1px solid black"
                                 }
                                 // "& .MuiInputBase-root .MuiInputBase-inputMultiline": {
                                 //     height: "100%",
@@ -576,8 +682,10 @@ export default function Page_Company_Interview_Id_Start() {
                         </Card>
                     </Grid>
                 </Grid>
-                <Button type="submit">Save record</Button>
-            </form>
+                <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 4 }}>
+                    <Button variant="contained" type="submit">Save record</Button>
+                </Box>
+            </form >
             : null
     );
 }
