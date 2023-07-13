@@ -1,3 +1,4 @@
+//Component Tab
 import React from 'react'
 import './Page_Company_Event_Id.scss'
 import { Box, Container, Grid, TextField, Typography } from '@mui/material'

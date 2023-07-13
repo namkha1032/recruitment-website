@@ -1,3 +1,8 @@
+// import libraries
+import { useState } from 'react'
+
+
+// import MUI components
 import { Box, Container, Grid, TextField, Typography } from '@mui/material'
 import React from 'react'
 import './Page_Company_Event_Id_Update.scss'
@@ -8,6 +13,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import EditIcon from '@mui/icons-material/Edit';
+
+
 
 const Page_Company_Event_Id_Update = () => {
     const [value, setValue] = React.useState(null);
@@ -54,11 +61,7 @@ const Page_Company_Event_Id_Update = () => {
                         <Grid item xs={9}>
                             <TextField fullWidth placeholder='Nhập địa điểm'></TextField>
                         </Grid>
-                        <Grid item xs={12} sx={{display: 'flex', justifyContent: 'flex-end'}}>
-                            <Button variant="contained" size='large' color="success" sx={{ mx: 5 }}>
-                                <EditIcon sx={{marginRight: 1}}></EditIcon>
-                                Chỉnh sửa
-                            </Button>
+                        <Grid item xs={12} align='right'>
                             <Button variant="contained" size='large'>
                                 <TaskAltIcon sx={{marginRight: 1}}></TaskAltIcon>
                                 Lưu
