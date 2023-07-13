@@ -24,24 +24,7 @@ import { useNavigate } from 'react-router-dom';
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 import "./Page_Company_Interview_Id_Start.scss"
-function CustomTabPanel(props) {
 
-    return (
-        <Box
-            sx={{
-                display: props.value == props.index ? "block" : "none",
-                padding: 3,
-                height: 400
-                // borderLeft: "1px solid black",
-                // borderRight: "1px solid black",
-                // borderBottom: "1px solid black",
-                // borderRadius: "0 0 20px 20px"
-            }}
-        >
-            {props.children}
-        </Box>
-    );
-}
 
 
 
@@ -71,7 +54,20 @@ export default function Page_Company_Interview_Id_Start() {
     })
 
     let softScoreArray = []
-    let softScoreString = ``
+    let softSumString = ``
+    let softMath = ``
+    let softResult = 0
+
+    let langScoreArray = []
+    let langSumString = ``
+    let langMath = ``
+    let langResult = 0
+
+    let techScoreArray = []
+    let techSumString = ``
+    let techMath = ``
+    let techResult = 0
+
     if (rightSoft) {
         rightSoft.questions.forEach((ques, index) => {
             if (ques.score != "") {
@@ -79,27 +75,42 @@ export default function Page_Company_Interview_Id_Start() {
             }
         })
         softScoreArray.forEach((sco, index) => {
-            softScoreString = softScoreString.concat(sco.toString())
+            let rightParen = `}\\right)`
+            let num = softScoreArray.length.toString()
+            let divider = `}{`
+            let leftParen = `\\times\\left(\\frac{`
+            let weight = `=0.2`
+            softResult = (softScoreArray.reduce((a, b) => a + b, 0) / softScoreArray.length * 0.2).toFixed(2)
+            softSumString = softSumString.concat(sco.toString())
             if (index < softScoreArray.length - 1) {
-                softScoreString = softScoreString.concat("+")
+                softSumString = softSumString.concat("+")
             }
-            else {
-                softScoreString = softScoreString.concat(`=${softScoreArray.reduce((a, b) => a + b, 0)}`)
-            }
+            softMath = `${softResult}` + weight + leftParen + softSumString + divider + num + rightParen
         })
     }
-    console.log("softScoreString: ", softScoreString)
-
-    let langScoreArray = []
+    // 9=0.2\\times\\left(\\frac{1+3+4}{2}\\right)
     if (rightLang) {
         rightLang.questions.forEach(ques => {
             if (ques.score != "") {
                 langScoreArray = langScoreArray.concat(parseFloat(ques.score))
             }
         })
+        langScoreArray.forEach((sco, index) => {
+            let rightParen = `}\\right)`
+            let num = langScoreArray.length.toString()
+            let divider = `}{`
+            let leftParen = `\\times\\left(\\frac{`
+            let weight = `=0.3`
+            langResult = (langScoreArray.reduce((a, b) => a + b, 0) / langScoreArray.length * 0.3).toFixed(2)
+
+            langSumString = langSumString.concat(sco.toString())
+            if (index < langScoreArray.length - 1) {
+                langSumString = langSumString.concat("+")
+            }
+            langMath = `${langResult}` + weight + leftParen + langSumString + divider + num + rightParen
+        })
     }
 
-    let techScoreArray = []
     if (rightTech) {
         rightTech.skills.forEach(skill => {
             skill.questions.forEach(ques => {
@@ -108,11 +119,26 @@ export default function Page_Company_Interview_Id_Start() {
                 }
             })
         })
+        techScoreArray.forEach((sco, index) => {
+            let rightParen = `}\\right)`
+            let num = techScoreArray.length.toString()
+            let divider = `}{`
+            let leftParen = `\\times\\left(\\frac{`
+            let weight = `=0.5`
+            techResult = (techScoreArray.reduce((a, b) => a + b, 0) / techScoreArray.length * 0.5).toFixed(2)
+
+            techSumString = techSumString.concat(sco.toString())
+            if (index < techScoreArray.length - 1) {
+                techSumString = techSumString.concat("+")
+            }
+            techMath = `${techResult}` + weight + leftParen + techSumString + divider + num + rightParen
+        })
     }
-    // console.log("softScoreString: ", softScoreArray)
-    // console.log("softScoreArray: ", softScoreArray)
-    // console.log("langScoreArray: ", langScoreArray)
-    // console.log("techScoreArray: ", techScoreArray)
+    let finalScore = (parseFloat(softResult) + parseFloat(langResult) + parseFloat(techResult)).toFixed(2)
+    let finalMath = `${finalScore}=${softResult}+${langResult}+${techResult}`
+
+    let [currentCateTab, setCurrentCateTab] = useState(0);
+
     let [currentLangTab, setCurrentLangTab] = useState(0);
     let [currentTechTab, setCurrentTechTab] = useState(0);
 
@@ -120,22 +146,49 @@ export default function Page_Company_Interview_Id_Start() {
     let [currentLang, setCurrentLang] = useState([])
     let [currentTech, setCurrentTech] = useState([])
 
+    let [note, setNote] = useState("")
 
-    let [chosenTech, setChosenTech] = useState(null)
+    console.log("softScoreArray: ", softScoreArray)
+    console.log("langScoreArray: ", langScoreArray)
+    console.log("techScoreArray: ", techScoreArray)
+
+    console.log("softSumString: ", softSumString)
+    console.log("langSumString: ", langSumString)
+    console.log("techSumString: ", techSumString)
 
     useEffect(() => {
         dispatch({ type: "saga/getAllRelatedQuestion" })
     }, [])
     const navigate = useNavigate()
+    function handleSubmit(e) {
+        e.preventDefault()
+        const newObj = {
+            interviewid: "123",
+            round: [
+                rightSoft,
+                rightLang,
+                rightTech
+            ],
+            note: note
+        }
+        dispatch({ type: "saga/scoreInterview", payload: JSON.stringify(newObj) })
+        navigate("/company/interview/1")
+    }
     return (
         leftSoft ?
-            <form autoComplete='off' onSubmit={(event) => {
-                event.preventDefault()
-            }}>
+            <form autoComplete='off' onSubmit={handleSubmit}>
                 {/* Soft Skill Questions */}
                 <Box sx={{ border: "1px solid black", borderRadius: 10 }}>
-                    <Box sx={{ borderRight: "1px solid black", borderBottom: "1px solid black", padding: 3, borderRadius: "40px 0px", width: "fit-content" }}>
-                        <Typography variant="h5">Soft Skill Questions</Typography>
+                    <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
+                        <Box sx={{ borderRight: "1px solid black", borderBottom: "1px solid black", padding: 2, borderRadius: "40px 0px" }}>
+                            <Typography variant="h5">Soft Skill Questions</Typography>
+                        </Box>
+                        <Box sx={{ position: "relative", left: "-40px", borderRight: "1px solid black", borderBottom: "1px solid black", padding: 2, borderRadius: "40px 0px" }}>
+                            <Typography sx={{ paddingLeft: "40px" }} variant="h5">Language Questions</Typography>
+                        </Box>
+                        <Box sx={{ position: "relative", left: "-80px", borderRight: "1px solid black", borderBottom: "1px solid black", padding: 2, borderRadius: "40px 0px" }}>
+                            <Typography sx={{ paddingLeft: "40px" }} variant="h5">Technical Questions</Typography>
+                        </Box>
                     </Box>
                     <Grid container sx={{ padding: 4 }}>
                         <Grid item md={5}>
@@ -229,7 +282,7 @@ export default function Page_Company_Interview_Id_Start() {
                     <Grid container sx={{ padding: 4 }}>
                         <Grid item md={5}>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                <Tabs value={currentLangTab} onChange={(event, newTab) => { }}>
+                                <Tabs value={0} onChange={(event, newTab) => { }}>
                                     <Tab label={leftLang.languagename}></Tab>
                                 </Tabs>
                             </Box>
@@ -280,7 +333,7 @@ export default function Page_Company_Interview_Id_Start() {
                         </Grid>
                         <Grid item md={5}>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                <Tabs value={currentLangTab} onChange={(event, newTab) => { }}>
+                                <Tabs value={0} onChange={(event, newTab) => { }}>
                                     <Tab label={leftLang.languagename}></Tab>
                                 </Tabs>
                             </Box>
@@ -449,7 +502,8 @@ export default function Page_Company_Interview_Id_Start() {
                         </Grid>
                     </Grid>
                 </Box>
-                <Grid container sx={{ marginTop: 5 }} columnSpacing={5}>
+                {/* Note and mark */}
+                <Grid container sx={{ marginTop: 5 }} columnSpacing={7}>
                     <Grid item md={6}>
                         <TextField
                             label="Note"
@@ -457,13 +511,16 @@ export default function Page_Company_Interview_Id_Start() {
                             multiline
                             fullWidth
                             variant="outlined"
-                            rows={6}
+                            value={note}
+                            onChange={event => setNote(event.target.value)}
+                            rows={11}
                             sx={{
                                 "&": {
                                     height: "100%"
                                 },
                                 "& .MuiInputBase-root": {
                                     height: "100%",
+                                    borderRadius: 5
                                 }
                                 // "& .MuiInputBase-root .MuiInputBase-inputMultiline": {
                                 //     height: "100%",
@@ -481,13 +538,37 @@ export default function Page_Company_Interview_Id_Start() {
                         <Card variant="outlined" sx={{ border: "1px solid black", borderRadius: 5 }}>
                             <CardHeader title="Final Score" />
                             <CardContent>
-                                <Grid container>
+                                <Grid container rowSpacing={4}>
                                     <Grid item md={4}>
                                         <Typography variant="body1">Soft Skill: </Typography>
                                     </Grid>
                                     <Grid item md={8}>
                                         <InlineMath
-                                            math={softScoreString}
+                                            math={softMath}
+                                        />
+                                    </Grid>
+                                    <Grid item md={4}>
+                                        <Typography variant="body1">Language Skill: </Typography>
+                                    </Grid>
+                                    <Grid item md={8}>
+                                        <InlineMath
+                                            math={langMath}
+                                        />
+                                    </Grid>
+                                    <Grid item md={4}>
+                                        <Typography variant="body1">Technical Skill: </Typography>
+                                    </Grid>
+                                    <Grid item md={8}>
+                                        <InlineMath
+                                            math={techMath}
+                                        />
+                                    </Grid>
+                                    <Grid item md={4}>
+                                        <Typography variant="body1">Final Score: </Typography>
+                                    </Grid>
+                                    <Grid item md={8}>
+                                        <InlineMath
+                                            math={finalMath}
                                         />
                                     </Grid>
                                 </Grid>
@@ -495,7 +576,7 @@ export default function Page_Company_Interview_Id_Start() {
                         </Card>
                     </Grid>
                 </Grid>
-                <Slider></Slider>
+                <Button type="submit">Save record</Button>
             </form>
             : null
     );

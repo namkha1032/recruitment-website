@@ -1,27 +1,14 @@
--------------------------------------------------
-Về hệ thống sign up / log in
-1. Trong bảng [Candidate] thêm 2 trường thông tin là [SecurityQuestion],[SecurityAnswer]. Mục đích dùng để khôi phục mật khẩu khi Candidate quên mật khẩu. Khi Candidate đăng ký tài khoản cần điền các trường thông tin bắt buộc là [WebUserName], [WebUserEmail], [Password], [SecurityQuestion], [SecurityAnswer]  (tự tạo câu hỏi bảo mật, tự trả lời luôn), sau khi tạo tài khoản thành công có thể đăng nhập và cập nhật các trường thông tin khác sau. Candidate dùng email để đăng nhập nên các bạn có thể set thêm constraint UNIQUE cho [WebUserEmail]. Còn [WebUserName] là tên đầy đủ của candidate nên ko unique vì có thể trùng tên nhau.
-2. Chức năng câu hỏi bảo mật này chỉ dành cho Candidate. Đối với Recruiter/Interviewer được tạo tài khoản bởi Admin, nếu quên mật khẩu có thể liên hệ admin để đặt mật khẩu mới
--------------------------------------------------
-Về tài khoản và CV
-3. Bảng [WebUser] thêm cột [DateOfBirth] để tiện tính tuổi ứng viên
-4. Bảng [CV] thêm cột [CVname] (đặt tên cho CV), cột [Introduction] (dạng text, kiểu tự giới thiệu bản thân), cột [Education] (dạng text, giống cột [Experience])
-5. Một [CV] có thể có nhiều language -> thêm bảng [CV_has_language] với các trường thông tin [CVhaslanguageId], [CVId], [LanguageId], trong đó [CVId] và [LanguageId] là FK
--------------------------------------------------
-Về position
-6. Bảng [Position] do được dùng làm FK bởi nhiều bảng khác nhau nên mình nghĩ ko nên cho phép người dùng xóa record trong bảng này, thay vào đó mình thêm một cột [Status] có 2 giá trị (đang tuyển/ngừng tuyển). Nếu [Status] là ngừng tuyển thì ẩn position trên web.
--------------------------------------------------
-Về interview
-7. Bảng [Interview] thêm cột [Priority] (chức năng tương tự cột [Priority] của bảng [Application]: khi Admin xem xét kết quả một buổi interview, nếu thấy ko ưng có thể set [Priority] thành false để tạm thời ẩn đi buổi interview đó)
-8. Bảng [ITRS] các bạn có thể đổi tên thành [TRS] tại InterviewerId nằm trong bảng [Interview] rồi nên chắc ko cần chữ I hehehe
--------------------------------------------------
-Về question
-9. Như mình bàn lần trước thì hệ thống question có 3 category là "Soft Skill", "Language Skill", "Technology Skill". Question thuộc cate "Technology Skill" có thể được phân loại chi tiết hơn thành các skill cụ thể (bảng [QuestionSKills]). Giờ tụi mình cần phân loại chi tiết các question thuộc cate "Language Skill" luôn nên mình tạo thêm bảng [QuestionLanguages] có 3 cột là [QuestionLanguagesId], [QuestionId], [LanguageId], trong đó [QuestionId] và [LanguageId] là FK.
-10. Bảng [QuestionSkills]: mỗi question chỉ có thể thuộc 1 loại skill nào đó (react, java, .net,...) vậy nên mình nghĩ chỉ cần set UNIQUE(QuestionId) là được rồi, chứ set composite UNIQUE(QuestionId, SkillId) thì ko hợp ní lắm hehehe
+langScoreArray.forEach((sco, index) => {
+            let rightParen = `}\\right)`
+            let num = langScoreArray.length.toString()
+            let divider = `}{`
+            let leftParen = `\\times\\left(\\frac{`
+            let weight = `=0.5`
+            langResult = (langScoreArray.reduce((a, b) => a + b, 0) / langScoreArray.length * 0.5).toFixed(2)
 
--------------------------------------------------
-Về event
-11. Bảng [Event] thêm cột [Description](miêu tả), [Place](nơi tổ chức), [Datetime](ngày giờ tổ chức), [MaxParticipants](số người tham gia tối đa)
-12. Bảng [CandidateJoinEvent] có cột [DateJoin] mình ko biết để làm gì. Theo mình nghĩ cột này để lưu "ngày tham gia event" hoặc "ngày nhấn nút tham gia event". Nếu là "ngày tham gia event" thì bảng [Event] có thông tin đó rồi nên bảng này ko cần nữa. Nếu là "ngày nhấn nút tham gia event" thì mình nghĩ chỉ cần set composite UNIQUE (CandidateId, EventId) được rồi, ko cần set thêm DateJoin. Nhưng mình nghĩ ko cần lưu thông tin này làm gì nên chắc là nên xóa luôn cột [DateJoin]
--------------------------------------------------
-13. Có cái bảng [Result] mình ko thấy nối với bất kì bảng nào hết, các bạn xem lại giúp mình xem có nhầm lẫn gì ko nha
+            langSumString = langSumString.concat(sco.toString())
+            if (index < langScoreArray.length - 1) {
+                langSumString = langSumString.concat("+")
+            }
+            langMath = `${langResult}` + weight + leftParen + langSumString + divider + num + rightParen
+        })
