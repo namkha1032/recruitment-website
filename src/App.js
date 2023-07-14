@@ -98,6 +98,7 @@ function App() {
           <Route path="/recovery" element={<XPage_Recovery />} />
           <Route path="/register" element={<XPage_Register />} />
 
+
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import {
   Chip,
   Button,
@@ -12,6 +12,7 @@ import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import DoNotDisturbOnIcon from "@mui/icons-material/DoNotDisturbOn";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from '@mui/icons-material/Delete';
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
@@ -29,17 +30,27 @@ import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
 import { localeVN } from "../../locale/locale";
 import Grid from "@mui/material/Grid";
 import QuestionFormModal from "./QuestionFormModal";
+import SuccessAlert from "../../components/Alert/Alert";
 
-const listOfSkills = [
-  "React",
-  "Angular",
-  "Java",
-  "Python",
-  "Figma",
-  ".NET",
-  "C",
-  "C++",
-];
+const listOfSkills = {
+  skill: [
+    "React",
+    "Angular",
+    "Java",
+    "Python",
+    "Figma",
+    ".NET",
+    "C",
+    "C++"
+  ],
+  language: [
+    "English",
+    "Vietnamese",
+    "Japanese",
+    "Chinese",
+    "Korian"
+  ]
+};
 
 function IdNavigate({ id }) {
   function handleClick() {
@@ -135,12 +146,12 @@ export default function Page_Company_Question() {
   const [statusChoose, setStatusChoose] = useState(null);
   const [modalStatus, setModalStatus] = useState(false);
 
-  const [question, setQuestion] = useState("");
-  const [skill, setSkill] = useState(null);
-
-  const [isFillQuestion, setIsFillQuestion] = useState(null);
-  const [isFillSkill, setIsFillSkill] = useState(null);
-
+  const [successAlert, setSuccessAlert] = useState(false);
+  
+  useEffect(() => {
+    const id = setTimeout(() => {handleCloseSuccessAlert()}, 1500);
+    return () => {clearTimeout(id)}
+  })
 
   function handleMoreClick(event) {
     setAnchorEl(event.currentTarget);
@@ -182,41 +193,27 @@ export default function Page_Company_Question() {
 
   function handleModalClose() {
     setModalStatus(false);
-    setQuestion("");
-    setSkill(null);
-    setIsFillQuestion(null);
-    setIsFillSkill(null);
   }
 
-  function handleQuestionChange(value) {
-    if (value !== "") {
-      setIsFillQuestion(true)
-    }
-    setQuestion(value)
+  function handleSubmitQuestion(value) {
+    handleOpenSuccessAlert()
+    setRows([
+      ...rows,
+      {
+        id: rows.length + 1,
+        QuestionName: value.question,
+        Category: value.category,
+        Skill: value.skill
+      }
+    ])
   }
 
-  function handleSkillChange(value) {
-    if (value !== undefined) {
-      setIsFillSkill(true)
-    }
-    setSkill(value)
+  function handleOpenSuccessAlert() {
+    setSuccessAlert(true)
   }
 
-  function handleQuestionSubmit() {
-    console.log(isFillQuestion)
-    if (question === "" || question === "null") {
-      setIsFillQuestion(false)
-    }
-    if (skill === null || skill === undefined) {
-      setIsFillSkill(false)
-    }
-    if (question !== "" && skill !== null && skill !== undefined) {
-      setModalStatus(false);
-      setQuestion("");
-      setSkill(null);
-      setIsFillQuestion(null);
-      setIsFillSkill(null);
-    }
+  function handleCloseSuccessAlert() {
+    setSuccessAlert(false)
   }
 
   const columns = useMemo(() => [
@@ -285,6 +282,15 @@ export default function Page_Company_Question() {
           label="Chỉnh sửa"
           onClick={() => alert("Modal Chỉnh sửa display")}
           showInMenu
+        />,
+        <GridActionsCellItem
+          icon={<DeleteIcon sx={{ color: "red" }}/>}
+          label="Xoá câu hỏi"
+          onClick={() => alert("Modal Chỉnh sửa display")}
+          showInMenu
+          sx={{
+            color: "red"
+          }}
         />,
       ],
     },
@@ -492,17 +498,19 @@ export default function Page_Company_Question() {
       </Box>
       
         <QuestionFormModal
+          key={modalStatus}
           modalStatus={modalStatus}
           handleModalClose={handleModalClose}
-          options={listOfSkills} 
-          question={question}
-          handleQuestionChange={handleQuestionChange}
-          skill={skill}
-          handleSkillChange={handleSkillChange}
-          isFillQuestion={isFillQuestion}
-          isFillSkill={isFillSkill}
-          handleQuestionSubmit={handleQuestionSubmit}
+          options={listOfSkills}
+          handleSubmitQuestion={handleSubmitQuestion}
+          keepMounted
         />
+
+        {successAlert === true && (
+          <SuccessAlert handleCloseSuccessAlert={handleCloseSuccessAlert} content={"Tạo câu hỏi"}/>
+        )
+        }
+        
 
     </Box>
   );
