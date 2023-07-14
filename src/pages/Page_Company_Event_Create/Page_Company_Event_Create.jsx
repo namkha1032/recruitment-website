@@ -83,28 +83,28 @@ const Page_Company_Event_Create = () => {
                         display: "flex",
                         alignItems: "center"
                     }}>
-                        <Grid item xs={3}>
+                        <Grid item md={3} sm={4} xs={5}>
                             <Typography variant='span' className='header'>Tên sự kiện</Typography>
                         </Grid>
-                        <Grid item xs={9}>
+                        <Grid item md={9} sm={8} xs={7}>
                             <TextField required fullWidth placeholder='Nhập tên sự kiện' onChange={handleName}></TextField>
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item md={3} sm={4} xs={5}>
                             <Typography variant='span' className='header'>Nội dung</Typography>
                         </Grid>
-                        <Grid item xs={9}>
+                        <Grid item md={9} sm={8} xs={7}>
                             <TextField required fullWidth multiline rows={3} placeholder="Nhập nội dung" onChange={handleContent} />
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item md={3} sm={4} xs={5}>
                             <Typography variant='span' className='header'>Số lượng tham gia tối đa</Typography>
                         </Grid>
-                        <Grid item xs={9}>
+                        <Grid item md={9} sm={8} xs={7}>
                             <TextField type='number' required inputProps={{ min: '0' }} fullWidth placeholder='Nhập số lượng' onChange={handleMaxQuantity}></TextField>
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item md={3} sm={4} xs={5}>
                             <Typography variant='span' className='header'>Hình ảnh</Typography>
                         </Grid>
-                        <Grid item xs={9}>
+                        <Grid item md={9} sm={8} xs={7}>
                             {/* <Button variant='outlined' size='medium' className='btnfile'>
                                 <label htmlFor="customFile" className='choice'>Chọn tệp</label>
                             </Button> */}
@@ -113,10 +113,10 @@ const Page_Company_Event_Create = () => {
                             {/* <Input type='file' onChange={handleFileChange} disabled={fileSelected}></Input> */}
                             <Input type='file' onChange={handleImage}></Input>
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item md={3} sm={4} xs={5}>
                             <Typography variant='span' className='header'>Thời gian</Typography>
                         </Grid>
-                        <Grid item xs={9}>
+                        <Grid item md={9} sm={8} xs={7}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DemoContainer components={['DatePicker']}>
                                     <DatePicker value={time} onChange={(newValue) => {
@@ -130,10 +130,10 @@ const Page_Company_Event_Create = () => {
                                 </DemoContainer>
                             </LocalizationProvider>
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item md={3} sm={4} xs={5}>
                             <Typography variant='span' className='header'>Địa điểm</Typography>
                         </Grid>
-                        <Grid item xs={9}>
+                        <Grid item md={9} sm={8} xs={7}>
                             <TextField required fullWidth placeholder='Nhập địa điểm' onChange={handleLocation}></TextField>
                         </Grid>
                         <Grid item xs={12} align='right'>
