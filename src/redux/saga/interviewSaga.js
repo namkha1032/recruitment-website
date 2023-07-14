@@ -11,6 +11,8 @@ function* getUpcomingInterviews(action) {
 function* scoreInterview(action) {
     // yield call(fs.writeFileSync, "../../data/interviewResult.json", action.payload)
     // fs.writeFileSync("data.json", data);
+    console.log("actionpayload: ", action.payload)
+    yield call(axios.post, "http://localhost:3001/api/interview", action.payload)
 }
 
 function* interviewSaga() {
