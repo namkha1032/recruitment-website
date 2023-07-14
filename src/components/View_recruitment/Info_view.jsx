@@ -18,7 +18,7 @@ import './Info_view.css'
 const Info_view = () => {
     const url = "https://fpt.com.vn/en";
     const requires = require('../../data/View_recruitment/requires.json');
-    
+
     return (
         <div className="Info_view">
             <Typography variant='h4' >
@@ -86,35 +86,50 @@ const Info_view = () => {
                     </Typography>
                 </Grid>
 
-                <Grid item xs={2.5}>
-                    <Typography align='center' variant='subtitle1'>
-                        <GroupIcon>  </GroupIcon> ITROOM
+                <Grid item xs={6} md={3} >
+                    <Typography align='left' variant='subtitle1' sx={{ display: "flex" }}>
+                        <GroupIcon>  </GroupIcon>
+                        <Box>
+                            ITROOM
+                        </Box>
                     </Typography>
                 </Grid>
-                <Grid item xs={3}>
-                    <Typography align='center' variant='subtitle1'>
-                        <PhoneIcon></PhoneIcon>  123456789
+                <Grid item xs={6} md ={3} >
+                    <Typography align='left' variant='subtitle1' sx={{ display: "flex" }}>
+                        <PhoneIcon></PhoneIcon>
+                        <Box>
+                            123456789
+                        </Box>
                     </Typography>
                 </Grid>
-
+                <Grid item md ={6} ></Grid>
                 <Grid item xs={12}>
                     <Typography align='center' variant='subtitle1'>
-                        <RoomIcon>  </RoomIcon> G Floor, F-Town 1 Building, High-tech Park, Tan Phu Ward, District 9, Ho Chi Minh City, Vietnam
+                        <RoomIcon>  </RoomIcon>
+                            G Floor, F-Town 1 Building, High-tech Park, Tan Phu Ward, District 9, Ho Chi Minh City, Vietnam
+                        
                     </Typography>
                 </Grid>
 
-                <Grid item xs={5}>
-                    <Typography align='center' variant='subtitle1'>
-                        <EmailIcon>  </EmailIcon>  ITroomFSOFT@ftp.com
+                <Grid item xs={6} md ={6}>
+                    <Typography align='left' variant='subtitle1' sx={{ display: "flex" }}>
+                        <EmailIcon>  </EmailIcon>
+                        <Box>
+                            ITroomFSOFT@ftp.com
+                        </Box>
                     </Typography>
                 </Grid>
-                <Grid item xs={2}>
-                    <Typography align='center' variant='subtitle1'>
-                        <WebAssetIcon></WebAssetIcon> <a href={url} > FPT</a>
+                <Grid item xs={6} md ={6}>
+                    <Typography align='left' variant='subtitle1' sx={{ display: "flex" }}>
+                        <WebAssetIcon></WebAssetIcon>
+                        <Box>
+                            <a href={url} > FPT</a>
+                        </Box>
                     </Typography>
                 </Grid>
+                <Grid item md ={6} ></Grid>
             </Grid>
-        </div>
+        </div >
     )
 }
 

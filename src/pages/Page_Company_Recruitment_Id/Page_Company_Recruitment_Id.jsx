@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Button, Grid, Box, paginationItemClasses } from "@mui/material"
+import { Button, Grid, Box, paginationItemClasses, ButtonGroup } from "@mui/material"
 import { Typography } from "@mui/material"
 import Info_view from "../../components/View_recruitment/Info_view"
 import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
@@ -10,12 +10,10 @@ import { Navigate, useNavigate } from 'react-router-dom';
 function QuickSearchToolbar() {
     return (
         <Box
-
             sx={{
                 p: 0.5,
                 pb: 0,
                 marginLeft: 50,
-
             }}
         >
             <GridToolbarQuickFilter />
@@ -29,36 +27,46 @@ const other = {
     showColumnVerticalBorder: true,
 };
 
-
-
 const Page_Company_Recruitment_Id = () => {
     const navigate = useNavigate();
+   
     const [pending_table, setPending_table] = useState(false);
     function handle_open_pending_table() {
         setPending_table(true);
         setReject_table(false);
         setPass_table(false);
+        
     }
     const [reject_table, setReject_table] = useState(false);
     function handle_open_reject_table() {
         setReject_table(true);
         setPending_table(false);
         setPass_table(false);
+       
     }
     const [pass_table, setPass_table] = useState(false);
     function handle_open_pass_table() {
         setPass_table(true);
         setPending_table(false);
-        setPass_table(false);
+        setReject_table(false);
+       
     }
 
-    const pending = require('../../data/Application_list/pending.json');
-    const reject = require('../../data/Application_list/reject.json');
-    const pass = require('../../data/Application_list/pass.json');
-
+    const datas = require('../../data/Application_list/list.json');
+    const pending = datas.filter(data => {
+        return data.status === false
+    });
+    const pass = datas.filter(data => {
+        return data.status === true
+    });
+    const reject = datas.filter(data => {
+        return data.priority === false
+    });
     const handleEditClick = (params) => {
-        // window.location.href = "/company/recruitment/:recruitmentid/application/"+ params.id;
         navigate(`/company/recruitment/:recruitmentid/application/${params.id}`);
+    }
+    const handleEdit = () => {
+        navigate('/company/recruitment/:recruitmentid/update');
     }
     const columns = [
         {
@@ -69,13 +77,14 @@ const Page_Company_Recruitment_Id = () => {
         },
 
         {
-            field: "candidatename",
+            field: "fullname",
             headerName: "Candidate Name",
             headerAlign: 'center',
             width: 200
         },
         {
             field: "Detail",
+            type: "action",
             renderCell: (cellValues) => {
                 return (
                     <Button
@@ -95,44 +104,54 @@ const Page_Company_Recruitment_Id = () => {
     return (
         <div className="page_company_recruitment_id">
             <Grid container spacing={2}>
-                <Grid item xs={3}></Grid>
+                <Grid item xs={3}>
+
+                </Grid>
                 {/* <Grid item xs={5}></Grid> */}
                 <Grid item xs={6}>
                     <Info_view />
+
                 </Grid>
                 <Grid item xs={3}></Grid>
+                <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+
+                    <Button sx={{ bgcolor: 'secondary.main', color: 'black', border: '2px solid black' }} variant='outlined' onClick={handleEdit}>
+                        Chỉnh sửa
+                    </Button>
+
+                </Grid>
             </Grid>
             <Box
                 display="flex"
-                minHeight="150vh"
+                minHeight="130vh"
                 justifyContent="center"
                 alignItems="center"
                 flexDirection="column"
                 sx={{ height: 200, width: '55%', margin: "auto" }}>
                 <Box minHeight="125vh">
-                    <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                            <Typography variant='h4' sx={{justifyContent: "center", alignItems: "center"}} >
+                    <Grid container spacing={2} >
+                        <Grid item xs={12} sx={{display: "flex", justifyContent: "center", alignItems: "center" }}>
+                            <Typography variant='h4'  >
                                 <p class="thick"> Tất cả hồ sơ</p>
                             </Typography>
                         </Grid>
                         <Box width="100%" />
-                        <Grid item xs={3}>
-                            <Button variant='outlined' onClick={handle_open_pending_table}>
-                                Đang chờ
-                            </Button>
+                        <Grid item xs={12} >
+                            <ButtonGroup sx={{display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <Button sx = {{textDecoration : pending_table ? 'underline' : 'none'}} variant={pending_table ? 'contained' : 'outlined'} onClick={handle_open_pending_table} >
+                                    Đang chờ
+                                </Button>
+
+                                <Button sx = {{textDecoration : reject_table ? 'underline' : 'none'}} variant={reject_table ? 'contained' : 'outlined'} onClick={handle_open_reject_table} >
+                                    Đã từ chối  
+                                </Button>
+
+                                <Button sx = {{textDecoration : pass_table ? 'underline' : 'none'}} variant={pass_table ? 'contained' : 'outlined'} onClick={handle_open_pass_table} >
+                                    Đã duyệt
+                                </Button>
+                            </ButtonGroup>
+                            <Grid item xs={12}></Grid>
                         </Grid>
-                        <Grid item xs={3}>
-                            <Button variant='outlined' onClick={handle_open_reject_table}>
-                                Đã từ chối
-                            </Button>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <Button variant='outlined' onClick={handle_open_pass_table}>
-                                Đã duyệt
-                            </Button>
-                        </Grid>
-                        <Grid item xs={12}></Grid>
                     </Grid>
 
                     {pending_table && (
@@ -150,9 +169,9 @@ const Page_Company_Recruitment_Id = () => {
                                     borderBottom: 1
 
                                 },
+                                display: "flex",
                                 justifyContent: "center",
-                                alignItems: "center",
-                                margin: "auto"
+                                alignItems: "center"
                             }}
                             slots={{ toolbar: QuickSearchToolbar }}
 
@@ -190,7 +209,8 @@ const Page_Company_Recruitment_Id = () => {
                                 alignItems: "center",
                                 margin: "auto"
                             }}
-                            rowHeight={80}
+                            slots={{ toolbar: QuickSearchToolbar }}
+                            rowHeight={72}
                             rows={reject}
                             {...other}
                             columns={columns}
@@ -224,7 +244,8 @@ const Page_Company_Recruitment_Id = () => {
                                 alignItems: "center",
                                 margin: "auto"
                             }}
-                            rowHeight={80}
+                            slots={{ toolbar: QuickSearchToolbar }}
+                            rowHeight={72}
                             rows={pass}
                             {...other}
                             columns={columns}

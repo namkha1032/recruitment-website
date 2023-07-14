@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { Grid, Button, Modal, Box } from '@mui/material';
+import { Grid, Button, Modal, Box, Input } from '@mui/material';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -9,20 +9,25 @@ import FormHelperText from '@mui/material/FormHelperText';
 import Typography from '@mui/material/Typography';
 import './Page_Recruitment_Id.css';
 import Info_view from '../../components/View_recruitment/Info_view';
+import Alert from '@mui/material/Alert';
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 600,
+    height: 300,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    display: "flex",
+    flexDirection: "column",
+
 };
 const boxDefault = {
     height: 20,
-    padding: 4 ,
+    padding: 4,
     minWidth: 600,
     m: 1,
     display: "flex"
@@ -36,10 +41,19 @@ let CVlist = [
     {
         id: 2,
         name: "CV2"
+    },
+    {
+        id: 3,
+        name: "CV3"
     }
 ]
 
 const Page_Recruitment_Id = () => {
+    const [selectedfile, setSelectedfile] = useState(null);
+    const handleFileChange = (e) => {
+        setSelectedfile(e.target.files[0]);
+    }
+    console.log(selectedfile);
     const [open, setOpen] = useState(false);
     const [outmodal, setOutmodal] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -75,7 +89,7 @@ const Page_Recruitment_Id = () => {
     };
     return (
         <Grid container spacing={1}>
-            <Grid item xs ={3}></Grid>
+            <Grid item xs={3}></Grid>
             {/* <Grid item xs={5}></Grid> */}
             <Grid item xs={6}>
                 <Info_view />
@@ -88,7 +102,9 @@ const Page_Recruitment_Id = () => {
                             alignItems="center"
                             sx={boxDefault}
                         >
-                            <Button sx={{ bgcolor: 'secondary.main', color: 'black', border: '2px solid black' }} variant='outlined' onClick={handleOpen}>Đăng ký ứng tuyển</Button>
+                            <Button sx={{ bgcolor: 'secondary.main', color: 'black', border: '2px solid black' }} variant='outlined' onClick={handleOpen}>
+                                Đăng ký ứng tuyển
+                            </Button>
                             <Modal
                                 open={open}
                                 onClose={handleSubmit}
@@ -100,7 +116,7 @@ const Page_Recruitment_Id = () => {
                                         Choose your CV
                                     </Typography>
                                     <form onSubmit={handleSubmit}>
-                                        <FormControl sx={{ m: 3 }} variant="standard">
+                                        <FormControl sx={{ margin: "auto" }} variant="standard">
 
                                             <RadioGroup
                                                 aria-labelledby="demo-error-radios"
@@ -117,12 +133,14 @@ const Page_Recruitment_Id = () => {
                                             </RadioGroup>
 
                                             <FormHelperText>{helperText}</FormHelperText>
-                                            <Grid item xs={12}>
-                                                <Button size="large" sx={{ mt: 1, mr: 0, ml: 10 }} type="submit" variant="outlined" onClick={hanldeOut}>
-                                                    Submit your CV
-                                                </Button>
-                                            </Grid>
                                         </FormControl>
+                                        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+
+                                            <Button size="large" type="submit" variant="outlined" onClick={hanldeOut}>
+                                                Submit your CV
+                                            </Button>
+
+                                        </Box>
                                     </form>
                                 </Box>
                             </Modal>
@@ -132,17 +150,7 @@ const Page_Recruitment_Id = () => {
 
                 </div>
             </Grid>
-            <Grid item xs ={3}></Grid>
-            {/* <Grid item xs={4} sx={height}>
-            <Box sx ={height}>
-            
-
-
-                <img src="https://png.pngtree.com/thumb_back/fw800/back_our/20190620/ourmid/pngtree-creative-hand-painted-recruitment-notice-image_167204.jpg" alt="Tuyển dụng" />
-
-            
-            </Box> 
-            </Grid>                                      */}
+            <Grid item xs={3}></Grid>
         </Grid>
     )
 }
