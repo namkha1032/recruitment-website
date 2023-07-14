@@ -28,33 +28,9 @@ import { useNavigate } from "react-router-dom";
 import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
 import { localeVN } from "../../locale/locale";
 import Grid from "@mui/material/Grid";
-import QuestionForm from "./QuestionForm";
+import QuestionFormModal from "./QuestionFormModal";
 
 const listOfSkills = [
-  "React",
-  "Angular",
-  "Java",
-  "Python",
-  "Figma",
-  ".NET",
-  "C",
-  "C++",
-  "React",
-  "Angular",
-  "Java",
-  "Python",
-  "Figma",
-  ".NET",
-  "C",
-  "C++",
-  "React",
-  "Angular",
-  "Java",
-  "Python",
-  "Figma",
-  ".NET",
-  "C",
-  "C++",
   "React",
   "Angular",
   "Java",
@@ -157,6 +133,14 @@ export default function Page_Company_Question() {
   const [valueChoose, setValueChoose] = useState(null);
   const [departmentChoose, setDepartmentChoose] = useState(null);
   const [statusChoose, setStatusChoose] = useState(null);
+  const [modalStatus, setModalStatus] = useState(false);
+
+  const [question, setQuestion] = useState("");
+  const [skill, setSkill] = useState(null);
+
+  const [isFillQuestion, setIsFillQuestion] = useState(null);
+  const [isFillSkill, setIsFillSkill] = useState(null);
+
 
   function handleMoreClick(event) {
     setAnchorEl(event.currentTarget);
@@ -190,6 +174,49 @@ export default function Page_Company_Question() {
 
   function handleChooseStatus(value) {
     setStatusChoose(value);
+  }
+
+  function handleModalOpen() {
+    setModalStatus(true);
+  }
+
+  function handleModalClose() {
+    setModalStatus(false);
+    setQuestion("");
+    setSkill(null);
+    setIsFillQuestion(null);
+    setIsFillSkill(null);
+  }
+
+  function handleQuestionChange(value) {
+    if (value !== "") {
+      setIsFillQuestion(true)
+    }
+    setQuestion(value)
+  }
+
+  function handleSkillChange(value) {
+    if (value !== undefined) {
+      setIsFillSkill(true)
+    }
+    setSkill(value)
+  }
+
+  function handleQuestionSubmit() {
+    console.log(isFillQuestion)
+    if (question === "" || question === "null") {
+      setIsFillQuestion(false)
+    }
+    if (skill === null || skill === undefined) {
+      setIsFillSkill(false)
+    }
+    if (question !== "" && skill !== null && skill !== undefined) {
+      setModalStatus(false);
+      setQuestion("");
+      setSkill(null);
+      setIsFillQuestion(null);
+      setIsFillSkill(null);
+    }
   }
 
   const columns = useMemo(() => [
@@ -305,20 +332,16 @@ export default function Page_Company_Question() {
               height: 50,
               width: 250,
             }}
-            onClick={handleAddClick}
+            onClick={handleModalOpen}
           >
             <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
             Tạo câu hỏi
           </Button>
-
-          <MoreVertIcon
-            onClick={handleMoreClick}
-            sx={{
-              marginLeft: 2,
-              cursor: "pointer",
-              "&:hover": { opacity: 0.6 },
-            }}
-          />
+          <IconButton onClick={handleMoreClick} sx={{
+            marginLeft: 1,
+          }}>
+            <MoreVertIcon />
+          </IconButton>
           <Menu
             id="more"
             anchorEl={anchorEl}
@@ -467,8 +490,20 @@ export default function Page_Company_Question() {
           //   }}
         />
       </Box>
+      
+        <QuestionFormModal
+          modalStatus={modalStatus}
+          handleModalClose={handleModalClose}
+          options={listOfSkills} 
+          question={question}
+          handleQuestionChange={handleQuestionChange}
+          skill={skill}
+          handleSkillChange={handleSkillChange}
+          isFillQuestion={isFillQuestion}
+          isFillSkill={isFillSkill}
+          handleQuestionSubmit={handleQuestionSubmit}
+        />
 
-      <QuestionForm />
     </Box>
   );
 }

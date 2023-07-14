@@ -284,14 +284,11 @@ export default function Page_Company_Event() {
             Tạo sự kiện
           </Button>
 
-          <MoreVertIcon
-            onClick={handleMoreClick}
-            sx={{
-              marginLeft: 2,
-              cursor: "pointer",
-              "&:hover": { opacity: 0.6 },
-            }}
-          />
+          <IconButton onClick={handleMoreClick} sx={{
+            marginLeft: 1,
+          }}>
+            <MoreVertIcon />
+          </IconButton>
           <Menu
             id="more"
             anchorEl={anchorEl}
