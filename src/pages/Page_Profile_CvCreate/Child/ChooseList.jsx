@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { skillList } from "./CvState";
 import InputText from "./InputText";
+import UlList from "./UlList";
 
 const filter = createFilterOptions();
 
@@ -33,6 +34,8 @@ export default function FreeSoloCreateOption(prop) {
   return (
     <>
       <Grid container spacing={0} justifyContent="center" alignItems="center">
+        <UlList comps={prop.skills} handleDelete={prop.handleSkilltDelete} />
+        <Grid item xs={12}></Grid>
         <Grid item xs={9}>
           <Autocomplete
             value={value}
@@ -103,16 +106,19 @@ export default function FreeSoloCreateOption(prop) {
             )}
           />
         </Grid>
+        {value && (
         <Grid item xs={3}>
-          <InputText
-            state={"Skill Experiece Year"}
-            width="100%"
-            value={prop.SExp}
-            margin="0"
-            marginLeft="1%"
-            handleState={handleSExp}
-          />
+            <InputText
+              type="number"
+              state={"Experiece(Year)"}
+              width="100%"
+              value={prop.SExp}
+              margin="0"
+              marginLeft="1%"
+              handleState={handleSExp}
+            />
         </Grid>
+        )}
         <Grid item xs={12}></Grid>
         <Button
           sx={{

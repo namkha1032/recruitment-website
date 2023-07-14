@@ -12,7 +12,7 @@ export default function EmptyTextarea(prop) {
     <>
       <div className="AutoT">
         <Box
-          component="form"
+          // component="form"
           sx={{
             "& > :not(style)": { width: "100%", margin: "0", marginTop: "8px" },
           }}

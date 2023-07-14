@@ -103,16 +103,19 @@ export default function FreeSoloCreateOption(prop) {
             )}
           />
         </Grid>
-        <Grid item xs={3}>
-          <InputText
-            state={"Skill Experiece Year"}
-            width="100%"
-            value={prop.SExp}
-            margin="0"
-            marginLeft="1%"
-            handleState={handleSExp}
-          />
-        </Grid>
+        {value && (
+          <Grid item xs={3}>
+            <InputText
+              type="number"
+              state={"Experiece(Year)"}
+              width="100%"
+              value={prop.SExp}
+              margin="0"
+              marginLeft="1%"
+              handleState={handleSExp}
+            />
+          </Grid>
+        )}
         <Grid item xs={12}></Grid>
         <Button
           sx={{

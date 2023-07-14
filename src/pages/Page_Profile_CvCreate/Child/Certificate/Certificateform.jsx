@@ -3,8 +3,7 @@ import Grid from "@mui/material/Grid";
 import EmptyTextarea from "./AutoText";
 import DateComp from "./CertDate";
 import CertButton from "./CertButton";
-import InputText from "../InputText";
-
+import NotRInputText from "../NotRequiredText";
 
 
 export default function CertificateForm(prop) {
@@ -21,7 +20,7 @@ export default function CertificateForm(prop) {
       <Grid container spacing={0} justifyContent="center" alignItems="center">
         <Grid item xs={12}>
           <div className="AutocompBox">
-            <InputText
+            <NotRInputText
               state={"Certificate"}
               width="100%"
               margin="0"
@@ -38,8 +37,9 @@ export default function CertificateForm(prop) {
           setOrganize={prop.setOrganize}
           organize={prop.organize}
         />
+        
         <Grid item xs={12}>
-          <InputText
+          <NotRInputText
             state={"Link"}
             width="100%"
             margin="0"
@@ -55,13 +55,12 @@ export default function CertificateForm(prop) {
             setDetail={prop.setDetail}
           />
         </Grid>
-
+        
           <CertButton
             open={prop.open}
             onPress={prop.onPress}
             handleClose={prop.handleClose}
           />
-
       </Grid>
     </>
   );

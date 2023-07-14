@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
-const InputText = (prop) => {
+const NotRInputText = (prop) => {
   return (
     <>
       <Box
@@ -18,7 +18,6 @@ const InputText = (prop) => {
         autoComplete="off"
       >
         <TextField
-          required
           type={prop.type}
           id="outlined-basic"
           value={prop.value}
@@ -30,4 +29,4 @@ const InputText = (prop) => {
     </>
   );
 };
-export default InputText;
+export default NotRInputText;

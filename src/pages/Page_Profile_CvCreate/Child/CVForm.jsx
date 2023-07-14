@@ -1,15 +1,15 @@
 import { useState } from "react";
 import InputText from "./InputText";
 import cvinfo from "./CvState";
-import UlList from "./UlList";
 import Button from "@mui/material/Button";
 import FreeSoloCreateOptionDialog from "./ChooseList";
 import Certificate from "./Certificate/Certificate";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
-
+import { useNavigate } from "react-router-dom";
 
 function CVForm() {
+  const navigate = useNavigate();
   // CV COMPS
   const [intro, setIntro] = useState(cvinfo.intro);
   const [education, setEducation] = useState(cvinfo.education);
@@ -29,15 +29,8 @@ function CVForm() {
   //SKILL COMPS
   const [name, setName] = useState("");
   const [Sid, setSid] = useState(0);
-  const [SExp,setSExp] = useState("")
+  const [SExp, setSExp] = useState("");
   //FUNCTION
-  function handleClick() {
-    console.log(intro);
-    console.log(education);
-    console.log(experience);
-    console.log(skills);
-    console.log(certs);
-  }
   function handleIntro(e) {
     setIntro(e.target.value);
   }
@@ -49,6 +42,7 @@ function CVForm() {
   }
   function handleSkillAdd() {
     console.log(name);
+    console.log(SExp);
     const newSkill = {
       id: Sid,
       name: name,
@@ -57,7 +51,7 @@ function CVForm() {
     if (name !== "") {
       setSkills([...skills, newSkill]);
       setName("");
-      setSExp("")
+      setSExp("");
       setSid((prev) => (prev += 1));
     }
   }
@@ -65,7 +59,7 @@ function CVForm() {
     setSkills(skills.filter((component) => component.id !== id));
   }
   function handleCertificateAdd() {
-    console.log(startDate)
+    console.log(startDate);
     const newCert = {
       id: Cid,
       name: Cname,
@@ -101,9 +95,13 @@ function CVForm() {
     }
     setOpen(false);
   };
+  function handleSubmit(e) {
+    e.preventDefault();
+    navigate("/profile/:profileid/cv/:cvid")
+  }
   //COMPS
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <div className={`CVForm InputForm`}>
         <div className="Container">
           <Grid
@@ -130,22 +128,22 @@ function CVForm() {
               />
               <Divider variant="middle" />
             </Grid>
-            <Grid item xs={10}>
-              <UlList comps={skills} handleDelete={handleSkilltDelete} />
-            </Grid>
+
             <Grid item xs={12}>
               <div className="parentFlex">
                 <div className="leftFlex">
-            <FreeSoloCreateOptionDialog
-              SExp={SExp}
-              setSExp={setSExp}
-              state={"Skill"}
-              handleState={setName}
-              value={name}
-              onPress={handleSkillAdd}
-            />
-            </div>
-            </div>
+                  <FreeSoloCreateOptionDialog
+                    skills={skills}
+                    handleSkilltDelete={handleSkilltDelete}
+                    SExp={SExp}
+                    setSExp={setSExp}
+                    state={"Skill"}
+                    handleState={setName}
+                    value={name}
+                    onPress={handleSkillAdd}
+                  />
+                </div>
+              </div>
             </Grid>
             <Grid item xs={12}>
               <div className="parentFlex">
@@ -188,14 +186,15 @@ function CVForm() {
             <Button
               variant="contained"
               className="AddButton"
-              onClick={handleClick}
+              type="submit"
+              // onClick={handleClick}
             >
               Submit
             </Button>
           </Grid>
         </div>
       </div>
-    </>
+    </form>
   );
 }
 export default CVForm;

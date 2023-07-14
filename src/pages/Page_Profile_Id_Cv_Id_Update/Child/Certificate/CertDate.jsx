@@ -1,5 +1,5 @@
 import * as React from "react";
-import InputText from "../InputText";
+import NotRInputText from "../NotRequiredText";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -22,7 +22,7 @@ const DateComp = (prop) => {
     <>
       <Grid container spacing={0}>
         <Grid item xs={6}>
-          <InputText
+          <NotRInputText
             state={"Organization"}
             width="100%"
             margin="0"

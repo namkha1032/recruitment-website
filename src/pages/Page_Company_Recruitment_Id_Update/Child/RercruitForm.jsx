@@ -10,6 +10,7 @@ import ChooseLanguage from "./ChooseLanguage";
 import LanguageUlList from "./LanguageUlList";
 import Department from "./Department";
 import SelectDate from "./SelectDate";
+import { useNavigate } from "react-router-dom";
 
 function RecruitForm() {
   // Recruiment comps
@@ -60,19 +61,11 @@ function RecruitForm() {
   const [departmentWeb, setDepartmentWeb] = useState(
     departments[0] ? departments[0].website : ""
   );
+  const navigate = useNavigate();
   //FUNCTION
-  function handleClick() {
-    console.log("Submit:");
-    console.log(RName);
-    console.log(description);
-    console.log(requirement);
-    console.log(languages);
-    console.log(salary);
-    console.log(departmentId);
-    console.log(departmentName);
-    console.log(startDate);
-    console.log(endDate);
-    console.log(maxHire);
+  function handleSubmit(e) {
+    e.preventDefault();
+    navigate("/company/recruitment/:recruitmentid")
   }
   const handleChange = (event) => {
     if (event.target.value === "") {
@@ -183,6 +176,7 @@ function RecruitForm() {
   }
   return (
     <>
+    <form onSubmit={handleSubmit}>
       <div className={`CVForm InputForm`}>
         <div className="Container">
           <Grid
@@ -284,6 +278,7 @@ function RecruitForm() {
                     state={"Hire number"}
                     handleState={handleMaxHire}
                     width="88%"
+                    type="number"
                     value={maxHire}
                   />
                 </Grid>
@@ -293,13 +288,15 @@ function RecruitForm() {
             <Button
               variant="contained"
               className="AddButton"
-              onClick={handleClick}
+              type="submit"
+              // onClick={handleClick}
             >
               Save
             </Button>
           </Grid>
         </div>
       </div>
+      </form>
     </>
   );
 }

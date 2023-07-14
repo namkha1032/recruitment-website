@@ -4,7 +4,7 @@ import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { skill } from "./RecruitData";
-import InputText from "./InputText";
+import NotRInputText from "./NotRequiredText";
 import EmptyTextarea from "./AutoText";
 
 const filter = createFilterOptions();
@@ -130,9 +130,10 @@ export default function ChooseList(prop) {
         </Grid>
 
         <Grid item xs={3}>
-          <InputText
+          <NotRInputText
             state={"Skill Experiece Year"}
             width="99%"
+            type="number"
             value={prop.experience}
             margin="0"
             marginLeft="1%"
