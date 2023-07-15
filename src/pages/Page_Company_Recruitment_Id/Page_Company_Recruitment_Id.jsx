@@ -3,7 +3,8 @@ import { Button, Grid, Box, paginationItemClasses, ButtonGroup } from "@mui/mate
 import { Typography } from "@mui/material"
 import Info_view from "../../components/View_recruitment/Info_view"
 import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
-import { Navigate, useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
+import "./Page_Company_Recruitment_Id.css"
 
 
 
@@ -73,7 +74,7 @@ const Page_Company_Recruitment_Id = () => {
             field: "id",
             headerName: "ID",
             headerAlign: 'center',
-            width: 100
+            width: 200
         },
 
         {
@@ -97,7 +98,7 @@ const Page_Company_Recruitment_Id = () => {
                 );
             },
             headerAlign: 'center',
-            width: 350
+            width: 200
         }
     ];
 
@@ -105,12 +106,9 @@ const Page_Company_Recruitment_Id = () => {
         <div className="page_company_recruitment_id">
             <Grid container spacing={2}>
                 <Grid item xs={3}>
-
                 </Grid>
-                {/* <Grid item xs={5}></Grid> */}
                 <Grid item xs={6}>
                     <Info_view />
-
                 </Grid>
                 <Grid item xs={3}></Grid>
                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -127,12 +125,12 @@ const Page_Company_Recruitment_Id = () => {
                 justifyContent="center"
                 alignItems="center"
                 flexDirection="column"
-                sx={{ height: 200, width: '55%', margin: "auto" }}>
+                sx={{ height: 200, width: '45%', margin: "auto" }}>
                 <Box minHeight="125vh">
                     <Grid container spacing={2} >
                         <Grid item xs={12} sx={{display: "flex", justifyContent: "center", alignItems: "center" }}>
-                            <Typography variant='h4'  >
-                                <p class="thick"> Tất cả hồ sơ</p>
+                            <Typography variant='h4' sx ={{fontStyle: "Times New Roman"}} >
+                                <p className="thick"> Tất cả hồ sơ</p>
                             </Typography>
                         </Grid>
                         <Box width="100%" />
@@ -187,6 +185,7 @@ const Page_Company_Recruitment_Id = () => {
                                 },
                             }}
                             pageSizeOptions={[5]}
+                            
                         />
                     )}
                     {reject_table && (
@@ -263,7 +262,6 @@ const Page_Company_Recruitment_Id = () => {
             </Box>
 
         </div>
-
     )
 }
 
