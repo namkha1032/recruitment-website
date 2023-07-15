@@ -153,7 +153,9 @@ CREATE TABLE [dbo].[Position]
     [DepartmentId] UNIQUEIDENTIFIER NOT NULL,
     [LanguageId] UNIQUEIDENTIFIER NOT NULL,
     [RecruiterId] UNIQUEIDENTIFIER NOT NULL,
-    [isDeleted] BIT NOT NULL DEFAULT 0
+    [isDeleted] BIT NOT NULL DEFAULT 0,
+    [Status] đang tuyển/ngừng tuyển,
+    [Image] blob
     -- Specify more columns here
 );
 GO
@@ -185,6 +187,7 @@ CREATE TABLE [dbo].[CV]
     [CandidateId] UNIQUEIDENTIFIER NOT NULL,
     [Experience] NVARCHAR(MAX),
     [CVpdf] VARBINARY(MAX),
+    [isDefault] yes no,
     [isDeleted] BIT NOT NULL DEFAULT 0
     -- Specify more columns here
 );
@@ -303,33 +306,15 @@ CREATE TABLE [dbo].[Event]
     [EventId] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, -- Primary Key column
     [EventName] NVARCHAR(255) NOT NULL,
     [RecruiterId] UNIQUEIDENTIFIER NOT NULL,
-    [isDeleted] BIT NOT NULL DEFAULT 0
+    [isDeleted] BIT NOT NULL DEFAULT 0,
+    [Status] đã diễn ra/chưa diễn ra,
+    [Image] blob
+    [Datetime]
     -- Specify more columns here
 );
 GO
 
--- Create a new table called '[Interview]' in schema '[dbo]'
--- Drop the table if it already exists
-IF OBJECT_ID('[dbo].[Interview]', 'U') IS NOT NULL
-DROP TABLE [dbo].[Interview]
-GO
--- Create the table in the specified schema
-CREATE TABLE [dbo].[Interview]
-(
-    [InterviewId] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, -- Primary Key column
-    -- [PositionId] UNIQUEIDENTIFIER NOT NULL,
-    [InterviewerId] UNIQUEIDENTIFIER NOT NULL,
-    -- [CandidateId] UNIQUEIDENTIFIER NOT NULL,
-    [RecruiterId] UNIQUEIDENTIFIER NOT NULL,
-    [ApplicationId] UNIQUEIDENTIFIER NOT NULL,
-    -- [CVId] UNIQUEIDENTIFIER NOT NULL,
-    [ITRSInterviewId] UNIQUEIDENTIFIER,
-    [Status] NVARCHAR(255) null,
-    [Notes] NVARCHAR(max) null,
-    [isDeleted] BIT NOT NULL DEFAULT 0
-    -- Specify more columns here
-);
-GO
+
 
 -- Create a new table called '[Requirements]' in schema '[dbo]'
 -- Drop the table if it already exists
@@ -363,9 +348,47 @@ CREATE TABLE [dbo].[Application]
     [PositionId] UNIQUEIDENTIFIER NOT NULL,
     [DateTime] DATETIME NOT NULL DEFAULT GETDATE(),
     [Status] NVARCHAR(255), -- enum
-    [Priority] BIT NULL,
+    -- Status có 2 trạng thái:
+    --          - "đang chờ"
+    --          - "đã đậu" (được tuyển vào công ty)
+    [Priority] NVARCHAR(255),
+    -- Priority có 3 trạng thái:
+    --          - "đang chờ" (để recruiter xem xét kết quả)
+    --          - "đã từ chối" (do candidate nằm trong blacklist,
+    --                          hoặc do CV ko đáp ứng yêu cầu 
+    --                          nên bị recruiter từ chối)
+    --          - "đã duyệt" (vào vòng phỏng vấn) 
     [isDeleted] BIT NOT NULL DEFAULT 0
-    -- Specify more columns here
+);
+GO
+
+IF OBJECT_ID('[dbo].[Interview]', 'U') IS NOT NULL
+DROP TABLE [dbo].[Interview]
+GO
+CREATE TABLE [dbo].[Interview]
+(
+    [InterviewId] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, -- Primary Key column
+    [PositionId] UNIQUEIDENTIFIER NOT NULL,
+    [InterviewerId] UNIQUEIDENTIFIER NOT NULL,
+    [CandidateId] UNIQUEIDENTIFIER NOT NULL,
+    [RecruiterId] UNIQUEIDENTIFIER NOT NULL,
+    [ApplicationId] UNIQUEIDENTIFIER NOT NULL,
+    [CVId] UNIQUEIDENTIFIER NOT NULL,
+    [ITRSInterviewId] UNIQUEIDENTIFIER,
+    [Status] NVARCHAR(255) null,
+    -- Status có 2 trạng thái:
+    --          - "đã phỏng vấn"
+    --          - "chưa phỏng vấn"
+    [Priority] NVARCHAR(255) null,
+    -- Priority có 3 trạng thái:
+    --          - "đang chờ" (để admin xem xét kết quả)
+    --          - "đã từ chối" (do kết quả phỏng vấn ko tốt 
+    --                          nên bị admin từ chối)
+    --          - "đã đậu" (đậu vòng phỏng vấn 
+    --                      -> set Status của [Application] 
+    --                         thành "đã đậu" ) 
+    [Notes] NVARCHAR(max) null,
+    [isDeleted] BIT NOT NULL DEFAULT 0
 );
 GO
 

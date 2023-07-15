@@ -4,7 +4,7 @@ const roomSlice = createSlice({
     name: "room",
     initialState: null,
     reducers: {
-        setRoomArray(state, action) {
+        setRoom(state, action) {
             return action.payload
         }
     }

@@ -2,14 +2,14 @@
 import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects"
 import axios from 'axios'
 
-function* getDepartmentInterviewers(action) {
-    const response = yield call(axios.get, 'http://localhost:3000/data/departmentinterviewer.json')
-    yield put({ type: "interviewer/setInterviewerArray", payload: response.data })
+function* getDepartmentInterviewer(action) {
+    const response = yield call(axios.get, 'http://localhost:3000/data/interviewerlist.json')
+    yield put({ type: "interviewer/setInterviewer", payload: response.data })
 }
 
 function* interviewerSaga() {
     yield all([
-        takeEvery("saga/getDepartmentInterviewers", getDepartmentInterviewers)
+        takeEvery("saga/getDepartmentInterviewer", getDepartmentInterviewer)
     ])
 }
 

@@ -4,7 +4,7 @@ const shiftSlice = createSlice({
     name: "shift",
     initialState: null,
     reducers: {
-        setShiftArray(state, action) {
+        setShift(state, action) {
             return action.payload
         }
     }

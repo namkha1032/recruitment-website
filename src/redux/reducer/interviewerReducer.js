@@ -4,7 +4,7 @@ const interviewerSlice = createSlice({
     name: "interviewer",
     initialState: null,
     reducers: {
-        setInterviewerArray(state, action) {
+        setInterviewer(state, action) {
             return action.payload
         }
     }

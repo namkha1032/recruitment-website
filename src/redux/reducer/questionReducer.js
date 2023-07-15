@@ -1,11 +1,10 @@
-import { CategoryRounded } from "@mui/icons-material";
 import { createSlice } from "@reduxjs/toolkit";
 
-const interviewQuestionSlice = createSlice({
-    name: "interviewQuestion",
+const questionSlice = createSlice({
+    name: "question",
     initialState: null,
     reducers: {
-        setInterviewQuestionArray(state, action) {
+        setInterviewQuestion(state, action) {
             return {
                 left: action.payload,
                 right: action.payload.map((cate, index) => {
@@ -28,6 +27,9 @@ const interviewQuestionSlice = createSlice({
                     }
                 })
             }
+        },
+        setQuestion(state, action) {
+            return action.payload
         },
         transferSoftLangQuestion(state, action) {
             let addedQuestion = null
@@ -203,4 +205,4 @@ const interviewQuestionSlice = createSlice({
     }
 })
 
-export default interviewQuestionSlice
+export default questionSlice

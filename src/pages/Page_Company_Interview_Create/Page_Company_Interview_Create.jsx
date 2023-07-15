@@ -24,7 +24,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { DatePicker } from '@mui/x-date-pickers';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-
+import { useNavigate } from "react-router-dom";
 const Page_Company_Interview_Create = () => {
     // useState
     let [chosenInterviewer, setChosenInterviewer] = useState(null)
@@ -36,14 +36,21 @@ const Page_Company_Interview_Create = () => {
     let [busyRoom, setBusyRoom] = useState([])
     let [busyShift, setBusyShift] = useState([])
     const [rowSelectionModel, setRowSelectionModel] = useState([]);
+    const navigate = useNavigate()
 
     const dispatch = useDispatch()
     // fetch Data
     useEffect(() => {
-        dispatch({ type: "saga/getUpcomingInterviews" })
-        dispatch({ type: "saga/getDepartmentInterviewers" })
-        dispatch({ type: "saga/getRooms" })
-        dispatch({ type: "saga/getShifts" })
+        dispatch({ type: "saga/getUpcomingInterview" })
+        dispatch({ type: "saga/getDepartmentInterviewer" })
+        dispatch({ type: "saga/getRoom" })
+        dispatch({ type: "saga/getShift" })
+        return () => {
+            dispatch({ type: "interview/setInterview", payload: null })
+            dispatch({ type: "interviewer/setInterviewer", payload: null })
+            dispatch({ type: "room/setRoom", payload: null })
+            dispatch({ type: "shift/setShift", payload: null })
+        }
     }, [])
 
     const interviewList = useSelector(state => state.interview)
@@ -206,6 +213,9 @@ const Page_Company_Interview_Create = () => {
             }
         }
     ]
+    function handleSubmit() {
+        navigate("/company/interview/1")
+    }
     return (
         <>{interviewerList &&
             <Grid container spacing={4}>
@@ -302,9 +312,16 @@ const Page_Company_Interview_Create = () => {
                                                     <em>None</em>
                                                 </MenuItem>
                                                 {shiftList ? shiftList.map(shift => {
-                                                    if (chosenInterviewer) {
+                                                    if (chosenInterviewer || chosenRoom) {
                                                         for (let interview of interviewList) {
-                                                            if (interview.interviewerid == chosenInterviewer.interviewerid
+                                                            if (chosenInterviewer && interview.interviewerid == chosenInterviewer.interviewerid
+                                                                && interview.interviewdate == chosenDate
+                                                                && interview.shiftid == shift.shiftid) {
+                                                                return (
+                                                                    <MenuItem disabled key={shift.shiftid} value={shift}>Shift {shift.shiftid}: {shift.shiftstart} to {shift.shiftend}</MenuItem>
+                                                                )
+                                                            }
+                                                            else if (chosenRoom && interview.roomid == chosenRoom.roomid
                                                                 && interview.interviewdate == chosenDate
                                                                 && interview.shiftid == shift.shiftid) {
                                                                 return (
@@ -382,7 +399,7 @@ const Page_Company_Interview_Create = () => {
                                                 />}
                                         </Grid>
                                         <Grid item md={15} sx={{ display: "flex", justifyContent: "flex-end" }}>
-                                            <Button variant="outlined">Create Interview</Button>
+                                            <Button variant="contained" onClick={handleSubmit}>Create Interview</Button>
                                         </Grid>
                                     </Grid>
                                 </CardContent>

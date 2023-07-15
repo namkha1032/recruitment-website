@@ -4,67 +4,40 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
+import { useState } from "react"
+import Plot from 'react-plotly.js';
 
-function CustomTabPanel(props) {
-    const { children, value, index, ...other } = props;
 
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
+export default function Page_Test() {
 
-CustomTabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
-
-export default function BasicTabs() {
-    const [value, setValue] = React.useState(0);
-    console.log("value: ", value)
-
-    const handleChange = (event, newValue) => {
-        console.log("newValue: ", newValue)
-        setValue(newValue);
-    };
 
     return (
-        <Box sx={{ width: '100%' }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Item One" {...a11yProps(0)} />
-                    <Tab label="Item Two" {...a11yProps(1)} />
-                    <Tab label="Item Three" {...a11yProps(2)} />
-                </Tabs>
-            </Box>
-            <CustomTabPanel value={value} index={0}>
-                Item One
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
-                Item Two
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={2}>
-                Item Three
-            </CustomTabPanel>
-        </Box>
-    );
+        <Plot
+            data={[{
+                type: 'scatterpolar',
+                r: [39, 28, 8],
+                theta: ['Soft Skill', 'Language Skill', 'Technology Skill'],
+                fill: 'toself'
+            }]}
+
+            layout={{
+                polar: {
+                    radialaxis: {
+                        visible: true,
+                        range: [0, 50]
+                    }
+                },
+                showlegend: false,
+                title: {
+                    text: "super radar"
+                },
+                width: 500,
+                height: 500
+            }}
+        />
+    )
 }

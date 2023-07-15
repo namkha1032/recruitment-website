@@ -6,23 +6,17 @@ import {
     Typography,
     Box,
     Button,
-    List,
-    ListItem,
-    ListItemText,
-    ListItemIcon,
-    Checkbox,
     TextField,
     Card,
     CardHeader,
-    CardContent,
-    Slider
+    CardContent
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import 'katex/dist/katex.min.css';
-import { InlineMath, BlockMath } from 'react-katex';
+import { InlineMath } from 'react-katex';
 import "./Page_Company_Interview_Id_Start.scss"
 
 
@@ -30,28 +24,15 @@ import "./Page_Company_Interview_Id_Start.scss"
 
 export default function Page_Company_Interview_Id_Start() {
     const dispatch = useDispatch()
-    // const [leftSoft, setleftSoft] = useState(useSelector(state => {
-    //     return state.question ? state.question[0] : null
-    // }))
-    let leftSoft = useSelector(state => {
-        return state.interviewQuestion ? state.interviewQuestion.left[0] : null
-    })
-    let leftLang = useSelector(state => {
-        return state.interviewQuestion ? state.interviewQuestion.left[1] : null
-    })
-    let leftTech = useSelector(state => {
-        return state.interviewQuestion ? state.interviewQuestion.left[2] : null
-    })
 
-    let rightSoft = useSelector(state => {
-        return state.interviewQuestion ? state.interviewQuestion.right[0] : null
-    })
-    let rightLang = useSelector(state => {
-        return state.interviewQuestion ? state.interviewQuestion.right[1] : null
-    })
-    let rightTech = useSelector(state => {
-        return state.interviewQuestion ? state.interviewQuestion.right[2] : null
-    })
+    let allQuestion = useSelector(state => state.question)
+
+    let leftSoft = allQuestion ? allQuestion.left[0] : null
+    let leftLang = allQuestion ? allQuestion.left[1] : null
+    let leftTech = allQuestion ? allQuestion.left[2] : null
+    let rightSoft = allQuestion ? allQuestion.right[0] : null
+    let rightLang = allQuestion ? allQuestion.right[1] : null
+    let rightTech = allQuestion ? allQuestion.right[2] : null
 
     let softScoreArray = []
     let softSumString = ``
@@ -75,20 +56,19 @@ export default function Page_Company_Interview_Id_Start() {
             }
         })
         softScoreArray.forEach((sco, index) => {
-            let rightParen = `}\\right)`
+            let rightParen = `}`
             let num = softScoreArray.length.toString()
             let divider = `}{`
-            let leftParen = `\\times\\left(\\frac{`
-            let weight = `=0.2`
-            softResult = (softScoreArray.reduce((a, b) => a + b, 0) / softScoreArray.length * 0.2).toFixed(2)
+            let leftParen = `\\frac{`
+            let equal = `=`
+            softResult = (softScoreArray.reduce((a, b) => a + b, 0) / softScoreArray.length).toFixed(2)
             softSumString = softSumString.concat(sco.toString())
             if (index < softScoreArray.length - 1) {
                 softSumString = softSumString.concat("+")
             }
-            softMath = `${softResult}` + weight + leftParen + softSumString + divider + num + rightParen
+            softMath = `${softResult}` + equal + leftParen + softSumString + divider + num + rightParen
         })
     }
-    // 9=0.2\\times\\left(\\frac{1+3+4}{2}\\right)
     if (rightLang) {
         rightLang.questions.forEach(ques => {
             if (ques.score != "") {
@@ -96,21 +76,20 @@ export default function Page_Company_Interview_Id_Start() {
             }
         })
         langScoreArray.forEach((sco, index) => {
-            let rightParen = `}\\right)`
+            let rightParen = `}`
             let num = langScoreArray.length.toString()
             let divider = `}{`
-            let leftParen = `\\times\\left(\\frac{`
-            let weight = `=0.3`
-            langResult = (langScoreArray.reduce((a, b) => a + b, 0) / langScoreArray.length * 0.3).toFixed(2)
+            let leftParen = `\\frac{`
+            let equal = `=`
+            langResult = (langScoreArray.reduce((a, b) => a + b, 0) / langScoreArray.length).toFixed(2)
 
             langSumString = langSumString.concat(sco.toString())
             if (index < langScoreArray.length - 1) {
                 langSumString = langSumString.concat("+")
             }
-            langMath = `${langResult}` + weight + leftParen + langSumString + divider + num + rightParen
+            langMath = `${langResult}` + equal + leftParen + langSumString + divider + num + rightParen
         })
     }
-
     if (rightTech) {
         rightTech.skills.forEach(skill => {
             skill.questions.forEach(ques => {
@@ -120,22 +99,23 @@ export default function Page_Company_Interview_Id_Start() {
             })
         })
         techScoreArray.forEach((sco, index) => {
-            let rightParen = `}\\right)`
+            let rightParen = `}`
             let num = techScoreArray.length.toString()
             let divider = `}{`
-            let leftParen = `\\times\\left(\\frac{`
-            let weight = `=0.5`
-            techResult = (techScoreArray.reduce((a, b) => a + b, 0) / techScoreArray.length * 0.5).toFixed(2)
+            let leftParen = `\\frac{`
+            let equal = `=`
+            techResult = (techScoreArray.reduce((a, b) => a + b, 0) / techScoreArray.length).toFixed(2)
 
             techSumString = techSumString.concat(sco.toString())
             if (index < techScoreArray.length - 1) {
                 techSumString = techSumString.concat("+")
             }
-            techMath = `${techResult}` + weight + leftParen + techSumString + divider + num + rightParen
+            techMath = `${techResult}` + equal + leftParen + techSumString + divider + num + rightParen
         })
     }
-    let finalScore = (parseFloat(softResult) + parseFloat(langResult) + parseFloat(techResult)).toFixed(2)
-    let finalMath = `${finalScore}=${softResult}+${langResult}+${techResult}`
+    
+    let finalScore = (parseFloat(softResult) * 0.2 + parseFloat(langResult) * 0.3 + parseFloat(techResult) * 0.5).toFixed(2)
+    let finalMath = `${finalScore}=0.2\\times${softResult}+0.3\\times${langResult}+0.5\\times${techResult}`
 
     let [currentCateTab, setCurrentCateTab] = useState(0);
 
@@ -157,21 +137,24 @@ export default function Page_Company_Interview_Id_Start() {
     // console.log("techSumString: ", techSumString)
 
     useEffect(() => {
-        dispatch({ type: "saga/getAllRelatedQuestion" })
+        dispatch({ type: "saga/getInterviewQuestion" })
+        return () => {
+            dispatch({ type: "question/setQuestion", payload: null })
+        }
     }, [])
     const navigate = useNavigate()
     function handleSubmit(e) {
         e.preventDefault()
         const newObj = {
             interviewid: "123",
+            note: note,
             round: [
                 rightSoft,
                 rightLang,
                 rightTech
-            ],
-            note: note
+            ]
         }
-        dispatch({ type: "saga/scoreInterview", payload: JSON.stringify(newObj) })
+        dispatch({ type: "saga/scoreInterview", payload: newObj })
         navigate("/company/interview/1")
     }
     return (
@@ -264,7 +247,7 @@ export default function Page_Company_Interview_Id_Start() {
                                             categoryOrder: 0,
                                             chosenQuestionId: currentSoft[0]
                                         }
-                                        dispatch({ type: "interviewQuestion/transferSoftLangQuestion", payload: newQues })
+                                        dispatch({ type: "question/transferSoftLangQuestion", payload: newQues })
                                         // handleChosenTech(newQues)
                                     }}
                                 >
@@ -303,7 +286,7 @@ export default function Page_Company_Interview_Id_Start() {
                                                                     chosenQuestionId: params.row.questionid,
                                                                     newScore: event.target.value
                                                                 }
-                                                                dispatch({ type: "interviewQuestion/updateNewSoftLangScore", payload: newQues })
+                                                                dispatch({ type: "question/updateNewSoftLangScore", payload: newQues })
                                                             }} />
                                                     </Box>
                                                 )
@@ -386,7 +369,7 @@ export default function Page_Company_Interview_Id_Start() {
                                             categoryOrder: 1,
                                             chosenQuestionId: currentLang[0]
                                         }
-                                        dispatch({ type: "interviewQuestion/transferSoftLangQuestion", payload: newQues })
+                                        dispatch({ type: "question/transferSoftLangQuestion", payload: newQues })
                                         // handleChosenTech(newQues)
                                     }}
                                 >
@@ -425,7 +408,7 @@ export default function Page_Company_Interview_Id_Start() {
                                                                     chosenQuestionId: params.row.questionid,
                                                                     newScore: event.target.value
                                                                 }
-                                                                dispatch({ type: "interviewQuestion/updateNewSoftLangScore", payload: newQues })
+                                                                dispatch({ type: "question/updateNewSoftLangScore", payload: newQues })
                                                             }} />
                                                     </Box>
                                                 )
@@ -524,7 +507,7 @@ export default function Page_Company_Interview_Id_Start() {
                                             skillOrder: currentTechTab,
                                             chosenQuestionId: currentTech[0]
                                         }
-                                        dispatch({ type: "interviewQuestion/transferTechQuestion", payload: newQues })
+                                        dispatch({ type: "question/transferTechQuestion", payload: newQues })
                                         // handleChosenTech(newQues)
                                     }}
                                 >
@@ -571,7 +554,7 @@ export default function Page_Company_Interview_Id_Start() {
                                                                                 chosenQuestionId: params.row.questionid,
                                                                                 newScore: event.target.value
                                                                             }
-                                                                            dispatch({ type: "interviewQuestion/updateNewTechScore", payload: newQues })
+                                                                            dispatch({ type: "question/updateNewTechScore", payload: newQues })
                                                                         }} />
                                                                 </Box>
                                                             )
@@ -608,7 +591,7 @@ export default function Page_Company_Interview_Id_Start() {
                         : null}
                 </Box>
                 {/* Note and mark */}
-                <Grid container sx={{ marginTop: 5 }} columnSpacing={7}>
+                <Grid container sx={{ marginTop: 5 }} columnSpacing={5}>
                     <Grid item md={6}>
                         <TextField
                             label="Note"
@@ -645,34 +628,34 @@ export default function Page_Company_Interview_Id_Start() {
                             <CardHeader title="Final Score" />
                             <CardContent>
                                 <Grid container rowSpacing={4}>
-                                    <Grid item md={4}>
+                                    <Grid item md={3}>
                                         <Typography variant="body1">Soft Skill: </Typography>
                                     </Grid>
-                                    <Grid item md={8}>
+                                    <Grid item md={9}>
                                         <InlineMath
                                             math={softMath}
                                         />
                                     </Grid>
-                                    <Grid item md={4}>
+                                    <Grid item md={3}>
                                         <Typography variant="body1">Language Skill: </Typography>
                                     </Grid>
-                                    <Grid item md={8}>
+                                    <Grid item md={9}>
                                         <InlineMath
                                             math={langMath}
                                         />
                                     </Grid>
-                                    <Grid item md={4}>
+                                    <Grid item md={3}>
                                         <Typography variant="body1">Technical Skill: </Typography>
                                     </Grid>
-                                    <Grid item md={8}>
+                                    <Grid item md={9}>
                                         <InlineMath
                                             math={techMath}
                                         />
                                     </Grid>
-                                    <Grid item md={4}>
+                                    <Grid item md={3}>
                                         <Typography variant="body1">Final Score: </Typography>
                                     </Grid>
-                                    <Grid item md={8}>
+                                    <Grid item md={9}>
                                         <InlineMath
                                             math={finalMath}
                                         />
