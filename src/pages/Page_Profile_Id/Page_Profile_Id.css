@@ -1,0 +1,19 @@
+.tab1{
+    padding: 0px 24px 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    flex-wrap:wrap;
+    background-color: white;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+.tab{
+    width: 600px;
+}
+@media screen and (max-width:1016px) {
+    .tab {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
