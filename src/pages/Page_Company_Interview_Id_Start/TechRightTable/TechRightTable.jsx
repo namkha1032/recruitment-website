@@ -1,0 +1,95 @@
+import {
+    Tabs,
+    Tab,
+    Box,
+    TextField,
+} from '@mui/material';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { useDispatch } from 'react-redux';
+import 'katex/dist/katex.min.css';
+
+
+const TechRightTable = (props) => {
+    const rightTech = props.rightTech
+    const setCurrentTech = props.setCurrentTech
+    const currentTechTab = props.currentTechTab
+    const setCurrentTechTab = props.setCurrentTechTab
+    const dispatch = useDispatch()
+    return (
+        <>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Tabs value={currentTechTab} onChange={(event, newTab) => {
+                    if (setCurrentTech) {
+                        setCurrentTech([])
+                    }
+                    setCurrentTechTab(newTab)
+                }}>
+                    {rightTech.skills.map(skill => {
+                        return (<Tab key={skill.skillid} label={skill.skillname}></Tab>)
+                    })}
+                </Tabs>
+            </Box>
+            {rightTech.skills.map((skill, index) => {
+                let rightTechColumns = [
+                    { field: "questionid", headerName: "ID", flex: 1 },
+                    { field: "questionstring", headerName: "String", flex: 3 },
+                    {
+                        field: "score", headerName: "Score", flex: 1, renderCell: (params) => {
+                            return (
+                                <Box sx={{ display: "flex", alignItems: "center" }}>
+                                    <TextField required type="number" size="small"
+                                        value={rightTech.skills[currentTechTab].questions.find(ques => ques.questionid == params.row.questionid).score}
+                                        onChange={(event) => {
+                                            let newQues = {
+                                                categoryOrder: 2,
+                                                skillOrder: currentTechTab,
+                                                chosenQuestionId: params.row.questionid,
+                                                newScore: parseFloat(event.target.value)
+                                            }
+                                            dispatch({ type: "question/updateNewTechScore", payload: newQues })
+                                        }}
+                                        InputProps={{
+                                            readOnly: setCurrentTech ? false : true,
+                                        }}
+                                    />
+                                </Box>
+                            )
+                        }
+                    }
+                ]
+                let rightTechRows = skill.questions.map(ques => ques)
+                return (
+                    currentTechTab == index
+                        ? <DataGrid
+                            key={skill.skillid}
+                            columns={rightTechColumns}
+                            rows={rightTechRows}
+                            getRowId={(row) => row.questionid}
+                            sx={{
+                                height: 400,
+                                '& .MuiDataGrid-row:hover': {
+                                    cursor: 'pointer'
+                                }
+                            }}
+                            disableColumnFilter
+                            disableColumnSelector
+                            disableDensitySelector
+                            slots={{ toolbar: GridToolbar }}
+                            slotProps={{
+                                toolbar: {
+                                    showQuickFilter: true,
+                                    quickFilterProps: { debounceMs: 100 },
+                                    csvOptions: { disableToolbarButton: true },
+                                    printOptions: { disableToolbarButton: true }
+                                },
+                            }}
+                        >
+                        </DataGrid>
+                        : null
+                )
+            })}
+        </>
+    )
+}
+
+export default TechRightTable

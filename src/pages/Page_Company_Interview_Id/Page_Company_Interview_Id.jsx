@@ -14,35 +14,42 @@ import Grid from '@mui/material/Grid';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import 'katex/dist/katex.min.css';
-import { InlineMath } from 'react-katex';
+import Plot from 'react-plotly.js';
+// import components
+import ScoreTable from '../Page_Company_Interview_Id_Start/ScoreTable/ScoreTable';
+import RadarPlot from './RadarPlot/RadarPlot';
+import QuestionTable from './QuestionTable/QuestionTable';
 
 const Page_Company_Interview_Id = () => {
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch({type:"saga/getInterviewId"})
+        dispatch({ type: "saga/getInterviewId" })
     }, [])
     const interview = useSelector(state => state.interview)
 
-    
-    let softScoreArray = []
-    let softSumString = ``
-    let softMath = ``
-    let softResult = 0
-
-    let langScoreArray = []
-    let langSumString = ``
-    let langMath = ``
-    let langResult = 0
-
-    let techScoreArray = []
-    let techSumString = ``
-    let techMath = ``
-    let techResult = 0
-
-    
     return (
-        <Typography variant="body1">Page_Company_Interview_Id</Typography>
+        <>{interview &&
+            <>
+                <Grid container spacing={5}>
+                    <Grid item md={6}>
+
+                    </Grid>
+                    <Grid item md={6}>
+                        <QuestionTable round={interview.round} />
+                    </Grid>
+                </Grid>
+                <Box sx={{ border: "1px solid black", marginTop: 5 }}>
+                    <Grid container spacing={5}>
+                        <Grid item md={6}>
+                            <RadarPlot allResult={interview.round} />
+                        </Grid>
+                        <Grid item md={6}>
+                            <ScoreTable allResult={interview.round} />
+                        </Grid>
+                    </Grid>
+                </Box>
+            </>
+        }</>
     )
 }
 

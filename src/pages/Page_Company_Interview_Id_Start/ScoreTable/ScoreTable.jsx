@@ -16,8 +16,25 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
+import calculateScore from '../../../utils/calculateScore';
 
 const ScoreTable = (props) => {
+
+    let rightSoft = props.allResult[0]
+    let rightLang = props.allResult[1]
+    let rightTech = props.allResult[2]
+
+    let {
+        softResult,
+        softMath,
+        langResult,
+        langMath,
+        techResult,
+        techMath,
+        finalResult,
+        finalMath
+    } = calculateScore(rightSoft, rightLang, rightTech)
+
     return (
         <Grid container rowSpacing={4}>
             <Grid item md={3}>
