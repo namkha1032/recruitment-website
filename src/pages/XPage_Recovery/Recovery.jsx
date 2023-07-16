@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-//import { useNavigate } from "react-router-dom"; 
+import React from "react";
 import {
   Grid,
   TextField,
@@ -8,9 +7,12 @@ import {
   Link,
   Box,
   Container,
+  InputAdornment,
 } from "@mui/material";
 
-//import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import image from './change_password.png'
+import imageBackground from './background.jpg'
+import EmailIcon from "@mui/icons-material/Email";
 
 const style = {
   marginTop: "15px",
@@ -18,95 +20,136 @@ const style = {
 };
 
 
-export default function Recovery({ email, onChangeEmail, handleSubmit }) {
-
-  //const navigate = useNavigate()
-  //const [email, setEmail] = useState("");
-
-  /* const handleSubmit = (event) => {
-    event.preventDefault();
-
-    console.log(email);
-
-    navigate('/check-otp');
-  } */
+const Recovery = ({ email, onChangeEmail, handleSubmit }) => {
 
   return (
     
-    <Box sx={{backgroundColor: 'cornflowerblue', height: '100vh'}}>
-
-    <Container sx={{display: "flex", justifyContent: "center"}}>
-      <Grid
-        container
-        sx={{ paddingTop: "100px", display: "flex", justifyContent: "center", width: "80%"}}
-      >
+    <Box
+      sx={{
+        height: "100vh",
+        backgroundImage: `url(${imageBackground})`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
+      }}
+    >
+      <Container sx={{ display: "flex", justifyContent: "center" }}>
         <Grid
-          item
-          md={5}
+          container
           sx={{
-            border: "1px solid #000",
-            borderRadius: "10px",
-            padding: "25px",
-            backgroundColor: "white",
-
+            paddingTop: "60px",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            width: "80%",
           }}
         >
-          
-          <Grid item xs={12} sx={{...style, display: 'flex', justifyContent: 'center'}}>
-            <Typography variant="h4" align="center">
-              Recovery
-            </Typography>
-          </Grid>
-
-          <Grid item xs={12} sx={{...style, display: 'flex', justifyContent: 'center'}}>
-            <Typography variant="h6" align="center">
-              Enter your email address
-            </Typography>
-          </Grid>
-
-          <form onSubmit={handleSubmit}>
-
-            <Grid item xs={12} md={12} sx={{ ...style}}>
-              <TextField 
-                  fullWidth
-                  required 
-                  label="Email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => {onChangeEmail(e.target.value)}}
+          <Grid
+            item 
+            md={7}
+            padding="20px"
+          >
+            <Grid item xs={12} display="flex" justifyContent="center">
+              <img
+                src={image}
+                alt="login"
+                width="25%"
+                height="25%"
+                loading="eager"
               />
             </Grid>
+          </Grid>
 
-            
+          <Grid
+            item
+            md={7}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
             <Grid
               item
-              xs={12}
-              sx={{ display: "flex", justifyContent: "center", ...style }}
+              md={9}
+              sx={{
+                borderRadius: "20px",
+                padding: "20px",
+                paddingTop: "10px",
+                paddingBottom: "10px",
+                backgroundColor: "white",
+                opacity: "100%",
+                left: "20%",
+                right: "20%",
+              }}
             >
-              <Button 
-                variant="contained" 
-                type="submit"
-                sx={{
-                  height: "40px",
-                  width: "100%",
-                  borderRadius: "5px",
-                  marginTop: "15px",
-                }}
-              >
-                Recovery
-              </Button>
-            </Grid>
-          </form>
 
-          <Grid item xs={12} sx={{...style, display: 'flex', justifyContent: 'center'}}>
-            <Typography variant="small" align="center">
-              <Link href="/login">Back to login</Link>
-            </Typography>
+              <Grid item xs={12} sx={{ ...style, display: 'flex', justifyContent: 'center'}}>
+                <Typography variant="h5" align="center">
+                  Enter your email address
+                </Typography>
+              </Grid>
+
+              <form
+                onSubmit={
+                  handleSubmit
+                } 
+              >
+
+                <Grid item xs={12} md={12} sx={{ ...style }}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Email"
+                    type="email"
+                    value={email}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <EmailIcon />
+                        </InputAdornment>
+                      ),
+
+                      style: { borderRadius: "25px" },
+                    }}
+                    onChange={(e) => {
+                      onChangeEmail(e.target.value);
+                    }}
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  xs={12}
+                  sx={{ display: "flex", justifyContent: "center", ...style }}
+                >
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    sx={{
+                      height: "40px",
+                      width: "100%",
+                      borderRadius: "20px",
+                      marginTop: "15px",
+                    }}
+                  >
+                    Recovery
+                  </Button>
+                </Grid>
+              </form>
+
+              <Grid
+                item
+                xs={12}
+                sx={{ ...style, display: "flex", justifyContent: "center" }}
+              >
+                <Typography variant="small" align="center">
+                  <Link href="/login">Back to login</Link>
+                </Typography>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Container>
-            
+      </Container>
     </Box>
   )
 }
+
+export default Recovery;

@@ -1,121 +1,173 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
+import React from "react";
 import {
   Grid,
   TextField,
   Button,
   Typography,
-  /* Link, */
   Box,
   Container,
+  InputAdornment,
 } from "@mui/material";
 
-//import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import LockResetIcon from '@mui/icons-material/LockReset';
+import LockIcon from '@mui/icons-material/Lock';
+import image from './change_password.png'
+import imageBackground from './background.jpg'
 
 const style = {
   marginTop: "15px",
   marginBottom: "15px",
 };
 
-export default function ResetPassword({ newPassword, confirmPassword, onChangeNewPassword, onChangeConfirmPassword, handleSubmit }) {
-
-  /* const navigate = useNavigate()
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    console.log(newPassword, confirmPassword);
-    if (newPassword !== confirmPassword) {
-      alert("Passwords do not match");
-      setNewPassword("");
-      setConfirmPassword("");
-    }
-    else {
-      alert("Password reset successful");
-      navigate('/login-form');
-    }
-    
-  } */
+const ResetPassword = ({ 
+  newPassword, 
+  confirmPassword, 
+  onChangeNewPassword, 
+  onChangeConfirmPassword, 
+  handleSubmit 
+}) => {
 
   return (
-    <Box sx={{backgroundColor: 'cornflowerblue', height: '100vh'}}>
-
-    <Container sx={{display: "flex", justifyContent: "center"}}>
-      <Grid
-        container
-        sx={{ paddingTop: "100px", display: "flex", justifyContent: "center", width: "80%"}}
-      >
+    <Box
+      sx={{
+        height: "100vh",
+        backgroundImage: `url(${imageBackground})`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
+      }}
+    >
+      <Container sx={{ display: "flex", justifyContent: "center" }}>
         <Grid
-          item
-          md={5}
+          container
           sx={{
-            border: "1px solid #000",
-            borderRadius: "10px",
-            padding: "25px",
-            backgroundColor: "white",
-
+            paddingTop: "60px",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            width: "80%",
           }}
         >
-
-          <Grid item xs={12} display='flex' justifyContent='center'>
-            <LockResetIcon sx={{ fontSize: 60, color: 'blue' }} />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Typography variant="h4" align="center">Reset Password</Typography>{" "}
-          </Grid>
-
-          <form onSubmit={handleSubmit}>
-            <Grid item xs={12} md={12} sx={{ ...style}}>
-              <TextField 
-                  fullWidth
-                  required 
-                  label="New Password"
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => {onChangeNewPassword(e.target.value)}}
+          <Grid
+            item 
+            md={7}
+            padding="20px"
+          >
+            <Grid item xs={12} display="flex" justifyContent="center">
+              <img
+                src={image}
+                alt="login"
+                width="25%"
+                height="25%"
+                loading="eager"
               />
             </Grid>
+          </Grid>
 
-            <Grid item xs={12} md={12} sx={{...style}}>
-              <TextField 
-                  fullWidth 
-                  required
-                  label="Confirm Password"
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => {onChangeConfirmPassword(e.target.value)}}
-              />
-            </Grid>
-            
+          <Grid
+            item
+            md={7}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
             <Grid
               item
-              xs={12}
-              sx={{ display: "flex", justifyContent: "center", ...style }}
+              md={9}
+              sx={{
+                borderRadius: "20px",
+                padding: "20px",
+                paddingTop: "10px",
+                paddingBottom: "10px",
+                backgroundColor: "white",
+                opacity: "100%",
+                left: "20%",
+                right: "20%",
+              }}
             >
-              <Button 
-                variant="contained" 
-                type="submit"
-                sx={{
-                  height: "40px",
-                  width: "100%",
-                  borderRadius: "5px",
-                  marginTop: "15px",
-                }}
-              >
-                Reset
-              </Button>
-            </Grid>
-          </form>
 
+              <Grid item xs={12} sx={{ ...style, display: 'flex', justifyContent: 'center'}}>
+                <Typography variant="h5" align="center">
+                  Enter your new password
+                </Typography>
+              </Grid>
+
+              <form
+                onSubmit={
+                  handleSubmit
+                } 
+              >
+
+                <Grid item xs={12} md={12} sx={{ ...style }}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="New Password"
+                    type="password"
+                    value={newPassword}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <LockIcon />
+                        </InputAdornment>
+                      ),
+
+                      style: { borderRadius: "25px" },
+                    }}
+                    onChange={(e) => {
+                      onChangeNewPassword(e.target.value);
+                    }}
+                  />
+                </Grid>
+
+                <Grid item xs={12} md={12} sx={{ ...style }}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Confirm Password"
+                    type="password"
+                    value={confirmPassword}
+                    variant="outlined"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <LockIcon />
+                        </InputAdornment>
+                      ),
+
+                      style: { borderRadius: "25px" },
+                    }}
+                    onChange={(e) => {
+                      onChangeConfirmPassword(e.target.value);
+                    }}
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  xs={12}
+                  sx={{ display: "flex", justifyContent: "center", ...style }}
+                >
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    sx={{
+                      height: "40px",
+                      width: "100%",
+                      borderRadius: "20px",
+                      marginTop: "15px",
+                    }}
+                  >
+                    Reset
+                  </Button>
+                </Grid>
+              </form>
+
+            </Grid>
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
-            
+      </Container>
     </Box>
   )
 }
+
+export default ResetPassword;
 
