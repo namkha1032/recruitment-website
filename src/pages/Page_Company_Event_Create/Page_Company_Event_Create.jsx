@@ -1,5 +1,6 @@
 // import libraries
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 
 // import MUI components
@@ -54,7 +55,6 @@ const Page_Company_Event_Create = () => {
     //     }
     //   };
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(name);
@@ -63,14 +63,17 @@ const Page_Company_Event_Create = () => {
         console.log(time);
         console.log(location);
         console.log(image);
+        navigate("/company/event/:eventid");
     }
 
-    
     // const [fileName, setFileName] = useState(null)
     // const handlechange = (event) => {
     //     setFileName(event.target.files[0])
     // }
     // console.log(fileName)
+
+
+    const navigate = useNavigate()
 
 
     return (

@@ -1,5 +1,6 @@
 // import libraries
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 
 // import MUI components
@@ -55,7 +56,11 @@ const Page_Company_Event_Id_Update = () => {
         console.log(time);
         console.log(location);
         console.log(image);
+        navigate("/company/event/:eventid");
     }
+
+
+    const navigate = useNavigate()
 
     
     return (
