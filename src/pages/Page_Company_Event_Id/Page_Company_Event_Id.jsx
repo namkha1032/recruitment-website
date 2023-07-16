@@ -1,10 +1,15 @@
+// import libraries
+import { useState } from 'react';
+
+
+// import MUI components
 import { Box, Container, Grid, Tab, Typography } from '@mui/material'
 import React from 'react'
 import './Page_Company_Event_Id.scss'
 import { Button } from '@mui/material'
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import EditIcon from '@mui/icons-material/Edit';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { useState } from 'react';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import PlagiarismIcon from '@mui/icons-material/Plagiarism';
 
@@ -26,6 +31,7 @@ const columns = [
             onClick={() => alert("Navigate to user id: " + params.row.id)}/>]
     }
 ];
+
 // Test Data
 const rows = [
     { id: 1, name: 'Ronaldo' }, { id: 2, name: 'Messi' }, { id: 3, name: 'Salah' }, 
@@ -41,22 +47,38 @@ const rows = [
 ];
 
 
+
 const Page_Company_Event_Id = () => {
+
+    // useState
     const [value, setValue] = useState('1');
+
+
+    // handle events
     const handleChange = (event, newValue) => {
         setValue(newValue);
     }
+
 
     return (
         <Container sx={{ p: 0 }} className='companyeventid'>
             <Typography variant='h4' align='center' sx={{ fontWeight: 600, color: 'slateblue' }}>Sự kiện 1</Typography>
 
             <Grid container>
+
                 <Grid item md={6} sm={12} sx={{ mt: 8 }}>
-                    <img src="https://file1.hutech.edu.vn/file/news/2-1569353757.jpg" alt="..." style={{ width: '100%', objectFit: 'cover', border: '5px solid #555' }} />
+                    <img src="https://file1.hutech.edu.vn/file/news/2-1569353757.jpg" 
+                    alt="..." 
+                    style={{ 
+                        width: '100%', 
+                        objectFit: 'cover', 
+                        border: '5px solid #555' 
+                    }}/>
                 </Grid>
+
                 <Grid item md={6} sm={12}>
                     <TabContext value={value}>
+
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <TabList aria-label='Tabs menu' onChange={handleChange} textColor="primary" indicatorColor="primary" centered>
                                 <Tab label='Thông tin sự kiện' value='1' />
@@ -65,7 +87,19 @@ const Page_Company_Event_Id = () => {
                         </Box>
 
                         <TabPanel value='1' sx={{ p: 2 }}>
-                            <Grid container spacing={2} sx={{ p: 0.5, display: "flex", alignItems: "center", width: '100%' }} style={{ border: '0px solid black', background: 'lightblue', margin: 0.5, filter: 'drop-shadow(0 0 10px black)' }}>
+                            <Grid container spacing={2} 
+                                sx={{ 
+                                    p: 0.5, 
+                                    display: "flex", 
+                                    alignItems: "center", 
+                                    width: '100%' 
+                                }} 
+                                style={{ 
+                                    border: '0px solid black', 
+                                    background: 'lightblue', 
+                                    margin: 0.5, 
+                                    filter: 'drop-shadow(0 0 10px black)' 
+                                }}>
                                 <Grid item md={5} sm={6} xs={7}>
                                     <Typography variant='span' className='header'>Tên sự kiện</Typography>
                                 </Grid>
@@ -97,9 +131,13 @@ const Page_Company_Event_Id = () => {
                                     <Box className='content' p={3}>Location</Box>
                                 </Grid>
                                 <Grid item xs={12} align='right'>
-                                    <Button variant="contained" size='small' className='btnregister'>
-                                        <AppRegistrationIcon sx={{ marginRight: 1 }}></AppRegistrationIcon>
-                                        Đăng ký tham gia
+                                    <Button variant='contained' size='small' className='btnregister' sx={{ mx: 2 }}>
+                                        <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon>
+                                        Đăng ký
+                                    </Button>
+                                    <Button variant='contained' size='small' color='success'>
+                                        <EditIcon sx={{ marginRight: 0.5 }}></EditIcon>
+                                        Chỉnh sửa
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -152,6 +190,7 @@ const Page_Company_Event_Id = () => {
                                 </DataGrid>
                             </div>
                         </TabPanel>
+
                     </TabContext>
                 </Grid>
             </Grid>

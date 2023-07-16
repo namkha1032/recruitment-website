@@ -1,3 +1,4 @@
+// import MUI components
 import { Box, Container, Grid, Typography } from '@mui/material'
 import React from 'react'
 import './Page_Event_Id.scss'
@@ -11,10 +12,28 @@ const Page_Event_Id = () => {
             <Typography variant='h4' align='center' sx={{ fontWeight: 600, color: 'slateblue' }}>Sự kiện 1</Typography>
             <Grid container sx={{mt: 1}}>
                 <Grid item md={6} sm={12} sx={{ p: 1 }}>
-                        <img src="https://file1.hutech.edu.vn/file/news/2-1569353757.jpg" alt="..." style={{ width: '100%', objectFit: 'cover', border: '5px solid #555' }} />
+                        <img src="https://file1.hutech.edu.vn/file/news/2-1569353757.jpg" 
+                        alt="..." 
+                        style={{ 
+                            width: '100%', 
+                            objectFit: 'cover', 
+                            border: '5px solid #555' 
+                        }}/>
                 </Grid>
                 <Grid item md={6} sm={12} sx={{ p: 1 }}>
-                    <Grid container spacing={2.5} sx={{ p: 0.8, display: "flex", alignItems: "center", width: '100%'}} style={{ border: '0px solid black', background: 'lightblue', margin: 0.5, filter: 'drop-shadow(0 0 10px black)' }}>
+                    <Grid container spacing={2.5} 
+                        sx={{ 
+                            p: 0.8, 
+                            display: "flex", 
+                            alignItems: "center", 
+                            width: '100%'
+                        }} 
+                        style={{ 
+                            border: '0px solid black', 
+                            background: 'lightblue', 
+                            margin: 0.5, 
+                            filter: 'drop-shadow(0 0 10px black)' 
+                        }}>
                         <Grid item md={5} sm={6} xs={7}>
                             <Typography variant='span' className='header'>Tên sự kiện</Typography>
                         </Grid>
@@ -47,8 +66,8 @@ const Page_Event_Id = () => {
                         </Grid>
                         <Grid item xs={12} align='right'>
                             <Button variant="contained" size='small' className='btnregister'>
-                                <AppRegistrationIcon sx={{ marginRight: 1 }}></AppRegistrationIcon>
-                                Đăng ký tham gia
+                                <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon>
+                                Đăng ký
                             </Button>
                         </Grid>
                     </Grid>
