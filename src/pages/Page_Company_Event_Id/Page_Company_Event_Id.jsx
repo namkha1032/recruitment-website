@@ -1,5 +1,6 @@
 // import libraries
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 // import MUI components
@@ -58,6 +59,13 @@ const Page_Company_Event_Id = () => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     }
+
+    const handleClick = (e) => {
+        navigate("/company/event/:eventid/update");
+    }
+
+
+    const navigate = useNavigate()
 
 
     return (
@@ -135,7 +143,7 @@ const Page_Company_Event_Id = () => {
                                         <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon>
                                         Đăng ký
                                     </Button>
-                                    <Button variant='contained' size='small' color='success'>
+                                    <Button variant='contained' size='small' color='success' onClick={handleClick}>
                                         <EditIcon sx={{ marginRight: 0.5 }}></EditIcon>
                                         Chỉnh sửa
                                     </Button>
