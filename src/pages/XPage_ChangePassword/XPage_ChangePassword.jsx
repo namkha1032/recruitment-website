@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 import LockIcon from '@mui/icons-material/Lock';
-import imageBackground from '../XPage_Login/background.jpg'
+import imageBackground from './background.jpg'
 import image from './change_password.png'
 
 const style = {
