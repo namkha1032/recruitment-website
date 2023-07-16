@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // useNavigate is a hook that allows us to navigate to a different page
+import { useNavigate } from "react-router-dom"; 
 import {
   Grid,
   TextField,
@@ -8,9 +8,14 @@ import {
   Link,
   Box,
   Container,
+  InputAdornment,
 } from "@mui/material";
 
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import EmailIcon from '@mui/icons-material/Email';
+import LockIcon from '@mui/icons-material/Lock';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
+import image from '../XPage_Login/login_icon.png'
+import imageBackground from '../XPage_Login/background.jpg'
 
 const style = {
   marginTop: "15px",
@@ -21,8 +26,7 @@ const style = {
 const XPage_Register = () => {
 
   const navigate = useNavigate()
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const Role = 'candidate';
@@ -30,117 +34,180 @@ const XPage_Register = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(firstName, lastName, email, password, Role);
+    console.log(name, email, password, Role);
 
     navigate('/login');
   }
 
   return (
 
-    <Box sx={{backgroundColor: 'cornflowerblue', height: '100vh'}}>
-
-    <Container sx={{display: "flex", justifyContent: "center"}}>
-      <Grid
-        container
-        sx={{ paddingTop: "100px", display: "flex", justifyContent: "center", width: "80%"}}
-      >
+    <Box
+      sx={{
+        height: "100vh",
+        backgroundImage: `url(${imageBackground})`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
+      }}
+    >
+      <Container sx={{ display: "flex", justifyContent: "center" }}>
         <Grid
-          item
-          md={5}
+          container
           sx={{
-            border: "1px solid #000",
-            borderRadius: "10px",
-            padding: "25px",
-            backgroundColor: "white",
-
+            paddingTop: "60px",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            width: "80%",
           }}
         >
-          <Grid item xs={12} display='flex' justifyContent='center'>
-            <AccountCircleIcon sx={{ fontSize: 60, color: 'blue' }} />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Typography variant="h4" align="center">Register</Typography>{" "}
-          </Grid>
-
-          <form onSubmit={handleSubmit}>
-
-            <Grid item xs={12} md={12} sx={{ ...style, display: 'flex', justifyContent: 'center'}}>
-              <Grid item xs={6} md={6} sx={{marginRight: '5px'}}>
-                <TextField 
-                    required
-                    label="First Name"
-                    type='text'
-                    value={firstName}
-                    onChange={(e) => {setFirstName(e.target.value)}}
-                />
-              </Grid>
-              
-              <Grid item xs={6} md={6} sx={{marginLeft: '5px'}}>
-                <TextField 
-                    required
-                    label="Last Name"
-                    type='text'
-                    value={lastName}
-                    onChange={(e) => {setLastName(e.target.value)}}
-                />
-              </Grid>
-            </Grid>
-
-            <Grid item xs={12} md={12} sx={{ ...style}}>
-              <TextField 
-                  fullWidth
-                  required 
-                  label="Email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => {setEmail(e.target.value)}}
+          <Grid
+            item 
+            md={7}
+            padding="20px"
+          >
+            <Grid item xs={12} display="flex" justifyContent="center">
+              <img
+                src={image}
+                alt="login"
+                width="25%"
+                height="25%"
+                loading="eager"
               />
             </Grid>
+          </Grid>
 
-            <Grid item xs={12} md={12} sx={{...style}}>
-              <TextField 
-                  fullWidth 
-                  required
-                  label="Password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => {setPassword(e.target.value)}}
-              />
-            </Grid>
-            
+          <Grid
+            item
+            md={7}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
             <Grid
               item
-              xs={12}
-              sx={{ display: "flex", justifyContent: "center", ...style }}
+              md={9}
+              sx={{
+                borderRadius: "20px",
+                padding: "20px",
+                paddingTop: "10px",
+                paddingBottom: "10px",
+                backgroundColor: "white",
+                opacity: "100%",
+                left: "20%",
+                right: "20%",
+              }}
             >
-              <Button 
-                variant="contained" 
-                type="submit"
-                sx={{
-                  height: "40px",
-                  width: "100%",
-                  borderRadius: "5px",
-                  marginTop: "15px",
-                }}
+              <form
+                onSubmit={
+                  handleSubmit
+                } 
               >
-                Register
-              </Button>
-            </Grid>
-          </form>
 
-          <Grid item xs={12} sx={{...style, display: 'flex', justifyContent: 'center'}}>
-            <Typography variant="small" align="center">
-              Already have account? <Link href="/login">Click here to login</Link>
-            </Typography>
+                <Grid item xs={12} md={12} sx={{ ...style }}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Name"
+                    type="text"
+                    value={name}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <PersonRoundedIcon />
+                        </InputAdornment>
+                      ),
+
+                      style: { borderRadius: "25px" },
+                    }}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                    }}
+                  />
+                </Grid>
+
+                <Grid item xs={12} md={12} sx={{ ...style }}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Email"
+                    type="email"
+                    value={email}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <EmailIcon />
+                        </InputAdornment>
+                      ),
+
+                      style: { borderRadius: "25px" },
+                    }}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                  />
+                </Grid>
+
+                <Grid item xs={12} md={12} sx={{ ...style }}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Password"
+                    type="password"
+                    value={password}
+                    variant="outlined"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <LockIcon />
+                        </InputAdornment>
+                      ),
+
+                      style: { borderRadius: "25px" },
+                    }}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                    /* sx={{ backgroundColor: "white" }} */
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  xs={12}
+                  sx={{ display: "flex", justifyContent: "center", ...style }}
+                >
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    sx={{
+                      height: "40px",
+                      width: "100%",
+                      borderRadius: "20px",
+                      marginTop: "15px",
+                    }}
+                  >
+                    Register
+                  </Button>
+                </Grid>
+              </form>
+
+              <Grid
+                item
+                xs={12}
+                sx={{ ...style, display: "flex", justifyContent: "center" }}
+              >
+                <Typography variant="small" align="center">
+                  Already have account?{" "}
+                  <Link href="/login">Click here to login</Link>
+                </Typography>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Container>
-            
+      </Container>
     </Box>
   )
 }
 
-export default XPage_Register
+export default XPage_Register;
 
