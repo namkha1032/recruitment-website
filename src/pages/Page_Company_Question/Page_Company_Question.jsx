@@ -231,6 +231,18 @@ export default function Page_Company_Question() {
       renderHeader: () => <span>Mã</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
+        return (
+          <Box
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+                textDecoration: "underline",
+              },
+            }}
+          >
+            {params.value}
+          </Box>
+        );
       },
     },
     {
@@ -242,6 +254,18 @@ export default function Page_Company_Question() {
       renderHeader: () => <span>Câu hỏi</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
+        return (
+          <Box
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+                textDecoration: "underline",
+              },
+            }}
+          >
+            {params.value}
+          </Box>
+        );
       },
     },
     {
@@ -250,6 +274,7 @@ export default function Page_Company_Question() {
       headerAlign: "center",
       align: "center",
       flex: 0.5,
+      minWidth: 80,
       renderHeader: () => <span>Loại</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
@@ -269,7 +294,6 @@ export default function Page_Company_Question() {
     {
       field: "actions",
       type: "actions",
-      width: 60,
       headerAlign: "right",
       align: "right",
       getActions: (params) => [
@@ -414,7 +438,7 @@ export default function Page_Company_Question() {
           <Autocomplete
             disablePortal
             id="filter-type"
-            options={["Loại", "Trạng thái"]}
+            options={["Chuyên môn", "Ngôn ngữ", "Kỹ năng mềm"]}
             sx={{ width: 200, marginRight: 2 }}
             renderInput={(params) => (
               <TextField {...params} label="Lọc theo..." />
@@ -422,14 +446,27 @@ export default function Page_Company_Question() {
             value={valueChoose}
             onChange={(event, value) => handleChooseValue(value)}
           />
-          {valueChoose === "Loại" && (
+          {valueChoose === "Chuyên môn" && (
             <Autocomplete
               disablePortal
               id="filter-type"
-              options={listOfSkills}
+              options={listOfSkills.skill}
               sx={{ width: 200 }}
               renderInput={(params) => (
                 <TextField {...params} label="Kỹ năng..." />
+              )}
+              value={statusChoose}
+              onChange={(event, value) => handleChooseStatus(value)}
+            />
+          )}
+          {valueChoose === "Ngôn ngữ" && (
+            <Autocomplete
+              disablePortal
+              id="filter-type"
+              options={listOfSkills.language}
+              sx={{ width: 200 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Ngôn ngữ..." />
               )}
               value={statusChoose}
               onChange={(event, value) => handleChooseStatus(value)}
@@ -515,10 +552,19 @@ export default function Page_Company_Question() {
               },
             },
           }}
-          //   onCellClick={(params, event) => {
-          //     if (params.field === "InterviewerName")
-          //         console.log(params.row.InterviewerId)
-          //   }}
+          onCellClick={(params, event) => {
+            if (params.field === "id" || params.field === "QuestionName") {
+              handleModalOpen(
+                {
+                  id: params.row.id,
+                  QuestionName: params.row.QuestionName,
+                  Category: params.row.Category,
+                  Skill: params.row.Skill,
+                },
+                false
+              );
+            }
+          }}
         />
       </Box>
 

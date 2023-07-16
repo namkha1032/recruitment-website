@@ -29,44 +29,6 @@ import { localeVN } from "../../locale/locale";
 import Grid from "@mui/material/Grid";
 import "./Page_Company_Recruitment.scss";
 
-function IdNavigate({ id }) {
-  function handleClick() {
-    alert("Navigate to position with id " + id);
-  }
-
-  return (
-    <button
-      onClick={handleClick}
-      style={{
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-      }}
-    >
-      {id}
-    </button>
-  );
-}
-
-function TitleNavigate({ title, id }) {
-  function handleClick() {
-    alert("Navigate to position with id " + id);
-  }
-
-  return (
-    <button
-      onClick={handleClick}
-      style={{
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-      }}
-    >
-      {title}
-    </button>
-  );
-}
-
 function NullString() {
   return <Chip icon={<PriorityHighIcon />} label="Trống" />;
 }
@@ -156,6 +118,14 @@ export default function Page_Company_Recruitment() {
     setStatusChoose(value);
   }
 
+  function handleDetailClick(value) {
+    navigate(`./${value}`)
+  }
+
+  function handleEditClick(value) {
+    navigate(`./${value}/update`)
+  }
+
   const columns = useMemo(() => [
     {
       field: "id",
@@ -166,11 +136,22 @@ export default function Page_Company_Recruitment() {
       renderHeader: () => <span>Mã</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
-        return <IdNavigate id={params.value} />;
+        return (
+          <Box
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+                textDecoration: "underline",
+              },
+            }}
+          >
+            {params.value}
+          </Box>
+        );
       },
     },
     {
-      field: "Title",
+      field: "PositionName",
       type: "string",
       headerAlign: "left",
       align: "left",
@@ -179,7 +160,18 @@ export default function Page_Company_Recruitment() {
       renderHeader: () => <span>Tên vị trí</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
-        return <TitleNavigate title={params.value} id={params.row.id} />;
+        return (
+          <Box
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+                textDecoration: "underline",
+              },
+            }}
+          >
+            {params.value}
+          </Box>
+        );
       },
       editable: true,
     },
@@ -252,13 +244,13 @@ export default function Page_Company_Recruitment() {
         <GridActionsCellItem
           icon={<InfoIcon variant="outlined" />}
           label="Chi tiết"
-          onClick={() => alert("Navigate to position id: " + params.row.id)}
+          onClick={() => handleDetailClick(params.row.id)}
           showInMenu
         />,
         <GridActionsCellItem
           icon={<EditIcon />}
           label="Chỉnh sửa"
-          onClick={() => alert("Modal Chỉnh sửa display")}
+          onClick={() => handleEditClick(params.row.id)}
           showInMenu
         />,
       ],
@@ -473,6 +465,11 @@ export default function Page_Company_Recruitment() {
                 pageSize: 25,
               },
             },
+          }}
+          onCellClick={(params, event) => {
+            if (params.field === "id" || params.field === "PositionName") {
+              handleDetailClick(params.row.id)
+            }
           }}
         />
       </Box>

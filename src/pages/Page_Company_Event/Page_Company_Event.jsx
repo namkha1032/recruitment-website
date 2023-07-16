@@ -39,43 +39,6 @@ import { localeVN } from "../../locale/locale";
 import Grid from "@mui/material/Grid";
 // import "./Company_Recruitment.scss"
 
-function IdNavigate({ id }) {
-  function handleClick() {
-    alert("Navigate to position with id " + id);
-  }
-
-  return (
-    <button
-      onClick={handleClick}
-      style={{
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-      }}
-    >
-      {id}
-    </button>
-  );
-}
-
-function TitleNavigate({ title, id }) {
-  function handleClick() {
-    alert("Navigate to position with id " + id);
-  }
-
-  return (
-    <button
-      onClick={handleClick}
-      style={{
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-      }}
-    >
-      {title}
-    </button>
-  );
-}
 
 function NullString() {
   return <Chip icon={<PriorityHighIcon />} label="Trống" />;
@@ -167,6 +130,18 @@ export default function Page_Company_Event() {
     setStatusChoose(value);
   }
 
+  function handleDetailClick(value) {
+    navigate(`./${value}`)
+  }
+
+  function handleAccountDetailClick(value) {
+    navigate(`../../profile/${value}`)
+  }
+
+  function handleEditClick(value) {
+    navigate(`./${value}/update`)
+  }
+
   const columns = useMemo(() => [
     {
       field: "id",
@@ -176,7 +151,18 @@ export default function Page_Company_Event() {
       renderHeader: () => <span>Mã</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
-        return <IdNavigate id={params.value} />;
+        return (
+          <Box
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+                textDecoration: "underline",
+              },
+            }}
+          >
+            {params.value}
+          </Box>
+        );
       },
     },
     {
@@ -188,11 +174,22 @@ export default function Page_Company_Event() {
       renderHeader: () => <span>Sự kiện</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
-        return <TitleNavigate title={params.value} id={params.row.id} />;
+        return (
+          <Box
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+                textDecoration: "underline",
+              },
+            }}
+          >
+            {params.value}
+          </Box>
+        );
       },
     },
     {
-      field: "CreatedBy",
+      field: "CreatedByName",
       type: "string",
       headerAlign: "center",
       align: "center",
@@ -200,7 +197,18 @@ export default function Page_Company_Event() {
       renderHeader: () => <span>Tạo bởi</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
-        return <TitleNavigate title={params.value} id={params.row.id} />;
+        return (
+          <Box
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+                textDecoration: "underline",
+              },
+            }}
+          >
+            {params.value}
+          </Box>
+        );
       },
     },
     {
@@ -223,13 +231,13 @@ export default function Page_Company_Event() {
         <GridActionsCellItem
           icon={<InfoIcon variant="outlined" />}
           label="Chi tiết"
-          onClick={() => alert("Navigate to position id: " + params.row.id)}
+          onClick={() => handleDetailClick(params.row.id)}
           showInMenu
         />,
         <GridActionsCellItem
           icon={<EditIcon />}
           label="Chỉnh sửa"
-          onClick={() => alert("Modal Chỉnh sửa display")}
+          onClick={() => handleEditClick(params.row.id)}
           showInMenu
         />,
       ],
@@ -330,7 +338,7 @@ export default function Page_Company_Event() {
           <Autocomplete
             disablePortal
             id="filter-type"
-            options={["Trạng thái", "Người tạo"]}
+            options={["Trạng thái"]}
             sx={{ width: 200, marginRight: 2 }}
             renderInput={(params) => (
               <TextField {...params} label="Lọc theo..." />
@@ -427,10 +435,14 @@ export default function Page_Company_Event() {
               },
             },
           }}
-        //   onCellClick={(params, event) => {
-        //     if (params.field === "InterviewerName")
-        //         console.log(params.row.InterviewerId)
-        //   }}
+          onCellClick={(params, event) => {
+            if (params.field === "id" || params.field === "EventName") {
+              handleDetailClick(params.row.id)
+            }
+            if (params.field === "CreatedByName") {
+              handleAccountDetailClick(params.row.CreatedById)
+            }
+          }}
         />
       </Box>
     </Box>

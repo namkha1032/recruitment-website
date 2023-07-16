@@ -6,7 +6,8 @@ import DoneIcon from "@mui/icons-material/Done";
 import Stack from "@mui/material/Stack";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Box } from "@mui/system";
+import { Box } from "@mui/material";
+import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 
 // export function SuccessAlert(props) {
 //   return (
@@ -34,6 +35,7 @@ function Success(props) {
     <Box
       sx={{
         fontSize: 14,
+        color: "#1565C0",
       }}
     >
       {props.content} thành công!
@@ -46,5 +48,8 @@ export function successAlert(content) {
     position: toast.POSITION.TOP_CENTER,
     theme: "light",
     autoClose: 2000,
+    icon: <CheckCircleOutlineRoundedIcon sx={{
+      color: "#1565C0",
+    }}/>
   });
 }
