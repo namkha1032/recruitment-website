@@ -14,8 +14,8 @@ import {
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
-import image from '../XPage_Login/login_icon.png'
-import imageBackground from '../XPage_Login/background.jpg'
+import image from './login_icon.png'
+import imageBackground from './background.jpg'
 
 const style = {
   marginTop: "15px",
