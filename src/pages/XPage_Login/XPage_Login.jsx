@@ -61,7 +61,7 @@ const XPage_Login = () => {
         >
           <Grid
             item 
-            xs={7}
+            md={7}
             padding="20px"
           >
             <Grid item xs={12} display="flex" justifyContent="center">
