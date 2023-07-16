@@ -5,12 +5,14 @@ import {
   TextField,
   Button,
   Typography,
-  /* Link, */
   Box,
   Container,
+  InputAdornment,
 } from "@mui/material";
 
-import LockResetIcon from '@mui/icons-material/LockReset';
+import LockIcon from '@mui/icons-material/Lock';
+import imageBackground from '../XPage_Login/background.jpg'
+import image from './change_password.png'
 
 const style = {
   marginTop: "15px",
@@ -26,8 +28,6 @@ const XPage_ChangePassword = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    //console.log(newPassword, confirmPassword);
     if (oldPassword === newPassword) {
       alert("New password cannot be the same as old password");
       setNewPassword("");
@@ -39,100 +39,175 @@ const XPage_ChangePassword = () => {
       setConfirmPassword("");
     }
     else {
-      alert("Password reset successful");
+      alert("Password change successful");
       navigate('/');
     }
     
   }
 
   return (
-    <Box sx={{backgroundColor: 'cornflowerblue', height: '100vh'}}>
-
-    <Container sx={{display: "flex", justifyContent: "center"}}>
-      <Grid
-        container
-        sx={{ paddingTop: "100px", display: "flex", justifyContent: "center", width: "80%"}}
-      >
+    <Box
+      sx={{
+        height: "100vh",
+        backgroundImage: `url(${imageBackground})`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
+      }}
+    >
+      <Container sx={{ display: "flex", justifyContent: "center" }}>
         <Grid
-          item
-          md={5}
+          container
           sx={{
-            border: "1px solid #000",
-            borderRadius: "10px",
-            padding: "25px",
-            backgroundColor: "white",
-
+            paddingTop: "60px",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            width: "80%",
           }}
         >
-
-          <Grid item xs={12} display='flex' justifyContent='center'>
-            <LockResetIcon sx={{ fontSize: 60, color: 'blue' }} />
+          <Grid
+            item 
+            md={7}
+            padding="20px"
+          >
+            <Grid item xs={12} display="flex" justifyContent="center">
+              <img
+                src={image}
+                alt="login"
+                width="25%"
+                height="25%"
+                loading="eager"
+              />
+            </Grid>
           </Grid>
 
-          <Grid item xs={12}>
-            <Typography variant="h4" align="center">Change Password</Typography>{" "}
-          </Grid>
-
-          <form onSubmit={handleSubmit}>
-            <Grid item xs={12} md={12} sx={{ ...style}}>
-              <TextField 
-                  fullWidth
-                  required 
-                  label="Old Password"
-                  type="password"
-                  value={oldPassword}
-                  onChange={(e) => {setOldPassword(e.target.value)}}
-              />
-            </Grid>
-
-            <Grid item xs={12} md={12} sx={{ ...style}}>
-              <TextField 
-                  fullWidth
-                  required 
-                  label="New Password"
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => {setNewPassword(e.target.value)}}
-              />
-            </Grid>
-
-            <Grid item xs={12} md={12} sx={{...style}}>
-              <TextField 
-                  fullWidth 
-                  required
-                  label="Confirm Password"
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => {setConfirmPassword(e.target.value)}}
-              />
-            </Grid>
-            
+          <Grid
+            item
+            md={7}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
             <Grid
               item
-              xs={12}
-              sx={{ display: "flex", justifyContent: "center", ...style }}
+              md={9}
+              sx={{
+                borderRadius: "20px",
+                padding: "20px",
+                paddingTop: "10px",
+                paddingBottom: "10px",
+                backgroundColor: "white",
+                opacity: "100%",
+                left: "20%",
+                right: "20%",
+              }}
             >
-              <Button 
-                variant="contained" 
-                type="submit"
-                sx={{
-                  height: "40px",
-                  width: "100%",
-                  borderRadius: "5px",
-                  marginTop: "15px",
-                }}
-              >
-                Update
-              </Button>
-            </Grid>
-          </form>
 
+              <Grid item xs={12} sx={{ ...style, display: 'flex', justifyContent: 'center'}}>
+                <Typography variant="h5" align="center">
+                  Enter your new password
+                </Typography>
+              </Grid>
+
+              <form
+                onSubmit={
+                  handleSubmit
+                } 
+              >
+
+                <Grid item xs={12} md={12} sx={{ ...style }}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Old Password"
+                    type="password"
+                    value={oldPassword}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <LockIcon />
+                        </InputAdornment>
+                      ),
+
+                      style: { borderRadius: "25px" },
+                    }}
+                    onChange={(e) => {
+                      setOldPassword(e.target.value);
+                    }}
+                  />
+                </Grid>
+
+                <Grid item xs={12} md={12} sx={{ ...style }}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="New Password"
+                    type="password"
+                    value={newPassword}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <LockIcon />
+                        </InputAdornment>
+                      ),
+
+                      style: { borderRadius: "25px" },
+                    }}
+                    onChange={(e) => {
+                      setNewPassword(e.target.value);
+                    }}
+                  />
+                </Grid>
+
+                <Grid item xs={12} md={12} sx={{ ...style }}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Confirm Password"
+                    type="password"
+                    value={confirmPassword}
+                    variant="outlined"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <LockIcon />
+                        </InputAdornment>
+                      ),
+
+                      style: { borderRadius: "25px" },
+                    }}
+                    onChange={(e) => {
+                      setConfirmPassword(e.target.value);
+                    }}
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  xs={12}
+                  sx={{ display: "flex", justifyContent: "center", ...style }}
+                >
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    sx={{
+                      height: "40px",
+                      width: "100%",
+                      borderRadius: "20px",
+                      marginTop: "15px",
+                    }}
+                  >
+                    Reset
+                  </Button>
+                </Grid>
+              </form>
+
+            </Grid>
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
-            
+      </Container>
     </Box>
   )
 }
 
-export default XPage_ChangePassword
+export default XPage_ChangePassword;
