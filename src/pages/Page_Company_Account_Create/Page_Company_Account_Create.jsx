@@ -1,18 +1,38 @@
 import React from 'react'
-import {Box, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField} from '@mui/material';
+import {
+    Button,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    Radio,
+    RadioGroup,
+    TextField,
+    Typography
+} from '@mui/material';
+import Grid from "@mui/material/Grid";
 
 const Page_Company_Account_Create = () => {
     return (
-        <Box
-            display="grid"
-            gridTemplateColumns="repeat(5, 1fr)"
-            gridAutoRows="50px"
-            gap="20px"
-            m="50px 0px 0 0px"
+        <Grid
+            container
+            rowSpacing={3}
         >
-            <Box
+            <Grid
+                    item
+                    xs={12}
+                    display="flex">
+            <Typography variant="h2"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="left"
+                        m="20px 0 20px 0">
+                    Create Advanced Accounts
+            </Typography>
+            </Grid>
+            <Grid
+                item
+                xs={12}
                 display="flex"
-                gridColumn="span 5"
                 alignItems="center"
                 justifyContent="left"
             >
@@ -22,12 +42,13 @@ const Page_Company_Account_Create = () => {
                     variant="outlined"
                     fullWidth
                 />
-            </Box>
-            <Box
-                display="flex"
+            </Grid>
+            <Grid
                 alignItems="center"
                 justifyContent="left"
-                gridColumn="span 5"
+                item
+                xs={12}
+                display="flex"
             >
                 <TextField
                     id="accountpassword"
@@ -35,42 +56,44 @@ const Page_Company_Account_Create = () => {
                     variant="outlined"
                     fullWidth
                 />
-            </Box>
-            <Box gridColumn="span 5" gridRow="span 2">
+            </Grid>
+            <Grid
+                item
+                xs={12}
+                display="flex">
                 <FormControl component="fieldset">
                     <FormLabel component="legend">Choose Role:</FormLabel>
                     <RadioGroup
                         aria-label="role"
                         name="role"
                         display="flex"
-                        alignItems="center"
-                        justifyContent="left"
+                        // alignItems="center"
+                        // justifyContent="left"
                     >
                         <FormControlLabel value="recruiter" control={<Radio/>} label="Recruiter"/>
                         <FormControlLabel value="interviewer" control={<Radio/>} label="Interviewer"/>
                     </RadioGroup>
                 </FormControl>
-            </Box>
-            <Box
+            </Grid>
+            <Grid
                 display="flex"
                 alignItems="center"
                 justifyContent="left"
-                gridColumn="span 5"
-            >
+                item
+                xs={12}>
                 <TextField
                     id="accountdepartment"
                     label="Department"
                     variant="outlined"
                     fullWidth
                 />
-            </Box>
-            <Box
+            </Grid>
+            <Grid
                 display="flex"
                 alignItems="center"
                 justifyContent="right"
-                gridColumn="span 5"
-                gridRow="6"
-            >
+                item
+                xs={12}>
                 <Button
                     variant="contained"
                     size="small"
@@ -80,8 +103,8 @@ const Page_Company_Account_Create = () => {
                 >
                     Create
                 </Button>
-            </Box>
-        </Box>
+            </Grid>
+        </Grid>
     );
 }
 

@@ -1,13 +1,35 @@
-import React from 'react'
-import {Box, Button, MenuItem, Select, Typography} from "@mui/material"
-import {DataGrid, GridToolbar} from "@mui/x-data-grid";
+import React, {useState} from 'react'
+import {
+    Box,
+    Button,
+    InputAdornment,
+    MenuItem,
+    Select, TextField,
+    Typography
+} from "@mui/material"
+import {DataGrid, GridSearchIcon, GridToolbar, GridToolbarQuickFilter} from "@mui/x-data-grid";
 import {useNavigate} from "react-router-dom";
 import {mockDataContacts} from "./mockData";
 import {grey, lightBlue, teal} from "@mui/material/colors";
-
+import IconButton from "@mui/material/IconButton";
+import Grid from "@mui/material/Grid";
 const Page_Company_Account = () => {
     const navigate = useNavigate()
-    const renderActionButton = (params) => {
+    const [account, setAccount] = useState('');
+    function QuickSearchToolbar() {
+        return (
+            <Box
+                sx={{
+                    p: 0.5,
+                    pb: 0,
+                }}
+            >
+                <GridToolbarQuickFilter />
+                <GridToolbar></GridToolbar>
+            </Box>
+        );
+    }
+    const renderActionButton = () => {
         return (
             <strong>
                 <Button
@@ -21,9 +43,6 @@ const Page_Company_Account = () => {
                 </Button>
             </strong>
         )
-    }
-    const gotoBlacklist = () => {
-        navigate("/company/account/blacklist")
     }
     const columns = [
         {field: "id", headerName: "ID", flex: 0.5},
@@ -75,90 +94,145 @@ const Page_Company_Account = () => {
     ];
 
     return (
-        <Box m="5px" width="76.5vw">
-            <Box
-                display="grid"
-                gridTemplateColumns="repeat(5, 1fr)"
-                gridAutoRows="70px"
-                gap="10px"
+        <Grid container width="77vw" justifyContent="center">
+            <Grid
+                container
             >
-                <Typography variant="h2"
-                            gridColumn="span 4"
-                            gridRow="span 3"
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="left">
+                <Grid
+                    item
+                    xs={8}
+                    md={12}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="left"
+                >
+                <Typography
+                    m="20px 0 30px 0"
+                    variant="h3"
+                    alignItems="center"
+                    justifyContent="left"
+                >
                     Account List
                 </Typography>
-                <Button variant="contained"
-                        size="medium"
-                        gridColumn="span 1"
-                        gridRow="span 1"
-                        xs={1}
-                        onClick={() => {
-                            navigate("/company/account/create")
-                        }}>
+                </Grid>
+                <Grid container spacing={{ xs: 0, md: 1.5 }} rowSpacing={{ xs: 1, md: 0 }} xs={4} md={12} display="flex">
+                <Grid
+                    item
+                    xs={12}
+                    md={2}
+                    display="flex"
+                    justifyContent="right">
+                <Button
+                    variant="contained"
+                    size="small"
+                    fullWidth
+                    onClick={() => {
+                        navigate("/company/account/create")
+                    }}
+                >
                     Create Advanced Account
                 </Button>
-                <Button variant="contained"
-                        size="medium"
-                        gridColumn="span 1"
-                        gridRow="span 1"
-                        onClick={() => {
-                            gotoBlacklist()
-                        }}>
+                </Grid>
+                <Grid
+                    item
+                    xs={12}
+                    md={2}
+                    display="flex"
+                    justifyContent="right">
+                <Button
+                    variant="contained"
+                    size="small"
+                    fullWidth
+                    onClick={() => {
+                        navigate("/company/account/blacklist")
+                    }}
+                >
                     Access Blacklist
                 </Button>
+                </Grid>
+                <Grid
+                    item
+                    xs={12}
+                    md={2}
+                    display="flex"
+                    justifyContent="right">
                 <Select
-                    gridColumn="span 1"
-                    gridRow="span 1"
                     labelId="selectaccount"
                     id="selectaccount"
                     label="Age"
+                    value={account}
+                    onChange={e => setAccount(e.target.value)}
+                    fullWidth
                 >
-                    <MenuItem value={10}>Candidate</MenuItem>
-                    <MenuItem value={20}>Interviewer</MenuItem>
-                    <MenuItem value={30}>Recruiter</MenuItem>
+                    <MenuItem value={"candidate"}>Candidate</MenuItem>
+                    <MenuItem value={"interviewer"}>Interviewer</MenuItem>
+                    <MenuItem value={"recruiter"}>Recruiter</MenuItem>
                 </Select>
-            </Box>
-            <Box
-                m="20px 0px 0 0px"
+                </Grid>
+                <Grid
+                    item
+                    xs={12}
+                    md={4}
+                    display="flex"
+                    justifyContent="right">
+                    <TextField
+                        fullWidth
+                        label="Account Search"
+                        id="accountSearch"
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton aria-label="searchBoxButton" edge="end">
+                                        <GridSearchIcon></GridSearchIcon>
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+            </Grid>
+                </Grid>
+            </Grid>
+            <Grid
+                item
+                m="25px 0 10px 0"
+                xs={12}
+                display="flex"
                 sx={{
                     "& .MuiDataGrid-root": {
-                        border: "none",
+                        border: "none"
                     },
                     "& .MuiDataGrid-cell": {
-                        borderBottom: "none",
+                        borderBottom: "none"
                     },
                     "& .name-column--cell": {
-                        color: lightBlue[800],
+                        color: lightBlue[800]
                     },
                     "& .MuiDataGrid-columnHeaders": {
                         backgroundColor: lightBlue[600],
-                        borderBottom: "none",
+                        borderBottom: "none"
                     },
                     "& .MuiDataGrid-virtualScroller": {
-                        backgroundColor: grey[100],
+                        backgroundColor: grey[100]
                     },
                     "& .MuiDataGrid-footerContainer": {
                         borderTop: "none",
-                        backgroundColor: lightBlue[600],
+                        backgroundColor: lightBlue[600]
                     },
                     "& .MuiCheckbox-root": {
-                        color: `${teal[300]} !important`,
+                        color: `${teal[300]} !important`
                     },
                     "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                        color: `${grey[700]} !important`,
-                    },
+                        color: `${grey[700]} !important`
+                    }
                 }}
             >
                 <DataGrid
                     rows={mockDataContacts}
                     columns={columns}
-                    components={{Toolbar: GridToolbar}}
+                    slots={{ toolbar: QuickSearchToolbar }}
                 />
-            </Box>
-        </Box>
+            </Grid>
+        </Grid>
     );
 }
 

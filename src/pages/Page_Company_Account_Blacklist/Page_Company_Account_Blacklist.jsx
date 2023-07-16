@@ -1,38 +1,94 @@
-import {Box, Button, Typography} from "@mui/material"
-import {DataGrid, GridToolbar} from "@mui/x-data-grid";
+import {
+    Box,
+    Button,
+    Dialog, DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    InputAdornment,
+    TextField,
+    Typography
+} from "@mui/material"
+import {DataGrid, GridSearchIcon, GridToolbar, GridToolbarQuickFilter} from "@mui/x-data-grid";
 import {mockDataContacts} from "../Page_Company_Account/mockData";
 import {grey, red, teal} from "@mui/material/colors";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import React from "react";
+const renderActionButton = () => {
+    return (
+        <strong>
+            <Button
+                variant="contained"
+                size="small"
+                color="secondary"
+                onClick={() => {
+
+                }}
+            >
+                Action
+            </Button>
+        </strong>
+    )
+}
+const RenderStatusButton = ({params}) => {
+    const [open, setOpen] = React.useState(false);
+    return (
+        <strong>
+            <Button
+                variant="contained"
+                size="small"
+                color="secondary"
+                onClick={() => {
+                    setOpen(true)
+                }}
+            >
+                Status
+            </Button>
+            <Dialog open={open}
+                    onClose={()=>{
+                        setOpen(false)
+                    }}
+                    aria-labelledby="accountinfo"
+                    aria-describedby="accountdetails"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Account info "}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Account ID: {params.row.id}<br/>
+                        Account Name: {params.row.name}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={()=>{
+                        setOpen(false)
+                    }}>Disagree</Button>
+                    <Button onClick={()=>{
+                        setOpen(false)
+                    }}>
+                        Agree
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </strong>
+    )
+}
 
 const Page_Company_Account_Blacklist = () => {
-    const renderActionButton = (params) => {
+    function QuickSearchToolbar() {
         return (
-            <strong>
-                <Button
-                    variant="contained"
-                    size="small"
-                    color="secondary"
-                    onClick={() => {
-                    }}
-                >
-                    Action
-                </Button>
-            </strong>
-        )
-    }
-    const renderStatusButton = (params) => {
-        return (
-            <strong>
-                <Button
-                    variant="contained"
-                    size="small"
-                    color="secondary"
-                    onClick={() => {
-                    }}
-                >
-                    Status
-                </Button>
-            </strong>
-        )
+            <Box
+                sx={{
+                    p: 0.5,
+                    pb: 0,
+                }}
+            >
+                <GridToolbarQuickFilter />
+                <GridToolbar></GridToolbar>
+            </Box>
+        );
     }
     const columns = [
         {field: "id", headerName: "ID", flex: 0.5},
@@ -80,30 +136,54 @@ const Page_Company_Account_Blacklist = () => {
             field: "status",
             headerName: "Account Status",
             flex: 1,
-            renderCell: renderStatusButton,
+            renderCell: (params)=>{
+                return(<RenderStatusButton params={params} />)
+            },
         },
     ];
 
     return (
-        <Box width="76.5vw"
-             alignItems="center"
-             justifyContent="center">
-            <Box
-                display="grid"
-                gridTemplateColumns="repeat(5, 1fr)"
-                gridAutoRows="40px"
-                gap="20px"
+        <Grid
+             container width="77vw">
+            <Grid
+                item
+                xs={12}
+                display="flex"
+                alignItems="center"
+                justifyContent="left"
             >
                 <Typography variant="h2"
-                            gridColumn="1"
-                            gridRow="span 3"
                             display="flex"
                             alignItems="center"
-                            justifyContent="center">
+                            justifyContent="left"
+                            m="30px 0 10px 0">
                     Blacklist
                 </Typography>
-            </Box>
-            <Box
+            </Grid>
+            <Grid
+                item
+                display="flex"
+                justifyContent="right">
+                <TextField
+                    fullWidth
+                    label="Account Search"
+                    id="blacklistSearch"
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton aria-label="toggle password visibility" edge="end">
+                                    <GridSearchIcon></GridSearchIcon>
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }}
+                />
+            </Grid>
+            <Grid
+                item
+                m="10px 0 10px 0"
+                xs={12}
+                display="flex"
                 sx={{
                     "& .MuiDataGrid-root": {
                         border: "none",
@@ -137,10 +217,10 @@ const Page_Company_Account_Blacklist = () => {
                 <DataGrid
                     rows={mockDataContacts}
                     columns={columns}
-                    components={{Toolbar: GridToolbar}}
+                    slots={{ toolbar: QuickSearchToolbar }}
                 />
-            </Box>
-        </Box>
+            </Grid>
+        </Grid>
     );
 }
 
