@@ -17,16 +17,15 @@ import { TextareaAutosize } from "@mui/base";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 
-export default function QuestionFormModal(props) {
-  const [question, setQuestion] = useState("");
-  const [skill, setSkill] = useState(null);
-  const [category, setCategory] = useState("Chuyên môn");
+export default function QuestionModal(props) {
+  const [question, setQuestion] = useState(props.value.QuestionName);
+  const [skill, setSkill] = useState(props.value.Skill);
+  const [category, setCategory] = useState(props.value.Category);
 
-  const [isFillQuestion, setIsFillQuestion] = useState(null);
-  const [isFillSkill, setIsFillSkill] = useState(null);
-  const [isFillCategory, setIsFillCategory] = useState(null);
+  const [isFillQuestion, setIsFillQuestion] = useState(true);
+  const [isFillSkill, setIsFillSkill] = useState(true);
+  const [isFillCategory, setIsFillCategory] = useState(true);
 
-  
   function handleResetForm() {
     setQuestion("");
     setSkill(null);
@@ -73,21 +72,21 @@ export default function QuestionFormModal(props) {
       skill !== undefined &&
       category !== null
     ) {
-      props.handleSubmitQuestion({
+      props.handleUpdateQuestion({
+        id: props.value.id,
         question: question,
         category: category,
-        skill: skill
-      })
-      handleResetForm();
-      props.handleAddModalClose();
+        skill: skill,
+      });
+      props.handleModalClose();
     }
   }
 
   return (
     <Box>
       <Modal
-        open={props.addModalStatus}
-        onClose={props.handleAddModalClose}
+        open={props.modalStatus}
+        onClose={props.handleModalClose}
         // transition={Slide}
         sx={{
           display: "flex",
@@ -129,7 +128,7 @@ export default function QuestionFormModal(props) {
                   color: "#1565C0",
                 }}
               >
-                Câu hỏi mới
+                {props.type === true ? "Cập nhật câu hỏi" : "Câu hỏi"}
               </Box>
             </Grid>
             <Grid
@@ -144,8 +143,7 @@ export default function QuestionFormModal(props) {
             >
               <IconButton
                 onClick={() => {
-                  handleResetForm();
-                  props.handleAddModalClose();
+                  props.handleModalClose();
                 }}
               >
                 <CloseIcon />
@@ -188,6 +186,7 @@ export default function QuestionFormModal(props) {
                     value={question}
                     onChange={(e) => handleQuestionChange(e.target.value)}
                     error={isFillQuestion !== true && isFillQuestion !== null}
+                    disabled={!props.type}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -241,16 +240,19 @@ export default function QuestionFormModal(props) {
                     value="Chuyên môn"
                     control={<Radio />}
                     label="Chuyên môn"
+                    disabled={!props.type}
                   />
                   <FormControlLabel
                     value="Ngôn ngữ"
                     control={<Radio />}
                     label="Ngôn ngữ"
+                    disabled={!props.type}
                   />
                   <FormControlLabel
                     value="Kỹ năng mềm"
                     control={<Radio />}
                     label="Kỹ năng mềm"
+                    disabled={!props.type}
                   />
                 </RadioGroup>
               </FormControl>
@@ -305,6 +307,7 @@ export default function QuestionFormModal(props) {
                       )}
                       value={skill}
                       onChange={(event, value) => handleSkillChange(value)}
+                      disabled={!props.type}
                     />
                   )}
                   {category === "Ngôn ngữ" && (
@@ -321,6 +324,7 @@ export default function QuestionFormModal(props) {
                       )}
                       value={skill}
                       onChange={(event, value) => handleSkillChange(value)}
+                      disabled={!props.type}
                     />
                   )}
                 </Grid>
@@ -355,15 +359,21 @@ export default function QuestionFormModal(props) {
                 sx={{
                   width: {
                     md: 250,
-                    xs: "100%"
+                    xs: "100%",
                   },
                   textTransform: "none",
                   fontSize: 16,
                   backgroundColor: "#1565C0",
                 }}
-                onClick={handleSubmitClick}
+                onClick={() => {
+                  if (props.type === true) {
+                    handleSubmitClick();
+                  } else {
+                    props.setType(true);
+                  }
+                }}
               >
-                Tạo câu hỏi
+                {props.type === true ? "Cập nhật câu hỏi" : "Chỉnh sửa câu hỏi"}
               </Button>
             </Grid>
           </Grid>

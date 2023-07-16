@@ -12,7 +12,7 @@ import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import DoNotDisturbOnIcon from "@mui/icons-material/DoNotDisturbOn";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
@@ -30,65 +30,16 @@ import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
 import { localeVN } from "../../locale/locale";
 import Grid from "@mui/material/Grid";
 import QuestionFormModal from "./QuestionFormModal";
-import SuccessAlert from "../../components/Alert/Alert";
+import QuestionModal from "./QuestionModal";
+import { successAlert } from "../../components/Alert/SuccessAlert";
+import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import DeleteAlertModal from "./DeleteModal";
 
 const listOfSkills = {
-  skill: [
-    "React",
-    "Angular",
-    "Java",
-    "Python",
-    "Figma",
-    ".NET",
-    "C",
-    "C++"
-  ],
-  language: [
-    "English",
-    "Vietnamese",
-    "Japanese",
-    "Chinese",
-    "Korian"
-  ]
+  skill: ["React", "Angular", "Java", "Python", "Figma", ".NET", "C", "C++"],
+  language: ["English", "Vietnamese", "Japanese", "Chinese", "Korian"],
 };
-
-function IdNavigate({ id }) {
-  function handleClick() {
-    alert("Navigate to position with id " + id);
-  }
-
-  return (
-    <button
-      onClick={handleClick}
-      style={{
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-      }}
-    >
-      {id}
-    </button>
-  );
-}
-
-function TitleNavigate({ title, id }) {
-  function handleClick() {
-    alert("Navigate to position with id " + id);
-  }
-
-  return (
-    <button
-      onClick={handleClick}
-      style={{
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-      }}
-    >
-      {title}
-    </button>
-  );
-}
 
 function NullString() {
   return <Chip icon={<PriorityHighIcon />} label="Trống" />;
@@ -144,14 +95,27 @@ export default function Page_Company_Question() {
   const [valueChoose, setValueChoose] = useState(null);
   const [departmentChoose, setDepartmentChoose] = useState(null);
   const [statusChoose, setStatusChoose] = useState(null);
-  const [modalStatus, setModalStatus] = useState(false);
 
-  const [successAlert, setSuccessAlert] = useState(false);
-  
-  useEffect(() => {
-    const id = setTimeout(() => {handleCloseSuccessAlert()}, 1500);
-    return () => {clearTimeout(id)}
-  })
+  const [addModalStatus, setAddModalStatus] = useState(false);
+
+  const [modalStatus, setModalStatus] = useState(false);
+  const [valueUpdate, setValueUpdate] = useState({
+    id: -1,
+    QuestionName: "",
+    Category: "",
+    Skill: "",
+  });
+  const [typeStatus, setTypeStatus] = useState(false);
+
+  const [deleteModalStatus, setDeleteModalStatus] = useState(false);
+  const [valueDelete, setValueDelete] = useState(0);
+
+  // const [successAlert, setSuccessAlert] = useState(false);
+
+  // useEffect(() => {
+  //   const id = setTimeout(() => {handleCloseSuccessAlert()}, 1500);
+  //   return () => {clearTimeout(id)}
+  // })
 
   function handleMoreClick(event) {
     setAnchorEl(event.currentTarget);
@@ -187,7 +151,30 @@ export default function Page_Company_Question() {
     setStatusChoose(value);
   }
 
-  function handleModalOpen() {
+  function handleAddModalOpen() {
+    setAddModalStatus(true);
+  }
+
+  function handleAddModalClose() {
+    setAddModalStatus(false);
+  }
+
+  function handleSubmitQuestion(value) {
+    successAlert("Tạo câu hỏi");
+    setRows([
+      ...rows,
+      {
+        id: rows.length + 1,
+        QuestionName: value.question,
+        Category: value.category,
+        Skill: value.skill,
+      },
+    ]);
+  }
+
+  function handleModalOpen(value, type) {
+    setValueUpdate(value);
+    setTypeStatus(type);
     setModalStatus(true);
   }
 
@@ -195,26 +182,45 @@ export default function Page_Company_Question() {
     setModalStatus(false);
   }
 
-  function handleSubmitQuestion(value) {
-    handleOpenSuccessAlert()
-    setRows([
-      ...rows,
-      {
-        id: rows.length + 1,
-        QuestionName: value.question,
-        Category: value.category,
-        Skill: value.skill
+  function handleUpdateQuestion(value) {
+    successAlert("Cập nhật câu hỏi");
+    const updateRows = rows.map((row) => {
+      if (row.id !== value.id) {
+        return row;
+      } else {
+        return {
+          ...row,
+          QuestionName: value.question,
+          Category: value.category,
+          Skill: value.skill,
+        };
       }
-    ])
+    });
+    setRows(updateRows);
   }
 
-  function handleOpenSuccessAlert() {
-    setSuccessAlert(true)
+  function handleDeleteModalOpen(value) {
+    setValueDelete(value);
+    setDeleteModalStatus(true);
   }
 
-  function handleCloseSuccessAlert() {
-    setSuccessAlert(false)
+  function handleDeleteModalClose() {
+    setDeleteModalStatus(false);
   }
+
+  function handleDeleteQuestion(value) {
+    successAlert("Xoá câu hỏi");
+    const updateRows = rows.filter((row) => row.id !== value);
+    setRows(updateRows);
+  }
+
+  // function handleOpenSuccessAlert() {
+  //   setSuccessAlert(true)
+  // }
+
+  // function handleCloseSuccessAlert() {
+  //   setSuccessAlert(false)
+  // }
 
   const columns = useMemo(() => [
     {
@@ -225,7 +231,6 @@ export default function Page_Company_Question() {
       renderHeader: () => <span>Mã</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
-        return <IdNavigate id={params.value} />;
       },
     },
     {
@@ -237,9 +242,7 @@ export default function Page_Company_Question() {
       renderHeader: () => <span>Câu hỏi</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
-        return <TitleNavigate title={params.value} id={params.row.id} />;
       },
-      editable: true,
     },
     {
       field: "Category",
@@ -250,7 +253,6 @@ export default function Page_Company_Question() {
       renderHeader: () => <span>Loại</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
-        return <TitleNavigate title={params.value} id={params.row.id} />;
       },
     },
     {
@@ -274,22 +276,42 @@ export default function Page_Company_Question() {
         <GridActionsCellItem
           icon={<InfoIcon variant="outlined" />}
           label="Chi tiết"
-          onClick={() => alert("Navigate to position id: " + params.row.id)}
+          onClick={() =>
+            handleModalOpen(
+              {
+                id: params.row.id,
+                QuestionName: params.row.QuestionName,
+                Category: params.row.Category,
+                Skill: params.row.Skill,
+              },
+              false
+            )
+          }
           showInMenu
         />,
         <GridActionsCellItem
           icon={<EditIcon />}
           label="Chỉnh sửa"
-          onClick={() => alert("Modal Chỉnh sửa display")}
+          onClick={() =>
+            handleModalOpen(
+              {
+                id: params.row.id,
+                QuestionName: params.row.QuestionName,
+                Category: params.row.Category,
+                Skill: params.row.Skill,
+              },
+              true
+            )
+          }
           showInMenu
         />,
         <GridActionsCellItem
-          icon={<DeleteIcon sx={{ color: "red" }}/>}
+          icon={<DeleteIcon sx={{ color: "#cc3300" }} />}
           label="Xoá câu hỏi"
-          onClick={() => alert("Modal Chỉnh sửa display")}
+          onClick={() => handleDeleteModalOpen(params.row.id)}
           showInMenu
           sx={{
-            color: "red"
+            color: "#cc3300",
           }}
         />,
       ],
@@ -338,14 +360,17 @@ export default function Page_Company_Question() {
               height: 50,
               width: 250,
             }}
-            onClick={handleModalOpen}
+            onClick={handleAddModalOpen}
           >
             <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
             Tạo câu hỏi
           </Button>
-          <IconButton onClick={handleMoreClick} sx={{
-            marginLeft: 1,
-          }}>
+          <IconButton
+            onClick={handleMoreClick}
+            sx={{
+              marginLeft: 1,
+            }}
+          >
             <MoreVertIcon />
           </IconButton>
           <Menu
@@ -496,22 +521,37 @@ export default function Page_Company_Question() {
           //   }}
         />
       </Box>
-      
-        <QuestionFormModal
-          key={modalStatus}
-          modalStatus={modalStatus}
-          handleModalClose={handleModalClose}
-          options={listOfSkills}
-          handleSubmitQuestion={handleSubmitQuestion}
-          keepMounted
-        />
 
-        {successAlert === true && (
-          <SuccessAlert handleCloseSuccessAlert={handleCloseSuccessAlert} content={"Tạo câu hỏi"}/>
-        )
-        }
-        
+      <QuestionFormModal
+        key={addModalStatus}
+        addModalStatus={addModalStatus}
+        handleAddModalClose={handleAddModalClose}
+        options={listOfSkills}
+        handleSubmitQuestion={handleSubmitQuestion}
+        keepMounted
+      />
 
+      <QuestionModal
+        key={valueUpdate.id}
+        modalStatus={modalStatus}
+        handleModalClose={handleModalClose}
+        options={listOfSkills}
+        handleUpdateQuestion={handleUpdateQuestion}
+        value={valueUpdate}
+        type={typeStatus}
+        setType={setTypeStatus}
+        keepMounted
+      />
+
+      <DeleteAlertModal
+        key={valueDelete}
+        deleteModalStatus={deleteModalStatus}
+        handleDeleteModalClose={handleDeleteModalClose}
+        id={valueDelete}
+        handleDeleteQuestion={handleDeleteQuestion}
+      />
+
+      <ToastContainer transition={Slide} hideProgressBar={true} />
     </Box>
   );
 }
