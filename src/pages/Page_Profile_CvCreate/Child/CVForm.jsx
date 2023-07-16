@@ -1,21 +1,26 @@
 import { useState } from "react";
 import InputText from "./InputText";
-import cvinfo from "./CvState";
+import cvinfo from "./CvData";
+import { language } from  "./CvData";
 import Button from "@mui/material/Button";
 import FreeSoloCreateOptionDialog from "./ChooseList";
 import Certificate from "./Certificate/Certificate";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import { useNavigate } from "react-router-dom";
+import ChooseLanguage from "./ChooseLanguage";
+import LanguageUlList from "./LanguageUlList";
 
 function CVForm() {
   const navigate = useNavigate();
   // CV COMPS
+  const [cvtitle,setTitle] = useState(cvinfo.title)
   const [intro, setIntro] = useState(cvinfo.intro);
   const [education, setEducation] = useState(cvinfo.education);
   const [experience, setExperience] = useState(cvinfo.experience);
   const [certs, setCerts] = useState(cvinfo.certificates);
   const [skills, setSkills] = useState(cvinfo.skills);
+  const [languages, setLanguages] = useState(cvinfo.language);
   // CERTIFICATE COMPS
   const [Cid, setCid] = useState(0);
   const [Cname, setCName] = useState("");
@@ -30,7 +35,16 @@ function CVForm() {
   const [name, setName] = useState("");
   const [Sid, setSid] = useState(0);
   const [SExp, setSExp] = useState("");
+  // Language comps
+  const [lId, setLId] = useState(languages.length > 0 ? languages.length : 0);
+  const [languageId, setLanguageId] = useState(null);
+  const [languageName, setLanguageName] = useState("");
+  const [lInputValue, setLInputValue] = useState("");
   //FUNCTION
+  function handleTitle(e) {
+    setTitle(e.target.value);
+    console.log(e.target.value)
+  }
   function handleIntro(e) {
     setIntro(e.target.value);
   }
@@ -86,6 +100,36 @@ function CVForm() {
   function handleCertDelete(id) {
     setCerts(certs.filter((component) => component.id !== id));
   }
+  
+  function handleLanguageAdd() {
+    console.log(lInputValue);
+    console.log(languageName);
+    let arr = language.filter(
+      (comp) => comp.name === (lInputValue !== null ? lInputValue.name : "")
+    );
+    console.log(arr);
+    if (arr[0] === undefined) {
+      alert("wrong language");
+      setLanguageId(null);
+      setLanguageName("");
+      setLInputValue("");
+    } else {
+      const newLanguage = {
+        id: lId,
+        languageId: languageId,
+        languageName: languageName,
+      };
+      console.log(newLanguage);
+      setLanguages([...languages, newLanguage]);
+      setLanguageId(null);
+      setLanguageName("");
+      setLInputValue("");
+      setLId((prev) => (prev += 1));
+    }
+  }
+  function handleLanguageDelete(id) {
+    setLanguages(languages.filter((component) => component.id !== id));
+  }
   const handleSetOpen = () => {
     setOpen(true);
   };
@@ -110,6 +154,15 @@ function CVForm() {
             justifyContent="center"
             alignItems="center"
           >
+            <Grid item xs={10}>
+              <InputText
+                state={"Title"}
+                handleState={handleTitle}
+                width="98%"
+                value={cvtitle}
+              />
+              <Divider variant="middle" />
+            </Grid>
             <Grid item xs={10}>
               <InputText
                 state={"Introduction"}
@@ -145,6 +198,25 @@ function CVForm() {
                 </div>
               </div>
             </Grid>
+            <Grid item xs={12}>
+                <div className="parentFlex">
+                  <div className="leftFlex">
+                    <LanguageUlList
+                      comps={languages}
+                      handleDelete={handleLanguageDelete}
+                    />
+                    <ChooseLanguage
+                      inputValue={lInputValue}
+                      setInputValue={setLInputValue}
+                      state={"language"}
+                      handleState={setLanguageName}
+                      value={languageName}
+                      setSkillId={setLanguageId}
+                      onPress={handleLanguageAdd}
+                    />
+                  </div>
+                </div>
+              </Grid>
             <Grid item xs={12}>
               <div className="parentFlex">
                 <div className="leftFlex">

@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { skillList } from "./CvData";
+import { skillList } from "./CvState";
 import InputText from "./InputText";
 
 const filter = createFilterOptions();
