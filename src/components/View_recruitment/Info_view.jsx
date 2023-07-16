@@ -22,7 +22,7 @@ const Info_view = () => {
     return (
         <div className="Info_view">
             <Typography variant='h3' sx={{ fontWeight: "bold", fontFamily: "Times New Roman", fontStyle: "italic"  }} >
-                 Position name
+                 Front-end Developer
             </Typography>
             <Grid container spacing={1} sx ={{marginTop: "10px"}}>
                 <Grid item xs={12}>
@@ -75,14 +75,14 @@ const Info_view = () => {
                     </Typography>
                     <ul>
                         <li> <span className="textstyle">Max Hiring: </span> 10</li>
-                        <li><span className="textstyle">Time for applied:</span> 03/06/2023 - 19/08/2023</li>
+                        <li> <span className="textstyle">Time for applied:</span> 03/06/2023 - 19/08/2023</li>
                     </ul>
                 </Grid>
                 <Box width="100%" />
                 <div className='line'></div>
                 <Grid item xs={12}>
                     <Typography variant='h5' sx={{ fontWeight: "bold", fontFamily: "Times New Roman", fontStyle: "italic"  }}>
-                        <LocationCityIcon></LocationCityIcon> DEPARTMENT
+                        <LocationCityIcon></LocationCityIcon> Department
                     </Typography>
                 </Grid>
 

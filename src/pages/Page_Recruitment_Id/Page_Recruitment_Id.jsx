@@ -10,6 +10,9 @@ import Typography from '@mui/material/Typography';
 import './Page_Recruitment_Id.css';
 import Info_view from '../../components/View_recruitment/Info_view';
 import DoneOutlineTwoToneIcon from '@mui/icons-material/DoneOutlineTwoTone';
+import CloseIcon from '@mui/icons-material/Close';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -22,7 +25,7 @@ const style = {
     boxShadow: 24,
     p: 4,
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column"
 
 };
 const success_notice = {
@@ -42,6 +45,12 @@ const boxDefault = {
     minWidth: 600,
     m: 1,
     display: "flex"
+}
+const styleofbox = {
+    borderRadius: "8px",
+    border: "1px solid black",
+    marginTop: "10px",
+    backgroundColor: "#6cbcc4"
 }
 
 let CVlist = [
@@ -65,12 +74,14 @@ const Page_Recruitment_Id = () => {
     const handleOpen = () => setOpen(true);
     const [notice, setNotice] = useState(false);
     const [CV, setCV] = useState('');
-
+    const handleClose = () => setOpen(false);
     const [helperText, setHelperText] = useState();
     const handleCVChange = (event) => {
         setCV(event.target.value);
         setHelperText('');
     };
+ 
+
     const handleclose_notice_modal = () => {
         setOpen(false);
         setNotice(false);
@@ -88,6 +99,7 @@ const Page_Recruitment_Id = () => {
             }
             else {
                 setNotice(true);
+                setCV('')
                 console.log(CV);
                 setSubmit(false);
             }
@@ -102,7 +114,9 @@ const Page_Recruitment_Id = () => {
         <Grid container spacing={1}>
             <Grid item xs={3}></Grid>
             <Grid item xs={6}>
-                <Info_view />
+                <Box sx={styleofbox}>
+                    <Info_view />
+                </Box>
                 <div className="button_register" >
 
 
@@ -121,6 +135,7 @@ const Page_Recruitment_Id = () => {
                                 aria-labelledby="modal-modal-title"
                                 aria-describedby="modal-modal-description"
                             >
+
                                 <Box sx={style}>
                                     <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ fontFamily: "Times New Roman" }}>
                                         Choose your CV
@@ -142,29 +157,48 @@ const Page_Recruitment_Id = () => {
                                                 {/* <FormControlLabel value="CV2" control={<Radio />} label="CV2" /> */}
                                             </RadioGroup>
 
-                                            <FormHelperText>{helperText}</FormHelperText>
+                                            <FormHelperText sx={{ fontSize: "20px", color: "red", fontFamily: "Times New Roman", fontWeight: "bold" }}>{helperText}</FormHelperText>
                                         </FormControl>
-                                        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-
-                                            <Button size="large" type="submit" variant="outlined" onClick={hanldebutton}   >
-                                                Submit your CV
-                                            </Button>
+                                        <Box sx={{ display: "flex" }}>
+                                            <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-start" }}>
+                                                <Button size="large" type="submit" variant="contained" onClick={handleClose}   >
+                                                    <CloseIcon></CloseIcon> Close
+                                                </Button>
+                                            </Grid>
+                                            <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
+                                                <Button size="large" type="submit" variant="contained" onClick={hanldebutton}   >
+                                                    <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit your CV
+                                                </Button>
+                                            </Grid>
                                             <Modal
                                                 open={notice}
                                                 onClose={handleclose_notice_modal}
                                                 aria-labelledby="child-modal-title"
                                                 aria-describedby="child-modal-description"
                                             >
-                                                <Box sx={{ ...success_notice, width: 700, height: 100, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                                    <Typography variant='h6' sx={{ fontFamily: "Times New Roman" }}>
-                                                        <DoneOutlineTwoToneIcon color='success'></DoneOutlineTwoToneIcon>
-                                                        You submmited successfully. Please wait for further information.
-                                                    </Typography>
+                                                <Box sx={{ ...success_notice, width: 300, height: 200, display: "flex", flexDirection: "column" }}>
+                                                    <Grid item xs={12}>
+                                                        <Typography color='success' variant='subtitle1' sx={{ fontFamily: "Times New Roman", display: "flex" }}>
+                                                            <DoneOutlineTwoToneIcon color='success'></DoneOutlineTwoToneIcon>
+                                                            You submited successfully. Please wait for further information.
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                                                            <Button variant='contained' color="success" onClick={handleclose_notice_modal}>
+                                                                <DoneAllIcon></DoneAllIcon> OK
+                                                            </Button>
 
+                                                        </Box>
+                                                    </Grid>
                                                 </Box>
                                             </Modal>
 
                                         </Box>
+
+
+
+
                                     </form>
                                 </Box>
                             </Modal>

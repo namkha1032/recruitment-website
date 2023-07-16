@@ -6,8 +6,6 @@ import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import {useNavigate } from 'react-router-dom';
 import "./Page_Company_Recruitment_Id.css"
 
-
-
 function QuickSearchToolbar() {
     return (
         <Box
@@ -27,6 +25,14 @@ const other = {
     showCellVerticalBorder: true,
     showColumnVerticalBorder: true,
 };
+
+const styleofbox = {
+    borderRadius: "8px",
+    border: "1px solid black",
+    marginTop: "10px",
+    backgroundColor: "#6cbcc4"
+}
+
 
 const Page_Company_Recruitment_Id = () => {
     const navigate = useNavigate();
@@ -108,7 +114,9 @@ const Page_Company_Recruitment_Id = () => {
                 <Grid item xs={3}>
                 </Grid>
                 <Grid item xs={6}>
+                <Box sx={styleofbox}>
                     <Info_view />
+                </Box>
                 </Grid>
                 <Grid item xs={3}></Grid>
                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
