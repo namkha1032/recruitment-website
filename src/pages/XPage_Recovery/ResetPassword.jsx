@@ -9,23 +9,22 @@ import {
   InputAdornment,
 } from "@mui/material";
 
-import LockIcon from '@mui/icons-material/Lock';
-import image from './change_password.png'
-import imageBackground from './background.jpg'
+import LockIcon from "@mui/icons-material/Lock";
+import image from "./change_password.png";
+import imageBackground from "./background.jpg";
 
 const style = {
   marginTop: "15px",
   marginBottom: "15px",
 };
 
-const ResetPassword = ({ 
-  newPassword, 
-  confirmPassword, 
-  onChangeNewPassword, 
-  onChangeConfirmPassword, 
-  handleSubmit 
+const ResetPassword = ({
+  newPassword,
+  confirmPassword,
+  onChangeNewPassword,
+  onChangeConfirmPassword,
+  handleSubmit,
 }) => {
-
   return (
     <Box
       sx={{
@@ -48,11 +47,7 @@ const ResetPassword = ({
             width: "80%",
           }}
         >
-          <Grid
-            item 
-            md={7}
-            padding="20px"
-          >
+          <Grid item md={7} padding="20px">
             <Grid item xs={12} display="flex" justifyContent="center">
               <img
                 src={image}
@@ -64,11 +59,7 @@ const ResetPassword = ({
             </Grid>
           </Grid>
 
-          <Grid
-            item
-            md={7}
-            sx={{ display: "flex", justifyContent: "center" }}
-          >
+          <Grid item md={7} sx={{ display: "flex", justifyContent: "center" }}>
             <Grid
               item
               md={9}
@@ -83,19 +74,17 @@ const ResetPassword = ({
                 right: "20%",
               }}
             >
-
-              <Grid item xs={12} sx={{ ...style, display: 'flex', justifyContent: 'center'}}>
+              <Grid
+                item
+                xs={12}
+                sx={{ ...style, display: "flex", justifyContent: "center" }}
+              >
                 <Typography variant="h5" align="center">
                   Enter your new password
                 </Typography>
               </Grid>
 
-              <form
-                onSubmit={
-                  handleSubmit
-                } 
-              >
-
+              <form onSubmit={handleSubmit}>
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
@@ -160,14 +149,12 @@ const ResetPassword = ({
                   </Button>
                 </Grid>
               </form>
-
             </Grid>
           </Grid>
         </Grid>
       </Container>
     </Box>
-  )
-}
+  );
+};
 
 export default ResetPassword;
-

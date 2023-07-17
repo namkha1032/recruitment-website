@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import {
   Grid,
   TextField,
@@ -10,9 +10,9 @@ import {
   InputAdornment,
 } from "@mui/material";
 
-import LockIcon from '@mui/icons-material/Lock';
-import imageBackground from './background.jpg'
-import image from './change_password.png'
+import LockIcon from "@mui/icons-material/Lock";
+import imageBackground from "./background.jpg";
+import image from "./change_password.png";
 
 const style = {
   marginTop: "15px",
@@ -20,8 +20,7 @@ const style = {
 };
 
 const XPage_ChangePassword = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -32,18 +31,15 @@ const XPage_ChangePassword = () => {
       alert("New password cannot be the same as old password");
       setNewPassword("");
       setConfirmPassword("");
-    }
-    else if (newPassword !== confirmPassword) {
+    } else if (newPassword !== confirmPassword) {
       alert("Passwords do not match");
       setNewPassword("");
       setConfirmPassword("");
-    }
-    else {
+    } else {
       alert("Password change successful");
-      navigate('/');
+      navigate("/");
     }
-    
-  }
+  };
 
   return (
     <Box
@@ -67,11 +63,7 @@ const XPage_ChangePassword = () => {
             width: "80%",
           }}
         >
-          <Grid
-            item 
-            md={7}
-            padding="20px"
-          >
+          <Grid item md={7} padding="20px">
             <Grid item xs={12} display="flex" justifyContent="center">
               <img
                 src={image}
@@ -83,11 +75,7 @@ const XPage_ChangePassword = () => {
             </Grid>
           </Grid>
 
-          <Grid
-            item
-            md={7}
-            sx={{ display: "flex", justifyContent: "center" }}
-          >
+          <Grid item md={7} sx={{ display: "flex", justifyContent: "center" }}>
             <Grid
               item
               md={9}
@@ -102,19 +90,17 @@ const XPage_ChangePassword = () => {
                 right: "20%",
               }}
             >
-
-              <Grid item xs={12} sx={{ ...style, display: 'flex', justifyContent: 'center'}}>
+              <Grid
+                item
+                xs={12}
+                sx={{ ...style, display: "flex", justifyContent: "center" }}
+              >
                 <Typography variant="h5" align="center">
                   Enter your new password
                 </Typography>
               </Grid>
 
-              <form
-                onSubmit={
-                  handleSubmit
-                } 
-              >
-
+              <form onSubmit={handleSubmit}>
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
@@ -201,13 +187,12 @@ const XPage_ChangePassword = () => {
                   </Button>
                 </Grid>
               </form>
-
             </Grid>
           </Grid>
         </Grid>
       </Container>
     </Box>
-  )
-}
+  );
+};
 
 export default XPage_ChangePassword;

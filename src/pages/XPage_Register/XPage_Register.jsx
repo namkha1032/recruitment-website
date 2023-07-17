@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import {
   Grid,
   TextField,
@@ -11,36 +11,33 @@ import {
   InputAdornment,
 } from "@mui/material";
 
-import EmailIcon from '@mui/icons-material/Email';
-import LockIcon from '@mui/icons-material/Lock';
-import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
-import image from './login_icon.png'
-import imageBackground from './background.jpg'
+import EmailIcon from "@mui/icons-material/Email";
+import LockIcon from "@mui/icons-material/Lock";
+import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+import image from "./login_icon.png";
+import imageBackground from "./background.jpg";
 
 const style = {
   marginTop: "15px",
   marginBottom: "15px",
 };
 
-
 const XPage_Register = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const Role = 'candidate';
+  const Role = "candidate";
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     console.log(name, email, password, Role);
 
-    navigate('/login');
-  }
+    navigate("/login");
+  };
 
   return (
-
     <Box
       sx={{
         height: "100vh",
@@ -62,11 +59,7 @@ const XPage_Register = () => {
             width: "80%",
           }}
         >
-          <Grid
-            item 
-            md={7}
-            padding="20px"
-          >
+          <Grid item md={7} padding="20px">
             <Grid item xs={12} display="flex" justifyContent="center">
               <img
                 src={image}
@@ -78,11 +71,7 @@ const XPage_Register = () => {
             </Grid>
           </Grid>
 
-          <Grid
-            item
-            md={7}
-            sx={{ display: "flex", justifyContent: "center" }}
-          >
+          <Grid item md={7} sx={{ display: "flex", justifyContent: "center" }}>
             <Grid
               item
               md={9}
@@ -97,12 +86,7 @@ const XPage_Register = () => {
                 right: "20%",
               }}
             >
-              <form
-                onSubmit={
-                  handleSubmit
-                } 
-              >
-
+              <form onSubmit={handleSubmit}>
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
@@ -206,8 +190,7 @@ const XPage_Register = () => {
         </Grid>
       </Container>
     </Box>
-  )
-}
+  );
+};
 
 export default XPage_Register;
-

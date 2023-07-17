@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import {
   Grid,
   TextField,
@@ -59,11 +59,7 @@ const XPage_Login = () => {
             width: "80%",
           }}
         >
-          <Grid
-            item 
-            md={7}
-            padding="20px"
-          >
+          <Grid item md={7} padding="20px">
             <Grid item xs={12} display="flex" justifyContent="center">
               <img
                 src={image}
@@ -73,14 +69,9 @@ const XPage_Login = () => {
                 loading="eager"
               />
             </Grid>
-
           </Grid>
 
-          <Grid
-            item
-            md={7}
-            sx={{ display: "flex", justifyContent: "center" }}
-          >
+          <Grid item md={7} sx={{ display: "flex", justifyContent: "center" }}>
             <Grid
               item
               md={9}
@@ -95,11 +86,7 @@ const XPage_Login = () => {
                 right: "20%",
               }}
             >
-              <form
-                onSubmit={
-                  handleSubmit
-                } 
-              >
+              <form onSubmit={handleSubmit}>
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
@@ -151,12 +138,7 @@ const XPage_Login = () => {
                   md={12}
                   sx={{ ...style, display: "flex", justifyContent: "center" }}
                 >
-                  <Grid
-                    item
-                    xs={6}
-                    md={6} 
-                    paddingLeft='5px'
-                  >
+                  <Grid item xs={6} md={6} paddingLeft="5px">
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -168,10 +150,9 @@ const XPage_Login = () => {
                       label="Remember me"
                       align="left"
                     />
-
                   </Grid>
 
-                  <Grid item xs={6} md={6} paddingRight='5px'>
+                  <Grid item xs={6} md={6} paddingRight="5px">
                     <Link href="/recovery">
                       <Typography paddingTop="8px" align="right">
                         Forgot password ?

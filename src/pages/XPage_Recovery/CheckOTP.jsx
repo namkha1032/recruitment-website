@@ -8,8 +8,8 @@ import {
   Container,
 } from "@mui/material";
 
-import image from './change_password.png'
-import imageBackground from './background.jpg'
+import image from "./change_password.png";
+import imageBackground from "./background.jpg";
 
 const style = {
   marginTop: "15px",
@@ -17,37 +17,33 @@ const style = {
 };
 
 const CheckOTP = ({ otp, onChangeOTP, handleSubmit }) => {
-
-  const [minutes, setMinutes] = useState(0)
-  const [seconds, setSeconds] = useState(10)
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(10);
 
   const Resend = () => {
-    setMinutes(0)
-    setSeconds(11)
-  }
+    setMinutes(0);
+    setSeconds(11);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (seconds > 0) {
-        setSeconds(seconds => seconds - 1)
+        setSeconds((seconds) => seconds - 1);
       }
 
       if (seconds === 0) {
         if (minutes === 0) {
-          clearInterval(interval)
-        }
-        else {
-          setSeconds(59)
-          setMinutes(minutes => minutes - 1)
+          clearInterval(interval);
+        } else {
+          setSeconds(59);
+          setMinutes((minutes) => minutes - 1);
         }
       }
-      
     }, 1000);
 
     return () => {
       clearInterval(interval);
     };
-
   }, [seconds, minutes]);
 
   return (
@@ -72,11 +68,7 @@ const CheckOTP = ({ otp, onChangeOTP, handleSubmit }) => {
             width: "80%",
           }}
         >
-          <Grid
-            item 
-            md={7}
-            padding="20px"
-          >
+          <Grid item md={7} padding="20px">
             <Grid item xs={12} display="flex" justifyContent="center">
               <img
                 src={image}
@@ -86,14 +78,9 @@ const CheckOTP = ({ otp, onChangeOTP, handleSubmit }) => {
                 loading="eager"
               />
             </Grid>
-
           </Grid>
 
-          <Grid
-            item
-            md={7}
-            sx={{ display: "flex", justifyContent: "center" }}
-          >
+          <Grid item md={7} sx={{ display: "flex", justifyContent: "center" }}>
             <Grid
               item
               md={9}
@@ -108,19 +95,17 @@ const CheckOTP = ({ otp, onChangeOTP, handleSubmit }) => {
                 right: "20%",
               }}
             >
-
-              <Grid item xs={12} sx={{ ...style, display: 'flex', justifyContent: 'center'}}>
+              <Grid
+                item
+                xs={12}
+                sx={{ ...style, display: "flex", justifyContent: "center" }}
+              >
                 <Typography variant="h5" align="center">
                   OTP Verification
                 </Typography>
               </Grid>
 
-              <form
-                onSubmit={
-                  handleSubmit
-                } 
-              >
-
+              <form onSubmit={handleSubmit}>
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
@@ -130,7 +115,6 @@ const CheckOTP = ({ otp, onChangeOTP, handleSubmit }) => {
                     value={otp}
                     variant="outlined"
                     InputProps={{
-
                       style: { borderRadius: "25px" },
                     }}
                     onChange={(e) => {
@@ -147,37 +131,28 @@ const CheckOTP = ({ otp, onChangeOTP, handleSubmit }) => {
                   <Grid
                     item
                     xs={6}
-                    md={6} 
-                    paddingLeft='5px'
-                    align='left'
-                    display='flex'
-                    justifyContent='left'
-                    alignItems='center'
+                    md={6}
+                    paddingLeft="5px"
+                    align="left"
+                    display="flex"
+                    justifyContent="left"
+                    alignItems="center"
                   >
-                    {
-                      seconds > 0 || minutes > 0 ? 
-                      <Typography variant='p'>
-                        Time Remaining: {minutes > 10 ? `0${minutes}` : minutes}:
-                        {seconds < 10 ? `0${seconds}` : seconds}
+                    {seconds > 0 || minutes > 0 ? (
+                      <Typography variant="p">
+                        Time Remaining: {minutes > 10 ? `0${minutes}` : minutes}
+                        :{seconds < 10 ? `0${seconds}` : seconds}
                       </Typography>
-                      :
-                      <Typography variant='p'>
-                        Didn't receive OTP?
-                      </Typography>
-                    }
+                    ) : (
+                      <Typography variant="p">Didn't receive OTP?</Typography>
+                    )}
                   </Grid>
 
-                  <Grid item 
-                    xs={6} 
-                    md={6} 
-                    paddingRight='5px' 
-                    align='right'
-                    
-                  >
+                  <Grid item xs={6} md={6} paddingRight="5px" align="right">
                     <Button
                       variant="text"
-                      disabled={seconds >0 || minutes > 0}
-                      height='5px'
+                      disabled={seconds > 0 || minutes > 0}
+                      height="5px"
                       onClick={Resend}
                     >
                       Resend OTP
@@ -209,7 +184,7 @@ const CheckOTP = ({ otp, onChangeOTP, handleSubmit }) => {
         </Grid>
       </Container>
     </Box>
-  )
-}
+  );
+};
 
 export default CheckOTP;

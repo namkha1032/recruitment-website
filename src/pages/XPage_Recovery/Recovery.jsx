@@ -10,8 +10,8 @@ import {
   InputAdornment,
 } from "@mui/material";
 
-import image from './change_password.png'
-import imageBackground from './background.jpg'
+import image from "./change_password.png";
+import imageBackground from "./background.jpg";
 import EmailIcon from "@mui/icons-material/Email";
 
 const style = {
@@ -19,11 +19,8 @@ const style = {
   marginBottom: "15px",
 };
 
-
 const Recovery = ({ email, onChangeEmail, handleSubmit }) => {
-
   return (
-    
     <Box
       sx={{
         height: "100vh",
@@ -45,11 +42,7 @@ const Recovery = ({ email, onChangeEmail, handleSubmit }) => {
             width: "80%",
           }}
         >
-          <Grid
-            item 
-            md={7}
-            padding="20px"
-          >
+          <Grid item md={7} padding="20px">
             <Grid item xs={12} display="flex" justifyContent="center">
               <img
                 src={image}
@@ -61,11 +54,7 @@ const Recovery = ({ email, onChangeEmail, handleSubmit }) => {
             </Grid>
           </Grid>
 
-          <Grid
-            item
-            md={7}
-            sx={{ display: "flex", justifyContent: "center" }}
-          >
+          <Grid item md={7} sx={{ display: "flex", justifyContent: "center" }}>
             <Grid
               item
               md={9}
@@ -80,19 +69,17 @@ const Recovery = ({ email, onChangeEmail, handleSubmit }) => {
                 right: "20%",
               }}
             >
-
-              <Grid item xs={12} sx={{ ...style, display: 'flex', justifyContent: 'center'}}>
+              <Grid
+                item
+                xs={12}
+                sx={{ ...style, display: "flex", justifyContent: "center" }}
+              >
                 <Typography variant="h5" align="center">
                   Enter your email address
                 </Typography>
               </Grid>
 
-              <form
-                onSubmit={
-                  handleSubmit
-                } 
-              >
-
+              <form onSubmit={handleSubmit}>
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
@@ -149,7 +136,7 @@ const Recovery = ({ email, onChangeEmail, handleSubmit }) => {
         </Grid>
       </Container>
     </Box>
-  )
-}
+  );
+};
 
 export default Recovery;

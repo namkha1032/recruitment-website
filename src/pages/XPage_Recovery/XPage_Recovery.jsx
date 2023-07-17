@@ -1,13 +1,11 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-//import { Button, Container, Grid, TextField, Box, Typography, Link } from '@mui/material'
-import Recovery from './Recovery'
-import CheckOTP from './CheckOTP'
-import ResetPassword from './ResetPassword'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Recovery from "./Recovery";
+import CheckOTP from "./CheckOTP";
+import ResetPassword from "./ResetPassword";
 
 const XPage_Recovery = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [otp, setOTP] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -17,17 +15,17 @@ const XPage_Recovery = () => {
 
   const handleEmailSubmit = (event) => {
     event.preventDefault();
-    if(!isEmailValid){
-      setIsEmailValid(true)
+    if (!isEmailValid) {
+      setIsEmailValid(true);
     }
-  }
+  };
 
   const handleOTPSubmit = (event) => {
     event.preventDefault();
-    if(!isOTPValid){
-      setIsOTPValid(true)
+    if (!isOTPValid) {
+      setIsOTPValid(true);
     }
-  }
+  };
 
   const handlePasswordSubmit = (event) => {
     event.preventDefault();
@@ -35,34 +33,37 @@ const XPage_Recovery = () => {
       alert("Passwords do not match");
       setNewPassword("");
       setConfirmPassword("");
-    }
-    else {
+    } else {
       alert("Password reset successful");
-      navigate('/login');
+      navigate("/login");
     }
-  }
+  };
 
-
-  
   return (
     <>
-      {
-        !isEmailValid ? 
-        <Recovery email={email} onChangeEmail={setEmail} handleSubmit={handleEmailSubmit}/>
-        : !isOTPValid ? 
-        <CheckOTP otp={otp} onChangeOTP={setOTP} handleSubmit={handleOTPSubmit}/>
-        : 
-        <ResetPassword 
-          newPassword={newPassword} 
-          confirmPassword={confirmPassword} 
+      {!isEmailValid ? (
+        <Recovery
+          email={email}
+          onChangeEmail={setEmail}
+          handleSubmit={handleEmailSubmit}
+        />
+      ) : !isOTPValid ? (
+        <CheckOTP
+          otp={otp}
+          onChangeOTP={setOTP}
+          handleSubmit={handleOTPSubmit}
+        />
+      ) : (
+        <ResetPassword
+          newPassword={newPassword}
+          confirmPassword={confirmPassword}
           onChangeNewPassword={setNewPassword}
           onChangeConfirmPassword={setConfirmPassword}
           handleSubmit={handlePasswordSubmit}
         />
-      }
+      )}
     </>
-  )
+  );
+};
 
-}
-
-export default XPage_Recovery
+export default XPage_Recovery;
