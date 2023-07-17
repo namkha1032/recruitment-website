@@ -24,7 +24,7 @@ const cvinfo = {
       startDate: dayjs("2022-04-17"),
       endDate: null,
       detail: "dasdasdasd",
-      link: "dadadadada",
+      link: "dadadadadadasd",
     },
   ],
   skills: [{ id: 0, name: "html" }],
