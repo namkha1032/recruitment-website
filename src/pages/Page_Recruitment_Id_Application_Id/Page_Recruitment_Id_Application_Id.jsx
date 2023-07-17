@@ -174,7 +174,7 @@ const Page_Recruitment_Id_Application_Id = () => {
              
             </Grid>
             <Grid item xs={8} sx={{padding:'15px'}}>
-                <div style={{...style}}>
+                <div style={{...style,height:'100%'}}>
                     <Typography variant='h5' align='center'>Cv detail</Typography> 
                     <Container>
                     <Page_Profile_Id_Cv_Id cvlist={user.cvs}/>
