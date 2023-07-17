@@ -14,12 +14,13 @@ const TechRightTable = (props) => {
     const setCurrentTech = props.setCurrentTech
     const currentTechTab = props.currentTechTab
     const setCurrentTechTab = props.setCurrentTechTab
+    const type = props.type
     const dispatch = useDispatch()
     return (
         <>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={currentTechTab} onChange={(event, newTab) => {
-                    if (setCurrentTech) {
+                    if (type == "score") {
                         setCurrentTech([])
                     }
                     setCurrentTechTab(newTab)
@@ -49,7 +50,7 @@ const TechRightTable = (props) => {
                                             dispatch({ type: "question/updateNewTechScore", payload: newQues })
                                         }}
                                         InputProps={{
-                                            readOnly: setCurrentTech ? false : true,
+                                            readOnly: type == "score" ? false : true,
                                         }}
                                     />
                                 </Box>

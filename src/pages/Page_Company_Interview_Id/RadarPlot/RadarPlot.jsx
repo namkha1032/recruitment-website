@@ -55,10 +55,10 @@ const RadarPlot = (props) => {
                     },
                     showlegend: false,
                     title: {
-                        text: "super radar"
+                        text: "Candidate skill overview"
                     },
-                    width: 500,
-                    height: 500
+                    width: 400,
+                    height: 350
                 }}
             />
         </>

@@ -1,4 +1,5 @@
 function calculateScore(rightSoft, rightLang, rightTech) {
+    
     let softScoreArray = []
     let softSumString = ``
     let softResult = 0

@@ -21,7 +21,7 @@ import LangLeftTable from '../LangLeftTable/LangLeftTable';
 import LangRightTable from '../LangRightTable/LangRightTable';
 
 const LangTransfer = (props) => {
-    const {leftLang, rightLang} = props
+    const { leftLang, rightLang } = props
     let [currentLang, setCurrentLang] = useState([])
     const dispatch = useDispatch()
     return (
@@ -57,7 +57,7 @@ const LangTransfer = (props) => {
                     </Button>
                 </Grid>
                 <Grid item md={5}>
-                    <LangRightTable rightLang={rightLang} />
+                    <LangRightTable rightLang={rightLang} type={"score"} />
                 </Grid>
             </Grid>
         </>

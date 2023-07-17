@@ -19,7 +19,7 @@ import Plot from 'react-plotly.js';
 import ScoreTable from '../Page_Company_Interview_Id_Start/ScoreTable/ScoreTable';
 import RadarPlot from './RadarPlot/RadarPlot';
 import QuestionTable from './QuestionTable/QuestionTable';
-
+import NoteField from './NoteField/NoteField';
 const Page_Company_Interview_Id = () => {
     const dispatch = useDispatch()
     useEffect(() => {
@@ -32,14 +32,14 @@ const Page_Company_Interview_Id = () => {
             <>
                 <Grid container spacing={5}>
                     <Grid item md={6}>
-
+                        <NoteField note={interview.note} />
                     </Grid>
                     <Grid item md={6}>
                         <QuestionTable round={interview.round} />
                     </Grid>
                 </Grid>
-                <Box sx={{ border: "1px solid black", marginTop: 5 }}>
-                    <Grid container spacing={5}>
+                <Box sx={{ border: "1px solid black", marginTop: 5, padding: 5, borderRadius: 5 }}>
+                    <Grid container>
                         <Grid item md={6}>
                             <RadarPlot allResult={interview.round} />
                         </Grid>

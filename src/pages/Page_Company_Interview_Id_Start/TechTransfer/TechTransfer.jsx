@@ -66,7 +66,8 @@ const TechTransfer = (props) => {
                     rightTech={rightTech}
                     setCurrentTech={setCurrentTech}
                     currentTechTab={currentTechTab}
-                    setCurrentTechTab={setCurrentTechTab} />
+                    setCurrentTechTab={setCurrentTechTab}
+                    type={"score"} />
             </Grid>
         </Grid>
     )

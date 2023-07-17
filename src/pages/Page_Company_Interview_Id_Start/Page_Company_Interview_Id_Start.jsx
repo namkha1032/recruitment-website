@@ -62,7 +62,7 @@ export default function Page_Company_Interview_Id_Start() {
     return (
         leftSoft ?
             <form autoComplete='off' onSubmit={handleSubmit}>
-                <Box sx={{ border: "1px solid black", borderRadius: 10 }}>
+                <Box sx={{ border: "1px solid black", borderRadius: 4 }}>
                     <CateTab currentCateTab={currentCateTab} setCurrentCateTab={setCurrentCateTab} />
                     {/* Soft Skill Questions */}
                     {currentCateTab == 0

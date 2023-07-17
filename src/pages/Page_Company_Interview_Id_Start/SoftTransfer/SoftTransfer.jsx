@@ -57,7 +57,7 @@ const SoftTransfer = (props) => {
                     </Button>
                 </Grid>
                 <Grid item md={5}>
-                    <SoftRightTable rightSoft={rightSoft} />
+                    <SoftRightTable rightSoft={rightSoft} type={"score"} />
                 </Grid>
             </Grid>
         </>

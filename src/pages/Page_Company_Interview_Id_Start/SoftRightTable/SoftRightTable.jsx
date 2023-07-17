@@ -18,7 +18,7 @@ import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
 
 const SoftRightTable = (props) => {
-    let { rightSoft } = props
+    let { rightSoft, type } = props
     const dispatch = useDispatch()
     return (
         <>
@@ -46,6 +46,9 @@ const SoftRightTable = (props) => {
                                                 newScore: parseFloat(event.target.value)
                                             }
                                             dispatch({ type: "question/updateNewSoftLangScore", payload: newQues })
+                                        }}
+                                        InputProps={{
+                                            readOnly: type == "score" ? false : true,
                                         }} />
                                 </Box>
                             )

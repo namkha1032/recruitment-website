@@ -27,7 +27,7 @@ const QuestionTable = (props) => {
     let [currentTechTab, setCurrentTechTab] = useState(0);
     return (
         <>
-            <Box sx={{ border: "1px solid black", borderRadius: 10 }}>
+            <Box sx={{ border: "1px solid black", borderRadius: 4 }}>
                 <CateTab currentCateTab={currentCateTab} setCurrentCateTab={setCurrentCateTab} />
                 {/* Soft Skill Questions */}
                 {currentCateTab == 0
