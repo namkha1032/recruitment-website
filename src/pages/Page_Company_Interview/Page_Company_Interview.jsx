@@ -19,7 +19,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import FlagIcon from "@mui/icons-material/Flag";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
+import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import datasjson from "./Page_Company_Interview_Data.json";
 import { useNavigate } from "react-router-dom";
@@ -76,31 +76,34 @@ export default function Page_Company_Interview() {
   const navigate = useNavigate();
 
   const [rows, setRows] = useState(datasjson);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [valueSearch, setValueSearch] = useState("");
+  
+  // const [anchorEl, setAnchorEl] = useState(null);
+  
+  // const [valueSearch, setValueSearch] = useState("");
+  
   const [valueChoose, setValueChoose] = useState(null);
   const [departmentChoose, setDepartmentChoose] = useState(null);
   const [statusChoose, setStatusChoose] = useState(null);
 
-  function handleMoreClick(event) {
-    setAnchorEl(event.currentTarget);
-  }
+  // function handleMoreClick(event) {
+  //   setAnchorEl(event.currentTarget);
+  // }
 
-  function handleClose() {
-    setAnchorEl(null);
-  }
+  // function handleClose() {
+  //   setAnchorEl(null);
+  // }
 
   function handleRowClick(id) {
     alert("Navigate to position id: " + id);
   }
 
-  function handleAddClick() {
-    navigate("./create");
-  }
+  // function handleAddClick() {
+  //   navigate("./create");
+  // }
 
-  function handleSearchClick() {
-    alert("Value search: " + valueSearch);
-  }
+  // function handleSearchClick() {
+  //   alert("Value search: " + valueSearch);
+  // }
 
   function handleChooseValue(value) {
     setValueChoose(value);
@@ -277,7 +280,7 @@ export default function Page_Company_Interview() {
           </Box>
         </Grid>
 
-        <Grid
+        {/* <Grid
           item
           xs={12}
           md={4}
@@ -335,7 +338,7 @@ export default function Page_Company_Interview() {
               <FlagIcon sx={{ mr: 1.75 }} /> Báo lỗi
             </MenuItem>
           </Menu>
-        </Grid>
+        </Grid> */}
 
         <Grid
           item
@@ -373,7 +376,7 @@ export default function Page_Company_Interview() {
           )}
         </Grid>
 
-        <Grid
+        {/* <Grid
           item
           xs={12}
           md={5}
@@ -407,7 +410,7 @@ export default function Page_Company_Interview() {
               <SearchIcon />
             </IconButton>
           </Box>
-        </Grid>
+        </Grid> */}
       </Grid>
 
       <Box
@@ -420,6 +423,9 @@ export default function Page_Company_Interview() {
           columns={columns}
           rows={rows}
           sx={{
+            "&.MuiDataGrid-root": {
+              borderRadius: 1,
+            },
             "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
               outline: "none",
             },
@@ -429,15 +435,27 @@ export default function Page_Company_Interview() {
               fontWeight: 700,
             },
           }}
-          // localeText={localeVN}
+          slots={{ toolbar: GridToolbar }}
           slotProps={{
             pagination: {
               labelRowsPerPage: "Số lượng hiển thị",
               labelDisplayedRows: ({ from, to, count }) =>
                 `${from}–${to} của ${count !== -1 ? count : `hơn ${to}`}`,
             },
+            toolbar: {
+              showQuickFilter: true,
+              quickFilterProps: { debounceMs: 500, placeholder: "Tìm kiếm...", sx: {
+                width: 300,
+                marginBottom: 1,
+              }},
+              csvOptions: { disableToolbarButton: true },
+              printOptions: { disableToolbarButton: true }
+          },
           }}
           disableColumnMenu
+          disableColumnFilter
+          disableColumnSelector
+          disableDensitySelector
           pagination
           pageSizeOptions={[5, 10, 25, 50, 100]}
           initialState={{
