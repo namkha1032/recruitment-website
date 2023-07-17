@@ -1,5 +1,6 @@
 import {
   CameraAltOutlined,
+  ContentPaste,
   Edit,
   Home,
   PermContactCalendar,
@@ -219,6 +220,18 @@ const Profile = () => {
                           0123456789
                         </Box>
                       </Box>
+                      <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginTop: "12px",
+                      }}
+                      >
+                        <ContentPaste/>
+                        <Box component="h6" sx={{ margin: "0px 0px 0px 8px" }}>
+                          CV1
+                        </Box>
+                      </Box>
                     </Box>
                   </Box>
                 </Paper>
@@ -226,7 +239,7 @@ const Profile = () => {
               <Grid item md={7} xs={12}>
                 <Paper sx={{ marginBottom: "24px", padding: "16px" }}>
                   <Box component="h4" sx={{ margin: 0 }}>
-                    CV
+                    CV1
                   </Box>
                   <Box sx={{ mt: "16px" }}>
                     <Box
