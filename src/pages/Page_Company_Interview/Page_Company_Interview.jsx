@@ -12,7 +12,6 @@ import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import DoNotDisturbOnIcon from "@mui/icons-material/DoNotDisturbOn";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import GetAppIcon from "@mui/icons-material/GetApp";
