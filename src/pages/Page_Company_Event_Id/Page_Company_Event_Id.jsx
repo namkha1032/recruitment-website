@@ -65,6 +65,7 @@ const Page_Company_Event_Id = () => {
     }
 
 
+    // useNavigate
     const navigate = useNavigate()
 
 
