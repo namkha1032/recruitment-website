@@ -53,7 +53,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainLayout />}>
-            
+
             <Route path="/company/account" element={<Page_Company_Account />} />
             <Route path="/company/account/blacklist" element={<Page_Company_Account_Blacklist />} />
             <Route path="/company/account/create" element={<Page_Company_Account_Create />} />
