@@ -1,8 +1,11 @@
-import { Typography } from "@mui/material";
+import CVForm from "./Child/CVForm"
+import "./UpdateCv.scss"
 
 const Page_Profile_Id_Cv_Id_Update = () => {
-    return (
-        <Typography variant="body1">Page_Profile_Id_Cv_Id_Update</Typography>
+    return(
+        <div className="UpdateCV">
+            <CVForm></CVForm>
+        </div>
     )
 }
 
