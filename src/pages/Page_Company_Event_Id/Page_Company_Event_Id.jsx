@@ -12,7 +12,7 @@ import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import EditIcon from '@mui/icons-material/Edit';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
-import PlagiarismIcon from '@mui/icons-material/Plagiarism';
+import FindInPageIcon from '@mui/icons-material/FindInPage';
 
 
 const columns = [
@@ -27,7 +27,7 @@ const columns = [
     align: 'center',
     getActions: (params) => [
           <GridActionsCellItem
-            icon={<PlagiarismIcon></PlagiarismIcon>}
+            icon={<FindInPageIcon></FindInPageIcon>}
             label="Detail"
             onClick={() => alert("Navigate to user id: " + params.row.id)}/>]
     }
@@ -60,7 +60,11 @@ const Page_Company_Event_Id = () => {
         setValue(newValue);
     }
 
-    const handleClick = (e) => {
+    const handleRegister = (e) => {
+        alert("Register successfully!");
+    }
+
+    const handleEdit = (e) => {
         navigate("/company/event/:eventid/update");
     }
 
@@ -71,8 +75,7 @@ const Page_Company_Event_Id = () => {
 
     return (
         <Container sx={{ p: 0 }} className='companyeventid'>
-            <Typography variant='h4' align='center' sx={{ fontWeight: 600, color: 'slateblue' }}>Sự kiện 1</Typography>
-
+            <Typography variant='h4' align='center' sx={{ fontWeight: 600, color: '#1565C0' }}>Sự kiện 1</Typography>
             <Grid container>
 
                 <Grid item md={6} sm={12} sx={{ mt: 8 }}>
@@ -105,7 +108,7 @@ const Page_Company_Event_Id = () => {
                                 }} 
                                 style={{ 
                                     border: '0px solid black', 
-                                    background: 'lightblue', 
+                                    background: 'lightgray', 
                                     margin: 0.5, 
                                     filter: 'drop-shadow(0 0 10px black)' 
                                 }}>
@@ -140,11 +143,11 @@ const Page_Company_Event_Id = () => {
                                     <Box className='content' p={3}>Location</Box>
                                 </Grid>
                                 <Grid item xs={12} align='right'>
-                                    <Button variant='contained' size='small' className='btnregister' sx={{ mx: 2 }}>
+                                    <Button variant='contained' size='small' className='btnregister' sx={{ mx: 2 }} onClick={handleRegister}>
                                         <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon>
                                         Đăng ký
                                     </Button>
-                                    <Button variant='contained' size='small' color='success' onClick={handleClick}>
+                                    <Button variant='contained' size='small' color='success' onClick={handleEdit}>
                                         <EditIcon sx={{ marginRight: 0.5 }}></EditIcon>
                                         Chỉnh sửa
                                     </Button>
@@ -153,7 +156,7 @@ const Page_Company_Event_Id = () => {
                         </TabPanel>
 
                         <TabPanel value='2' sx={{ p: 2 }}>
-                            <div style={{ height: 500, width: '100%' }}>
+                            <div style={{ height: 525, width: '100%' }}>
                                 {/* Data Grid */}
                                 <DataGrid 
                                     rows={rows} 

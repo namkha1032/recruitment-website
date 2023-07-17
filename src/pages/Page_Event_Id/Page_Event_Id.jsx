@@ -6,10 +6,28 @@ import { Button } from '@mui/material'
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 
 
+
 const Page_Event_Id = () => {
+
+
+    // handle events
+    const handleRegister = (e) => {
+        alert("Register successfully!");
+    }
+
+
     return (
-        <Container sx={{ p: 1 }} className='eventid'>
-            <Typography variant='h4' align='center' sx={{ fontWeight: 600, color: 'slateblue' }}>Sự kiện 1</Typography>
+        <Container sx={{ p: 0 }} className='eventid'>
+            <Box sx={{ 
+                fontSize: 39, 
+                fontWeight: 600, 
+                color: '#1565C0', 
+                display: 'flex', 
+                justifyContent: 'center' 
+            }}>
+                Sự kiện 1
+            </Box>
+
             <Grid container sx={{mt: 1}}>
                 <Grid item md={6} sm={12} sx={{ p: 1 }}>
                         <img src="https://file1.hutech.edu.vn/file/news/2-1569353757.jpg" 
@@ -20,6 +38,7 @@ const Page_Event_Id = () => {
                             border: '5px solid #555' 
                         }}/>
                 </Grid>
+
                 <Grid item md={6} sm={12} sx={{ p: 1 }}>
                     <Grid container spacing={2.5} 
                         sx={{ 
@@ -30,46 +49,58 @@ const Page_Event_Id = () => {
                         }} 
                         style={{ 
                             border: '0px solid black', 
-                            background: 'lightblue', 
+                            background: 'lightgray', 
                             margin: 0.5, 
                             filter: 'drop-shadow(0 0 10px black)' 
                         }}>
+
                         <Grid item md={5} sm={6} xs={7}>
                             <Typography variant='span' className='header'>Tên sự kiện</Typography>
                         </Grid>
+
                         <Grid item md={7} sm={6} xs={5}>
                             <Box className='content' p={3}>Code War</Box>
                         </Grid>
+
                         <Grid item md={5} sm={6} xs={7}>
                             <Typography variant='span' className='header'>Nội dung</Typography>
                         </Grid>
+
                         <Grid item md={7} sm={6} xs={5}>
                             <Box className='content' p={3}>Code War là một sự kiện thú vị đến từ FPT Software</Box>
                         </Grid>
+
                         <Grid item md={5} sm={6} xs={7}>
                             <Typography variant='span' className='header'>Số lượng đã tham gia</Typography>
                         </Grid>
+
                         <Grid item md={7} sm={6} xs={5}>
                             <Box className='content' p={3}>500/1000</Box>
                         </Grid>
+
                         <Grid item md={5} sm={6} xs={7}>
                             <Typography variant='span' className='header'>Thời gian</Typography>
                         </Grid>
+
                         <Grid item md={7} sm={6} xs={5}>
                             <Box className='content' p={3}>Date time</Box>
                         </Grid>
+
                         <Grid item md={5} sm={6} xs={7}>
                             <Typography variant='span' className='header'>Địa điểm</Typography>
                         </Grid>
+
                         <Grid item md={7} sm={6} xs={5}>
                             <Box className='content' p={3}>Location</Box>
                         </Grid>
+
                         <Grid item xs={12} align='right'>
-                            <Button variant="contained" size='small' className='btnregister'>
+                            <Button variant="contained" size='small' className='btnregister' onClick={handleRegister}>
                                 <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon>
                                 Đăng ký
                             </Button>
                         </Grid>
+
                     </Grid>
                 </Grid>
             </Grid>
