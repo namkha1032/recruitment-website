@@ -1,0 +1,42 @@
+[
+    {
+        "shiftid": 1,
+        "shiftstart": "08:00:00",
+        "shiftend": "09:00:00"
+    },
+    {
+        "shiftid": 2,
+        "shiftstart": "09:00:00",
+        "shiftend": "10:00:00"
+    },
+    {
+        "shiftid": 3,
+        "shiftstart": "10:00:00",
+        "shiftend": "11:00:00"
+    },
+    {
+        "shiftid": 4,
+        "shiftstart": "11:00:00",
+        "shiftend": "12:00:00"
+    },
+    {
+        "shiftid": 5,
+        "shiftstart": "13:00:00",
+        "shiftend": "14:00:00"
+    },
+    {
+        "shiftid": 6,
+        "shiftstart": "14:00:00",
+        "shiftend": "15:00:00"
+    },
+    {
+        "shiftid": 7,
+        "shiftstart": "15:00:00",
+        "shiftend": "16:00:00"
+    },
+    {
+        "shiftid": 8,
+        "shiftstart": "16:00:00",
+        "shiftend": "17:00:00"
+    }
+]

@@ -46,6 +46,7 @@ import XPage_Login from './pages/XPage_Login/XPage_Login';
 import XPage_Register from './pages/XPage_Register/XPage_Register';
 import XPage_Recovery from './pages/XPage_Recovery/XPage_Recovery';
 
+import PageTest from './pages/xpagetest/PageTest';
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function App() {
   return (
@@ -53,7 +54,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainLayout />}>
-            
+
             <Route path="/company/account" element={<Page_Company_Account />} />
             <Route path="/company/account/blacklist" element={<Page_Company_Account_Blacklist />} />
             <Route path="/company/account/create" element={<Page_Company_Account_Create />} />
@@ -92,12 +93,13 @@ function App() {
             <Route path="/recruitment/:recruitmentid" element={<Page_Recruitment_Id />} />
             <Route path="/recruitment/:recruitmentid/application/:applicationid" element={<Page_Recruitment_Id_Application_Id />} />
 
+
+            <Route path="/test" element={<PageTest />} />
           </Route>
 
           <Route path="/login" element={<XPage_Login />} />
           <Route path="/recovery" element={<XPage_Recovery />} />
           <Route path="/register" element={<XPage_Register />} />
-
         </Routes>
       </BrowserRouter>
     </div>

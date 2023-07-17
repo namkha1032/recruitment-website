@@ -1,0 +1,42 @@
+[
+    {
+        "roomid": 1,
+        "roomname": "Room 1"
+    },
+    {
+        "roomid": 2,
+        "roomname": "Room 2"
+    },
+    {
+        "roomid": 3,
+        "roomname": "Room 3"
+    },
+    {
+        "roomid": 4,
+        "roomname": "Room 4"
+    },
+    {
+        "roomid": 5,
+        "roomname": "Room 5"
+    },
+    {
+        "roomid": 6,
+        "roomname": "Room 6"
+    },
+    {
+        "roomid": 7,
+        "roomname": "Room 7"
+    },
+    {
+        "roomid": 8,
+        "roomname": "Room 8"
+    },
+    {
+        "roomid": 9,
+        "roomname": "Room 9"
+    },
+    {
+        "roomid": 10,
+        "roomname": "Room 10"
+    }
+]
