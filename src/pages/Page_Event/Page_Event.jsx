@@ -17,6 +17,24 @@ import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Menu, MenuItem } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+import Pagination from '@mui/material/Pagination';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+//
+const cards1 = [1, 2, 3, 4, 5, 6];
+//
+function Copyright() {
+    return (
+      <Typography variant="body2" color="text.secondary" align="center">
+        {'Copyright © '}
+        <Link color="inherit" href="https://mui.com/">
+          Team 4
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+    );
+  }
+  
 
 const Page_Event = () => {
     return (
@@ -35,10 +53,57 @@ const Page_Event = () => {
         Sự kiện
         </Typography>
       </Box>
-        
-     
       </div>
+
+    <Box sx={{backgroundColor:'black'}}>
+        <Typography variant='h4'>
+            hello
+        </Typography>
+    </Box>
+   
+
+
+   <Container sx={{ py: 8 }} maxWidth="md">
+          {/* End hero unit */
+          <Typography variant='h4' align="left">Sự kiện</Typography>
+          }
+          <Grid container spacing={4}>
+            {cards1.map((card) => (
+              <Grid item key={card} xs={12} sm={6} md={4}>
+                <Card
+                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                >
+                  <CardMedia
+                    component="div"
+                    sx={{
+                      // 16:9
+                      pt: '58.25%',
+                    }}
+                    image="https://source.unsplash.com/random?wallpapers"
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      Event
+                    </Typography>
+                    <Typography>
+                      This is a media card. You can use this section to describe the
+                      content.
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small">View</Button>
+                    <Button size="small">Edit</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+          <Pagination count={10} variant="outlined" color="primary" />
+          
+          </Container>
+
         </>
+
        
 
     )

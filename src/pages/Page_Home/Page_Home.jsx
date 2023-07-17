@@ -14,12 +14,16 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Menu, MenuItem } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+import Carousel from 'react-bootstrap/Carousel';
+import './Page_Home.scss'
+import '../../assets/vendor/swiper/swiper-bundle.min.css'
 
-//
+
 
 const cards1 = [1, 2, 3, 4, 5, 6];
 const cards2 = [1, 2, 3];
@@ -42,14 +46,69 @@ function Copyright() {
       </Typography>
     );
   }
-//
-const Page_Home = () => {
 
+const Page_Home = () => {
+  const navigate = useNavigate()
+  const handleNavigateClick = ()=>{
+   navigate('/event')
+  }
+  const handleNavigateClick1 = ()=>{
+    navigate('/recruitment')
+   }
     return (
+      
+      <>
+      <Carousel className="Car1">
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="https://bootstrapmade.com/demo/templates/ZenBlog/assets/img/post-landscape-6.jpg"
+          alt="First slide"
+        />
+        <Carousel.Caption>
+          <a>
+          <h3>About us</h3>
+          </a>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="https://bootstrapmade.com/demo/templates/ZenBlog/assets/img/post-landscape-5.jpg"
+          alt="Second slide"
+        />
+
+        <Carousel.Caption>
+          <h3 onClick={handleNavigateClick1}>Recruitment</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="https://bootstrapmade.com/demo/templates/ZenBlog/assets/img/post-landscape-1.jpg"
+          alt="Third slide"
+        />
+
+        <Carousel.Caption>
+          <h3 onClick={handleNavigateClick}>View event</h3>
+          <p>
+            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+          </p>
+        </Carousel.Caption>
+      </Carousel.Item>
+    </Carousel>
+
+    <Grid container spacing={1}>
+      
+    </Grid>
+      
+<main>    
         <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
       
-    <main>
+    
         {/* Hero unit */}
         <Box
           sx={{
@@ -58,6 +117,8 @@ const Page_Home = () => {
             pb: 6,
           }}
         >
+           
+ 
           <Container maxWidth="sm">
             <Typography
               component="h1"
@@ -70,15 +131,17 @@ const Page_Home = () => {
               
             </Typography>
             
-            {/* <Stack
+            { <Stack
               sx={{ pt: 4 }}
               direction="row"
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained">Sự kiện</Button>
-              <Button variant="contained">Thông tin tuyển dụng</Button>
-            </Stack> */}
+              <Button variant="contained" onClick={handleNavigateClick}>
+                
+              Sự kiện</Button>
+              <Button variant="contained" onClick={handleNavigateClick1}>Thông tin tuyển dụng</Button>
+            </Stack> }
           </Container>
         </Box>
         <Container sx={{ py: 8 }} maxWidth="md">
@@ -151,7 +214,7 @@ const Page_Home = () => {
             ))}
           </Grid>
         </Container>
-      </main>
+        
        {/* Footer */}
        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
@@ -169,6 +232,9 @@ const Page_Home = () => {
       </Box>
       {/* End footer */}
     </ThemeProvider>
+    </main>
+  </>
+
     )
 }
 
