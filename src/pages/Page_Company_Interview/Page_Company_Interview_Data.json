@@ -1,0 +1,93 @@
+[
+    {
+      "id": 1,
+      "InterviewerName": "Nguyễn Văn A",
+      "InterviewerId": 1234,
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 1,
+      "StartTime": "11/07/2023, 09:00 AM",
+      "EndTime": "11/07/2023, 09:30 AM",
+      "Status": true
+    },
+    {
+      "id": 2,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 12,
+      "StartTime": "11/07/2023, 09:00 AM",
+      "EndTime": "11/07/2023, 09:30 AM",
+      "Status": false
+    },
+    {
+      "id": 333,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 1345,
+      "StartTime": "11/07/2023, 09:00 AM",
+      "EndTime": "11/07/2023, 09:30 AM",
+      "Status": true
+    },
+    {
+      "id": 4,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 1,
+      "StartTime": "11/07/2023, 09:00 AM",
+      "EndTime": "11/07/2023, 09:30 AM",
+      "Status": false
+    },
+    {
+      "id": 5,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 1,
+      "StartTime": "11/07/2023, 09:00 AM",
+      "EndTime": "11/07/2023, 09:30 AM",
+      "Status": false
+    },
+    {
+      "id": 6666,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 2221,
+      "StartTime": "11/07/2023, 09:00 AM",
+      "EndTime": "11/07/2023, 09:30 AM",
+      "Status": true
+    },
+    {
+      "id": 7,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 190,
+      "StartTime": "11/07/2023, 09:00 AM",
+      "EndTime": "11/07/2023, 09:30 AM",
+      "Status": false
+    },
+    {
+      "id": 88,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 1,
+      "StartTime": "11/07/2023, 09:00 AM",
+      "EndTime": "11/07/2023, 09:30 AM",
+      "Status": true
+    },
+    {
+      "id": 9,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 1,
+      "StartTime": "11/07/2023, 09:00 AM",
+      "EndTime": "11/07/2023, 09:30 AM",
+      "Status": false
+    },
+    {
+      "id": 10,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 1,
+      "StartTime": "11/07/2023, 09:00 AM",
+      "EndTime": "11/07/2023, 09:30 AM",
+      "Status": false
+    }
+]

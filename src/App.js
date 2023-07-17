@@ -100,6 +100,7 @@ function App() {
           <Route path="/login" element={<XPage_Login />} />
           <Route path="/recovery" element={<XPage_Recovery />} />
           <Route path="/register" element={<XPage_Register />} />
+
         </Routes>
       </BrowserRouter>
     </div>
