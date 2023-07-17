@@ -1,41 +1,50 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   TextField,
   Button,
   Typography,
-  Link,
   Box,
   Container,
-  InputAdornment,
-  Checkbox,
-  FormControlLabel,
 } from "@mui/material";
 
-import EmailIcon from "@mui/icons-material/Email";
-import LockIcon from "@mui/icons-material/Lock";
-import image from "./login_icon.png";
+import image from "./change_password.png";
 import imageBackground from "./background.jpg";
 
 const style = {
   marginTop: "15px",
   marginBottom: "15px",
 };
-const XPage_Login = () => {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(email, password);
-    navigate("/");
+const CheckOTP = ({ otp, onChangeOTP, handleSubmit }) => {
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(10);
+
+  const Resend = () => {
+    setMinutes(0);
+    setSeconds(11);
   };
 
-  const handleCheck = (event) => {
-    console.log(event.target.checked);
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds((seconds) => seconds - 1);
+      }
+
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(interval);
+        } else {
+          setSeconds(59);
+          setMinutes((minutes) => minutes - 1);
+        }
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [seconds, minutes]);
 
   return (
     <Box
@@ -86,48 +95,30 @@ const XPage_Login = () => {
                 right: "20%",
               }}
             >
+              <Grid
+                item
+                xs={12}
+                sx={{ ...style, display: "flex", justifyContent: "center" }}
+              >
+                <Typography variant="h5" align="center">
+                  OTP Verification
+                </Typography>
+              </Grid>
+
               <form onSubmit={handleSubmit}>
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
                     required
-                    label="Email"
-                    type="email"
-                    value={email}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <EmailIcon />
-                        </InputAdornment>
-                      ),
-
-                      style: { borderRadius: "25px" },
-                    }}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
-                  />
-                </Grid>
-
-                <Grid item xs={12} md={12} sx={{ ...style }}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Password"
-                    type="password"
-                    value={password}
+                    label="OTP"
+                    type="text"
+                    value={otp}
                     variant="outlined"
                     InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <LockIcon />
-                        </InputAdornment>
-                      ),
-
                       style: { borderRadius: "25px" },
                     }}
                     onChange={(e) => {
-                      setPassword(e.target.value);
+                      onChangeOTP(e.target.value);
                     }}
                   />
                 </Grid>
@@ -135,29 +126,37 @@ const XPage_Login = () => {
                 <Grid
                   item
                   xs={12}
-                  md={12}
                   sx={{ ...style, display: "flex", justifyContent: "center" }}
                 >
-                  <Grid item xs={6} md={6} paddingLeft="5px">
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          defaultChecked
-                          color="primary"
-                          onClick={handleCheck}
-                        />
-                      }
-                      label="Remember me"
-                      align="left"
-                    />
+                  <Grid
+                    item
+                    xs={6}
+                    md={6}
+                    paddingLeft="5px"
+                    align="left"
+                    display="flex"
+                    justifyContent="left"
+                    alignItems="center"
+                  >
+                    {seconds > 0 || minutes > 0 ? (
+                      <Typography variant="p">
+                        Time Remaining: {minutes > 10 ? `0${minutes}` : minutes}
+                        :{seconds < 10 ? `0${seconds}` : seconds}
+                      </Typography>
+                    ) : (
+                      <Typography variant="p">Didn't receive OTP?</Typography>
+                    )}
                   </Grid>
 
-                  <Grid item xs={6} md={6} paddingRight="5px">
-                    <Link href="/recovery">
-                      <Typography paddingTop="8px" align="right">
-                        Forgot password ?
-                      </Typography>
-                    </Link>
+                  <Grid item xs={6} md={6} paddingRight="5px" align="right">
+                    <Button
+                      variant="text"
+                      disabled={seconds > 0 || minutes > 0}
+                      height="5px"
+                      onClick={Resend}
+                    >
+                      Resend OTP
+                    </Button>
                   </Grid>
                 </Grid>
 
@@ -180,17 +179,6 @@ const XPage_Login = () => {
                   </Button>
                 </Grid>
               </form>
-
-              <Grid
-                item
-                xs={12}
-                sx={{ ...style, display: "flex", justifyContent: "center" }}
-              >
-                <Typography variant="small" align="center">
-                  Didn't have account?{" "}
-                  <Link href="/register">Click here to register</Link>
-                </Typography>
-              </Grid>
             </Grid>
           </Grid>
         </Grid>
@@ -199,4 +187,4 @@ const XPage_Login = () => {
   );
 };
 
-export default XPage_Login;
+export default CheckOTP;

@@ -1,20 +1,16 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import {
   Grid,
   TextField,
   Button,
   Typography,
-  Link,
   Box,
   Container,
   InputAdornment,
 } from "@mui/material";
 
-import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-import image from "./login_icon.png";
+import image from "./change_password.png";
 import imageBackground from "./background.jpg";
 
 const style = {
@@ -22,21 +18,13 @@ const style = {
   marginBottom: "15px",
 };
 
-const XPage_Register = () => {
-  const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const Role = "candidate";
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    console.log(name, email, password, Role);
-
-    navigate("/login");
-  };
-
+const ResetPassword = ({
+  newPassword,
+  confirmPassword,
+  onChangeNewPassword,
+  onChangeConfirmPassword,
+  handleSubmit,
+}) => {
   return (
     <Box
       sx={{
@@ -86,58 +74,46 @@ const XPage_Register = () => {
                 right: "20%",
               }}
             >
+              <Grid
+                item
+                xs={12}
+                sx={{ ...style, display: "flex", justifyContent: "center" }}
+              >
+                <Typography variant="h5" align="center">
+                  Enter your new password
+                </Typography>
+              </Grid>
+
               <form onSubmit={handleSubmit}>
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
                     required
-                    label="Name"
-                    type="text"
-                    value={name}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <PersonRoundedIcon />
-                        </InputAdornment>
-                      ),
-
-                      style: { borderRadius: "25px" },
-                    }}
-                    onChange={(e) => {
-                      setName(e.target.value);
-                    }}
-                  />
-                </Grid>
-
-                <Grid item xs={12} md={12} sx={{ ...style }}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Email"
-                    type="email"
-                    value={email}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <EmailIcon />
-                        </InputAdornment>
-                      ),
-
-                      style: { borderRadius: "25px" },
-                    }}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
-                  />
-                </Grid>
-
-                <Grid item xs={12} md={12} sx={{ ...style }}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Password"
+                    label="New Password"
                     type="password"
-                    value={password}
+                    value={newPassword}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <LockIcon />
+                        </InputAdornment>
+                      ),
+
+                      style: { borderRadius: "25px" },
+                    }}
+                    onChange={(e) => {
+                      onChangeNewPassword(e.target.value);
+                    }}
+                  />
+                </Grid>
+
+                <Grid item xs={12} md={12} sx={{ ...style }}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Confirm Password"
+                    type="password"
+                    value={confirmPassword}
                     variant="outlined"
                     InputProps={{
                       endAdornment: (
@@ -149,9 +125,8 @@ const XPage_Register = () => {
                       style: { borderRadius: "25px" },
                     }}
                     onChange={(e) => {
-                      setPassword(e.target.value);
+                      onChangeConfirmPassword(e.target.value);
                     }}
-                    /* sx={{ backgroundColor: "white" }} */
                   />
                 </Grid>
 
@@ -170,21 +145,10 @@ const XPage_Register = () => {
                       marginTop: "15px",
                     }}
                   >
-                    Register
+                    Reset
                   </Button>
                 </Grid>
               </form>
-
-              <Grid
-                item
-                xs={12}
-                sx={{ ...style, display: "flex", justifyContent: "center" }}
-              >
-                <Typography variant="small" align="center">
-                  Already have account?{" "}
-                  <Link href="/login">Click here to login</Link>
-                </Typography>
-              </Grid>
             </Grid>
           </Grid>
         </Grid>
@@ -193,4 +157,4 @@ const XPage_Register = () => {
   );
 };
 
-export default XPage_Register;
+export default ResetPassword;
