@@ -97,7 +97,8 @@ export default function QuestionFormModal(props) {
       >
         <Box
           sx={{
-            width: "45%",
+            maxWidth: 600,
+            width: "80%",
             backgroundColor: "white",
             borderRadius: 3,
           }}
