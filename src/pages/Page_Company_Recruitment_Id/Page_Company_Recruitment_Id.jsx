@@ -5,7 +5,7 @@ import Info_view from "../../components/View_recruitment/Info_view"
 import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import {useNavigate } from 'react-router-dom';
 import "./Page_Company_Recruitment_Id.css"
-
+//// update final
 function QuickSearchToolbar() {
     return (
         <Box
