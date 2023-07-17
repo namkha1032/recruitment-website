@@ -34,7 +34,7 @@ import Page_Profile_Id from './pages/Page_Profile_Id/Page_Profile_Id';
 import Page_Profile_Id_Application from './pages/Page_Profile_Id_Application/Page_Profile_Id_Application';
 import Page_Profile_Id_ChangePassword from './pages/Page_Profile_Id_ChangePassword/Page_Profile_Id_ChangePassword';
 import Page_Profile_Id_Cv from './pages/Page_Profile_Id_Cv/Page_Profile_Id_Cv';
-import Page_Profile_Id_Cv_Id from './pages/Page_Profile_Id_Cv_Id/Page_Profile_Id_Cv';
+import Page_Profile_Id_Cv_Id from './pages/Page_Profile_Id_Cv_Id/Page_Profile_Id_Cv_Id';
 import Page_Profile_Id_Cv_Id_Update from './pages/Page_Profile_Id_Cv_Id_Update/Page_Profile_Id_Cv_Id_Update';
 import Page_Profile_Id_Event from './pages/Page_Profile_Id_Event/Page_Profile_Id_Event';
 import Page_Profile_Id_Interview from './pages/Page_Profile_Id_Interview/Page_Profile_Id_Interview';
@@ -45,15 +45,18 @@ import Page_Recruitment_Id_Application_Id from './pages/Page_Recruitment_Id_Appl
 import XPage_Login from './pages/XPage_Login/XPage_Login';
 import XPage_Register from './pages/XPage_Register/XPage_Register';
 import XPage_Recovery from './pages/XPage_Recovery/XPage_Recovery';
+import XPage_ChangePassword from './pages/XPage_ChangePassword/XPage_ChangePassword';
 
+import PageTest from './pages/xpagetest/PageTest';
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function App() {
   return (
     <div className="App">
+    a
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainLayout />}>
-            
+
             <Route path="/company/account" element={<Page_Company_Account />} />
             <Route path="/company/account/blacklist" element={<Page_Company_Account_Blacklist />} />
             <Route path="/company/account/create" element={<Page_Company_Account_Create />} />
@@ -92,6 +95,9 @@ function App() {
             <Route path="/recruitment/:recruitmentid" element={<Page_Recruitment_Id />} />
             <Route path="/recruitment/:recruitmentid/application/:applicationid" element={<Page_Recruitment_Id_Application_Id />} />
 
+            <Route path="/change-password" element={<XPage_ChangePassword />} />
+
+            <Route path="/test" element={<PageTest />} />
           </Route>
 
           <Route path="/login" element={<XPage_Login />} />

@@ -36,7 +36,6 @@ const CvList = [
         ]
     }
 ]
-
 const style = { border: '1px solid #000', borderRadius: '10px' }
 const Page_Company_Recruitment_Id_Application_Id = () => {
     return (

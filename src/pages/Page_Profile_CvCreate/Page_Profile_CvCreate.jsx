@@ -1,8 +1,12 @@
-import { Typography } from "@mui/material";
+
+import CVForm from "./Child/CVForm"
+import "./CreateCV.scss"
 
 const Page_Profile_CvCreate = () => {
-    return (
-        <Typography variant="body1">Page_Profile_CvCreate</Typography>
+    return(
+        <div className="CreateCV">
+            <CVForm></CVForm>
+        </div>
     )
 }
 
