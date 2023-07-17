@@ -40,9 +40,9 @@ function MainLayout() {
             <Sidebar open={showSidebar ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} />
             <Main open={showSidebar ? open : false}>
                 <DrawerHeader />
-
-                    <Outlet/>
-                
+                <Container>
+                    <Outlet />
+                </Container>
             </Main>
         </Box>
     );

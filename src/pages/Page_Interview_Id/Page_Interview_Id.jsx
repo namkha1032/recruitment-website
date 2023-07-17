@@ -2,8 +2,8 @@ import { Typography } from "@mui/material"
 import Grid from "@mui/material/Grid"
 import { Box } from "@mui/material"
 import './Page_Interview_Id.css'
-import Page_Profile_Id_Cv_Id from "../Page_Profile_Id_Cv_Id/Page_Profile_Id_Cv"
-
+// import Page_Profile_Id_Cv_Id from "../Page_Profile_Id_Cv_Id/Page_Profile_Id_Cv"
+import CV from "../../components/CV/CV"
 
 const styleofbox = {
     borderRadius: "8px",
@@ -52,7 +52,7 @@ const Page_Interview_Id = () => {
         <>
             <Grid container spacing={2}>
                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <Typography variant="h3" sx={{ fontWeight: "bold", fontFamily: "Times New Roman", fontStyle: "italic"  }}>
+                    <Typography variant="h3" sx={{ fontWeight: "bold", fontFamily: "Times New Roman", fontStyle: "italic" }}>
                         Detail of the interview
                     </Typography>
                 </Grid>
@@ -145,7 +145,8 @@ const Page_Interview_Id = () => {
                     </Box>
                 </Grid>
                 <Grid item xs={6}>
-                    <Page_Profile_Id_Cv_Id />
+                    {/* <Page_Profile_Id_Cv_Id /> */}
+                    <CV />
                 </Grid>
             </Grid>
 

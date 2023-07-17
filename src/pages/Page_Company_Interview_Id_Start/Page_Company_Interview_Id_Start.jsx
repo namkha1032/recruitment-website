@@ -61,59 +61,61 @@ export default function Page_Company_Interview_Id_Start() {
     }
     return (
         leftSoft ?
-            <form autoComplete='off' onSubmit={handleSubmit}>
-                <Box sx={{ border: "1px solid black", borderRadius: 4 }}>
-                    <CateTab currentCateTab={currentCateTab} setCurrentCateTab={setCurrentCateTab} />
-                    {/* Soft Skill Questions */}
-                    {currentCateTab == 0
-                        ? <SoftTransfer leftSoft={leftSoft} rightSoft={rightSoft} />
-                        : null}
-                    {/* Language Skill */}
-                    {currentCateTab == 1
-                        ? <LangTransfer leftLang={leftLang} rightLang={rightLang} />
-                        : null}
-                    {/* Technical Questions */}
-                    {currentCateTab == 2
-                        ? <TechTransfer leftTech={leftTech} rightTech={rightTech} />
-                        : null}
-                </Box>
-                {/* Note and mark */}
-                <Grid container sx={{ marginTop: 5 }} columnSpacing={5}>
-                    <Grid item md={6}>
-                        <TextField
-                            label="Note"
-                            placeholder="Note"
-                            multiline
-                            fullWidth
-                            variant="outlined"
-                            value={note}
-                            onChange={event => setNote(event.target.value)}
-                            rows={11}
-                            sx={{
-                                "&": {
-                                    height: "100%"
-                                },
-                                "& .MuiInputBase-root": {
-                                    height: "100%",
-                                    borderRadius: 5,
-                                    border: "1px solid black"
-                                }
-                            }}
-                        />
+            <>
+                <form autoComplete='off' onSubmit={handleSubmit}>
+                    <Box sx={{ border: "1px solid black", borderRadius: 4 }}>
+                        <CateTab currentCateTab={currentCateTab} setCurrentCateTab={setCurrentCateTab} />
+                        {/* Soft Skill Questions */}
+                        {currentCateTab == 0
+                            ? <SoftTransfer leftSoft={leftSoft} rightSoft={rightSoft} />
+                            : null}
+                        {/* Language Skill */}
+                        {currentCateTab == 1
+                            ? <LangTransfer leftLang={leftLang} rightLang={rightLang} />
+                            : null}
+                        {/* Technical Questions */}
+                        {currentCateTab == 2
+                            ? <TechTransfer leftTech={leftTech} rightTech={rightTech} />
+                            : null}
+                    </Box>
+                    {/* Note and mark */}
+                    <Grid container sx={{ marginTop: 5 }} columnSpacing={5}>
+                        <Grid item md={6}>
+                            <TextField
+                                label="Note"
+                                placeholder="Note"
+                                multiline
+                                fullWidth
+                                variant="outlined"
+                                value={note}
+                                onChange={event => setNote(event.target.value)}
+                                rows={11}
+                                sx={{
+                                    "&": {
+                                        height: "100%"
+                                    },
+                                    "& .MuiInputBase-root": {
+                                        height: "100%",
+                                        borderRadius: 5,
+                                        border: "1px solid black"
+                                    }
+                                }}
+                            />
+                        </Grid>
+                        <Grid item md={6}>
+                            <Card variant="outlined" sx={{ border: "1px solid black", borderRadius: 5 }}>
+                                <CardHeader title="Final Score" />
+                                <CardContent>
+                                    <ScoreTable allResult={allQuestion.right} />
+                                </CardContent>
+                            </Card>
+                        </Grid>
                     </Grid>
-                    <Grid item md={6}>
-                        <Card variant="outlined" sx={{ border: "1px solid black", borderRadius: 5 }}>
-                            <CardHeader title="Final Score" />
-                            <CardContent>
-                                <ScoreTable allResult={allQuestion.right} />
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                </Grid>
-                <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 4 }}>
-                    <Button variant="contained" type="submit">Save record</Button>
-                </Box>
-            </form >
+                    <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 4 }}>
+                        <Button variant="contained" type="submit">Save record</Button>
+                    </Box>
+                </form >
+            </>
             : null
     );
 }

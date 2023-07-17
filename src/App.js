@@ -34,7 +34,7 @@ import Page_Profile_Id from './pages/Page_Profile_Id/Page_Profile_Id';
 import Page_Profile_Id_Application from './pages/Page_Profile_Id_Application/Page_Profile_Id_Application';
 import Page_Profile_Id_ChangePassword from './pages/Page_Profile_Id_ChangePassword/Page_Profile_Id_ChangePassword';
 import Page_Profile_Id_Cv from './pages/Page_Profile_Id_Cv/Page_Profile_Id_Cv';
-import Page_Profile_Id_Cv_Id from './pages/Page_Profile_Id_Cv_Id/Page_Profile_Id_Cv';
+import Page_Profile_Id_Cv_Id from './pages/Page_Profile_Id_Cv_Id/Page_Profile_Id_Cv_Id';
 import Page_Profile_Id_Cv_Id_Update from './pages/Page_Profile_Id_Cv_Id_Update/Page_Profile_Id_Cv_Id_Update';
 import Page_Profile_Id_Event from './pages/Page_Profile_Id_Event/Page_Profile_Id_Event';
 import Page_Profile_Id_Interview from './pages/Page_Profile_Id_Interview/Page_Profile_Id_Interview';
@@ -94,6 +94,7 @@ function App() {
             <Route path="/recruitment/:recruitmentid" element={<Page_Recruitment_Id />} />
             <Route path="/recruitment/:recruitmentid/application/:applicationid" element={<Page_Recruitment_Id_Application_Id />} />
 
+            <Route path="/change-password" element={<XPage_ChangePassword />} />
 
             <Route path="/test" element={<PageTest />} />
           </Route>
@@ -101,7 +102,6 @@ function App() {
           <Route path="/login" element={<XPage_Login />} />
           <Route path="/recovery" element={<XPage_Recovery />} />
           <Route path="/register" element={<XPage_Register />} />
-          <Route path="/change-password" element={<XPage_ChangePassword />} />
 
         </Routes>
       </BrowserRouter>

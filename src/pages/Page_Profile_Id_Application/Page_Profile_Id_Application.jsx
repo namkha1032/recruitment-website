@@ -4,47 +4,47 @@ export default function Page_Profile_Id_Application(){
     const eventsData = [
         {
           id: 1,
-          name: 'Event 1',
+          name: 'Application 1',
         },
         {
           id: 2,
-          name: 'Event 2',
+          name: 'Application 2',
         },
         {
           id: 3,
-          name: 'Event 3',
+          name: 'Application 3',
         },
         {
           id: 4,
-          name: 'Event 4',
+          name: 'Application 4',
         },
         {
           id: 5,
-          name: 'Event 5',
+          name: 'Application 5',
         },
         {
           id: 6,
-          name: 'Event 6',
+          name: 'Application 6',
         },
         {
           id: 7,
-          name: 'Event 7',
+          name: 'Application 7',
         },
         {
           id: 8,
-          name: 'Event 8',
+          name: 'Application 8',
         },
         {
           id: 9,
-          name: 'Event 9',
+          name: 'Application 9',
         },
         {
           id: 10,
-          name: 'Event 10',
+          name: 'Application 10',
         },
         {
           id: 11,
-          name: 'Event 11',
+          name: 'Application 11',
         },
         // Thêm các dữ liệu cho các event khác
       ];

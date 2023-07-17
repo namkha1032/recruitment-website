@@ -18,7 +18,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Menu, MenuItem } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Pagination from '@mui/material/Pagination';
-import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+// import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 //
 const cards1 = [1, 2, 3, 4, 5, 6];
 //

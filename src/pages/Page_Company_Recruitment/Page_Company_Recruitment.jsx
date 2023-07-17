@@ -21,11 +21,11 @@ import FlagIcon from "@mui/icons-material/Flag";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
-import { Box } from "@mui/system";
+import Box from "@mui/material/Box";
 import datasjson from "./Page_Company_Recruitment_Data.json";
 import { useNavigate } from "react-router-dom";
 import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
-import { localeVN } from "../../locale/locale";
+// import { localeVN } from "../../locale/locale";
 import Grid from "@mui/material/Grid";
 import "./Page_Company_Recruitment.scss";
 
@@ -448,7 +448,7 @@ export default function Page_Company_Recruitment() {
             },
             "&.MuiDataGrid-root .MuiDataGrid-row": {},
           }}
-          localeText={localeVN}
+          // localeText={localeVN}
           slotProps={{
             pagination: {
               labelRowsPerPage: "Số lượng hiển thị",

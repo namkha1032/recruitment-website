@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { Button, Typography, Grid, Paper, IconButton } from '@mui/material';
 import { FirstPage, LastPage } from '@mui/icons-material';
-
+import { useNavigate } from 'react-router';
 export default function ProfileIdOneCv({ events }) {
   const [currentPage, setCurrentPage] = useState(1);
-
+  const navigate = useNavigate()
   const handleDetails = (eventId) => {
     // Thực hiện hành động khi người dùng nhấn vào nút "Xem chi tiết" của từng event
     // Bạn có thể triển khai hàm này để hiển thị thông tin chi tiết về event, ví dụ: popup, chuyển đến trang mới, ...
   };
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -39,7 +38,9 @@ export default function ProfileIdOneCv({ events }) {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'flex-end',
+                cursor: "pointer"
               }}
+              onClick={() => navigate("/profile/1/cv/1")}
             >
               <Grid item sx={{ margin: '0 auto', marginBlockStart: '0' }}>
                 <Paper variant="outlined" sx={{ p: 2, height: '100px', width: '200px', marginBottom: '10px', padding: '0' }}>

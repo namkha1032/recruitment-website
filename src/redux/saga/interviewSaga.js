@@ -14,7 +14,8 @@ function* getInterviewId(action) {
 }
 
 function* scoreInterview(action) {
-    const abc = yield call(axios.post, "http://localhost:3001/api/interview", action.payload)
+    // const abc = yield call(axios.post, "http://localhost:3001/api/interview", action.payload)
+    console.log("hehehe")
 }
 
 

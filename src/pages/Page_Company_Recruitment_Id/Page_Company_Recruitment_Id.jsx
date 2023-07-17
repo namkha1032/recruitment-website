@@ -3,7 +3,7 @@ import { Button, Grid, Box, paginationItemClasses, ButtonGroup } from "@mui/mate
 import { Typography } from "@mui/material"
 import Info_view from "../../components/View_recruitment/Info_view"
 import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import "./Page_Company_Recruitment_Id.css"
 //// update final
 function QuickSearchToolbar() {
@@ -36,28 +36,29 @@ const styleofbox = {
 
 const Page_Company_Recruitment_Id = () => {
     const navigate = useNavigate();
-   
-    const [pending_table, setPending_table] = useState(false);
-    function handle_open_pending_table() {
-        setPending_table(true);
-        setReject_table(false);
-        setPass_table(false);
-        
-    }
-    const [reject_table, setReject_table] = useState(false);
-    function handle_open_reject_table() {
-        setReject_table(true);
-        setPending_table(false);
-        setPass_table(false);
-       
-    }
-    const [pass_table, setPass_table] = useState(false);
-    function handle_open_pass_table() {
-        setPass_table(true);
-        setPending_table(false);
-        setReject_table(false);
-       
-    }
+
+    let [currentTable, setCurrentTable] = useState(0)
+    // const [pending_table, setPending_table] = useState(true);
+    // function handle_open_pending_table() {
+    //     setPending_table(true);
+    //     setReject_table(false);
+    //     setPass_table(false);
+
+    // }
+    // const [reject_table, setReject_table] = useState(false);
+    // function handle_open_reject_table() {
+    //     setReject_table(true);
+    //     setPending_table(false);
+    //     setPass_table(false);
+
+    // }
+    // const [pass_table, setPass_table] = useState(false);
+    // function handle_open_pass_table() {
+    //     setPass_table(true);
+    //     setPending_table(false);
+    //     setReject_table(false);
+
+    // }
 
     const datas = require('../../data/Application_list/list.json');
     const pending = datas.filter(data => {
@@ -107,16 +108,15 @@ const Page_Company_Recruitment_Id = () => {
             width: 200
         }
     ];
-
     return (
         <div className="page_company_recruitment_id">
             <Grid container spacing={2}>
                 <Grid item xs={3}>
                 </Grid>
                 <Grid item xs={6}>
-                <Box sx={styleofbox}>
-                    <Info_view />
-                </Box>
+                    <Box sx={styleofbox}>
+                        <Info_view />
+                    </Box>
                 </Grid>
                 <Grid item xs={3}></Grid>
                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -136,23 +136,23 @@ const Page_Company_Recruitment_Id = () => {
                 sx={{ height: 200, width: '45%', margin: "auto" }}>
                 <Box minHeight="125vh">
                     <Grid container spacing={2} >
-                        <Grid item xs={12} sx={{display: "flex", justifyContent: "center", alignItems: "center" }}>
-                            <Typography variant='h4' sx ={{fontStyle: "Times New Roman"}} >
+                        <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                            <Typography variant='h4' sx={{ fontStyle: "Times New Roman" }} >
                                 <p className="thick"> Tất cả hồ sơ</p>
                             </Typography>
                         </Grid>
                         <Box width="100%" />
                         <Grid item xs={12} >
-                            <ButtonGroup sx={{display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                <Button sx = {{textDecoration : pending_table ? 'underline' : 'none'}} variant={pending_table ? 'contained' : 'outlined'} onClick={handle_open_pending_table} >
+                            <ButtonGroup sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <Button sx={{ textDecoration: currentTable == 0 ? 'underline' : 'none' }} variant={currentTable == 0 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(0) }} >
                                     Đang chờ
                                 </Button>
 
-                                <Button sx = {{textDecoration : reject_table ? 'underline' : 'none'}} variant={reject_table ? 'contained' : 'outlined'} onClick={handle_open_reject_table} >
-                                    Đã từ chối  
+                                <Button sx={{ textDecoration: currentTable == 1 ? 'underline' : 'none' }} variant={currentTable == 1 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(1) }} >
+                                    Đã từ chối
                                 </Button>
 
-                                <Button sx = {{textDecoration : pass_table ? 'underline' : 'none'}} variant={pass_table ? 'contained' : 'outlined'} onClick={handle_open_pass_table} >
+                                <Button sx={{ textDecoration: currentTable == 2 ? 'underline' : 'none' }} variant={currentTable == 2 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(2) }} >
                                     Đã duyệt
                                 </Button>
                             </ButtonGroup>
@@ -160,7 +160,7 @@ const Page_Company_Recruitment_Id = () => {
                         </Grid>
                     </Grid>
 
-                    {pending_table && (
+                    {currentTable == 0 ? (
                         <DataGrid
                             sx={{
                                 "& .MuiDataGrid-columnHeaders": {
@@ -175,9 +175,9 @@ const Page_Company_Recruitment_Id = () => {
                                     borderBottom: 1
 
                                 },
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center"
+                                // display: "flex",
+                                // justifyContent: "center",
+                                // alignItems: "center"
                             }}
                             slots={{ toolbar: QuickSearchToolbar }}
 
@@ -193,11 +193,10 @@ const Page_Company_Recruitment_Id = () => {
                                 },
                             }}
                             pageSizeOptions={[5]}
-                            
-                        />
-                    )}
-                    {reject_table && (
 
+                        />
+                    ) : null}
+                    {currentTable == 1 ? (
                         <DataGrid
                             sx={{
                                 "& .MuiDataGrid-columnHeaders": {
@@ -212,9 +211,9 @@ const Page_Company_Recruitment_Id = () => {
                                     borderBottom: 1
 
                                 },
-                                justifyContent: "center",
-                                alignItems: "center",
-                                margin: "auto"
+                                // justifyContent: "center",
+                                // alignItems: "center",
+                                // margin: "auto"
                             }}
                             slots={{ toolbar: QuickSearchToolbar }}
                             rowHeight={72}
@@ -231,8 +230,8 @@ const Page_Company_Recruitment_Id = () => {
                             pageSizeOptions={[5]}
                         />
 
-                    )}
-                    {pass_table && (
+                    ) : null}
+                    {currentTable == 2 ? (
                         <DataGrid
                             sx={{
                                 "& .MuiDataGrid-columnHeaders": {
@@ -247,9 +246,9 @@ const Page_Company_Recruitment_Id = () => {
                                     borderBottom: 1
 
                                 },
-                                justifyContent: "center",
-                                alignItems: "center",
-                                margin: "auto"
+                                // justifyContent: "center",
+                                // alignItems: "center",
+                                // margin: "auto"
                             }}
                             slots={{ toolbar: QuickSearchToolbar }}
                             rowHeight={72}
@@ -265,7 +264,7 @@ const Page_Company_Recruitment_Id = () => {
                             }}
                             pageSizeOptions={[5]}
                         />
-                    )}
+                    ) : null}
                 </Box>
             </Box>
 

@@ -21,8 +21,10 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router";
+import CV from "../../components/CV/CV";
 const Profile = () => {
+  const navigate = useNavigate()
   const [selectedImage, setSelectedImage] = useState(
     "https://pbs.twimg.com/media/EYVxlOSXsAExOpX.jpg"
   );
@@ -221,13 +223,13 @@ const Profile = () => {
                         </Box>
                       </Box>
                       <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginTop: "12px",
-                      }}
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          marginTop: "12px",
+                        }}
                       >
-                        <ContentPaste/>
+                        <ContentPaste />
                         <Box component="h6" sx={{ margin: "0px 0px 0px 8px" }}>
                           CV1
                         </Box>
@@ -238,7 +240,7 @@ const Profile = () => {
               </Grid>
               <Grid item md={7} xs={12}>
                 <Paper sx={{ marginBottom: "24px", padding: "16px" }}>
-                  <Box component="h4" sx={{ margin: 0 }}>
+                  {/* <Box component="h4" sx={{ margin: 0 }}>
                     CV1
                   </Box>
                   <Box sx={{ mt: "16px" }}>
@@ -280,13 +282,15 @@ const Profile = () => {
                     structure of web content, while CSS enables me to style and
                     customize layouts. By combining these technologies, I create
                     modern and engaging web experiences.
-                  </Box>
+                  </Box> */}
+                  <CV />
                 </Paper>
               </Grid>
             </Grid>
           </TabPanel>
         </Box>
       </TabContext>
+      <Button variant="contained" color="success" onClick={()=>navigate("/profile/1/changepassword")}>Đổi mật khẩu</Button>
     </Container>
   );
 };
