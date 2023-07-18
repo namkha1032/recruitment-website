@@ -214,6 +214,7 @@ const Page_Company_Interview_Create = () => {
         }
     ]
     function handleSubmit() {
+        dispatch({ type: "interview/setInterview", payload: null })
         navigate("/company/interview/1")
     }
     return (

@@ -29,6 +29,7 @@ const Page_Company_Interview_Id = () => {
         dispatch({ type: "saga/getInterviewId" })
     }, [])
     const interview = useSelector(state => state.interview)
+    console.log("interview: ", interview)
     function handleStart() {
         navigate("/company/interview/1/start")
     }
