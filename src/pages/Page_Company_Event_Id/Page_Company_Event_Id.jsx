@@ -14,14 +14,19 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 
+import picture from '../../assets/img/event.jpg'
+
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 150 },
-    { field: 'name', headerName: 'Tên', width: 200 },
-    { 
-    field: 'actions',
+    { field: 'id', 
+    renderHeader: () => <span>Mã</span>, 
+    width: 150 },
+    { field: 'name', 
+    renderHeader: () => <span>Tên</span>, 
+    width: 200 },
+    { field: 'actions',
     type: 'actions',
-    headerName: 'Chi tiết',
+    renderHeader: () => <span>Chi tiết</span>,
     width: 150,
     headerAlign: 'center',
     align: 'center',
@@ -29,8 +34,7 @@ const columns = [
           <GridActionsCellItem
             icon={<FindInPageIcon></FindInPageIcon>}
             label="Detail"
-            onClick={() => alert("Navigate to user id: " + params.row.id)}/>]
-    }
+            onClick={() => alert("Navigate to user id: " + params.row.id)}/>]}
 ];
 
 // Test Data
@@ -79,7 +83,7 @@ const Page_Company_Event_Id = () => {
             <Grid container>
 
                 <Grid item md={6} sm={12} sx={{ mt: 8 }}>
-                    <img src="https://file1.hutech.edu.vn/file/news/2-1569353757.jpg" 
+                    <img src={picture} 
                     alt="..." 
                     style={{ 
                         width: '100%', 
@@ -93,8 +97,8 @@ const Page_Company_Event_Id = () => {
 
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <TabList aria-label='Tabs menu' onChange={handleChange} textColor="primary" indicatorColor="primary" centered>
-                                <Tab label='Thông tin sự kiện' value='1' />
-                                <Tab label='Danh sách đăng ký' value='2' />
+                                <Tab label='Thông tin sự kiện' value='1' sx={{ textTransform: 'none', fontSize: 20 }} />
+                                <Tab label='Danh sách đăng ký' value='2' sx={{ textTransform: 'none', fontSize: 20 }} />
                             </TabList>
                         </Box>
 
@@ -104,40 +108,44 @@ const Page_Company_Event_Id = () => {
                                     p: 0.5, 
                                     display: "flex", 
                                     alignItems: "center", 
-                                    width: '100%' 
+                                    width: '100%', 
+                                    height: '100%'
                                 }} 
                                 style={{ 
-                                    border: '0px solid black', 
-                                    background: 'lightgray', 
-                                    margin: 0.5, 
-                                    filter: 'drop-shadow(0 0 10px black)' 
+                                    // border: '0px solid black', 
+                                    // background: 'lightgray', 
+                                    // filter: 'drop-shadow(0 0 10px black)', 
+                                    margin: 0.5,
+                                    backgroundColor: 'white',
+                                    borderRadius: '15px',
+                                    border: '2px solid black'
                                 }}>
                                 <Grid item md={5} sm={6} xs={7}>
-                                    <Typography variant='span' className='header'>Tên sự kiện</Typography>
+                                    <Typography variant='span' className='header'>Tên sự kiện:</Typography>
                                 </Grid>
                                 <Grid item md={7} sm={6} xs={5}>
                                     <Box className='content' p={3}>Code War</Box>
                                 </Grid>
                                 <Grid item md={5} sm={6} xs={7}>
-                                    <Typography variant='span' className='header'>Nội dung</Typography>
+                                    <Typography variant='span' className='header'>Nội dung:</Typography>
                                 </Grid>
                                 <Grid item md={7} sm={6} xs={5}>
                                     <Box className='content' p={3}>Code War là một sự kiện thú vị đến từ FPT Software</Box>
                                 </Grid>
                                 <Grid item md={5} sm={6} xs={7}>
-                                    <Typography variant='span' className='header'>Số lượng đã tham gia</Typography>
+                                    <Typography variant='span' className='header'>Số lượng đã tham gia:</Typography>
                                 </Grid>
                                 <Grid item md={7} sm={6} xs={5}>
                                     <Box className='content' p={3}>500/1000</Box>
                                 </Grid>
                                 <Grid item md={5} sm={6} xs={7}>
-                                    <Typography variant='span' className='header'>Thời gian</Typography>
+                                    <Typography variant='span' className='header'>Thời gian:</Typography>
                                 </Grid>
                                 <Grid item md={7} sm={6} xs={5}>
                                     <Box className='content' p={3}>Date time</Box>
                                 </Grid>
                                 <Grid item md={5} sm={6} xs={7}>
-                                    <Typography variant='span' className='header'>Địa điểm</Typography>
+                                    <Typography variant='span' className='header'>Địa điểm:</Typography>
                                 </Grid>
                                 <Grid item md={7} sm={6} xs={5}>
                                     <Box className='content' p={3}>Location</Box>
@@ -168,7 +176,7 @@ const Page_Company_Event_Id = () => {
                                         "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
                                           backgroundColor: "#1565C0",
                                           color: "white",
-                                          fontWeight: "bold",
+                                          fontWeight: 700,
                                         },
                                     }}
                                     localeText={{
