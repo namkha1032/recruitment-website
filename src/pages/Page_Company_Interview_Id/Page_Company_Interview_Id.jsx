@@ -20,6 +20,7 @@ import ScoreTable from '../Page_Company_Interview_Id_Start/ScoreTable/ScoreTable
 import RadarPlot from './RadarPlot/RadarPlot';
 import QuestionTable from './QuestionTable/QuestionTable';
 import NoteField from './NoteField/NoteField';
+import Page_Interview_Id from "../Page_Interview_Id/Page_Interview_Id";
 // import { useNavItem } from '@restart/ui/esm/NavItem';
 const Page_Company_Interview_Id = () => {
     const navigate = useNavigate()
@@ -34,7 +35,10 @@ const Page_Company_Interview_Id = () => {
     return (
         <>{interview &&
             <>
-                <Button variant='contained' onClick={handleStart}>Start</Button>
+                <Page_Interview_Id />
+                <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 4, marginBottom: 4 }}>
+                    <Button variant='contained' onClick={handleStart}>Start</Button>
+                </Box>
                 <Grid container spacing={5}>
                     <Grid item md={6}>
                         <NoteField note={interview.note} />
