@@ -27,6 +27,7 @@ import { useNavigate } from "react-router-dom";
 import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
 // import { localeVN } from "../../locale/locale";
 import Grid from "@mui/material/Grid";
+import Page_Company_Recruitment_Id_Report from "./Page_Company_Recruitment_Id_Report";
 // import "./Page_Company_Recruitment.scss";
 
 function NullString() {
@@ -490,6 +491,9 @@ export default function Page_Company_Recruitment() {
           }}
         />
       </Box>
+      
+      <Page_Company_Recruitment_Id_Report />
+
     </Box>
   );
 }
