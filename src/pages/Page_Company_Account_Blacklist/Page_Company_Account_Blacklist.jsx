@@ -15,6 +15,7 @@ import {grey, red, teal} from "@mui/material/colors";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import React from "react";
+import {useNavigate} from "react-router-dom";
 const renderActionButton = () => {
     return (
         <strong>
@@ -58,7 +59,7 @@ const RenderStatusButton = ({params}) => {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         Account ID: {params.row.id}<br/>
-                        Account Name: {params.row.name}
+                        Account Name: {params.row.accountName}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -77,6 +78,7 @@ const RenderStatusButton = ({params}) => {
 }
 
 const Page_Company_Account_Blacklist = () => {
+    const navigate = useNavigate()
     function QuickSearchToolbar() {
         return (
             <Box
@@ -91,51 +93,24 @@ const Page_Company_Account_Blacklist = () => {
         );
     }
     const columns = [
-        {field: "id", headerName: "ID", flex: 0.5},
-        {field: "registerId", headerName: "Register ID"},
+        { field: "id", headerName: "ID", flex: 0.5 },
+        { field: "registerId", headerName: "Register ID", flex: 0.5},
         {
-            field: "name",
-            headerName: "Name",
+            field: "accountName",
+            headerName: "Account Name",
             flex: 1,
             cellClassName: "name-column--cell",
         },
         {
-            field: "age",
-            headerName: "Age",
-            type: "number",
-            headerAlign: "left",
-            align: "left",
-        },
-        {
-            field: "phone",
-            headerName: "Phone Number",
-            flex: 1,
-        },
-        {
-            field: "email",
-            headerName: "Email",
-            flex: 1,
-        },
-        {
-            field: "address",
-            headerName: "Address",
-            flex: 1,
-        },
-        {
-            field: "city",
-            headerName: "City",
-            flex: 1,
-        },
-        {
             field: "action",
             headerName: "Action",
-            flex: 1,
+            flex: 0.5,
             renderCell: renderActionButton,
         },
         {
             field: "status",
             headerName: "Account Status",
-            flex: 1,
+            flex: 0.5,
             renderCell: (params)=>{
                 return(<RenderStatusButton params={params} />)
             },
@@ -147,7 +122,7 @@ const Page_Company_Account_Blacklist = () => {
              container width="77vw">
             <Grid
                 item
-                xs={12}
+                xs={10}
                 display="flex"
                 alignItems="center"
                 justifyContent="left"
@@ -162,23 +137,41 @@ const Page_Company_Account_Blacklist = () => {
             </Grid>
             <Grid
                 item
+                m="30px 0 10px 0"
+                xs={2}
                 display="flex"
                 justifyContent="right">
-                <TextField
+                <Button
+                    variant="contained"
+                    size="medium"
                     fullWidth
-                    label="Account Search"
-                    id="blacklistSearch"
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton aria-label="toggle password visibility" edge="end">
-                                    <GridSearchIcon></GridSearchIcon>
-                                </IconButton>
-                            </InputAdornment>
-                        )
+                    onClick={() => {
+                        navigate("/company/account")
                     }}
-                />
+                    style={{minWidth: '100px'}}
+                >
+                    Back to Account List
+                </Button>
             </Grid>
+            {/*<Grid*/}
+            {/*    item*/}
+            {/*    display="flex"*/}
+            {/*    justifyContent="right">*/}
+            {/*    <TextField*/}
+            {/*        fullWidth*/}
+            {/*        label="Account Search"*/}
+            {/*        id="blacklistSearch"*/}
+            {/*        InputProps={{*/}
+            {/*            endAdornment: (*/}
+            {/*                <InputAdornment position="end">*/}
+            {/*                    <IconButton aria-label="toggle password visibility" edge="end">*/}
+            {/*                        <GridSearchIcon></GridSearchIcon>*/}
+            {/*                    </IconButton>*/}
+            {/*                </InputAdornment>*/}
+            {/*            )*/}
+            {/*        }}*/}
+            {/*    />*/}
+            {/*</Grid>*/}
             <Grid
                 item
                 m="10px 0 10px 0"

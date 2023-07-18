@@ -46,49 +46,17 @@ const Page_Company_Account = () => {
     }
     const columns = [
         { field: "id", headerName: "ID", flex: 0.5 },
-        { field: "registerId", headerName: "Register ID" },
+        { field: "registerId", headerName: "Register ID", flex: 0.5},
         {
-            field: "name",
-            headerName: "Name",
+            field: "accountName",
+            headerName: "Account Name",
             flex: 1,
             cellClassName: "name-column--cell",
         },
         {
-            field: "age",
-            headerName: "Age",
-            type: "number",
-            headerAlign: "left",
-            align: "left",
-        },
-        {
-            field: "phone",
-            headerName: "Phone Number",
-            flex: 1,
-        },
-        {
-            field: "email",
-            headerName: "Email",
-            flex: 1,
-        },
-        {
-            field: "address",
-            headerName: "Address",
-            flex: 1,
-        },
-        {
-            field: "city",
-            headerName: "City",
-            flex: 1,
-        },
-        {
-            field: "zipCode",
-            headerName: "Zip Code",
-            flex: 1,
-        },
-        {
-            field: "action",
-            headerName: "Action",
-            flex: 1,
+            field: "details",
+            headerName: "Details",
+            flex: 0.5,
             renderCell: renderActionButton,
         },
     ];
@@ -170,27 +138,27 @@ const Page_Company_Account = () => {
                                 <MenuItem value={"recruiter"}>Recruiter</MenuItem>
                             </Select>
                         </Grid>
-                        <Grid
-                            item
-                            xs={12}
-                            md={4}
-                            display="flex"
-                            justifyContent="right">
-                            <TextField
-                                fullWidth
-                                label="Account Search"
-                                id="accountSearch"
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton aria-label="searchBoxButton" edge="end">
-                                                <GridSearchIcon></GridSearchIcon>
-                                            </IconButton>
-                                        </InputAdornment>
-                                    )
-                                }}
-                            />
-                        </Grid>
+                        {/*<Grid*/}
+                        {/*    item*/}
+                        {/*    xs={12}*/}
+                        {/*    md={4}*/}
+                        {/*    display="flex"*/}
+                        {/*    justifyContent="right">*/}
+                        {/*    <TextField*/}
+                        {/*        fullWidth*/}
+                        {/*        label="Account Search"*/}
+                        {/*        id="accountSearch"*/}
+                        {/*        InputProps={{*/}
+                        {/*            endAdornment: (*/}
+                        {/*                <InputAdornment position="end">*/}
+                        {/*                    <IconButton aria-label="searchBoxButton" edge="end">*/}
+                        {/*                        <GridSearchIcon></GridSearchIcon>*/}
+                        {/*                    </IconButton>*/}
+                        {/*                </InputAdornment>*/}
+                        {/*            )*/}
+                        {/*        }}*/}
+                        {/*    />*/}
+                        {/*</Grid>*/}
                     </Grid>
                 </Grid>
             </Grid>
@@ -210,7 +178,8 @@ const Page_Company_Account = () => {
                         color: lightBlue[800]
                     },
                     "& .MuiDataGrid-columnHeaders": {
-                        backgroundColor: lightBlue[600],
+                        backgroundColor: lightBlue[700],
+                        color: "#ffffff",
                         borderBottom: "none"
                     },
                     "& .MuiDataGrid-virtualScroller": {
@@ -218,7 +187,7 @@ const Page_Company_Account = () => {
                     },
                     "& .MuiDataGrid-footerContainer": {
                         borderTop: "none",
-                        backgroundColor: lightBlue[600]
+                        backgroundColor: lightBlue[700],
                     },
                     "& .MuiCheckbox-root": {
                         color: `${teal[300]} !important`
