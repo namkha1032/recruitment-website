@@ -90,7 +90,8 @@ export default function ChooseLanguage(prop) {
                 display: "flex",
                 margin: "0",
                 padding: "0",
-                marginRight: "1%",
+                marginLeft: "1%",
+                width:"98%"
               },
             }}
             freeSolo

@@ -4,7 +4,7 @@ import EmptyTextarea from "./AutoText";
 import DateComp from "./CertDate";
 import CertButton from "./CertButton";
 import NotRInputText from "../NotRequiredText";
-
+import Box from "@mui/material/Box";
 
 export default function CertificateForm(prop) {
   function handleLink(e) {
@@ -17,6 +17,7 @@ export default function CertificateForm(prop) {
   }
   return (
     <>
+    <Box sx={{marginTop:"8px"}}>
       <Grid container spacing={0} justifyContent="center" alignItems="center">
         <Grid item xs={12}>
           <div className="AutocompBox">
@@ -62,6 +63,7 @@ export default function CertificateForm(prop) {
             handleClose={prop.handleClose}
           />
       </Grid>
+      </Box>
     </>
   );
 }

@@ -1,5 +1,5 @@
 
-import CVForm from "./Child/CVForm"
+import CVForm from "./Child/CVForm2"
 import "./CreateCV.scss"
 
 const Page_Profile_CvCreate = () => {

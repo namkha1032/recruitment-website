@@ -1,10 +1,9 @@
-
 const cvinfo = {
-  title:"",
+  title: "",
   intro: "",
   certificates: [],
   skills: [],
-  language:[],
+  language: [],
   education: "",
   experience: "",
 };
@@ -25,5 +24,10 @@ export const language = [
   { id: 1, name: "Japanese" },
   { id: 2, name: "Chinese" },
   { id: 3, name: "VietNamese" },
+];
+export const steps = [
+  "Cv Infor",
+  "Yout Experience",
+  "Yout Certificate",
 ];
 export default cvinfo;

@@ -1,15 +1,21 @@
 import { useState } from "react";
-import cvinfo from "./CvState";
+import cvinfo from "./CvData";
 import CreateCv from "./CreateCv";
 import Grid from "@mui/material/Grid";
-import ViewCv from "./ViewCv";
+import { useNavigate } from "react-router-dom";
+import { language } from  "./CvData";
+// import ViewCv from "./ViewCv";
 function CVForm() {
   // CV COMPS
+  const navigate = useNavigate();
+  // CV COMPS
+  const [cvtitle,setTitle] = useState(cvinfo.title)
   const [intro, setIntro] = useState(cvinfo.intro);
   const [education, setEducation] = useState(cvinfo.education);
   const [experience, setExperience] = useState(cvinfo.experience);
   const [certs, setCerts] = useState(cvinfo.certificates);
   const [skills, setSkills] = useState(cvinfo.skills);
+  const [languages, setLanguages] = useState(cvinfo.language);
   // CERTIFICATE COMPS
   const [Cid, setCid] = useState(0);
   const [Cname, setCName] = useState("");
@@ -24,25 +30,24 @@ function CVForm() {
   const [name, setName] = useState("");
   const [Sid, setSid] = useState(0);
   const [SExp, setSExp] = useState("");
+  // Language comps
+  const [lId, setLId] = useState(languages.length > 0 ? languages.length : 0);
+  const [languageId, setLanguageId] = useState(null);
+  const [languageName, setLanguageName] = useState("");
+  const [lInputValue, setLInputValue] = useState("");
   //FUNCTION
-  function handleClick() {
-    console.log(intro);
-    console.log(education);
-    console.log(experience);
-    console.log(skills);
-    console.log(certs);
+  function handleTitle(e) {
+    setTitle(e.target.value);
+    
   }
   function handleIntro(e) {
     setIntro(e.target.value);
-    console.log(e.target.value);
   }
   function handleEdu(e) {
     setEducation(e.target.value);
-    console.log(e.target.value);
   }
   function handleExp(e) {
     setExperience(e.target.value);
-    console.log(e.target.value);
   }
   function handleSkillAdd() {
     console.log(name);
@@ -90,6 +95,36 @@ function CVForm() {
   function handleCertDelete(id) {
     setCerts(certs.filter((component) => component.id !== id));
   }
+  
+  function handleLanguageAdd() {
+    console.log(lInputValue);
+    console.log(languageName);
+    let arr = language.filter(
+      (comp) => comp.name === (lInputValue !== null ? lInputValue.name : "")
+    );
+    console.log(arr);
+    if (arr[0] === undefined) {
+      alert("wrong language");
+      setLanguageId(null);
+      setLanguageName("");
+      setLInputValue("");
+    } else {
+      const newLanguage = {
+        id: lId,
+        languageId: languageId,
+        languageName: languageName,
+      };
+      console.log(newLanguage);
+      setLanguages([...languages, newLanguage]);
+      setLanguageId(null);
+      setLanguageName("");
+      setLInputValue("");
+      setLId((prev) => (prev += 1));
+    }
+  }
+  function handleLanguageDelete(id) {
+    setLanguages(languages.filter((component) => component.id !== id));
+  }
   const handleSetOpen = () => {
     setOpen(true);
   };
@@ -101,12 +136,13 @@ function CVForm() {
   };
   function handleSubmit(e) {
     e.preventDefault();
+    navigate("/profile/:profileid/cv/:cvid")
   }
   //COMPS
   return (
     <>
       <Grid container spacing={0} justifyContent="center" alignItems="center">
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <CreateCv
             intro={intro}
             setIntro={setIntro}
@@ -141,7 +177,6 @@ function CVForm() {
             setSid={setSid}
             SExp={SExp}
             setSExp={setSExp}
-            handleClick={handleClick}
             handleIntro={handleIntro}
             handleEdu={handleEdu}
             handleExp={handleExp}
@@ -152,27 +187,16 @@ function CVForm() {
             handleSetOpen={handleSetOpen}
             handleClose={handleClose}
             handleSubmit={handleSubmit}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <ViewCv
-            intro={intro}
-            education={education}
-            experience={experience}
-            certs={certs}
-            skills={skills}
-            Cid={Cid}
-            Cname={Cname}
-            organize={organize}
-            startDate={startDate}
-            endDate={endDate}
-            detail={detail}
-            link={link}
-            cvalue={cvalue}
-            open={open}
-            name={name}
-            Sid={Sid}
-            SExp={SExp}
+            languages={languages}
+            handleLanguageDelete={handleLanguageDelete}
+            lInputValue={lInputValue}
+            setLInputValue={setLInputValue}
+            setLanguageName={setLanguageName}
+            languageName={languageName}
+            setLanguageId={setLanguageId}
+            handleLanguageAdd={handleLanguageAdd}
+            cvtitle={cvtitle}
+            handleTitle={handleTitle}
           />
         </Grid>
       </Grid>

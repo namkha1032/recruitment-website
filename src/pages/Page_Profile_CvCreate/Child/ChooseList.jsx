@@ -97,7 +97,7 @@ export default function FreeSoloCreateOption(prop) {
                 margin: "0",
                 marginTop: "8px",
                 padding: "0",
-                marginRight: "1%",
+                marginLeft: "1%",
               },
             }}
             freeSolo
@@ -106,19 +106,19 @@ export default function FreeSoloCreateOption(prop) {
             )}
           />
         </Grid>
-        {value && (
+     
         <Grid item xs={3}>
             <InputText
               type="number"
               state={"Experiece(Year)"}
-              width="100%"
+              width="90%"
               value={prop.SExp}
               margin="0"
-              marginLeft="1%"
+              marginLeft="6%"
               handleState={handleSExp}
             />
         </Grid>
-        )}
+
         <Grid item xs={12}></Grid>
         <Button
           sx={{
