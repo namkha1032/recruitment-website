@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Grid, Typography, Button } from '@mui/material';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-
+import { DataGrid} from '@mui/x-data-grid';
+import { useNavigate } from 'react-router-dom';
 export default function EventList({ events, time, status }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
-
+  const navigate = useNavigate();
   const handleDetails = (eventId) => {
+    navigate(`/event/1`);
     // Perform action when the "View Details" button is clicked for an event
     // You can implement this function to display detailed information about the event, e.g., show a popup, navigate to a new page, etc.
   };

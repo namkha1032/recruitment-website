@@ -51,8 +51,10 @@ export default function Page_Profile_Id_Application(){
       const time = '12/07/2023 10:00';
       const status = 'Đã đăng ký';
       const itemsPerPage = 10;
+      const pathnavigate = '/recruitment/:recruitmentid/application/1';
+      const namePage = 'Position name';
       return(
-        <HistoryList events={eventsData} time={time} status={status} itemsPerPage={itemsPerPage} />
+        <HistoryList events={eventsData} time={time} status={status} itemsPerPage={itemsPerPage} pathnavigate={pathnavigate} namePage={namePage} />
       )
       
 }
