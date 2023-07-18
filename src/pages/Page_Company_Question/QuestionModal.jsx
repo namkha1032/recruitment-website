@@ -186,7 +186,9 @@ export default function QuestionModal(props) {
                     value={question}
                     onChange={(e) => handleQuestionChange(e.target.value)}
                     error={isFillQuestion !== true && isFillQuestion !== null}
-                    disabled={!props.type}
+                    InputProps={{
+                      readOnly: props.type ? false : true,
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>

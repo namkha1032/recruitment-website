@@ -22,7 +22,7 @@ import FlagIcon from "@mui/icons-material/Flag";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import CodeIcon from "@mui/icons-material/Code";
-import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
+import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import datasjson from "./Page_Company_Question_Data.json";
 import { useNavigate } from "react-router-dom";
@@ -35,6 +35,7 @@ import { successAlert } from "../../components/Alert/SuccessAlert";
 import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DeleteAlertModal from "./DeleteModal";
+import QuestionDataGrid from "./QuestionDataGrid";
 
 const listOfSkills = {
   skill: ["React", "Angular", "Java", "Python", "Figma", ".NET", "C", "C++"],
@@ -90,8 +91,9 @@ export default function Page_Company_Question() {
   const navigate = useNavigate();
 
   const [rows, setRows] = useState(datasjson);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [valueSearch, setValueSearch] = useState("");
+  // const [anchorEl, setAnchorEl] = useState(null);
+  // const [valueSearch, setValueSearch] = useState("");
+
   const [valueChoose, setValueChoose] = useState(null);
   const [departmentChoose, setDepartmentChoose] = useState(null);
   const [statusChoose, setStatusChoose] = useState(null);
@@ -117,13 +119,13 @@ export default function Page_Company_Question() {
   //   return () => {clearTimeout(id)}
   // })
 
-  function handleMoreClick(event) {
-    setAnchorEl(event.currentTarget);
-  }
+  // function handleMoreClick(event) {
+  //   setAnchorEl(event.currentTarget);
+  // }
 
-  function handleClose() {
-    setAnchorEl(null);
-  }
+  // function handleClose() {
+  //   setAnchorEl(null);
+  // }
 
   function handleRowClick(id) {
     alert("Navigate to position id: " + id);
@@ -133,9 +135,9 @@ export default function Page_Company_Question() {
     navigate("./create");
   }
 
-  function handleSearchClick() {
-    alert("Value search: " + valueSearch);
-  }
+  // function handleSearchClick() {
+  //   alert("Value search: " + valueSearch);
+  // }
 
   function handleChooseValue(value) {
     setValueChoose(value);
@@ -389,7 +391,7 @@ export default function Page_Company_Question() {
             <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
             Tạo câu hỏi
           </Button>
-          <IconButton
+          {/* <IconButton
             onClick={handleMoreClick}
             sx={{
               marginLeft: 1,
@@ -422,7 +424,7 @@ export default function Page_Company_Question() {
             <MenuItem onClick={handleClose}>
               <FlagIcon sx={{ mr: 1.75 }} /> Báo lỗi
             </MenuItem>
-          </Menu>
+          </Menu> */}
         </Grid>
 
         <Grid
@@ -474,7 +476,7 @@ export default function Page_Company_Question() {
           )}
         </Grid>
 
-        <Grid
+        {/* <Grid
           item
           xs={12}
           md={5}
@@ -512,61 +514,14 @@ export default function Page_Company_Question() {
               <SearchIcon />
             </IconButton>
           </Box>
-        </Grid>
+        </Grid> */}
       </Grid>
 
-      <Box
-        sx={{
-          height: 600,
-          width: "100%",
-        }}
-      >
-        <DataGrid
-          columns={columns}
-          rows={rows}
-          sx={{
-            "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
-              outline: "none",
-            },
-            "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
-              backgroundColor: "#1565C0",
-              color: "white",
-              fontWeight: 700,
-            },
-          }}
-          // localeText={localeVN}
-          slotProps={{
-            pagination: {
-              labelRowsPerPage: "Số lượng hiển thị",
-              labelDisplayedRows: ({ from, to, count }) =>
-                `${from}–${to} của ${count !== -1 ? count : `hơn ${to}`}`,
-            },
-          }}
-          disableColumnMenu
-          pagination
-          pageSizeOptions={[5, 10, 25, 50, 100]}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 25,
-              },
-            },
-          }}
-          onCellClick={(params, event) => {
-            if (params.field === "id" || params.field === "QuestionName") {
-              handleModalOpen(
-                {
-                  id: params.row.id,
-                  QuestionName: params.row.QuestionName,
-                  Category: params.row.Category,
-                  Skill: params.row.Skill,
-                },
-                false
-              );
-            }
-          }}
-        />
-      </Box>
+      <QuestionDataGrid 
+        columns={columns}
+        rows={rows}
+        handleModalOpen={handleAddModalOpen}
+      />
 
       <QuestionFormModal
         key={addModalStatus}
