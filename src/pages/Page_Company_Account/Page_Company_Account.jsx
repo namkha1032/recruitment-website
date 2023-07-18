@@ -138,27 +138,27 @@ const Page_Company_Account = () => {
                                 <MenuItem value={"recruiter"}>Recruiter</MenuItem>
                             </Select>
                         </Grid>
-                        <Grid
-                            item
-                            xs={12}
-                            md={4}
-                            display="flex"
-                            justifyContent="right">
-                            <TextField
-                                fullWidth
-                                label="Account Search"
-                                id="accountSearch"
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton aria-label="searchBoxButton" edge="end">
-                                                <GridSearchIcon></GridSearchIcon>
-                                            </IconButton>
-                                        </InputAdornment>
-                                    )
-                                }}
-                            />
-                        </Grid>
+                        {/*<Grid*/}
+                        {/*    item*/}
+                        {/*    xs={12}*/}
+                        {/*    md={4}*/}
+                        {/*    display="flex"*/}
+                        {/*    justifyContent="right">*/}
+                        {/*    <TextField*/}
+                        {/*        fullWidth*/}
+                        {/*        label="Account Search"*/}
+                        {/*        id="accountSearch"*/}
+                        {/*        InputProps={{*/}
+                        {/*            endAdornment: (*/}
+                        {/*                <InputAdornment position="end">*/}
+                        {/*                    <IconButton aria-label="searchBoxButton" edge="end">*/}
+                        {/*                        <GridSearchIcon></GridSearchIcon>*/}
+                        {/*                    </IconButton>*/}
+                        {/*                </InputAdornment>*/}
+                        {/*            )*/}
+                        {/*        }}*/}
+                        {/*    />*/}
+                        {/*</Grid>*/}
                     </Grid>
                 </Grid>
             </Grid>
@@ -178,7 +178,8 @@ const Page_Company_Account = () => {
                         color: lightBlue[800]
                     },
                     "& .MuiDataGrid-columnHeaders": {
-                        backgroundColor: lightBlue[600],
+                        backgroundColor: lightBlue[700],
+                        color: "#ffffff",
                         borderBottom: "none"
                     },
                     "& .MuiDataGrid-virtualScroller": {
@@ -186,7 +187,7 @@ const Page_Company_Account = () => {
                     },
                     "& .MuiDataGrid-footerContainer": {
                         borderTop: "none",
-                        backgroundColor: lightBlue[600]
+                        backgroundColor: lightBlue[700],
                     },
                     "& .MuiCheckbox-root": {
                         color: `${teal[300]} !important`

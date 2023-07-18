@@ -15,6 +15,7 @@ import {grey, red, teal} from "@mui/material/colors";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import React from "react";
+import {useNavigate} from "react-router-dom";
 const renderActionButton = () => {
     return (
         <strong>
@@ -77,6 +78,7 @@ const RenderStatusButton = ({params}) => {
 }
 
 const Page_Company_Account_Blacklist = () => {
+    const navigate = useNavigate()
     function QuickSearchToolbar() {
         return (
             <Box
@@ -120,7 +122,7 @@ const Page_Company_Account_Blacklist = () => {
              container width="77vw">
             <Grid
                 item
-                xs={12}
+                xs={10}
                 display="flex"
                 alignItems="center"
                 justifyContent="left"
@@ -132,6 +134,24 @@ const Page_Company_Account_Blacklist = () => {
                             m="30px 0 10px 0">
                     Blacklist
                 </Typography>
+            </Grid>
+            <Grid
+                item
+                m="30px 0 10px 0"
+                xs={2}
+                display="flex"
+                justifyContent="right">
+                <Button
+                    variant="contained"
+                    size="medium"
+                    fullWidth
+                    onClick={() => {
+                        navigate("/company/account")
+                    }}
+                    style={{minWidth: '100px'}}
+                >
+                    Back to Account List
+                </Button>
             </Grid>
             {/*<Grid*/}
             {/*    item*/}
