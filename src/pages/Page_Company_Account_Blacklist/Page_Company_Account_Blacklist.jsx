@@ -58,7 +58,7 @@ const RenderStatusButton = ({params}) => {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         Account ID: {params.row.id}<br/>
-                        Account Name: {params.row.name}
+                        Account Name: {params.row.accountName}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
