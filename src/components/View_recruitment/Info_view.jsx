@@ -21,15 +21,15 @@ const Info_view = () => {
 
     return (
         <div className="Info_view">
-            <Typography variant='h3' sx={{ fontWeight: "bold", fontFamily: "Times New Roman", fontStyle: "italic"  }} >
+            <Typography variant='h3' sx={{ fontWeight: "bold",  fontStyle: "italic"  }} >
                  Front-end Developer
             </Typography>
             <Grid container spacing={1} sx ={{marginTop: "10px"}}>
                 <Grid item xs={12}>
-                    <Typography variant='h5' sx={{ fontWeight: "bold", fontFamily: "Times New Roman", fontStyle: "italic"  }}>
+                    <Typography variant='h5' sx={{ fontWeight: "bold",  fontStyle: "italic"  }}>
                         <DescriptionIcon></DescriptionIcon> Description
                     </Typography>
-                    <Box sx={{ p: 2, border: '1px solid grey', textAlign: "justify" , fontFamily: "Times New Roman", fontSize: "16px"}}>
+                    <Box sx={{ p: 2, border: '1px solid grey', textAlign: "justify" ,  fontSize: "16px"}}>
                     ReactJS is a declarative, efficient, and flexible JavaScript library for building reusable UI components. It is an open-source, component-based front end library responsible only for the view layer of the application. It was created by Jordan Walke, who was a software engineer at Facebook. It was initially developed and maintained by Facebook and was later used in its products like WhatsApp & Instagram. Facebook developed ReactJS in 2011 in its newsfeed section, but it was released to the public in the month of May 2013.
                     </Box>
                 </Grid>
@@ -38,7 +38,7 @@ const Info_view = () => {
 
 
                 <Grid item xs={8}>
-                    <Typography variant='h5' sx={{ fontWeight: "bold", fontFamily: "Times New Roman", fontStyle: "italic"  }}>
+                    <Typography variant='h5' sx={{ fontWeight: "bold",  fontStyle: "italic"  }}>
                         <RecommendIcon></RecommendIcon> Requirement
                     </Typography>
                     <ul className = "text">
@@ -49,7 +49,7 @@ const Info_view = () => {
                 </Grid>
                 <div className='line'></div>
                 <Grid item xs={5}>
-                    <Typography variant='h5' sx={{ fontWeight: "bold", fontFamily: "Times New Roman", fontStyle: "italic"  }}>
+                    <Typography variant='h5' sx={{ fontWeight: "bold",  fontStyle: "italic"  }}>
                         <LanguageIcon></LanguageIcon>Languages
                     </Typography>
                     <ul className = "text">
@@ -58,19 +58,19 @@ const Info_view = () => {
                 </Grid>
                 <div className='line'></div>
                 <Grid item xs={2.5}>
-                    <Typography variant='h5' sx={{ fontWeight: "bold", fontFamily: "Times New Roman", fontStyle: "italic"  }}>
+                    <Typography variant='h5' sx={{ fontWeight: "bold",  fontStyle: "italic"  }}>
                         <CreditScoreIcon></CreditScoreIcon> Salary:
                     </Typography>
                 </Grid>
                 <Grid item xs={2} >
-                    <Typography variant='h5' sx ={{fontFamily: "Times New Roman"}}>
+                    <Typography variant='h5' >
                         1000$
                     </Typography>
                 </Grid>
                 <Box width="100%" />
                 <div className='line'></div>
                 <Grid item xs={12}>
-                    <Typography variant='h5' sx={{ fontWeight: "bold", fontFamily: "Times New Roman", fontStyle: "italic"  }}>
+                    <Typography variant='h5' sx={{ fontWeight: "bold",  fontStyle: "italic"  }}>
                         <CreditScoreIcon></CreditScoreIcon> Additional information:
                     </Typography>
                     <ul>
@@ -81,13 +81,13 @@ const Info_view = () => {
                 <Box width="100%" />
                 <div className='line'></div>
                 <Grid item xs={12}>
-                    <Typography variant='h5' sx={{ fontWeight: "bold", fontFamily: "Times New Roman", fontStyle: "italic"  }}>
+                    <Typography variant='h5' sx={{ fontWeight: "bold", fontStyle: "italic"  }}>
                         <LocationCityIcon></LocationCityIcon> Department
                     </Typography>
                 </Grid>
 
                 <Grid item xs={6} md={3} >
-                    <Typography align='left' variant='subtitle1' sx={{ display: "flex",  fontFamily: "Times New Roman" }}>
+                    <Typography align='left' variant='subtitle1' sx={{ display: "flex" }}>
                         <GroupIcon>  </GroupIcon>
                         <Box>
                             ITROOM
@@ -95,7 +95,7 @@ const Info_view = () => {
                     </Typography>
                 </Grid>
                 <Grid item xs={6} md ={3} >
-                    <Typography align='left' variant='subtitle1' sx={{ display: "flex" , fontFamily: "Times New Roman" }}>
+                    <Typography align='left' variant='subtitle1' sx={{ display: "flex"  }}>
                         <PhoneIcon></PhoneIcon>
                         <Box>
                             123456789
@@ -104,7 +104,7 @@ const Info_view = () => {
                 </Grid>
                 <Grid item md ={6} ></Grid>
                 <Grid item xs={12}>
-                    <Typography align='center' variant='subtitle1' sx={{ display: "flex" , fontFamily: "Times New Roman" }}>
+                    <Typography align='center' variant='subtitle1' sx={{ display: "flex"  }}>
                         <RoomIcon>  </RoomIcon>
                             G Floor, F-Town 1 Building, High-tech Park, Tan Phu Ward, District 9, Ho Chi Minh City, Vietnam
                         
@@ -112,7 +112,7 @@ const Info_view = () => {
                 </Grid>
 
                 <Grid item xs={6} md ={6}>
-                    <Typography align='left' variant='subtitle1' sx={{ display: "flex" , fontFamily: "Times New Roman" }}>
+                    <Typography align='left' variant='subtitle1' sx={{ display: "flex" }}>
                         <EmailIcon>  </EmailIcon>
                         <Box>
                             ITroomFSOFT@ftp.com
@@ -120,7 +120,7 @@ const Info_view = () => {
                     </Typography>
                 </Grid>
                 <Grid item xs={6} md ={6}>
-                    <Typography align='left' variant='subtitle1' sx={{ display: "flex" , fontFamily: "Times New Roman" }}>
+                    <Typography align='left' variant='subtitle1' sx={{ display: "flex"  }}>
                         <WebAssetIcon></WebAssetIcon>
                         <Box>
                             <a href={url} > FPT</a>

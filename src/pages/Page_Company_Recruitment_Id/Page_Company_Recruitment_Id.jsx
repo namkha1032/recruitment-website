@@ -110,16 +110,17 @@ const Page_Company_Recruitment_Id = () => {
     ];
     return (
         <div className="page_company_recruitment_id">
-            <Grid container spacing={2}>
-                <Grid item xs={3}>
+            <Grid container spacing={1} >
+                <Grid item xs={6} >
+                    <img className='picturesize' src="https://png.pngtree.com/thumb_back/fw800/back_our/20190620/ourmid/pngtree-creative-hand-painted-recruitment-notice-image_167204.jpg" alt="Tuyển dụng" />
                 </Grid>
                 <Grid item xs={6}>
                     <Box sx={styleofbox}>
                         <Info_view />
                     </Box>
                 </Grid>
-                <Grid item xs={3}></Grid>
-                <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                
+                <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
 
                     <Button sx={{ bgcolor: 'secondary.main', color: 'black', border: '2px solid black' }} variant='outlined' onClick={handleEdit}>
                         Chỉnh sửa
