@@ -57,7 +57,7 @@ const Info_view = () => {
                     </ul>
                 </Grid>
                 <div className='line'></div>
-                <Grid item xs={2.5}>
+                <Grid item xs={3}>
                     <Typography variant='h5' sx={{ fontWeight: "bold",  fontStyle: "italic"  }}>
                         <CreditScoreIcon></CreditScoreIcon> Salary:
                     </Typography>
