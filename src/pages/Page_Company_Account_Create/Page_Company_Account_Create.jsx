@@ -96,7 +96,7 @@ const Page_Company_Account_Create = () => {
                 xs={12}>
                 <Button
                     variant="contained"
-                    size="small"
+                    size="medium"
                     color="primary"
                     onClick={() => {
                     }}
