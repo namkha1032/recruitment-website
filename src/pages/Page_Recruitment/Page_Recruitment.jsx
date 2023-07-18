@@ -8,15 +8,15 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Pagination from '@mui/material/Pagination';
 import { Favorite, FavoriteBorder, FavoriteOutlined } from '@mui/icons-material';
-// import Demo from '../../components/demo/demo';
+
 
 const cards1 = [1, 2, 3, 4, 5, 6];
 const cards2 = [1, 2, 3];
@@ -43,11 +43,17 @@ function Copyright() {
 const Page_Recruitment = () => {
     const [like,setLike] = React.useState(true)
 
+    //
+    const navigate = useNavigate()
+    const handleNavigateClick1 = () => {
+      navigate('/recruitment/id')
+    }
+
     return (
         <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
       
-    <main>
+    <main id='recruitment'>
         {/* Hero unit */}
         <Box
           sx={{
@@ -77,7 +83,7 @@ const Page_Recruitment = () => {
           <Grid container spacing={8}>
             {cards1.map((card) => (
               <Grid item key={card} xs={12}>
-                  <Box sx={{backgroundColor:'#C0C0C0C0', borderRadius:'5px' } }>
+                  <Box sx={{backgroundColor:'#99CCFF', borderRadius:'5px' } }>
                     <Grid container>
                       <Grid item xs={9}>
                         <Box sx={{margin:'15px',display:'flex'}}>
@@ -92,7 +98,7 @@ const Page_Recruitment = () => {
                           </Box>
                           <Box sx={{marginLeft:'15px',display:'flex',flexDirection:'column',justifyContent:'space-between'}}>
                             <Box>
-                            <Typography>Trợ Lý Tiếng Trung (Lương 10 - 15 Triệu) </Typography>
+                            <Typography>Lập trình viên FrontEnd </Typography>
                             <Typography>Công Ty TNHH USMART</Typography>
                             </Box>
                             
@@ -107,11 +113,11 @@ const Page_Recruitment = () => {
                       </Grid>
                       <Grid item xs={3} sx={{display:'flex',flexDirection:'column',justifyContent:'space-between'}}>
                         <Box sx={{margin:'15px'}}>
-                          <Typography align='right'>2 -30 củ</Typography>
+                          <Typography align='right'></Typography>
                         </Box>
                         <Box sx={{margin:'15px',display:'flex',justifyContent:'end'}}>
-                          <Button variant='contained' size='small'> ứng tuyển</Button>
-                          <Button onClick={()=> setLike(!like)}>{like ? <FavoriteBorder/> : <Favorite/>}</Button>
+                          <Button onClick={handleNavigateClick1} variant='contained' size='small'>Chi tiết</Button>
+                          
                         </Box>
                       </Grid>
                     </Grid>
@@ -119,9 +125,10 @@ const Page_Recruitment = () => {
               </Grid>
             ))}
           </Grid>
-          <Typography align='right'>
-            <Button variant="text">Xem thêm...</Button>
-          </Typography>
+        
+          <Box sx={{display:'flex', justifyContent:'flex-end', marginTop:3}}> 
+          <Pagination count={10} variant="outlined" color="primary"  />
+          </Box>
           
          
         </Container>
