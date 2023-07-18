@@ -29,7 +29,7 @@ const XPage_Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(email, password);
-    navigate("/");
+    navigate("/home");
   };
 
   const handleCheck = (event) => {
