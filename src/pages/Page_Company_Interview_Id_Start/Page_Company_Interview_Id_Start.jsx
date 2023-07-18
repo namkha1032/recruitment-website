@@ -92,7 +92,7 @@ export default function Page_Company_Interview_Id_Start() {
                     {/* Note and mark */}
                     <Grid container sx={{ marginTop: 5 }} columnSpacing={5}>
                         <Grid item md={6}>
-                            <Box sx={{ ...boxStyle, height: "100%", padding:2 }}>
+                            <Box sx={{ ...boxStyle, height: "100%", padding: 2 }}>
                                 <ReactQuill theme="snow" value={note} onChange={setNote} />
                             </Box>
                         </Grid>
@@ -111,7 +111,6 @@ export default function Page_Company_Interview_Id_Start() {
                         <Button variant="contained" type="submit">Save record</Button>
                     </Box>
                 </form >
-                {/* <p ref={noteRef}></p> */}
             </>
             : null
     );
