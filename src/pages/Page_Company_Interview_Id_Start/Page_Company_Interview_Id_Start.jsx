@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
     Typography,
     Box,
@@ -6,19 +6,23 @@ import {
     TextField,
     Card,
     CardHeader,
-    CardContent
+    CardContent,
+    Paper
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 // import components
 import ScoreTable from './ScoreTable/ScoreTable';
 import TechTransfer from './TechTransfer/TechTransfer';
 import LangTransfer from './LangTransfer/LangTransfer';
 import SoftTransfer from './SoftTransfer/SoftTransfer';
 import CateTab from './CateTab/CateTab';
-
+// import style
+import boxStyle from '../../assets/js/boxStyle';
+import "./Page_Company_Interview_Id_Start.scss"
 export default function Page_Company_Interview_Id_Start() {
     const dispatch = useDispatch()
 
@@ -35,15 +39,20 @@ export default function Page_Company_Interview_Id_Start() {
 
 
 
-    let [note, setNote] = useState("")
-
-
+    let [note, setNote] = useState("<h1>About skill</h1>")
+    const noteRef = useRef()
     useEffect(() => {
         dispatch({ type: "saga/getInterviewQuestion" })
         return () => {
             dispatch({ type: "question/setQuestion", payload: null })
         }
     }, [])
+    useEffect(() => {
+        if (noteRef.current) {
+            console.log("noteRef: ", noteRef)
+            noteRef.current.innerHTML = note
+        }
+    })
     const navigate = useNavigate()
     function handleSubmit(e) {
         e.preventDefault()
@@ -63,7 +72,8 @@ export default function Page_Company_Interview_Id_Start() {
         leftSoft ?
             <>
                 <form autoComplete='off' onSubmit={handleSubmit}>
-                    <Box sx={{ border: "1px solid black", borderRadius: 4 }}>
+                    <Box sx={boxStyle}>
+                        {/* <Paper elevation={24} sx={{ borderRadius: 4 }}> */}
                         <CateTab currentCateTab={currentCateTab} setCurrentCateTab={setCurrentCateTab} />
                         {/* Soft Skill Questions */}
                         {currentCateTab == 0
@@ -77,44 +87,31 @@ export default function Page_Company_Interview_Id_Start() {
                         {currentCateTab == 2
                             ? <TechTransfer leftTech={leftTech} rightTech={rightTech} />
                             : null}
+                        {/* </Paper> */}
                     </Box>
                     {/* Note and mark */}
                     <Grid container sx={{ marginTop: 5 }} columnSpacing={5}>
                         <Grid item md={6}>
-                            <TextField
-                                label="Note"
-                                placeholder="Note"
-                                multiline
-                                fullWidth
-                                variant="outlined"
-                                value={note}
-                                onChange={event => setNote(event.target.value)}
-                                rows={11}
-                                sx={{
-                                    "&": {
-                                        height: "100%"
-                                    },
-                                    "& .MuiInputBase-root": {
-                                        height: "100%",
-                                        borderRadius: 5,
-                                        border: "1px solid black"
-                                    }
-                                }}
-                            />
+                            <Box sx={{ ...boxStyle, height: "100%", padding:2 }}>
+                                <ReactQuill theme="snow" value={note} onChange={setNote} />
+                            </Box>
                         </Grid>
                         <Grid item md={6}>
-                            <Card variant="outlined" sx={{ border: "1px solid black", borderRadius: 5 }}>
+                            {/* <Card variant="outlined" sx={{ border: "1px solid black", borderRadius: 5 }}> */}
+                            <Box sx={boxStyle}>
                                 <CardHeader title="Final Score" />
                                 <CardContent>
                                     <ScoreTable allResult={allQuestion.right} />
                                 </CardContent>
-                            </Card>
+                            </Box>
+                            {/* </Card> */}
                         </Grid>
                     </Grid>
                     <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 4 }}>
                         <Button variant="contained" type="submit">Save record</Button>
                     </Box>
                 </form >
+                {/* <p ref={noteRef}></p> */}
             </>
             : null
     );

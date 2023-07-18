@@ -48,6 +48,7 @@ import XPage_Recovery from './pages/XPage_Recovery/XPage_Recovery';
 import XPage_ChangePassword from './pages/XPage_ChangePassword/XPage_ChangePassword';
 
 import PageTest from './pages/xpagetest/PageTest';
+import PageTest2 from './pages/xpagetest2/PageTest2';
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function App() {
   return (
@@ -102,6 +103,7 @@ function App() {
           <Route path="/login" element={<XPage_Login />} />
           <Route path="/recovery" element={<XPage_Recovery />} />
           <Route path="/register" element={<XPage_Register />} />
+          <Route path="/test2" element={<PageTest2 />} />
 
         </Routes>
       </BrowserRouter>
