@@ -12,25 +12,29 @@ import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import EditIcon from '@mui/icons-material/Edit';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
-import PlagiarismIcon from '@mui/icons-material/Plagiarism';
+import FindInPageIcon from '@mui/icons-material/FindInPage';
+
+import picture from '../../assets/img/event.jpg'
 
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 150 },
-    { field: 'name', headerName: 'Tên', width: 200 },
-    { 
-    field: 'actions',
+    { field: 'id', 
+    renderHeader: () => <span>Mã</span>, 
+    width: 150 },
+    { field: 'name', 
+    renderHeader: () => <span>Tên</span>, 
+    width: 200 },
+    { field: 'actions',
     type: 'actions',
-    headerName: 'Chi tiết',
+    renderHeader: () => <span>Chi tiết</span>,
     width: 150,
     headerAlign: 'center',
     align: 'center',
     getActions: (params) => [
           <GridActionsCellItem
-            icon={<PlagiarismIcon></PlagiarismIcon>}
+            icon={<FindInPageIcon></FindInPageIcon>}
             label="Detail"
-            onClick={() => alert("Navigate to user id: " + params.row.id)}/>]
-    }
+            onClick={() => alert("Navigate to user id: " + params.row.id)}/>]}
 ];
 
 // Test Data
@@ -60,7 +64,11 @@ const Page_Company_Event_Id = () => {
         setValue(newValue);
     }
 
-    const handleClick = (e) => {
+    const handleRegister = (e) => {
+        alert("Register successfully!");
+    }
+
+    const handleEdit = (e) => {
         navigate("/company/event/:eventid/update");
     }
 
@@ -71,12 +79,11 @@ const Page_Company_Event_Id = () => {
 
     return (
         <Container sx={{ p: 0 }} className='companyeventid'>
-            <Typography variant='h4' align='center' sx={{ fontWeight: 600, color: 'slateblue' }}>Sự kiện 1</Typography>
-
+            <Typography variant='h4' align='center' sx={{ fontWeight: 600, color: '#1565C0' }}>Sự kiện 1</Typography>
             <Grid container>
 
                 <Grid item md={6} sm={12} sx={{ mt: 8 }}>
-                    <img src="https://file1.hutech.edu.vn/file/news/2-1569353757.jpg" 
+                    <img src={picture} 
                     alt="..." 
                     style={{ 
                         width: '100%', 
@@ -90,8 +97,8 @@ const Page_Company_Event_Id = () => {
 
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <TabList aria-label='Tabs menu' onChange={handleChange} textColor="primary" indicatorColor="primary" centered>
-                                <Tab label='Thông tin sự kiện' value='1' />
-                                <Tab label='Danh sách đăng ký' value='2' />
+                                <Tab label='Thông tin sự kiện' value='1' sx={{ textTransform: 'none', fontSize: 20 }} />
+                                <Tab label='Danh sách đăng ký' value='2' sx={{ textTransform: 'none', fontSize: 20 }} />
                             </TabList>
                         </Box>
 
@@ -101,50 +108,54 @@ const Page_Company_Event_Id = () => {
                                     p: 0.5, 
                                     display: "flex", 
                                     alignItems: "center", 
-                                    width: '100%' 
+                                    width: '100%', 
+                                    height: '100%'
                                 }} 
                                 style={{ 
-                                    border: '0px solid black', 
-                                    background: 'lightblue', 
-                                    margin: 0.5, 
-                                    filter: 'drop-shadow(0 0 10px black)' 
+                                    // border: '0px solid black', 
+                                    // background: 'lightgray', 
+                                    // filter: 'drop-shadow(0 0 10px black)', 
+                                    margin: 0.5,
+                                    backgroundColor: 'white',
+                                    borderRadius: '15px',
+                                    border: '2px solid black'
                                 }}>
                                 <Grid item md={5} sm={6} xs={7}>
-                                    <Typography variant='span' className='header'>Tên sự kiện</Typography>
+                                    <Typography variant='span' className='header'>Tên sự kiện:</Typography>
                                 </Grid>
                                 <Grid item md={7} sm={6} xs={5}>
                                     <Box className='content' p={3}>Code War</Box>
                                 </Grid>
                                 <Grid item md={5} sm={6} xs={7}>
-                                    <Typography variant='span' className='header'>Nội dung</Typography>
+                                    <Typography variant='span' className='header'>Nội dung:</Typography>
                                 </Grid>
                                 <Grid item md={7} sm={6} xs={5}>
                                     <Box className='content' p={3}>Code War là một sự kiện thú vị đến từ FPT Software</Box>
                                 </Grid>
                                 <Grid item md={5} sm={6} xs={7}>
-                                    <Typography variant='span' className='header'>Số lượng đã tham gia</Typography>
+                                    <Typography variant='span' className='header'>Số lượng đã tham gia:</Typography>
                                 </Grid>
                                 <Grid item md={7} sm={6} xs={5}>
                                     <Box className='content' p={3}>500/1000</Box>
                                 </Grid>
                                 <Grid item md={5} sm={6} xs={7}>
-                                    <Typography variant='span' className='header'>Thời gian</Typography>
+                                    <Typography variant='span' className='header'>Thời gian:</Typography>
                                 </Grid>
                                 <Grid item md={7} sm={6} xs={5}>
                                     <Box className='content' p={3}>Date time</Box>
                                 </Grid>
                                 <Grid item md={5} sm={6} xs={7}>
-                                    <Typography variant='span' className='header'>Địa điểm</Typography>
+                                    <Typography variant='span' className='header'>Địa điểm:</Typography>
                                 </Grid>
                                 <Grid item md={7} sm={6} xs={5}>
                                     <Box className='content' p={3}>Location</Box>
                                 </Grid>
                                 <Grid item xs={12} align='right'>
-                                    <Button variant='contained' size='small' className='btnregister' sx={{ mx: 2 }}>
+                                    <Button variant='contained' size='small' className='btnregister' sx={{ mx: 2 }} onClick={handleRegister}>
                                         <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon>
                                         Đăng ký
                                     </Button>
-                                    <Button variant='contained' size='small' color='success' onClick={handleClick}>
+                                    <Button variant='contained' size='small' color='success' onClick={handleEdit}>
                                         <EditIcon sx={{ marginRight: 0.5 }}></EditIcon>
                                         Chỉnh sửa
                                     </Button>
@@ -153,7 +164,7 @@ const Page_Company_Event_Id = () => {
                         </TabPanel>
 
                         <TabPanel value='2' sx={{ p: 2 }}>
-                            <div style={{ height: 500, width: '100%' }}>
+                            <div style={{ height: 525, width: '100%' }}>
                                 {/* Data Grid */}
                                 <DataGrid 
                                     rows={rows} 
@@ -165,7 +176,7 @@ const Page_Company_Event_Id = () => {
                                         "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
                                           backgroundColor: "#1565C0",
                                           color: "white",
-                                          fontWeight: "bold",
+                                          fontWeight: 700,
                                         },
                                     }}
                                     localeText={{

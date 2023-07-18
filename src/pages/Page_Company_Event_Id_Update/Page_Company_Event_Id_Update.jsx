@@ -13,6 +13,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import { Box } from '@mui/system'
 
 
 
@@ -66,9 +67,17 @@ const Page_Company_Event_Id_Update = () => {
     
     return (
         <form onSubmit={handleSubmit}>
-            <Container sx={{ p: 1 }} className='eventupdate' >
-                <Typography variant='h4' align='center' sx={{ fontWeight: 600, color: 'cornflowerblue' }}>Chỉnh sửa sự kiện</Typography>
-                <Container style={{ border: '2px solid black', background: 'white', margin: 14 }}>
+            <Container sx={{ p: 0 }} className='eventupdate' >
+                <Box sx={{ 
+                    fontSize: 40, 
+                    fontWeight: 600, 
+                    color: '#1565C0', 
+                    display: 'flex', 
+                    justifyContent: 'center' 
+                }}>
+                    Chỉnh sửa sự kiện
+                </Box>
+                <Container style={{ border: '2px solid black', borderRadius: '15px', background: 'white', margin: 17 }}>
                     <Grid container spacing={2.5} sx={{
                         p: 1,
                         display: "flex",
