@@ -91,51 +91,24 @@ const Page_Company_Account_Blacklist = () => {
         );
     }
     const columns = [
-        {field: "id", headerName: "ID", flex: 0.5},
-        {field: "registerId", headerName: "Register ID"},
+        { field: "id", headerName: "ID", flex: 0.5 },
+        { field: "registerId", headerName: "Register ID", flex: 0.5},
         {
-            field: "name",
-            headerName: "Name",
+            field: "accountName",
+            headerName: "Account Name",
             flex: 1,
             cellClassName: "name-column--cell",
         },
         {
-            field: "age",
-            headerName: "Age",
-            type: "number",
-            headerAlign: "left",
-            align: "left",
-        },
-        {
-            field: "phone",
-            headerName: "Phone Number",
-            flex: 1,
-        },
-        {
-            field: "email",
-            headerName: "Email",
-            flex: 1,
-        },
-        {
-            field: "address",
-            headerName: "Address",
-            flex: 1,
-        },
-        {
-            field: "city",
-            headerName: "City",
-            flex: 1,
-        },
-        {
             field: "action",
             headerName: "Action",
-            flex: 1,
+            flex: 0.5,
             renderCell: renderActionButton,
         },
         {
             field: "status",
             headerName: "Account Status",
-            flex: 1,
+            flex: 0.5,
             renderCell: (params)=>{
                 return(<RenderStatusButton params={params} />)
             },
@@ -160,25 +133,25 @@ const Page_Company_Account_Blacklist = () => {
                     Blacklist
                 </Typography>
             </Grid>
-            <Grid
-                item
-                display="flex"
-                justifyContent="right">
-                <TextField
-                    fullWidth
-                    label="Account Search"
-                    id="blacklistSearch"
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton aria-label="toggle password visibility" edge="end">
-                                    <GridSearchIcon></GridSearchIcon>
-                                </IconButton>
-                            </InputAdornment>
-                        )
-                    }}
-                />
-            </Grid>
+            {/*<Grid*/}
+            {/*    item*/}
+            {/*    display="flex"*/}
+            {/*    justifyContent="right">*/}
+            {/*    <TextField*/}
+            {/*        fullWidth*/}
+            {/*        label="Account Search"*/}
+            {/*        id="blacklistSearch"*/}
+            {/*        InputProps={{*/}
+            {/*            endAdornment: (*/}
+            {/*                <InputAdornment position="end">*/}
+            {/*                    <IconButton aria-label="toggle password visibility" edge="end">*/}
+            {/*                        <GridSearchIcon></GridSearchIcon>*/}
+            {/*                    </IconButton>*/}
+            {/*                </InputAdornment>*/}
+            {/*            )*/}
+            {/*        }}*/}
+            {/*    />*/}
+            {/*</Grid>*/}
             <Grid
                 item
                 m="10px 0 10px 0"
