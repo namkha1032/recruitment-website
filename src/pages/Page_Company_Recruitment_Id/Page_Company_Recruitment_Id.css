@@ -1,6 +1,5 @@
 
-
-.picture {
-    width: 100%;
-    margin: auto;
+.picturesize{
+    width: 500px;
+    height: 100%;
 }

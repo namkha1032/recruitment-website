@@ -14,7 +14,6 @@ const styleofbox = {
 
 const titlebox = {
     fontWeight: "bold",
-    fontFamily: "Times New Roman",
     fontStyle: "italic",
     display: "flex",
     justifyContent: "center",
@@ -24,7 +23,6 @@ const titlebox = {
 const texttitle = {
     fontStyle: "italic",
     fontWeight: "bold",
-    fontFamily: "Times New Roman",
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "flex-start",
@@ -32,41 +30,70 @@ const texttitle = {
 }
 
 const textinfo = {
-    fontFamily: "Times New Roman",
     display: "flex",
     marginLeft: "5px"
 }
-const interviewers = [
-    {
-        id: 1,
-        name: "Pham Cong Quoc Viet"
-    },
-    {
-        id: 2,
-        name: "Tran Doan Thi Khanh Linh"
-    }
-]
+
 
 const Page_Interview_Id = () => {
+    const requires = require('../../data/View_recruitment/requires.json');
     return (
         <>
             <Grid container spacing={2}>
                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <Typography variant="h3" sx={{ fontWeight: "bold", fontFamily: "Times New Roman", fontStyle: "italic" }}>
+                    <Typography variant="h3" sx={{ fontWeight: "bold",  fontStyle: "italic" }}>
                         Detail of the interview
                     </Typography>
                 </Grid>
-                <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-start" }}>
+                {/* <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-start" }}>
                     <Typography variant="h4" sx={{ fontWeight: "bold", fontFamily: "Times New Roman", fontStyle: "italic" }}>
                         Position: ReactJS
                     </Typography>
-                </Grid>
+                </Grid> */}
                 <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
+                <Box sx={styleofbox}>
+                        <Typography variant="h5" sx={titlebox}>
+                            General information
+                        </Typography>
+                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
+                            <Typography variant="h6" sx={texttitle}>
+                                Position:
+                            </Typography>
+                            <Typography variant="h6" sx={textinfo}>
+                                Front-end Developer
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
+                            <Typography variant="h6" sx={texttitle}>
+                                Requirement:
+                            </Typography>
+                            <Typography variant="h6" sx={{  display: "flex", marginLeft: "120px", marginTop: "-50px" }}>
+                                <ul>
+                                    {requires.map((require) =>
+                                    (
+                                        <li key={require.id}>{require.name}
+
+                                        </li>
+                                    )
+                                    )}
+                                </ul>
+
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
+                            <Typography variant="h6" sx={texttitle}>
+                                Language:
+                            </Typography>
+                            <Typography variant="h6" sx={textinfo}>
+                                Japanese
+                            </Typography>
+                        </Grid>
+                    </Box>
                     <Box sx={styleofbox}>
                         <Typography variant="h5" sx={titlebox}>
                             Detail of the candidate
                         </Typography>
-                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
+                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
                             <Typography variant="h6" sx={texttitle}>
                                 Name:
                             </Typography>
@@ -101,15 +128,15 @@ const Page_Interview_Id = () => {
                     </Box>
                     <Box sx={styleofbox}>
                         <Typography variant="h5" sx={titlebox}>
-                            Detail of the interviewers
+                            Detail of the interviewer
                         </Typography>
-                        <Grid container spacing={0} item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
+                        <Grid container spacing={0} item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
                             <Typography variant="h6" sx={texttitle}>
                                 Name:
 
 
                             </Typography>
-                            <Typography variant="h6" sx={{ fontFamily: "Times New Roman", display: "flex", justifyContent: "flex-start", alignItems: "flex-start", marginLeft: "50px", marginTop: "-50px" }}>
+                            {/* <Typography variant="h6" sx={{ fontFamily: "Times New Roman", display: "flex", justifyContent: "flex-start", alignItems: "flex-start", marginLeft: "50px", marginTop: "-50px" }}>
                                 <ul>
                                     {interviewers.map((interviewer) =>
                                     (
@@ -119,6 +146,10 @@ const Page_Interview_Id = () => {
                                     )
                                     )}
                                 </ul>
+
+                            </Typography> */}
+                            <Typography variant="h6" sx={textinfo}>
+                                Pham Cong Quoc Viet
                             </Typography>
                         </Grid>
                     </Box>

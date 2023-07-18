@@ -80,7 +80,7 @@ const Page_Recruitment_Id = () => {
         setCV(event.target.value);
         setHelperText('');
     };
- 
+
 
     const handleclose_notice_modal = () => {
         setOpen(false);
@@ -111,9 +111,11 @@ const Page_Recruitment_Id = () => {
 
     };
     return (
-        <Grid container spacing={1}>
-            <Grid item xs={3}></Grid>
-            <Grid item xs={6}>
+        <Grid container spacing={1} sx ={{display:"flex", flexDirection: "row"}}>
+            <Grid item xs={6} sm ={6} md ={6}>
+                <img className='picturesize' src="https://png.pngtree.com/thumb_back/fw800/back_our/20190620/ourmid/pngtree-creative-hand-painted-recruitment-notice-image_167204.jpg" alt="Tuyển dụng" />
+            </Grid>
+            <Grid item xs={6} sm ={6} md ={6}>
                 <Box sx={styleofbox}>
                     <Info_view />
                 </Box>
@@ -127,7 +129,7 @@ const Page_Recruitment_Id = () => {
                             sx={boxDefault}
                         >
                             <Button sx={{ bgcolor: 'secondary.main', color: 'black', border: '2px solid black' }} variant='outlined' onClick={handleOpen}>
-                                Đăng ký ứng tuyển
+                                Register
                             </Button>
                             <Modal
                                 open={open}
@@ -137,7 +139,7 @@ const Page_Recruitment_Id = () => {
                             >
 
                                 <Box sx={style}>
-                                    <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ fontFamily: "Times New Roman" }}>
+                                    <Typography id="modal-modal-title" variant="h6" component="h2" >
                                         Choose your CV
                                     </Typography>
                                     <form onSubmit={handleSubmit}>
@@ -151,13 +153,13 @@ const Page_Recruitment_Id = () => {
                                             >
 
                                                 {CVlist.map((CVs) => (
-                                                    <FormControlLabel sx={{ fontFamily: "Times New Roman" }} key={CVs.id} value={CVs.name} control={<Radio />} label={CVs.name} />
+                                                    <FormControlLabel  key={CVs.id} value={CVs.name} control={<Radio />} label={CVs.name} />
                                                 ))}
 
                                                 {/* <FormControlLabel value="CV2" control={<Radio />} label="CV2" /> */}
                                             </RadioGroup>
 
-                                            <FormHelperText sx={{ fontSize: "20px", color: "red", fontFamily: "Times New Roman", fontWeight: "bold" }}>{helperText}</FormHelperText>
+                                            <FormHelperText sx={{ fontSize: "20px", color: "red",  fontWeight: "bold" }}>{helperText}</FormHelperText>
                                         </FormControl>
                                         <Box sx={{ display: "flex" }}>
                                             <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-start" }}>
@@ -178,7 +180,7 @@ const Page_Recruitment_Id = () => {
                                             >
                                                 <Box sx={{ ...success_notice, width: 300, height: 200, display: "flex", flexDirection: "column" }}>
                                                     <Grid item xs={12}>
-                                                        <Typography color='success' variant='subtitle1' sx={{ fontFamily: "Times New Roman", display: "flex" }}>
+                                                        <Typography color='success' variant='subtitle1' sx={{  display: "flex" }}>
                                                             <DoneOutlineTwoToneIcon color='success'></DoneOutlineTwoToneIcon>
                                                             You submited successfully. Please wait for further information.
                                                         </Typography>
