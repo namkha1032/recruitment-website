@@ -45,7 +45,6 @@ import Page_Recruitment_Id_Application_Id from './pages/Page_Recruitment_Id_Appl
 import XPage_Login from './pages/XPage_Login/XPage_Login';
 import XPage_Register from './pages/XPage_Register/XPage_Register';
 import XPage_Recovery from './pages/XPage_Recovery/XPage_Recovery';
-import XPage_ChangePassword from './pages/XPage_ChangePassword/XPage_ChangePassword';
 
 import PageTest from './pages/xpagetest/PageTest';
 import PageTest2 from './pages/xpagetest2/PageTest2';
@@ -94,8 +93,6 @@ function App() {
             <Route path="/recruitment" element={<Page_Recruitment />} />
             <Route path="/recruitment/:recruitmentid" element={<Page_Recruitment_Id />} />
             <Route path="/recruitment/:recruitmentid/application/:applicationid" element={<Page_Recruitment_Id_Application_Id />} />
-
-            <Route path="/change-password" element={<XPage_ChangePassword />} />
 
             <Route path="/test" element={<PageTest />} />
           </Route>

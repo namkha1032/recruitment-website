@@ -15,8 +15,7 @@ import {
 
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
-import image from "./login_icon.png";
-import imageBackground from "./background.jpg";
+import imageBackground from "../../assets/img/background.jpg";
 
 const style = {
   marginTop: "15px",
@@ -61,17 +60,13 @@ const XPage_Login = () => {
         >
           <Grid item md={7} padding="20px">
             <Grid item xs={12} display="flex" justifyContent="center">
-              <img
-                src={image}
-                alt="login"
-                width="25%"
-                height="25%"
-                loading="eager"
-              />
+              <Typography variant="h1" color='white'>
+                Login
+              </Typography>
             </Grid>
           </Grid>
 
-          <Grid item md={7} sx={{ display: "flex", justifyContent: "center" }}>
+          <Grid item md={7} sx={{ display: "flex", justifyContent: "center", alignItems: 'center'}}>
             <Grid
               item
               md={9}
