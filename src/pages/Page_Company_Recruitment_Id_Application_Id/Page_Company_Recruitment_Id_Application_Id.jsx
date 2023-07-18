@@ -16,7 +16,6 @@ const Page_Company_Recruitment_Id_Application_Id = () => {
     <Container>
       <Application />
       <Box
-        item
         xs={12}
         sx={{ display: "flex", justifyContent: "flex-end", padding: "15px" }}
       >

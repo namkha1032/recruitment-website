@@ -9,7 +9,6 @@ const Page_Recruitment_Id_Application_Id = () => {
     <Container>
       <Application />
       <Box
-        item
         xs={12}
         sx={{
           display: "flex",
