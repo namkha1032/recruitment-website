@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Grid, Typography, Button } from '@mui/material';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-
-export default function HistoryList({ events, time, status }) {
+import { useNavigate } from 'react-router-dom';
+export default function HistoryList({ events, time, status, pathnavigate, namePage }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
-
+  const navigate = useNavigate();
   const handleDetails = (eventId) => {
+    navigate(pathnavigate);
     // Perform action when the "View Details" button is clicked for an event
     // You can implement this function to display detailed information about the event, e.g., show a popup, navigate to a new page, etc.
   };
@@ -19,7 +20,7 @@ export default function HistoryList({ events, time, status }) {
   };
 
   const columns = [
-    { field: 'name', headerName: 'Tên Event', flex:1 },
+    { field: 'name', headerName: namePage, flex:1 },
     { field: 'time', headerName: 'Thời gian', flex:1 },
     status && { field: 'status', headerName: 'Trạng thái',flex:1 },
     {
