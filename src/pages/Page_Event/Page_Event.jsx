@@ -14,11 +14,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
+import { useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Menu, MenuItem } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Pagination from '@mui/material/Pagination';
-// import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+
 //
 const cards1 = [1, 2, 3, 4, 5, 6];
 //
@@ -37,35 +38,40 @@ function Copyright() {
   
 
 const Page_Event = () => {
+  //
+  const navigate = useNavigate()
+  //
+  
+  //
+    const handleNavigateClick1 = () => {
+      navigate('/event/:eventid')
+    }
     return (
         <>
-        <div style={{width:'100%'}}> 
+        <Box sx={{padding:'24px'}}>
        
         <Box 
         sx=
         {{
-            backgroundImage:'url(https://fo4.garena.vn/wp-content/uploads/2020/11/bg-news.png)', 
-            height:'250px', 
+            backgroundImage:'url(https://bootstrapmade.com/demo/templates/ZenBlog/assets/img/post-landscape-6.jpg)', 
+            height:'300px',
+            borderRadius: '10px'
 
         }}>
         
-       <Typography variant='h4' align='center'>
-        Sự kiện
+       <Typography variant='h4' align='center' color='white' fontFamily='serif'>
+        Event
         </Typography>
       </Box>
-      </div>
+      </Box>
+      
 
-    <Box sx={{backgroundColor:'black'}}>
-        <Typography variant='h4'>
-            hello
-        </Typography>
-    </Box>
    
 
 
    <Container sx={{ py: 8 }} maxWidth="md">
           {/* End hero unit */
-          <Typography variant='h4' align="left">Sự kiện</Typography>
+          <Typography variant='h4' align="left" fontFamily='serif'>View Event</Typography>
           }
           <Grid container spacing={4}>
             {cards1.map((card) => (
@@ -91,16 +97,32 @@ const Page_Event = () => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
+                    <Button onClick={handleNavigateClick1} size="small">View</Button>
                   </CardActions>
                 </Card>
               </Grid>
             ))}
           </Grid>
-          <Pagination count={10} variant="outlined" color="primary" />
-          
+          <Box sx={{display:'flex', justifyContent:'flex-end', marginTop:3}}> 
+          <Pagination count={10} variant="outlined" color="primary"  />
+          </Box>
           </Container>
+          {/* Footer */}
+       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
+        <Typography variant="h6" align="center" gutterBottom>
+          Team 4
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          align="center"
+          color="text.secondary"
+          component="p"
+        >
+          Something here to give the footer a purpose!
+        </Typography>
+        <Copyright />
+      </Box>
+      {/* End footer */}
 
         </>
 
