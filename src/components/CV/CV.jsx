@@ -1,4 +1,4 @@
-import { Code, EmojiEmotions, EmojiEvents, IntegrationInstructions, Person, School } from "@mui/icons-material"
+import { Code, EmojiEmotions, EmojiEvents, IntegrationInstructions, Language, Person, School } from "@mui/icons-material"
 import { Box, Divider, Grid } from "@mui/material"
 import { useEffect } from "react"
 
@@ -52,6 +52,23 @@ const infoCV = {
             skillname:'Python',
             decription:'Python'
         },
+    ],
+    languages:[
+        {
+            cvlanguageid:0,
+            name:'English',
+            decription:''
+        },
+        {
+            cvlanguageid:1,
+            name:'Korean',
+            decription:''
+        },
+        {
+            cvlanguageid:2,
+            name:'Chinese',
+            decription:''
+        }
     ]
 }
 const CV = (props) => {
@@ -100,12 +117,12 @@ const CV = (props) => {
                     <Box sx={{display:'flex',alignItems:'flex-end'}}>
                         <IntegrationInstructions sx={{mr:'15px'}}/>
                         <Box component='h2' sx={{position:'relative', top:'6.5px',m:0}}>
-                         Skils
+                         Skills
                         </Box>
                     </Box>
                     <Box sx={{padding:'10px 0 0 40px'}}>
                     {infoCV.skills.map((skill,index) => (
-                        <Box key={index}>&bull; {skill.skillname}</Box>
+                        <Box key={index} >&bull; {skill.skillname}</Box>
                     ))}
                      
                     </Box>
@@ -121,8 +138,8 @@ const CV = (props) => {
                     </Box>
                     <Box sx={{padding:'10px 0 0 40px'}}>
                     {infoCV.certificates.map((certificate,index) => (
-                        <Box key={index}>
-                            &bull; {certificate.name}
+                        <Box key={index} >
+                            &bull; <a href={certificate.link} style={{textDecoration:'none'}}>{certificate.name}</a> 
                             <Box sx={{ml:'50px'}}> 
                              EarnedDate: {certificate.dateearned} , ExpDate: {certificate.expirationdate}
                             </Box>
@@ -131,6 +148,23 @@ const CV = (props) => {
                        
                     ))}
                      
+                    </Box>
+                    
+                </Box>
+                <Divider sx={{backgroundColor:'black',mt:'16px' }} />
+                <Box>
+                    <Box sx={{display:'flex',alignItems:'flex-end'}}>
+                        <Language sx={{mr:'15px'}}/>
+                        <Box component='h2' sx={{position:'relative', top:'5.5px',m:0}}>
+                         Language
+                        </Box>
+                    </Box>
+                    <Box sx={{padding:'10px 0 0 40px'}}>
+                    {infoCV.languages.map((language,index) => (
+                        <Box key={index}>
+                            &bull; {language.name}
+                        </Box>
+                    ))}
                     </Box>
                     
                 </Box>

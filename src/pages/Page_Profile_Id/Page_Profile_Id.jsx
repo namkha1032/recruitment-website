@@ -7,7 +7,10 @@ import {
   Person,
   Phone,
 } from "@mui/icons-material";
-import { TabContext, TabPanel } from "@mui/lab";
+import { DatePicker, LocalizationProvider, TabContext, TabPanel } from "@mui/lab";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+
 import "./Page_Profile_Id.css";
 import {
   Box,
@@ -18,6 +21,7 @@ import {
   Paper,
   Tab,
   Tabs,
+  TextField,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
@@ -28,12 +32,19 @@ const Profile = () => {
   const [selectedImage, setSelectedImage] = useState(
     "https://pbs.twimg.com/media/EYVxlOSXsAExOpX.jpg"
   );
+  const [block,setBlock] = useState('none')
   const [tabValue, setTabValue] = useState("Profile");
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file !== null) setSelectedImage(URL.createObjectURL(file));
     console.log(URL.createObjectURL(file));
   };
+  const handleSave = () => {
+    setBlock('none')
+  }
+  const handleEdit = () => {
+    setBlock('block')
+  }
   return (
     <Container sx={{ backgroundColor: "#f3f4f9" }}>
       <TabContext value={tabValue}>
@@ -131,26 +142,29 @@ const Profile = () => {
                 value="Profile"
                 label="Profile"
               />
-              <Tab
-                sx={{ padding: "0px 8px", margin: "0px 0px 0px 16px" }}
-                value="CVs"
-                label="CVs"
-              />
-              <Tab
-                sx={{ padding: "0px 8px", margin: "0px 0px 0px 16px" }}
-                value="Applications"
-                label="Applications"
-              />
-              <Tab
-                sx={{ padding: "0px 8px", margin: "0px 0px 0px 16px" }}
-                value="Interviews"
-                label="Interviews"
-              />
-              <Tab
-                sx={{ padding: "0px 8px", margin: "0px 0px 0px 16px" }}
-                value="Events"
-                label="Events"
-              />
+              
+              {// <Tab
+              //   sx={{ padding: "0px 8px", margin: "0px 0px 0px 16px" }}
+              //   value="CVs"
+              //   label="CVs"
+              // />
+              // <Tab
+              //   sx={{ padding: "0px 8px", margin: "0px 0px 0px 16px" }}
+              //   value="Applications"
+              //   label="Applications"
+              // />
+              // <Tab
+              //   sx={{ padding: "0px 8px", margin: "0px 0px 0px 16px" }}
+              //   value="Interviews"
+              //   label="Interviews"
+              // />
+              // <Tab
+              //   sx={{ padding: "0px 8px", margin: "0px 0px 0px 16px" }}
+              //   value="Events"
+              //   label="Events"
+              // />
+            }
+              
             </Tabs>
           </Box>
           <TabPanel value="Profile" sx={{ padding: "24px 0px 0px 0px" }}>
@@ -160,7 +174,7 @@ const Profile = () => {
               spacing={3}
             >
               <Grid item md={5} xs={12}>
-                <Paper>
+                <Paper sx={{mb:'24px'}} id='detail'>
                   <Box sx={{ padding: "24px" }}>
                     <Box
                       component="h4"
@@ -171,7 +185,7 @@ const Profile = () => {
                         margin: 0,
                       }}
                     >
-                      Detail <Edit fontSize="small" sx={{ ml: "5px" }} />
+                      Detail <a href='#edit'><Edit  onClick={handleEdit} fontSize="small" sx={{ ml: "5px",color:'black' }} /></a> 
                     </Box>
                     <Box sx={{ margin: "24px 0px 0px" }}>
                       <Box
@@ -237,52 +251,21 @@ const Profile = () => {
                     </Box>
                   </Box>
                 </Paper>
+                <Paper id='edit' sx={{display: block}}>
+                <Box sx={{ padding: "24px" }}>
+                  <TextField value='abc' label='Name' fullWidth sx={{mb:'16px'}}/>
+                  <TextField value='abc' label='Birth' fullWidth sx={{mb:'16px'}}/>
+                  <TextField value='abc' label='Address' fullWidth sx={{mb:'16px'}}/>
+                  <TextField value='abc' label='Phone' fullWidth sx={{mb:'16px'}}/>
+                  <TextField value='abc' label='Email' fullWidth sx={{mb:'16px'}}/>
+                    <Box sx={{display:'flex',justifyContent:'right'}}>
+                        <Button onClick={handleSave} variant="contained">Save</Button>
+                    </Box>
+                </Box>
+                </Paper>
               </Grid>
               <Grid item md={7} xs={12}>
                 <Paper sx={{ marginBottom: "24px", padding: "16px" }}>
-                  {/* <Box component="h4" sx={{ margin: 0 }}>
-                    CV1
-                  </Box>
-                  <Box sx={{ mt: "16px" }}>
-                    <Box
-                      component="h5"
-                      sx={{ m: 0, borderBottom: "2px solid #000" }}
-                    >
-                      Skills
-                    </Box>
-                    <Box>&bull; HTML CSS </Box>
-                    <Box>&bull; JavaScript </Box>
-                    <Box>&bull; ReactJS</Box>
-                    <Box>&bull; Python </Box>
-                    <Box
-                      component="h5"
-                      sx={{
-                        m: "16px 0px 0px 0px",
-                        borderBottom: "2px solid #000",
-                      }}
-                    >
-                      Certificates
-                    </Box>
-                    <Box>&bull; HTML CSS </Box>
-                    <Box>&bull; JavaScript </Box>
-                    <Box>&bull; ReactJS</Box>
-                    <Box>&bull; Python </Box>
-                    <Box
-                      component="h5"
-                      sx={{
-                        m: "16px 0px 0px 0px",
-                        borderBottom: "2px solid #000",
-                      }}
-                    >
-                      Experience
-                    </Box>
-                    I have gained valuable experience in React.js, HTML, and
-                    CSS. React.js has allowed me to build dynamic user
-                    interfaces and manage state efficiently. HTML provides the
-                    structure of web content, while CSS enables me to style and
-                    customize layouts. By combining these technologies, I create
-                    modern and engaging web experiences.
-                  </Box> */}
                   <CV />
                 </Paper>
               </Grid>
