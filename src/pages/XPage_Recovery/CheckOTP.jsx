@@ -8,8 +8,7 @@ import {
   Container,
 } from "@mui/material";
 
-import image from "./change_password.png";
-import imageBackground from "./background.jpg";
+import imageBackground from "../../assets/img/background.jpg";
 
 const style = {
   marginTop: "15px",
@@ -70,13 +69,9 @@ const CheckOTP = ({ otp, onChangeOTP, handleSubmit }) => {
         >
           <Grid item md={7} padding="20px">
             <Grid item xs={12} display="flex" justifyContent="center">
-              <img
-                src={image}
-                alt="login"
-                width="25%"
-                height="25%"
-                loading="eager"
-              />
+              <Typography variant="h1" color='white'>
+                Recovery
+              </Typography>
             </Grid>
           </Grid>
 
