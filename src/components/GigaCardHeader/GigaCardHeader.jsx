@@ -6,20 +6,16 @@ import Avatar from '@mui/material/Avatar';
 const GigaCardHeader = (props) => {
     return (
         <Box sx={{ paddingLeft: 4, paddingTop: 4 }}>
-            {/* <Grid container sx={{ color: props.color, display: "flex", alignItems: "center" }}> */}
-            <Box sx={{ color: props.color, display: "flex", alignItems: "center" }}>
-                {/* <Grid item md={2}> */}
-                <Avatar sx={{ backgroundColor: props.color, marginRight: 2 }}>
+            <Box sx={{ color: props.color, display: "flex", alignItems: "center", columnGap: 2 }}>
+                {/* <Avatar sx={{ backgroundColor: props.color }}> */}
+                <Box sx={{ fontSize: 40, display: "flex", alignItems: "center" }}>
                     {props.headerIcon}
-                </Avatar>
-                {/* </Grid>
-                <Grid item md={10}> */}
+                </Box>
+                {/* </Avatar> */}
                 <Typography variant="h4" sx={{ fontWeight: "bold" }}>
                     {props.children}
                 </Typography>
-                {/* </Grid> */}
             </Box>
-            {/* </Grid> */}
         </Box>
     )
 }

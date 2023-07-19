@@ -29,21 +29,21 @@ const CateTab = (props) => {
     };
     return (
         <Box sx={{ display: "flex", columnGap: 2, marginBottom: 2 }}>
-            <Button sx={{ borderRadius: 100 }} size="large"
+            <Button sx={{ borderRadius: 100 }} size="medium"
                 color={"secondary"}
                 startIcon={<HandshakeIcon />}
                 variant={currentCateTab == 0 ? "contained" : "outlined"}
                 onClick={() => { setCurrentCateTab(0) }}>
                 Soft Skill
             </Button>
-            <Button sx={{ borderRadius: 100 }} size="large"
+            <Button sx={{ borderRadius: 100 }} size="medium"
                 color={"success"}
                 startIcon={<LanguageIcon />}
                 variant={currentCateTab == 1 ? "contained" : "outlined"}
                 onClick={() => { setCurrentCateTab(1) }}>
                 Language
             </Button>
-            <Button sx={{ borderRadius: 100 }} size="large"
+            <Button sx={{ borderRadius: 100 }} size="medium"
                 color={"warning"}
                 startIcon={<TungstenIcon />}
                 variant={currentCateTab == 2 ? "contained" : "outlined"}

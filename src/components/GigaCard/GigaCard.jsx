@@ -5,7 +5,7 @@ const GigaCard = (props) => {
         <Box sx={{
             borderRadius: 4,
             boxShadow: 10,
-            backgroundColor: "grey.50",
+            backgroundColor: "white",
             border: (theme) => `1px solid ${theme.palette.divider}`,
             height: "100%",
             display: "flex",
@@ -15,5 +15,6 @@ const GigaCard = (props) => {
         </Box>
     )
 }
+
 
 export default GigaCard
