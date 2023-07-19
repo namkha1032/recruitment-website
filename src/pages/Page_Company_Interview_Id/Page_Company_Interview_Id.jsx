@@ -72,29 +72,25 @@ const Page_Company_Interview_Id = () => {
                     <Grid item md={12}>
                         <GigaCard>
                             <Grid container>
-                                <Grid item md={6}>
-                                    <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
-                                        <GigaCardHeader color={"primary.main"} headerIcon={<TroubleshootIcon sx={{ fontSize: "inherit" }} />}>
-                                            Analysis
-                                        </GigaCardHeader>
-                                        <GigaCardBody>
-                                            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
-                                                <RadarPlot allResult={interview.round} />
-                                            </Box>
-                                        </GigaCardBody>
-                                    </Box>
+                                <Grid item md={6} sx={{ display: "flex", flexDirection: "column" }}>
+                                    <GigaCardHeader color={"primary.main"} headerIcon={<TroubleshootIcon sx={{ fontSize: "inherit" }} />}>
+                                        Analysis
+                                    </GigaCardHeader>
+                                    <GigaCardBody>
+                                        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+                                            <RadarPlot allResult={interview.round} />
+                                        </Box>
+                                    </GigaCardBody>
                                 </Grid>
-                                <Grid item md={6}>
-                                    <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
-                                        <GigaCardHeader color={"primary.main"} headerIcon={<SportsScoreIcon sx={{ fontSize: "inherit" }} />}>
-                                            Final Score
-                                        </GigaCardHeader>
-                                        <GigaCardBody>
-                                            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
-                                                <ScoreTable allResult={interview.round} />
-                                            </Box>
-                                        </GigaCardBody>
-                                    </Box>
+                                <Grid item md={6} sx={{ display: "flex", flexDirection: "column" }}>
+                                    <GigaCardHeader color={"primary.main"} headerIcon={<SportsScoreIcon sx={{ fontSize: "inherit" }} />}>
+                                        Final Score
+                                    </GigaCardHeader>
+                                    <GigaCardBody>
+                                        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+                                            <ScoreTable allResult={interview.round} />
+                                        </Box>
+                                    </GigaCardBody>
                                 </Grid>
                             </Grid>
                         </GigaCard>

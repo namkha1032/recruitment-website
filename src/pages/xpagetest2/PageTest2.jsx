@@ -1,70 +1,133 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
-import { Container } from '@mui/material';
-const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    {
-        field: 'firstName',
-        headerName: 'First name',
-        width: 150,
-        editable: true,
-    },
-    {
-        field: 'lastName',
-        headerName: 'Last name',
-        width: 150,
-        editable: true,
-    },
-    {
-        field: 'age',
-        headerName: 'Age',
-        type: 'number',
-        width: 110,
-        editable: true,
-    },
-    {
-        field: 'fullName',
-        headerName: 'Full name',
-        description: 'This column has a value getter and is not sortable.',
-        sortable: false,
-        width: 160,
-        valueGetter: (params) =>
-            `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-    },
-];
+import { useState, useEffect } from "react"
+import axios from "axios"
 
-const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+const TableRow = (props) => {
+    const { room, roomList, setRoomList } = props
+    const [updating, setUpdating] = useState(false)
+    const [updatedRoomName, setUpdatedRoomName] = useState("")
 
-export default function DataGridDemo() {
+    function handleUpdateRoom() {
+        let newRoomList = roomList.map(eachRoom => {
+            if (eachRoom.roomid != room.roomid) {
+                return eachRoom
+            }
+            else {
+                return {
+                    ...eachRoom,
+                    roomname: updatedRoomName
+                }
+            }
+        })
+        setRoomList(newRoomList)
+        setUpdating(false)
+    }
+    function handleDeleteRoom() {
+        let newRoomList = roomList.filter(eachRoom => {
+            return eachRoom.roomid != room.roomid
+        })
+        setRoomList(newRoomList)
+    }
     return (
-        <Container>
-            <Box sx={{ height: 400, width: '100%' }}>
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    initialState={{
-                        pagination: {
-                            paginationModel: {
-                                pageSize: 5,
-                            },
-                        },
-                    }}
-                    pageSizeOptions={[5]}
-                    checkboxSelection
-                    disableRowSelectionOnClick
-                />
-            </Box>
-        </Container>
-    );
+        <>
+            <tr>
+                <td>
+                    {room.roomid}
+                </td>
+                <td>
+                    {updating
+                        ?
+                        <input
+                            type="text"
+                            value={updatedRoomName}
+                            onChange={(event) => { setUpdatedRoomName(event.target.value) }} />
+                        :
+                        room.roomname
+                    }
+                </td>
+                <td>
+                    {updating
+                        ?
+                        <button onClick={handleUpdateRoom}>
+                            save
+                        </button>
+                        :
+                        <button onClick={() => {
+                            setUpdating(true)
+                            setUpdatedRoomName(room.roomname)
+                        }}>
+                            update
+                        </button>
+                    }
+                </td>
+                <td>
+                    <button onClick={handleDeleteRoom}>
+                        del
+                    </button>
+                </td>
+            </tr>
+        </>
+    )
 }
+
+const App = () => {
+    let [roomList, setRoomList] = useState([])
+    let [newRoomName, setNewRoomName] = useState("")
+    useEffect(() => {
+        async function fetchData() {
+            // let response = await fetch("http://localhost:3000/data/roomlist.json")
+            // let newRoomList = await response.json()
+            // setRoomList(newRoomList)
+            let response = await axios.get("http://localhost:3000/data/roomlist.json")
+            setRoomList(response.data)
+
+            // dòng 77-78-79 chức năng y chang dòng 80-81
+            // thử comment dòng 80-81 và uncomment dòng 77-78-79 rồi chạy thử
+        }
+        fetchData()
+    }, [])
+    function handleAddNewRoom() {
+        let newRoomList = roomList.concat(
+            {
+                roomid: roomList.length + 1,
+                roomname: newRoomName
+            }
+        )
+        setRoomList(newRoomList)
+        setNewRoomName("")
+    }
+    return (
+        <>
+            <table>
+                <thead>
+                    <tr>
+                        <td>
+                            ID
+                        </td>
+                        <td>
+                            Room name
+                        </td>
+                        <td>
+                            Change
+                        </td>
+                        <td>
+                            Delete
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {roomList.map(room => (
+                        <TableRow key={room.roomid}
+                            room={room}
+                            roomList={roomList}
+                            setRoomList={setRoomList}
+                        />
+                    ))}
+                </tbody>
+            </table>
+            <input type="text" value={newRoomName} onChange={(event) => { setNewRoomName(event.target.value) }} />
+            <button onClick={handleAddNewRoom}>add</button>
+        </>
+    )
+}
+
+export default App

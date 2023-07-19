@@ -43,8 +43,6 @@ export default function Page_Company_Interview_Id_Start() {
 
     let [currentCateTab, setCurrentCateTab] = useState(1);
 
-
-
     let [note, setNote] = useState("<h1>Anything to say?</h1>")
     const noteRef = useRef()
     useEffect(() => {
@@ -79,7 +77,7 @@ export default function Page_Company_Interview_Id_Start() {
             <>
                 <form autoComplete='off' onSubmit={handleSubmit}>
                     <GigaCard>
-                        <GigaCardHeader color={"primary.main"} headerIcon={<QuestionMarkIcon />}>
+                        <GigaCardHeader color={"primary.main"} headerIcon={<QuestionMarkIcon sx={{ fontSize: "inherit" }} />}>
                             Questions
                         </GigaCardHeader>
                         <GigaCardBody>
@@ -101,7 +99,7 @@ export default function Page_Company_Interview_Id_Start() {
                     <Grid container sx={{ marginTop: 4 }} columnSpacing={4}>
                         <Grid item md={6}>
                             <GigaCard>
-                                <GigaCardHeader color={"primary.main"} headerIcon={<EditNoteIcon />}>
+                                <GigaCardHeader color={"primary.main"} headerIcon={<EditNoteIcon sx={{ fontSize: "inherit" }} />}>
                                     Note
                                 </GigaCardHeader>
                                 <GigaCardBody>
@@ -112,7 +110,7 @@ export default function Page_Company_Interview_Id_Start() {
                         <Grid item md={6}>
                             {/* <Card variant="outlined" sx={{ border: "1px solid black", borderRadius: 5 }}> */}
                             <GigaCard>
-                                <GigaCardHeader color={"primary.main"} headerIcon={<SportsScoreIcon />}>
+                                <GigaCardHeader color={"primary.main"} headerIcon={<SportsScoreIcon sx={{ fontSize: "inherit" }} />}>
                                     Final Score
                                 </GigaCardHeader>
                                 <GigaCardBody>
