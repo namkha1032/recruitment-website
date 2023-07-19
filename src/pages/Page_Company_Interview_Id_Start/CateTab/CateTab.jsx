@@ -6,55 +6,51 @@ import {
     TextField,
     Card,
     CardHeader,
-    CardContent
+    CardContent,
+    Tabs,
+    Tab,
+    Chip
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
+import PhoneIcon from '@mui/icons-material/Phone';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import PersonPinIcon from '@mui/icons-material/PersonPin';
+import HandshakeIcon from '@mui/icons-material/Handshake';
+import LanguageIcon from '@mui/icons-material/Language';
+import TungstenIcon from '@mui/icons-material/Tungsten';
 const CateTab = (props) => {
     const { currentCateTab, setCurrentCateTab } = props
+    const [value, setValue] = useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
     return (
-        <>
-            <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
-                <Box onClick={() => { setCurrentCateTab(0) }}
-                    sx={{
-                        cursor: "pointer", zIndex: 3, borderRight: "1px solid black", borderBottom: "1px solid black",
-                        padding: 2, borderRadius: "16px 0px",
-                        backgroundColor: currentCateTab == 0 ? "grey.600" : "white",
-                        color: currentCateTab == 0 ? "white" : "black",
-                        "&:hover": {
-                            backgroundColor: currentCateTab == 0 ? "grey.600" : "grey.300",
-                        }
-                    }}>
-                    <Typography variant="h6">Soft Skill</Typography>
-                </Box>
-                <Box onClick={() => { setCurrentCateTab(1) }}
-                    sx={{
-                        cursor: "pointer", zIndex: 2, position: "relative", borderRight: "1px solid black", borderBottom: "1px solid black",
-                        padding: 2, borderRadius: "16px 0px", left: "-16px",
-                        backgroundColor: currentCateTab == 1 ? "grey.600" : "white",
-                        color: currentCateTab == 1 ? "white" : "black",
-                        "&:hover": {
-                            backgroundColor: currentCateTab == 1 ? "grey.600" : "grey.300",
-                        }
-                    }}>
-                    <Typography sx={{ paddingLeft: 2 }} variant="h6">Language</Typography>
-                </Box>
-                <Box onClick={() => { setCurrentCateTab(2) }}
-                    sx={{
-                        cursor: "pointer", zIndex: 1, position: "relative", borderRight: "1px solid black", borderBottom: "1px solid black",
-                        padding: 2, borderRadius: "16px 0px", left: "-32px",
-                        backgroundColor: currentCateTab == 2 ? "grey.600" : "white",
-                        color: currentCateTab == 2 ? "white" : "black",
-                        "&:hover": {
-                            backgroundColor: currentCateTab == 2 ? "grey.600" : "grey.300",
-                        }
-                    }}>
-                    <Typography sx={{ paddingLeft: 2 }} variant="h6">Technology</Typography>
-                </Box>
-            </Box>
-        </>
+        <Box sx={{ display: "flex", columnGap: 2, marginBottom: 2 }}>
+            <Button sx={{ borderRadius: 100 }} size="large"
+                color={"secondary"}
+                startIcon={<HandshakeIcon />}
+                variant={currentCateTab == 0 ? "contained" : "outlined"}
+                onClick={() => { setCurrentCateTab(0) }}>
+                Soft Skill
+            </Button>
+            <Button sx={{ borderRadius: 100 }} size="large"
+                color={"success"}
+                startIcon={<LanguageIcon />}
+                variant={currentCateTab == 1 ? "contained" : "outlined"}
+                onClick={() => { setCurrentCateTab(1) }}>
+                Language
+            </Button>
+            <Button sx={{ borderRadius: 100 }} size="large"
+                color={"warning"}
+                startIcon={<TungstenIcon />}
+                variant={currentCateTab == 2 ? "contained" : "outlined"}
+                onClick={() => { setCurrentCateTab(2) }}>
+                Technology
+            </Button>
+        </Box>
     )
 }
 

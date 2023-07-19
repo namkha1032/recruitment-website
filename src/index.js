@@ -7,6 +7,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import theme
+import theme from './assets/js/theme';
 
 // import store
 import store from './redux/store'
@@ -17,9 +19,9 @@ root.render(
     {/* <React.StrictMode> */}
     <Provider store={store}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        {/* <ThemeProvider> */}
-        < CssBaseline />
-        <App />
+        {/* <ThemeProvider theme={theme}> */}
+          < CssBaseline />
+          <App />
         {/* </ThemeProvider> */}
       </LocalizationProvider>
     </Provider>

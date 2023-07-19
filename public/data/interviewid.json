@@ -21,17 +21,17 @@
                 {
                     "questionid": 1,
                     "questionstring": "soft skill question 1",
-                    "score": "2"
+                    "score": 2
                 },
                 {
                     "questionid": 4,
                     "questionstring": "soft skill question 4",
-                    "score": "3"
+                    "score": 3
                 },
                 {
                     "questionid": 5,
                     "questionstring": "soft skill question 5",
-                    "score": "5"
+                    "score": 5
                 }
             ]
         },
@@ -44,22 +44,22 @@
                 {
                     "questionid": 13,
                     "questionstring": "english question 13",
-                    "score": "7"
+                    "score": 7
                 },
                 {
                     "questionid": 14,
                     "questionstring": "english question 14",
-                    "score": "8"
+                    "score": 8
                 },
                 {
                     "questionid": 15,
                     "questionstring": "english question 15",
-                    "score": "9"
+                    "score": 9
                 },
                 {
                     "questionid": 17,
                     "questionstring": "english question 17",
-                    "score": "10"
+                    "score": 10
                 }
             ]
         },
@@ -74,17 +74,17 @@
                         {
                             "questionid": 22,
                             "questionstring": "react question 22",
-                            "score": "7"
+                            "score": 7
                         },
                         {
                             "questionid": 24,
                             "questionstring": "react question 24",
-                            "score": "8"
+                            "score": 8
                         },
                         {
                             "questionid": 25,
                             "questionstring": "react question 25",
-                            "score": "9"
+                            "score": 9
                         }
                     ]
                 },
@@ -95,17 +95,17 @@
                         {
                             "questionid": 32,
                             "questionstring": "java question 32",
-                            "score": "7"
+                            "score": 7
                         },
                         {
                             "questionid": 34,
                             "questionstring": "java question 34",
-                            "score": "8"
+                            "score": 8
                         },
                         {
                             "questionid": 35,
                             "questionstring": "java question 35",
-                            "score": "6"
+                            "score": 6
                         }
                     ]
                 },
@@ -116,17 +116,17 @@
                         {
                             "questionid": 42,
                             "questionstring": ".NET question 42",
-                            "score": "8"
+                            "score": 8
                         },
                         {
                             "questionid": 44,
                             "questionstring": ".NET question 44",
-                            "score": "7"
+                            "score": 7
                         },
                         {
                             "questionid": 45,
                             "questionstring": ".NET question 45",
-                            "score": "9"
+                            "score": 9
                         }
                     ]
                 },
@@ -137,17 +137,17 @@
                         {
                             "questionid": 53,
                             "questionstring": "Python question 53",
-                            "score": "6"
+                            "score": 6
                         },
                         {
                             "questionid": 55,
                             "questionstring": "Python question 55",
-                            "score": "7"
+                            "score": 7
                         },
                         {
                             "questionid": 56,
                             "questionstring": "Python question 56",
-                            "score": "9"
+                            "score": 9
                         }
                     ]
                 }

@@ -40,10 +40,11 @@ const LangRightTable = (props) => {
                                     <TextField required type="number" size="small"
                                         value={rightLang.questions.find(ques => ques.questionid == params.row.questionid).score}
                                         onChange={(event) => {
+                                            let middleScore = parseFloat(event.target.value) >= 0 && parseFloat(event.target.value) <= 10 ? parseFloat(event.target.value) : ""
                                             let newQues = {
                                                 categoryOrder: 1,
                                                 chosenQuestionId: params.row.questionid,
-                                                newScore: parseFloat(event.target.value)
+                                                newScore: middleScore
                                             }
                                             dispatch({ type: "question/updateNewSoftLangScore", payload: newQues })
                                         }}

@@ -19,42 +19,27 @@ import { InlineMath } from 'react-katex';
 // import components
 import SoftLeftTable from '../SoftLeftTable/SoftLeftTable';
 import SoftRightTable from '../SoftRightTable/SoftRightTable';
-
+import ButtonTransfer from '../ButtonTransfer/ButtonTransfer';
 const SoftTransfer = (props) => {
     let { leftSoft, rightSoft } = props
     let [currentSoft, setCurrentSoft] = useState([])
     const dispatch = useDispatch()
+    function handleTransfer() {
+        let newQues = {
+            categoryOrder: 0,
+            chosenQuestionId: currentSoft[0]
+        }
+        dispatch({ type: "question/transferSoftLangQuestion", payload: newQues })
+        // handleChosenTech(newQues)
+    }
     return (
         <>
-            <Grid container sx={{ padding: 4 }}>
+            <Grid container>
                 <Grid item md={5}>
                     <SoftLeftTable leftSoft={leftSoft} currentSoft={currentSoft} setCurrentSoft={setCurrentSoft} />
                 </Grid>
                 <Grid item md={2} sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                    <Button
-                        sx={{ my: 0.5 }}
-                        variant="contained"
-                        size="small"
-                        disabled={currentSoft.length == 0}
-                        onClick={() => {
-                            let newQues = {
-                                categoryOrder: 0,
-                                chosenQuestionId: currentSoft[0]
-                            }
-                            dispatch({ type: "question/transferSoftLangQuestion", payload: newQues })
-                            // handleChosenTech(newQues)
-                        }}
-                    >
-                        &gt;
-                    </Button>
-                    <Button
-                        sx={{ my: 0.5 }}
-                        variant="contained"
-                        size="small"
-                        color="error"
-                    >
-                        &lt;
-                    </Button>
+                    <ButtonTransfer currentChosen={currentSoft} handleTransfer={handleTransfer} />
                 </Grid>
                 <Grid item md={5}>
                     <SoftRightTable rightSoft={rightSoft} type={"score"} />

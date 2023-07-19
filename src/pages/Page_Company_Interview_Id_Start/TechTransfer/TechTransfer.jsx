@@ -8,7 +8,8 @@ import {
     TextField,
     Card,
     CardHeader,
-    CardContent
+    CardContent,
+    IconButton
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
@@ -20,13 +21,23 @@ import { InlineMath } from 'react-katex';
 // import components
 import TechLeftTable from '../TechLeftTable/TechLeftTable';
 import TechRightTable from '../TechRightTable/TechRightTable';
+import ButtonTransfer from '../ButtonTransfer/ButtonTransfer';
 const TechTransfer = (props) => {
     const { leftTech, rightTech } = props
     const dispatch = useDispatch()
     let [currentTechTab, setCurrentTechTab] = useState(0);
     let [currentTech, setCurrentTech] = useState([])
+    function handleTransfer() {
+        let newQues = {
+            categoryOrder: 2,
+            skillOrder: currentTechTab,
+            chosenQuestionId: currentTech[0]
+        }
+        dispatch({ type: "question/transferTechQuestion", payload: newQues })
+        // handleChosenTech(newQues)
+    }
     return (
-        <Grid container sx={{ padding: 4 }}>
+        <Grid container>
             <Grid item md={5}>
                 <TechLeftTable leftTech={leftTech}
                     currentTech={currentTech}
@@ -35,7 +46,7 @@ const TechTransfer = (props) => {
                     setCurrentTechTab={setCurrentTechTab} />
             </Grid>
             <Grid item md={2} sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                <Button
+                {/* <Button
                     sx={{ my: 0.5 }}
                     variant="contained"
                     size="small"
@@ -51,15 +62,16 @@ const TechTransfer = (props) => {
                     }}
                 >
                     &gt;
-                </Button>
-                <Button
+                </Button> */}
+                <ButtonTransfer currentChosen={currentTech} handleTransfer={handleTransfer} />
+                {/* <Button
                     sx={{ my: 0.5 }}
                     variant="contained"
                     size="small"
                     color="error"
                 >
                     &lt;
-                </Button>
+                </Button> */}
             </Grid>
             <Grid item md={5}>
                 <TechRightTable
