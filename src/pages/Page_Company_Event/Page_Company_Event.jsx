@@ -1,89 +1,21 @@
-// import { Typography } from "@mui/material";
-
-// const Page_Company_Event = () => {
-//     return (
-//         <Typography variant="body1">Page_Company_Event</Typography>
-//     )
-// }
-
-// export default Page_Company_Event
-
 import { useMemo, useState } from "react";
 import {
   Chip,
   Button,
-  Menu,
-  MenuItem,
-  Input,
   Autocomplete,
   TextField,
 } from "@mui/material";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
-import DoNotDisturbOnIcon from "@mui/icons-material/DoNotDisturbOn";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import QueryStatsIcon from "@mui/icons-material/QueryStats";
-import GetAppIcon from "@mui/icons-material/GetApp";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import FlagIcon from "@mui/icons-material/Flag";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
+import { NullString, NotStart, Pending, Completed } from "../../components/Label/Label";
 import Box from "@mui/material/Box";
 import datasjson from "./Page_Company_Event_Data.json";
 import { useNavigate } from "react-router-dom";
-import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
-// import { localeVN } from "../../locale/locale";
 import Grid from "@mui/material/Grid";
-// import "./Company_Recruitment.scss"
 
-
-function NullString() {
-  return <Chip icon={<PriorityHighIcon />} label="Trống" />;
-}
-function NotStart() {
-  return (
-    <Chip
-      label="Chưa bắt đầu"
-      variant="outlined"
-      style={{
-        color: "#E0E0E0",
-        backgroundColor: "white",
-        borderColor: "#E0E0E0",
-      }}
-    />
-  );
-}
-
-function Pending() {
-  return (
-    <Chip
-      label="Đang diễn ra"
-      variant="outlined"
-      style={{
-        color: "#00C853",
-        backgroundColor: "white",
-        borderColor: "#00C853",
-      }}
-    />
-  );
-}
-
-function Completed() {
-  return (
-    <Chip
-      label="Kết thúc"
-      variant="outlined"
-      style={{
-        color: "#D84315",
-        backgroundColor: "white",
-        borderColor: "#D84315",
-      }}
-    />
-  );
-}
 
 export default function Page_Company_Event() {
 
@@ -150,7 +82,7 @@ export default function Page_Company_Event() {
       type: "number",
       headerAlign: "left",
       align: "left",
-      renderHeader: () => <span>Mã</span>,
+      renderHeader: () => <span>ID</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
         return (
@@ -384,7 +316,7 @@ export default function Page_Company_Event() {
             }}
           >
             <Input
-              placeholder="Nhập mã, tên sự kiện..."
+              placeholder="Nhập ID, tên sự kiện..."
               disableUnderline
               value={valueSearch}
               onChange={(e) => setValueSearch(e.target.value)}
@@ -402,7 +334,6 @@ export default function Page_Company_Event() {
 
       <Box
         sx={{
-          height: 600,
           width: "100%",
         }}
       >

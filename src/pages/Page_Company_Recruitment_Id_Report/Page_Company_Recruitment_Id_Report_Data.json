@@ -1,0 +1,46 @@
+[
+    {
+        "InterviewId": 1,
+        "CandidateId": 1,
+        "CandidateName": "Nguyễn Văn A",
+        "InterviewerId": 1,
+        "InterviewerName": "Nguyễn Văn X",
+        "ApplyDate": "20/07/2023",
+        "InterviewDate": "23/07/2023",
+        "Status": "Kết thúc",
+        "Score": 8.5
+    },
+    {
+        "InterviewId": 2,
+        "CandidateId": 2,
+        "CandidateName": "Nguyễn Văn B",
+        "InterviewerId": 2,
+        "InterviewerName": "Trần Thị Y",
+        "ApplyDate": "21/07/2023",
+        "InterviewDate": "25/07/2023",
+        "Status": "Đang diễn ra",
+        "Score": null
+    },
+    {
+        "InterviewId": 3,
+        "CandidateId": 3,
+        "CandidateName": "Nguyễn Văn C",
+        "InterviewerId": 3,
+        "InterviewerName": "Nguyễn Văn Z",
+        "ApplyDate": "23/07/2023",
+        "InterviewDate": "29/07/2023",
+        "Status": "Chưa bắt đầu",
+        "Score": null
+    },
+    {
+        "InterviewId": 4,
+        "CandidateId": 4,
+        "CandidateName": "Nguyễn Văn D",
+        "InterviewerId": 4,
+        "InterviewerName": "Nguyễn Văn T",
+        "ApplyDate": "20/07/2023",
+        "InterviewDate": "23/07/2023",
+        "Status": "Kết thúc",
+        "Score": 9
+    }
+]

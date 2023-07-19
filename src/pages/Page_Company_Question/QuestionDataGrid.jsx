@@ -6,7 +6,6 @@ export default function QuestionDataGrid(props) {
   return (
     <Box
       sx={{
-        height: 600,
         width: "100%",
       }}
     >

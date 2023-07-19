@@ -1,38 +1,23 @@
 import { useMemo, useState, useEffect } from "react";
 import {
-  Chip,
   Button,
-  Menu,
-  MenuItem,
-  Input,
   Autocomplete,
   TextField,
 } from "@mui/material";
-import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
-import DoNotDisturbOnIcon from "@mui/icons-material/DoNotDisturbOn";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import QueryStatsIcon from "@mui/icons-material/QueryStats";
-import GetAppIcon from "@mui/icons-material/GetApp";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import FlagIcon from "@mui/icons-material/Flag";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
-import CodeIcon from "@mui/icons-material/Code";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import datasjson from "./Page_Company_Question_Data.json";
 import { useNavigate } from "react-router-dom";
-import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
-// import { localeVN } from "../../locale/locale";
 import Grid from "@mui/material/Grid";
 import QuestionFormModal from "./QuestionFormModal";
 import QuestionModal from "./QuestionModal";
 import { successAlert } from "../../components/Alert/SuccessAlert";
 import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
+import { NullString, NotStart, Pending, Completed } from "../../components/Label/Label";
 import "react-toastify/dist/ReactToastify.css";
 import DeleteAlertModal from "./DeleteModal";
 import QuestionDataGrid from "./QuestionDataGrid";
@@ -41,51 +26,6 @@ const listOfSkills = {
   skill: ["React", "Angular", "Java", "Python", "Figma", ".NET", "C", "C++"],
   language: ["English", "Vietnamese", "Japanese", "Chinese", "Korian"],
 };
-
-function NullString() {
-  return <Chip icon={<PriorityHighIcon />} label="Trống" />;
-}
-function NotStart() {
-  return (
-    <Chip
-      label="Chưa bắt đầu"
-      variant="outlined"
-      style={{
-        color: "#E0E0E0",
-        backgroundColor: "white",
-        borderColor: "#E0E0E0",
-      }}
-    />
-  );
-}
-
-function Pending() {
-  return (
-    <Chip
-      label="Đang diễn ra"
-      variant="outlined"
-      style={{
-        color: "#00C853",
-        backgroundColor: "white",
-        borderColor: "#00C853",
-      }}
-    />
-  );
-}
-
-function Completed() {
-  return (
-    <Chip
-      label="Kết thúc"
-      variant="outlined"
-      style={{
-        color: "#D84315",
-        backgroundColor: "white",
-        borderColor: "#D84315",
-      }}
-    />
-  );
-}
 
 export default function Page_Company_Question() {
   const navigate = useNavigate();
@@ -230,7 +170,7 @@ export default function Page_Company_Question() {
       type: "number",
       headerAlign: "left",
       align: "left",
-      renderHeader: () => <span>Mã</span>,
+      renderHeader: () => <span>ID</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
         return (
@@ -497,7 +437,7 @@ export default function Page_Company_Question() {
             }}
           >
             <Input
-              placeholder="Nhập mã, câu hỏi..."
+              placeholder="Nhập ID, câu hỏi..."
               disableUnderline
               value={valueSearch}
               onChange={(e) => setValueSearch(e.target.value)}
