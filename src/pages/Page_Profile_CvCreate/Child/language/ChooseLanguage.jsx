@@ -3,15 +3,14 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import AddIcon from '@mui/icons-material/Add';
-
-
+import AddIcon from "@mui/icons-material/Add";
+import Fab from "@mui/material/Fab";
 
 const filter = createFilterOptions();
 export default function ChooseLanguage(prop) {
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      event.preventDefault()
+      event.preventDefault();
       const inputValue = event.target.value;
       console.log(prop.lInputValue);
       console.log(inputValue);
@@ -34,15 +33,15 @@ export default function ChooseLanguage(prop) {
             value={prop.lInputValue}
             onChange={(event, newValue) => {
               if (typeof newValue === "string") {
-                return ()=>prop.setValue({
-                  name: newValue,
-                });
+                return () =>
+                  prop.setValue({
+                    name: newValue,
+                  });
               } else if (newValue && newValue.inputValue) {
-                
                 prop.setInputValue({
                   name: newValue.inputValue,
                 });
-                console.log(newValue.name)
+                console.log(newValue.name);
                 if (newValue !== null) {
                   console.log(newValue);
                   prop.handleState(newValue);
@@ -51,7 +50,11 @@ export default function ChooseLanguage(prop) {
                 prop.setInputValue(newValue);
                 if (newValue !== null) {
                   console.log(newValue);
-                  prop.setSkillId(prop.languageData.filter((comp) => comp.name === newValue.name)[0].id);
+                  prop.setSkillId(
+                    prop.languageData.filter(
+                      (comp) => comp.name === newValue.name
+                    )[0].id
+                  );
                   prop.handleState(newValue.name);
                 }
               }
@@ -93,7 +96,7 @@ export default function ChooseLanguage(prop) {
                 margin: "0",
                 padding: "0",
                 marginLeft: "1%",
-                width:"98%"
+                width: "98%",
               },
             }}
             freeSolo
@@ -110,13 +113,29 @@ export default function ChooseLanguage(prop) {
           size="medium"
           variant="outlined"
           className="AddCompButton"
-          startIcon={<AddIcon/>}
+          startIcon={<AddIcon />}
           onClick={() => {
             prop.onPress();
           }}
         >
           Add
         </Button>
+          {/* <Fab
+            variant="extended"
+            className="AddCompButton"
+            sx={{
+              backgroundColor: "White",
+              border: 0.1,
+              borderColor: "primary.main",
+              color: "primary.main",
+            }}
+            onClick={() => {
+              prop.onPress();
+            }}
+          >
+            <AddIcon sx={{ mr: 1 }} />
+            Add
+          </Fab> */}
         <Grid item xs={12}></Grid>
       </Grid>
     </>

@@ -1,11 +1,13 @@
 .CreateCV {
   .CVForm {
-    // width: 95%;
+    
+    width: 80%;
     margin: auto;
     display: flex;
     // border-radius: 10px;
     // border: 1px solid black;
     .Container {
+      margin-top:5%;
       width: 100%;
       label {
         text-align: right;
@@ -45,7 +47,6 @@
   .AddCompButton {
     width: 100px;
     margin: 10px;
-    border-radius: 5px;
 
   }
 }

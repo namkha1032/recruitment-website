@@ -1,12 +1,14 @@
 import RecruitForm from "./Child/RercruitForm"
 import "./UpdateRecruit.scss"
+import Box from "@mui/material/Box";
 
-const Page_Company_Recruitment_Id_Update = () => {
+
+const Page_Company_Recruitment_Create = () => {
     return(
-        <div className="CreateRecruit">
+        <Box className="CreateRecruit">
             <RecruitForm></RecruitForm>
-        </div>
+        </Box>
     )
 }
 
-export default Page_Company_Recruitment_Id_Update
+export default Page_Company_Recruitment_Create
