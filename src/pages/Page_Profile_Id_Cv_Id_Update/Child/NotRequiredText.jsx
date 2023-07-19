@@ -11,14 +11,14 @@ const NotRInputText = (prop) => {
             width: prop.width,
             margin: prop.margin,
             marginTop: "8px",
-            marginLeft:prop.marginLeft,
+            marginLeft: prop.marginLeft,
           },
         }}
         noValidate
         autoComplete="off"
       >
         <TextField
-          type={prop.type}
+        type={prop.type}
           id="outlined-basic"
           value={prop.value}
           label={prop.state}

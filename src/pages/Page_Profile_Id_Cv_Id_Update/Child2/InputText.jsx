@@ -19,7 +19,6 @@ const InputText = (prop) => {
       >
         <TextField
           required
-          type={prop.type}
           id="outlined-basic"
           value={prop.value}
           label={prop.state}

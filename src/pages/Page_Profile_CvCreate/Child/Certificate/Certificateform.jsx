@@ -20,7 +20,7 @@ export default function CertificateForm(prop) {
       <Box sx={{ marginTop: "8px" }}>
         <Grid container spacing={0} justifyContent="center" alignItems="center">
           <Grid item xs={12}>
-            <div className="AutocompBox">
+            <Box className="AutocompBox">
               <NotRInputText
                 state={"Certificate"}
                 width="100%"
@@ -28,7 +28,7 @@ export default function CertificateForm(prop) {
                 value={prop.value}
                 handleState={handleCert}
               />
-            </div>
+            </Box>
           </Grid>
           <DateComp
             startday={prop.startDate}

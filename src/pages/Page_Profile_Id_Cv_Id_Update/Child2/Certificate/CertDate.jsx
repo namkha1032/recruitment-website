@@ -1,10 +1,9 @@
 import * as React from "react";
+import NotRInputText from "../NotRequiredText";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Grid from "@mui/material/Grid";
-import NotRInputText from "../NotRequiredText";
-import Box from "@mui/material/Box";
 
 const DateComp = (prop) => {
   const handleDateChange = (date) => {
@@ -32,7 +31,7 @@ const DateComp = (prop) => {
           />
         </Grid>
         <Grid item xs={3}>
-          <Box style={{ marginLeft: "1%", marginTop: "8px" }}>
+          <div style={{ marginLeft: "1%", marginTop: "8px" }}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 sx={{
@@ -52,10 +51,10 @@ const DateComp = (prop) => {
                 }}
               />
             </LocalizationProvider>
-          </Box>
+          </div>
         </Grid>
         <Grid item xs={3}>
-          <Box style={{ marginLeft: "1%", marginTop: "8px" }}>
+          <div style={{ marginLeft: "1%", marginTop: "8px" }}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 sx={{
@@ -66,7 +65,7 @@ const DateComp = (prop) => {
                 onChange={handleEnd}
               />
             </LocalizationProvider>
-          </Box>
+          </div>
         </Grid>
       </Grid>
     </>

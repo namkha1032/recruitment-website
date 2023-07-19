@@ -1,11 +1,10 @@
 import CertificateForm from "./Certificateform";
 import UlList from "./CertUlList";
-import Box from "@mui/material/Box";
 
 const Certificate = (prop) => {
   return (
     <>
-      <Box>
+      <div>
         <UlList comps={prop.certs} handleDelete={prop.handleCertDelete} />
         <CertificateForm
           state={"Certificate"}
@@ -22,12 +21,14 @@ const Certificate = (prop) => {
           organize={prop.organize}
           detail={prop.detail}
           setDetail={prop.setDetail}
+          cvalue={prop.cvalue}
+          setCValue={prop.setCValue}
           open={prop.open}
           setOpen={prop.setOpen}
           handleSetOpen={prop.handleSetOpen}
           handleClose={prop.handleClose}
         />
-      </Box>
+      </div>
     </>
   );
 };
