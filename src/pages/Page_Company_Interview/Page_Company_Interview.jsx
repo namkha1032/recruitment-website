@@ -1,9 +1,5 @@
 import { useMemo, useState } from "react";
-import {
-  Chip,
-  Autocomplete,
-  TextField,
-} from "@mui/material";
+import { Chip, Autocomplete, TextField, IconButton } from "@mui/material";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
@@ -11,18 +7,23 @@ import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import datasjson from "./Page_Company_Interview_Data.json";
 import { useNavigate } from "react-router-dom";
-import { NullString, NotStart, Pending, Completed } from "../../components/Label/Label";
+import {
+  NullString,
+  NotStart,
+  Pending,
+  Completed,
+} from "../../components/Label/Label";
 import Grid from "@mui/material/Grid";
 
 export default function Page_Company_Interview() {
   const navigate = useNavigate();
 
   const [rows, setRows] = useState(datasjson);
-  
+
   // const [anchorEl, setAnchorEl] = useState(null);
-  
+
   // const [valueSearch, setValueSearch] = useState("");
-  
+
   const [valueChoose, setValueChoose] = useState(null);
   const [departmentChoose, setDepartmentChoose] = useState(null);
   const [statusChoose, setStatusChoose] = useState(null);
@@ -62,15 +63,15 @@ export default function Page_Company_Interview() {
   }
 
   function handleDetailClick(value) {
-    navigate(`./${value}`)
+    navigate(`./${value}`);
   }
 
   function handleProfileDetailClick(value) {
-    navigate(`../../profile/${value}`)
+    navigate(`../../profile/${value}`);
   }
 
   function handleEditClick(value) {
-    navigate(`./${value}/update`)
+    navigate(`./${value}/update`);
   }
 
   const columns = useMemo(() => [
@@ -146,21 +147,32 @@ export default function Page_Company_Interview() {
     {
       field: "StartTime",
       type: "string",
-      headerAlign: "left",
-      align: "left",
-      renderHeader: () => <span>Ngày bắt đầu</span>,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <span>Ngày phỏng vấn</span>,
       minWidth: 180,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
       },
     },
     {
-      field: "EndTime",
+      field: "Shift",
+      type: "number",
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <span>Ca</span>,
+      minWidth: 80,
+      renderCell: (params) => {
+        if (params.value === undefined) return NullString();
+      },
+    },
+    {
+      field: "Room",
       type: "string",
-      headerAlign: "left",
-      align: "left",
-      renderHeader: () => <span>Ngày kết thúc</span>,
-      minWidth: 180,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <span>Phòng</span>,
+      minWidth: 100,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
       },
@@ -172,31 +184,23 @@ export default function Page_Company_Interview() {
       align: "center",
       renderHeader: () => <span>Trạng thái</span>,
       renderCell: (params) => {
-        if (params.value === true) {
-          return Completed();
+        switch (params.value) {
+          case "Chưa bắt đầu": return <NotStart />
+          case "Đang diễn ra": return <Pending />
+          case "Kết thúc": return <Completed />
         }
-        return Pending();
       },
     },
     {
       field: "actions",
       type: "actions",
-      width: 60,
+      width: 30,
       headerAlign: "right",
       align: "right",
       getActions: (params) => [
-        <GridActionsCellItem
-          icon={<InfoIcon variant="outlined" />}
-          label="Chi tiết"
-          onClick={() => handleDetailClick(params.row.id)}
-          showInMenu
-        />,
-        <GridActionsCellItem
-          icon={<EditIcon />}
-          label="Chỉnh sửa"
-          onClick={() => handleEditClick(params.row.id)}
-          showInMenu
-        />,
+        <IconButton onClick={() => handleDetailClick(params.row.InterviewId)}>
+          <InfoIcon sx={{color: "#1565C0"}}/>
+        </IconButton>
       ],
     },
   ]);
@@ -370,10 +374,19 @@ export default function Page_Company_Interview() {
             "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
               outline: "none",
             },
+            "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+              outline: "none",
+            },
             "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
               backgroundColor: "#1565C0",
               color: "white",
               fontWeight: 700,
+            },
+            "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+              display: "none",
+            },
+            "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+              color: "white",
             },
           }}
           slots={{ toolbar: GridToolbar }}
@@ -385,13 +398,17 @@ export default function Page_Company_Interview() {
             },
             toolbar: {
               showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500, placeholder: "Tìm kiếm...", sx: {
-                width: 300,
-                marginBottom: 1,
-              }},
+              quickFilterProps: {
+                debounceMs: 500,
+                placeholder: "Tìm kiếm...",
+                sx: {
+                  width: 300,
+                  marginBottom: 1,
+                },
+              },
               csvOptions: { disableToolbarButton: true },
-              printOptions: { disableToolbarButton: true }
-          },
+              printOptions: { disableToolbarButton: true },
+            },
           }}
           disableColumnMenu
           disableColumnFilter
@@ -408,13 +425,13 @@ export default function Page_Company_Interview() {
           }}
           onCellClick={(params, event) => {
             if (params.field === "id") {
-              handleDetailClick(params.row.id)
+              handleDetailClick(params.row.id);
             }
             if (params.field === "CandidateName") {
-              handleProfileDetailClick(params.row.CandidateId)
+              handleProfileDetailClick(params.row.CandidateId);
             }
             if (params.field === "InterviewerName")
-              handleProfileDetailClick(params.row.InterviewerId)
+              handleProfileDetailClick(params.row.InterviewerId);
           }}
         />
       </Box>

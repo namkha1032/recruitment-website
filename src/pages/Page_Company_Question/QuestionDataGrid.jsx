@@ -24,6 +24,12 @@ export default function QuestionDataGrid(props) {
             color: "white",
             fontWeight: 700,
           },
+          "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+            display: "none",
+          },
+          "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+            color: "white",
+          },
         }}
         slots={{ toolbar: GridToolbar }}
         slotProps={{

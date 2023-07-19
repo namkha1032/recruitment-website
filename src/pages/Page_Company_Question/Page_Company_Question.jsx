@@ -1,9 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
-import {
-  Button,
-  Autocomplete,
-  TextField,
-} from "@mui/material";
+import { Button, Autocomplete, TextField } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -17,10 +13,19 @@ import QuestionFormModal from "./QuestionFormModal";
 import QuestionModal from "./QuestionModal";
 import { successAlert } from "../../components/Alert/SuccessAlert";
 import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
-import { NullString, NotStart, Pending, Completed } from "../../components/Label/Label";
+import {
+  NullString,
+  NotStart,
+  Pending,
+  Completed,
+  Technology,
+  SoftSkill,
+  Language,
+} from "../../components/Label/Label";
 import "react-toastify/dist/ReactToastify.css";
 import DeleteAlertModal from "./DeleteModal";
 import QuestionDataGrid from "./QuestionDataGrid";
+import { LanguageRounded, PsychologyRounded, SchoolRounded } from "@mui/icons-material";
 
 const listOfSkills = {
   skill: ["React", "Angular", "Java", "Python", "Figma", ".NET", "C", "C++"],
@@ -172,7 +177,7 @@ export default function Page_Company_Question() {
       align: "left",
       renderHeader: () => <span>ID</span>,
       renderCell: (params) => {
-        if (params.value === undefined) return NullString();
+        if (params.value === undefined) return <NullString />;
         return (
           <Box
             sx={{
@@ -195,7 +200,7 @@ export default function Page_Company_Question() {
       flex: 1,
       renderHeader: () => <span>Câu hỏi</span>,
       renderCell: (params) => {
-        if (params.value === undefined) return NullString();
+        if (params.value === undefined) return <NullString />;
         return (
           <Box
             sx={{
@@ -219,7 +224,10 @@ export default function Page_Company_Question() {
       minWidth: 80,
       renderHeader: () => <span>Loại</span>,
       renderCell: (params) => {
-        if (params.value === undefined) return NullString();
+        if (params.value === undefined) return <NullString />;
+        else if (params.value === "Chuyên môn") return <Technology />;
+        else if (params.value === "Ngôn ngữ") return <Language />;
+        else if (params.value === "Kỹ năng mềm") return <SoftSkill />;
       },
     },
     {
@@ -230,7 +238,7 @@ export default function Page_Company_Question() {
       minWidth: 50,
       renderHeader: () => <span>Kỹ năng</span>,
       renderCell: (params) => {
-        if (params.value === undefined) return NullString();
+        if (params.value === undefined) return <NullString />;
       },
     },
     {
@@ -380,15 +388,53 @@ export default function Page_Company_Question() {
           <Autocomplete
             disablePortal
             id="filter-type"
-            options={["Chuyên môn", "Ngôn ngữ", "Kỹ năng mềm"]}
+            options={["Technology", "Language", "Soft Skills"]}
             sx={{ width: 200, marginRight: 2 }}
             renderInput={(params) => (
               <TextField {...params} label="Lọc theo..." />
             )}
+            renderOption={(props, option) => {
+              if (option === "Technology")
+                return (
+                  <Box component="li" {...props} sx={{
+                    color: "#1565C0"
+                  }}>
+                    <SchoolRounded sx={{
+                      color: "#1565C0",
+                      marginRight: 1,
+                    }}/>
+                    {option}
+                  </Box>
+                );
+              else if (option === "Language")
+                return (
+                  <Box component="li" {...props} sx={{
+                    color: "#008631"
+                  }}>
+                    <LanguageRounded sx={{
+                      color: "#008631",
+                      marginRight: 1,
+                    }}/>
+                    {option}
+                  </Box>
+                );
+              else if (option === "Soft Skills")
+                return (
+                  <Box component="li" {...props} sx={{
+                    color: "#AA336A"
+                  }}>
+                    <PsychologyRounded sx={{
+                      color: "#AA336A",
+                      marginRight: 1,
+                    }}/>
+                    {option}
+                  </Box>
+                );
+            }}
             value={valueChoose}
             onChange={(event, value) => handleChooseValue(value)}
           />
-          {valueChoose === "Chuyên môn" && (
+          {valueChoose === "Technology" && (
             <Autocomplete
               disablePortal
               id="filter-type"
@@ -401,7 +447,7 @@ export default function Page_Company_Question() {
               onChange={(event, value) => handleChooseStatus(value)}
             />
           )}
-          {valueChoose === "Ngôn ngữ" && (
+          {valueChoose === "Language" && (
             <Autocomplete
               disablePortal
               id="filter-type"
@@ -457,10 +503,10 @@ export default function Page_Company_Question() {
         </Grid> */}
       </Grid>
 
-      <QuestionDataGrid 
+      <QuestionDataGrid
         columns={columns}
         rows={rows}
-        handleModalOpen={handleAddModalOpen}
+        handleModalOpen={handleModalOpen}
       />
 
       <QuestionFormModal

@@ -464,12 +464,8 @@ export default function Page_Company_Recruitment() {
           </Box>
         </Grid> */}
       </Grid>
-
-      <Box
-        sx={{
-          width: "100%",
-        }}
-      >
+      
+      <Grid item xs={12} md={12}>
         <DataGrid
           columns={columns}
           rows={rows}
@@ -496,7 +492,6 @@ export default function Page_Company_Recruitment() {
             "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
               color: "white",
             },
-            "&.MuiDataGrid-root .MuiDataGrid-row": { },
           }}
           slots={{ toolbar: GridToolbar }}
           slotProps={{
@@ -534,8 +529,7 @@ export default function Page_Company_Recruitment() {
             }
           }}
         />
-      </Box>
-      
+      </Grid>
     </Box>
   );
 }

@@ -6,6 +6,9 @@ import FlightTakeoffRoundedIcon from '@mui/icons-material/FlightTakeoffRounded';
 import FlightLandRoundedIcon from '@mui/icons-material/FlightLandRounded';
 import EventNoteRoundedIcon from '@mui/icons-material/EventNoteRounded';
 import SportsScoreRoundedIcon from '@mui/icons-material/SportsScoreRounded';
+import PsychologyRoundedIcon from '@mui/icons-material/PsychologyRounded';
+import LanguageRoundedIcon from '@mui/icons-material/LanguageRounded';
+import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
 
 export function NullString() {
   return <Chip icon={<PriorityHighIcon />} label="Unavailable" />;
@@ -84,6 +87,69 @@ export function Postpone() {
         <DoNotDisturbOnRoundedIcon
           style={{
             color: "#cc3300",
+          }}
+        />
+      }
+    />
+  );
+}
+
+export function Technology() {
+  return (
+    <Chip
+      label="Technology"
+      variant="outlined"
+      style={{
+        color: "#1565C0",
+        backgroundColor: "white",
+        borderColor: "#1565C0",
+      }}
+      icon={
+        <SchoolRoundedIcon
+          style={{
+            color: "#1565C0",
+          }}
+        />
+      }
+    />
+  );
+}
+
+export function Language() {
+  return (
+    <Chip
+      label="Language"
+      variant="outlined"
+      style={{
+        color: "#008631",
+        backgroundColor: "white",
+        borderColor: "#008631",
+      }}
+      icon={
+        <LanguageRoundedIcon
+          style={{
+            color: "#008631",
+          }}
+        />
+      }
+    />
+  );
+}
+
+export function SoftSkill() {
+  return (
+    <Chip
+      label="Soft Skills"
+      variant="outlined"
+      style={{
+        color: "#AA336A",
+        backgroundColor: "white",
+        borderColor: "#AA336A",
+      }}
+      icon={
+        <PsychologyRoundedIcon
+          style={{
+            color: "#AA336A",
           }}
         />
       }

@@ -4,6 +4,7 @@ import {
   Button,
   Autocomplete,
   TextField,
+  IconButton
 } from "@mui/material";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import InfoIcon from "@mui/icons-material/Info";
@@ -156,24 +157,35 @@ export default function Page_Company_Event() {
       },
     },
     {
+      field: "Status",
+      type: "string",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 180,
+      renderHeader: () => <span>Trạng thái</span>,
+      renderCell: (params) => {
+        switch (params.value) {
+          case "Chưa bắt đầu":
+            return <NotStart />;
+          case "Đang diễn ra":
+            return <Pending />;
+          case "Kết thúc":
+            return <Completed />;
+          default:
+            return <NullString />;
+        }
+      },
+    },
+    {
       field: "actions",
       type: "actions",
       width: 60,
       headerAlign: "right",
       align: "right",
       getActions: (params) => [
-        <GridActionsCellItem
-          icon={<InfoIcon variant="outlined" />}
-          label="Chi tiết"
-          onClick={() => handleDetailClick(params.row.id)}
-          showInMenu
-        />,
-        <GridActionsCellItem
-          icon={<EditIcon />}
-          label="Chỉnh sửa"
-          onClick={() => handleEditClick(params.row.id)}
-          showInMenu
-        />,
+        <IconButton onClick={() => handleDetailClick(params.row.InterviewId)}>
+          <InfoIcon sx={{color: "#1565C0"}}/>
+        </IconButton>
       ],
     },
   ]);
@@ -347,10 +359,19 @@ export default function Page_Company_Event() {
             "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
               outline: "none",
             },
+            "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+              outline: "none",
+            },
             "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
               backgroundColor: "#1565C0",
               color: "white",
               fontWeight: 700,
+            },
+            "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+              display: "none",
+            },
+            "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+              color: "white",
             },
           }}
           slots={{ toolbar: GridToolbar }}

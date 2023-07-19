@@ -11,6 +11,8 @@ import datasjson from "./Page_Company_Recruitment_Id_Report_Data.json";
 import { NullString, NotStart, Pending, Completed, Postpone } from "../../components/Label/Label";
 import { useLocation, useNavigate } from "react-router-dom";
 import ReportDataGrid from "./ReportDataGrid";
+import ReportGraph from "./ReportGraph";
+import ReportStatistic from "./ReportStatistic";
 
 
 export default function Page_Company_Recruitment_Id_Report(props) {
@@ -173,7 +175,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       align: "center",
       getActions: (params) => [
         <IconButton onClick={() => handleDetailClick(params.row.InterviewId)}>
-          <InfoIcon />
+          <InfoIcon sx={{color: "#1565C0"}}/>
         </IconButton>
       ],
     },
@@ -284,6 +286,19 @@ export default function Page_Company_Recruitment_Id_Report(props) {
         rows={rows}
         handleDetailClick={handleDetailClick}
       />}
+
+      {tabValue === "1" && 
+      <Box>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={8}>
+            <ReportGraph />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <ReportStatistic />
+          </Grid>
+        </Grid>
+      </Box>
+      }
 
       
     </Box>
