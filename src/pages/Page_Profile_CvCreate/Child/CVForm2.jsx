@@ -1,14 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import cvinfo from "./CvData";
 import CreateCv from "./CreateCv";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
-import { language } from  "./CvData";
+import { useDispatch, useSelector } from "react-redux";
+
 // import ViewCv from "./ViewCv";
 function CVForm() {
-  // CV COMPS
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // fetch Data
+  useEffect(() => {
+    dispatch({ type: "saga/getLanguage" });
+    dispatch({ type: "saga/getSkill" });
+    return () => {
+      dispatch({ type: "skill/setSkill", payload: null });
+      dispatch({ type: "language/setLanguage", payload: null });
+    };
+  },[]);
   // CV COMPS
+  const skillList = useSelector((state) => state.skill);
+  const languageList = useSelector((state) => state.language);
+
+  const skillData= skillList?skillList:[]
+  const languageData= languageList?languageList:[]
   const [cvtitle,setTitle] = useState(cvinfo.title)
   const [intro, setIntro] = useState(cvinfo.intro);
   const [education, setEducation] = useState(cvinfo.education);
@@ -99,7 +114,7 @@ function CVForm() {
   function handleLanguageAdd() {
     console.log(lInputValue);
     console.log(languageName);
-    let arr = language.filter(
+    let arr = languageData.filter(
       (comp) => comp.name === (lInputValue !== null ? lInputValue.name : "")
     );
     console.log(arr);
@@ -197,6 +212,8 @@ function CVForm() {
             handleLanguageAdd={handleLanguageAdd}
             cvtitle={cvtitle}
             handleTitle={handleTitle}
+            skillData={skillData}
+            languageData={languageData}
           />
         </Grid>
       </Grid>

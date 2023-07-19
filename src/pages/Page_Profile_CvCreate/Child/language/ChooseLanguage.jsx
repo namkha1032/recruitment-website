@@ -3,30 +3,25 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { skillList } from "./CvData";
-import InputText from "./InputText";
-import UlList from "./UlList";
+import AddIcon from '@mui/icons-material/Add';
+
+
 
 const filter = createFilterOptions();
-
-export default function FreeSoloCreateOption(prop) {
-  const [value, setValue] = React.useState(null);
-  function handleSExp(e) {
-    console.log(e.target.value);
-    prop.setSExp(e.target.value);
-  }
+export default function ChooseLanguage(prop) {
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
+      event.preventDefault()
       const inputValue = event.target.value;
-      console.log(value);
+      console.log(prop.lInputValue);
       console.log(inputValue);
-      if (value === null) {
+      if (prop.lInputValue === null) {
         if (inputValue.trim() !== "") {
-          setValue(null);
+          prop.setInputValue(null);
           prop.handleState(inputValue);
         }
       } else {
-        setValue(null);
+        prop.setInputValue(null);
         return prop.onPress();
       }
     }
@@ -34,28 +29,29 @@ export default function FreeSoloCreateOption(prop) {
   return (
     <>
       <Grid container spacing={0} justifyContent="center" alignItems="center">
-        <UlList comps={prop.skills} handleDelete={prop.handleSkilltDelete} />
-        <Grid item xs={12}></Grid>
-        <Grid item xs={9}>
+        <Grid item xs={12}>
           <Autocomplete
-            value={value}
+            value={prop.lInputValue}
             onChange={(event, newValue) => {
               if (typeof newValue === "string") {
-                setValue({
+                return ()=>prop.setValue({
                   name: newValue,
                 });
               } else if (newValue && newValue.inputValue) {
-                setValue({
+                
+                prop.setInputValue({
                   name: newValue.inputValue,
                 });
+                console.log(newValue.name)
                 if (newValue !== null) {
-                  console.log(newValue.name);
-                  prop.handleState(newValue.name);
+                  console.log(newValue);
+                  prop.handleState(newValue);
                 }
               } else {
-                setValue(newValue);
+                prop.setInputValue(newValue);
                 if (newValue !== null) {
-                  console.log(newValue.name);
+                  console.log(newValue);
+                  prop.setSkillId(prop.languageData.filter((comp) => comp.name === newValue.name)[0].id);
                   prop.handleState(newValue.name);
                 }
               }
@@ -79,7 +75,7 @@ export default function FreeSoloCreateOption(prop) {
             clearOnBlur
             handleHomeEndKeys
             id="free-solo-with-text-demo"
-            options={skillList}
+            options={prop.languageData}
             getOptionLabel={(option) => {
               if (typeof option === "string") {
                 return option;
@@ -95,9 +91,9 @@ export default function FreeSoloCreateOption(prop) {
                 m: 1,
                 display: "flex",
                 margin: "0",
-                marginTop: "8px",
                 padding: "0",
                 marginLeft: "1%",
+                width:"98%"
               },
             }}
             freeSolo
@@ -106,29 +102,17 @@ export default function FreeSoloCreateOption(prop) {
             )}
           />
         </Grid>
-     
-        <Grid item xs={3}>
-            <InputText
-              type="number"
-              state={"Experiece(Year)"}
-              width="90%"
-              value={prop.SExp}
-              margin="0"
-              marginLeft="6%"
-              handleState={handleSExp}
-            />
-        </Grid>
-
-        <Grid item xs={12}></Grid>
         <Button
           sx={{
             margin: "auto",
           }}
-          variant="contained"
-          className="AddButton"
+          color="primary"
+          size="medium"
+          variant="outlined"
+          className="AddCompButton"
+          startIcon={<AddIcon/>}
           onClick={() => {
             prop.onPress();
-            setValue(null);
           }}
         >
           Add

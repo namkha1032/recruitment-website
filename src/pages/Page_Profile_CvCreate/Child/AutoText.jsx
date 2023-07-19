@@ -14,16 +14,17 @@ export default function EmptyTextarea(prop) {
         <Box
           // component="form"
           sx={{
-            "& > :not(style)": { width: "100%", margin: "0", marginTop: "8px" },
+            "& > :not(style)": { width:prop.width, margin: "0",marginLeft:prop.marginLeft,  marginTop: "8px"},
           }}
           noValidate
           autoComplete="off"
         >
           <TextField
+            
             value={prop.value}
             onChange={handleDetail}
             id="outlined-basic"
-            label="Detail"
+            label={prop.state}
             variant="outlined"
             multiline
           />

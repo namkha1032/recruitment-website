@@ -3,23 +3,31 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { language } from "./CvData";
-
+import InputText from "../InputText";
+import UlList from "./UlList";
+import AddIcon from '@mui/icons-material/Add';
+import NotRInputText from "../NotRequiredText";
 
 const filter = createFilterOptions();
-export default function ChooseLanguage(prop) {
+
+export default function FreeSoloCreateOption(prop) {
+  const [value, setValue] = React.useState(null);
+  function handleSExp(e) {
+    console.log(e.target.value);
+    prop.setSExp(e.target.value);
+  }
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       const inputValue = event.target.value;
-      console.log(prop.value);
+      console.log(value);
       console.log(inputValue);
-      if (prop.value === null) {
+      if (value === null) {
         if (inputValue.trim() !== "") {
-          prop.setInputValue(null);
+          setValue(null);
           prop.handleState(inputValue);
         }
       } else {
-        prop.setInputValue(null);
+        setValue(null);
         return prop.onPress();
       }
     }
@@ -27,29 +35,28 @@ export default function ChooseLanguage(prop) {
   return (
     <>
       <Grid container spacing={0} justifyContent="center" alignItems="center">
-        <Grid item xs={12}>
+        <UlList comps={prop.skills} handleDelete={prop.handleSkilltDelete} />
+        <Grid item xs={12}></Grid>
+        <Grid item xs={9}>
           <Autocomplete
-            value={prop.inputValue}
+            value={value}
             onChange={(event, newValue) => {
               if (typeof newValue === "string") {
-                return ()=>prop.setValue({
+                setValue({
                   name: newValue,
                 });
               } else if (newValue && newValue.inputValue) {
-                
-                prop.setInputValue({
+                setValue({
                   name: newValue.inputValue,
                 });
-                console.log(newValue.name)
                 if (newValue !== null) {
-                  console.log(newValue);
-                  prop.handleState(newValue);
+                  console.log(newValue.name);
+                  prop.handleState(newValue.name);
                 }
               } else {
-                prop.setInputValue(newValue);
+                setValue(newValue);
                 if (newValue !== null) {
-                  console.log(newValue);
-                  prop.setSkillId(language.filter((comp) => comp.name === newValue.name)[0].id);
+                  console.log(newValue.name);
                   prop.handleState(newValue.name);
                 }
               }
@@ -73,7 +80,7 @@ export default function ChooseLanguage(prop) {
             clearOnBlur
             handleHomeEndKeys
             id="free-solo-with-text-demo"
-            options={language}
+            options={prop.skillData}
             getOptionLabel={(option) => {
               if (typeof option === "string") {
                 return option;
@@ -89,9 +96,9 @@ export default function ChooseLanguage(prop) {
                 m: 1,
                 display: "flex",
                 margin: "0",
+                marginTop: "8px",
                 padding: "0",
                 marginLeft: "1%",
-                width:"98%"
               },
             }}
             freeSolo
@@ -100,14 +107,32 @@ export default function ChooseLanguage(prop) {
             )}
           />
         </Grid>
+
+        <Grid item xs={3}>
+          <NotRInputText
+            type="number"
+            state={"Experiece(Year)"}
+            width="90%"
+            value={prop.SExp}
+            margin="0"
+            marginLeft="6%"
+            handleState={handleSExp}
+          />
+        </Grid>
+
+        <Grid item xs={12}></Grid>
         <Button
           sx={{
             margin: "auto",
           }}
-          variant="contained"
-          className="AddButton"
+          color="primary"
+          size="medium"
+          variant="outlined"
+          className="AddCompButton"
+          startIcon={<AddIcon/>}
           onClick={() => {
             prop.onPress();
+            setValue(null);
           }}
         >
           Add

@@ -8,132 +8,8 @@ import CvStep3 from "./cvStep3";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
-import { styled } from "@mui/material/styles";
-import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
-import PersonIcon from "@mui/icons-material/Person";
-import Check from "@mui/icons-material/Check";
-import PropTypes from "prop-types";
-import HandymanIcon from "@mui/icons-material/Handyman";
-import StepConnector, {
-  stepConnectorClasses,
-} from "@mui/material/StepConnector";
+import { ColorlibConnector, ColorlibStepIcon } from "./SteperComp";
 //////////////////////////////////////////////////////
-const QontoStepIconRoot = styled("div")(({ theme, ownerState }) => ({
-  color:
-    // theme.palette.mode === "dark" ? theme.palette.grey[700] :
-    "#eaeaf0",
-  display: "flex",
-  height: 22,
-  alignItems: "center",
-  ...(ownerState.active && {
-    color: "#784af4",
-  }),
-  "& .QontoStepIcon-completedIcon": {
-    color: "#784af4",
-    zIndex: 1,
-    fontSize: 18,
-  },
-  "& .QontoStepIcon-circle": {
-    width: 8,
-    height: 8,
-    borderRadius: "50%",
-    backgroundColor: "currentColor",
-  },
-}));
-const ColorlibStepIconRoot = styled("div")(({ theme, ownerState }) => ({
-  backgroundColor:
-    theme.palette.mode === "dark" ? theme.palette.grey[700] : "#ccc",
-  zIndex: 1,
-  color: "#fff",
-  width: 50,
-  height: 50,
-  display: "flex",
-  borderRadius: "50%",
-  justifyContent: "center",
-  alignItems: "center",
-  ...(ownerState.active && {
-    backgroundImage:
-      "linear-gradient( 110deg,rgb(25, 118, 210 ) 0%,rgb(25, 118, 249) 50%,rgb(133, 193, 233) 100%)",
-    boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
-  }),
-  ...(ownerState.completed && {
-    backgroundImage:
-      "linear-gradient( 120deg,rgb(25, 118, 210 ) 0%,rgb(25, 118, 249) 50%,rgb(133, 193, 233) 100%)",
-    boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
-  }),
-}));
-function QontoStepIcon(props) {
-  const { active, completed, className } = props;
-
-  return (
-    <QontoStepIconRoot ownerState={{ active }} className={className}>
-      {completed ? (
-        <Check className="QontoStepIcon-completedIcon" />
-      ) : (
-        <div className="QontoStepIcon-circle" />
-      )}
-    </QontoStepIconRoot>
-  );
-}
-function ColorlibStepIcon(props) {
-  const { active, completed, className } = props;
-
-  const icons = {
-    1: <PersonIcon />,
-    2: <HandymanIcon />,
-    3: <WorkspacePremiumIcon />,
-  };
-
-  return (
-    <ColorlibStepIconRoot
-      sx={{ cursor: "pointer" }}
-      ownerState={{ completed, active }}
-      className={className}
-    >
-      {icons[String(props.icon)]}
-    </ColorlibStepIconRoot>
-  );
-}
-
-QontoStepIcon.propTypes = {
-  /**
-   * Whether this step is active.
-   * @default false
-   */
-  active: PropTypes.bool,
-  className: PropTypes.string,
-  /**
-   * Mark the step as completed. Is passed to child components.
-   * @default false
-   */
-  completed: PropTypes.bool,
-};
-
-const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
-  [`&.${stepConnectorClasses.alternativeLabel}`]: {
-    top: 22,
-  },
-  [`&.${stepConnectorClasses.active}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      backgroundImage:
-        "linear-gradient( 120deg,rgb(36, 113, 163 ) 0%,rgb(40, 116, 166) 50%,rgb(133, 193, 233) 100%)",
-    },
-  },
-  [`&.${stepConnectorClasses.completed}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      backgroundImage:
-        "linear-gradient( 120deg,rgb(36, 113, 163 ) 0%,rgb(40, 116, 166) 50%,rgb(133, 193, 233) 100%)",
-    },
-  },
-  [`& .${stepConnectorClasses.line}`]: {
-    height: 3,
-    border: 0,
-    backgroundColor:
-      // theme.palette.mode === "dark" ? theme.palette.grey[800] :
-      "#eaeaf0",
-    borderRadius: 1,
-  },
-}));
 
 ///////////////////////////////////////////////////////
 const CreateCv = (prop) => {
@@ -153,8 +29,8 @@ const CreateCv = (prop) => {
   };
   return (
     <form onSubmit={prop.handleSubmit}>
-      <div className={`CVForm InputForm`}>
-        <div className="Container">
+      <Box className={`CVForm InputForm`}>
+        <Box className="Container">
           <Grid
             container
             spacing={0}
@@ -180,7 +56,7 @@ const CreateCv = (prop) => {
               </Stepper>
             </Grid>
             <Grid item xs={12}>
-              <div>
+              <Box>
                 <React.Fragment>
                   {activeStep === 0 ? (
                     <Grid item xs={12}>
@@ -196,16 +72,20 @@ const CreateCv = (prop) => {
                   ) : activeStep === 1 ? (
                     <Grid item xs={12}>
                       <CvStep2
+                        skillData={prop.skillData}
+                        languageData={prop.languageData}
                         skills={prop.skills}
                         handleSkilltDelete={prop.handleSkilltDelete}
                         SExp={prop.SExp}
+                        setExperience={prop.setExperience}
+                        experience={prop.experience}
                         setSExp={prop.setSExp}
                         setName={prop.setName}
                         name={prop.name}
                         handleSkillAdd={prop.handleSkillAdd}
                         languages={prop.languages}
                         handleLanguageDelete={prop.handleLanguageDelete}
-                        linputValue={prop.lInputValue}
+                        lInputValue={prop.lInputValue}
                         setLInputValue={prop.setLInputValue}
                         setLanguageName={prop.setLanguageName}
                         languageName={prop.languageName}
@@ -280,11 +160,11 @@ const CreateCv = (prop) => {
                     )}
                   </Box>
                 </React.Fragment>
-              </div>
+              </Box>
             </Grid>
           </Grid>
-        </div>
-      </div>
+        </Box>
+      </Box>
     </form>
   );
 };

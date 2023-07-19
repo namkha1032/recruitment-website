@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InputText from "./InputText";
 import cvinfo from "./CvData";
 import { language } from "./CvData";
@@ -10,10 +10,26 @@ import Divider from "@mui/material/Divider";
 import { useNavigate } from "react-router-dom";
 import ChooseLanguage from "./ChooseLanguage";
 import LanguageUlList from "./LanguageUlList";
+import { useDispatch, useSelector } from "react-redux";
 
 function CVForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // fetch Data
+  useEffect(() => {
+    dispatch({ type: "saga/getLanguage" });
+    dispatch({ type: "saga/getSkill" });
+    return () => {
+      dispatch({ type: "skill/setSkill", payload: null });
+      dispatch({ type: "language/setLanguage", payload: null });
+    };
+  },[]);
   // CV COMPS
+  const skillList = useSelector((state) => state.skill);
+  const languageList = useSelector((state) => state.language);
+
+  const skillData= skillList?skillList:[]
+  const languageData= languageList?languageList:[]
   const [cvtitle, setTitle] = useState(cvinfo.title);
   const [intro, setIntro] = useState(cvinfo.intro);
   const [education, setEducation] = useState(cvinfo.education);
