@@ -175,12 +175,13 @@ function RecruitForm() {
     <>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={0} justifyContent="center" alignItems="center">
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6} sx={{marginTop: "8px",}}>
             <Box
               className={`RecruiteForm Form InputForm`}
               sx={{
                 borderRadius: 4,
                 boxShadow: 10,
+                width:"90%",
                 backgroundColor: "white",
                 border: (theme) => `1px solid ${theme.palette.divider}`,
                 height: "100%",
@@ -208,11 +209,12 @@ function RecruitForm() {
               </Box>
             </Box>
           </Grid>
-          <Grid item sx={{ marginTop: "16px" }} xs={12}>
+          <Grid item xs={12} sm={6}  sx={{marginTop: "8px",}}>
             <Box
               className={`RecruiteForm InputForm`}
               sx={{
                 borderRadius: 4,
+                width:"90%",
                 boxShadow: 10,
                 backgroundColor: "white",
                 border: (theme) => `1px solid ${theme.palette.divider}`,
@@ -258,6 +260,7 @@ function RecruitForm() {
               sx={{
                 borderRadius: 4,
                 boxShadow: 10,
+                width:"95%",
                 backgroundColor: "white",
                 border: (theme) => `1px solid ${theme.palette.divider}`,
                 height: "100%",
