@@ -7,6 +7,7 @@ import {
   Box,
   Container,
   InputAdornment,
+  createTheme,
 } from "@mui/material";
 
 import LockIcon from "@mui/icons-material/Lock";
@@ -17,13 +18,15 @@ const style = {
   marginBottom: "15px",
 };
 
-const ResetPassword = ({
-  newPassword,
-  confirmPassword,
-  onChangeNewPassword,
-  onChangeConfirmPassword,
-  handleSubmit,
-}) => {
+const theme = createTheme({
+  palette: {
+    secondary: {
+      main: '#673AB7'
+    }
+  }
+});
+
+const ResetPassword = (props) => {
   return (
     <Box
       sx={{
@@ -39,27 +42,24 @@ const ResetPassword = ({
         <Grid
           container
           sx={{
-            paddingTop: "60px",
+            paddingTop: "10%",
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
             width: "80%",
           }}
         >
-          <Grid item md={7} padding="20px">
-            <Grid item xs={12} display="flex" justifyContent="center">
-              <Typography variant="h1" color='white'>
-                Recovery
-              </Typography>
-            </Grid>
-          </Grid>
 
-          <Grid item md={7} sx={{ display: "flex", justifyContent: "center" }}>
+          <Grid
+            item
+            xs={7}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
             <Grid
               item
-              md={9}
+              xs={9}
               sx={{
-                borderRadius: "20px",
+                borderRadius: "10px",
                 padding: "20px",
                 paddingTop: "10px",
                 paddingBottom: "10px",
@@ -69,24 +69,34 @@ const ResetPassword = ({
                 right: "20%",
               }}
             >
-              <Grid
-                item
-                xs={12}
-                sx={{ ...style, display: "flex", justifyContent: "center" }}
-              >
-                <Typography variant="h5" align="center">
-                  Enter your new password
-                </Typography>
-              </Grid>
 
-              <form onSubmit={handleSubmit}>
+              <Typography 
+                variant="h2" 
+                align="center" 
+                color='#673AB7' 
+                gutterBottom
+                fontFamily={'Roboto'}
+                fontSize={'28px'}
+                lineHeight={'28px'}
+                fontWeight={'700'}
+                padding={"20px"}
+              >
+                Reset password
+              </Typography>
+
+              <form
+                onSubmit={
+                  props.handleSubmit
+                } 
+              >
+
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
                     required
                     label="New Password"
                     type="password"
-                    value={newPassword}
+                    value={props.newPassword}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -94,10 +104,10 @@ const ResetPassword = ({
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "10px" },
                     }}
                     onChange={(e) => {
-                      onChangeNewPassword(e.target.value);
+                      props.onChangeNewPassword(e.target.value);
                     }}
                   />
                 </Grid>
@@ -108,7 +118,7 @@ const ResetPassword = ({
                     required
                     label="Confirm Password"
                     type="password"
-                    value={confirmPassword}
+                    value={props.confirmPassword}
                     variant="outlined"
                     InputProps={{
                       endAdornment: (
@@ -117,10 +127,10 @@ const ResetPassword = ({
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "10px" },
                     }}
                     onChange={(e) => {
-                      onChangeConfirmPassword(e.target.value);
+                      props.onChangeConfirmPassword(e.target.value);
                     }}
                   />
                 </Grid>
@@ -131,19 +141,23 @@ const ResetPassword = ({
                   sx={{ display: "flex", justifyContent: "center", ...style }}
                 >
                   <Button
+                    theme={theme}
                     variant="contained"
                     type="submit"
+                    color="secondary"
+                  
                     sx={{
                       height: "40px",
                       width: "100%",
                       borderRadius: "20px",
-                      marginTop: "15px",
+                      marginTop: "5px",
                     }}
                   >
                     Reset
                   </Button>
                 </Grid>
               </form>
+
             </Grid>
           </Grid>
         </Grid>
