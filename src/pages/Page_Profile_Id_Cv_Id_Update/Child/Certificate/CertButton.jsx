@@ -1,8 +1,8 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import AddIcon from '@mui/icons-material/Add';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -11,8 +11,11 @@ const CertButton = (prop) => {
   return (
     <>
       <Button
-        variant="contained"
-        className="AddButton"
+        color="primary"
+        size="medium"
+        variant="outlined"
+        startIcon={<AddIcon/>}
+        className="AddCompButton"
         sx={{
           margin: "auto",
         }}

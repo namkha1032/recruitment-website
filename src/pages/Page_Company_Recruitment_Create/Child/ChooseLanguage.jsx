@@ -4,7 +4,7 @@ import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { language } from "./RecruitData";
-
+import AddIcon from "@mui/icons-material/Add";
 
 const filter = createFilterOptions();
 export default function ChooseLanguage(prop) {
@@ -103,8 +103,11 @@ export default function ChooseLanguage(prop) {
           sx={{
             margin: "auto",
           }}
-          variant="contained"
-          className="AddButton"
+          color="primary"
+          size="medium"
+          variant="outlined"
+          className="AddCompButton"
+          startIcon={<AddIcon />}
           onClick={() => {
             prop.onPress();
           }}

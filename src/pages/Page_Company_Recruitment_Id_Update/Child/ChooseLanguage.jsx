@@ -4,16 +4,10 @@ import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { language } from "./RecruitData";
-import InputText from "./InputText";
-import EmptyTextarea from "./AutoText";
+import AddIcon from "@mui/icons-material/Add";
 
 const filter = createFilterOptions();
 export default function ChooseLanguage(prop) {
-  
-  function handleRExp(e) {
-    console.log(e.target.value);
-    prop.setExperience(e.target.value);
-  }
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       const inputValue = event.target.value;
@@ -109,8 +103,11 @@ export default function ChooseLanguage(prop) {
           sx={{
             margin: "auto",
           }}
-          variant="contained"
-          className="AddButton"
+          color="primary"
+          size="medium"
+          variant="outlined"
+          className="AddCompButton"
+          startIcon={<AddIcon />}
           onClick={() => {
             prop.onPress();
           }}

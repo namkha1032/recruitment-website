@@ -8,9 +8,7 @@ const LanguageUlList = (prop) => {
       <Grid container spacing={0} justifyContent="center" alignItems="center">
         {prop.comps.map((comp) => (
           <Grid key={comp.id}>
-            <div>
-              <SmallLanguageUlList comp={comp} handleDelete={prop.handleDelete} />
-            </div>
+            <SmallLanguageUlList comp={comp} handleDelete={prop.handleDelete} />
           </Grid>
         ))}
       </Grid>
