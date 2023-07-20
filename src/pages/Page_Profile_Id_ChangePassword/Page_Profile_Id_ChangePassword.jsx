@@ -95,15 +95,19 @@ const Page_Profile_Id_ChangePassword = () => {
                 right: "20%",
               }}
             >
-              <Grid
-                item
-                xs={12}
-                sx={{ ...style, display: "flex", justifyContent: "center" }}
+              <Typography 
+                variant="h2" 
+                align="center" 
+                color='#1976d2' 
+                gutterBottom
+                fontFamily={'Roboto'}
+                fontSize={'28px'}
+                lineHeight={'28px'}
+                fontWeight={'700'}
+                padding={"20px"}
               >
-                <Typography variant="h5" align="center">
-                  Change your password
-                </Typography>
-              </Grid>
+                Change your password
+              </Typography>
 
               <form onSubmit={handleSubmit}>
                 <Grid item xs={12} md={12} sx={{ ...style }}>
