@@ -72,6 +72,7 @@ export default function Page_Company_Interview_Id_Start() {
         dispatch({ type: "saga/scoreInterview", payload: newObj })
         navigate("/company/interview/1")
     }
+    console.log("note: ", note)
     return (
         leftSoft ?
             <>

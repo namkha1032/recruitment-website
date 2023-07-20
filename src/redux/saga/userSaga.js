@@ -4,9 +4,9 @@ import axios from 'axios'
 
 function* loginSaga(action) {
     try {
-        const user = yield call(axios.post, 'http://localhost:3001/api/login', action.payload)
-        yield call(window.localStorage.setItem, 'user', JSON.stringify(user))
-        yield put({ type: "user/userLogin", payload: user })
+        const response = yield call(axios.post, 'http://localhost:3001/api/login', action.payload)
+        yield call(window.localStorage.setItem, 'user', JSON.stringify(response.data))
+        yield put({ type: "user/userLogin", payload: response.data })
 
     }
     catch (error) {

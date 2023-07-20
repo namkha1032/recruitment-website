@@ -30,7 +30,8 @@ import TableInterviewer from "./TableInterviewer/TableInterviewer";
 import TableRoom from "./TableRoom/TableRoom";
 import TableResult from "./TableResult/TableResult";
 import DateTimePicker from "./DateTimePicker/DateTimePicker";
-
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 
 import GigaCard from '../../components/GigaCard/GigaCard';
 import GigaCardBody from '../../components/GigaCardBody/GigaCardBody';
@@ -49,12 +50,13 @@ const Page_Company_Interview_Create = () => {
 
     let [busyInterviewer, setBusyInterviewer] = useState([])
     let [busyRoom, setBusyRoom] = useState([])
-
+    let [errorSnackbar, setErrorSnackbar] = useState(false)
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
     // fetch Data
     useEffect(() => {
+        console.log("use effect first")
         dispatch({ type: "saga/getUpcomingInterview" })
         dispatch({ type: "saga/getDepartmentInterviewer" })
         dispatch({ type: "saga/getRoom" })
@@ -71,10 +73,11 @@ const Page_Company_Interview_Create = () => {
     const interviewerList = useSelector(state => state.interviewer)
     const roomList = useSelector(state => state.room)
     const shiftList = useSelector(state => state.shift)
+    const newError = useSelector(state => state.error)
 
-    console.log("interviewList: ", interviewList)
     // set busyInterviewer and busyRoom
     useEffect(() => {
+        console.log("use effect shift")
         setBusyInterviewer(oldList => [])
         setBusyRoom(oldList => [])
         if (chosenShift) {
@@ -97,10 +100,28 @@ const Page_Company_Interview_Create = () => {
         }
     }, [chosenShift])
 
+    useEffect(() => {
+        console.log("use effect error")
+        if (newError.status == "no") {
+            dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+            dispatch({ type: "interview/setInterview", payload: null })
+            dispatch({ type: "interviewer/setInterviewer", payload: null })
+            dispatch({ type: "room/setRoom", payload: null })
+            dispatch({ type: "shift/setShift", payload: null })
+            navigate("/company/interview/1")
+        }
+        if (newError.status == "yes") {
+            setErrorSnackbar(true)
+            setTimeout(() => {
+                setErrorSnackbar(false)
+                dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+            }, 5000)
+        }
+    }, [newError])
 
     function handleSubmit() {
-        dispatch({ type: "interview/setInterview", payload: null })
-        navigate("/company/interview/1")
+        dispatch({ type: "saga/createInterview", payload: null })
+        // navigate("/company/interview/1")
     }
     return (
         <>{interviewerList &&
@@ -187,10 +208,18 @@ const Page_Company_Interview_Create = () => {
                 <Grid item md={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
                     <Button variant="contained" onClick={handleSubmit}>Create Interview</Button>
                 </Grid>
-
-                <Grid item md={6}>
-
-                </Grid>
+                <Snackbar
+                    // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                    open={errorSnackbar}
+                    autoHideDuration={5000}
+                    onClose={() => { setErrorSnackbar(false) }}
+                // message="I love snacks"
+                // key={vertical + horizontal}
+                >
+                    <Alert onClose={() => { setErrorSnackbar(false) }} severity="error" sx={{ width: '100%' }}>
+                        {newError.message}
+                    </Alert>
+                </Snackbar>
             </Grid>
         }
         </>

@@ -40,7 +40,15 @@ const Page_Company_Interview_Id = () => {
         dispatch({ type: "saga/getInterviewId" })
     }, [])
     const interview = useSelector(state => state.interview)
+    const interviewer = useSelector(state => state.interviewer)
+    const room = useSelector(state => state.room)
+    const shift = useSelector(state => state.shift)
+    const error = useSelector(state => state.error)
     console.log("interview: ", interview)
+    console.log("interviewer: ", interviewer)
+    console.log("room: ", room)
+    console.log("shift: ", shift)
+    console.log("error: ", error)
     function handleStart() {
         navigate("/company/interview/1/start")
     }
@@ -63,16 +71,16 @@ const Page_Company_Interview_Id = () => {
                     </Button>
                 </Divider>
                 <Grid container spacing={4}>
-                    <Grid item md={6}>
+                    <Grid item md={6} xs={12}>
                         <NoteField note={interview.note} />
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item md={6} xs={12}>
                         <QuestionTable round={interview.round} />
                     </Grid>
                     <Grid item md={12}>
                         <GigaCard>
                             <Grid container>
-                                <Grid item md={6} sx={{ display: "flex", flexDirection: "column" }}>
+                                <Grid item md={6} xs={12} sx={{ display: "flex", flexDirection: "column" }}>
                                     <GigaCardHeader color={"primary.main"} headerIcon={<TroubleshootIcon sx={{ fontSize: "inherit" }} />}>
                                         Analysis
                                     </GigaCardHeader>
@@ -82,7 +90,7 @@ const Page_Company_Interview_Id = () => {
                                         </Box>
                                     </GigaCardBody>
                                 </Grid>
-                                <Grid item md={6} sx={{ display: "flex", flexDirection: "column" }}>
+                                <Grid item md={6} xs={12} sx={{ display: "flex", flexDirection: "column" }}>
                                     <GigaCardHeader color={"primary.main"} headerIcon={<SportsScoreIcon sx={{ fontSize: "inherit" }} />}>
                                         Final Score
                                     </GigaCardHeader>
