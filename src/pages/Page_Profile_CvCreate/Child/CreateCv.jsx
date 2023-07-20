@@ -186,7 +186,7 @@ const CreateCv = (prop) => {
                           className="AddButton"
                           onClick={prop.handleSubmit}
                         >
-                          Finish
+                          Submit
                         </Button>
                       ) : (
                         <Button

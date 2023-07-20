@@ -1,17 +1,13 @@
 import { useState } from "react";
-import InputText from "./InputText";
 import recruitInfo from "./RecruitData";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { skill, language, department } from "./RecruitData";
-import ChooseLanguage from "./ChooseLanguage";
-import LanguageUlList from "./LanguageUlList";
-import Department from "./Department";
-import SelectDate from "./SelectDate";
 import { useNavigate } from "react-router-dom";
-import Require from "./Require";
 import { Box } from "@mui/material";
-
+import Box1 from "./Box1";
+import Box2 from "./Box2";
+import Box3 from "./Box3";
 function RecruitForm() {
   // Recruiment comps
   const [RName, setRName] = useState(recruitInfo.name);
@@ -178,122 +174,138 @@ function RecruitForm() {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <Box
-          className={`CVForm InputForm`}
-          sx={{
-            borderRadius: 4,
-            boxShadow: 10,
-            backgroundColor: "white",
-            border: (theme) => `1px solid ${theme.palette.divider}`,
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <Box className="Container">
-            <Grid
-              container
-              spacing={0}
-              justifyContent="center"
-              alignItems="center"
+        <Grid container spacing={0} justifyContent="center" alignItems="center">
+          <Grid item xs={12}>
+            <Box
+              className={`RecruiteForm Form InputForm`}
+              sx={{
+                borderRadius: 4,
+                boxShadow: 10,
+                backgroundColor: "white",
+                border: (theme) => `1px solid ${theme.palette.divider}`,
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+              }}
             >
-              <Grid item xs={10}>
-                <InputText
-                  state={"Recuite Name"}
-                  handleState={handleRname}
-                  width="98%"
-                  value={RName}
-                />
-              </Grid>
-              <Grid item xs={10}>
-                <InputText
-                  state={"Description"}
-                  handleState={handleDescription}
-                  width="98%"
-                  value={description}
-                />
-              </Grid>
-              <Grid item xs={10}>
-                <Require
-                  requirement={requirement}
-                  handleRequirementDelete={handleRequirementDelete}
-                  inputValue={inputValue}
-                  setInputValue={setInputValue}
-                  experience={experience}
-                  setExperience={setExperience}
-                  note={note}
-                  setNote={setNote}
-                  setSkillName={setSkillName}
-                  skillName={skillName}
-                  setSkillId={setSkillId}
-                  handleRequirementAdd={handleRequirementAdd}
-                />
-              </Grid>
-              <Grid item xs={10}>
-                <Box sx={{ margin: "auto", width: "98%", marginTop: "8px" }}>
-                  <LanguageUlList
-                    comps={languages}
-                    handleDelete={handleLanguageDelete}
-                  />
-                  <ChooseLanguage
-                    inputValue={lInputValue}
-                    setInputValue={setLInputValue}
-                    state={"language"}
-                    handleState={setLanguageName}
-                    value={languageName}
-                    setSkillId={setLanguageId}
-                    onPress={handleLanguageAdd}
-                  />
-                </Box>
-              </Grid>
-              <Grid item xs={10}>
-                <InputText
-                  state={"Salary"}
-                  handleState={handleSalary}
-                  width="98%"
-                  value={salary}
-                />
-              </Grid>
-              <Grid item xs={10}>
-                <Department
-                  handleChange={handleChange}
-                  departmentName={departmentName}
-                  express={express}
-                  departmentId={departmentId}
-                  departmentAddress={departmentAddress}
-                  departmentEmail={departmentEmail}
-                  departmentPhone={departmentPhone}
-                  departmentWeb={departmentWeb}
-                />
-              </Grid>
-              <Grid item xs={10}>
-                <Grid container spacing={0}>
+              <Box className="Container">
+                <Grid
+                  container
+                  spacing={0}
+                  justifyContent="center"
+                  alignItems="center"
+                >
                   <Grid item xs={10}>
-                    <SelectDate
+                    <Box1
+                      setDescription={setDescription}
+                      handleRname={handleRname}
+                      RName={RName}
+                      handleDescription={handleDescription}
+                      description={description}
+                    />
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item sx={{ marginTop: "16px" }} xs={12}>
+            <Box
+              className={`RecruiteForm InputForm`}
+              sx={{
+                borderRadius: 4,
+                boxShadow: 10,
+                backgroundColor: "white",
+                border: (theme) => `1px solid ${theme.palette.divider}`,
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Box className="Container">
+                <Grid
+                  container
+                  spacing={0}
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Grid item xs={10}>
+                    <Box2
+                      handleSalary={handleSalary}
+                      salary={salary}
+                      handleChange={handleChange}
+                      departmentName={departmentName}
+                      express={express}
+                      departmentId={departmentId}
+                      departmentAddress={departmentAddress}
+                      departmentEmail={departmentEmail}
+                      departmentPhone={departmentPhone}
+                      departmentWeb={departmentWeb}
                       handleEnd={handleEnd}
                       handleStart={handleStart}
                       startDate={startDate}
                       endDate={endDate}
-                    />
-                  </Grid>
-                  <Grid item xs={2}>
-                    <InputText
-                      state={"Hire number"}
-                      handleState={handleMaxHire}
-                      width="88%"
-                      type="number"
-                      value={maxHire}
+                      handleMaxHire={handleMaxHire}
+                      maxHire={maxHire}
                     />
                   </Grid>
                 </Grid>
-              </Grid>
-              <Grid item xs={12}></Grid>
-              <Button variant="contained" className="AddButton" type="submit">
-                Submit
-              </Button>
-            </Grid>
-          </Box>
-        </Box>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid sx={{ marginTop: "16px" }} item xs={12}>
+            <Box
+              className={`RecruiteForm InputForm`}
+              sx={{
+                borderRadius: 4,
+                boxShadow: 10,
+                backgroundColor: "white",
+                border: (theme) => `1px solid ${theme.palette.divider}`,
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Box className="Container">
+                <Grid
+                  container
+                  spacing={0}
+                  justifyContent="center"
+                  alignItems="center"
+                  sx={{ paddingTop: "16px" }}
+                >
+                  <Grid item xs={10}>
+                    <Box3
+                      requirement={requirement}
+                      handleRequirementDelete={handleRequirementDelete}
+                      inputValue={inputValue}
+                      setInputValue={setInputValue}
+                      experience={experience}
+                      setExperience={setExperience}
+                      note={note}
+                      setNote={setNote}
+                      setSkillName={setSkillName}
+                      skillName={skillName}
+                      setSkillId={setSkillId}
+                      handleRequirementAdd={handleRequirementAdd}
+                      languages={languages}
+                      handleLanguageDelete={handleLanguageDelete}
+                      lInputValue={lInputValue}
+                      setLInputValue={setLInputValue}
+                      setLanguageName={setLanguageName}
+                      languageName={languageName}
+                      setLanguageId={setLanguageId}
+                      handleLanguageAdd={handleLanguageAdd}
+                    />
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12}></Grid>
+          <Button variant="contained" className="AddButton" type="submit">
+            Submit
+          </Button>
+        </Grid>
       </form>
     </>
   );
