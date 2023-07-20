@@ -8,6 +8,7 @@ import roomSlice from './reducer/roomReducer'
 import shiftSlice from './reducer/shiftReducer'
 import interviewerSlice from './reducer/interviewerReducer'
 import questionSlice from './reducer/questionReducer'
+import recruitmentsSlice from './reducer/recruitmentReducer'
 // import rootSaga
 import rootSaga from './rootSaga'
 
@@ -19,7 +20,8 @@ const store = configureStore({
         room: roomSlice.reducer,
         shift: shiftSlice.reducer,
         interviewer: interviewerSlice.reducer,
-        question: questionSlice.reducer
+        question: questionSlice.reducer,
+        recruitments: recruitmentsSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]

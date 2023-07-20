@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Button,
   Autocomplete,
@@ -17,11 +17,20 @@ import { useNavigate } from "react-router-dom";
 import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
 import Grid from "@mui/material/Grid";
 import { NullString, NotStart, Pending, Completed, Postpone } from "../../components/Label/Label";
+import { useDispatch, useSelector } from "react-redux";
 
 
 
 export default function Page_Company_Recruitment() {
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch({type: "saga/getRecruitmentList"})
+  }, [])
+
+  const rows = useSelector(state => state.recruitment)
 
   const [rows, setRows] = useState(datasjson);
 
@@ -91,7 +100,7 @@ export default function Page_Company_Recruitment() {
       }
       return row
     })
-    setRows(updateRows)
+    dispatch({type: "recruitment/updateRecruitment", payload: value})
   }
 
   function handlePostponeClick(value) {
