@@ -13,7 +13,7 @@ import { mockDataContacts } from "./mockData";
 import { grey, lightBlue, teal } from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import {AddBox} from "@mui/icons-material";
+import {AddAlarm, AddBox, AddCard, FileOpen} from "@mui/icons-material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import FormControl from "@mui/material/FormControl";
@@ -106,10 +106,10 @@ const Page_Company_Account = () => {
                     // display:'flex',
                     // border: "1px solid black",
                     // borderRadius: 1,
-                    padding:3
+                    padding:4
                 }}>
-                <Grid container>
-                <Grid item md={12} xs={8}
+                <Grid container columnSpacing={{xs: 1}}>
+                <Grid item md={12} xs={7}
                       display="flex"
                       alignItems="center"
                       justifyContent="left">
@@ -122,18 +122,18 @@ const Page_Company_Account = () => {
                         Account List
                     </Typography>
                 </Grid>
-                <Grid item xs={4} sm={12} display="flex">
+                <Grid item xs={5} sm={12} display="flex">
                 <Grid container  spacing={{ xs: 0, sm: 3 }} rowSpacing={{ xs: 1, sm: 0 }} display="flex">
                     <Grid
                         item
                         xs={12}
                         sm={3}
-                        lg={2}
+                        lg={3}
                         display="flex"
                         justifyContent="right">
                         <Button
                             variant="contained"
-                            size="small"
+                            size="medium"
                             fullWidth
                             onClick={() => {
                                 navigate("/company/account/create")
@@ -141,20 +141,21 @@ const Page_Company_Account = () => {
                             sx={{
                                 boxShadow:7
                             }}
+                            startIcon={<AddCard />}
                         >
-                            Create Advanced Account
+                            Add Advanced Account
                         </Button>
                     </Grid>
                     <Grid
                         item
                         xs={12}
                         sm={3}
-                        lg={2}
+                        lg={3}
                         display="flex"
                         justifyContent="right">
                         <Button
                             variant="contained"
-                            size="small"
+                            size="medium"
                             fullWidth
                             onClick={() => {
                                 navigate("/company/account/blacklist")
@@ -162,6 +163,7 @@ const Page_Company_Account = () => {
                             sx={{
                                 boxShadow:7
                             }}
+                            startIcon={<FileOpen />}
                         >
                             Access Blacklist
                         </Button>
@@ -170,13 +172,13 @@ const Page_Company_Account = () => {
                         item
                         xs={12}
                         sm={3}
-                        lg={2}
+                        lg={3}
                         display="flex"
                         justifyContent="left">
                         <FormControl
                             display="flex"
                             sx={{
-                                width: '170px',
+                                width: '250px',
                                 minWidth:'50px',
                                 maxHeight:'55px',
                                 boxShadow:7
@@ -210,13 +212,13 @@ const Page_Company_Account = () => {
                     display:'flex',
                     // border: "1px solid black",
                     // borderRadius: 1,
-                    padding:2,
+                    padding:4,
                     mt:4
                 }}>
                 <Grid
                     width="77vw"
                     item
-                    m="0px 10px 10px 10px"
+                    m="0px 0px 10px 0px"
                     xs={12}
                     display="flex"
                     sx={{
