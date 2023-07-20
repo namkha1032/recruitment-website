@@ -20,8 +20,13 @@ import DescriptionRoundedIcon from '@mui/icons-material/DescriptionRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
+import PsychologyAltRoundedIcon from '@mui/icons-material/PsychologyAltRounded';
+import TodayRoundedIcon from '@mui/icons-material/TodayRounded';
 
-import picture from '../../assets/img/event.jpg'
+import picture from '../../assets/img/event.png'
+import GigaCard from '../../components/GigaCard/GigaCard';
+import GigaCardHeader from '../../components/GigaCardHeader/GigaCardHeader';
+import GigaCardBody from '../../components/GigaCardBody/GigaCardBody';
 
 
 const columns = [
@@ -97,19 +102,20 @@ const Page_Company_Event_Id = () => {
 
     return (
         <Container sx={{ p: 0 }} className='companyeventid'>
+            <CelebrationRoundedIcon color='primary' fontSize='large' sx={{ marginRight: 1 }}></CelebrationRoundedIcon>
             <Box sx={{
-                fontSize: 38,
+                fontSize: 40,
                 fontWeight: 600,
                 color: '#1565C0',
                 display: 'flex',
                 justifyContent: 'start',
                 // justifyContent: 'center'
-                paddingLeft: 1
+                display: 'inline-block'
             }}>
-                Sự kiện 1
+                Chi tiết sự kiện
             </Box>
             <TabContext value={value}>
-                <Box sx={{ p: 1 }}>
+                <Box>
                     <TabList
                         aria-label='Tabs menu'
                         onChange={handleChange}
@@ -117,13 +123,90 @@ const Page_Company_Event_Id = () => {
                         indicatorColor="primary"
                     // centered
                     >
-                        <Tab label='Thông tin' value='1' sx={{ textTransform: 'none', fontSize: 20, marginRight: 3 }} icon={<InfoRoundedIcon />} iconPosition='start' />
-                        <Tab label='Danh sách đăng ký' value='2' sx={{ textTransform: 'none', fontSize: 20 }} icon={<FormatListNumberedRoundedIcon />} iconPosition='start' />
+                        <Tab label='Thông tin' value='1' sx={{ textTransform: 'none', fontSize: 23, marginRight: 4 }} icon={<InfoRoundedIcon />} iconPosition='start' />
+                        <Tab label='Danh sách đăng ký' value='2' sx={{ textTransform: 'none', fontSize: 23 }} icon={<FormatListNumberedRoundedIcon />} iconPosition='start' />
                     </TabList>
                     <Divider sx={{ borderColor: 'lightgray' }}></Divider>
                 </Box>
-                <TabPanel value='1' sx={{ p: 0, mt: 0 }}>
-                    <Grid container>
+
+                <TabPanel value='1' sx={{ p: 0, mt: 2 }}>
+                    <Box sx={{ mb: 2 }}>
+                        <img src={picture}
+                            alt="..."
+                            style={{
+                                width: '100%',
+                                objectFit: 'cover',
+                                border: '5px solid #555',
+                                borderRadius: '5px'
+                            }} />
+                    </Box>
+                    <GigaCard>
+                        <GigaCardHeader headerIcon={<PsychologyAltRoundedIcon fontSize='large'></PsychologyAltRoundedIcon>}>
+                            How To Think Critically and Avoid Fallacies
+                        </GigaCardHeader>
+                        <GigaCardBody>
+                            <Box sx={{ fontSize: '20px', fontStyle: 'italic', display: 'flex', justifyContent: 'flex-end', marginBottom: 3 }}>
+                                <TodayRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></TodayRoundedIcon>
+                                <span style={{ color: 'darkgray' }}>Tạo lúc 16:40 20/07/2023</span>
+                            </Box>
+                            <p align='justify'>
+                                <h3>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis recusandae sapiente deserunt sequi rerum animi eaque illo excepturi. Iusto saepe cumque ipsa cupiditate ab accusantium dolor soluta veritatis ex hic?</h3>
+                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae modi rerum enim voluptatibus voluptatem! Alias eum velit, animi harum at vitae! Atque, eum. Eos iste soluta vitae quidem itaque saepe?</p>
+                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus rerum libero cupiditate voluptatem, doloremque quaerat culpa soluta! Soluta assumenda at sint et fugit quo natus id beatae! Et, saepe? Ratione!</p>
+                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum mollitia asperiores quis quos, ut fugiat harum. Voluptates vero animi alias sapiente odit cumque esse culpa, repudiandae error inventore, autem commodi!</span>
+                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit eum esse quisquam distinctio animi iure possimus omnis tempore dicta consectetur perspiciatis atque in, cupiditate nostrum numquam accusamus blanditiis velit libero!</p>
+                                <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure laborum, ullam necessitatibus harum distinctio similique itaque corrupti qui possimus incidunt quisquam, optio hic molestias et accusantium rem ipsum. Commodi, consequatur.</span>
+                            </p>
+                            <Box sx={{ display: "flex", alignItems: 'center' }}>
+                                <PeopleAltRoundedIcon fontSize='medium' sx={{ marginRight: 1 }}></PeopleAltRoundedIcon>
+                                <p style={{ fontWeight: 600, fontSize: 20 }}>500/1000</p>
+                            </Box>
+                            <Box sx={{ display: "flex", alignItems: 'center' }}>
+                                <AccessTimeRoundedIcon fontSize='medium' sx={{ marginRight: 1 }}></AccessTimeRoundedIcon>
+                                <p style={{ fontWeight: 600, fontSize: 20 }}>21/07/2023</p>
+                            </Box>
+                            <Box sx={{ display: "flex", alignItems: 'center' }}>
+                                <LocationOnRoundedIcon fontSize='medium' sx={{ marginRight: 1 }}></LocationOnRoundedIcon>
+                                <p style={{ fontWeight: 600, fontSize: 20 }}>268 Lý Thường Kiệt, phường 14, quận 10</p>
+                            </Box>
+
+                            {/* <Grid container sx={{ mt: 2 }}>
+                                <Grid item xs={4}>
+                                    <Grid container>
+                                        <Grid item xs={4} display="flex" justifyContent="center" alignItems="center">
+                                            <PeopleAltRoundedIcon fontSize="large"></PeopleAltRoundedIcon>
+                                        </Grid>
+                                        <Grid item xs={8}>
+                                            <Box sx={{display:"flex", flexDirection:"column", justifyContent:"flex-start", alignItems:"center"}}>
+                                                <Box sx={{
+                                                    fontSize: 20,
+                                                    fontWeight: 600,
+                                                    display: 'flex',
+                                                    alignItems: 'center'
+                                                }}>
+                                                    Số lượng
+                                                </Box>
+                                                <p>500/1000</p>
+                                            </Box>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={4}>abcde</Grid>
+                                <Grid item xs={4}>abcde</Grid>
+                            </Grid> */}
+                            <Grid item xs={12} align='right'>
+                                <Button variant='outlined' size='large' className='btnregister' sx={{ mx: 3 }} onClick={handleRegister}>
+                                    {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
+                                    Đăng ký
+                                </Button>
+                                <Button variant='contained' size='large' color='primary' onClick={handleEdit}>
+                                    {/* <EditIcon sx={{ marginRight: 0.5 }}></EditIcon> */}
+                                    Chỉnh sửa
+                                </Button>
+                            </Grid>
+                        </GigaCardBody>
+                    </GigaCard>
+                    {/* <Grid container>
                         <Grid item md={6} sm={12} sx={{ p: 1 }}>
                             <img src={picture}
                                 alt="..."
@@ -172,12 +255,12 @@ const Page_Company_Event_Id = () => {
                                     <Grid item md={8} sm={7} xs={6}>
                                         <Box className='content' p={3} height={140}>Code War là một sự kiện thú vị đến từ FPT Software</Box>
                                     </Grid>
-                                    {/* <Grid item md={3} sm={4} xs={5}>
+                                    <Grid item md={3} sm={4} xs={5}>
                                         <Typography variant='span' className='header'>Đã đăng ký</Typography>
                                     </Grid>
                                     <Grid item md={9} sm={8} xs={7}>
                                         <Box className='content' p={3}>500/1000</Box>
-                                    </Grid> */}
+                                    </Grid>
                                     <Grid item md={4} sm={5} xs={6} sx={{ display: 'flex', justifyContent: 'flex-start' }}>
                                         <AccessTimeRoundedIcon color='primary' sx={{ marginRight: 1 }}></AccessTimeRoundedIcon>
                                         <Typography variant='span' className='header'>Thời gian</Typography>
@@ -205,7 +288,7 @@ const Page_Company_Event_Id = () => {
                                 </Grid>
                             </Paper>
                         </Grid>
-                    </Grid>
+                    </Grid> */}
                 </TabPanel>
 
                 <TabPanel value='2' sx={{ p: 0, mt: 2 }}>

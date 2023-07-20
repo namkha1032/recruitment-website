@@ -14,8 +14,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Carousel from 'react-bootstrap/Carousel';
 import './Page_Home.scss'
 // import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-// import styles from './bootstrap.module.css';
-
+//
+// import Swiper core and required modules
 
 
 const cards1 = [1, 2, 3, 4, 5, 6];
