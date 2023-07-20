@@ -1,19 +1,24 @@
 import { CameraAltOutlined } from "@mui/icons-material";
 import { Box, IconButton, Tab, Tabs } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const  ProfileHeader = ({tabValue,setTabValue,id}) => {
-    const [selectedImage, setSelectedImage] = useState(
-        "https://pbs.twimg.com/media/EYVxlOSXsAExOpX.jpg"
-      );
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file !== null) setSelectedImage(URL.createObjectURL(file));
-        console.log(URL.createObjectURL(file));
-      };
-    const navigate = useNavigate();
-    const location = useLocation();
+const ProfileHeader = ({ tabValue, setTabValue, id, userName }) => {
+  const [selectedImage, setSelectedImage] = useState(
+    "https://pbs.twimg.com/media/EYVxlOSXsAExOpX.jpg"
+  );
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file !== null) {
+      setSelectedImage(URL.createObjectURL(file));
+      axios.patch("http://localhost:3001/user", {
+        image: URL.createObjectURL(file),
+      });
+    }
+  };
+  const navigate = useNavigate();
+  const location = useLocation();
   return (
     <>
       <img
@@ -91,7 +96,7 @@ const  ProfileHeader = ({tabValue,setTabValue,id}) => {
             </IconButton>
           </Box>
 
-          <Box sx={{ margin: "24px 0px 0px  24px" }}>Nguyễn Văn A</Box>
+          <Box sx={{ margin: "24px 0px 0px  24px" }}>{userName}</Box>
         </Box>
 
         <Tabs
@@ -101,21 +106,22 @@ const  ProfileHeader = ({tabValue,setTabValue,id}) => {
             height: "48px",
           }}
           value={tabValue}
-          onChange={(e, newvalue) =>{
-            if (newvalue === 'CVs') navigate(`/profile/${id}/cv`)
-            if (newvalue === 'Profile') navigate(`/profile/${id}`)
-            if (newvalue === 'Applications') navigate(`/profile/${id}/application`)
-            if (newvalue === 'Interviews') navigate(`/profile/${id}/interview`)
-            if (newvalue === 'Events') navigate(`/profile/${id}/event`)
-        }}
-          aria-label="basic tabs example"
+          // {onChange={(e, newvalue) => {
+          //   if (newvalue === "CVs") navigate(`/profile/${id}/cv`);
+          //   if (newvalue === "Profile") navigate(`/profile/${id}`);
+          //   if (newvalue === "Applications")
+          //     navigate(`/profile/${id}/application`);
+          //   if (newvalue === "Interviews") navigate(`/profile/${id}/interview`);
+          //   if (newvalue === "Events") navigate(`/profile/${id}/event`);
+          // }}
+          // aria-label="basic tabs example"}
         >
           <Tab
             sx={{ padding: "0px 8px", margin: "0px 16px 0px 0px" }}
             value="Profile"
             label="Profile"
           />
-          <Tab
+          {/*<Tab
             sx={{ padding: "0px 8px", margin: "0px 0px 0px 16px" }}
             value="CVs"
             label="CVs"
@@ -134,11 +140,11 @@ const  ProfileHeader = ({tabValue,setTabValue,id}) => {
             sx={{ padding: "0px 8px", margin: "0px 0px 0px 16px" }}
             value="Events"
             label="Events"
-          />
+          />*/}
         </Tabs>
       </Box>
     </>
   );
-}
+};
 
 export default ProfileHeader;
