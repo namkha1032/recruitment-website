@@ -31,10 +31,10 @@
     },
     {
       "id": 4,
-      "PositionName": "Front-end",
+      "PositionName": "Back-end",
       "Description": "Front-end web development is the development of the graphical user interface of a website, through the use of HTML, CSS, and JavaScript, so that users can view and interact with that website.",
       "MaxHiringQty": 30,
-      "HiredQty": 80,
+      "HiredQty": 100,
       "StartDate": "09/09/2023, 10:00 AM",
       "EndDate": "09/12/2023, 10:00 AM",
       "Department": "abc",

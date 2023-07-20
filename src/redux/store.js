@@ -8,6 +8,7 @@ import roomSlice from './reducer/roomReducer'
 import shiftSlice from './reducer/shiftReducer'
 import interviewerSlice from './reducer/interviewerReducer'
 import questionSlice from './reducer/questionReducer'
+import recruitmentSlice from './reducer/recruitmentReducer'
 import departmentSlice from './reducer/departmentReducer'
 import skillSlice from "./reducer/skillReducer"
 import languageSlice from './reducer/languageReducer'
@@ -24,6 +25,7 @@ const store = configureStore({
         shift: shiftSlice.reducer,
         interviewer: interviewerSlice.reducer,
         question: questionSlice.reducer,
+        recruitment: recruitmentSlice.reducer,
         department: departmentSlice.reducer,
         skill: skillSlice.reducer,
         language: languageSlice.reducer,
