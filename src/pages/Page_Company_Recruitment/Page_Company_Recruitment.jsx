@@ -1,78 +1,24 @@
 import { useMemo, useState } from "react";
 import {
-  Chip,
   Button,
-  Menu,
-  MenuItem,
-  Input,
   Autocomplete,
   TextField,
 } from "@mui/material";
-import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
-import DoNotDisturbOnIcon from "@mui/icons-material/DoNotDisturbOn";
-import InfoIcon from "@mui/icons-material/Info";
-import EditIcon from "@mui/icons-material/Edit";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import QueryStatsIcon from "@mui/icons-material/QueryStats";
-import GetAppIcon from "@mui/icons-material/GetApp";
+import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import QueryStatsRoundedIcon from '@mui/icons-material/QueryStatsRounded';
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import FlagIcon from "@mui/icons-material/Flag";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
+import DoNotDisturbOnRoundedIcon from '@mui/icons-material/DoNotDisturbOnRounded';
+import PlayCircleOutlineRoundedIcon from '@mui/icons-material/PlayCircleOutlineRounded';
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import datasjson from "./Page_Company_Recruitment_Data.json";
 import { useNavigate } from "react-router-dom";
 import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
-// import { localeVN } from "../../locale/locale";
 import Grid from "@mui/material/Grid";
-// import "./Page_Company_Recruitment.scss";
+import { NullString, NotStart, Pending, Completed, Postpone } from "../../components/Label/Label";
 
-function NullString() {
-  return <Chip icon={<PriorityHighIcon />} label="Trống" />;
-}
-function NotStart() {
-  return (
-    <Chip
-      label="Chưa bắt đầu"
-      variant="outlined"
-      style={{
-        color: "#E0E0E0",
-        backgroundColor: "white",
-        borderColor: "#E0E0E0",
-      }}
-    />
-  );
-}
 
-function Pending() {
-  return (
-    <Chip
-      label="Đang diễn ra"
-      variant="outlined"
-      style={{
-        color: "#00C853",
-        backgroundColor: "white",
-        borderColor: "#00C853",
-      }}
-    />
-  );
-}
-
-function Completed() {
-  return (
-    <Chip
-      label="Kết thúc"
-      variant="outlined"
-      style={{
-        color: "#D84315",
-        backgroundColor: "white",
-        borderColor: "#D84315",
-      }}
-    />
-  );
-}
 
 export default function Page_Company_Recruitment() {
   const navigate = useNavigate();
@@ -85,6 +31,8 @@ export default function Page_Company_Recruitment() {
   const [valueChoose, setValueChoose] = useState(null);
   const [departmentChoose, setDepartmentChoose] = useState(null);
   const [statusChoose, setStatusChoose] = useState(null);
+
+  const [valueReport, setValueReport] = useState(0);
 
   // function handleMoreClick(event) {
   //   setAnchorEl(event.currentTarget);
@@ -124,9 +72,44 @@ export default function Page_Company_Recruitment() {
     navigate(`./${value}`)
   }
 
-  function handleEditClick(value) {
-    navigate(`./${value}/update`)
+  function handleReportClick(value) {
+    setValueReport(value)
+    navigate(`./${value}/report`, { 
+      state: {
+        positionId: value,
+      }
+    })
   }
+
+  function handleContinueClick(value) {
+    const updateRows = rows.map((row) => {
+      if (row.id === value) {
+        return {
+          ...row,
+          status: "Đang diễn ra"
+        }
+      }
+      return row
+    })
+    setRows(updateRows)
+  }
+
+  function handlePostponeClick(value) {
+    const updateRows = rows.map((row) => {
+      if (row.id === value) {
+        return {
+          ...row,
+          status: "Tạm ngừng"
+        }
+      }
+      return row
+    })
+    setRows(updateRows)
+  }
+
+  // function handleEditClick(value) {
+  //   navigate(`./${value}/update`)
+  // }
 
   const columns = useMemo(() => [
     {
@@ -135,7 +118,7 @@ export default function Page_Company_Recruitment() {
       headerAlign: "left",
       align: "left",
       width: 40,
-      renderHeader: () => <span>Mã</span>,
+      renderHeader: () => <span>ID</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
         return (
@@ -199,15 +182,15 @@ export default function Page_Company_Recruitment() {
         if (params.value === undefined) return NullString();
       },
     },
-    {
-      field: "MaxHiringQty",
-      type: "number",
-      headerAlign: "center",
-      align: "center",
-      //   flex: 0.3,
-      renderHeader: () => <span>Tối đa</span>,
-      minWidth: 100,
-    },
+    // {
+    //   field: "MaxHiringQty",
+    //   type: "number",
+    //   headerAlign: "center",
+    //   align: "center",
+    //   //   flex: 0.3,
+    //   renderHeader: () => <span>Tối đa</span>,
+    //   minWidth: 100,
+    // },
     {
       field: "HiredQty",
       type: "number",
@@ -223,16 +206,15 @@ export default function Page_Company_Recruitment() {
       align: "center",
       renderHeader: () => <span>Trạng thái</span>,
       renderCell: (params) => {
-        const a = randomNumberBetween(params.row.id, 1, 3);
-        switch (Math.round(a())) {
-          case 1:
-            return NotStart();
-          case 2:
-            return Pending();
-          case 3:
-            return Completed();
+        switch (params.value) {
+          case "Chưa bắt đầu":
+            return <NotStart />;
+          case "Đang diễn ra":
+            return <Pending />;
+          case "Kết thúc":
+            return <Completed />;
           default:
-            return Completed();
+            return <Postpone />;
         }
       },
     },
@@ -242,20 +224,74 @@ export default function Page_Company_Recruitment() {
       width: 30,
       headerAlign: "right",
       align: "right",
-      getActions: (params) => [
-        <GridActionsCellItem
-          icon={<InfoIcon variant="outlined" />}
-          label="Chi tiết"
-          onClick={() => handleDetailClick(params.row.id)}
-          showInMenu
-        />,
-        <GridActionsCellItem
-          icon={<EditIcon />}
-          label="Chỉnh sửa"
-          onClick={() => handleEditClick(params.row.id)}
-          showInMenu
-        />,
-      ],
+      getActions: (params) => {
+        if (params.row.status === "Tạm ngừng") {
+          return [
+            <GridActionsCellItem
+              icon={<InfoRoundedIcon variant="outlined" />}
+              label="Chi tiết"
+              onClick={() => handleDetailClick(params.row.id)}
+              showInMenu
+            />,
+            <GridActionsCellItem
+              icon={<QueryStatsRoundedIcon />}
+              label="Báo cáo"
+              onClick={() => handleReportClick(params.row.id)}
+              showInMenu
+            />,
+            <GridActionsCellItem
+              icon={<PlayCircleOutlineRoundedIcon sx={{ color: "#1565C0" }}/>}
+              label="Tiếp tục tuyển dụng"
+              onClick={() => handleContinueClick(params.row.id)}
+              showInMenu
+              sx={{ 
+                color: "#1565C0" 
+              }}
+            />,
+          ]
+        }
+        else if (params.row.status === "Đang diễn ra") {
+          return [
+            <GridActionsCellItem
+              icon={<InfoRoundedIcon variant="outlined" />}
+              label="Chi tiết"
+              onClick={() => handleDetailClick(params.row.id)}
+              showInMenu
+            />,
+            <GridActionsCellItem
+              icon={<QueryStatsRoundedIcon />}
+              label="Báo cáo"
+              onClick={() => handleReportClick(params.row.id)}
+              showInMenu
+            />,
+            <GridActionsCellItem
+              icon={<DoNotDisturbOnRoundedIcon sx={{ color: "#cc3300" }}/>}
+              label="Tạm ngừng tuyển dụng"
+              onClick={() => handlePostponeClick(params.row.id)}
+              showInMenu
+              sx={{ 
+                color: "#cc3300" 
+              }}
+            />,
+          ]
+        }
+        else {
+          return [
+            <GridActionsCellItem
+              icon={<InfoRoundedIcon variant="outlined" />}
+              label="Chi tiết"
+              onClick={() => handleDetailClick(params.row.id)}
+              showInMenu
+            />,
+            <GridActionsCellItem
+              icon={<QueryStatsRoundedIcon />}
+              label="Báo cáo"
+              onClick={() => handleReportClick(params.row.id)}
+              showInMenu
+            />,
+          ]
+        }
+      },
     },
   ]);
 
@@ -409,7 +445,7 @@ export default function Page_Company_Recruitment() {
             }}
           >
             <Input
-              placeholder="Nhập mã, tên vị trí tuyển dụng..."
+              placeholder="Nhập ID, tên vị trí tuyển dụng..."
               disableUnderline
               value={valueSearch}
               onChange={(e) => setValueSearch(e.target.value)}
@@ -428,13 +464,8 @@ export default function Page_Company_Recruitment() {
           </Box>
         </Grid> */}
       </Grid>
-
-      <Box
-        sx={{
-          width: "100%",
-          height: 600,
-        }}
-      >
+      
+      <Grid item xs={12} md={12}>
         <DataGrid
           columns={columns}
           rows={rows}
@@ -445,13 +476,22 @@ export default function Page_Company_Recruitment() {
             "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
               outline: "none",
             },
+            "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+              outline: "none",
+            },
             "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
               backgroundColor: "#1565C0",
               color: "white",
               fontWeight: 700,
               fontSize: 14,
+              border: "none",
             },
-            "&.MuiDataGrid-root .MuiDataGrid-row": {},
+            "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+              display: "none",
+            },
+            "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+              color: "white",
+            },
           }}
           slots={{ toolbar: GridToolbar }}
           slotProps={{
@@ -489,7 +529,7 @@ export default function Page_Company_Recruitment() {
             }
           }}
         />
-      </Box>
+      </Grid>
     </Box>
   );
 }

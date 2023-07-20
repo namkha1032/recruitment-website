@@ -41,6 +41,7 @@ import Page_Profile_Id_Interview from './pages/Page_Profile_Id_Interview/Page_Pr
 import Page_Recruitment from './pages/Page_Recruitment/Page_Recruitment';
 import Page_Recruitment_Id from './pages/Page_Recruitment_Id/Page_Recruitment_Id';
 import Page_Recruitment_Id_Application_Id from './pages/Page_Recruitment_Id_Application_Id/Page_Recruitment_Id_Application_Id';
+import Page_Company_Recruitment_Id_Report from './pages/Page_Company_Recruitment_Id_Report/Page_Company_Recruitment_Id_Report';
 
 import XPage_Login from './pages/XPage_Login/XPage_Login';
 import XPage_Register from './pages/XPage_Register/XPage_Register';
@@ -48,6 +49,7 @@ import XPage_Recovery from './pages/XPage_Recovery/XPage_Recovery';
 
 import PageTest from './pages/xpagetest/PageTest';
 import PageTest2 from './pages/xpagetest2/PageTest2';
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function App() {
   return (
@@ -74,6 +76,7 @@ function App() {
             <Route path="/company/recruitment/:recruitmentid" element={<Page_Company_Recruitment_Id />} />
             <Route path="/company/recruitment/:recruitmentid/application/:applicationid" element={<Page_Company_Recruitment_Id_Application_Id />} />
             <Route path="/company/recruitment/:recruitmentid/update" element={<Page_Company_Recruitment_Id_Update />} />
+            <Route path="/company/recruitment/:recruitmentid/report" element={<Page_Company_Recruitment_Id_Report />} />
             {/* ------------------------------------------------------------------------------------------------------------------------------------ */}
             {/* ------------------------------------------------------------------------------------------------------------------------------------ */}
             {/* ------------------------------------------------------------------------------------------------------------------------------------ */}

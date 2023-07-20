@@ -72,7 +72,7 @@ export default function DeleteAlertModal(props) {
                   marginBottom: 3,
                 }}
               >
-                Bạn chắc chắn muốn xoá câu hỏi có mã là {props.id}?
+                Bạn chắc chắn muốn xoá câu hỏi có ID là {props.id}?
               </Box>
             </Grid>
             <Grid

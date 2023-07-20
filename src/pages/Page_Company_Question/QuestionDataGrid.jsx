@@ -6,7 +6,6 @@ export default function QuestionDataGrid(props) {
   return (
     <Box
       sx={{
-        height: 600,
         width: "100%",
       }}
     >
@@ -24,6 +23,12 @@ export default function QuestionDataGrid(props) {
             backgroundColor: "#1565C0",
             color: "white",
             fontWeight: 700,
+          },
+          "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+            display: "none",
+          },
+          "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+            color: "white",
           },
         }}
         slots={{ toolbar: GridToolbar }}
