@@ -10,12 +10,22 @@ import {
     Typography
 } from '@mui/material';
 import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
 
 const Page_Company_Account_Create = () => {
     return (
+        <Card
+            raised="true"
+            sx={{
+                // display:'flex',
+                // border: "1px solid black",
+                // borderRadius: 1,
+                padding:5,
+                boxShadow:5
+            }}>
         <Grid
             container
-            rowSpacing={3}
+            rowSpacing={5}
         >
             <Grid
                     item
@@ -25,7 +35,7 @@ const Page_Company_Account_Create = () => {
                         display="flex"
                         alignItems="center"
                         justifyContent="left"
-                        m="20px 0 20px 0">
+                        m="10px 0 10px 0">
                     Create Advanced Accounts
             </Typography>
             </Grid>
@@ -100,11 +110,15 @@ const Page_Company_Account_Create = () => {
                     color="primary"
                     onClick={() => {
                     }}
+                    sx={{
+                        boxShadow:5
+                    }}
                 >
                     Create
                 </Button>
             </Grid>
         </Grid>
+        </Card>
     );
 }
 

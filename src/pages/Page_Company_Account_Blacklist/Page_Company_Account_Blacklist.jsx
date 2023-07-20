@@ -13,7 +13,14 @@ import {mockDataContacts} from "../Page_Company_Account/mockData";
 import {grey, lightBlue, red, teal} from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import {AddBox} from "@mui/icons-material";
+import {
+    AddBox,
+    ArrowBack,
+    ArrowBackIos,
+    ArrowBackIosNewRounded,
+    ArrowBackRounded,
+    DoorBackRounded
+} from "@mui/icons-material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import FormControl from "@mui/material/FormControl";
@@ -98,7 +105,7 @@ const Page_Company_Account = () => {
                     // display:'flex',
                     // border: "1px solid black",
                     // borderRadius: 1,
-                    padding:3
+                    padding:4
                 }}>
                 <Grid container>
                     <Grid item xs={10}
@@ -132,6 +139,7 @@ const Page_Company_Account = () => {
                                         boxShadow:7
                                     }}
                                     style={{minWidth: '100px'}}
+                                    startIcon={<ArrowBackIosNewRounded/>}
                                 >
                                     Back to Account List
                                 </Button>
@@ -147,13 +155,13 @@ const Page_Company_Account = () => {
                     display:'flex',
                     // border: "1px solid black",
                     // borderRadius: 1,
-                    padding:2,
+                    padding:4,
                     mt:4
                 }}>
                 <Grid
                     width="77vw"
                     item
-                    m="0px 10px 10px 10px"
+                    m="0px 10px 0px 10px"
                     xs={12}
                     display="flex"
                     sx={{
