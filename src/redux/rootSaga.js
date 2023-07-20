@@ -12,6 +12,7 @@ import recruitmentSaga from "./saga/recruitmentSaga";
 
 // import libraries
 import { all } from "redux-saga/effects"
+import ListcvSaga from "./saga/listcvSaga";
 
 function* rootSaga() {
     yield all([
@@ -25,6 +26,7 @@ function* rootSaga() {
         LanguageSaga(),
         skillSaga(),
         recruitmentSaga(),
+        ListcvSaga()
     ])
 }
 
