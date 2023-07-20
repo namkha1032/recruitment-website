@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -12,124 +12,140 @@ import LanguageIcon from '@mui/icons-material/Language';
 import CreditScoreIcon from '@mui/icons-material/CreditScore';
 import WebAssetIcon from '@mui/icons-material/WebAsset';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
+import HourglassBottomRoundedIcon from '@mui/icons-material/HourglassBottomRounded';
+import RadarIcon from '@mui/icons-material/Radar';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
+import PendingIcon from '@mui/icons-material/Pending';
+import FmdBadIcon from '@mui/icons-material/FmdBad';
+import GradingIcon from '@mui/icons-material/Grading';
 import './Info_view.css'
+import Button from '@mui/material/Button';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
+
+import { Chip, Stack } from '@mui/material';
+import View_detail from './View_detail';
+import List_application from './List_application';
 
 
-const Info_view = () => {
-    const url = "https://fpt.com.vn/en";
+const Info_view = (props) => {
     const requires = require('../../data/View_recruitment/requires.json');
+    const languages = require('../../data/View_recruitment/languages.json');
+    const [tab1, setTab1] = useState('1');
+    const [tab2, setTab2] = useState('3');
+    const handleTab1 = (event, newValue) => {
+        setTab1(newValue);
+    };
+    const handleTab2 = (event, newValue) => {
+        setTab2(newValue);
+    };
 
     return (
-        <div className="Info_view">
-            <Typography variant='h3' sx={{ fontWeight: "bold",  fontStyle: "italic"  }} >
-                 Front-end Developer
-            </Typography>
-            <Grid container spacing={1} sx ={{marginTop: "10px"}}>
-                <Grid item xs={12}>
-                    <Typography variant='h5' sx={{ fontWeight: "bold",  fontStyle: "italic"  }}>
-                        <DescriptionIcon></DescriptionIcon> Description
-                    </Typography>
-                    <Box sx={{ p: 2, border: '1px solid grey', textAlign: "justify" ,  fontSize: "16px"}}>
-                    ReactJS is a declarative, efficient, and flexible JavaScript library for building reusable UI components. It is an open-source, component-based front end library responsible only for the view layer of the application. It was created by Jordan Walke, who was a software engineer at Facebook. It was initially developed and maintained by Facebook and was later used in its products like WhatsApp & Instagram. Facebook developed ReactJS in 2011 in its newsfeed section, but it was released to the public in the month of May 2013.
-                    </Box>
-                </Grid>
-
-                <div className='line'></div>
-
-
-                <Grid item xs={8}>
-                    <Typography variant='h5' sx={{ fontWeight: "bold",  fontStyle: "italic"  }}>
-                        <RecommendIcon></RecommendIcon> Requirement
-                    </Typography>
-                    <ul className = "text">
-                        {requires.map((require) => (
-                            <li key={require.id}>{require.name}</li>
-                        ))}
-                    </ul>
-                </Grid>
-                <div className='line'></div>
-                <Grid item xs={5}>
-                    <Typography variant='h5' sx={{ fontWeight: "bold",  fontStyle: "italic"  }}>
-                        <LanguageIcon></LanguageIcon>Languages
-                    </Typography>
-                    <ul className = "text">
-                        <li>Japanese</li>
-                    </ul>
-                </Grid>
-                <div className='line'></div>
-                <Grid item xs={3}>
-                    <Typography variant='h5' sx={{ fontWeight: "bold",  fontStyle: "italic"  }}>
-                        <CreditScoreIcon></CreditScoreIcon> Salary:
-                    </Typography>
-                </Grid>
-                <Grid item xs={2} >
-                    <Typography variant='h5' >
-                        1000$
-                    </Typography>
-                </Grid>
-                <Box width="100%" />
-                <div className='line'></div>
-                <Grid item xs={12}>
-                    <Typography variant='h5' sx={{ fontWeight: "bold",  fontStyle: "italic"  }}>
-                        <CreditScoreIcon></CreditScoreIcon> Additional information:
-                    </Typography>
-                    <ul>
-                        <li> <span className="textstyle">Max Hiring: </span> 10</li>
-                        <li> <span className="textstyle">Time for applied:</span> 03/06/2023 - 19/08/2023</li>
-                    </ul>
-                </Grid>
-                <Box width="100%" />
-                <div className='line'></div>
-                <Grid item xs={12}>
-                    <Typography variant='h5' sx={{ fontWeight: "bold", fontStyle: "italic"  }}>
-                        <LocationCityIcon></LocationCityIcon> Department
-                    </Typography>
-                </Grid>
-
-                <Grid item xs={6} md={3} >
-                    <Typography align='left' variant='subtitle1' sx={{ display: "flex" }}>
-                        <GroupIcon>  </GroupIcon>
-                        <Box>
-                            ITROOM
-                        </Box>
-                    </Typography>
-                </Grid>
-                <Grid item xs={6} md ={3} >
-                    <Typography align='left' variant='subtitle1' sx={{ display: "flex"  }}>
-                        <PhoneIcon></PhoneIcon>
-                        <Box>
-                            123456789
-                        </Box>
-                    </Typography>
-                </Grid>
-                <Grid item md ={6} ></Grid>
-                <Grid item xs={12}>
-                    <Typography align='center' variant='subtitle1' sx={{ display: "flex"  }}>
-                        <RoomIcon>  </RoomIcon>
-                            G Floor, F-Town 1 Building, High-tech Park, Tan Phu Ward, District 9, Ho Chi Minh City, Vietnam
-                        
-                    </Typography>
-                </Grid>
-
-                <Grid item xs={6} md ={6}>
-                    <Typography align='left' variant='subtitle1' sx={{ display: "flex" }}>
-                        <EmailIcon>  </EmailIcon>
-                        <Box>
-                            ITroomFSOFT@ftp.com
-                        </Box>
-                    </Typography>
-                </Grid>
-                <Grid item xs={6} md ={6}>
-                    <Typography align='left' variant='subtitle1' sx={{ display: "flex"  }}>
-                        <WebAssetIcon></WebAssetIcon>
-                        <Box>
-                            <a href={url} > FPT</a>
-                        </Box>
-                    </Typography>
-                </Grid>
-                <Grid item md ={6} ></Grid>
+        <Grid container spacing={2}>
+            <Grid item xs={6}>
+                <img className='picturesize' src="https://www.pvcfc.com.vn/Data/Sites/1/News/5510/mau-1.jpg" alt="Tuyển dụng" />
             </Grid>
-        </div >
+            <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
+                <Box sx={{ width: "500px", height: "250px", margin: "auto", border: "1px solid black", borderRadius: "5px", boxShadow: "24", display: "flex", flexDirection: "column" }}>
+                    <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
+                        <Typography variant='h5' sx={{ justifyContent: "flex-start", alignItems: "flex-start" , fontWeight: "bold", fontStyle: "italic" }} >
+                            <RadarIcon></RadarIcon> Position:
+                        </Typography>
+                        <Typography variant='h5' sx={{ display: "flex", marginLeft: "10px" }} >
+                            Front-end Developer
+                        </Typography>
+                    </Grid>
+
+                    <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
+                        <Typography variant='h5' sx={{ justifyContent: "flex-start", alignItems: "flex-start" , fontWeight: "bold", fontStyle: "italic" }} >
+                            <HourglassBottomRoundedIcon></HourglassBottomRoundedIcon> Time for applied:
+                        </Typography>
+                        <Chip variant='outlined' color="info" sx={{ display: "flex", marginLeft: "10px" }} label="19/07/2023 - 29/07/2023" />
+
+
+                    </Grid>
+                    <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
+                        <Typography variant='h5' sx={{ justifyContent: "flex-start", alignItems: "flex-start", fontWeight: "bold", fontStyle: "italic" }} >
+                            <ZoomInIcon></ZoomInIcon> Max Hiring:
+                        </Typography>
+                        <Chip variant='outlined' color="info" sx={{ display: "flex", marginLeft: "10px" }} label="10" />
+                    </Grid>
+                    <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
+                        <Typography  variant='h5' sx={{justifyContent: "flex-start", alignItems: "flex-start", fontWeight: "bold", fontStyle: "italic" }}>
+                            <RecommendIcon></RecommendIcon> Requirement
+
+                        </Typography>
+                        <Stack direction="row" spacing={1} sx={{ display: "flex", marginLeft: "15px" }}>
+                            {requires.map((require) => (
+                                <Chip key={require.id} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
+                            ))}
+                        </Stack>
+                    </Grid>
+
+                    <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
+                        <Typography  variant='h5' sx={{ justifyContent: "flex-start", alignItems: "flex-start", fontWeight: "bold", fontStyle: "italic" }} >
+                            <LanguageIcon></LanguageIcon> Language:
+                        </Typography>
+                        <Stack direction="row" spacing={1} sx={{ display: "flex", marginLeft: "15px" }}>
+                            {languages.map((language) => (
+                                <Chip key={language.id} value={language.name} label={language.name} variant='outlined' size='medium' color="success" />
+                            ))}
+                        </Stack>
+                    </Grid>
+
+                    <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
+                        <Typography  variant='h5' sx={{ fontWeight: "bold", fontStyle: "italic" }}>
+                            <CreditScoreIcon></CreditScoreIcon> Salary:
+                            <Chip sx={{ padding: "0px", marginLeft: "5px" }} label="1000$" variant="outlined" color='info' size="medium" />
+                        </Typography>
+                    </Grid>
+
+
+
+                </Box>
+            </Grid>
+            <Grid item xs={12}>
+                <Box sx={{ width: '100%', typography: 'body1' }}>
+                    {props.tabs == 2 ? (
+                        <TabContext value={tab1}>
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+
+                                <TabList onChange={handleTab1} aria-label="lab API tabs example">
+                                    <Tab label="Detail" value="1" />
+                                    <Tab label="List of applications" value="2" />
+
+                                </TabList>
+
+                            </Box>
+                            <TabPanel value="1" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
+                                <View_detail />
+                            </TabPanel>
+                            <TabPanel value="2">
+                                <List_application />
+                            </TabPanel>
+
+                        </TabContext>
+                    ) : (
+                        <TabContext value={tab2}>
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                <TabList onChange={handleTab2} aria-label="lab API tabs example">
+                                    <Tab label="Detail" value="3" />
+
+                                </TabList>
+                            </Box>
+                            <TabPanel value="3" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
+                                <View_detail />
+                            </TabPanel>
+                        </TabContext>
+                    )}
+
+                </Box>
+            </Grid>
+        </Grid>
+
     )
 }
 

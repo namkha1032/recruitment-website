@@ -17,7 +17,7 @@ import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Carousel from 'react-bootstrap/Carousel';
 import './Page_Home.scss'
-import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+// import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 // import styles from './bootstrap.module.css';
 
 
