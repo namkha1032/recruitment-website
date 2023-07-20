@@ -1,10 +1,21 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import { green } from '@mui/material/colors';
-import Icon from '@mui/material/Icon';
-import { DatePicker } from '@mui/x-date-pickers';
-export default function Icons() {
+import GigaCard from "../../components/GigaCard/GigaCard"
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody"
+import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader"
+import AcUnitIcon from '@mui/icons-material/AcUnit';
+const PageTest = () => {
     return (
-        <DatePicker />
-    );
+        <>
+            <GigaCard>
+                <GigaCardHeader color={"primary.main"} headerIcon={<AcUnitIcon sx={{ fontSize: "inherit" }} />}>
+                    this is a header
+                </GigaCardHeader>
+                <GigaCardBody>
+
+                    23456
+                </GigaCardBody>
+            </GigaCard>
+        </>
+    )
 }
+
+export default PageTest

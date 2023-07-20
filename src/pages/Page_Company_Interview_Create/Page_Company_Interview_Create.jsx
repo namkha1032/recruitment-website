@@ -71,6 +71,8 @@ const Page_Company_Interview_Create = () => {
     const interviewerList = useSelector(state => state.interviewer)
     const roomList = useSelector(state => state.room)
     const shiftList = useSelector(state => state.shift)
+
+    console.log("interviewList: ", interviewList)
     // set busyInterviewer and busyRoom
     useEffect(() => {
         setBusyInterviewer(oldList => [])

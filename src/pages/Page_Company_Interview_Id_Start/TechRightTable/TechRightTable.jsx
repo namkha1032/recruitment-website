@@ -38,7 +38,7 @@ const TechRightTable = (props) => {
                     {
                         field: "action", headerName: "View", flex: 1, renderCell: (params) => {
                             return (
-                                <ViewDialog params={params} category={"Technology"} skill={skill.skillname} />
+                                <ViewDialog params={params} category={"Technology"} skillname={skill.skillname} />
                             )
                         }
                     },

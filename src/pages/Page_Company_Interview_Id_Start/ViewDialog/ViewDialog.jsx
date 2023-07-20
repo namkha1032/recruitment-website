@@ -11,7 +11,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 const ViewDialog = (props) => {
     const params = props.params
     const category = props.category
-    const skill = props.skill
+    const skillname = props.skillname
+    const languagename = props.languagename
     let [open, setOpen] = useState(false)
     return (
         <>
@@ -29,9 +30,14 @@ const ViewDialog = (props) => {
                     <Typography variant="body1">
                         Category: {category}
                     </Typography>
-                    <Typography variant="body1">
-                        Skill: {skill}
-                    </Typography>
+                    {skillname &&
+                        <Typography variant="body1">
+                            Skill: {skillname}
+                        </Typography>}
+                    {languagename &&
+                        <Typography variant="body1">
+                            Language: {languagename}
+                        </Typography>}
                 </DialogContent>
             </Dialog>
             <IconButton onClick={() => setOpen(true)}>

@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
+import ViewDialog from '../ViewDialog/ViewDialog';
 
 const LangRightTable = (props) => {
     const { rightLang, type } = props
@@ -31,7 +32,13 @@ const LangRightTable = (props) => {
                 getRowId={(row) => row.questionid}
                 columns={[
                     { field: "questionid", headerName: "ID", flex: 1 },
-                    { field: "questionstring", headerName: "String", flex: 3 },
+                    { field: "questionstring", headerName: "String", flex: 3 }, {
+                        field: "action", headerName: "View", flex: 1, renderCell: (params) => {
+                            return (
+                                <ViewDialog params={params} category={"Language"} languagename={rightLang.languagename} />
+                            )
+                        }
+                    },
                     {
                         field: "score", headerName: "Score", flex: 1,
                         renderCell: (params) => {
