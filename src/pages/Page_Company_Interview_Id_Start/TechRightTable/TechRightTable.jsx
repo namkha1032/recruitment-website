@@ -8,6 +8,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useDispatch } from 'react-redux';
 import 'katex/dist/katex.min.css';
 
+import ViewDialog from '../ViewDialog/ViewDialog';
 
 const TechRightTable = (props) => {
     const rightTech = props.rightTech
@@ -35,17 +36,25 @@ const TechRightTable = (props) => {
                     { field: "questionid", headerName: "ID", flex: 1 },
                     { field: "questionstring", headerName: "String", flex: 3 },
                     {
+                        field: "action", headerName: "View", flex: 1, renderCell: (params) => {
+                            return (
+                                <ViewDialog params={params} category={"Technology"} skillname={skill.skillname} />
+                            )
+                        }
+                    },
+                    {
                         field: "score", headerName: "Score", flex: 1, renderCell: (params) => {
                             return (
                                 <Box sx={{ display: "flex", alignItems: "center" }}>
                                     <TextField required type="number" size="small"
                                         value={rightTech.skills[currentTechTab].questions.find(ques => ques.questionid == params.row.questionid).score}
                                         onChange={(event) => {
+                                            let middleScore = parseFloat(event.target.value) >= 0 && parseFloat(event.target.value) <= 10 ? parseFloat(event.target.value) : ""
                                             let newQues = {
                                                 categoryOrder: 2,
                                                 skillOrder: currentTechTab,
                                                 chosenQuestionId: params.row.questionid,
-                                                newScore: parseFloat(event.target.value)
+                                                newScore: middleScore
                                             }
                                             dispatch({ type: "question/updateNewTechScore", payload: newQues })
                                         }}
@@ -58,7 +67,10 @@ const TechRightTable = (props) => {
                         }
                     }
                 ]
-                let rightTechRows = skill.questions.map(ques => ques)
+                let rightTechRows = skill.questions.map(ques => ({
+                    ...ques,
+                    action: "action"
+                }))
                 return (
                     currentTechTab == index
                         ? <DataGrid

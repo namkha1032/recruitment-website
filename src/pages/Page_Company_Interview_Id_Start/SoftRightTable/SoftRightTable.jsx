@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
+import ViewDialog from '../ViewDialog/ViewDialog';
 
 const SoftRightTable = (props) => {
     let { rightSoft, type } = props
@@ -33,6 +34,13 @@ const SoftRightTable = (props) => {
                     { field: "questionid", headerName: "ID", flex: 1 },
                     { field: "questionstring", headerName: "String", flex: 3 },
                     {
+                        field: "action", headerName: "View", flex: 1, renderCell: (params) => {
+                            return (
+                                <ViewDialog params={params} category={"Soft Skill"} />
+                            )
+                        }
+                    },
+                    {
                         field: "score", headerName: "Score", flex: 1,
                         renderCell: (params) => {
                             return (
@@ -40,10 +48,11 @@ const SoftRightTable = (props) => {
                                     <TextField required type="number" size="small"
                                         value={rightSoft.questions.find(ques => ques.questionid == params.row.questionid).score}
                                         onChange={(event) => {
+                                            let middleScore = parseFloat(event.target.value) >= 0 && parseFloat(event.target.value) <= 10 ? parseFloat(event.target.value) : ""
                                             let newQues = {
                                                 categoryOrder: 0,
                                                 chosenQuestionId: params.row.questionid,
-                                                newScore: parseFloat(event.target.value)
+                                                newScore: middleScore
                                             }
                                             dispatch({ type: "question/updateNewSoftLangScore", payload: newQues })
                                         }}

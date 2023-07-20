@@ -8,7 +8,8 @@ import {
     TextField,
     Card,
     CardHeader,
-    CardContent
+    CardContent,
+    IconButton
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
@@ -16,8 +17,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
-
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import ViewDialog from '../ViewDialog/ViewDialog';
 const TechLeftTable = (props) => {
     const { leftTech, currentTech, setCurrentTech, currentTechTab, setCurrentTechTab } = props
     const dispatch = useDispatch()
@@ -36,9 +37,19 @@ const TechLeftTable = (props) => {
             {leftTech.skills.map((skill, index) => {
                 let leftTechColumns = [
                     { field: "questionid", headerName: "ID", flex: 1 },
-                    { field: "questionstring", headerName: "String", flex: 3 }
+                    { field: "questionstring", headerName: "String", flex: 4 },
+                    {
+                        field: "action", headerName: "View", flex: 1, renderCell: (params) => {
+                            return (
+                                <ViewDialog params={params} category={"Technology"} skillname={skill.skillname} />
+                            )
+                        }
+                    }
                 ]
-                let leftTechRows = skill.questions.map(ques => ques)
+                let leftTechRows = skill.questions.map(ques => ({
+                    ...ques,
+                    action: "action"
+                }))
                 return (
                     currentTechTab == index
                         ? <DataGrid

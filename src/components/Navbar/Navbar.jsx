@@ -254,6 +254,8 @@ const CustomAppBar = styled(AppBar, {
             duration: theme.transitions.duration.enteringScreen,
         }),
     }),
+    // backgroundColor: theme.palette.grey[600],
+    // color: "black"
 }));
 const Navbar = (props) => {
     innerDrawerWidth = props.drawerWidth
