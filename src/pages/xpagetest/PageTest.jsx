@@ -21,15 +21,9 @@ const PageTest = () => {
     }, [])
     return (
         <>
-            <GigaCard>
-                <GigaCardHeader color={"primary.main"} headerIcon={<AcUnitIcon sx={{ fontSize: "inherit" }} />}>
-                    this is a header
-                </GigaCardHeader>
-                <GigaCardBody>
-
-                    23456
-                </GigaCardBody>
-            </GigaCard>
+           <Carousel/>
+            
+         
         </>
     )
 }

@@ -11,9 +11,8 @@ import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Carousel from 'react-bootstrap/Carousel';
-import './Page_Home.scss'
-// import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import Carousel from '../../components/Carousel/Carousel'
+
 //
 // import Swiper core and required modules
 
@@ -30,7 +29,7 @@ const styleFont = {
 }
 const styleFontContent = {
   fontFamily: "serif",
-
+fontWeight: "bold"
 }
 
 //
@@ -73,9 +72,9 @@ const Page_Home = () => {
     <>
       <main>
         <Box sx={{ padding: '24px' }}>
-
-
-          <Carousel className="Car1">
+          
+        <Carousel />
+          {/* <Carousel className="Car1">
             <Carousel.Item>
               <img
                 className="d-block w-100"
@@ -118,7 +117,7 @@ const Page_Home = () => {
                 </p>
               </Carousel.Caption>
             </Carousel.Item>
-          </Carousel>
+          </Carousel> */}
         </Box>
 
         <Box sx={{ padding: '24px', borderTop: '1px solid lightgrey' }}>
@@ -289,7 +288,7 @@ const Page_Home = () => {
                     border: "1px solid lightgrey"
                   }}>
                     <Box
-                      component='h5'
+                      component='h3'
                       sx={{
                         ...styleFont,
                         // border: '1px solid lightgrey',
