@@ -11,8 +11,12 @@ import {
 import Grid from '@mui/material/Grid';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 // import components
 import CateTab from '../../Page_Company_Interview_Id_Start/CateTab/CateTab';
+import GigaCard from '../../../components/GigaCard/GigaCard';
+import GigaCardHeader from '../../../components/GigaCardHeader/GigaCardHeader';
+import GigaCardBody from '../../../components/GigaCardBody/GigaCardBody';
 
 import SoftRightTable from '../../Page_Company_Interview_Id_Start/SoftRightTable/SoftRightTable';
 import LangRightTable from '../../Page_Company_Interview_Id_Start/LangRightTable/LangRightTable';
@@ -27,30 +31,26 @@ const QuestionTable = (props) => {
     let [currentTechTab, setCurrentTechTab] = useState(0);
     return (
         <>
-            <Box sx={{ border: "1px solid black", borderRadius: 4 }}>
-                <CateTab currentCateTab={currentCateTab} setCurrentCateTab={setCurrentCateTab} />
-                {/* Soft Skill Questions */}
-                {currentCateTab == 0
-                    ?
-                    <Box sx={{ padding: 5 }}>
-                        <SoftRightTable rightSoft={rightSoft} />
-                    </Box>
-                    : null}
-                {/* Language Skill */}
-                {currentCateTab == 1
-                    ?
-                    <Box sx={{ padding: 5 }}>
-                        <LangRightTable rightLang={rightLang} />
-                    </Box>
-                    : null}
-                {/* Technical Questions */}
-                {currentCateTab == 2
-                    ?
-                    <Box sx={{ padding: 5 }}>
-                        <TechRightTable rightTech={rightTech} currentTechTab={currentTechTab} setCurrentTechTab={setCurrentTechTab} />
-                    </Box>
-                    : null}
-            </Box>
+            <GigaCard>
+                <GigaCardHeader color={"primary.main"} headerIcon={<QuestionMarkIcon sx={{ fontSize: "inherit" }} />}>
+                    Questions
+                </GigaCardHeader>
+                <GigaCardBody>
+                    <CateTab currentCateTab={currentCateTab} setCurrentCateTab={setCurrentCateTab} />
+                    {/* Soft Skill */}
+                    {currentCateTab == 0
+                        ? <SoftRightTable rightSoft={rightSoft} />
+                        : null}
+                    {/* Language Skill */}
+                    {currentCateTab == 1
+                        ? <LangRightTable rightLang={rightLang} />
+                        : null}
+                    {/* Technical Questions */}
+                    {currentCateTab == 2
+                        ? <TechRightTable rightTech={rightTech} currentTechTab={currentTechTab} setCurrentTechTab={setCurrentTechTab} />
+                        : null}
+                </GigaCardBody>
+            </GigaCard>
         </>
     )
 }

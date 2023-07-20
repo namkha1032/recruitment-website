@@ -1,19 +1,29 @@
-import { useState } from "react";
-import InputText from "./InputText";
+import { useState, useEffect } from "react";
 import cvinfo from "./CvData";
-import { language } from  "./CvData";
-import Button from "@mui/material/Button";
-import FreeSoloCreateOptionDialog from "./ChooseList";
-import Certificate from "./Certificate/Certificate";
+import CreateCv from "./CreateCv";
 import Grid from "@mui/material/Grid";
-import Divider from "@mui/material/Divider";
 import { useNavigate } from "react-router-dom";
-import ChooseLanguage from "./ChooseLanguage";
-import LanguageUlList from "./LanguageUlList";
+import { useDispatch, useSelector } from "react-redux";
 
+// import ViewCv from "./ViewCv";
 function CVForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // fetch Data
+  useEffect(() => {
+    dispatch({ type: "saga/getLanguage" });
+    dispatch({ type: "saga/getSkill" });
+    return () => {
+      dispatch({ type: "skill/setSkill", payload: null });
+      dispatch({ type: "language/setLanguage", payload: null });
+    };
+  },[dispatch]);
   // CV COMPS
+  const skillList = useSelector((state) => state.skill);
+  const languageList = useSelector((state) => state.language);
+
+  const skillData= skillList?skillList:[]
+  const languageData= languageList?languageList:[]
   const [cvtitle,setTitle] = useState(cvinfo.title)
   const [intro, setIntro] = useState(cvinfo.intro);
   const [education, setEducation] = useState(cvinfo.education);
@@ -22,18 +32,17 @@ function CVForm() {
   const [skills, setSkills] = useState(cvinfo.skills);
   const [languages, setLanguages] = useState(cvinfo.language);
   // CERTIFICATE COMPS
-  const [Cid, setCid] = useState(0);
+  const [Cid, setCid] = useState(certs.length> 0 ? certs.length : 0);
   const [Cname, setCName] = useState("");
   const [organize, setOrganize] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [detail, setDetail] = useState("");
   const [link, setLink] = useState("");
-  const [cvalue, setCValue] = useState(null);
   const [open, setOpen] = useState(false);
   //SKILL COMPS
   const [name, setName] = useState("");
-  const [Sid, setSid] = useState(0);
+  const [Sid, setSid] = useState(skills.length > 0 ? skills.length : 0);
   const [SExp, setSExp] = useState("");
   // Language comps
   const [lId, setLId] = useState(languages.length > 0 ? languages.length : 0);
@@ -43,7 +52,7 @@ function CVForm() {
   //FUNCTION
   function handleTitle(e) {
     setTitle(e.target.value);
-    console.log(e.target.value)
+    
   }
   function handleIntro(e) {
     setIntro(e.target.value);
@@ -104,7 +113,7 @@ function CVForm() {
   function handleLanguageAdd() {
     console.log(lInputValue);
     console.log(languageName);
-    let arr = language.filter(
+    let arr = languageData.filter(
       (comp) => comp.name === (lInputValue !== null ? lInputValue.name : "")
     );
     console.log(arr);
@@ -145,128 +154,68 @@ function CVForm() {
   }
   //COMPS
   return (
-    <form onSubmit={handleSubmit}>
-      <div className={`CVForm InputForm`}>
-        <div className="Container">
-          <Grid
-            container
-            spacing={0}
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Grid item xs={10}>
-              <InputText
-                state={"Title"}
-                handleState={handleTitle}
-                width="98%"
-                value={cvtitle}
-              />
-              <Divider variant="middle" />
-            </Grid>
-            <Grid item xs={10}>
-              <InputText
-                state={"Introduction"}
-                handleState={handleIntro}
-                width="98%"
-                value={intro}
-              />
-              <Divider variant="middle" />
-            </Grid>
-            <Grid item xs={10}>
-              <InputText
-                state={"Education"}
-                handleState={handleEdu}
-                width="98%"
-                value={education}
-              />
-              <Divider variant="middle" />
-            </Grid>
-
-            <Grid item xs={12}>
-              <div className="parentFlex">
-                <div className="leftFlex">
-                  <FreeSoloCreateOptionDialog
-                    skills={skills}
-                    handleSkilltDelete={handleSkilltDelete}
-                    SExp={SExp}
-                    setSExp={setSExp}
-                    state={"Skill"}
-                    handleState={setName}
-                    value={name}
-                    onPress={handleSkillAdd}
-                  />
-                </div>
-              </div>
-            </Grid>
-            <Grid item xs={12}>
-                <div className="parentFlex">
-                  <div className="leftFlex">
-                    <LanguageUlList
-                      comps={languages}
-                      handleDelete={handleLanguageDelete}
-                    />
-                    <ChooseLanguage
-                      inputValue={lInputValue}
-                      setInputValue={setLInputValue}
-                      state={"language"}
-                      handleState={setLanguageName}
-                      value={languageName}
-                      setSkillId={setLanguageId}
-                      onPress={handleLanguageAdd}
-                    />
-                  </div>
-                </div>
-              </Grid>
-            <Grid item xs={12}>
-              <div className="parentFlex">
-                <div className="leftFlex">
-                  <Certificate
-                    cvalue={cvalue}
-                    setCValue={setCValue}
-                    open={open}
-                    setOpen={setOpen}
-                    certs={certs}
-                    handleCertDelete={handleCertDelete}
-                    setCName={setCName}
-                    setOrganize={setOrganize}
-                    setStart={setStartDate}
-                    setEnd={setEndDate}
-                    handleCertificateAdd={handleCertificateAdd}
-                    Cname={Cname}
-                    startDate={startDate}
-                    endDate={endDate}
-                    organize={organize}
-                    detail={detail}
-                    setDetail={setDetail}
-                    link={link}
-                    setLink={setLink}
-                    handleSetOpen={handleSetOpen}
-                    handleClose={handleClose}
-                  />
-                </div>
-              </div>
-            </Grid>
-            <Grid item xs={10}>
-              <InputText
-                state={"Experience"}
-                handleState={handleExp}
-                width="98%"
-                value={experience}
-              />
-            </Grid>
-            <Grid item xs={12}></Grid>
-            <Button
-              variant="contained"
-              className="AddButton"
-              type="submit"
-              // onClick={handleClick}
-            >
-              Submit
-            </Button>
-          </Grid>
-        </div>
-      </div>
-    </form>
+    <>
+      <Grid container spacing={0} justifyContent="center" alignItems="center">
+        <Grid item xs={12}>
+          <CreateCv
+            intro={intro}
+            setIntro={setIntro}
+            education={education}
+            setEducation={setEducation}
+            experience={experience}
+            setExperience={setExperience}
+            certs={certs}
+            setCerts={setCerts}
+            skills={skills}
+            setSkills={setSkills}
+            Cid={Cid}
+            setCid={setCid}
+            Cname={Cname}
+            setCName={setCName}
+            organize={organize}
+            setOrganize={setOrganize}
+            startDate={startDate}
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate}
+            detail={detail}
+            setDetail={setDetail}
+            link={link}
+            setLink={setLink}
+            open={open}
+            setOpen={setOpen}
+            name={name}
+            setName={setName}
+            Sid={Sid}
+            setSid={setSid}
+            SExp={SExp}
+            setSExp={setSExp}
+            handleIntro={handleIntro}
+            handleEdu={handleEdu}
+            handleExp={handleExp}
+            handleSkillAdd={handleSkillAdd}
+            handleSkilltDelete={handleSkilltDelete}
+            handleCertificateAdd={handleCertificateAdd}
+            handleCertDelete={handleCertDelete}
+            handleSetOpen={handleSetOpen}
+            handleClose={handleClose}
+            handleSubmit={handleSubmit}
+            languages={languages}
+            handleLanguageDelete={handleLanguageDelete}
+            lInputValue={lInputValue}
+            setLInputValue={setLInputValue}
+            setLanguageName={setLanguageName}
+            languageName={languageName}
+            setLanguageId={setLanguageId}
+            handleLanguageAdd={handleLanguageAdd}
+            cvtitle={cvtitle}
+            handleTitle={handleTitle}
+            skillData={skillData}
+            languageData={languageData}
+          />
+        </Grid>
+      </Grid>
+    </>
   );
 }
 export default CVForm;

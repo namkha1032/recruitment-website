@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
+import ViewDialog from '../ViewDialog/ViewDialog';
 
 const LangLeftTable = (props) => {
     let { leftLang, currentLang, setCurrentLang } = props
@@ -31,8 +32,20 @@ const LangLeftTable = (props) => {
                 getRowId={(row) => row.questionid}
                 columns={[
                     { field: "questionid", headerName: "ID", flex: 1 },
-                    { field: "questionstring", headerName: "String", flex: 3 }]}
-                rows={leftLang.questions.map(ques => ques)}
+                    { field: "questionstring", headerName: "String", flex: 3 },
+                    {
+                        field: "action", headerName: "View", flex: 1, renderCell: (params) => {
+                            return (
+                                <ViewDialog params={params} category={"Language"} languagename={leftLang.languagename} />
+                            )
+                        }
+                    }]}
+                rows={leftLang.questions.map(ques => (
+                    {
+                        ...ques,
+                        action: "action"
+                    }
+                ))}
                 onRowSelectionModelChange={(newChosen) => {
                     setCurrentLang(newChosen);
                 }}

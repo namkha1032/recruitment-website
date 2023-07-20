@@ -16,7 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
-
+import ViewDialog from '../ViewDialog/ViewDialog';
 const SoftLeftTable = (props) => {
     const { leftSoft, currentSoft, setCurrentSoft } = props
     return (
@@ -30,7 +30,16 @@ const SoftLeftTable = (props) => {
                 getRowId={(row) => row.questionid}
                 columns={[
                     { field: "questionid", headerName: "ID", flex: 1 },
-                    { field: "questionstring", headerName: "String", flex: 3 }]}
+                    { field: "questionstring", headerName: "String", flex: 3 },
+                    {
+                        field: "action", headerName: "View", flex: 1, renderCell: (params) => {
+                            return (
+                                <ViewDialog params={params} category={"Soft Skill"} />
+                            )
+                        }
+                    }
+
+                ]}
                 rows={leftSoft.questions.map(ques => ques)}
                 onRowSelectionModelChange={(newChosen) => {
                     setCurrentSoft(newChosen);

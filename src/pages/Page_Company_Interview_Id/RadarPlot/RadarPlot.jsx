@@ -19,7 +19,7 @@ import Plot from 'react-plotly.js';
 
 // import functions
 import calculateScore from '../../../utils/calculateScore';
-
+// import styles
 const RadarPlot = (props) => {
     const { allResult } = props
     let rightSoft = allResult[0]
@@ -42,7 +42,7 @@ const RadarPlot = (props) => {
                 data={[{
                     type: 'scatterpolar',
                     r: [softResult, langResult, techResult],
-                    theta: ['Soft Skill', 'Language Skill', 'Technology Skill'],
+                    theta: ['Soft Skill', 'Language', 'Technology'],
                     fill: 'toself'
                 }]}
 
@@ -54,11 +54,19 @@ const RadarPlot = (props) => {
                         }
                     },
                     showlegend: false,
-                    title: {
-                        text: "Candidate skill overview"
+                    margin: {
+                        autoexpand: false,
+                        pad: 0,
+                        b: 0,
+                        l: 20,
+                        r: 70,
+                        t: 0
                     },
-                    width: 400,
-                    height: 350
+                    width: 320,
+                    height: 320
+                }}
+                config={{
+                    displayModeBar: false, // this is the line that hides the bar.
                 }}
             />
         </>

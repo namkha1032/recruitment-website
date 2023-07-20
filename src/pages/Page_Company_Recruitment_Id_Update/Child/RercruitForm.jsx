@@ -2,15 +2,15 @@ import { useState } from "react";
 import InputText from "./InputText";
 import recruitInfo from "./RecruitData";
 import Button from "@mui/material/Button";
-import ChooseList from "./ChooseSkill";
 import Grid from "@mui/material/Grid";
-import RequireUlList from "./RequireUlList";
 import { skill, language, department } from "./RecruitData";
 import ChooseLanguage from "./ChooseLanguage";
 import LanguageUlList from "./LanguageUlList";
 import Department from "./Department";
 import SelectDate from "./SelectDate";
 import { useNavigate } from "react-router-dom";
+import Require from "./Require";
+import { Box } from "@mui/material";
 
 function RecruitForm() {
   // Recruiment comps
@@ -18,26 +18,27 @@ function RecruitForm() {
   const [description, setDescription] = useState(recruitInfo.description);
   const [salary, setSalary] = useState(recruitInfo.salary);
   const [maxHire, setMaxHire] = useState(recruitInfo.maxHiring);
-  const [hired, setHired] = useState(recruitInfo.hired);
   const [startDate, setStartDate] = useState(recruitInfo.startDate);
   const [endDate, setEndDate] = useState(recruitInfo.endDate);
-  const [departments, setDepartments] = useState(
-    department.filter((comp) => comp.id === recruitInfo.departmentId)
+  const departments = department.filter(
+    (comp) => comp.id === recruitInfo.departmentId
   );
   const [languages, setLanguages] = useState(recruitInfo.language);
-  const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
-  const [status, setStatus] = useState(recruitInfo.status);
+  // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
+  // const [status, setStatus] = useState(recruitInfo.status);
   const [requirement, setRequirement] = useState(recruitInfo.requirement);
 
   // Requirement comps
-  const [rId, setRId] = useState(requirement.length>0?requirement.length:0);
+  const [rId, setRId] = useState(
+    requirement.length > 0 ? requirement.length : 0
+  );
   const [skillId, setSkillId] = useState(null);
   const [skillName, setSkillName] = useState("");
   const [experience, setExperience] = useState("");
   const [note, setNote] = useState("");
   const [inputValue, setInputValue] = useState("");
   // Language comps
-  const [lId, setLId] = useState(languages.length>0?languages.length:0);
+  const [lId, setLId] = useState(languages.length > 0 ? languages.length : 0);
   const [languageId, setLanguageId] = useState(null);
   const [languageName, setLanguageName] = useState("");
   const [lInputValue, setLInputValue] = useState("");
@@ -65,7 +66,7 @@ function RecruitForm() {
   //FUNCTION
   function handleSubmit(e) {
     e.preventDefault();
-    navigate("/company/recruitment/:recruitmentid")
+    navigate("/company/recruitment/:recruitmentid");
   }
   const handleChange = (event) => {
     if (event.target.value === "") {
@@ -176,57 +177,60 @@ function RecruitForm() {
   }
   return (
     <>
-    <form onSubmit={handleSubmit}>
-      <div className={`CVForm InputForm`}>
-        <div className="Container">
-          <Grid
-            container
-            spacing={0}
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Grid item xs={10}>
-              <InputText
-                state={"Recuite Name"}
-                handleState={handleRname}
-                width="98%"
-                value={RName}
-              />
-            </Grid>
-            <Grid item xs={10}>
-              <InputText
-                state={"Description"}
-                handleState={handleDescription}
-                width="98%"
-                value={description}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <div className="parentFlex">
-                <div className="leftFlex">
-                  <RequireUlList
-                    comps={requirement}
-                    handleDelete={handleRequirementDelete}
-                  />
-                  <ChooseList
-                    inputValue={inputValue}
-                    setInputValue={setInputValue}
-                    experience={experience}
-                    setExperience={setExperience}
-                    note={note}
-                    setNote={setNote}
-                    state={"Skill"}
-                    handleState={setSkillName}
-                    value={skillName}
-                    setSkillId={setSkillId}
-                    onPress={handleRequirementAdd}
-                  />
-                </div>
-              </div>
-            </Grid>
-            <Grid item xs={12}>
-              <div className="parentFlex">
-                <div className="leftFlex">
+      <form onSubmit={handleSubmit}>
+        <Box
+          className={`CVForm InputForm`}
+          sx={{
+            borderRadius: 4,
+            boxShadow: 10,
+            backgroundColor: "white",
+            border: (theme) => `1px solid ${theme.palette.divider}`,
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Box className="Container">
+            <Grid
+              container
+              spacing={0}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Grid item xs={10}>
+                <InputText
+                  state={"Recuite Name"}
+                  handleState={handleRname}
+                  width="98%"
+                  value={RName}
+                />
+              </Grid>
+              <Grid item xs={10}>
+                <InputText
+                  state={"Description"}
+                  handleState={handleDescription}
+                  width="98%"
+                  value={description}
+                />
+              </Grid>
+              <Grid item xs={10}>
+                <Require
+                  requirement={requirement}
+                  handleRequirementDelete={handleRequirementDelete}
+                  inputValue={inputValue}
+                  setInputValue={setInputValue}
+                  experience={experience}
+                  setExperience={setExperience}
+                  note={note}
+                  setNote={setNote}
+                  setSkillName={setSkillName}
+                  skillName={skillName}
+                  setSkillId={setSkillId}
+                  handleRequirementAdd={handleRequirementAdd}
+                />
+              </Grid>
+              <Grid item xs={10}>
+                <Box sx={{ margin: "auto", width: "98%", marginTop: "8px" }}>
                   <LanguageUlList
                     comps={languages}
                     handleDelete={handleLanguageDelete}
@@ -240,62 +244,56 @@ function RecruitForm() {
                     setSkillId={setLanguageId}
                     onPress={handleLanguageAdd}
                   />
-                </div>
-              </div>
-            </Grid>
-            <Grid item xs={10}>
-              <InputText
-                state={"Salary"}
-                handleState={handleSalary}
-                width="98%"
-                value={salary}
-              />
-            </Grid>
-            <Grid item xs={10}>
-              <Department
-                handleChange={handleChange}
-                departmentName={departmentName}
-                express={express}
-                departmentId={departmentId}
-                departmentAddress={departmentAddress}
-                departmentEmail={departmentEmail}
-                departmentPhone={departmentPhone}
-                departmentWeb={departmentWeb}
-              />
-            </Grid>
-            <Grid item xs={10}>
-              <Grid container spacing={0}>
-                <Grid item xs={10}>
-                  <SelectDate
-                    handleEnd={handleEnd}
-                    handleStart={handleStart}
-                    startDate={startDate}
-                    endDate={endDate}
-                  />
-                </Grid>
-                <Grid item xs={2}>
-                  <InputText
-                    state={"Hire number"}
-                    handleState={handleMaxHire}
-                    width="88%"
-                    type="number"
-                    value={maxHire}
-                  />
+                </Box>
+              </Grid>
+              <Grid item xs={10}>
+                <InputText
+                  state={"Salary"}
+                  handleState={handleSalary}
+                  width="98%"
+                  value={salary}
+                />
+              </Grid>
+              <Grid item xs={10}>
+                <Department
+                  handleChange={handleChange}
+                  departmentName={departmentName}
+                  express={express}
+                  departmentId={departmentId}
+                  departmentAddress={departmentAddress}
+                  departmentEmail={departmentEmail}
+                  departmentPhone={departmentPhone}
+                  departmentWeb={departmentWeb}
+                />
+              </Grid>
+              <Grid item xs={10}>
+                <Grid container spacing={0}>
+                  <Grid item xs={10}>
+                    <SelectDate
+                      handleEnd={handleEnd}
+                      handleStart={handleStart}
+                      startDate={startDate}
+                      endDate={endDate}
+                    />
+                  </Grid>
+                  <Grid item xs={2}>
+                    <InputText
+                      state={"Hire number"}
+                      handleState={handleMaxHire}
+                      width="88%"
+                      type="number"
+                      value={maxHire}
+                    />
+                  </Grid>
                 </Grid>
               </Grid>
+              <Grid item xs={12}></Grid>
+              <Button variant="contained" className="AddButton" type="submit">
+                Submit
+              </Button>
             </Grid>
-            <Grid item xs={12}></Grid>
-            <Button
-              variant="contained"
-              className="AddButton"
-              type="submit"
-              // onClick={handleClick}
-            >
-              Save
-            </Button>
-          </Grid>
-        </div>
-      </div>
+          </Box>
+        </Box>
       </form>
     </>
   );

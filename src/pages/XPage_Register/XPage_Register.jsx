@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   Grid,
   TextField,
   Button,
   Typography,
-  Link,
+  /* Link, */
   Box,
   Container,
   InputAdornment,
+  createTheme,
 } from "@mui/material";
 
 import EmailIcon from "@mui/icons-material/Email";
@@ -21,6 +22,14 @@ const style = {
   marginBottom: "15px",
 };
 
+const theme = createTheme({
+  palette: {
+    secondary: {
+      main: '#673AB7'
+    }
+  }
+});
+
 const XPage_Register = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -28,7 +37,7 @@ const XPage_Register = () => {
   const [password, setPassword] = useState("");
   const Role = "candidate";
 
-  const handleSubmit = (event) => {
+  const handleRegister = (event) => {
     event.preventDefault();
 
     console.log(name, email, password, Role);
@@ -51,27 +60,24 @@ const XPage_Register = () => {
         <Grid
           container
           sx={{
-            paddingTop: "60px",
+            paddingTop: "10%",
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
             width: "80%",
           }}
         >
-          <Grid item md={7} padding="20px">
-            <Grid item xs={12} display="flex" justifyContent="center">
-              <Typography variant="h1" color='white'>
-                Register
-              </Typography>
-            </Grid>
-          </Grid>
 
-          <Grid item md={7} sx={{ display: "flex", justifyContent: "center" }}>
+          <Grid
+            item
+            xs={7}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
             <Grid
               item
-              md={9}
+              xs={9}
               sx={{
-                borderRadius: "20px",
+                borderRadius: "10px",
                 padding: "20px",
                 paddingTop: "10px",
                 paddingBottom: "10px",
@@ -81,7 +87,26 @@ const XPage_Register = () => {
                 right: "20%",
               }}
             >
-              <form onSubmit={handleSubmit}>
+              <Typography 
+                variant="h2" 
+                align="center" 
+                color='#673AB7' 
+                gutterBottom
+                fontFamily={'Roboto'}
+                fontSize={'28px'}
+                lineHeight={'28px'}
+                fontWeight={'700'}
+                padding={"20px"}
+              >
+                Register
+              </Typography>
+
+              <form
+                onSubmit={
+                  handleRegister
+                } 
+              >
+
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
@@ -96,7 +121,7 @@ const XPage_Register = () => {
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "10px" },
                     }}
                     onChange={(e) => {
                       setName(e.target.value);
@@ -118,7 +143,7 @@ const XPage_Register = () => {
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "10px" },
                     }}
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -141,7 +166,7 @@ const XPage_Register = () => {
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "10px" },
                     }}
                     onChange={(e) => {
                       setPassword(e.target.value);
@@ -156,8 +181,11 @@ const XPage_Register = () => {
                   sx={{ display: "flex", justifyContent: "center", ...style }}
                 >
                   <Button
+                    theme={theme}
                     variant="contained"
                     type="submit"
+                    color="secondary"
+                  
                     sx={{
                       height: "40px",
                       width: "100%",
@@ -175,9 +203,8 @@ const XPage_Register = () => {
                 xs={12}
                 sx={{ ...style, display: "flex", justifyContent: "center" }}
               >
-                <Typography variant="small" align="center">
-                  Already have account?{" "}
-                  <Link href="/login">Click here to login</Link>
+                <Typography component={Link} to="/login" variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
+                  Already have an account?{" "}
                 </Typography>
               </Grid>
             </Grid>

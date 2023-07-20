@@ -1,30 +1,35 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
-    Tabs,
-    Tab,
-    Typography,
     Box,
-    Button,
-    TextField,
-    Card,
-    CardHeader,
-    CardContent
+    Divider
 } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import Plot from 'react-plotly.js';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 // import components
+import GigaCard from '../../../components/GigaCard/GigaCard';
+import GigaCardHeader from '../../../components/GigaCardHeader/GigaCardHeader';
+import GigaCardBody from '../../../components/GigaCardBody/GigaCardBody';
 
 const NoteField = (props) => {
     const { note } = props
+    const noteRef = useRef()
+    useEffect(() => {
+        noteRef.current.innerHTML = note
+    }, [note])
+    console.log("noteRef: ", noteRef)
     return (
         <>
-            <Box sx={{ borderRadius: 4, border: "1px solid black", padding: 2, height: "100%" }}>
-                <Typography variant="h4">Note</Typography>
-                <Typography varint="body1">{note}</Typography>
-            </Box>
+            <GigaCard>
+                <GigaCardHeader color={"primary.main"} headerIcon={<EditNoteIcon sx={{ fontSize: "inherit" }} />}>
+                    Note
+                </GigaCardHeader>
+                <GigaCardBody>
+                    <Divider />
+                    <Box ref={noteRef} sx={{ overflowY: "scroll", maxHeight: "500px" }}>
+
+                    </Box>
+                    <Divider />
+                </GigaCardBody>
+            </GigaCard >
         </>
     )
 }

@@ -1,13 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom"
 import {
   Grid,
   TextField,
   Button,
   Typography,
-  Link,
+  /* Link, */
   Box,
   Container,
   InputAdornment,
+  createTheme,
 } from "@mui/material";
 
 import imageBackground from "../../assets/img/background.jpg";
@@ -18,7 +20,15 @@ const style = {
   marginBottom: "15px",
 };
 
-const Recovery = ({ email, onChangeEmail, handleSubmit }) => {
+const theme = createTheme({
+  palette: {
+    secondary: {
+      main: '#673AB7'
+    }
+  }
+});
+
+const Recovery = (props) => {
   return (
     <Box
       sx={{
@@ -34,27 +44,24 @@ const Recovery = ({ email, onChangeEmail, handleSubmit }) => {
         <Grid
           container
           sx={{
-            paddingTop: "60px",
+            paddingTop: "10%",
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
             width: "80%",
           }}
         >
-          <Grid item md={7} padding="20px">
-            <Grid item xs={12} display="flex" justifyContent="center">
-              <Typography variant="h1" color='white'>
-                Recovery
-              </Typography>
-            </Grid>
-          </Grid>
 
-          <Grid item md={7} sx={{ display: "flex", justifyContent: "center" }}>
+          <Grid
+            item
+            xs={7}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
             <Grid
               item
-              md={9}
+              xs={9}
               sx={{
-                borderRadius: "20px",
+                borderRadius: "10px",
                 padding: "20px",
                 paddingTop: "10px",
                 paddingBottom: "10px",
@@ -64,24 +71,34 @@ const Recovery = ({ email, onChangeEmail, handleSubmit }) => {
                 right: "20%",
               }}
             >
-              <Grid
-                item
-                xs={12}
-                sx={{ ...style, display: "flex", justifyContent: "center" }}
-              >
-                <Typography variant="h5" align="center">
-                  Enter your email address
-                </Typography>
-              </Grid>
 
-              <form onSubmit={handleSubmit}>
+              <Typography 
+                variant="h2" 
+                align="center" 
+                color='#673AB7' 
+                gutterBottom
+                fontFamily={'Roboto'}
+                fontSize={'28px'}
+                lineHeight={'28px'}
+                fontWeight={'700'}
+                padding={"20px"}
+              >
+                Enter your email address
+              </Typography>
+
+              <form
+                onSubmit={
+                  props.handleSubmit
+                } 
+              >
+
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
                     required
                     label="Email"
                     type="email"
-                    value={email}
+                    value={props.email}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -89,10 +106,10 @@ const Recovery = ({ email, onChangeEmail, handleSubmit }) => {
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "10px" },
                     }}
                     onChange={(e) => {
-                      onChangeEmail(e.target.value);
+                      props.onChangeEmail(e.target.value);
                     }}
                   />
                 </Grid>
@@ -103,8 +120,11 @@ const Recovery = ({ email, onChangeEmail, handleSubmit }) => {
                   sx={{ display: "flex", justifyContent: "center", ...style }}
                 >
                   <Button
+                    theme={theme}
                     variant="contained"
                     type="submit"
+                    color="secondary"
+                  
                     sx={{
                       height: "40px",
                       width: "100%",
@@ -122,8 +142,8 @@ const Recovery = ({ email, onChangeEmail, handleSubmit }) => {
                 xs={12}
                 sx={{ ...style, display: "flex", justifyContent: "center" }}
               >
-                <Typography variant="small" align="center">
-                  <Link href="/login">Back to login</Link>
+                <Typography component={Link} to="/login" variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
+                  Back to login{" "}
                 </Typography>
               </Grid>
             </Grid>

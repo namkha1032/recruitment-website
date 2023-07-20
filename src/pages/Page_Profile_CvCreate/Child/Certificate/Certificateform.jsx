@@ -1,10 +1,10 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
-import EmptyTextarea from "./AutoText";
+import EmptyTextarea from "../AutoText";
 import DateComp from "./CertDate";
 import CertButton from "./CertButton";
 import NotRInputText from "../NotRequiredText";
-
+import Box from "@mui/material/Box";
 
 export default function CertificateForm(prop) {
   function handleLink(e) {
@@ -17,51 +17,55 @@ export default function CertificateForm(prop) {
   }
   return (
     <>
-      <Grid container spacing={0} justifyContent="center" alignItems="center">
-        <Grid item xs={12}>
-          <div className="AutocompBox">
+      <Box sx={{ marginTop: "8px" }}>
+        <Grid container spacing={0} justifyContent="center" alignItems="center">
+          <Grid item xs={12}>
+            <Box className="AutocompBox">
+              <NotRInputText
+                state={"Certificate"}
+                width="100%"
+                margin="0"
+                value={prop.value}
+                handleState={handleCert}
+              />
+            </Box>
+          </Grid>
+          <DateComp
+            startday={prop.startDate}
+            endday={prop.endDate}
+            setStart={prop.setStart}
+            setEnd={prop.setEnd}
+            setOrganize={prop.setOrganize}
+            organize={prop.organize}
+          />
+
+          <Grid item xs={12}>
             <NotRInputText
-              state={"Certificate"}
+              state={"Link"}
               width="100%"
               margin="0"
-              value={prop.value}
-              handleState={handleCert}
+              handleState={handleLink}
+              value={prop.link}
+              setLink={prop.setLink}
+              onPress={prop.onPress}
             />
-          </div>
-        </Grid>
-        <DateComp
-          startday={prop.startDate}
-          endday={prop.endDate}
-          setStart={prop.setStart}
-          setEnd={prop.setEnd}
-          setOrganize={prop.setOrganize}
-          organize={prop.organize}
-        />
-        
-        <Grid item xs={12}>
-          <NotRInputText
-            state={"Link"}
-            width="100%"
-            margin="0"
-            handleState={handleLink}
-            value={prop.link}
-            setLink={prop.setLink}
-            onPress={prop.onPress}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <EmptyTextarea
-            value={prop.detail}
-            setDetail={prop.setDetail}
-          />
-        </Grid>
-        
+          </Grid>
+          <Grid item xs={12}>
+            <EmptyTextarea
+              width="100%"
+              state="Detail"
+              value={prop.detail}
+              setDetail={prop.setDetail}
+            />
+          </Grid>
+
           <CertButton
             open={prop.open}
             onPress={prop.onPress}
             handleClose={prop.handleClose}
           />
-      </Grid>
+        </Grid>
+      </Box>
     </>
   );
 }

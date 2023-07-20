@@ -10,11 +10,15 @@ export default function EmptyTextarea(prop) {
   }
   return (
     <>
-      <div className="AutoT">
+      <Box className="AutoT">
         <Box
-          // component="form"
           sx={{
-            "& > :not(style)": { width: "100%", margin: "0", marginTop: "8px" },
+            "& > :not(style)": {
+              width: prop.width,
+              margin: "0",
+              marginLeft: prop.marginLeft,
+              marginTop: "8px",
+            },
           }}
           noValidate
           autoComplete="off"
@@ -23,12 +27,12 @@ export default function EmptyTextarea(prop) {
             value={prop.value}
             onChange={handleDetail}
             id="outlined-basic"
-            label="Detail"
+            label={prop.state}
             variant="outlined"
             multiline
           />
         </Box>
-      </div>
+      </Box>
     </>
   );
 }

@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   Grid,
   TextField,
   Button,
   Typography,
-  Link,
+  /* Link, */
   Box,
   Container,
   InputAdornment,
   Checkbox,
   FormControlLabel,
+  createTheme,
 } from "@mui/material";
 
 import EmailIcon from "@mui/icons-material/Email";
@@ -21,12 +22,21 @@ const style = {
   marginTop: "15px",
   marginBottom: "15px",
 };
+
+const theme = createTheme({
+  palette: {
+    secondary: {
+      main: '#673AB7'
+    }
+  }
+});
+
 const XPage_Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleLogin = (event) => {
     event.preventDefault();
     console.log(email, password);
     navigate("/home");
@@ -44,6 +54,7 @@ const XPage_Login = () => {
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
+        /* backgroundColor: "#EEF2F6", */
         width: "100%",
       }}
     >
@@ -51,27 +62,24 @@ const XPage_Login = () => {
         <Grid
           container
           sx={{
-            paddingTop: "60px",
+            paddingTop: "10%",
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
             width: "80%",
           }}
         >
-          <Grid item md={7} padding="20px">
-            <Grid item xs={12} display="flex" justifyContent="center">
-              <Typography variant="h1" color='white'>
-                Login
-              </Typography>
-            </Grid>
-          </Grid>
 
-          <Grid item md={7} sx={{ display: "flex", justifyContent: "center", alignItems: 'center'}}>
+          <Grid
+            item
+            xs={7}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
             <Grid
               item
-              md={9}
+              xs={9}
               sx={{
-                borderRadius: "20px",
+                borderRadius: "10px",
                 padding: "20px",
                 paddingTop: "10px",
                 paddingBottom: "10px",
@@ -81,7 +89,25 @@ const XPage_Login = () => {
                 right: "20%",
               }}
             >
-              <form onSubmit={handleSubmit}>
+              <Typography 
+                variant="h2" 
+                align="center" 
+                color='#673AB7' 
+                gutterBottom
+                fontFamily={'Roboto'}
+                fontSize={'28px'}
+                lineHeight={'28px'}
+                fontWeight={'700'}
+                padding={"20px"}
+              >
+                Hi, welcome back
+              </Typography>
+
+              <form
+                onSubmit={
+                  handleLogin
+                } 
+              >
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
@@ -96,7 +122,7 @@ const XPage_Login = () => {
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "10px" },
                     }}
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -119,21 +145,23 @@ const XPage_Login = () => {
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "10px" },
                     }}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
+                    onChange={(e) => {setPassword(e.target.value)}}
                   />
                 </Grid>
 
                 <Grid
                   item
                   xs={12}
-                  md={12}
                   sx={{ ...style, display: "flex", justifyContent: "center" }}
                 >
-                  <Grid item xs={6} md={6} paddingLeft="5px">
+                  <Grid
+                    item
+                    xs={6}
+                    md={6} 
+                    paddingLeft='5px'
+                  >
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -145,30 +173,42 @@ const XPage_Login = () => {
                       label="Remember me"
                       align="left"
                     />
+
                   </Grid>
 
-                  <Grid item xs={6} md={6} paddingRight="5px">
-                    <Link href="/recovery">
-                      <Typography paddingTop="8px" align="right">
-                        Forgot password ?
-                      </Typography>
-                    </Link>
+                  <Grid item xs={6} md={6} paddingRight='5px' display='flex' justifyContent='right'>
+                    <Typography 
+                      component={Link} to="/recovery" 
+                      variant="subtitle1" 
+                      sx={{ 
+                        textDecoration: 'none', 
+                        color: '#673AB7',
+                        paddingTop: '8px',
+                        fontWeight: '500'
+                      }}
+                    >
+                      Forgot password?{" "}
+                    </Typography>
                   </Grid>
                 </Grid>
 
                 <Grid
                   item
                   xs={12}
-                  sx={{ display: "flex", justifyContent: "center", ...style }}
+                  sx={{ display: "flex", justifyContent: "center", ...style, marginTop: '0px' }}
+                  
                 >
                   <Button
+                    theme={theme}
                     variant="contained"
                     type="submit"
+                    color="secondary"
+                  
                     sx={{
                       height: "40px",
                       width: "100%",
                       borderRadius: "20px",
-                      marginTop: "15px",
+                      marginTop: "5px",
                     }}
                   >
                     Login
@@ -181,9 +221,8 @@ const XPage_Login = () => {
                 xs={12}
                 sx={{ ...style, display: "flex", justifyContent: "center" }}
               >
-                <Typography variant="small" align="center">
-                  Didn't have account?{" "}
-                  <Link href="/register">Click here to register</Link>
+                <Typography component={Link} to="/register" variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
+                  Didn't have an account?{" "}
                 </Typography>
               </Grid>
             </Grid>

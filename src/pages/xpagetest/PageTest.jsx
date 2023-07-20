@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import GigaCard from "../../components/GigaCard/GigaCard"
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody"
+import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader"
+import AcUnitIcon from '@mui/icons-material/AcUnit';
+const PageTest = () => {
+    return (
+        <>
+            <GigaCard>
+                <GigaCardHeader color={"primary.main"} headerIcon={<AcUnitIcon sx={{ fontSize: "inherit" }} />}>
+                    this is a header
+                </GigaCardHeader>
+                <GigaCardBody>
 
-export default function MyComponent() {
-    const [value, setValue] = useState('');
-    console.log("value: ", value)
-    return <ReactQuill style={{ height: "600px" }} theme="snow" value={value} onChange={setValue} />;
+                    23456
+                </GigaCardBody>
+            </GigaCard>
+        </>
+    )
 }
+
+export default PageTest

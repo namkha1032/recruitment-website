@@ -83,7 +83,7 @@ const Page_Recruitment = () => {
           <Grid container spacing={8}>
             {cards1.map((card) => (
               <Grid item key={card} xs={12}>
-                  <Box sx={{backgroundColor:'#99CCFF', borderRadius:'5px' } }>
+                  <Box sx={{backgroundColor:'#99CCFF', borderRadius:'5px', boxShadow:10 } }>
                     <Grid container>
                       <Grid item xs={9}>
                         <Box sx={{margin:'15px',display:'flex'}}>

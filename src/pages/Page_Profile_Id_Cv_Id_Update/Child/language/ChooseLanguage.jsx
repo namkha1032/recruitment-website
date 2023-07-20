@@ -3,17 +3,19 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { language } from "./CvData";
+import AddIcon from '@mui/icons-material/Add';
+
 
 
 const filter = createFilterOptions();
 export default function ChooseLanguage(prop) {
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
+      event.preventDefault()
       const inputValue = event.target.value;
-      console.log(prop.value);
+      console.log(prop.lInputValue);
       console.log(inputValue);
-      if (prop.value === null) {
+      if (prop.lInputValue === null) {
         if (inputValue.trim() !== "") {
           prop.setInputValue(null);
           prop.handleState(inputValue);
@@ -29,7 +31,7 @@ export default function ChooseLanguage(prop) {
       <Grid container spacing={0} justifyContent="center" alignItems="center">
         <Grid item xs={12}>
           <Autocomplete
-            value={prop.inputValue}
+            value={prop.lInputValue}
             onChange={(event, newValue) => {
               if (typeof newValue === "string") {
                 return ()=>prop.setValue({
@@ -49,7 +51,7 @@ export default function ChooseLanguage(prop) {
                 prop.setInputValue(newValue);
                 if (newValue !== null) {
                   console.log(newValue);
-                  prop.setSkillId(language.filter((comp) => comp.name === newValue.name)[0].id);
+                  prop.setSkillId(prop.languageData.filter((comp) => comp.name === newValue.name)[0].id);
                   prop.handleState(newValue.name);
                 }
               }
@@ -73,7 +75,7 @@ export default function ChooseLanguage(prop) {
             clearOnBlur
             handleHomeEndKeys
             id="free-solo-with-text-demo"
-            options={language}
+            options={prop.languageData}
             getOptionLabel={(option) => {
               if (typeof option === "string") {
                 return option;
@@ -90,7 +92,8 @@ export default function ChooseLanguage(prop) {
                 display: "flex",
                 margin: "0",
                 padding: "0",
-                marginRight: "1%",
+                marginLeft: "1%",
+                width:"98%"
               },
             }}
             freeSolo
@@ -103,8 +106,11 @@ export default function ChooseLanguage(prop) {
           sx={{
             margin: "auto",
           }}
-          variant="contained"
-          className="AddButton"
+          color="primary"
+          size="medium"
+          variant="outlined"
+          className="AddCompButton"
+          startIcon={<AddIcon/>}
           onClick={() => {
             prop.onPress();
           }}

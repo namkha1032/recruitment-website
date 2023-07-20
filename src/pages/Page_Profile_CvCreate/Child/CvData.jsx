@@ -1,29 +1,12 @@
-
+import dayjs from "dayjs";
 const cvinfo = {
-  title:"",
+  title: "",
   intro: "",
   certificates: [],
   skills: [],
-  language:[],
+  language: [],
   education: "",
   experience: "",
 };
-export const certificateList = [
-  { name: "IELTS" },
-  { name: "TOEIC" },
-  { name: "python" },
-  { name: "javaScript" },
-];
-export const skillList = [
-  { name: "html" },
-  { name: "css" },
-  { name: "python" },
-  { name: "javaScript" },
-];
-export const language = [
-  { id: 0, name: "English" },
-  { id: 1, name: "Japanese" },
-  { id: 2, name: "Chinese" },
-  { id: 3, name: "VietNamese" },
-];
+export const steps = ["Cv Infor", "Yout Experience", "Yout Certificate"];
 export default cvinfo;

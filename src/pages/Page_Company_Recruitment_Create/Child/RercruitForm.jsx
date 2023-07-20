@@ -1,32 +1,27 @@
 import { useState } from "react";
-import InputText from "./InputText";
 import recruitInfo from "./RecruitData";
 import Button from "@mui/material/Button";
-import ChooseList from "./ChooseSkill";
 import Grid from "@mui/material/Grid";
-import RequireUlList from "./RequireUlList";
 import { skill, language, department } from "./RecruitData";
-import ChooseLanguage from "./ChooseLanguage";
-import LanguageUlList from "./LanguageUlList";
-import Department from "./Department";
-import SelectDate from "./SelectDate";
 import { useNavigate } from "react-router-dom";
-
+import { Box } from "@mui/material";
+import Box1 from "./Box1";
+import Box2 from "./Box2";
+import Box3 from "./Box3";
 function RecruitForm() {
   // Recruiment comps
   const [RName, setRName] = useState(recruitInfo.name);
   const [description, setDescription] = useState(recruitInfo.description);
   const [salary, setSalary] = useState(recruitInfo.salary);
   const [maxHire, setMaxHire] = useState(recruitInfo.maxHiring);
-  const [hired, setHired] = useState(recruitInfo.hired);
   const [startDate, setStartDate] = useState(recruitInfo.startDate);
   const [endDate, setEndDate] = useState(recruitInfo.endDate);
-  const [departments, setDepartments] = useState(
-    department.filter((comp) => comp.id === recruitInfo.departmentId)
+  const departments = department.filter(
+    (comp) => comp.id === recruitInfo.departmentId
   );
   const [languages, setLanguages] = useState(recruitInfo.language);
-  const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
-  const [status, setStatus] = useState(recruitInfo.status);
+  // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
+  // const [status, setStatus] = useState(recruitInfo.status);
   const [requirement, setRequirement] = useState(recruitInfo.requirement);
 
   // Requirement comps
@@ -68,19 +63,6 @@ function RecruitForm() {
   function handleSubmit(e) {
     e.preventDefault();
     navigate("/company/recruitment/:recruitmentid");
-  }
-  function handleClick() {
-    console.log("Submit:");
-    console.log(RName);
-    console.log(description);
-    console.log(requirement);
-    console.log(languages);
-    console.log(salary);
-    console.log(departmentId);
-    console.log(departmentName);
-    console.log(startDate);
-    console.log(endDate);
-    console.log(maxHire);
   }
   const handleChange = (event) => {
     if (event.target.value === "") {
@@ -192,125 +174,138 @@ function RecruitForm() {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className={`CVForm InputForm`}>
-          <div className="Container">
-            <Grid
-              container
-              spacing={0}
-              justifyContent="center"
-              alignItems="center"
+        <Grid container spacing={0} justifyContent="center" alignItems="center">
+          <Grid item xs={12}>
+            <Box
+              className={`RecruiteForm Form InputForm`}
+              sx={{
+                borderRadius: 4,
+                boxShadow: 10,
+                backgroundColor: "white",
+                border: (theme) => `1px solid ${theme.palette.divider}`,
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+              }}
             >
-              <Grid item xs={10}>
-                <InputText
-                  state={"Recuite Name"}
-                  handleState={handleRname}
-                  width="98%"
-                  value={RName}
-                />
-              </Grid>
-              <Grid item xs={10}>
-                <InputText
-                  state={"Description"}
-                  handleState={handleDescription}
-                  width="98%"
-                  value={description}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <div className="parentFlex">
-                  <div className="leftFlex">
-                    <RequireUlList
-                      comps={requirement}
-                      handleDelete={handleRequirementDelete}
+              <Box className="Container">
+                <Grid
+                  container
+                  spacing={0}
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Grid item xs={10}>
+                    <Box1
+                      setDescription={setDescription}
+                      handleRname={handleRname}
+                      RName={RName}
+                      handleDescription={handleDescription}
+                      description={description}
                     />
-                    <ChooseList
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item sx={{ marginTop: "16px" }} xs={12}>
+            <Box
+              className={`RecruiteForm InputForm`}
+              sx={{
+                borderRadius: 4,
+                boxShadow: 10,
+                backgroundColor: "white",
+                border: (theme) => `1px solid ${theme.palette.divider}`,
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Box className="Container">
+                <Grid
+                  container
+                  spacing={0}
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Grid item xs={10}>
+                    <Box2
+                      handleSalary={handleSalary}
+                      salary={salary}
+                      handleChange={handleChange}
+                      departmentName={departmentName}
+                      express={express}
+                      departmentId={departmentId}
+                      departmentAddress={departmentAddress}
+                      departmentEmail={departmentEmail}
+                      departmentPhone={departmentPhone}
+                      departmentWeb={departmentWeb}
+                      handleEnd={handleEnd}
+                      handleStart={handleStart}
+                      startDate={startDate}
+                      endDate={endDate}
+                      handleMaxHire={handleMaxHire}
+                      maxHire={maxHire}
+                    />
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid sx={{ marginTop: "16px" }} item xs={12}>
+            <Box
+              className={`RecruiteForm InputForm`}
+              sx={{
+                borderRadius: 4,
+                boxShadow: 10,
+                backgroundColor: "white",
+                border: (theme) => `1px solid ${theme.palette.divider}`,
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Box className="Container">
+                <Grid
+                  container
+                  spacing={0}
+                  justifyContent="center"
+                  alignItems="center"
+                  sx={{ paddingTop: "16px" }}
+                >
+                  <Grid item xs={10}>
+                    <Box3
+                      requirement={requirement}
+                      handleRequirementDelete={handleRequirementDelete}
                       inputValue={inputValue}
                       setInputValue={setInputValue}
                       experience={experience}
                       setExperience={setExperience}
                       note={note}
                       setNote={setNote}
-                      state={"Skill"}
-                      handleState={setSkillName}
-                      value={skillName}
+                      setSkillName={setSkillName}
+                      skillName={skillName}
                       setSkillId={setSkillId}
-                      onPress={handleRequirementAdd}
-                    />
-                  </div>
-                </div>
-              </Grid>
-              <Grid item xs={12}>
-                <div className="parentFlex">
-                  <div className="leftFlex">
-                    <LanguageUlList
-                      comps={languages}
-                      handleDelete={handleLanguageDelete}
-                    />
-                    <ChooseLanguage
-                      inputValue={lInputValue}
-                      setInputValue={setLInputValue}
-                      state={"language"}
-                      handleState={setLanguageName}
-                      value={languageName}
-                      setSkillId={setLanguageId}
-                      onPress={handleLanguageAdd}
-                    />
-                  </div>
-                </div>
-              </Grid>
-              <Grid item xs={10}>
-                <InputText
-                  state={"Salary"}
-                  handleState={handleSalary}
-                  width="98%"
-                  value={salary}
-                />
-              </Grid>
-              <Grid item xs={10}>
-                <Department
-                  handleChange={handleChange}
-                  departmentName={departmentName}
-                  express={express}
-                  departmentId={departmentId}
-                  departmentAddress={departmentAddress}
-                  departmentEmail={departmentEmail}
-                  departmentPhone={departmentPhone}
-                  departmentWeb={departmentWeb}
-                />
-              </Grid>
-              <Grid item xs={10}>
-                <Grid container spacing={0}>
-                  <Grid item xs={10}>
-                    <SelectDate
-                      handleEnd={handleEnd}
-                      handleStart={handleStart}
-                      startDate={startDate}
-                      endDate={endDate}
-                    />
-                  </Grid>
-                  <Grid item xs={2}>
-                    <InputText
-                      state={"Hire number"}
-                      handleState={handleMaxHire}
-                      width="88%"
-                      type="number"
-                      value={maxHire}
+                      handleRequirementAdd={handleRequirementAdd}
+                      languages={languages}
+                      handleLanguageDelete={handleLanguageDelete}
+                      lInputValue={lInputValue}
+                      setLInputValue={setLInputValue}
+                      setLanguageName={setLanguageName}
+                      languageName={languageName}
+                      setLanguageId={setLanguageId}
+                      handleLanguageAdd={handleLanguageAdd}
                     />
                   </Grid>
                 </Grid>
-              </Grid>
-              <Grid item xs={12}></Grid>
-              <Button
-              variant="contained"
-              className="AddButton"
-              type="submit"
-              // onClick={handleClick}
-            >
-                Submit
-              </Button>
-            </Grid>
-          </div>
-        </div>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12}></Grid>
+          <Button variant="contained" className="AddButton" type="submit">
+            Submit
+          </Button>
+        </Grid>
       </form>
     </>
   );
