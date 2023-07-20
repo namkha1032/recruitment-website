@@ -6,9 +6,15 @@ function* getRecruitmentList() {
     yield put({ type: "recruitment/setRecruitment", payload: response.data })
 }
 
+function* updateRecruitmentList(action) {
+    const response = yield call(axios.put, "", action.payload)
+    yield put({type: "recruitment/setRecruitment", payload: response.data})
+}
+
 function* recruitmentSaga() {
     yield all([
-        takeLatest("saga/getRecruitmentList", getRecruitmentList)
+        takeEvery("saga/getRecruitmentList", getRecruitmentList),
+        takeEvery("saga/updateRecruitmentList", updateRecruitmentList)
     ])
 }
 

@@ -18,6 +18,7 @@ import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
 import Grid from "@mui/material/Grid";
 import { NullString, NotStart, Pending, Completed, Postpone } from "../../components/Label/Label";
 import { useDispatch, useSelector } from "react-redux";
+import { delay } from "redux-saga/effects";
 
 
 
@@ -28,11 +29,15 @@ export default function Page_Company_Recruitment() {
 
   useEffect(() => {
     dispatch({type: "saga/getRecruitmentList"})
+    dispatch({type: "saga/getDepartment"})
   }, [])
 
   const rows = useSelector(state => state.recruitment)
+  const department_draft = useSelector(state => state.department)
 
-  const [rows, setRows] = useState(datasjson);
+  const departments = department_draft ? department_draft.map((department) => department.departmentName) : []
+  console.log(departments)
+  // const [rows, setRows] = useState(datasjson);
 
   // const [anchorEl, setAnchorEl] = useState(null);
   // const [valueSearch, setValueSearch] = useState("");
@@ -51,9 +56,9 @@ export default function Page_Company_Recruitment() {
   //   setAnchorEl(null);
   // }
 
-  function handleRowClick(id) {
-    alert("Navigate to position id: " + id);
-  }
+  // function handleRowClick(id) {
+  //   alert("Navigate to position id: " + id);
+  // }
 
   function handleAddClick() {
     navigate("./create");
@@ -91,29 +96,11 @@ export default function Page_Company_Recruitment() {
   }
 
   function handleContinueClick(value) {
-    const updateRows = rows.map((row) => {
-      if (row.id === value) {
-        return {
-          ...row,
-          status: "Đang diễn ra"
-        }
-      }
-      return row
-    })
-    dispatch({type: "recruitment/updateRecruitment", payload: value})
+    dispatch({type: "saga/updateRecruitment", payload: {id: value, Status: "Đang diễn ra"}})
   }
 
   function handlePostponeClick(value) {
-    const updateRows = rows.map((row) => {
-      if (row.id === value) {
-        return {
-          ...row,
-          status: "Tạm ngừng"
-        }
-      }
-      return row
-    })
-    setRows(updateRows)
+    dispatch({type: "saga/updateRecruitment", payload: {id: value, Status: "Tạm ngừng"}})
   }
 
   // function handleEditClick(value) {
@@ -209,7 +196,7 @@ export default function Page_Company_Recruitment() {
       minWidth: 100,
     },
     {
-      field: "status",
+      field: "Status",
       minWidth: 180,
       headerAlign: "center",
       align: "center",
@@ -234,7 +221,7 @@ export default function Page_Company_Recruitment() {
       headerAlign: "right",
       align: "right",
       getActions: (params) => {
-        if (params.row.status === "Tạm ngừng") {
+        if (params.row.Status === "Tạm ngừng") {
           return [
             <GridActionsCellItem
               icon={<InfoRoundedIcon variant="outlined" />}
@@ -259,7 +246,7 @@ export default function Page_Company_Recruitment() {
             />,
           ]
         }
-        else if (params.row.status === "Đang diễn ra") {
+        else if (params.row.Status === "Đang diễn ra") {
           return [
             <GridActionsCellItem
               icon={<InfoRoundedIcon variant="outlined" />}
@@ -409,7 +396,7 @@ export default function Page_Company_Recruitment() {
             <Autocomplete
               disablePortal
               id="filter-type"
-              options={["Phòng ban A", "Phòng ban B", "Phòng ban C"]}
+              options={departments}
               sx={{ width: 200 }}
               renderInput={(params) => (
                 <TextField {...params} label="Phòng ban..." />
@@ -422,7 +409,7 @@ export default function Page_Company_Recruitment() {
             <Autocomplete
               disablePortal
               id="filter-type"
-              options={["Chưa bắt đầu", "Đang diễn ra", "Kết thúc"]}
+              options={["Chưa bắt đầu", "Đang diễn ra", "Kết thúc", "Tạm hoãn"]}
               sx={{ width: 200 }}
               renderInput={(params) => (
                 <TextField {...params} label="Trạng thái..." />
@@ -477,7 +464,8 @@ export default function Page_Company_Recruitment() {
       <Grid item xs={12} md={12}>
         <DataGrid
           columns={columns}
-          rows={rows}
+          rows={rows === null ? [] : rows}
+          loading={rows === null}
           sx={{
             "&.MuiDataGrid-root": {
               borderRadius: 1,
@@ -524,11 +512,11 @@ export default function Page_Company_Recruitment() {
           disableColumnSelector
           disableDensitySelector
           pagination
-          pageSizeOptions={[5, 10, 25, 50, 100]}
+          pageSizeOptions={[5, 10, 15, 25, 50, 100]}
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 25,
+                pageSize: 10,
               },
             },
           }}
