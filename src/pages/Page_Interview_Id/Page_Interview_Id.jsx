@@ -1,6 +1,16 @@
 import { Typography } from "@mui/material"
 import Grid from "@mui/material/Grid"
-import { Box } from "@mui/material"
+import { Chip, Box, Stack } from "@mui/material"
+import RadarIcon from '@mui/icons-material/Radar';
+import RecommendIcon from '@mui/icons-material/Recommend';
+import LanguageIcon from '@mui/icons-material/Language';
+import ScheduleIcon from '@mui/icons-material/Schedule';
+import RoomIcon from '@mui/icons-material/Room';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import HomeIcon from '@mui/icons-material/Home';
 import './Page_Interview_Id.css'
 // import Page_Profile_Id_Cv_Id from "../Page_Profile_Id_Cv_Id/Page_Profile_Id_Cv"
 import CV from "../../components/CV/CV"
@@ -9,7 +19,20 @@ const styleofbox = {
     borderRadius: "8px",
     border: "1px solid black",
     marginTop: "10px",
-    backgroundColor: "#6cbcc4"
+    display: "flex",
+    flexDirection: "row"
+
+
+
+}
+
+const boxcandidate = {
+    borderRadius: "8px",
+    border: "1px solid black",
+    marginTop: "10px",
+    display: "flex",
+    flexDirection: "column"
+
 }
 
 const titlebox = {
@@ -37,65 +60,114 @@ const textinfo = {
 
 const Page_Interview_Id = () => {
     const requires = require('../../data/View_recruitment/requires.json');
+    const languages = require('../../data/View_recruitment/languages.json');
     return (
         <>
             <Grid container spacing={2}>
                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <Typography variant="h3" sx={{ fontWeight: "bold",  fontStyle: "italic" }}>
+                    <Typography variant="h3" sx={{ fontWeight: "bold", fontStyle: "italic" }}>
                         Detail of the interview
                     </Typography>
                 </Grid>
-                {/* <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-start" }}>
-                    <Typography variant="h4" sx={{ fontWeight: "bold", fontFamily: "Times New Roman", fontStyle: "italic" }}>
-                        Position: ReactJS
-                    </Typography>
-                </Grid> */}
-                <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
-                <Box sx={styleofbox}>
-                        <Typography variant="h5" sx={titlebox}>
-                            General information
-                        </Typography>
-                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
-                            <Typography variant="h6" sx={texttitle}>
-                                Position:
+                <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
+                    <Box sx={styleofbox}>
+                        <Grid item xs={6}>
+                            <Typography variant="h5" sx={titlebox}>
+                                General information
                             </Typography>
-                            <Typography variant="h6" sx={textinfo}>
-                                Front-end Developer
-                            </Typography>
+                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
+                                <Typography variant="h6" sx={texttitle}>
+                                    <RadarIcon></RadarIcon> Position:
+                                </Typography>
+                                <Typography variant="h6" sx={textinfo}>
+                                    Front-end Developer
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
+                                <Typography variant="h6" sx={texttitle}>
+                                    <RecommendIcon></RecommendIcon> Requirement:
+                                </Typography>
+                                <Stack direction="row" spacing={1} sx={{ display: "flex", marginLeft: "15px" }}>
+                                    {requires.map((require) => (
+                                        <Chip key={require.id} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
+                                    ))}
+                                </Stack>
+                            </Grid>
+                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginTop: "5px", marginBottom: "5px" }}>
+                                <Typography variant="h6" sx={texttitle}>
+                                    <LanguageIcon></LanguageIcon>  Language:
+                                </Typography>
+                                <Stack direction="row" spacing={1} sx={{ display: "flex", marginLeft: "15px" }}>
+                                    {languages.map((language) => (
+                                        <Chip key={language.id} value={language.name} label={language.name} variant='outlined' size='medium' color="success" />
+                                    ))}
+                                </Stack>
+                            </Grid>
+                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
+                                <Typography variant="h6" sx={texttitle}>
+                                    <ScheduleIcon></ScheduleIcon> Date Time:
+                                </Typography>
+                                <Typography variant="h6" sx={textinfo}>
+                                    14:00 12/06/2023
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
+                                <Typography variant="h6" sx={texttitle}>
+                                    <RoomIcon></RoomIcon> Room:
+                                </Typography>
+                                <Typography variant="h6" sx={textinfo}>
+                                    202B4
+                                </Typography>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
-                            <Typography variant="h6" sx={texttitle}>
-                                Requirement:
+                        <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
+                            <Typography variant="h5" sx={titlebox}>
+                                Detail of the interviewer
                             </Typography>
-                            <Typography variant="h6" sx={{  display: "flex", marginLeft: "120px", marginTop: "-50px" }}>
-                                <ul>
-                                    {requires.map((require) =>
-                                    (
-                                        <li key={require.id}>{require.name}
-
-                                        </li>
-                                    )
-                                    )}
-                                </ul>
-
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
-                            <Typography variant="h6" sx={texttitle}>
-                                Language:
-                            </Typography>
-                            <Typography variant="h6" sx={textinfo}>
-                                Japanese
-                            </Typography>
+                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
+                                <Typography variant="h6" sx={texttitle}>
+                                    <AccountBoxIcon></AccountBoxIcon>  Name:
+                                </Typography>
+                                <Typography variant="h6" sx={textinfo}>
+                                    Cong Pham  Quoc Viet
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
+                                <Typography variant="h6" sx={texttitle}>
+                                    <EmailIcon></EmailIcon> Email:
+                                </Typography>
+                                <Typography variant="h6" sx={textinfo}>
+                                    vietcpq@fpt.com
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
+                                <Typography variant="h6" sx={texttitle}>
+                                    <PhoneIphoneIcon></PhoneIphoneIcon> Phone:
+                                </Typography>
+                                <Typography variant="h6" sx={textinfo}>
+                                    09123456788
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
+                                <Typography variant="h6" sx={texttitle}>
+                                   <LocationCityIcon></LocationCityIcon> Department:
+                                </Typography>
+                                <Typography variant="h6" sx={textinfo}>
+                                    ITROOM
+                                </Typography>
+                            </Grid>
                         </Grid>
                     </Box>
-                    <Box sx={styleofbox}>
+                </Grid>
+
+                <Grid item xs={6} >
+                    <Box sx={boxcandidate}>
                         <Typography variant="h5" sx={titlebox}>
                             Detail of the candidate
                         </Typography>
                         <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
                             <Typography variant="h6" sx={texttitle}>
-                                Name:
+                                <AccountBoxIcon></AccountBoxIcon>  Name:
                             </Typography>
                             <Typography variant="h6" sx={textinfo}>
                                 Ngo Quang Huy
@@ -103,7 +175,7 @@ const Page_Interview_Id = () => {
                         </Grid>
                         <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
                             <Typography variant="h6" sx={texttitle}>
-                                Email:
+                                <EmailIcon></EmailIcon>  Email:
                             </Typography>
                             <Typography variant="h6" sx={textinfo}>
                                 huy.ngoquanghuy@hcmut.edu.vn
@@ -111,7 +183,7 @@ const Page_Interview_Id = () => {
                         </Grid>
                         <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
                             <Typography variant="h6" sx={texttitle}>
-                                Phone:
+                                <PhoneIphoneIcon></PhoneIphoneIcon>  Phone:
                             </Typography>
                             <Typography variant="h6" sx={textinfo}>
                                 1234567890
@@ -119,67 +191,18 @@ const Page_Interview_Id = () => {
                         </Grid>
                         <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
                             <Typography variant="h6" sx={texttitle}>
-                                Address:
+                               <HomeIcon></HomeIcon> Address:
                             </Typography>
                             <Typography variant="h6" sx={textinfo}>
                                 G Floor, F-Town 1 Building, High-tech Park, Tan Phu Ward, District 9, Ho Chi Minh City, Vietnam
                             </Typography>
                         </Grid>
                     </Box>
-                    <Box sx={styleofbox}>
-                        <Typography variant="h5" sx={titlebox}>
-                            Detail of the interviewer
-                        </Typography>
-                        <Grid container spacing={0} item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
-                            <Typography variant="h6" sx={texttitle}>
-                                Name:
-
-
-                            </Typography>
-                            {/* <Typography variant="h6" sx={{ fontFamily: "Times New Roman", display: "flex", justifyContent: "flex-start", alignItems: "flex-start", marginLeft: "50px", marginTop: "-50px" }}>
-                                <ul>
-                                    {interviewers.map((interviewer) =>
-                                    (
-                                        <li key={interviewer.id}>{interviewer.name}
-
-                                        </li>
-                                    )
-                                    )}
-                                </ul>
-
-                            </Typography> */}
-                            <Typography variant="h6" sx={textinfo}>
-                                Pham Cong Quoc Viet
-                            </Typography>
-                        </Grid>
-                    </Box>
-                    <Box sx={styleofbox}>
-                        <Typography variant="h5" sx={titlebox}>
-                            Date Time and Room
-                        </Typography>
-                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
-                            <Typography variant="h6" sx={texttitle}>
-                                Date Time:
-                            </Typography>
-                            <Typography variant="h6" sx={textinfo}>
-                                14:00 12/06/2023
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
-                            <Typography variant="h6" sx={texttitle}>
-                                Room:
-                            </Typography>
-                            <Typography variant="h6" sx={textinfo}>
-                                202B4
-                            </Typography>
-                        </Grid>
-                    </Box>
                 </Grid>
                 <Grid item xs={6}>
-                    {/* <Page_Profile_Id_Cv_Id /> */}
                     <CV />
                 </Grid>
-            </Grid>
+            </Grid >
 
         </>
     )

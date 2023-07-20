@@ -1,18 +1,18 @@
 [
     {
       "id": 4,
-      "name": "Basic knowledge HTML, CSS, Javascript"
+      "name": "HTML"
     },
     {
       "id": 1,
-      "name": "There have been projects related to ReactJS"
+      "name": "CSS"
     },
     {
       "id": 2,
-      "name": "Good teamwork and communication skills"
+      "name": "JavaScript"
     },
     {
       "id": 3,
-      "name": "Diligent, responsible, punctual work attitude"
+      "name": "Python"
     }
 ]
