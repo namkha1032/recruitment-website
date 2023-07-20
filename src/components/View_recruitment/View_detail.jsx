@@ -18,7 +18,7 @@ const View_detail = () => {
     return (
         <Grid container spacing={1} sx={{ marginTop: "10px" }}>
             <Grid item xs={12}>
-                <Typography color="primary" variant='h5' sx={{ fontWeight: "bold", fontStyle: "italic" }}>
+                <Typography color="primary" variant='h5' sx={{ fontWeight: "bold" }}>
                     <DescriptionIcon></DescriptionIcon> Description
                 </Typography>
                 <Box sx={{ marginLeft: "15px", textAlign: "justify", fontSize: "16px" }}>
@@ -63,7 +63,7 @@ const View_detail = () => {
 
             <div className='line'></div>
             <Grid item xs={12}>
-                <Typography color="primary" variant='h5' sx={{ fontWeight: "bold", fontStyle: "italic" }}>
+                <Typography color="primary" variant='h5' sx={{ fontWeight: "bold"}}>
                     <LocationCityIcon></LocationCityIcon> Department
                 </Typography>
             </Grid>

@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import {  Grid, Box,  Button } from '@mui/material';
+import { Grid, Box, Button } from '@mui/material';
 import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import PendingIcon from '@mui/icons-material/Pending';
@@ -34,7 +34,7 @@ const styleofbox = {
 }
 const List_application = () => {
     const navigate = useNavigate();
-    
+
     let [currentTable, setCurrentTable] = useState(0)
     const datas = require('../../data/Application_list/list.json');
     const pending = datas.filter(data => {
@@ -49,8 +49,8 @@ const List_application = () => {
     const handleEditClick = (params) => {
         navigate(`/company/recruitment/:recruitmentid/application/${params.id}`);
     }
-    
-    
+
+
     const columns = [
         {
             field: "id",
@@ -80,7 +80,7 @@ const List_application = () => {
                     <Button
                         onClick={() => handleEditClick(cellValues)}
                         variant="contained"
-                        
+
                     >
                         Detail
                     </Button>
@@ -101,19 +101,18 @@ const List_application = () => {
             sx={{ height: 200, width: '45%', margin: "auto" }}>
             <Box minHeight="125vh">
                 <Grid container spacing={2} >
-                    <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                    <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
 
                         <Button color="primary" sx={{ textDecoration: currentTable == 0 ? 'underline' : 'none' }} variant={currentTable == 0 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(0) }} >
                             <PendingIcon></PendingIcon> Đang chờ
                         </Button>
 
-                        <Button color="warning" sx={{ textDecoration: currentTable == 1 ? 'underline' : 'none' }} variant={currentTable == 1 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(1) }} >
+                        <Button color="warning" sx={{ textDecoration: currentTable == 1 ? 'underline' : 'none' , marginLeft: "10px" }} variant={currentTable == 1 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(1) }} >
                             <FmdBadIcon></FmdBadIcon> Đã từ chối
                         </Button>
-
-                        <Button color="success" sx={{ textDecoration: currentTable == 2 ? 'underline' : 'none' }} variant={currentTable == 2 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(2) }} >
+                        <Button color="success" sx={{ textDecoration: currentTable == 2 ? 'underline' : 'none', marginLeft: "10px" }} variant={currentTable == 2 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(2) }} >
                             <GradingIcon></GradingIcon> Đã duyệt
-                        </Button>
+                        </Button>    
 
 
                     </Grid>

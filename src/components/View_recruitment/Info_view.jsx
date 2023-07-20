@@ -45,59 +45,64 @@ const Info_view = (props) => {
 
     return (
         <Grid container spacing={2}>
-            <Grid item xs={6}>
-                <img className='picturesize' src="https://www.pvcfc.com.vn/Data/Sites/1/News/5510/mau-1.jpg" alt="Tuyển dụng" />
+            <Grid item xs={12} md={6}>
+                <Box>
+                    <img style={{ width: '100%' }} src="https://www.pvcfc.com.vn/Data/Sites/1/News/5510/mau-1.jpg" alt="Tuyển dụng" />
+                </Box>
             </Grid>
-            <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
-                <Box sx={{ width: "500px", height: "250px", margin: "auto", border: "1px solid black", borderRadius: "5px", boxShadow: "24", display: "flex", flexDirection: "column" }}>
+            <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column" }}>
+                <Box sx={{ width: "100%", height: "100%", borderRadius: "5px", boxShadow: "24", display: "flex", flexDirection: "column" }}>
                     <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
-                        <Typography variant='h5' sx={{ justifyContent: "flex-start", alignItems: "flex-start" , fontWeight: "bold", fontStyle: "italic" }} >
+                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }} >
                             <RadarIcon></RadarIcon> Position:
                         </Typography>
-                        <Typography variant='h5' sx={{ display: "flex", marginLeft: "10px" }} >
+                        <Typography variant='h6' sx={{ display: "flex", marginLeft: "10px" }} >
                             Front-end Developer
                         </Typography>
                     </Grid>
 
-                    <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
-                        <Typography variant='h5' sx={{ justifyContent: "flex-start", alignItems: "flex-start" , fontWeight: "bold", fontStyle: "italic" }} >
-                            <HourglassBottomRoundedIcon></HourglassBottomRoundedIcon> Time for applied:
-                        </Typography>
-                        <Chip variant='outlined' color="info" sx={{ display: "flex", marginLeft: "10px" }} label="19/07/2023 - 29/07/2023" />
-
+                    <Grid item xs={12} >
+                        <Box sx={{ display: "flex", flexDirection: "row", marginLeft: "5px", flexWrap: "wrap" }}>
+                            <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }} >
+                                <HourglassBottomRoundedIcon></HourglassBottomRoundedIcon> Time for applied:
+                            </Typography>
+                            
+                                <Chip variant='outlined' color="info" sx={{ display: "flex", marginLeft: "10px" }} label="19/07/2023 - 29/07/2023" />
+                            
+                        </Box>
 
                     </Grid>
                     <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
-                        <Typography variant='h5' sx={{ justifyContent: "flex-start", alignItems: "flex-start", fontWeight: "bold", fontStyle: "italic" }} >
+                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }} >
                             <ZoomInIcon></ZoomInIcon> Max Hiring:
                         </Typography>
                         <Chip variant='outlined' color="info" sx={{ display: "flex", marginLeft: "10px" }} label="10" />
                     </Grid>
                     <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
-                        <Typography  variant='h5' sx={{justifyContent: "flex-start", alignItems: "flex-start", fontWeight: "bold", fontStyle: "italic" }}>
-                            <RecommendIcon></RecommendIcon> Requirement
+                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }}>
+                            <RecommendIcon></RecommendIcon> Requirement:
 
                         </Typography>
-                        <Stack direction="row" spacing={1} sx={{ display: "flex", marginLeft: "15px" }}>
+                        <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
                             {requires.map((require) => (
-                                <Chip key={require.id} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
+                                <Chip key={require.id} sx={{ margin: "0px 0px 5px 15px" }} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
                             ))}
                         </Stack>
                     </Grid>
 
                     <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
-                        <Typography  variant='h5' sx={{ justifyContent: "flex-start", alignItems: "flex-start", fontWeight: "bold", fontStyle: "italic" }} >
+                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }} >
                             <LanguageIcon></LanguageIcon> Language:
                         </Typography>
-                        <Stack direction="row" spacing={1} sx={{ display: "flex", marginLeft: "15px" }}>
+                        <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
                             {languages.map((language) => (
-                                <Chip key={language.id} value={language.name} label={language.name} variant='outlined' size='medium' color="success" />
+                                <Chip key={language.id} sx={{ margin: "0px 0px 5px 15px" }} value={language.name} label={language.name} variant='outlined' size='medium' color="success" />
                             ))}
                         </Stack>
                     </Grid>
 
                     <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
-                        <Typography  variant='h5' sx={{ fontWeight: "bold", fontStyle: "italic" }}>
+                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }}>
                             <CreditScoreIcon></CreditScoreIcon> Salary:
                             <Chip sx={{ padding: "0px", marginLeft: "5px" }} label="1000$" variant="outlined" color='info' size="medium" />
                         </Typography>

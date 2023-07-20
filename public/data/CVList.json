@@ -1,0 +1,15 @@
+[
+    {
+        "CVid": 1,
+        "CVname": "Front-end"
+    },
+    {
+        "CVid": 2,
+        "CVname": "Back-end"
+    },
+    {
+        "CVid": 3,
+        "CVname": "Full-stack"
+    }
+
+]

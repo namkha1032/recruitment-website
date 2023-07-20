@@ -17,34 +17,33 @@ import CV from "../../components/CV/CV"
 
 const styleofbox = {
     borderRadius: "8px",
-    border: "1px solid black",
+    boxShadow: 10,
     marginTop: "10px",
     display: "flex",
-    flexDirection: "row"
-
-
-
+    flexDirection: "row",
+    padding: 2,
 }
 
 const boxcandidate = {
     borderRadius: "8px",
-    border: "1px solid black",
+    boxShadow: 10,
     marginTop: "10px",
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    padding: 2
 
 }
 
 const titlebox = {
     fontWeight: "bold",
-    fontStyle: "italic",
+
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
 }
 
 const texttitle = {
-    fontStyle: "italic",
+   
     fontWeight: "bold",
     display: "flex",
     justifyContent: "flex-start",
@@ -54,7 +53,9 @@ const texttitle = {
 
 const textinfo = {
     display: "flex",
-    marginLeft: "5px"
+    marginLeft: "5px",
+    flexWrap: "wrap",
+
 }
 
 
@@ -87,9 +88,11 @@ const Page_Interview_Id = () => {
                                 <Typography variant="h6" sx={texttitle}>
                                     <RecommendIcon></RecommendIcon> Requirement:
                                 </Typography>
-                                <Stack direction="row" spacing={1} sx={{ display: "flex", marginLeft: "15px" }}>
+                                <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
                                     {requires.map((require) => (
-                                        <Chip key={require.id} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
+
+                                        <Chip key={require.id} sx={{ margin: "0px 0px 5px 15px" }} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
+
                                     ))}
                                 </Stack>
                             </Grid>
@@ -97,19 +100,21 @@ const Page_Interview_Id = () => {
                                 <Typography variant="h6" sx={texttitle}>
                                     <LanguageIcon></LanguageIcon>  Language:
                                 </Typography>
-                                <Stack direction="row" spacing={1} sx={{ display: "flex", marginLeft: "15px" }}>
+                                <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
                                     {languages.map((language) => (
-                                        <Chip key={language.id} value={language.name} label={language.name} variant='outlined' size='medium' color="success" />
+                                        <Chip key={language.id} sx={{ margin: "0px 0px 5px 15px" }} value={language.name} label={language.name} variant='outlined' size='medium' color="success" />
                                     ))}
                                 </Stack>
                             </Grid>
                             <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
-                                <Typography variant="h6" sx={texttitle}>
-                                    <ScheduleIcon></ScheduleIcon> Date Time:
-                                </Typography>
-                                <Typography variant="h6" sx={textinfo}>
-                                    14:00 12/06/2023
-                                </Typography>
+                                <Box sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
+                                    <Typography variant="h6" sx={texttitle}>
+                                        <ScheduleIcon></ScheduleIcon> Date Time:
+                                    </Typography>
+                                    <Typography variant="h6" sx={textinfo}>
+                                        14:00 12/06/2023
+                                    </Typography>
+                                </Box>
                             </Grid>
                             <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
                                 <Typography variant="h6" sx={texttitle}>
@@ -150,7 +155,7 @@ const Page_Interview_Id = () => {
                             </Grid>
                             <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
                                 <Typography variant="h6" sx={texttitle}>
-                                   <LocationCityIcon></LocationCityIcon> Department:
+                                    <LocationCityIcon></LocationCityIcon> Department:
                                 </Typography>
                                 <Typography variant="h6" sx={textinfo}>
                                     ITROOM
@@ -177,7 +182,7 @@ const Page_Interview_Id = () => {
                             <Typography variant="h6" sx={texttitle}>
                                 <EmailIcon></EmailIcon>  Email:
                             </Typography>
-                            <Typography variant="h6" sx={textinfo}>
+                            <Typography variant="h6" sx={{ ...textinfo, wordBreak: "break-word" }}>
                                 huy.ngoquanghuy@hcmut.edu.vn
                             </Typography>
                         </Grid>
@@ -191,7 +196,7 @@ const Page_Interview_Id = () => {
                         </Grid>
                         <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
                             <Typography variant="h6" sx={texttitle}>
-                               <HomeIcon></HomeIcon> Address:
+                                <HomeIcon></HomeIcon> Address:
                             </Typography>
                             <Typography variant="h6" sx={textinfo}>
                                 G Floor, F-Town 1 Building, High-tech Park, Tan Phu Ward, District 9, Ho Chi Minh City, Vietnam
