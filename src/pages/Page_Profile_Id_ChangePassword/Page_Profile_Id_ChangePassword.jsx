@@ -8,9 +8,12 @@ import {
   Box,
   Container,
   InputAdornment,
+  IconButton,
 } from "@mui/material";
 
-import LockIcon from "@mui/icons-material/Lock";
+//import LockIcon from "@mui/icons-material/Lock";
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const style = {
   marginTop: "15px",
@@ -22,6 +25,25 @@ const Page_Profile_Id_ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleClickShowOldPassword = () => {
+    setShowOldPassword(!showOldPassword);
+  }
+
+  const handleClickShowNewPassword = () => {
+    setShowNewPassword(!showNewPassword);
+  }
+
+  const handleClickShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  }
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -63,7 +85,7 @@ const Page_Profile_Id_ChangePassword = () => {
               item
               md={9}
               sx={{
-                borderRadius: "20px",
+                borderRadius: "10px",
                 padding: "20px",
                 paddingTop: "10px",
                 paddingBottom: "10px",
@@ -73,15 +95,19 @@ const Page_Profile_Id_ChangePassword = () => {
                 right: "20%",
               }}
             >
-              <Grid
-                item
-                xs={12}
-                sx={{ ...style, display: "flex", justifyContent: "center" }}
+              <Typography 
+                variant="h2" 
+                align="center" 
+                color='#1976d2' 
+                gutterBottom
+                fontFamily={'Roboto'}
+                fontSize={'28px'}
+                lineHeight={'28px'}
+                fontWeight={'700'}
+                padding={"20px"}
               >
-                <Typography variant="h5" align="center">
-                  Change your password
-                </Typography>
-              </Grid>
+                Change your password
+              </Typography>
 
               <form onSubmit={handleSubmit}>
                 <Grid item xs={12} md={12} sx={{ ...style }}>
@@ -89,16 +115,21 @@ const Page_Profile_Id_ChangePassword = () => {
                     fullWidth
                     required
                     label="Old Password"
-                    type="password"
+                    type={showOldPassword ? "text" : "password"}
                     value={oldPassword}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <LockIcon />
+                          <IconButton
+                            onClick={handleClickShowOldPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showOldPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "10px" },
                     }}
                     onChange={(e) => {
                       setOldPassword(e.target.value);
@@ -111,16 +142,21 @@ const Page_Profile_Id_ChangePassword = () => {
                     fullWidth
                     required
                     label="New Password"
-                    type="password"
+                    type={showNewPassword ? "text" : "password"}
                     value={newPassword}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <LockIcon />
+                          <IconButton
+                            onClick={handleClickShowNewPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showNewPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "10px" },
                     }}
                     onChange={(e) => {
                       setNewPassword(e.target.value);
@@ -133,17 +169,22 @@ const Page_Profile_Id_ChangePassword = () => {
                     fullWidth
                     required
                     label="Confirm Password"
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     value={confirmPassword}
                     variant="outlined"
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <LockIcon />
+                          <IconButton
+                            onClick={handleClickShowConfirmPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "10px" },
                     }}
                     onChange={(e) => {
                       setConfirmPassword(e.target.value);

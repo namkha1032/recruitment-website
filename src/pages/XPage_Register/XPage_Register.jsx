@@ -10,11 +10,15 @@ import {
   Container,
   InputAdornment,
   createTheme,
+  IconButton,
 } from "@mui/material";
 
-import EmailIcon from "@mui/icons-material/Email";
-import LockIcon from "@mui/icons-material/Lock";
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+/* import EmailIcon from "@mui/icons-material/Email";
+import LockIcon from "@mui/icons-material/Lock"; */
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+/* import PersonRoundedIcon from "@mui/icons-material/PersonRounded"; */
+
 import imageBackground from "../../assets/img/background.jpg";
 
 const style = {
@@ -25,7 +29,7 @@ const style = {
 const theme = createTheme({
   palette: {
     secondary: {
-      main: '#673AB7'
+      main: '#1976d2'
     }
   }
 });
@@ -35,12 +39,21 @@ const XPage_Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const Role = "candidate";
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  }
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+    /* setShowPassword(!showPassword); */
+  }
 
   const handleRegister = (event) => {
     event.preventDefault();
 
-    console.log(name, email, password, Role);
+    console.log(name, email, password);
 
     navigate("/login");
   };
@@ -90,7 +103,7 @@ const XPage_Register = () => {
               <Typography 
                 variant="h2" 
                 align="center" 
-                color='#673AB7' 
+                color='#1976d2' 
                 gutterBottom
                 fontFamily={'Roboto'}
                 fontSize={'28px'}
@@ -115,11 +128,11 @@ const XPage_Register = () => {
                     type="text"
                     value={name}
                     InputProps={{
-                      endAdornment: (
+                      /* endAdornment: (
                         <InputAdornment position="end">
                           <PersonRoundedIcon />
                         </InputAdornment>
-                      ),
+                      ), */
 
                       style: { borderRadius: "10px" },
                     }}
@@ -137,11 +150,11 @@ const XPage_Register = () => {
                     type="email"
                     value={email}
                     InputProps={{
-                      endAdornment: (
+                      /* endAdornment: (
                         <InputAdornment position="end">
                           <EmailIcon />
                         </InputAdornment>
-                      ),
+                      ), */
 
                       style: { borderRadius: "10px" },
                     }}
@@ -156,13 +169,18 @@ const XPage_Register = () => {
                     fullWidth
                     required
                     label="Password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     value={password}
                     variant="outlined"
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <LockIcon />
+                          <IconButton
+                            onClick={handleShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
                         </InputAdornment>
                       ),
 
