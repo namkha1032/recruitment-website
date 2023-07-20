@@ -17,27 +17,27 @@ const Application = () => {
               Information Of Candidate
             </Typography>
             <Box sx={{ marginTop: "16px" }}>
-              <Box  sx={{ m: 0, display: "flex" }}>
+              <Box sx={{ m: 0, display: "flex" }}>
                 Name:{" "}
                 <Box sx={{ fontWeight: "normal", paddingLeft: "8px" }}>
                   {" "}
                   Nguyễn Văn A{" "}
                 </Box>
               </Box>
-              <Box  sx={{ m: 0, display: "flex" }}>
+              <Box sx={{ m: 0, display: "flex" }}>
                 Email:
                 <Box sx={{ fontWeight: "normal", paddingLeft: "8px" }}>
                   0123456789@gmail.com
                 </Box>
               </Box>
-              <Box  sx={{ m: 0, display: "flex" }}>
+              <Box sx={{ m: 0, display: "flex" }}>
                 Phone:{" "}
                 <Box sx={{ fontWeight: "normal", paddingLeft: "8px" }}>
                   {" "}
                   0123456789{" "}
                 </Box>
               </Box>
-              <Box  sx={{ m: 0, display: "flex" }}>
+              <Box sx={{ m: 0, display: "flex" }}>
                 Address:{" "}
                 <Box sx={{ fontWeight: "normal", paddingLeft: "8px" }}>
                   {" "}
@@ -52,27 +52,27 @@ const Application = () => {
               Information Of Position
             </Typography>
             <Box sx={{ marginTop: "16px" }}>
-              <Box  sx={{ m: 0, display: "flex" }}>
+              <Box sx={{ m: 0, display: "flex" }}>
                 Name :{" "}
                 <Box sx={{ fontWeight: "normal", paddingLeft: "8px" }}>
                   {" "}
                   Nguyễn Văn B{" "}
                 </Box>
               </Box>
-              <Box  sx={{ m: 0, display: "flex" }}>
+              <Box sx={{ m: 0, display: "flex" }}>
                 Email:
                 <Box sx={{ fontWeight: "normal", paddingLeft: "8px" }}>
                   000123456789@gmail.com
                 </Box>
               </Box>
-              <Box  sx={{ m: 0, display: "flex" }}>
+              <Box sx={{ m: 0, display: "flex" }}>
                 Phone:{" "}
                 <Box sx={{ fontWeight: "normal", paddingLeft: "8px" }}>
                   {" "}
                   01234567890{" "}
                 </Box>
               </Box>
-              <Box  sx={{ m: 0, display: "flex" }}>
+              <Box sx={{ m: 0, display: "flex" }}>
                 Address:{" "}
                 <Box sx={{ fontWeight: "normal", paddingLeft: "8px" }}>
                   {" "}
