@@ -8,12 +8,12 @@ import {
   /* Link, */
   Box,
   Container,
-  InputAdornment,
+  /* InputAdornment, */
   createTheme,
 } from "@mui/material";
 
 import imageBackground from "../../assets/img/background.jpg";
-import EmailIcon from "@mui/icons-material/Email";
+/* import EmailIcon from "@mui/icons-material/Email"; */
 
 const style = {
   marginTop: "15px",
@@ -23,7 +23,7 @@ const style = {
 const theme = createTheme({
   palette: {
     secondary: {
-      main: '#673AB7'
+      main: '#1976d2'
     }
   }
 });
@@ -75,7 +75,7 @@ const Recovery = (props) => {
               <Typography 
                 variant="h2" 
                 align="center" 
-                color='#673AB7' 
+                color='#1976d2' 
                 gutterBottom
                 fontFamily={'Roboto'}
                 fontSize={'28px'}
@@ -100,11 +100,11 @@ const Recovery = (props) => {
                     type="email"
                     value={props.email}
                     InputProps={{
-                      endAdornment: (
+                      /* endAdornment: (
                         <InputAdornment position="end">
                           <EmailIcon />
                         </InputAdornment>
-                      ),
+                      ), */
 
                       style: { borderRadius: "10px" },
                     }}
