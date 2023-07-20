@@ -15,6 +15,8 @@ import { useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Pagination from '@mui/material/Pagination';
+import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader"
+import GigaCard from "../../components/GigaCard/GigaCard"
 import { Favorite, FavoriteBorder, FavoriteOutlined } from '@mui/icons-material';
 
 
@@ -63,16 +65,18 @@ const Page_Recruitment = () => {
           }}
         >
           <Container maxWidth="sm">
+            
             <Typography
               component="h1"
-              variant="h2"
+              variant="h3"
               align="center"
               color="text.primary"
               gutterBottom
             >
-              Recruitment
+              Thông tin tuyển dụng
               
             </Typography>
+            
         
           </Container>
         </Box>
@@ -103,9 +107,9 @@ const Page_Recruitment = () => {
                             </Box>
                             
                             <Box sx={{display:'flex',flexWrap:'wrap'}}>
-                              <div style={{marginRight:'10px',marginTop:'10px',backgroundColor:'cornsilk', borderRadius:'3px',padding:'3px',fontSize:'small'}}>Đồng Nai</div>
-                              <div style={{marginRight:'10px',marginTop:'10px',backgroundColor:'cornsilk', borderRadius:'3px',padding:'3px',fontSize:'small'}}>Còn 24 ngày để ứng tuyển</div>
-                              <div style={{marginRight:'10px',marginTop:'10px',backgroundColor:'cornsilk', borderRadius:'3px',padding:'3px',fontSize:'small'}}> Cập nhật 3 phút trước</div>
+                              <Box style={{marginRight:'10px',marginTop:'10px',backgroundColor:'cornsilk', borderRadius:'3px',padding:'3px',fontSize:'small'}}>Đồng Nai</Box>
+                              <Box style={{marginRight:'10px',marginTop:'10px',backgroundColor:'cornsilk', borderRadius:'3px',padding:'3px',fontSize:'small'}}>Còn 24 ngày để ứng tuyển</Box>
+                              <Box style={{marginRight:'10px',marginTop:'10px',backgroundColor:'cornsilk', borderRadius:'3px',padding:'3px',fontSize:'small'}}> Cập nhật 3 phút trước</Box>
                             </Box>
 
                           </Box>

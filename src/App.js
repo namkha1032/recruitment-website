@@ -98,6 +98,7 @@ function App() {
             <Route path="/recruitment/:recruitmentid/application/:applicationid" element={<Page_Recruitment_Id_Application_Id />} />
 
             <Route path="/test" element={<PageTest />} />
+  
           </Route>
 
           <Route path="/login" element={<XPage_Login />} />
