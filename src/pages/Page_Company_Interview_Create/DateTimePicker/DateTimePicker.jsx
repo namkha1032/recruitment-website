@@ -60,7 +60,6 @@ const DateTimePicker = (props) => {
                             id="shiftSelect"
                             value={chosenShift ? chosenShift : ""}
                             onChange={(event) => {
-                                console.log("event: ", event.target.value)
                                 setChosenShift(event.target.value)
                             }}
                         >
