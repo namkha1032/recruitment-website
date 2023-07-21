@@ -10,9 +10,19 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const ViewDialog = (props) => {
     const params = props.params
-    const category = props.category
+    const cate = props.cate
     const skillname = props.skillname
     const languagename = props.languagename
+    let categoryName
+    if (cate == 0) {
+        categoryName == "Soft Skills"
+    }
+    else if (cate == 1) {
+        categoryName == "Language"
+    }
+    else if (cate == 2) {
+        categoryName == "Technology"
+    }
     let [open, setOpen] = useState(false)
     return (
         <>
@@ -28,7 +38,7 @@ const ViewDialog = (props) => {
                         String: {params.row.questionstring}
                     </Typography>
                     <Typography variant="body1">
-                        Category: {category}
+                        Category: {categoryName}
                     </Typography>
                     {skillname &&
                         <Typography variant="body1">

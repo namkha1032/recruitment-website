@@ -25,6 +25,9 @@ const RadarPlot = (props) => {
     let rightSoft = allResult[0]
     let rightLang = allResult[1]
     let rightTech = allResult[2]
+    console.log("rightSoft: ", rightSoft)
+    console.log("rightLang: ", rightLang)
+    console.log("rightTech: ", rightTech)
     let {
         softResult,
         softMath,

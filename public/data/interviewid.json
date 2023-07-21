@@ -7,67 +7,76 @@
             "categoryname": "Soft Skills",
             "questions": [
                 {
-                    "questionid": 3,
-                    "questionstring": "soft skill question 3",
-                    "score": 5
+                    "questionid": 2,
+                    "questionstring": "soft skill question 2",
+                    "score": 4
                 },
                 {
                     "questionid": 4,
                     "questionstring": "soft skill question 4",
-                    "score": 6
+                    "score": 5
                 },
                 {
-                    "questionid": 2,
-                    "questionstring": "soft skill question 2",
-                    "score": 7
+                    "questionid": 6,
+                    "questionstring": "soft skill question 6",
+                    "score": 6
                 }
             ]
         },
         {
             "categoryid": 2,
             "categoryname": "Language Skills",
-            "languageid": 1,
-            "languagename": "English",
-            "questions": [
+            "languages": [
                 {
-                    "questionid": 13,
-                    "questionstring": "english question 13",
-                    "score": 1
-                },
-                {
-                    "questionid": 12,
-                    "questionstring": "english question 12",
-                    "score": 2
-                },
-                {
-                    "questionid": 16,
-                    "questionstring": "english question 16",
-                    "score": 3
-                },
-                {
-                    "questionid": 14,
-                    "questionstring": "english question 14",
-                    "score": 4
+                    "languageid": 1,
+                    "languagename": "English",
+                    "questions": [
+                        {
+                            "questionid": 14,
+                            "questionstring": "english question 14",
+                            "score": 2
+                        },
+                        {
+                            "questionid": 13,
+                            "questionstring": "english question 13",
+                            "score": 3
+                        },
+                        {
+                            "questionid": 16,
+                            "questionstring": "english question 16",
+                            "score": 0
+                        },
+                        {
+                            "questionid": 17,
+                            "questionstring": "english question 17",
+                            "score": 1
+                        }
+                    ]
                 }
             ]
         },
         {
             "categoryid": 3,
-            "categoryname": "Technical Skills",
+            "categoryname": "Technology Skills",
             "skills": [
                 {
                     "skillid": 1,
                     "skillname": "React",
                     "questions": [
                         {
-                            "questionid": 23,
-                            "questionstring": "react question 23",
-                            "score": 9
-                        },
-                        {
                             "questionid": 24,
                             "questionstring": "react question 24",
                             "score": 8
+                        },
+                        {
+                            "questionid": 22,
+                            "questionstring": "react question 22",
+                            "score": 7
+                        },
+                        {
+                            "questionid": 25,
+                            "questionstring": "react question 25",
+                            "score": 9
                         }
                     ]
                 },
@@ -78,11 +87,16 @@
                         {
                             "questionid": 33,
                             "questionstring": "java question 33",
-                            "score": 7
+                            "score": 9
                         },
                         {
                             "questionid": 35,
                             "questionstring": "java question 35",
+                            "score": 9
+                        },
+                        {
+                            "questionid": 34,
+                            "questionstring": "java question 34",
                             "score": 8
                         }
                     ]
@@ -92,14 +106,14 @@
                     "skillname": ".NET",
                     "questions": [
                         {
-                            "questionid": 42,
-                            "questionstring": ".NET question 42",
-                            "score": 0
+                            "questionid": 43,
+                            "questionstring": ".NET question 43",
+                            "score": 6
                         },
                         {
                             "questionid": 44,
                             "questionstring": ".NET question 44",
-                            "score": 8
+                            "score": 7
                         }
                     ]
                 },
@@ -108,13 +122,13 @@
                     "skillname": "Python",
                     "questions": [
                         {
-                            "questionid": 52,
-                            "questionstring": "Python question 52",
+                            "questionid": 54,
+                            "questionstring": "Python question 54",
                             "score": 8
                         },
                         {
-                            "questionid": 55,
-                            "questionstring": "Python question 55",
+                            "questionid": 53,
+                            "questionstring": "Python question 53",
                             "score": 9
                         }
                     ]
