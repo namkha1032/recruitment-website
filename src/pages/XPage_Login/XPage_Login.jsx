@@ -70,9 +70,10 @@ const XPage_Login = () => {
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        /* backgroundColor: "#EEF2F6", */
+        flexWrap: "wrap",
         width: "100%",
       }}
+
     >
       <Container sx={{ display: "flex", justifyContent: "center" }}>
         <Grid
@@ -82,7 +83,7 @@ const XPage_Login = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "80%",
+            width: "75%",
           }}
         >
 
@@ -132,13 +133,7 @@ const XPage_Login = () => {
                     type="email"
                     value={email}
                     InputProps={{
-                      /* endAdornment: (
-                        <InputAdornment position="end">
-                          <EmailIcon />
-                        </InputAdornment>
-                      ), */
-
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -167,7 +162,7 @@ const XPage_Login = () => {
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
                   />
                   
@@ -229,7 +224,7 @@ const XPage_Login = () => {
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "20px",
+                      borderRadius: "5px",
                       marginTop: "5px",
                     }}
                   >
@@ -243,8 +238,11 @@ const XPage_Login = () => {
                 xs={12}
                 sx={{ ...style, display: "flex", justifyContent: "center" }}
               >
-                <Typography component={Link} to="/register" variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
+                <Typography variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
                   Didn't have an account?{" "}
+                  <Typography component={Link} to="/register" variant="subtitle1" sx={{ textDecoration: 'none', color: '#1976d2', fontWeight: '500' }}>
+                    Register now
+                  </Typography>
                 </Typography>
               </Grid>
             </Grid>
