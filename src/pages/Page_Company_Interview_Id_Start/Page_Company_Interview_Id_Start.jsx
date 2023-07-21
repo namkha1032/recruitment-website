@@ -40,7 +40,7 @@ export default function Page_Company_Interview_Id_Start() {
     let rightSoft = allQuestion ? allQuestion.right[0] : null
     let rightLang = allQuestion ? allQuestion.right[1] : null
     let rightTech = allQuestion ? allQuestion.right[2] : null
-
+    
     let [currentCateTab, setCurrentCateTab] = useState(1);
 
     let [note, setNote] = useState("<h1>Anything to say?</h1>")

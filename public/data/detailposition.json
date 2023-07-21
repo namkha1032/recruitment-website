@@ -1,0 +1,13 @@
+[
+    {
+     "positionId":123,
+     "positionName":"Frontend Developer",
+     "departmentID":"234",
+     "departmentName":"Kohona",
+     "startTime":"19/07/2023",
+     "endTime":"11/08/2023",
+     "hireMax":10,
+     "applyedNumber":30,
+     "status":"active"
+    }
+]

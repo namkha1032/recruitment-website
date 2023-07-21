@@ -12,6 +12,7 @@ import skillSaga from "./saga/skillSaga"
 // import libraries
 import { all } from "redux-saga/effects"
 import ListcvSaga from "./saga/listcvSaga";
+import DetailpositionSaga from "./saga/detailpositionSaga";
 
 function* rootSaga() {
     yield all([
@@ -24,7 +25,8 @@ function* rootSaga() {
         DepartmentSaga(),
         LanguageSaga(),
         skillSaga(),
-        ListcvSaga()
+        ListcvSaga(),
+        DetailpositionSaga()
     ])
 }
 

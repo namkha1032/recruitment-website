@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -29,6 +29,7 @@ import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import { Chip, Stack } from '@mui/material';
 import View_detail from './View_detail';
 import List_application from './List_application';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Info_view = (props) => {
@@ -42,8 +43,21 @@ const Info_view = (props) => {
     const handleTab2 = (event, newValue) => {
         setTab2(newValue);
     };
+    const detailposition_draft = useSelector(state => state.detailposition);
+    const detailposition = detailposition_draft ? detailposition_draft : [];
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch({ type: 'saga/getDetailposition' })
+        return () => {
+            dispatch({ type: 'detailposition/setDetailposition', payload: null })
+        }
+    }, [])
+    console.log(detailposition);
+    // console.log(detailposition.positionName);
+   
 
     return (
+
         <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
                 <Box>
@@ -53,7 +67,7 @@ const Info_view = (props) => {
             <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column" }}>
                 <Box sx={{ width: "100%", height: "100%", borderRadius: "5px", boxShadow: "24", display: "flex", flexDirection: "column" }}>
                     <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
-                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }} >
+                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start", display: "flex" }} >
                             <RadarIcon></RadarIcon> Position:
                         </Typography>
                         <Typography variant='h6' sx={{ display: "flex", marginLeft: "10px" }} >
@@ -63,23 +77,23 @@ const Info_view = (props) => {
 
                     <Grid item xs={12} >
                         <Box sx={{ display: "flex", flexDirection: "row", marginLeft: "5px", flexWrap: "wrap" }}>
-                            <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }} >
+                            <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start", display: "flex" }} >
                                 <HourglassBottomRoundedIcon></HourglassBottomRoundedIcon> Time for applied:
                             </Typography>
-                            
-                                <Chip variant='outlined' color="info" sx={{ display: "flex", marginLeft: "10px" }} label="19/07/2023 - 29/07/2023" />
-                            
+
+                            <Chip variant='outlined' color="info" sx={{ display: "flex", marginLeft: "10px" }} label="19/07/2023-29/07/2023" />
+
                         </Box>
 
                     </Grid>
                     <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
-                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }} >
+                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start", display: "flex" }} >
                             <ZoomInIcon></ZoomInIcon> Max Hiring:
                         </Typography>
                         <Chip variant='outlined' color="info" sx={{ display: "flex", marginLeft: "10px" }} label="10" />
                     </Grid>
                     <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
-                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }}>
+                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start", display: "flex" }}>
                             <RecommendIcon></RecommendIcon> Requirement:
 
                         </Typography>
@@ -91,7 +105,7 @@ const Info_view = (props) => {
                     </Grid>
 
                     <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
-                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }} >
+                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start", display: "flex" }} >
                             <LanguageIcon></LanguageIcon> Language:
                         </Typography>
                         <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
@@ -102,7 +116,7 @@ const Info_view = (props) => {
                     </Grid>
 
                     <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
-                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }}>
+                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start", display: "flex" }}>
                             <CreditScoreIcon></CreditScoreIcon> Salary:
                             <Chip sx={{ padding: "0px", marginLeft: "5px" }} label="1000$" variant="outlined" color='info' size="medium" />
                         </Typography>
@@ -150,6 +164,8 @@ const Info_view = (props) => {
                 </Box>
             </Grid>
         </Grid>
+
+
 
     )
 }

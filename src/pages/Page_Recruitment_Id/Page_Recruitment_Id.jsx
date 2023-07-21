@@ -42,20 +42,6 @@ const success_notice = {
     p: 4
 }
 
-let CVlist = [
-    {
-        id: 1,
-        name: "CV1",
-    },
-    {
-        id: 2,
-        name: "CV2"
-    },
-    {
-        id: 3,
-        name: "CV3"
-    }
-]
 const Page_Recruitment_Id = () => {
     const navigate = useNavigate();
     const [showCV, setShowCV] = useState(false);
@@ -81,12 +67,12 @@ const Page_Recruitment_Id = () => {
         }
 
     }, [])
+    
     const handleTextClick = () => {
         window.open('/profile/:profileid/cv/:cvid');
-      };
-    console.log(list_CV);
+    };
 
-   
+
     const hanldebutton = () => {
         setSubmit(true);
     }
@@ -153,7 +139,7 @@ const Page_Recruitment_Id = () => {
 
                                 {list_CV.map((CV) => (
                                     <FormControlLabel key={CV.CVid} value={CV.CVname} control={<Radio />} label={<span onClick={handleTextClick}>
-                                       
+
                                         {CV.CVname}
                                     </span>} />
                                 ))}
