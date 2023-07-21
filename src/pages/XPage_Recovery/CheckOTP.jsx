@@ -73,7 +73,7 @@ const CheckOTP = (props) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "80%",
+            width: "75%",
           }}
         >
 
@@ -127,7 +127,7 @@ const CheckOTP = (props) => {
                     variant="outlined"
                     InputProps={{
 
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
                       props.onChangeOTP(e.target.value);
@@ -197,7 +197,7 @@ const CheckOTP = (props) => {
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "20px",
+                      borderRadius: "5px",
                       marginTop: "5px",
                     }}
                   >

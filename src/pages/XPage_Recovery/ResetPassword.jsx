@@ -66,7 +66,7 @@ const ResetPassword = (props) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "80%",
+            width: "75%",
           }}
         >
 
@@ -129,7 +129,7 @@ const ResetPassword = (props) => {
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
                       props.onChangeNewPassword(e.target.value);
@@ -157,7 +157,7 @@ const ResetPassword = (props) => {
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
                       props.onChangeConfirmPassword(e.target.value);
@@ -179,7 +179,7 @@ const ResetPassword = (props) => {
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "20px",
+                      borderRadius: "5px",
                       marginTop: "5px",
                     }}
                   >

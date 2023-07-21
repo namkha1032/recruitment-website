@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import Recovery from "./Recovery";
 import CheckOTP from "./CheckOTP";
 import ResetPassword from "./ResetPassword";
@@ -30,12 +34,22 @@ const XPage_Recovery = () => {
   const handlePasswordSubmit = (event) => {
     event.preventDefault();
     if (newPassword !== confirmPassword) {
-      alert("Passwords do not match");
+      toast.error("Passwords do not match", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1500,
+        closeOnClick: true,
+      });
       setNewPassword("");
       setConfirmPassword("");
     } else {
-      alert("Password reset successful");
-      navigate("/login");
+      toast.success("Password reset successfully", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1500,
+        closeOnClick: true,
+      });
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     }
   };
 
@@ -54,6 +68,7 @@ const XPage_Recovery = () => {
           handleSubmit={handleOTPSubmit}
         />
       ) : (
+        <>
         <ResetPassword
           newPassword={newPassword}
           confirmPassword={confirmPassword}
@@ -61,6 +76,8 @@ const XPage_Recovery = () => {
           onChangeConfirmPassword={setConfirmPassword}
           handleSubmit={handlePasswordSubmit}
         />
+        <ToastContainer />
+        </>
       )}
     </>
   );

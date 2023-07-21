@@ -37,11 +37,25 @@ const theme = createTheme({
   }
 });
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const XPage_Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false); 
+  const [validEmail, setValidEmail] = useState(true);
+
+  const handleEmailChange = (event) => {
+    let value = event.target.value;
+    setEmail(value);
+    if (!emailRegex.test(value)) {
+      setValidEmail(false)
+    }
+    else {
+      setValidEmail(true)
+    }
+  }
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -54,8 +68,13 @@ const XPage_Login = () => {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    console.log(email, password);
-    navigate("/home");
+    if (validEmail) {
+      navigate("/home");
+    }
+    else {
+      setValidEmail(false);
+      setEmail("");
+    }
   };
 
   const handleCheck = (event) => {
@@ -135,10 +154,36 @@ const XPage_Login = () => {
                     InputProps={{
                       style: { borderRadius: "12px" },
                     }}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
+                    onChange={handleEmailChange}
+                    error={!validEmail}
                   />
+
+                  {!validEmail && (
+                    <Box
+                      margin="3px 14px 0px"
+                    >
+                      {
+                        email === "" ? (
+                          <Typography 
+                            color="#f44336"
+                            fontSize="12px"
+                            lineHeight="20px"
+                          >
+                          Email is required
+                          </Typography>
+                        ) : (
+                          <Typography color="#f44336"
+                          fontSize="12px"
+                            lineHeight="20px"
+                          >
+                          Must be a valid email
+                          </Typography>
+                        )
+                      }
+                      
+                    </Box>
+
+                  )}
                 </Grid>
 
                 <Grid item xs={12} md={12} sx={{ ...style }}>
@@ -183,7 +228,8 @@ const XPage_Login = () => {
                       control={
                         <Checkbox
                           defaultChecked
-                          color="primary"
+                          theme={theme}
+                          color="secondary"
                           onClick={handleCheck}
                         />
                       }
@@ -201,7 +247,7 @@ const XPage_Login = () => {
                         textDecoration: 'none', 
                         color: '#1976d2',
                         paddingTop: '8px',
-                        fontWeight: '500'
+                        /* fontWeight: '500' */
                       }}
                     >
                       Forgot password?{" "}
@@ -240,7 +286,7 @@ const XPage_Login = () => {
               >
                 <Typography variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
                   Didn't have an account?{" "}
-                  <Typography component={Link} to="/register" variant="subtitle1" sx={{ textDecoration: 'none', color: '#1976d2', fontWeight: '500' }}>
+                  <Typography component={Link} to="/register" variant="subtitle1" sx={{ textDecoration: 'none', color: '#1976d2'}}>
                     Register now
                   </Typography>
                 </Typography>
