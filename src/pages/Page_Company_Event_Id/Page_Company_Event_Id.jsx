@@ -8,15 +8,15 @@ import { Box, Chip, Container, Divider, Grid, Paper, Tab, Typography } from '@mu
 import React from 'react'
 import './Page_Company_Event_Id.scss'
 import { Button } from '@mui/material'
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
-import EditIcon from '@mui/icons-material/Edit';
+// import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+// import EditIcon from '@mui/icons-material/Edit';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import FormatListNumberedRoundedIcon from '@mui/icons-material/FormatListNumberedRounded';
 import CelebrationRoundedIcon from '@mui/icons-material/CelebrationRounded';
-import DescriptionRoundedIcon from '@mui/icons-material/DescriptionRounded';
+// import DescriptionRoundedIcon from '@mui/icons-material/DescriptionRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
@@ -157,44 +157,82 @@ const Page_Company_Event_Id = () => {
                                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit eum esse quisquam distinctio animi iure possimus omnis tempore dicta consectetur perspiciatis atque in, cupiditate nostrum numquam accusamus blanditiis velit libero!</p>
                                 <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure laborum, ullam necessitatibus harum distinctio similique itaque corrupti qui possimus incidunt quisquam, optio hic molestias et accusantium rem ipsum. Commodi, consequatur.</span>
                             </p>
-                            <Box sx={{ display: "flex", alignItems: 'center' }}>
-                                <PeopleAltRoundedIcon fontSize='medium' sx={{ marginRight: 1 }}></PeopleAltRoundedIcon>
-                                <p style={{ fontWeight: 600, fontSize: 20 }}>500/1000</p>
-                            </Box>
-                            <Box sx={{ display: "flex", alignItems: 'center' }}>
-                                <AccessTimeRoundedIcon fontSize='medium' sx={{ marginRight: 1 }}></AccessTimeRoundedIcon>
-                                <p style={{ fontWeight: 600, fontSize: 20 }}>21/07/2023</p>
-                            </Box>
-                            <Box sx={{ display: "flex", alignItems: 'center' }}>
-                                <LocationOnRoundedIcon fontSize='medium' sx={{ marginRight: 1 }}></LocationOnRoundedIcon>
-                                <p style={{ fontWeight: 600, fontSize: 20 }}>268 Lý Thường Kiệt, phường 14, quận 10</p>
-                            </Box>
 
-                            {/* <Grid container sx={{ mt: 2 }}>
-                                <Grid item xs={4}>
-                                    <Grid container>
-                                        <Grid item xs={4} display="flex" justifyContent="center" alignItems="center">
-                                            <PeopleAltRoundedIcon fontSize="large"></PeopleAltRoundedIcon>
-                                        </Grid>
-                                        <Grid item xs={8}>
-                                            <Box sx={{display:"flex", flexDirection:"column", justifyContent:"flex-start", alignItems:"center"}}>
-                                                <Box sx={{
-                                                    fontSize: 20,
-                                                    fontWeight: 600,
-                                                    display: 'flex',
-                                                    alignItems: 'center'
-                                                }}>
-                                                    Số lượng
-                                                </Box>
-                                                <p>500/1000</p>
+                            <Grid container sx={{ marginTop: 8 }}>
+                                <Grid item md={3} sm={4} xs={6}>
+                                    <Box sx={{
+                                        display: "flex",
+                                        // alignItems: 'center',
+                                        // marginTop: 6
+                                    }}>
+                                        <PeopleAltRoundedIcon fontSize='large' sx={{ marginRight: 2 }}></PeopleAltRoundedIcon>
+                                        <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                            <Box sx={{
+                                                fontSize: 22,
+                                                fontWeight: 600,
+                                            }}>
+                                                Số lượng
                                             </Box>
-                                        </Grid>
-                                    </Grid>
+                                            <Box sx={{
+                                                fontSize: 16,
+                                            }}>
+                                                500/1000
+                                            </Box>
+                                        </Box>
+                                        {/* <p style={{ fontWeight: 600, fontSize: 20 }}>500/1000</p> */}
+                                    </Box>
                                 </Grid>
-                                <Grid item xs={4}>abcde</Grid>
-                                <Grid item xs={4}>abcde</Grid>
-                            </Grid> */}
-                            <Grid item xs={12} align='right'>
+                                <Grid item md={3} sm={4} xs={6}>
+                                    <Box sx={{
+                                        display: "flex",
+                                        // alignItems: 'center',
+                                        // marginTop: 3
+                                        // justifyContent: 'center'
+                                    }}>
+                                        <AccessTimeRoundedIcon fontSize='large' sx={{ marginRight: 2 }}></AccessTimeRoundedIcon>
+                                        <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                            <Box sx={{
+                                                fontSize: 22,
+                                                fontWeight: 600,
+                                            }}>
+                                                Thời gian
+                                            </Box>
+                                            <Box sx={{
+                                                fontSize: 16,
+                                            }}>
+                                                21/07/2023
+                                            </Box>
+                                        </Box>
+                                        {/* <p style={{ fontWeight: 600, fontSize: 20 }}>21/07/2023</p> */}
+                                    </Box>
+                                </Grid>
+                                <Grid item md={6} sm={4} xs={12}>
+                                    <Box sx={{
+                                        display: "flex",
+                                        // alignItems: 'center',
+                                        // marginTop: 3
+                                        // justifyContent: 'flex-end'
+                                    }}>
+                                        <LocationOnRoundedIcon fontSize='large' sx={{ marginRight: 2 }}></LocationOnRoundedIcon>
+                                        <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                            <Box sx={{
+                                                fontSize: 22,
+                                                fontWeight: 600,
+                                            }}>
+                                                Địa điểm
+                                            </Box>
+                                            <Box sx={{
+                                                fontSize: 16,
+                                            }}>
+                                                268 Lý Thường Kiệt, phường 14, quận 10, Thành phố Hồ Chí Minh 
+                                            </Box>
+                                        </Box>
+                                        {/* <p style={{ fontWeight: 600, fontSize: 20 }}>268 Lý Thường Kiệt, phường 14, quận 10</p> */}
+                                    </Box>
+                                </Grid>
+                            </Grid>
+
+                            <Grid item xs={12} align='right' sx={{ marginTop: 8 }}>
                                 <Button variant='outlined' size='large' className='btnregister' sx={{ mx: 3 }} onClick={handleRegister}>
                                     {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
                                     Đăng ký
@@ -206,89 +244,6 @@ const Page_Company_Event_Id = () => {
                             </Grid>
                         </GigaCardBody>
                     </GigaCard>
-                    {/* <Grid container>
-                        <Grid item md={6} sm={12} sx={{ p: 1 }}>
-                            <img src={picture}
-                                alt="..."
-                                style={{
-                                    width: '100%',
-                                    objectFit: 'cover',
-                                    border: '5px solid #555'
-                                }} />
-                        </Grid>
-
-                        <Grid item md={6} sm={12} sx={{ p: 1 }}>
-                            <Paper elevation={20} sx={{ borderRadius: '10px' }}>
-                                <Grid container spacing={2}
-                                    sx={{
-                                        p: 0.8,
-                                        display: "flex",
-                                        alignItems: "center",
-                                        width: '100%',
-                                        height: '100%',
-                                    }}
-                                    style={{
-                                        // filter: 'drop-shadow(0 0 10px black)', 
-                                        margin: 0.5,
-                                        // background: 'lightgray', 
-                                        backgroundColor: '#EEF2F5',
-                                        borderRadius: '10px',
-                                        // border: '2px solid black'
-                                    }}>
-                                    <Grid item xs={12} align='right'>
-                                        <Box sx={{ borderRadius: 100, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                                            <Typography variant='span' className='header'>500/1000</Typography>
-                                            <PeopleAltRoundedIcon color='primary' sx={{ marginLeft: 1 }}></PeopleAltRoundedIcon>
-                                        </Box>
-                                    </Grid>
-                                    <Grid item md={4} sm={5} xs={6} sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-                                        <CelebrationRoundedIcon color='primary' sx={{ marginRight: 1 }}></CelebrationRoundedIcon>
-                                        <Typography variant='span' className='header'>Tên sự kiện</Typography>
-                                    </Grid>
-                                    <Grid item md={8} sm={7} xs={6}>
-                                        <Box className='content' p={3}>Code War</Box>
-                                    </Grid>
-                                    <Grid item md={4} sm={5} xs={6} sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-                                        <DescriptionRoundedIcon color='primary' sx={{ marginRight: 1 }}></DescriptionRoundedIcon>
-                                        <Typography variant='span' className='header'>Nội dung</Typography>
-                                    </Grid>
-                                    <Grid item md={8} sm={7} xs={6}>
-                                        <Box className='content' p={3} height={140}>Code War là một sự kiện thú vị đến từ FPT Software</Box>
-                                    </Grid>
-                                    <Grid item md={3} sm={4} xs={5}>
-                                        <Typography variant='span' className='header'>Đã đăng ký</Typography>
-                                    </Grid>
-                                    <Grid item md={9} sm={8} xs={7}>
-                                        <Box className='content' p={3}>500/1000</Box>
-                                    </Grid>
-                                    <Grid item md={4} sm={5} xs={6} sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-                                        <AccessTimeRoundedIcon color='primary' sx={{ marginRight: 1 }}></AccessTimeRoundedIcon>
-                                        <Typography variant='span' className='header'>Thời gian</Typography>
-                                    </Grid>
-                                    <Grid item md={8} sm={7} xs={6}>
-                                        <Box className='content' p={3}>Date time</Box>
-                                    </Grid>
-                                    <Grid item md={4} sm={5} xs={6} sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-                                        <LocationOnRoundedIcon color='primary' sx={{ marginRight: 1 }}></LocationOnRoundedIcon>
-                                        <Typography variant='span' className='header'>Địa điểm</Typography>
-                                    </Grid>
-                                    <Grid item md={8} sm={7} xs={6}>
-                                        <Box className='content' p={3}>Location</Box>
-                                    </Grid>
-                                    <Grid item xs={12} align='right'>
-                                        <Button variant='contained' size='small' className='btnregister' sx={{ mx: 2 }} onClick={handleRegister}>
-                                            <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon>
-                                            Đăng ký
-                                        </Button>
-                                        <Button variant='contained' size='small' color='success' onClick={handleEdit}>
-                                            <EditIcon sx={{ marginRight: 0.5 }}></EditIcon>
-                                            Chỉnh sửa
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                            </Paper>
-                        </Grid>
-                    </Grid> */}
                 </TabPanel>
 
                 <TabPanel value='2' sx={{ p: 0, mt: 2 }}>
