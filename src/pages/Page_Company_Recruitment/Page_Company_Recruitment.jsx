@@ -36,7 +36,6 @@ export default function Page_Company_Recruitment() {
   const department_draft = useSelector(state => state.department)
 
   const departments = department_draft ? department_draft.map((department) => department.departmentName) : []
-  console.log(departments)
   // const [rows, setRows] = useState(datasjson);
 
   // const [anchorEl, setAnchorEl] = useState(null);
@@ -113,7 +112,8 @@ export default function Page_Company_Recruitment() {
       type: "number",
       headerAlign: "left",
       align: "left",
-      width: 40,
+      minWidth: 40,
+      flex: 1,
       renderHeader: () => <span>ID</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
@@ -163,6 +163,7 @@ export default function Page_Company_Recruitment() {
       align: "left",
       renderHeader: () => <span>Ngày bắt đầu</span>,
       minWidth: 180,
+      flex: 1,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
       },
@@ -174,6 +175,7 @@ export default function Page_Company_Recruitment() {
       align: "left",
       renderHeader: () => <span>Ngày kết thúc</span>,
       minWidth: 180,
+      flex: 1,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
       },
@@ -194,10 +196,12 @@ export default function Page_Company_Recruitment() {
       align: "center",
       renderHeader: () => <span>Đã đăng ký</span>,
       minWidth: 100,
+      flex: 1,
     },
     {
       field: "Status",
       minWidth: 180,
+      flex: 1,
       headerAlign: "center",
       align: "center",
       renderHeader: () => <span>Trạng thái</span>,
@@ -486,6 +490,12 @@ export default function Page_Company_Recruitment() {
             "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
               display: "none",
             },
+            '&.MuiDataGrid-root .MuiDataGrid-virtualScroller::-webkit-scrollbar': {
+              display: "none",
+            },
+            // "&.MuiDataGrid-root .MuiDataGrid-virtualScrollerContent--overflowed": {
+            //   display: "none",
+            // },
             "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
               color: "white",
             },
@@ -511,6 +521,7 @@ export default function Page_Company_Recruitment() {
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
+          disableSelectionOnClick
           pagination
           pageSizeOptions={[5, 10, 15, 25, 50, 100]}
           initialState={{
