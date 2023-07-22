@@ -22,5 +22,37 @@
     "departmentEmail": "recruite@fpt.com",
     "departmentPhone": "0123456789",
     "departmentWebsite": "https://fpt.recruit.com"
+  },
+  {
+    "departmentId": 3,
+    "departmentName": "Recruite xyz",
+    "departmentAddress": "F Town 3",
+    "departmentEmail": "recruite@fpt.com",
+    "departmentPhone": "0123456789",
+    "departmentWebsite": "https://fpt.recruit.com"
+  },
+  {
+    "departmentId": 4,
+    "departmentName": "Recruite xyz",
+    "departmentAddress": "F Town 3",
+    "departmentEmail": "recruite@fpt.com",
+    "departmentPhone": "0123456789",
+    "departmentWebsite": "https://fpt.recruit.com"
+  },
+  {
+    "departmentId": 5,
+    "departmentName": "Recruite xyz",
+    "departmentAddress": "F Town 3",
+    "departmentEmail": "recruite@fpt.com",
+    "departmentPhone": "0123456789",
+    "departmentWebsite": "https://fpt.recruit.com"
+  },
+  {
+    "departmentId": 6,
+    "departmentName": "Recruite xyz",
+    "departmentAddress": "F Town 3",
+    "departmentEmail": "recruite@fpt.com",
+    "departmentPhone": "0123456789",
+    "departmentWebsite": "https://fpt.recruit.com"
   }
 ]

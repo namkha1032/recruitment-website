@@ -10,6 +10,9 @@ const recruitmentSlice = createSlice({
     updateRecruitment(state, action) {
       return action.payload;
     },
+    clearUpRecruitment() {
+      return null
+    }
   },
 });
 
