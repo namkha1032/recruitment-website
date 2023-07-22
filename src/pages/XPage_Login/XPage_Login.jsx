@@ -22,9 +22,6 @@ import GigaCardBody from "../../components/GigaCardBody/GigaCardBody"
 
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
-/* import EmailIcon from "@mui/icons-material/Email"; */
-/* import LockIcon from "@mui/icons-material/Lock"; */
 import imageBackground from "../../assets/img/background.jpg";
 
 const style = {
@@ -40,23 +37,24 @@ const theme = createTheme({
   }
 });
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
 
 const XPage_Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [validUsername, setValidUsername] = useState(true);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false); 
-  const [validEmail, setValidEmail] = useState(true);
+  const [check, setCheck] = useState(false);
 
-  const handleEmailChange = (event) => {
+  const handleUsernameChange = (event) => {
     let value = event.target.value;
-    setEmail(value);
-    if (!emailRegex.test(value)) {
-      setValidEmail(false)
+    setUsername(value);
+    if (!usernameRegex.test(value)) {
+      setValidUsername(false)
     }
     else {
-      setValidEmail(true)
+      setValidUsername(true)
     }
   }
 
@@ -66,23 +64,22 @@ const XPage_Login = () => {
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
-    /* setShowPassword(!showPassword); */
   }
 
   const handleLogin = (event) => {
     event.preventDefault();
-    if (validEmail) {
+    if (validUsername) {
       navigate("/home");
     }
     else {
-      setValidEmail(false);
-      setEmail("");
+      setValidUsername(false);
+      setUsername("");
     }
   };
 
   const handleCheck = (event) => {
     event.preventDefault();
-    console.log(event.target.checked);
+    setCheck(!check);
   };
 
   return (
@@ -156,35 +153,35 @@ const XPage_Login = () => {
                   <TextField
                     fullWidth
                     required
-                    label="Email"
-                    type="email"
-                    value={email}
+                    label="Username"
+                    type="text"
+                    value={username}
                     InputProps={{
                       style: { borderRadius: "12px" },
                     }}
-                    onChange={handleEmailChange}
-                    error={!validEmail}
+                    onChange={handleUsernameChange}
+                    error={!validUsername}
                   />
 
-                  {!validEmail && (
+                  {!validUsername && (
                     <Box
                       margin="3px 14px 0px"
                     >
                       {
-                        email === "" ? (
+                        username === "" ? (
                           <Typography 
                             color="#f44336"
                             fontSize="12px"
                             lineHeight="20px"
                           >
-                          Email is required
+                            Username is required
                           </Typography>
                         ) : (
                           <Typography color="#f44336"
                           fontSize="12px"
                             lineHeight="20px"
                           >
-                          Must be a valid email
+                            Username must be 3-20 characters long and can only contain letters, numbers and underscores
                           </Typography>
                         )
                       }
@@ -235,7 +232,7 @@ const XPage_Login = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          defaultChecked
+                          checked={check}
                           theme={theme}
                           color="secondary"
                           onClick={handleCheck}
