@@ -11,6 +11,10 @@ import {
   IconButton,
 } from "@mui/material";
 
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 //import LockIcon from "@mui/icons-material/Lock";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -48,16 +52,30 @@ const Page_Profile_Id_ChangePassword = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (oldPassword === newPassword) {
-      alert("New password cannot be the same as old password");
+      toast.error("New password cannot be same as old password", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1500,
+        closeOnClick: true,
+      });
       setNewPassword("");
       setConfirmPassword("");
     } else if (newPassword !== confirmPassword) {
-      alert("Passwords do not match");
+      toast.error("Passwords do not match", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1500,
+        closeOnClick: true,
+      });
       setNewPassword("");
       setConfirmPassword("");
     } else {
-      alert("Password change successful");
-      navigate("/profile/:profileid");
+      toast.success("Password changed successfully", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1500,
+        closeOnClick: true,
+      });
+      setTimeout(() => {
+        navigate("/profile/:profileid");
+      }, 2000);
     }
   };
 
@@ -76,7 +94,7 @@ const Page_Profile_Id_ChangePassword = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "80%",
+            width: "75%",
           }}
         >
 
@@ -93,6 +111,7 @@ const Page_Profile_Id_ChangePassword = () => {
                 opacity: "100%",
                 left: "20%",
                 right: "20%",
+                border: "1px solid black",
               }}
             >
               <Typography 
@@ -106,7 +125,7 @@ const Page_Profile_Id_ChangePassword = () => {
                 fontWeight={'700'}
                 padding={"20px"}
               >
-                Change your password
+                Change password
               </Typography>
 
               <form onSubmit={handleSubmit}>
@@ -129,7 +148,7 @@ const Page_Profile_Id_ChangePassword = () => {
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
                       setOldPassword(e.target.value);
@@ -156,7 +175,7 @@ const Page_Profile_Id_ChangePassword = () => {
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
                       setNewPassword(e.target.value);
@@ -184,7 +203,7 @@ const Page_Profile_Id_ChangePassword = () => {
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
                       setConfirmPassword(e.target.value);
@@ -203,7 +222,7 @@ const Page_Profile_Id_ChangePassword = () => {
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "20px",
+                      borderRadius: "5px",
                       marginTop: "15px",
                     }}
                   >
@@ -211,6 +230,8 @@ const Page_Profile_Id_ChangePassword = () => {
                   </Button>
                 </Grid>
               </form>
+
+              <ToastContainer />
             </Grid>
           </Grid>
         </Grid>

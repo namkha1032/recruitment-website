@@ -37,11 +37,25 @@ const theme = createTheme({
   }
 });
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const XPage_Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false); 
+  const [validEmail, setValidEmail] = useState(true);
+
+  const handleEmailChange = (event) => {
+    let value = event.target.value;
+    setEmail(value);
+    if (!emailRegex.test(value)) {
+      setValidEmail(false)
+    }
+    else {
+      setValidEmail(true)
+    }
+  }
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -54,11 +68,17 @@ const XPage_Login = () => {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    console.log(email, password);
-    navigate("/home");
+    if (validEmail) {
+      navigate("/home");
+    }
+    else {
+      setValidEmail(false);
+      setEmail("");
+    }
   };
 
   const handleCheck = (event) => {
+    event.preventDefault();
     console.log(event.target.checked);
   };
 
@@ -70,9 +90,10 @@ const XPage_Login = () => {
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        /* backgroundColor: "#EEF2F6", */
+        flexWrap: "wrap",
         width: "100%",
       }}
+
     >
       <Container sx={{ display: "flex", justifyContent: "center" }}>
         <Grid
@@ -82,7 +103,7 @@ const XPage_Login = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "80%",
+            width: "75%",
           }}
         >
 
@@ -132,18 +153,38 @@ const XPage_Login = () => {
                     type="email"
                     value={email}
                     InputProps={{
-                      /* endAdornment: (
-                        <InputAdornment position="end">
-                          <EmailIcon />
-                        </InputAdornment>
-                      ), */
-
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
+                    onChange={handleEmailChange}
+                    error={!validEmail}
                   />
+
+                  {!validEmail && (
+                    <Box
+                      margin="3px 14px 0px"
+                    >
+                      {
+                        email === "" ? (
+                          <Typography 
+                            color="#f44336"
+                            fontSize="12px"
+                            lineHeight="20px"
+                          >
+                          Email is required
+                          </Typography>
+                        ) : (
+                          <Typography color="#f44336"
+                          fontSize="12px"
+                            lineHeight="20px"
+                          >
+                          Must be a valid email
+                          </Typography>
+                        )
+                      }
+                      
+                    </Box>
+
+                  )}
                 </Grid>
 
                 <Grid item xs={12} md={12} sx={{ ...style }}>
@@ -167,7 +208,7 @@ const XPage_Login = () => {
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
                   />
                   
@@ -188,7 +229,8 @@ const XPage_Login = () => {
                       control={
                         <Checkbox
                           defaultChecked
-                          color="primary"
+                          theme={theme}
+                          color="secondary"
                           onClick={handleCheck}
                         />
                       }
@@ -206,7 +248,7 @@ const XPage_Login = () => {
                         textDecoration: 'none', 
                         color: '#1976d2',
                         paddingTop: '8px',
-                        fontWeight: '500'
+                        /* fontWeight: '500' */
                       }}
                     >
                       Forgot password?{" "}
@@ -229,7 +271,7 @@ const XPage_Login = () => {
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "20px",
+                      borderRadius: "5px",
                       marginTop: "5px",
                     }}
                   >
@@ -243,8 +285,11 @@ const XPage_Login = () => {
                 xs={12}
                 sx={{ ...style, display: "flex", justifyContent: "center" }}
               >
-                <Typography component={Link} to="/register" variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
+                <Typography variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
                   Didn't have an account?{" "}
+                  <Typography component={Link} to="/register" variant="subtitle1" sx={{ textDecoration: 'none', color: '#1976d2'}}>
+                    Register now
+                  </Typography>
                 </Typography>
               </Grid>
             </Grid>

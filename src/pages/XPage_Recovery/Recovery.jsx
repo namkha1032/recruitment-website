@@ -48,7 +48,7 @@ const Recovery = (props) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "80%",
+            width: "75%",
           }}
         >
 
@@ -83,7 +83,7 @@ const Recovery = (props) => {
                 fontWeight={'700'}
                 padding={"20px"}
               >
-                Enter your email address
+                Recovery
               </Typography>
 
               <form
@@ -106,7 +106,7 @@ const Recovery = (props) => {
                         </InputAdornment>
                       ), */
 
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
                       props.onChangeEmail(e.target.value);
@@ -128,7 +128,7 @@ const Recovery = (props) => {
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "20px",
+                      borderRadius: "5px",
                       marginTop: "15px",
                     }}
                   >
@@ -142,7 +142,7 @@ const Recovery = (props) => {
                 xs={12}
                 sx={{ ...style, display: "flex", justifyContent: "center" }}
               >
-                <Typography component={Link} to="/login" variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
+                <Typography component={Link} to="/login" variant="subtitle1" sx={{ textDecoration: 'none', color: '#1976d2' }}>
                   Back to login{" "}
                 </Typography>
               </Grid>
