@@ -211,8 +211,8 @@ const ProfileDetail = ({ user, cvlist, cvid, change, setChange }) => {
             {user.cvselected !== null && (
               <Grid item md={7} xs={12}>
                 <Paper sx={{ marginBottom: "24px", padding: "16px" }}>
-                  <CV cvid={cvid} />
-                </Paper>
+                  <CV cvid={cvid}/>
+                </Paper> 
               </Grid>
             )}
           </Grid>
