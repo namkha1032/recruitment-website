@@ -15,6 +15,8 @@ import { useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Pagination from '@mui/material/Pagination';
+import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader"
+import GigaCard from "../../components/GigaCard/GigaCard"
 import { Favorite, FavoriteBorder, FavoriteOutlined } from '@mui/icons-material';
 
 
@@ -55,7 +57,32 @@ const Page_Recruitment = () => {
       
     <main id='recruitment'>
         {/* Hero unit */}
-        <Box
+        <Box sx={{ padding: '24px' }}>
+
+<Box
+  sx=
+  {{
+    backgroundImage: 'url(https://img4.thuthuatphanmem.vn/uploads/2020/12/25/anh-bia-background-tuyen-dung_055954570.jpg)',
+    height: '300px',
+    borderRadius: '10px',
+    boxShadow: 5
+  }}>
+  <Box sx={{ padding: '150px 750px 0px 110px' }}>
+    <Typography variant='h3' align='left' color='white' fontFamily='serif' sx={{ borderBottom: '3px solid #0099FF' }}>
+      Tuyển dụng
+    </Typography>
+
+  </Box>
+
+  <Box sx={{ padding: '10px 350px 0px 110px' }}>
+    <Typography variant='h6' align='left' color='lightgrey' fontFamily='serif' >
+      Các sự kiện sôi động sẽ cập nhật liên tục, hãy theo dõi tin tức sự kiện để có thể đăng kí tham gia.
+    </Typography>
+  </Box>
+
+</Box>
+</Box>
+        {/* <Box
           sx={{
             bgcolor: 'background.paper',
             pt: 8,
@@ -63,19 +90,21 @@ const Page_Recruitment = () => {
           }}
         >
           <Container maxWidth="sm">
+            
             <Typography
               component="h1"
-              variant="h2"
+              variant="h3"
               align="center"
               color="text.primary"
               gutterBottom
             >
-              Recruitment
+              Thông tin tuyển dụng
               
             </Typography>
+            
         
           </Container>
-        </Box>
+        </Box> */}
         <Container sx={{ py: 4 }} maxWidth="md">
           {/* End hero unit */
           <Typography variant='h4' align="left" sx={{marginBottom:'15px'}}> View Recruitment</Typography>
@@ -103,9 +132,9 @@ const Page_Recruitment = () => {
                             </Box>
                             
                             <Box sx={{display:'flex',flexWrap:'wrap'}}>
-                              <div style={{marginRight:'10px',marginTop:'10px',backgroundColor:'cornsilk', borderRadius:'3px',padding:'3px',fontSize:'small'}}>Đồng Nai</div>
-                              <div style={{marginRight:'10px',marginTop:'10px',backgroundColor:'cornsilk', borderRadius:'3px',padding:'3px',fontSize:'small'}}>Còn 24 ngày để ứng tuyển</div>
-                              <div style={{marginRight:'10px',marginTop:'10px',backgroundColor:'cornsilk', borderRadius:'3px',padding:'3px',fontSize:'small'}}> Cập nhật 3 phút trước</div>
+                              <Box style={{marginRight:'10px',marginTop:'10px',backgroundColor:'cornsilk', borderRadius:'3px',padding:'3px',fontSize:'small'}}>Đồng Nai</Box>
+                              <Box style={{marginRight:'10px',marginTop:'10px',backgroundColor:'cornsilk', borderRadius:'3px',padding:'3px',fontSize:'small'}}>Còn 24 ngày để ứng tuyển</Box>
+                              <Box style={{marginRight:'10px',marginTop:'10px',backgroundColor:'cornsilk', borderRadius:'3px',padding:'3px',fontSize:'small'}}> Cập nhật 3 phút trước</Box>
                             </Box>
 
                           </Box>

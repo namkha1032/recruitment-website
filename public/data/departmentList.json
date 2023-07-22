@@ -8,19 +8,19 @@
     "departmentWebsite": "https://fpt.recruit.com"
   },
   {
-    "id": 1,
-    "name": "FrontEnd",
-    "address": "F Town 2",
-    "email": "frontend@fpt.com",
-    "phone": "0123456789",
-    "website": "https://fpt.frontend.com"
+    "departmentId": 1,
+    "departmentName": "FrontEnd",
+    "departmentAddress": "F Town 2",
+    "departmentEmail": "frontend@fpt.com",
+    "departmentPhone": "0123456789",
+    "departmentWebsite": "https://fpt.frontend.com"
   },
   {
-    "id": 2,
-    "name": "BackEnd",
-    "address": "F Town 3",
-    "email": "backend@fpt.com",
-    "phone": "0123456789",
-    "website": "https://fpt.Backend.com"
+    "departmentId": 2,
+    "departmentName": "BackEnd",
+    "departmentAddress": "F Town 3",
+    "departmentEmail": "backend@fpt.com",
+    "departmentPhone": "0123456789",
+    "departmentWebsite": "https://fpt.Backend.com"
   }
 ]

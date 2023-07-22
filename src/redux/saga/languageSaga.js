@@ -6,13 +6,13 @@ function* getLanguage(action) {
     yield put({ type: "language/setLanguage", payload: response.data })
 }
 
-function* LanguageSaga() {
+function* languageSaga() {
     yield all([
         takeEvery("saga/getLanguage", getLanguage)
     ])
 }
 
-export default LanguageSaga
+export default languageSaga
 
 
 

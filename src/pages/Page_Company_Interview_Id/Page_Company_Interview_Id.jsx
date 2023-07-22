@@ -18,7 +18,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Plot from 'react-plotly.js';
 // import components
-import ScoreTable from '../Page_Company_Interview_Id_Start/ScoreTable/ScoreTable';
+// import ScoreTable from '../Page_Company_Interview_Id_Start/ScoreTable/ScoreTable';
+import ScoreTable from '../../components/ScoreTable/ScoreTable';
 import RadarPlot from './RadarPlot/RadarPlot';
 import QuestionTable from './QuestionTable/QuestionTable';
 import NoteField from './NoteField/NoteField';
@@ -29,6 +30,8 @@ import GigaCardHeader from '../../components/GigaCardHeader/GigaCardHeader';
 import GigaCardBody from '../../components/GigaCardBody/GigaCardBody';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
@@ -40,7 +43,6 @@ const Page_Company_Interview_Id = () => {
         dispatch({ type: "saga/getInterviewId" })
     }, [])
     const interview = useSelector(state => state.interview)
-    console.log("interview: ", interview)
     function handleStart() {
         navigate("/company/interview/1/start")
     }
@@ -54,25 +56,41 @@ const Page_Company_Interview_Id = () => {
                 <Divider sx={{
                     marginY: 10,
                     "&::before, &::after": {
-                        borderColor: "error.main",
+                        borderColor: "primary.main",
                         borderWidth: "1px"
                     },
                 }}>
-                    <Button variant="contained" color="error" sx={{ fontSize: 25, borderRadius: 100 }}>
+                    <Button variant="contained" color="primary" sx={{ fontSize: 25, borderRadius: 100 }}>
                         RESULT OF THE INTERVIEW
                     </Button>
                 </Divider>
                 <Grid container spacing={4}>
-                    <Grid item md={6}>
-                        <NoteField note={interview.note} />
+                    <Grid item md={6} xs={12}>
+                        <GigaCard>
+                            <GigaCardHeader color={"primary.main"} headerIcon={<EditNoteIcon sx={{ fontSize: "inherit" }} />}>
+                                Note
+                            </GigaCardHeader>
+                            <GigaCardBody>
+                                <Divider />
+                                <NoteField note={interview.note} />
+                                <Divider />
+                            </GigaCardBody>
+                        </GigaCard >
                     </Grid>
-                    <Grid item md={6}>
-                        <QuestionTable round={interview.round} />
+                    <Grid item md={6} xs={12}>
+                        <GigaCard>
+                            <GigaCardHeader color={"primary.main"} headerIcon={<QuestionMarkIcon sx={{ fontSize: "inherit" }} />}>
+                                Questions
+                            </GigaCardHeader>
+                            <GigaCardBody>
+                                <QuestionTable round={interview.round} />
+                            </GigaCardBody>
+                        </GigaCard>
                     </Grid>
                     <Grid item md={12}>
                         <GigaCard>
                             <Grid container>
-                                <Grid item md={6} sx={{ display: "flex", flexDirection: "column" }}>
+                                <Grid item md={6} xs={12} sx={{ display: "flex", flexDirection: "column" }}>
                                     <GigaCardHeader color={"primary.main"} headerIcon={<TroubleshootIcon sx={{ fontSize: "inherit" }} />}>
                                         Analysis
                                     </GigaCardHeader>
@@ -82,7 +100,7 @@ const Page_Company_Interview_Id = () => {
                                         </Box>
                                     </GigaCardBody>
                                 </Grid>
-                                <Grid item md={6} sx={{ display: "flex", flexDirection: "column" }}>
+                                <Grid item md={6} xs={12} sx={{ display: "flex", flexDirection: "column" }}>
                                     <GigaCardHeader color={"primary.main"} headerIcon={<SportsScoreIcon sx={{ fontSize: "inherit" }} />}>
                                         Final Score
                                     </GigaCardHeader>
@@ -103,7 +121,6 @@ const Page_Company_Interview_Id = () => {
                             Accept
                         </Button>
                     </Grid>
-
                 </Grid>
 
             </>

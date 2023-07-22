@@ -26,6 +26,8 @@
     "react-bootstrap": "^2.8.0",
     "react-dom": "^18.2.0",
     "react-katex": "^3.0.1",
+    "react-material-ui-carousel": "^3.4.2",
+    "react-number-format": "^5.2.2",
     "react-plotly.js": "^2.6.0",
     "react-quill": "^2.0.0",
     "react-redux": "^8.1.1",

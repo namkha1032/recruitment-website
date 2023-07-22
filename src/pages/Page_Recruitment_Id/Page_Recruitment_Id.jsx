@@ -1,6 +1,6 @@
 import React from 'react';
-import { useState } from 'react';
-import { Grid, Button, Modal, Box, Alert, AlertTitle } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Grid, Button, Modal, Box, Alert, AlertTitle, Link } from '@mui/material';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -12,6 +12,9 @@ import Info_view from '../../components/View_recruitment/Info_view';
 import CloseIcon from '@mui/icons-material/Close';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import Page_Profile_Id_Cv_Id from '../Page_Profile_Id_Cv_Id/Page_Profile_Id_Cv_Id';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -38,36 +41,10 @@ const success_notice = {
     boxShadow: 24,
     p: 4
 }
-const boxDefault = {
-    height: 20,
-    padding: 4,
-    minWidth: 600,
-    m: 1,
-    display: "flex"
-}
-const styleofbox = {
-    borderRadius: "8px",
-    border: "1px solid black",
-    boxShadow: 24,
-    marginTop: "10px"
-}
 
-let CVlist = [
-    {
-        id: 1,
-        name: "CV1",
-    },
-    {
-        id: 2,
-        name: "CV2"
-    },
-    {
-        id: 3,
-        name: "CV3"
-    }
-]
 const Page_Recruitment_Id = () => {
-
+    const navigate = useNavigate();
+    const [showCV, setShowCV] = useState(false);
     const [open, setOpen] = useState(false);
     const [submit, setSubmit] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -79,6 +56,23 @@ const Page_Recruitment_Id = () => {
         setCV(event.target.value);
         setHelperText('');
     };
+    const handleCloseCV = () => setShowCV(true);
+    const list_CV_draft = useSelector(state => state.cvlist);
+    const list_CV = list_CV_draft ? list_CV_draft : []
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch({ type: 'saga/getCvList' })
+        return () => {
+            dispatch({ type: 'cv/setCvList', payload: null })
+        }
+
+    }, [])
+
+    const handleTextClick = () => {
+        window.open('/profile/:profileid/cv/:cvid');
+    };
+
+
     const hanldebutton = () => {
         setSubmit(true);
     }
@@ -109,14 +103,15 @@ const Page_Recruitment_Id = () => {
     };
     const tabs = 1
     return (
+
         <Grid container spacing={2} >
             <Grid item xs={12}>
-            {/* tabs={tabs} */}
-                <Info_view  tabs={tabs} />
+                {/* tabs={tabs} */}
+                <Info_view tabs={tabs} />
             </Grid>
             <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
-                <Button  sx={{ bgcolor: 'primary.main', color: 'black', border: '2px solid black' }} variant='outlined' onClick={handleOpen}>
-                  <InsertDriveFileIcon></InsertDriveFileIcon>  Apply
+                <Button sx={{ bgcolor: 'primary.main', color: 'black' }} variant='outlined' onClick={handleOpen}>
+                    <InsertDriveFileIcon></InsertDriveFileIcon>  Apply
                 </Button>
             </Grid>
             <Modal
@@ -138,14 +133,20 @@ const Page_Recruitment_Id = () => {
                                 name="choose CV"
                                 value={CV}
                                 onChange={handleCVChange}
+
+
                             >
 
-                                {CVlist.map((CVs) => (
-                                    <FormControlLabel key={CVs.id} value={CVs.name} control={<Radio />} label={CVs.name} />
+                                {list_CV.map((CV) => (
+                                    <FormControlLabel key={CV.CVid} value={CV.CVname} control={<Radio />} label={<span onClick={handleTextClick}>
+
+                                        {CV.CVname}
+                                    </span>} />
                                 ))}
 
 
                             </RadioGroup>
+
 
                             <FormHelperText sx={{ fontSize: "20px", color: "red", fontWeight: "bold" }}>{helperText}</FormHelperText>
                         </FormControl>
@@ -184,14 +185,14 @@ const Page_Recruitment_Id = () => {
                                 </Box>
                             </Modal> */}
                             {notice == true ? (
-                                <Box sx={{ ...success_notice,  height: 200, display: "flex", flexDirection: "column" }}>
-                                    
-                                    <Alert severity="success" sx ={{fontSize: "18px"}} >
-                                        <AlertTitle sx ={{fontSize: "20px", fontWeight: "bold"}}>Success</AlertTitle>
+                                <Box sx={{ ...success_notice, height: 200, display: "flex", flexDirection: "column" }}>
+
+                                    <Alert severity="success" sx={{ fontSize: "18px" }} >
+                                        <AlertTitle sx={{ fontSize: "20px", fontWeight: "bold" }}>Success</AlertTitle>
                                         You submited successfully. Please wait for further information.
                                     </Alert>
                                 </Box>
-                            ):  null
+                            ) : null
                             }
                             {/* <Grid item xs={12}>
                                         <Typography color='success' variant='subtitle1' sx={{ display: "flex" }}>
@@ -199,7 +200,7 @@ const Page_Recruitment_Id = () => {
                                             You submited successfully. Please wait for further information.
                                         </Typography>
                                     </Grid> */}
-                                    {/* <Grid item xs={12}>
+                            {/* <Grid item xs={12}>
                                     <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                                         <Button variant='contained' color="success" onClick={handleclose_notice_modal}>
                                             <DoneAllIcon></DoneAllIcon> OK

@@ -48,54 +48,58 @@
     {
         "categoryid": 2,
         "categoryname": "Language Skills",
-        "languageid": 1,
-        "languagename": "English",
-        "questions": [
+        "languages": [
             {
-                "questionid": 11,
-                "questionstring": "english question 11"
-            },
-            {
-                "questionid": 12,
-                "questionstring": "english question 12"
-            },
-            {
-                "questionid": 13,
-                "questionstring": "english question 13"
-            },
-            {
-                "questionid": 14,
-                "questionstring": "english question 14"
-            },
-            {
-                "questionid": 15,
-                "questionstring": "english question 15"
-            },
-            {
-                "questionid": 16,
-                "questionstring": "english question 16"
-            },
-            {
-                "questionid": 17,
-                "questionstring": "english question 17"
-            },
-            {
-                "questionid": 18,
-                "questionstring": "english question 18"
-            },
-            {
-                "questionid": 19,
-                "questionstring": "english question 19"
-            },
-            {
-                "questionid": 20,
-                "questionstring": "english question 20"
+                "languageid": 1,
+                "languagename": "English",
+                "questions": [
+                    {
+                        "questionid": 11,
+                        "questionstring": "english question 11"
+                    },
+                    {
+                        "questionid": 12,
+                        "questionstring": "english question 12"
+                    },
+                    {
+                        "questionid": 13,
+                        "questionstring": "english question 13"
+                    },
+                    {
+                        "questionid": 14,
+                        "questionstring": "english question 14"
+                    },
+                    {
+                        "questionid": 15,
+                        "questionstring": "english question 15"
+                    },
+                    {
+                        "questionid": 16,
+                        "questionstring": "english question 16"
+                    },
+                    {
+                        "questionid": 17,
+                        "questionstring": "english question 17"
+                    },
+                    {
+                        "questionid": 18,
+                        "questionstring": "english question 18"
+                    },
+                    {
+                        "questionid": 19,
+                        "questionstring": "english question 19"
+                    },
+                    {
+                        "questionid": 20,
+                        "questionstring": "english question 20"
+                    }
+                ]
             }
         ]
     },
     {
         "categoryid": 3,
-        "categoryname": "Technical Skills",
+        "categoryname": "Technology Skills",
         "skills": [
             {
                 "skillid": 1,
@@ -103,7 +107,7 @@
                 "questions": [
                     {
                         "questionid": 21,
-                        "questionstring": "react question 21"
+                        "questionstring": "react question 21react question 21react question 21react question 21react question 21react question 21react question 21react question 21react question 21react question 21react question 21"
                     },
                     {
                         "questionid": 22,

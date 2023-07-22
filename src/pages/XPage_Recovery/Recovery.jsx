@@ -8,12 +8,12 @@ import {
   /* Link, */
   Box,
   Container,
-  InputAdornment,
+  /* InputAdornment, */
   createTheme,
 } from "@mui/material";
 
 import imageBackground from "../../assets/img/background.jpg";
-import EmailIcon from "@mui/icons-material/Email";
+/* import EmailIcon from "@mui/icons-material/Email"; */
 
 const style = {
   marginTop: "15px",
@@ -23,7 +23,7 @@ const style = {
 const theme = createTheme({
   palette: {
     secondary: {
-      main: '#673AB7'
+      main: '#1976d2'
     }
   }
 });
@@ -48,7 +48,7 @@ const Recovery = (props) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "80%",
+            width: "75%",
           }}
         >
 
@@ -75,7 +75,7 @@ const Recovery = (props) => {
               <Typography 
                 variant="h2" 
                 align="center" 
-                color='#673AB7' 
+                color='#1976d2' 
                 gutterBottom
                 fontFamily={'Roboto'}
                 fontSize={'28px'}
@@ -83,7 +83,7 @@ const Recovery = (props) => {
                 fontWeight={'700'}
                 padding={"20px"}
               >
-                Enter your email address
+                Recovery
               </Typography>
 
               <form
@@ -100,13 +100,13 @@ const Recovery = (props) => {
                     type="email"
                     value={props.email}
                     InputProps={{
-                      endAdornment: (
+                      /* endAdornment: (
                         <InputAdornment position="end">
                           <EmailIcon />
                         </InputAdornment>
-                      ),
+                      ), */
 
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
                       props.onChangeEmail(e.target.value);
@@ -128,7 +128,7 @@ const Recovery = (props) => {
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "20px",
+                      borderRadius: "5px",
                       marginTop: "15px",
                     }}
                   >
@@ -142,7 +142,7 @@ const Recovery = (props) => {
                 xs={12}
                 sx={{ ...style, display: "flex", justifyContent: "center" }}
               >
-                <Typography component={Link} to="/login" variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
+                <Typography component={Link} to="/login" variant="subtitle1" sx={{ textDecoration: 'none', color: '#1976d2' }}>
                   Back to login{" "}
                 </Typography>
               </Grid>

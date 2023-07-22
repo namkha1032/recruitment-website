@@ -8,9 +8,13 @@ import {
   Container,
   InputAdornment,
   createTheme,
+  IconButton,
 } from "@mui/material";
 
-import LockIcon from "@mui/icons-material/Lock";
+//import LockIcon from "@mui/icons-material/Lock";
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 import imageBackground from "../../assets/img/background.jpg";
 
 const style = {
@@ -21,12 +25,28 @@ const style = {
 const theme = createTheme({
   palette: {
     secondary: {
-      main: '#673AB7'
+      main: '#1976d2'
     }
   }
 });
 
 const ResetPassword = (props) => {
+
+  const [showNewPassword, setShowNewPassword] = React.useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+
+  const handleClickShowNewPassword = () => {
+    setShowNewPassword(!showNewPassword);
+  }
+
+  const handleClickShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  }
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  }
+
   return (
     <Box
       sx={{
@@ -46,7 +66,7 @@ const ResetPassword = (props) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "80%",
+            width: "75%",
           }}
         >
 
@@ -73,7 +93,7 @@ const ResetPassword = (props) => {
               <Typography 
                 variant="h2" 
                 align="center" 
-                color='#673AB7' 
+                color='#1976d2' 
                 gutterBottom
                 fontFamily={'Roboto'}
                 fontSize={'28px'}
@@ -95,16 +115,21 @@ const ResetPassword = (props) => {
                     fullWidth
                     required
                     label="New Password"
-                    type="password"
+                    type={showNewPassword ? "text" : "password"}
                     value={props.newPassword}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <LockIcon />
+                          <IconButton
+                            onClick={handleClickShowNewPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showNewPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
                       props.onChangeNewPassword(e.target.value);
@@ -117,17 +142,22 @@ const ResetPassword = (props) => {
                     fullWidth
                     required
                     label="Confirm Password"
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     value={props.confirmPassword}
                     variant="outlined"
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <LockIcon />
+                          <IconButton
+                            onClick={handleClickShowConfirmPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
                       props.onChangeConfirmPassword(e.target.value);
@@ -149,7 +179,7 @@ const ResetPassword = (props) => {
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "20px",
+                      borderRadius: "5px",
                       marginTop: "5px",
                     }}
                   >

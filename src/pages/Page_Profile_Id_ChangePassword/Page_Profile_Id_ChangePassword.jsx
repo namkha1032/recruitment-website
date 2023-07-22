@@ -8,9 +8,16 @@ import {
   Box,
   Container,
   InputAdornment,
+  IconButton,
 } from "@mui/material";
 
-import LockIcon from "@mui/icons-material/Lock";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+//import LockIcon from "@mui/icons-material/Lock";
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const style = {
   marginTop: "15px",
@@ -22,20 +29,53 @@ const Page_Profile_Id_ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleClickShowOldPassword = () => {
+    setShowOldPassword(!showOldPassword);
+  }
+
+  const handleClickShowNewPassword = () => {
+    setShowNewPassword(!showNewPassword);
+  }
+
+  const handleClickShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  }
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (oldPassword === newPassword) {
-      alert("New password cannot be the same as old password");
+      toast.error("New password cannot be same as old password", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1500,
+        closeOnClick: true,
+      });
       setNewPassword("");
       setConfirmPassword("");
     } else if (newPassword !== confirmPassword) {
-      alert("Passwords do not match");
+      toast.error("Passwords do not match", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1500,
+        closeOnClick: true,
+      });
       setNewPassword("");
       setConfirmPassword("");
     } else {
-      alert("Password change successful");
-      navigate("/profile/:profileid");
+      toast.success("Password changed successfully", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1500,
+        closeOnClick: true,
+      });
+      setTimeout(() => {
+        navigate("/profile/:profileid");
+      }, 2000);
     }
   };
 
@@ -54,7 +94,7 @@ const Page_Profile_Id_ChangePassword = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "80%",
+            width: "75%",
           }}
         >
 
@@ -63,7 +103,7 @@ const Page_Profile_Id_ChangePassword = () => {
               item
               md={9}
               sx={{
-                borderRadius: "20px",
+                borderRadius: "10px",
                 padding: "20px",
                 paddingTop: "10px",
                 paddingBottom: "10px",
@@ -71,17 +111,22 @@ const Page_Profile_Id_ChangePassword = () => {
                 opacity: "100%",
                 left: "20%",
                 right: "20%",
+                border: "1px solid black",
               }}
             >
-              <Grid
-                item
-                xs={12}
-                sx={{ ...style, display: "flex", justifyContent: "center" }}
+              <Typography 
+                variant="h2" 
+                align="center" 
+                color='#1976d2' 
+                gutterBottom
+                fontFamily={'Roboto'}
+                fontSize={'28px'}
+                lineHeight={'28px'}
+                fontWeight={'700'}
+                padding={"20px"}
               >
-                <Typography variant="h5" align="center">
-                  Change your password
-                </Typography>
-              </Grid>
+                Change password
+              </Typography>
 
               <form onSubmit={handleSubmit}>
                 <Grid item xs={12} md={12} sx={{ ...style }}>
@@ -89,16 +134,21 @@ const Page_Profile_Id_ChangePassword = () => {
                     fullWidth
                     required
                     label="Old Password"
-                    type="password"
+                    type={showOldPassword ? "text" : "password"}
                     value={oldPassword}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <LockIcon />
+                          <IconButton
+                            onClick={handleClickShowOldPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showOldPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
                       setOldPassword(e.target.value);
@@ -111,16 +161,21 @@ const Page_Profile_Id_ChangePassword = () => {
                     fullWidth
                     required
                     label="New Password"
-                    type="password"
+                    type={showNewPassword ? "text" : "password"}
                     value={newPassword}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <LockIcon />
+                          <IconButton
+                            onClick={handleClickShowNewPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showNewPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
                       setNewPassword(e.target.value);
@@ -133,17 +188,22 @@ const Page_Profile_Id_ChangePassword = () => {
                     fullWidth
                     required
                     label="Confirm Password"
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     value={confirmPassword}
                     variant="outlined"
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <LockIcon />
+                          <IconButton
+                            onClick={handleClickShowConfirmPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
                       setConfirmPassword(e.target.value);
@@ -162,7 +222,7 @@ const Page_Profile_Id_ChangePassword = () => {
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "20px",
+                      borderRadius: "5px",
                       marginTop: "15px",
                     }}
                   >
@@ -170,6 +230,8 @@ const Page_Profile_Id_ChangePassword = () => {
                   </Button>
                 </Grid>
               </form>
+
+              <ToastContainer />
             </Grid>
           </Grid>
         </Grid>

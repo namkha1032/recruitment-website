@@ -13,11 +13,16 @@ import { mockDataContacts } from "./mockData";
 import { grey, lightBlue, teal } from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import {AddBox} from "@mui/icons-material";
+import {AddAlarm, AddBox, AddCard, FileOpen} from "@mui/icons-material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import FormControl from "@mui/material/FormControl";
 import { shadows } from '@mui/system';
+import PropTypes from "prop-types";
+import {useTheme} from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 
 
 const RenderAddToBlacklist = ({params}) => {
@@ -65,163 +70,55 @@ const RenderAddToBlacklist = ({params}) => {
         </strong>
     )
 }
-const Page_Company_Account = () => {
-    const navigate = useNavigate()
-    const [account, setAccount] = useState('');
-    function QuickSearchToolbar() {
-        return (
-            <Box
-                sx={{
-                    p: 0.5,
-                    pb: 0,
-                }}
-            >
-                <GridToolbarQuickFilter />
-                <GridToolbar></GridToolbar>
-            </Box>
-        );
-    }
-    const columns = [
-        { field: "id", headerName: "ID", flex: 0.2 },
-        { field: "registerId", headerName: "Register ID", flex: 0.4},
-        {
-            field: "accountName",
-            headerName: "Account Name",
-            flex: 1,
-            cellClassName: "name-column--cell",
-        },
-        {
-            field: "addtoBlacklist",
-            headerName: "Add to Blacklist",
-            flex: 0.3,
-            renderCell: (params) => {return(<RenderAddToBlacklist params={params} />)},
-        },
-    ];
 
-    return (
-        <Grid item xs={12}>
-            <Card
-                raised="true"
-                sx={{
-                    // display:'flex',
-                    // border: "1px solid black",
-                    // borderRadius: 1,
-                    padding:3
-                }}>
-                <Grid container>
-                <Grid item md={12} xs={8}
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="left">
-                    <Typography
-                        m="0px 10px 20px 3px"
-                        variant="h3"
-                        alignItems="center"
-                        // justifyContent="left"
-                    >
-                        Account List
-                    </Typography>
+const Page_Company_Account = () => {
+    function TabPanel(props) {
+        const { children, value, index, ...other } = props;
+        function QuickSearchToolbar() {
+            return (
+                <Grid container
+                >
+                    <GridToolbarQuickFilter />
+                    <GridToolbar></GridToolbar>
                 </Grid>
-                <Grid item xs={4} sm={12} display="flex">
-                <Grid container  spacing={{ xs: 0, sm: 3 }} rowSpacing={{ xs: 1, sm: 0 }} display="flex">
-                    <Grid
-                        item
-                        xs={12}
-                        sm={3}
-                        lg={2}
-                        display="flex"
-                        justifyContent="right">
-                        <Button
-                            variant="contained"
-                            size="small"
-                            fullWidth
-                            onClick={() => {
-                                navigate("/company/account/create")
-                            }}
-                            sx={{
-                                boxShadow:7
-                            }}
-                        >
-                            Create Advanced Account
-                        </Button>
-                    </Grid>
-                    <Grid
-                        item
-                        xs={12}
-                        sm={3}
-                        lg={2}
-                        display="flex"
-                        justifyContent="right">
-                        <Button
-                            variant="contained"
-                            size="small"
-                            fullWidth
-                            onClick={() => {
-                                navigate("/company/account/blacklist")
-                            }}
-                            sx={{
-                                boxShadow:7
-                            }}
-                        >
-                            Access Blacklist
-                        </Button>
-                    </Grid>
-                    <Grid
-                        item
-                        xs={12}
-                        sm={3}
-                        lg={2}
-                        display="flex"
-                        justifyContent="left">
-                        <FormControl
-                            display="flex"
-                            sx={{
-                                width: '170px',
-                                minWidth:'50px',
-                                maxHeight:'55px',
-                                boxShadow:7
-                            }}
-                        >
-                            <InputLabel id="accountSelect">Select Account</InputLabel>
-                            <Select
-                                display="flex"
-                                labelId="selectaccount"
-                                id="selectaccount"
-                                label="Select Account"
-                                value={account}
-                                onChange={e => setAccount(e.target.value)}
-                                displayEmpty={true}
-                                variant="outlined"
-                            >
-                                <MenuItem value={"candidate"}>Candidate</MenuItem>
-                                <MenuItem value={"interviewer"}>Interviewer</MenuItem>
-                                <MenuItem value={"recruiter"}>Recruiter</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                </Grid>
-                </Grid>
-                </Grid>
-            </Card>
-            <Card
-                raised="true"
-                sx={{
-                    // width:'77vw',
-                    display:'flex',
-                    // border: "1px solid black",
-                    // borderRadius: 1,
-                    padding:2,
-                    mt:4
-                }}>
+            );
+        }
+        const columns = [
+            { field: "id", headerName: "ID", flex: 0.2 },
+            { field: "registerId", headerName: "Register ID", flex: 0.4},
+            {
+                field: "accountName",
+                headerName: "Account Name",
+                flex: 1,
+                cellClassName: "name-column--cell",
+            },
+            {
+                field: "addtoBlacklist",
+                headerName: "Add to Blacklist",
+                flex: 0.3,
+                renderCell: (params) => {return(<RenderAddToBlacklist params={params} />)},
+            },
+        ];
+
+        return (
+            <div
+                role="tabpanel"
+                hidden={value !== index}
+                id={`full-width-tabpanel-${index}`}
+                aria-labelledby={`full-width-tab-${index}`}
+                {...other}>
+            <Grid container>
                 <Grid
-                    width="77vw"
+                    border={0}
+                    width="80vw"
                     item
-                    m="0px 10px 10px 10px"
+                    m="0px 0px 0px 0px"
                     xs={12}
                     display="flex"
                     sx={{
                         "& .MuiDataGrid-root": {
-                            border: "none"
+                            border: "none",
+                            backgroundColor: grey[50],
                         },
                         "& .MuiDataGrid-cell": {
                             borderBottom: "none"
@@ -253,9 +150,221 @@ const Page_Company_Account = () => {
                         rows={mockDataContacts}
                         columns={columns}
                         slots={{ toolbar: QuickSearchToolbar }}
+                        display="flex"
                     />
                 </Grid>
+            </Grid>
+            </div>
+        );
+    }
+
+    TabPanel.propTypes = {
+        children: PropTypes.node,
+        index: PropTypes.number.isRequired,
+        value: PropTypes.number.isRequired,
+    };
+
+    function a11yProps(index) {
+        return {
+            id: `full-width-tab-${index}`,
+            'aria-controls': `full-width-tabpanel-${index}`,
+        };
+    }
+
+    function FullWidthTabs() {
+        const theme = useTheme();
+        const [value, setValue] = React.useState(0);
+
+        const handleChange = (event, newValue) => {
+            setValue(newValue);
+        };
+
+        const handleChangeIndex = (index) => {
+            setValue(index);
+        };
+
+
+        return (
+
+            <Card
+                raised="true"
+                sx={{
+                    // width:'77vw',
+                    display:'flex',
+                    // border: "1px solid black",
+                    // borderRadius: 1,
+                    // padding:4,
+                    mt:4
+                }}>
+                <Grid container>
+                <AppBar position="static">
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        indicatorColor="primary"
+                        textColor="inherit"
+                        variant="fullWidth"
+                        aria-label="full width tabs example"
+                        sx={{
+                            backgroundColor: '#ffffff',
+                            color: '#000000'
+                        }}
+                    >
+                        <Tab label="Candidate" {...a11yProps(0)} />
+                        <Tab label="Interviewer" {...a11yProps(1)} />
+                        <Tab label="Recruiter" {...a11yProps(2)} />
+                    </Tabs>
+                    <TabPanel value={value} index={0}>
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                    </TabPanel>
+                    <TabPanel value={value} index={2}>
+                    </TabPanel>
+                </AppBar>
+                </Grid>
             </Card>
+        );
+    }
+    const navigate = useNavigate()
+    const [account, setAccount] = useState('');
+    // function QuickSearchToolbar() {
+    //     return (
+    //         <Box
+    //             sx={{
+    //                 p: 0.5,
+    //                 pb: 0,
+    //             }}
+    //         >
+    //             <GridToolbarQuickFilter />
+    //             <GridToolbar></GridToolbar>
+    //         </Box>
+    //     );
+    // }
+    // const columns = [
+    //     { field: "id", headerName: "ID", flex: 0.2 },
+    //     { field: "registerId", headerName: "Register ID", flex: 0.4},
+    //     {
+    //         field: "accountName",
+    //         headerName: "Account Name",
+    //         flex: 1,
+    //         cellClassName: "name-column--cell",
+    //     },
+    //     {
+    //         field: "addtoBlacklist",
+    //         headerName: "Add to Blacklist",
+    //         flex: 0.3,
+    //         renderCell: (params) => {return(<RenderAddToBlacklist params={params} />)},
+    //     },
+    // ];
+
+    return (
+        <Grid item xs={12}>
+            <Card
+                raised="true"
+                sx={{
+                    // display:'flex',
+                    // border: "1px solid black",
+                    // borderRadius: 1,
+                    padding:4
+                }}>
+                <Grid container columnSpacing={{xs: 1}}>
+                <Grid item md={12} xs={7}
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="left">
+                    <Typography
+                        m="0px 10px 20px 3px"
+                        variant="h3"
+                        alignItems="center"
+                        // justifyContent="left"
+                    >
+                        Account List
+                    </Typography>
+                </Grid>
+                <Grid item xs={5} sm={12} display="flex">
+                <Grid container  spacing={{ xs: 0, sm: 3 }} rowSpacing={{ xs: 1, sm: 0 }} display="flex">
+                    <Grid
+                        item
+                        xs={12}
+                        sm={3}
+                        lg={3}
+                        display="flex"
+                        justifyContent="right">
+                        <Button
+                            variant="contained"
+                            size="medium"
+                            fullWidth
+                            onClick={() => {
+                                navigate("/company/account/create")
+                            }}
+                            sx={{
+                                boxShadow:7
+                            }}
+                            startIcon={<AddCard />}
+                        >
+                            Add Advanced Account
+                        </Button>
+                    </Grid>
+                    <Grid
+                        item
+                        xs={12}
+                        sm={3}
+                        lg={3}
+                        display="flex"
+                        justifyContent="right">
+                        <Button
+                            variant="contained"
+                            size="medium"
+                            fullWidth
+                            onClick={() => {
+                                navigate("/company/account/blacklist")
+                            }}
+                            sx={{
+                                boxShadow:7
+                            }}
+                            startIcon={<FileOpen />}
+                        >
+                            Access Blacklist
+                        </Button>
+                    </Grid>
+                    {/*<Grid*/}
+                    {/*    item*/}
+                    {/*    xs={12}*/}
+                    {/*    sm={3}*/}
+                    {/*    lg={3}*/}
+                    {/*    display="flex"*/}
+                    {/*    justifyContent="left">*/}
+                    {/*    <FormControl*/}
+                    {/*        display="flex"*/}
+                    {/*        sx={{*/}
+                    {/*            width: '250px',*/}
+                    {/*            minWidth:'50px',*/}
+                    {/*            maxHeight:'55px',*/}
+                    {/*            boxShadow:7*/}
+                    {/*        }}*/}
+                    {/*    >*/}
+                    {/*        <InputLabel id="accountSelect">Select Account</InputLabel>*/}
+                    {/*        <Select*/}
+                    {/*            display="flex"*/}
+                    {/*            labelId="selectaccount"*/}
+                    {/*            id="selectaccount"*/}
+                    {/*            label="Select Account"*/}
+                    {/*            value={account}*/}
+                    {/*            onChange={e => setAccount(e.target.value)}*/}
+                    {/*            displayEmpty={true}*/}
+                    {/*            variant="outlined"*/}
+                    {/*        >*/}
+                    {/*            <MenuItem value={"candidate"}>Candidate</MenuItem>*/}
+                    {/*            <MenuItem value={"interviewer"}>Interviewer</MenuItem>*/}
+                    {/*            <MenuItem value={"recruiter"}>Recruiter</MenuItem>*/}
+                    {/*        </Select>*/}
+                    {/*    </FormControl>*/}
+                    {/*</Grid>*/}
+                </Grid>
+                </Grid>
+                </Grid>
+            </Card>
+            <FullWidthTabs />
         </Grid>
 
     );

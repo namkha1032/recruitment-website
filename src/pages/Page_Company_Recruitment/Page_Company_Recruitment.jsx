@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Button,
   Autocomplete,
@@ -12,24 +12,44 @@ import DoNotDisturbOnRoundedIcon from '@mui/icons-material/DoNotDisturbOnRounded
 import PlayCircleOutlineRoundedIcon from '@mui/icons-material/PlayCircleOutlineRounded';
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import datasjson from "./Page_Company_Recruitment_Data.json";
 import { useNavigate } from "react-router-dom";
-import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
 import Grid from "@mui/material/Grid";
 import { NullString, NotStart, Pending, Completed, Postpone } from "../../components/Label/Label";
+import { useDispatch, useSelector } from "react-redux";
+import { EventNoteRounded, RocketLaunchRounded, SportsScoreRounded } from "@mui/icons-material";
 
 
 
 export default function Page_Company_Recruitment() {
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [rows, setRows] = useState(datasjson);
+  useEffect(() => {
+    dispatch({type: "saga/getRecruitmentList"})
+    dispatch({type: "saga/getDepartment"})
+    dispatch({type: "saga/getLanguage"})
+    return () => {
+      dispatch({type: "recruitment/clearUpRecruitment"})
+    }
+  }, [])
+
+  const rows = useSelector(state => state.recruitment)
+  const department_draft = useSelector(state => state.department)
+  const language_draft = useSelector(state => state.language)
+
+  const departments = department_draft ? department_draft : []
+  const languages = language_draft ? language_draft : []
+
+  // const [rows, setRows] = useState(datasjson);
 
   // const [anchorEl, setAnchorEl] = useState(null);
   // const [valueSearch, setValueSearch] = useState("");
   
   const [valueChoose, setValueChoose] = useState(null);
+
   const [departmentChoose, setDepartmentChoose] = useState(null);
+
   const [statusChoose, setStatusChoose] = useState(null);
 
   const [valueReport, setValueReport] = useState(0);
@@ -42,9 +62,9 @@ export default function Page_Company_Recruitment() {
   //   setAnchorEl(null);
   // }
 
-  function handleRowClick(id) {
-    alert("Navigate to position id: " + id);
-  }
+  // function handleRowClick(id) {
+  //   alert("Navigate to position id: " + id);
+  // }
 
   function handleAddClick() {
     navigate("./create");
@@ -62,6 +82,9 @@ export default function Page_Company_Recruitment() {
 
   function handleChooseDepartment(value) {
     setDepartmentChoose(value);
+    if (value) {
+      dispatch({type: "saga/getRecruitmentListWithDepartment", payload: {id: value.departmentId}});
+    }
   }
 
   function handleChooseStatus(value) {
@@ -82,29 +105,11 @@ export default function Page_Company_Recruitment() {
   }
 
   function handleContinueClick(value) {
-    const updateRows = rows.map((row) => {
-      if (row.id === value) {
-        return {
-          ...row,
-          status: "Đang diễn ra"
-        }
-      }
-      return row
-    })
-    setRows(updateRows)
+    dispatch({type: "saga/updateRecruitment", payload: {id: value, Status: "Đang diễn ra"}})
   }
 
   function handlePostponeClick(value) {
-    const updateRows = rows.map((row) => {
-      if (row.id === value) {
-        return {
-          ...row,
-          status: "Tạm ngừng"
-        }
-      }
-      return row
-    })
-    setRows(updateRows)
+    dispatch({type: "saga/updateRecruitment", payload: {id: value, Status: "Tạm ngừng"}})
   }
 
   // function handleEditClick(value) {
@@ -117,7 +122,8 @@ export default function Page_Company_Recruitment() {
       type: "number",
       headerAlign: "left",
       align: "left",
-      width: 40,
+      minWidth: 40,
+      flex: 0.2,
       renderHeader: () => <span>ID</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
@@ -141,7 +147,7 @@ export default function Page_Company_Recruitment() {
       headerAlign: "left",
       align: "left",
       minWidth: 200,
-      flex: 1,
+      flex: 0.6,
       renderHeader: () => <span>Tên vị trí</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
@@ -167,6 +173,7 @@ export default function Page_Company_Recruitment() {
       align: "left",
       renderHeader: () => <span>Ngày bắt đầu</span>,
       minWidth: 180,
+      flex: 0.4,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
       },
@@ -178,6 +185,7 @@ export default function Page_Company_Recruitment() {
       align: "left",
       renderHeader: () => <span>Ngày kết thúc</span>,
       minWidth: 180,
+      flex: 0.4,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
       },
@@ -198,10 +206,12 @@ export default function Page_Company_Recruitment() {
       align: "center",
       renderHeader: () => <span>Đã đăng ký</span>,
       minWidth: 100,
+      flex: 0.2,
     },
     {
-      field: "status",
+      field: "Status",
       minWidth: 180,
+      flex: 0.3,
       headerAlign: "center",
       align: "center",
       renderHeader: () => <span>Trạng thái</span>,
@@ -225,7 +235,7 @@ export default function Page_Company_Recruitment() {
       headerAlign: "right",
       align: "right",
       getActions: (params) => {
-        if (params.row.status === "Tạm ngừng") {
+        if (params.row.Status === "Tạm ngừng") {
           return [
             <GridActionsCellItem
               icon={<InfoRoundedIcon variant="outlined" />}
@@ -250,7 +260,7 @@ export default function Page_Company_Recruitment() {
             />,
           ]
         }
-        else if (params.row.status === "Đang diễn ra") {
+        else if (params.row.Status === "Đang diễn ra") {
           return [
             <GridActionsCellItem
               icon={<InfoRoundedIcon variant="outlined" />}
@@ -388,7 +398,7 @@ export default function Page_Company_Recruitment() {
           <Autocomplete
             disablePortal
             id="filter-type"
-            options={["Phòng ban", "Trạng thái"]}
+            options={["Phòng ban", "Trạng thái", "Ngôn ngữ", "Chuyên môn"]}
             sx={{ width: 200, marginRight: 2 }}
             renderInput={(params) => (
               <TextField {...params} label="Lọc theo..." />
@@ -400,11 +410,18 @@ export default function Page_Company_Recruitment() {
             <Autocomplete
               disablePortal
               id="filter-type"
-              options={["Phòng ban A", "Phòng ban B", "Phòng ban C"]}
+              options={departments}
               sx={{ width: 200 }}
               renderInput={(params) => (
                 <TextField {...params} label="Phòng ban..." />
               )}
+              getOptionLabel={(option) => option.departmentName || ""}
+              renderOption={(props, option) => (
+                <li {...props} key={option.departmentId}> {option.departmentName} </li>
+              )}
+              isOptionEqualToValue={(option, value) => {
+                return option.departmentId === value.departmentId
+              }}
               value={departmentChoose}
               onChange={(event, value) => handleChooseDepartment(value)}
             />
@@ -413,13 +430,76 @@ export default function Page_Company_Recruitment() {
             <Autocomplete
               disablePortal
               id="filter-type"
-              options={["Chưa bắt đầu", "Đang diễn ra", "Kết thúc"]}
+              options={["Chưa bắt đầu", "Đang diễn ra", "Kết thúc", "Tạm hoãn"]}
               sx={{ width: 200 }}
               renderInput={(params) => (
                 <TextField {...params} label="Trạng thái..." />
               )}
+              renderOption={(props, option) => {
+                if (option === "Chưa bắt đầu")
+                  return (
+                    <Box component="li" {...props} sx={{
+                      color: "#E0E0E0",
+                    }}>
+                      <EventNoteRounded sx={{
+                        color: "#E0E0E0",
+                        marginRight: 1,
+                      }}/>
+                      Not start
+                    </Box>
+                  );
+                else if (option === "Đang diễn ra")
+                  return (
+                    <Box component="li" {...props} sx={{
+                      color: "#1565C0",
+                    }}>
+                      <RocketLaunchRounded sx={{
+                        color: "#1565C0",
+                        marginRight: 1,
+                      }}/>
+                      Going
+                    </Box>
+                  );
+                else if (option === "Kết thúc")
+                  return (
+                    <Box component="li" {...props} sx={{
+                      color: "#008631",
+                    }}>
+                      <SportsScoreRounded sx={{
+                        color: "#008631",
+                        marginRight: 1,
+                      }}/>
+                      Finished
+                    </Box>
+                  );
+                  else if (option === "Tạm hoãn")
+                  return (
+                    <Box component="li" {...props} sx={{
+                      color: "#cc3300",
+                    }}>
+                      <DoNotDisturbOnRoundedIcon sx={{
+                        color: "#cc3300",
+                        marginRight: 1,
+                      }}/>
+                      Postponed
+                    </Box>
+                  );
+              }}
               value={statusChoose}
               onChange={(event, value) => handleChooseStatus(value)}
+            />
+          )}
+          {valueChoose === "Ngôn ngữ" && (
+            <Autocomplete
+              disablePortal
+              id="filter-type"
+              options={languages}
+              sx={{ width: 200 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Phòng ban..." />
+              )}
+              value={departmentChoose}
+              onChange={(event, value) => handleChooseDepartment(value)}
             />
           )}
         </Grid>
@@ -468,7 +548,8 @@ export default function Page_Company_Recruitment() {
       <Grid item xs={12} md={12}>
         <DataGrid
           columns={columns}
-          rows={rows}
+          rows={rows === null ? [] : rows}
+          loading={rows === null}
           sx={{
             "&.MuiDataGrid-root": {
               borderRadius: 1,
@@ -489,6 +570,12 @@ export default function Page_Company_Recruitment() {
             "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
               display: "none",
             },
+            '&.MuiDataGrid-root .MuiDataGrid-virtualScroller::-webkit-scrollbar': {
+              display: "none",
+            },
+            // "&.MuiDataGrid-root .MuiDataGrid-virtualScrollerContent--overflowed": {
+            //   display: "none",
+            // },
             "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
               color: "white",
             },
@@ -514,12 +601,13 @@ export default function Page_Company_Recruitment() {
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
+          disableSelectionOnClick
           pagination
-          pageSizeOptions={[5, 10, 25, 50, 100]}
+          pageSizeOptions={[5, 10, 15, 25, 50, 100]}
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 25,
+                pageSize: 10,
               },
             },
           }}

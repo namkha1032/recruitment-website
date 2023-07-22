@@ -10,11 +10,15 @@ import {
   Container,
   InputAdornment,
   createTheme,
+  IconButton,
 } from "@mui/material";
 
-import EmailIcon from "@mui/icons-material/Email";
-import LockIcon from "@mui/icons-material/Lock";
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+/* import EmailIcon from "@mui/icons-material/Email";
+import LockIcon from "@mui/icons-material/Lock"; */
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+/* import PersonRoundedIcon from "@mui/icons-material/PersonRounded"; */
+
 import imageBackground from "../../assets/img/background.jpg";
 
 const style = {
@@ -25,24 +29,68 @@ const style = {
 const theme = createTheme({
   palette: {
     secondary: {
-      main: '#673AB7'
+      main: '#1976d2'
     }
   }
 });
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const passwordRegex = /^.{8,}$/;
 
 const XPage_Register = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const Role = "candidate";
+  const [showPassword, setShowPassword] = useState(false);
+  const [validEmail, setValidEmail] = useState(true);
+  const [validPassword, setValidPassword] = useState(true);
+
+  const handleEmailChange = (event) => {
+    let value = event.target.value;
+    setEmail(value);
+    if (!emailRegex.test(value)) {
+      setValidEmail(false)
+    }
+    else {
+      setValidEmail(true)
+    }
+  }
+
+  const handlePasswordChange = (event) => {
+    let value = event.target.value;
+    setPassword(value);
+    if (!passwordRegex.test(value)) {
+      setValidPassword(false)
+    }
+    else {
+      setValidPassword(true)
+    }
+  }
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  }
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  }
 
   const handleRegister = (event) => {
     event.preventDefault();
-
-    console.log(name, email, password, Role);
-
-    navigate("/login");
+    if (!validEmail || !validPassword) {
+      if (!validEmail) {
+        setValidEmail(false)
+        setEmail("")
+      }
+      else {
+        setValidPassword(false)
+        setPassword("")
+      }
+    }
+    else {
+      navigate("/login");
+    }
   };
 
   return (
@@ -64,7 +112,7 @@ const XPage_Register = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "80%",
+            width: "75%",
           }}
         >
 
@@ -90,7 +138,7 @@ const XPage_Register = () => {
               <Typography 
                 variant="h2" 
                 align="center" 
-                color='#673AB7' 
+                color='#1976d2' 
                 gutterBottom
                 fontFamily={'Roboto'}
                 fontSize={'28px'}
@@ -115,13 +163,7 @@ const XPage_Register = () => {
                     type="text"
                     value={name}
                     InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <PersonRoundedIcon />
-                        </InputAdornment>
-                      ),
-
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
                       setName(e.target.value);
@@ -137,18 +179,36 @@ const XPage_Register = () => {
                     type="email"
                     value={email}
                     InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <EmailIcon />
-                        </InputAdornment>
-                      ),
-
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
+                    onChange={handleEmailChange}
+                    error={!validEmail}
                   />
+
+                  {!validEmail && (
+                    <Box
+                      margin="3px 14px 0px"
+                    >
+                      {
+                        email === "" ? (
+                          <Typography 
+                            color="#f44336"
+                            fontSize="12px"
+                            lineHeight="20px"
+                          >
+                          Email is required
+                          </Typography>
+                        ) : (
+                          <Typography color="#f44336"
+                          fontSize="12px"
+                            lineHeight="20px"
+                          >
+                          Must be a valid email
+                          </Typography>
+                        )
+                      }
+                    </Box>
+                  )}
                 </Grid>
 
                 <Grid item xs={12} md={12} sx={{ ...style }}>
@@ -156,23 +216,53 @@ const XPage_Register = () => {
                     fullWidth
                     required
                     label="Password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     value={password}
                     variant="outlined"
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <LockIcon />
+                          <IconButton
+                            onClick={handleShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
-                    /* sx={{ backgroundColor: "white" }} */
+                    onChange={handlePasswordChange}
+                    error={!validPassword}
                   />
+
+                  {!validPassword && (
+                    <Box
+                      margin="3px 14px 0px"
+                    >
+                      {
+                        password === "" ? (
+                          <Typography 
+                            color="#f44336"
+                            fontSize="12px"
+                            lineHeight="20px"
+                          >
+                          Password is required
+                          </Typography>
+                        ) : (
+                          <Typography color="#f44336"
+                          fontSize="12px"
+                            lineHeight="20px"
+                          >
+                          Your password must be at least 8 characters 
+                          </Typography>
+                        )
+                      }
+                      
+                    </Box>
+
+                  )}
                 </Grid>
 
                 <Grid
@@ -189,7 +279,7 @@ const XPage_Register = () => {
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "20px",
+                      borderRadius: "5px",
                       marginTop: "15px",
                     }}
                   >
@@ -203,8 +293,11 @@ const XPage_Register = () => {
                 xs={12}
                 sx={{ ...style, display: "flex", justifyContent: "center" }}
               >
-                <Typography component={Link} to="/login" variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
-                  Already have an account?{" "}
+                <Typography variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
+                  Already have account?{" "}
+                  <Typography component={Link} to="/login" variant="subtitle1" sx={{ textDecoration: 'none', color: '#1976d2'/* , fontWeight: '500' */ }}>
+                    Login here
+                  </Typography>
                 </Typography>
               </Grid>
             </Grid>

@@ -3,14 +3,13 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import InputText from "../InputText";
 import UlList from "./UlList";
 import AddIcon from '@mui/icons-material/Add';
 import NotRInputText from "../NotRequiredText";
 
 const filter = createFilterOptions();
 
-export default function FreeSoloCreateOption(prop) {
+export default function ChooseList(prop) {
   const [value, setValue] = React.useState(null);
   function handleSExp(e) {
     console.log(e.target.value);
@@ -108,7 +107,7 @@ export default function FreeSoloCreateOption(prop) {
           />
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item xs={3} >
           <NotRInputText
             type="number"
             state={"Experiece(Year)"}

@@ -18,49 +18,78 @@ import { useNavigate } from 'react-router-dom';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import ViewDialog from '../ViewDialog/ViewDialog';
-const TechLeftTable = (props) => {
-    const { leftTech, currentTech, setCurrentTech, currentTechTab, setCurrentTechTab } = props
-    const dispatch = useDispatch()
+import ViewDialog from '../../../components/ViewDialog/ViewDialog';
+const LeftTable = (props) => {
+    const { leftTable, cate,
+        currentQues, setCurrentQues,
+        currentSubTab, setCurrentSubTab } = props
+    let TabComponent
+    let superSet
+    if (cate == 0) {
+        TabComponent = (<Tab label={"SOFT SKILL"}></Tab>)
+        superSet = [leftTable]
+    }
+    else if (cate == 1) {
+        TabComponent = leftTable.languages.map(language => {
+            return (<Tab key={language.languageid} label={language.languagename}></Tab>)
+        })
+        superSet = leftTable.languages
+    }
+    else if (cate == 2) {
+        TabComponent = leftTable.skills.map(skill => {
+            return (<Tab key={skill.skillid} label={skill.skillname}></Tab>)
+        })
+        superSet = leftTable.skills
+    }
     return (
         <>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={currentTechTab} onChange={(event, newTab) => {
-                    setCurrentTech([])
-                    setCurrentTechTab(newTab)
+                <Tabs value={currentSubTab} onChange={(event, newTab) => {
+                    setCurrentQues([])
+                    setCurrentSubTab(newTab)
                 }}>
-                    {leftTech.skills.map(skill => {
-                        return (<Tab key={skill.skillid} label={skill.skillname}></Tab>)
-                    })}
+                    {TabComponent}
                 </Tabs>
             </Box>
-            {leftTech.skills.map((skill, index) => {
-                let leftTechColumns = [
+            {superSet.map((sub, index) => {
+                let leftColumns = [
                     { field: "questionid", headerName: "ID", flex: 1 },
                     { field: "questionstring", headerName: "String", flex: 4 },
                     {
                         field: "action", headerName: "View", flex: 1, renderCell: (params) => {
-                            return (
-                                <ViewDialog params={params} category={"Technology"} skillname={skill.skillname} />
-                            )
+                            if (cate == 0) {
+                                return (
+                                    <ViewDialog params={params} cate={cate} />
+                                )
+                            }
+                            else if (cate == 1) {
+                                return (
+                                    <ViewDialog params={params} cate={cate} languagename={sub.languagename} />
+                                )
+                            }
+                            else if (cate == 2) {
+                                return (
+                                    <ViewDialog params={params} cate={cate} skillname={sub.skillname} />
+                                )
+                            }
                         }
                     }
                 ]
-                let leftTechRows = skill.questions.map(ques => ({
+                let leftRows = sub.questions.map(ques => ({
                     ...ques,
                     action: "action"
                 }))
                 return (
-                    currentTechTab == index
+                    currentSubTab == index
                         ? <DataGrid
-                            key={skill.skillid}
-                            columns={leftTechColumns}
-                            rows={leftTechRows}
+                            key={index}
+                            columns={leftColumns}
+                            rows={leftRows}
                             getRowId={(row) => row.questionid}
                             onRowSelectionModelChange={(newChosen) => {
-                                setCurrentTech(newChosen);
+                                setCurrentQues(newChosen);
                             }}
-                            rowSelectionModel={currentTech}
+                            rowSelectionModel={currentQues}
                             sx={{
                                 height: 400,
                                 '& .MuiDataGrid-row:hover': {
@@ -88,4 +117,4 @@ const TechLeftTable = (props) => {
     )
 }
 
-export default TechLeftTable
+export default LeftTable

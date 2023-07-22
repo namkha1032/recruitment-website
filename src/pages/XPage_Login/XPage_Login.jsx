@@ -12,10 +12,16 @@ import {
   Checkbox,
   FormControlLabel,
   createTheme,
+  IconButton,
+  /* Visibility,
+  VisibilityOff, */
 } from "@mui/material";
 
-import EmailIcon from "@mui/icons-material/Email";
-import LockIcon from "@mui/icons-material/Lock";
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
+/* import EmailIcon from "@mui/icons-material/Email"; */
+/* import LockIcon from "@mui/icons-material/Lock"; */
 import imageBackground from "../../assets/img/background.jpg";
 
 const style = {
@@ -26,23 +32,53 @@ const style = {
 const theme = createTheme({
   palette: {
     secondary: {
-      main: '#673AB7'
+      main: '#1976d2'
     }
   }
 });
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const XPage_Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); 
+  const [validEmail, setValidEmail] = useState(true);
+
+  const handleEmailChange = (event) => {
+    let value = event.target.value;
+    setEmail(value);
+    if (!emailRegex.test(value)) {
+      setValidEmail(false)
+    }
+    else {
+      setValidEmail(true)
+    }
+  }
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  }
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+    /* setShowPassword(!showPassword); */
+  }
 
   const handleLogin = (event) => {
     event.preventDefault();
-    console.log(email, password);
-    navigate("/home");
+    if (validEmail) {
+      navigate("/home");
+    }
+    else {
+      setValidEmail(false);
+      setEmail("");
+    }
   };
 
   const handleCheck = (event) => {
+    event.preventDefault();
     console.log(event.target.checked);
   };
 
@@ -54,9 +90,10 @@ const XPage_Login = () => {
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        /* backgroundColor: "#EEF2F6", */
+        flexWrap: "wrap",
         width: "100%",
       }}
+
     >
       <Container sx={{ display: "flex", justifyContent: "center" }}>
         <Grid
@@ -66,7 +103,7 @@ const XPage_Login = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "80%",
+            width: "75%",
           }}
         >
 
@@ -92,7 +129,7 @@ const XPage_Login = () => {
               <Typography 
                 variant="h2" 
                 align="center" 
-                color='#673AB7' 
+                color='#1976d2' 
                 gutterBottom
                 fontFamily={'Roboto'}
                 fontSize={'28px'}
@@ -116,18 +153,38 @@ const XPage_Login = () => {
                     type="email"
                     value={email}
                     InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <EmailIcon />
-                        </InputAdornment>
-                      ),
-
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
+                    onChange={handleEmailChange}
+                    error={!validEmail}
                   />
+
+                  {!validEmail && (
+                    <Box
+                      margin="3px 14px 0px"
+                    >
+                      {
+                        email === "" ? (
+                          <Typography 
+                            color="#f44336"
+                            fontSize="12px"
+                            lineHeight="20px"
+                          >
+                          Email is required
+                          </Typography>
+                        ) : (
+                          <Typography color="#f44336"
+                          fontSize="12px"
+                            lineHeight="20px"
+                          >
+                          Must be a valid email
+                          </Typography>
+                        )
+                      }
+                      
+                    </Box>
+
+                  )}
                 </Grid>
 
                 <Grid item xs={12} md={12} sx={{ ...style }}>
@@ -135,20 +192,26 @@ const XPage_Login = () => {
                     fullWidth
                     required
                     label="Password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     value={password}
+                    onChange={(e) => {setPassword(e.target.value)}}
                     variant="outlined"
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <LockIcon />
+                          <IconButton
+                            onClick={handleShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "10px" },
+                      style: { borderRadius: "12px" },
                     }}
-                    onChange={(e) => {setPassword(e.target.value)}}
                   />
+                  
                 </Grid>
 
                 <Grid
@@ -166,7 +229,8 @@ const XPage_Login = () => {
                       control={
                         <Checkbox
                           defaultChecked
-                          color="primary"
+                          theme={theme}
+                          color="secondary"
                           onClick={handleCheck}
                         />
                       }
@@ -182,9 +246,9 @@ const XPage_Login = () => {
                       variant="subtitle1" 
                       sx={{ 
                         textDecoration: 'none', 
-                        color: '#673AB7',
+                        color: '#1976d2',
                         paddingTop: '8px',
-                        fontWeight: '500'
+                        /* fontWeight: '500' */
                       }}
                     >
                       Forgot password?{" "}
@@ -207,7 +271,7 @@ const XPage_Login = () => {
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "20px",
+                      borderRadius: "5px",
                       marginTop: "5px",
                     }}
                   >
@@ -221,8 +285,11 @@ const XPage_Login = () => {
                 xs={12}
                 sx={{ ...style, display: "flex", justifyContent: "center" }}
               >
-                <Typography component={Link} to="/register" variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
+                <Typography variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
                   Didn't have an account?{" "}
+                  <Typography component={Link} to="/register" variant="subtitle1" sx={{ textDecoration: 'none', color: '#1976d2'}}>
+                    Register now
+                  </Typography>
                 </Typography>
               </Grid>
             </Grid>

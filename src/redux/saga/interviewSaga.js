@@ -18,12 +18,31 @@ function* scoreInterview(action) {
     console.log("hehehe")
 }
 
+function* createInterview(action) {
+    try {
+        // const response = yield call(axios.post, "http://localhost:3001/api/interview/error", action.payload)
+        // throw {
+        //     response: {
+        //         data: {
+        //             error: "trung lich roi lam lai di"
+        //         }
+        //     }
+        // }
+        yield put({ type: "error/setError", payload: { status: "no", message: "" } })
+    }
+    catch (err) {
+        yield put({ type: "error/setError", payload: { status: "yes", message: err.response.data.error } })
+        console.log("err: ", err)
+    }
+}
+
 
 function* interviewSaga() {
     yield all([
         takeEvery("saga/getUpcomingInterview", getUpcomingInterview),
         takeEvery("saga/scoreInterview", scoreInterview),
-        takeEvery("saga/getInterviewId", getInterviewId)
+        takeEvery("saga/getInterviewId", getInterviewId),
+        takeEvery("saga/createInterview", createInterview)
     ])
 }
 

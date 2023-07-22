@@ -12,39 +12,44 @@ import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import HomeIcon from '@mui/icons-material/Home';
 import './Page_Interview_Id.css'
+import Divider from "@mui/material/Divider";
+import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward';
+// import gigacard
+import GigaCard from "../../components/GigaCard/GigaCard";
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader";
 // import Page_Profile_Id_Cv_Id from "../Page_Profile_Id_Cv_Id/Page_Profile_Id_Cv"
 import CV from "../../components/CV/CV"
 
 const styleofbox = {
     borderRadius: "8px",
-    border: "1px solid black",
+    boxShadow: 10,
     marginTop: "10px",
     display: "flex",
-    flexDirection: "row"
-
-
-
+    flexDirection: "row",
+    padding: 2,
 }
 
 const boxcandidate = {
     borderRadius: "8px",
-    border: "1px solid black",
+    boxShadow: 10,
     marginTop: "10px",
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    padding: 2
 
 }
 
 const titlebox = {
     fontWeight: "bold",
-    fontStyle: "italic",
+
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
 }
 
 const texttitle = {
-    fontStyle: "italic",
+
     fontWeight: "bold",
     display: "flex",
     justifyContent: "flex-start",
@@ -54,7 +59,9 @@ const texttitle = {
 
 const textinfo = {
     display: "flex",
-    marginLeft: "5px"
+    marginLeft: "5px",
+    flexWrap: "wrap",
+
 }
 
 
@@ -65,16 +72,83 @@ const Page_Interview_Id = () => {
         <>
             <Grid container spacing={2}>
                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <Typography variant="h3" sx={{ fontWeight: "bold", fontStyle: "italic" }}>
+                    <Typography variant="h3" sx={{ fontWeight: "bold" }}>
                         Detail of the interview
                     </Typography>
                 </Grid>
                 <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
                     <Box sx={styleofbox}>
                         <Grid item xs={6}>
+
+                        </Grid>
+                        <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
                             <Typography variant="h5" sx={titlebox}>
-                                General information
+                                Detail of the candidate
                             </Typography>
+                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
+                                <Typography variant="h6" sx={texttitle}>
+                                    <AccountBoxIcon></AccountBoxIcon>  Name:
+                                </Typography>
+                                <Typography variant="h6" sx={textinfo}>
+                                    Ngo Quang Huy
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
+                                <Typography variant="h6" sx={texttitle}>
+                                    <EmailIcon></EmailIcon>  Email:
+                                </Typography>
+                                <Typography variant="h6" sx={{ ...textinfo, wordBreak: "break-word" }}>
+                                    huy.ngoquanghuy@hcmut.edu.vn
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
+                                <Typography variant="h6" sx={texttitle}>
+                                    <PhoneIphoneIcon></PhoneIphoneIcon>  Phone:
+                                </Typography>
+                                <Typography variant="h6" sx={textinfo}>
+                                    1234567890
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
+                                <Typography variant="h6" sx={texttitle}>
+                                    <HomeIcon></HomeIcon> Address:
+                                </Typography>
+                                <Typography variant="h6" sx={textinfo}>
+                                    G Floor, F-Town 1 Building, High-tech Park, Tan Phu Ward, District 9, Ho Chi Minh City, Vietnam
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </Grid>
+
+                <Grid item xs={5} sx={{ display: "flex", flexDirection: "column", rowGap: 2 }}>
+                    <GigaCard>
+                        <GigaCardHeader color={"primary.main"} headerIcon={<AccessibleForwardIcon sx={{ fontSize: "inherit" }} />}>
+                            General information
+                        </GigaCardHeader>
+                        <GigaCardBody>
+                            {/* <Typography variant="h5" sx={titlebox}>
+                                General information
+                            </Typography> */}
+                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
+                                <Box sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
+                                    <Typography variant="h6" sx={texttitle}>
+                                        <ScheduleIcon></ScheduleIcon> Date Time:
+                                    </Typography>
+                                    <Typography variant="h6" sx={textinfo}>
+                                        14:00 12/06/2023
+                                    </Typography>
+                                </Box>
+                            </Grid>
+                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
+                                <Typography variant="h6" sx={texttitle}>
+                                    <RoomIcon></RoomIcon> Room:
+                                </Typography>
+                                <Typography variant="h6" sx={textinfo}>
+                                    202B4
+                                </Typography>
+                            </Grid>
+                            <Divider sx={{ marginY: 3 }} />
                             <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
                                 <Typography variant="h6" sx={texttitle}>
                                     <RadarIcon></RadarIcon> Position:
@@ -87,9 +161,11 @@ const Page_Interview_Id = () => {
                                 <Typography variant="h6" sx={texttitle}>
                                     <RecommendIcon></RecommendIcon> Requirement:
                                 </Typography>
-                                <Stack direction="row" spacing={1} sx={{ display: "flex", marginLeft: "15px" }}>
+                                <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
                                     {requires.map((require) => (
-                                        <Chip key={require.id} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
+
+                                        <Chip key={require.id} sx={{ margin: "0px 0px 5px 15px" }} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
+
                                     ))}
                                 </Stack>
                             </Grid>
@@ -97,30 +173,17 @@ const Page_Interview_Id = () => {
                                 <Typography variant="h6" sx={texttitle}>
                                     <LanguageIcon></LanguageIcon>  Language:
                                 </Typography>
-                                <Stack direction="row" spacing={1} sx={{ display: "flex", marginLeft: "15px" }}>
+                                <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
                                     {languages.map((language) => (
-                                        <Chip key={language.id} value={language.name} label={language.name} variant='outlined' size='medium' color="success" />
+                                        <Chip key={language.id} sx={{ margin: "0px 0px 5px 15px" }} value={language.name} label={language.name} variant='outlined' size='medium' color="success" />
                                     ))}
                                 </Stack>
                             </Grid>
-                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
-                                <Typography variant="h6" sx={texttitle}>
-                                    <ScheduleIcon></ScheduleIcon> Date Time:
-                                </Typography>
-                                <Typography variant="h6" sx={textinfo}>
-                                    14:00 12/06/2023
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
-                                <Typography variant="h6" sx={texttitle}>
-                                    <RoomIcon></RoomIcon> Room:
-                                </Typography>
-                                <Typography variant="h6" sx={textinfo}>
-                                    202B4
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
+
+                        </GigaCardBody>
+                    </GigaCard>
+                    <GigaCard>
+                        <GigaCardBody>
                             <Typography variant="h5" sx={titlebox}>
                                 Detail of the interviewer
                             </Typography>
@@ -150,57 +213,22 @@ const Page_Interview_Id = () => {
                             </Grid>
                             <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
                                 <Typography variant="h6" sx={texttitle}>
-                                   <LocationCityIcon></LocationCityIcon> Department:
+                                    <LocationCityIcon></LocationCityIcon> Department:
                                 </Typography>
                                 <Typography variant="h6" sx={textinfo}>
                                     ITROOM
                                 </Typography>
                             </Grid>
-                        </Grid>
-                    </Box>
-                </Grid>
+                        </GigaCardBody>
+                    </GigaCard>
 
-                <Grid item xs={6} >
-                    <Box sx={boxcandidate}>
-                        <Typography variant="h5" sx={titlebox}>
-                            Detail of the candidate
-                        </Typography>
-                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
-                            <Typography variant="h6" sx={texttitle}>
-                                <AccountBoxIcon></AccountBoxIcon>  Name:
-                            </Typography>
-                            <Typography variant="h6" sx={textinfo}>
-                                Ngo Quang Huy
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
-                            <Typography variant="h6" sx={texttitle}>
-                                <EmailIcon></EmailIcon>  Email:
-                            </Typography>
-                            <Typography variant="h6" sx={textinfo}>
-                                huy.ngoquanghuy@hcmut.edu.vn
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
-                            <Typography variant="h6" sx={texttitle}>
-                                <PhoneIphoneIcon></PhoneIphoneIcon>  Phone:
-                            </Typography>
-                            <Typography variant="h6" sx={textinfo}>
-                                1234567890
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
-                            <Typography variant="h6" sx={texttitle}>
-                               <HomeIcon></HomeIcon> Address:
-                            </Typography>
-                            <Typography variant="h6" sx={textinfo}>
-                                G Floor, F-Town 1 Building, High-tech Park, Tan Phu Ward, District 9, Ho Chi Minh City, Vietnam
-                            </Typography>
-                        </Grid>
-                    </Box>
                 </Grid>
-                <Grid item xs={6}>
-                    <CV />
+                <Grid item xs={7}>
+                    <GigaCard>
+                        <GigaCardBody>
+                            <CV />
+                        </GigaCardBody>
+                    </GigaCard>
                 </Grid>
             </Grid >
 
