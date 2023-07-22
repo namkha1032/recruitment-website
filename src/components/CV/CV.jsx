@@ -20,18 +20,18 @@ import { useDispatch, useSelector } from "react-redux";
 const CV = ({ cvid }) => {
   console.log(cvid);
   const dispatch = useDispatch();
-  const cv = useSelector((state) => state.listcv.cv);
-  const user = useSelector((state) => state.user);
+  const cv = useSelector((state) => state.cv);
+  const candidate = useSelector((state) => state.candidate);
 
   useEffect(() => {
-    // dispatch({ type: "saga/getCv", payload: cvid });
+    dispatch({ type: "saga/getCv", payload: cvid });
     return () => {
-      // dispatch({ type: "listcv/setCv", payload: null });
+      dispatch({ type: "cv/setCv", payload: null });
     };
   }, []);
 
   return (
-    cv !== null && (
+    cv && candidate && (
       <Box sx={{ padding: "16px 0 16px 0" }}>
         <Box
           sx={{
@@ -48,11 +48,11 @@ const CV = ({ cvid }) => {
               width: "100px",
               height: "100px",
             }}
-            src={user.image}
+            src={candidate.image}
             alt=""
           />
           <Box component="h1" sx={{ margin: "24px 0px 0px  24px" }}>
-            {user.name}
+            {candidate.name}
           </Box>
         </Box>
         <Grid container spacing={2} sx={{ mt: "10px" }}>
@@ -164,10 +164,10 @@ const CV = ({ cvid }) => {
               Details
             </Box>
             <Box sx={{ padding: "10px 0 0 0" }}>
-              <Box>{user.address}</Box>
-              <Box>{user.phone}</Box>
+              <Box>{candidate.address}</Box>
+              <Box>{candidate.phone}</Box>
               <Box>
-                <a>{user.email}</a>
+                <a>{candidate.email}</a>
               </Box>
             </Box>
           </Grid>

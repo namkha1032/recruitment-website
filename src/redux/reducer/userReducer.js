@@ -10,9 +10,9 @@ const userSlice = createSlice({
         "birth": "24-08-20000",
         "phone": "0986925857aa",
         "address": "Phường Linh Đông Thành Phố Thủ Đức HCM",
-        "cvselected": 2,
+        "cvselected": 0,
         "image": "https://pbs.twimg.com/media/EYVxlOSXsAExOpX.jpg"
-      },
+    },
     reducers: {
         userLogin(state, action) {
             return action.payload

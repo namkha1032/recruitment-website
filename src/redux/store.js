@@ -8,7 +8,9 @@ import roomSlice from './reducer/roomReducer'
 import shiftSlice from './reducer/shiftReducer'
 import interviewerSlice from './reducer/interviewerReducer'
 import questionSlice from './reducer/questionReducer'
-import listcvSlice from './reducer/listcvReducer'
+import listcvSlice from './reducer/cvListReducer'
+import candidateSlice from './reducer/candidateReducer'
+import cvSlice from './reducer/cvReducer'
 // import rootSaga
 import rootSaga from './rootSaga'
 
@@ -21,7 +23,9 @@ const store = configureStore({
         shift: shiftSlice.reducer,
         interviewer: interviewerSlice.reducer,
         question: questionSlice.reducer,
-        listcv : listcvSlice.reducer
+        listcv: listcvSlice.reducer,
+        candidate: candidateSlice.reducer,
+        cv: cvSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]

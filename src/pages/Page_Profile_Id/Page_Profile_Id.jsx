@@ -44,13 +44,11 @@ const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  // const { listcv } = useSelector((state) => state.list);
-  const {listcv} = useSelector(state => state.listcv)
   const user = useSelector((state) => state.user);
-  console.log('  listcv: ' ,listcv)
-  console.log('user: ',user)
+
+  console.log('user: ', user)
   const [tabValue, setTabValue] = useState("Profile");
-  const [change, setChange] = useState(true);
+  // const [change, setChange] = useState(true);
   // console.log(user.cvselected)
   useEffect(() => {
     // dispatch({ type: "saga/getListcv" });
@@ -58,15 +56,14 @@ const Profile = () => {
       // dispatch({ type: "listcv/setListcv", payload: null });
     };
   }, []);
-  useEffect(() => {
-    // dispatch({ type: "saga/getUserSaga" });
-    return () => {
-      // dispatch({ type: "user/setUser", payload: null });
-    };
-  }, [change]);
+  // useEffect(() => {
+  //   // dispatch({ type: "saga/getUserSaga" });
+  //   return () => {
+  //     // dispatch({ type: "user/setUser", payload: null });
+  //   };
+  // }, [change]);
   return (
-    user &&
-    listcv && (
+    user && (
       <Container sx={{ backgroundColor: "#f3f4f9" }}>
         <>
           {" "}
@@ -81,10 +78,10 @@ const Profile = () => {
             </Box>
             <ProfileDetail
               user={user}
-              cvlist={listcv}
+              // cvlist={listcv}
               cvid={user.cvselected}
-              change={change}
-              setChange={setChange}
+            // change={change}
+            // setChange={setChange}
             />
           </TabContext>
           <Button
