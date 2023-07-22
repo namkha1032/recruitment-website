@@ -14,6 +14,9 @@ import skillSlice from "./reducer/skillReducer"
 import languageSlice from './reducer/languageReducer'
 import errorSlice from './reducer/errorReducer'
 
+import listcvSlice from './reducer/cvListReducer'
+import candidateSlice from './reducer/candidateReducer'
+import cvSlice from './reducer/cvReducer'
 // import rootSaga
 import rootSaga from './rootSaga'
 import listcvSlice from './reducer/listcvReducer'
@@ -33,7 +36,9 @@ const store = configureStore({
         skill: skillSlice.reducer,
         language: languageSlice.reducer,
         error: errorSlice.reducer,
-        list: listcvSlice.reducer
+        listcv: listcvSlice.reducer,
+        candidate: candidateSlice.reducer,
+        cv: cvSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]
