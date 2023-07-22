@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid";
 import LanguageUlList from "./language/LanguageUlList";
 import ChooseLanguage from "./language/ChooseLanguage";
-import FreeSoloCreateOptionDialog from "./skill/ChooseList";
+import ChooseList from "./skill/ChooseList";
 import Box from "@mui/material/Box";
 import EmptyTextarea from "./AutoText";
 
@@ -11,7 +11,7 @@ function CvStep1(prop) {
       <Box sx={{ width: "80%", margin: "auto", marginTop: "50px" }}>
         <Grid container spacing={0} justifyContent="center" alignItems="center">
           <Grid item xs={12}>
-            <FreeSoloCreateOptionDialog
+            <ChooseList
               skillData={prop.skillData}
               skills={prop.skills}
               handleSkilltDelete={prop.handleSkilltDelete}

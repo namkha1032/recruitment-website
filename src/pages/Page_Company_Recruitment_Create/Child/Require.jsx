@@ -1,10 +1,5 @@
 import ChooseList from "./ChooseSkill";
 import RequireUlList from "./RequireUlList";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Box } from "@mui/material";
 
 function Require(prop) {
@@ -18,6 +13,7 @@ function Require(prop) {
           handleDelete={prop.handleRequirementDelete}
         />
         <ChooseList
+          skill={prop.skill}
           inputValue={prop.inputValue}
           setInputValue={prop.setInputValue}
           experience={prop.experience}

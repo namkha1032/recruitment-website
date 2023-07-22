@@ -10,6 +10,7 @@ function Box3(prop) {
       <Box>
         <Grid item xs={12}>
           <Require
+            skill={prop.skill}
             requirement={prop.requirement}
             handleRequirementDelete={prop.handleRequirementDelete}
             inputValue={prop.inputValue}
@@ -31,6 +32,7 @@ function Box3(prop) {
               handleDelete={prop.handleLanguageDelete}
             />
             <ChooseLanguage
+              language={prop.language}
               inputValue={prop.lInputValue}
               setInputValue={prop.setLInputValue}
               state={"language"}

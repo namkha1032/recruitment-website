@@ -9,18 +9,18 @@
   },
   {
     "departmentId": 1,
-    "departmentName": "Recruite 12345",
+    "departmentName": "FrontEnd",
     "departmentAddress": "F Town 2",
-    "departmentEmail": "recruite@fpt.com",
+    "departmentEmail": "frontend@fpt.com",
     "departmentPhone": "0123456789",
-    "departmentWebsite": "https://fpt.recruit.com"
+    "departmentWebsite": "https://fpt.frontend.com"
   },
   {
     "departmentId": 2,
-    "departmentName": "Recruite xyz",
+    "departmentName": "BackEnd",
     "departmentAddress": "F Town 3",
-    "departmentEmail": "recruite@fpt.com",
+    "departmentEmail": "backend@fpt.com",
     "departmentPhone": "0123456789",
-    "departmentWebsite": "https://fpt.recruit.com"
+    "departmentWebsite": "https://fpt.Backend.com"
   }
 ]
