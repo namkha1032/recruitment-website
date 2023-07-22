@@ -156,3 +156,45 @@ export function SoftSkill() {
     />
   );
 }
+
+export function Active() {
+  return (
+    <Chip
+      label="Active"
+      variant="outlined"
+      style={{
+        color: "#1565C0",
+        backgroundColor: "white",
+        borderColor: "#1565C0",
+      }}
+      icon={
+        <RocketLaunchRoundedIcon
+          style={{
+            color: "#1565C0",
+          }}
+        />
+      }
+    />
+  );
+}
+
+export function Inactive() {
+  return (
+    <Chip
+      label="Inactive"
+      variant="outlined"
+      style={{
+        color: "#E0E0E0",
+        backgroundColor: "white",
+        borderColor: "#E0E0E0",
+      }}
+      icon={
+        <RocketLaunchRoundedIcon
+          style={{
+            color: "#E0E0E0",
+          }}
+        />
+      }
+    />
+  );
+}
