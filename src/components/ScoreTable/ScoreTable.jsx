@@ -25,7 +25,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
-import calculateScore from '../../../utils/calculateScore';
+import calculateScore from '../../utils/calculateScore';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -47,17 +47,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
 
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
 const ScoreTable = (props) => {
 
@@ -78,40 +68,6 @@ const ScoreTable = (props) => {
 
     return (
         <>
-            {/* <Grid container rowSpacing={4}>
-                <Grid item md={3}>
-                    <Typography variant="body1">Soft Skill: </Typography>
-                </Grid>
-                <Grid item md={9}>
-                    <InlineMath
-                        math={softMath}
-                    />
-                </Grid>
-                <Grid item md={3}>
-                    <Typography variant="body1">Language Skill: </Typography>
-                </Grid>
-                <Grid item md={9}>
-                    <InlineMath
-                        math={langMath}
-                    />
-                </Grid>
-                <Grid item md={3}>
-                    <Typography variant="body1">Technical Skill: </Typography>
-                </Grid>
-                <Grid item md={9}>
-                    <InlineMath
-                        math={techMath}
-                    />
-                </Grid>
-                <Grid item md={3}>
-                    <Typography variant="body1">Final Score: </Typography>
-                </Grid>
-                <Grid item md={9}>
-                    <InlineMath
-                        math={finalMath}
-                    />
-                </Grid>
-            </Grid> */}
             <TableContainer component={Paper}>
                 <Table sx={{ width: "100%" }} aria-label="customized table">
                     <TableHead>
@@ -122,7 +78,6 @@ const ScoreTable = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {/* {rows.map((row) => ( */}
                         <TableRow>
                             <StyledTableCell component="th" scope="row">
                                 Soft Skill
@@ -151,7 +106,6 @@ const ScoreTable = (props) => {
                             <StyledTableCell><InlineMath math={finalResult.toString()} /></StyledTableCell>
                             <StyledTableCell><InlineMath math={finalMath} /></StyledTableCell>
                         </TableRow>
-                        {/* ))} */}
                     </TableBody>
                 </Table>
             </TableContainer>

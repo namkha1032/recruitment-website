@@ -36,17 +36,18 @@ function calculateScore(rightSoft, rightLang, rightTech) {
         })
     }
     if (rightLang) {
-        rightLang.questions.forEach(ques => {
-            if (typeof (ques.score) == "number") {
-                langScoreArray = langScoreArray.concat(parseFloat(ques.score))
-            }
+        rightLang.languages.forEach(language => {
+            language.questions.forEach(ques => {
+                if (typeof (ques.score) == "number") {
+                    langScoreArray = langScoreArray.concat(parseFloat(ques.score))
+                }
+            })
         })
         langScoreArray.forEach((sco, index) => {
             let rightParen = `}`
             let num = langScoreArray.length.toString()
             let divider = `}{`
             let leftParen = `\\frac{`
-            let equal = `=`
             langResult = (langScoreArray.reduce((a, b) => a + b, 0) / langScoreArray.length).toFixed(2)
 
             langSumString = langSumString.concat(sco.toString())

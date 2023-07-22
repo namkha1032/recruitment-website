@@ -9,37 +9,72 @@ import { useDispatch } from 'react-redux';
 import 'katex/dist/katex.min.css';
 
 import ViewDialog from '../ViewDialog/ViewDialog';
-
-const TechRightTable = (props) => {
-    const rightTech = props.rightTech
-    const setCurrentTech = props.setCurrentTech
-    const currentTechTab = props.currentTechTab
-    const setCurrentTechTab = props.setCurrentTechTab
-    const type = props.type
+const RightTable = (props) => {
+    // const {
+    //     rightTable,
+    //     cate,
+    //     setCurrentQues,
+    //     currentSubTab,
+    //     setCurrentSubTab,
+    //     type,
+    // } = props
+    const rightTable = props.rightTable
+    const cate = props.cate
+    const currentSubTab = props.currentSubTab
+    const setCurrentSubTab = props.setCurrentSubTab
+    const setCurrentQues = props.setCurrentQues
     const dispatch = useDispatch()
+    let TabComponent
+    let superSet
+    if (cate == 0) {
+        TabComponent = (<Tab label={"Soft Skill"}></Tab>)
+        superSet = [rightTable]
+    }
+    else if (cate == 1) {
+        TabComponent = rightTable.languages.map(language => {
+            return (<Tab key={language.languageid} label={language.languagename}></Tab>)
+        })
+        superSet = rightTable.languages
+    }
+    else if (cate == 2) {
+        TabComponent = rightTable.skills.map(skill => {
+            return (<Tab key={skill.skillid} label={skill.skillname}></Tab>)
+        })
+        superSet = rightTable.skills
+    }
     return (
         <>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={currentTechTab} onChange={(event, newTab) => {
-                    if (type == "score") {
-                        setCurrentTech([])
+                <Tabs value={currentSubTab} onChange={(event, newTab) => {
+                    if (setCurrentQues) {
+                        setCurrentQues([])
                     }
-                    setCurrentTechTab(newTab)
+                    setCurrentSubTab(newTab)
                 }}>
-                    {rightTech.skills.map(skill => {
-                        return (<Tab key={skill.skillid} label={skill.skillname}></Tab>)
-                    })}
+                    {TabComponent}
                 </Tabs>
             </Box>
-            {rightTech.skills.map((skill, index) => {
-                let rightTechColumns = [
+            {superSet.map((sub, index) => {
+                let rightColumns = [
                     { field: "questionid", headerName: "ID", flex: 1 },
                     { field: "questionstring", headerName: "String", flex: 3 },
                     {
                         field: "action", headerName: "View", flex: 1, renderCell: (params) => {
-                            return (
-                                <ViewDialog params={params} category={"Technology"} skillname={skill.skillname} />
-                            )
+                            if (cate == 0) {
+                                return (
+                                    <ViewDialog params={params} cate={cate} />
+                                )
+                            }
+                            else if (cate == 1) {
+                                return (
+                                    <ViewDialog params={params} cate={cate} languagename={sub.languagename} />
+                                )
+                            }
+                            else if (cate == 2) {
+                                return (
+                                    <ViewDialog params={params} cate={cate} skillname={sub.skillname} />
+                                )
+                            }
                         }
                     },
                     {
@@ -47,19 +82,20 @@ const TechRightTable = (props) => {
                             return (
                                 <Box sx={{ display: "flex", alignItems: "center" }}>
                                     <TextField required type="number" size="small"
-                                        value={rightTech.skills[currentTechTab].questions.find(ques => ques.questionid == params.row.questionid).score}
+                                        value={superSet[currentSubTab].questions.find(ques => ques.questionid == params.row.questionid).score}
                                         onChange={(event) => {
                                             let middleScore = parseFloat(event.target.value) >= 0 && parseFloat(event.target.value) <= 10 ? parseFloat(event.target.value) : ""
                                             let newQues = {
-                                                categoryOrder: 2,
-                                                skillOrder: currentTechTab,
+                                                categoryOrder: cate,
+                                                subOrder: currentSubTab,
                                                 chosenQuestionId: params.row.questionid,
                                                 newScore: middleScore
                                             }
-                                            dispatch({ type: "question/updateNewTechScore", payload: newQues })
+                                            console.log("newQues: ", newQues)
+                                            dispatch({ type: "question/scoreQuestion", payload: newQues })
                                         }}
                                         InputProps={{
-                                            readOnly: type == "score" ? false : true,
+                                            readOnly: setCurrentQues ? false : true,
                                         }}
                                     />
                                 </Box>
@@ -67,16 +103,16 @@ const TechRightTable = (props) => {
                         }
                     }
                 ]
-                let rightTechRows = skill.questions.map(ques => ({
+                let rightRows = sub.questions.map(ques => ({
                     ...ques,
                     action: "action"
                 }))
                 return (
-                    currentTechTab == index
+                    currentSubTab == index
                         ? <DataGrid
-                            key={skill.skillid}
-                            columns={rightTechColumns}
-                            rows={rightTechRows}
+                            key={index}
+                            columns={rightColumns}
+                            rows={rightRows}
                             getRowId={(row) => row.questionid}
                             sx={{
                                 height: 400,
@@ -105,4 +141,4 @@ const TechRightTable = (props) => {
     )
 }
 
-export default TechRightTable
+export default RightTable

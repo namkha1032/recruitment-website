@@ -21,6 +21,13 @@ function* scoreInterview(action) {
 function* createInterview(action) {
     try {
         // const response = yield call(axios.post, "http://localhost:3001/api/interview/error", action.payload)
+        // throw {
+        //     response: {
+        //         data: {
+        //             error: "trung lich roi lam lai di"
+        //         }
+        //     }
+        // }
         yield put({ type: "error/setError", payload: { status: "no", message: "" } })
     }
     catch (err) {

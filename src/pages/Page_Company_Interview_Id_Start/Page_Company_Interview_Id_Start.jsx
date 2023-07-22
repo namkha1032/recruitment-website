@@ -16,18 +16,16 @@ import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 // import components
-import ScoreTable from './ScoreTable/ScoreTable';
-import TechTransfer from './TechTransfer/TechTransfer';
-import LangTransfer from './LangTransfer/LangTransfer';
-import SoftTransfer from './SoftTransfer/SoftTransfer';
-import CateTab from './CateTab/CateTab';
+// import ScoreTable from './ScoreTable/ScoreTable';
+import ScoreTable from '../../components/ScoreTable/ScoreTable';
+import QuestionTransfer from './QuestionTransfer/QuestionTransfer';
+import CateTab from '../../components/CateTab/CateTab';
 import GigaCard from '../../components/GigaCard/GigaCard';
 import GigaCardBody from '../../components/GigaCardBody/GigaCardBody';
 import GigaCardHeader from '../../components/GigaCardHeader/GigaCardHeader';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import EditNoteIcon from '@mui/icons-material/EditNote';
-import boxStyle from '../../assets/js/boxStyle';
 import "./Page_Company_Interview_Id_Start.scss"
 export default function Page_Company_Interview_Id_Start() {
     const dispatch = useDispatch()
@@ -41,9 +39,9 @@ export default function Page_Company_Interview_Id_Start() {
     let rightLang = allQuestion ? allQuestion.right[1] : null
     let rightTech = allQuestion ? allQuestion.right[2] : null
 
-    let [currentCateTab, setCurrentCateTab] = useState(1);
+    let [currentCateTab, setCurrentCateTab] = useState(0);
 
-    let [note, setNote] = useState("<h1>Anything to say?</h1>")
+    let [note, setNote] = useState("")
     const noteRef = useRef()
     useEffect(() => {
         dispatch({ type: "saga/getInterviewQuestion" })
@@ -85,15 +83,15 @@ export default function Page_Company_Interview_Id_Start() {
                             <CateTab currentCateTab={currentCateTab} setCurrentCateTab={setCurrentCateTab} />
                             {/* Soft Skill */}
                             {currentCateTab == 0
-                                ? <SoftTransfer leftSoft={leftSoft} rightSoft={rightSoft} />
+                                ? <QuestionTransfer leftTable={leftSoft} rightTable={rightSoft} cate={0} />
                                 : null}
                             {/* Language Skill */}
                             {currentCateTab == 1
-                                ? <LangTransfer leftLang={leftLang} rightLang={rightLang} />
+                                ? <QuestionTransfer leftTable={leftLang} rightTable={rightLang} cate={1} />
                                 : null}
-                            {/* Technical Questions */}
+                            {/* Technology Skill */}
                             {currentCateTab == 2
-                                ? <TechTransfer leftTech={leftTech} rightTech={rightTech} />
+                                ? <QuestionTransfer leftTable={leftTech} rightTable={rightTech} cate={2} />
                                 : null}
                         </GigaCardBody>
                     </GigaCard>
