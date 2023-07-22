@@ -52,6 +52,7 @@ const Info_view = (props) => {
             dispatch({ type: 'detailposition/setDetailposition', payload: null })
         }
     }, [])
+    // dang bi console 3 lan
     console.log(detailposition);
     // console.log(detailposition.positionName);
    
