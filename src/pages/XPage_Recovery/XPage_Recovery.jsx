@@ -8,19 +8,36 @@ import Recovery from "./Recovery";
 import CheckOTP from "./CheckOTP";
 import ResetPassword from "./ResetPassword";
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const XPage_Recovery = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [validEmail, setValidEmail] = useState(true);
   const [otp, setOTP] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isOTPValid, setIsOTPValid] = useState(false);
 
+  const handleEmailChange = (event) => {
+    let value = event.target.value;
+    setEmail(value);
+    if (!emailRegex.test(value)) {
+      setValidEmail(false);
+    } else {
+      setValidEmail(true);
+    }
+  }
+
   const handleEmailSubmit = (event) => {
     event.preventDefault();
-    if (!isEmailValid) {
+    if (!isEmailValid && validEmail) {
       setIsEmailValid(true);
+    }
+    else {
+      setValidEmail(false);
+      setEmail("");
     }
   };
 
@@ -58,8 +75,9 @@ const XPage_Recovery = () => {
       {!isEmailValid ? (
         <Recovery
           email={email}
-          onChangeEmail={setEmail}
+          handleEmailChange={handleEmailChange}
           handleSubmit={handleEmailSubmit}
+          validEmail={validEmail}
         />
       ) : !isOTPValid ? (
         <CheckOTP

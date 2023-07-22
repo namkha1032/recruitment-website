@@ -103,10 +103,34 @@ const Recovery = (props) => {
 
                       style: { borderRadius: "12px" },
                     }}
-                    onChange={(e) => {
-                      props.onChangeEmail(e.target.value);
-                    }}
+                    onChange={props.handleEmailChange}
+                    error={!props.validEmail}
                   />
+                  {!props.validEmail && (
+                    <Box
+                    margin="3px 14px 0px"
+                  >
+                    {
+                      props.email === "" ? (
+                        <Typography 
+                          color="#f44336"
+                          fontSize="12px"
+                          lineHeight="20px"
+                        >
+                        Email is required
+                        </Typography>
+                      ) : (
+                        <Typography color="#f44336"
+                        fontSize="12px"
+                          lineHeight="20px"
+                        >
+                        Must be a valid email
+                        </Typography>
+                      )
+                    }
+                    
+                  </Box>
+                  )}
                 </Grid>
 
                 <Grid
