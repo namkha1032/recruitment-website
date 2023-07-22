@@ -100,11 +100,6 @@ const Recovery = (props) => {
                     type="email"
                     value={props.email}
                     InputProps={{
-                      /* endAdornment: (
-                        <InputAdornment position="end">
-                          <EmailIcon />
-                        </InputAdornment>
-                      ), */
 
                       style: { borderRadius: "12px" },
                     }}

@@ -14,6 +14,19 @@ function* loginSaga(action) {
         console.log("error is: ", error)
     }
 }
+
+function* registerSaga(action) {
+    try {
+        const response = yield call(axios.post, 'http://localhost:3001/api/register', action.payload)
+        /* yield call(window.localStorage.setItem, 'user', JSON.stringify(response.data))
+        yield put({ type: "user/userRegister", payload: response.data }) */
+
+    }
+    catch (error) {
+        console.log("error is: ", error)
+    }
+}
+
 function* logoutSaga() {
     yield call(window.localStorage.removeItem, 'user')
     yield put({ type: "user/userLogout", payload: null })
@@ -36,6 +49,7 @@ function* getUserSaga(action) {
 function* userSaga() {
     yield all([
         takeEvery("saga/userLogin", loginSaga),
+        takeEvery("saga/userRegister", registerSaga),
         takeEvery("saga/userLogout", logoutSaga),
         takeEvery("saga/setUser", setUserSaga),
         takeEvery("saga/setUser", getUserSaga)

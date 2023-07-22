@@ -17,6 +17,9 @@ import {
   VisibilityOff, */
 } from "@mui/material";
 
+import GigaCard from "../../components/GigaCard/GigaCard"
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody"
+
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
@@ -103,7 +106,7 @@ const XPage_Login = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "75%",
+            width: "80%",
           }}
         >
 
@@ -116,16 +119,20 @@ const XPage_Login = () => {
               item
               xs={9}
               sx={{
-                borderRadius: "10px",
+                /* borderRadius: "10px",
                 padding: "20px",
                 paddingTop: "10px",
                 paddingBottom: "10px",
-                backgroundColor: "white",
+                backgroundColor: "white", */
                 opacity: "100%",
                 left: "20%",
                 right: "20%",
               }}
             >
+              <GigaCard>
+              <GigaCardBody>
+                
+
               <Typography 
                 variant="h2" 
                 align="center" 
@@ -292,6 +299,10 @@ const XPage_Login = () => {
                   </Typography>
                 </Typography>
               </Grid>
+              
+              </GigaCardBody>
+              </GigaCard>
+              
             </Grid>
           </Grid>
         </Grid>
