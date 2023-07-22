@@ -57,7 +57,32 @@ const Page_Recruitment = () => {
       
     <main id='recruitment'>
         {/* Hero unit */}
-        <Box
+        <Box sx={{ padding: '24px' }}>
+
+<Box
+  sx=
+  {{
+    backgroundImage: 'url(https://img4.thuthuatphanmem.vn/uploads/2020/12/25/anh-bia-background-tuyen-dung_055954570.jpg)',
+    height: '300px',
+    borderRadius: '10px',
+    boxShadow: 5
+  }}>
+  <Box sx={{ padding: '150px 750px 0px 110px' }}>
+    <Typography variant='h3' align='left' color='white' fontFamily='serif' sx={{ borderBottom: '3px solid #0099FF' }}>
+      Tuyển dụng
+    </Typography>
+
+  </Box>
+
+  <Box sx={{ padding: '10px 350px 0px 110px' }}>
+    <Typography variant='h6' align='left' color='lightgrey' fontFamily='serif' >
+      Các sự kiện sôi động sẽ cập nhật liên tục, hãy theo dõi tin tức sự kiện để có thể đăng kí tham gia.
+    </Typography>
+  </Box>
+
+</Box>
+</Box>
+        {/* <Box
           sx={{
             bgcolor: 'background.paper',
             pt: 8,
@@ -79,7 +104,7 @@ const Page_Recruitment = () => {
             
         
           </Container>
-        </Box>
+        </Box> */}
         <Container sx={{ py: 4 }} maxWidth="md">
           {/* End hero unit */
           <Typography variant='h4' align="left" sx={{marginBottom:'15px'}}> View Recruitment</Typography>
