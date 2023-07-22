@@ -57,17 +57,17 @@ const Page_Recruitment_Id = () => {
         setHelperText('');
     };
     const handleCloseCV = () => setShowCV(true);
-    const list_CV_draft = useSelector(state => state.listcv);
+    const list_CV_draft = useSelector(state => state.cvlist);
     const list_CV = list_CV_draft ? list_CV_draft : []
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch({ type: 'saga/getListcv' })
+        dispatch({ type: 'saga/getCvList' })
         return () => {
-            dispatch({ type: 'listcv/setListcv', payload: null })
+            dispatch({ type: 'cv/setCvList', payload: null })
         }
 
     }, [])
-    
+
     const handleTextClick = () => {
         window.open('/profile/:profileid/cv/:cvid');
     };

@@ -6,10 +6,10 @@ function* getDepartment(action) {
     yield put({ type: "department/setDepartment", payload: response.data })
 }
 
-function* DepartmentSaga() {
+function* departmentSaga() {
     yield all([
         takeEvery("saga/getDepartment", getDepartment)
     ])
 }
 
-export default DepartmentSaga
+export default departmentSaga

@@ -43,22 +43,22 @@ const Info_view = (props) => {
     const handleTab2 = (event, newValue) => {
         setTab2(newValue);
     };
-    const detailposition = useSelector(state => state.detailposition);
-  
+    const detailposition = useSelector(state => state.position);
+
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch({ type: 'saga/getDetailposition' })
+        dispatch({ type: 'saga/getPosition' })
         return () => {
-            dispatch({ type: 'detailposition/setDetailposition', payload: null })
+            dispatch({ type: 'position/setPosition', payload: null })
         }
     }, [])
     // dang bi console 3 lan
-    
+
 
 
 
     return (
-        detailposition  &&
+        detailposition &&
         <>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
@@ -142,7 +142,7 @@ const Info_view = (props) => {
 
                                 </Box>
                                 <TabPanel value="1" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
-                                    <View_detail  />
+                                    <View_detail />
                                 </TabPanel>
                                 <TabPanel value="2">
                                     <List_application />
@@ -166,14 +166,14 @@ const Info_view = (props) => {
                     </Box>
                 </Grid>
             </Grid>
-        </> 
-        
-        
-            
-           
-           
+        </>
 
-       
+
+
+
+
+
+
 
 
 

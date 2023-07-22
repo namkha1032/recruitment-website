@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const cvListSlice = createSlice({
-  name: 'listcv',
+  name: 'cvlist',
   initialState: null,
   reducers: {
     setCvList(state, action) {

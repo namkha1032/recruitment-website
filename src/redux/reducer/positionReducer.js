@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const listcvSlice = createSlice({
-    name: 'listcv',
+const positionSlice = createSlice({
+    name: "position",
     initialState: null,
     reducers: {
-        setListcv(state, action){
+        setPosition(state, action) {
+
             return action.payload
         }
     }
 })
 
-export default listcvSlice;
+export default positionSlice;

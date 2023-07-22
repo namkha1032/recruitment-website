@@ -10,9 +10,15 @@ function* getCv(action) {
     // yield put({ type: "candidate/setCandidate", payload: response2.data })
 }
 
+function* getCvList(action) {
+    const reponse = yield call(axios.get, 'http://localhost:3000/data/CVList.json')
+    yield put({ type: 'cvlist/setCvList', payload: reponse.data })
+}
+
 function* cvSaga() {
     yield all([
-        takeEvery("saga/getCv", getCv)
+        takeEvery("saga/getCv", getCv),
+        takeEvery("saga/getCvList", getCvList)
     ])
 }
 

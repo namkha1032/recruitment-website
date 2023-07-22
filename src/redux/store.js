@@ -13,15 +13,12 @@ import departmentSlice from './reducer/departmentReducer'
 import skillSlice from "./reducer/skillReducer"
 import languageSlice from './reducer/languageReducer'
 import errorSlice from './reducer/errorReducer'
-
-// import listcvSlice from './reducer/cvListReducer'
+import cvListSlice from './reducer/cvListReducer'
 import candidateSlice from './reducer/candidateReducer'
 import cvSlice from './reducer/cvReducer'
 // import rootSaga
 import rootSaga from './rootSaga'
-import listcvSlice from './reducer/listcvReducer'
-import detailpositionSlice from './reducer/detailpositionReducer'
-
+import positionSlice from './reducer/positionReducer'
 
 const sagaMiddleware = createSagaMiddleware()
 const store = configureStore({
@@ -37,10 +34,10 @@ const store = configureStore({
         skill: skillSlice.reducer,
         language: languageSlice.reducer,
         error: errorSlice.reducer,
-        listcv: listcvSlice.reducer,
+        cvlist: cvListSlice.reducer,
         candidate: candidateSlice.reducer,
         cv: cvSlice.reducer,
-        detailposition: detailpositionSlice.reducer
+        position: positionSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]
