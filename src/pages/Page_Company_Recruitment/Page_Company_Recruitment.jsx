@@ -47,7 +47,7 @@ export default function Page_Company_Recruitment() {
     dispatch({ type: "saga/getDepartment" });
     dispatch({ type: "saga/getLanguage" });
     return () => {
-      dispatch({ type: "recruitment/clearUpRecruitment" });
+      dispatch({ type: "recruitment/cleanUpRecruitment" });
     };
   }, []);
 

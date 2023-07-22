@@ -7,7 +7,7 @@ const interviewSlice = createSlice({
         setInterview(state, action) {
             return action.payload
         },
-        clearUpInterview() {
+        cleanUpInterview() {
             return null
         }
     }
