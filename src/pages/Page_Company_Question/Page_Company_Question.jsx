@@ -25,7 +25,11 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 import DeleteAlertModal from "./DeleteModal";
 import QuestionDataGrid from "./QuestionDataGrid";
-import { LanguageRounded, PsychologyRounded, SchoolRounded } from "@mui/icons-material";
+import {
+  LanguageRounded,
+  PsychologyRounded,
+  SchoolRounded,
+} from "@mui/icons-material";
 
 const listOfSkills = {
   skill: ["React", "Angular", "Java", "Python", "Figma", ".NET", "C", "C++"],
@@ -394,42 +398,61 @@ export default function Page_Company_Question() {
               <TextField {...params} label="Lọc theo..." />
             )}
             renderOption={(props, option) => {
-              if (option === "Technology")
+              if (option === "Technology") {
                 return (
-                  <Box component="li" {...props} sx={{
-                    color: "#1565C0"
-                  }}>
-                    <SchoolRounded sx={{
+                  <Box
+                    component="li"
+                    {...props}
+                    sx={{
                       color: "#1565C0",
-                      marginRight: 1,
-                    }}/>
+                    }}
+                  >
+                    <SchoolRounded
+                      sx={{
+                        color: "#1565C0",
+                        marginRight: 1,
+                      }}
+                    />
                     {option}
                   </Box>
                 );
-              else if (option === "Language")
+              } else if (option === "Language") {
                 return (
-                  <Box component="li" {...props} sx={{
-                    color: "#008631"
-                  }}>
-                    <LanguageRounded sx={{
+                  <Box
+                    component="li"
+                    {...props}
+                    sx={{
                       color: "#008631",
-                      marginRight: 1,
-                    }}/>
+                    }}
+                  >
+                    <LanguageRounded
+                      sx={{
+                        color: "#008631",
+                        marginRight: 1,
+                      }}
+                    />
                     {option}
                   </Box>
                 );
-              else if (option === "Soft Skills")
+              } else if (option === "Soft Skills") {
                 return (
-                  <Box component="li" {...props} sx={{
-                    color: "#AA336A"
-                  }}>
-                    <PsychologyRounded sx={{
+                  <Box
+                    component="li"
+                    {...props}
+                    sx={{
                       color: "#AA336A",
-                      marginRight: 1,
-                    }}/>
+                    }}
+                  >
+                    <PsychologyRounded
+                      sx={{
+                        color: "#AA336A",
+                        marginRight: 1,
+                      }}
+                    />
                     {option}
                   </Box>
                 );
+              }
             }}
             value={valueChoose}
             onChange={(event, value) => handleChooseValue(value)}
