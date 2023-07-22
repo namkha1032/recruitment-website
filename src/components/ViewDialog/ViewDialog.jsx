@@ -77,10 +77,12 @@ const ViewDialog = (props) => {
                             </Typography>
                         </Grid>
                         <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
-                            <SourceIcon />
-                            <Typography variant="h6">
-                                Content
-                            </Typography>
+                            <Box sx={gridSx}>
+                                <SourceIcon />
+                                <Typography variant="h6">
+                                    Content
+                                </Typography>
+                            </Box>
                         </Grid>
                         <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
                             <Typography variant="h6">

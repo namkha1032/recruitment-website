@@ -32,43 +32,43 @@ const CV = ({ cvid }) => {
 
   return (
     cv && candidate && (
-      <Box sx={{ padding: "16px 0 16px 0" }}>
-        <Grid container spacing={2} sx={{ mt: "10px" }}>
-        <Grid item md={3}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            bottom: "25px",
-          }}
-        >
-          <Box
-            component="img"
+      <>
+        <Grid container spacing={2}>
+          <Grid item md={3}
             sx={{
-              borderRadius: "50%",
-              border: "1px solid #ccc",
-              width: "200px",
-              height: "200px",
+              display: "flex",
+              alignItems: "center",
+              bottom: "25px",
             }}
-            src={candidate.image}
-            alt=""
-          />
-        </Grid>
-        <Grid item md={9}>
-          <Box component="h1" sx={{ margin: "24px 0px 0px  24px" }}>
-            {candidate.name}
-          </Box>  
-            <Box sx={{ padding: "10px 0 0 0" ,display:'flex',flexWrap:'wrap'}}>
-              
-              
-              <Person fontSize="large"/>
-                <a>{candidate.email}</a>
-              </Box>
-              <Box>{candidate.phone}</Box>
-              <Box>{candidate.address}</Box>
-           
-              </Grid>
-          
-        
+          >
+            <Box
+              component="img"
+              sx={{
+                borderRadius: "50%",
+                border: "1px solid #ccc",
+                width: "200px",
+                height: "200px",
+              }}
+              src={candidate.image}
+              alt=""
+            />
+          </Grid>
+          <Grid item md={9}>
+            <Box component="h1" sx={{ margin: "24px 0px 0px  24px" }}>
+              {candidate.name}
+            </Box>
+            <Box sx={{ padding: "10px 0 0 0", display: 'flex', flexWrap: 'wrap' }}>
+
+
+              <Person fontSize="large" />
+              <a>{candidate.email}</a>
+            </Box>
+            <Box>{candidate.phone}</Box>
+            <Box>{candidate.address}</Box>
+
+          </Grid>
+
+
           <Grid item lg={3} md={3} sx={{}}><Box component='h2'>About</Box></Grid>
           <Grid item lg={9} md={9}>
             <Box>
@@ -167,9 +167,9 @@ const CV = ({ cvid }) => {
               <Box sx={{ padding: "10px 0 0 40px" }}>{cv.education}</Box>
             </Box>
           </Grid>
-          
+
         </Grid>
-      </Box>
+      </>
     )
   );
 };

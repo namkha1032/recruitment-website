@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from "react-router";
 import CV from "../../components/CV/CV";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import GigaCard from "../../components/GigaCard/GigaCard";
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 // import Error from "../../components/Error/Error";
 // import { checkuser } from "../../assets/js/checkuser";
 const data = {
@@ -184,7 +186,7 @@ const Page_Profile_Id_Cv_Id = () => {
   // const segments = location.pathname.split("/");
   // const lastSegment = segments[segments.length - 1];
   // const Cvid = parseInt(lastSegment)
-  
+
   // {useEffect(() => {
   //   const fetchData = async () => {
   //     const response = await axios.get(
@@ -212,17 +214,14 @@ const Page_Profile_Id_Cv_Id = () => {
     user &&
     cv && (
       <>
-        <Box
-          sx={{
-            border: "1px solid black",
-            padding: 10,
-            borderRadius: 4,
-            mb: 5,
-          }}
-        >
-          <CV user={user} cv={cv} />
-        </Box>
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <GigaCard>
+          <GigaCardBody>
+            <Box sx={{ padding: 10 }}>
+              <CV user={user} cv={cv} />
+            </Box>
+          </GigaCardBody>
+        </GigaCard>
+        <Box sx={{ display: "flex", justifyContent: "flex-end", marginY: 4 }}>
           <Button
             variant="contained"
             color="warning"

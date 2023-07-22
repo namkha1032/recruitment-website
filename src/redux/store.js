@@ -14,7 +14,7 @@ import skillSlice from "./reducer/skillReducer"
 import languageSlice from './reducer/languageReducer'
 import errorSlice from './reducer/errorReducer'
 
-import listcvSlice from './reducer/cvListReducer'
+// import listcvSlice from './reducer/cvListReducer'
 import candidateSlice from './reducer/candidateReducer'
 import cvSlice from './reducer/cvReducer'
 // import rootSaga
