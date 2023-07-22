@@ -3,7 +3,6 @@ import { Grid, Typography, Button, Paper } from '@mui/material';
 import { DataGrid ,GridToolbar} from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import { NullString, NotStart, Pending, Completed, Postpone } from "../LabelButton/LabelButton";
-import Sidebar from '../SideBarProfile/SideBarProfile';
 import TabInProfile from './TabInProfile/TabInProfile';
 export default function HistoryList({ events, time, pathnavigate, namePage }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
