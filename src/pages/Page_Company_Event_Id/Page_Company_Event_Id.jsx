@@ -11,7 +11,7 @@ import { Button } from '@mui/material'
 // import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 // import EditIcon from '@mui/icons-material/Edit';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import FormatListNumberedRoundedIcon from '@mui/icons-material/FormatListNumberedRounded';
@@ -102,7 +102,7 @@ const Page_Company_Event_Id = () => {
 
     return (
         <Container sx={{ p: 0 }} className='companyeventid'>
-            <CelebrationRoundedIcon color='primary' fontSize='large' sx={{ marginRight: 1 }}></CelebrationRoundedIcon>
+            {/* <CelebrationRoundedIcon color='primary' fontSize='large' sx={{ marginRight: 1 }}></CelebrationRoundedIcon> */}
             <Box sx={{
                 fontSize: 40,
                 fontWeight: 600,
@@ -141,7 +141,10 @@ const Page_Company_Event_Id = () => {
                             }} />
                     </Box>
                     <GigaCard>
-                        <GigaCardHeader headerIcon={<PsychologyAltRoundedIcon fontSize='large'></PsychologyAltRoundedIcon>}>
+                        {/* <GigaCardHeader headerIcon={<PsychologyAltRoundedIcon fontSize='large'></PsychologyAltRoundedIcon>}>
+                            How To Think Critically and Avoid Fallacies
+                        </GigaCardHeader> */}
+                        <GigaCardHeader headerIcon={<CelebrationRoundedIcon fontSize='large'></CelebrationRoundedIcon>}>
                             How To Think Critically and Avoid Fallacies
                         </GigaCardHeader>
                         <GigaCardBody>
@@ -224,7 +227,7 @@ const Page_Company_Event_Id = () => {
                                             <Box sx={{
                                                 fontSize: 16,
                                             }}>
-                                                268 Lý Thường Kiệt, phường 14, quận 10, Thành phố Hồ Chí Minh 
+                                                268 Lý Thường Kiệt, phường 14, quận 10, Thành phố Hồ Chí Minh
                                             </Box>
                                         </Box>
                                         {/* <p style={{ fontWeight: 600, fontSize: 20 }}>268 Lý Thường Kiệt, phường 14, quận 10</p> */}
@@ -247,12 +250,15 @@ const Page_Company_Event_Id = () => {
                 </TabPanel>
 
                 <TabPanel value='2' sx={{ p: 0, mt: 2 }}>
-                    <div style={{ height: 525, width: '100%' }}>
+                    <Box sx={{ width: '100%' }}>
                         {/* Data Grid */}
                         <DataGrid
                             rows={rows}
                             columns={columns}
                             sx={{
+                                "&.MuiDataGrid-root": {
+                                    borderRadius: 2,
+                                },
                                 "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
                                     outline: "none",
                                 },
@@ -260,6 +266,12 @@ const Page_Company_Event_Id = () => {
                                     backgroundColor: "#1565C0",
                                     color: "white",
                                     fontWeight: 700,
+                                },
+                                "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                                    display: "none",
+                                },
+                                "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+                                    color: "white",
                                 },
                             }}
                             localeText={{
@@ -273,15 +285,28 @@ const Page_Company_Event_Id = () => {
                                 labelDisplayedRows: ({ from, to, count }) =>
                                     `${from}–${to} trên ${count !== -1 ? count : `hơn ${to}`}`,
                             }}
+                            slots={{ toolbar: GridToolbar }}
                             slotProps={{
                                 pagination: {
                                     labelRowsPerPage: "Số lượng hiển thị",
                                     labelDisplayedRows: ({ from, to, count }) =>
                                         `${from}–${to} của ${count !== -1 ? count : `hơn ${to}`}`,
                                 },
+                                toolbar: {
+                                    showQuickFilter: true,
+                                    quickFilterProps: {
+                                        debounceMs: 500, placeholder: "Tìm kiếm...", sx: {
+                                            width: 300,
+                                            marginBottom: 1,
+                                        }
+                                    },
+                                    // csvOptions: { disableToolbarButton: true },
+                                    // printOptions: { disableToolbarButton: true }
+                                },
                             }}
                             disableColumnFilter
                             disableColumnSelector
+                            // disableDensitySelector
                             pagination
                             pageSizeOptions={[5, 10, 25, 50, 100]}
                             initialState={{
@@ -292,7 +317,7 @@ const Page_Company_Event_Id = () => {
                                 },
                             }}>
                         </DataGrid>
-                    </div>
+                    </Box>
                 </TabPanel>
             </TabContext>
         </Container >
