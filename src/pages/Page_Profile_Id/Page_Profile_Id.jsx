@@ -44,9 +44,11 @@ const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { listcv } = useSelector((state) => state.list);
+  // const { listcv } = useSelector((state) => state.list);
+  const {listcv} = useSelector(state => state.listcv)
   const user = useSelector((state) => state.user);
-  console.log(user,listcv)
+  console.log('  listcv: ' ,listcv)
+  console.log('user: ',user)
   const [tabValue, setTabValue] = useState("Profile");
   const [change, setChange] = useState(true);
   // console.log(user.cvselected)
