@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Typography, Grid, Paper, IconButton } from '@mui/material';
 import { FirstPage, LastPage } from '@mui/icons-material';
 import { useNavigate } from 'react-router';
-
+import TabInProfile from '../../../components/Profile/TabInProfile/TabInProfile';
 export default function ProfileIdOneCv({ events }) {
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
@@ -47,6 +47,13 @@ export default function ProfileIdOneCv({ events }) {
 
   return (
     <Grid container justifyContent="center" spacing={2}>
+      <div>
+        <TabInProfile/>
+      </div>
+      <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px', width: '100%' }}>
+      <Typography variant="h5" gutterBottom>
+            CVs List
+          </Typography>
       <Grid item xs={12} md={12} sx={{ margin: '0 25px' }}>
         <Grid container justifyContent="flex-start" spacing={2} wrap="wrap">
           {displayedEvents.map((event) => (
@@ -128,6 +135,7 @@ export default function ProfileIdOneCv({ events }) {
           </Grid>
         </Grid>
       </Grid>
+      </Paper>
     </Grid>
   );
 }

@@ -3,11 +3,12 @@ import { Grid, Typography, Button, Paper } from '@mui/material';
 import { DataGrid ,GridToolbar} from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import { NullString, NotStart, Pending, Completed, Postpone } from "../LabelButton/LabelButton";
-
+import Sidebar from '../SideBarProfile/SideBarProfile';
+import TabInProfile from './TabInProfile/TabInProfile';
 export default function HistoryList({ events, time, pathnavigate, namePage }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const navigate = useNavigate();
-
+  const drawerWidth = 200;
   const handleDetails = (eventId) => {
     navigate(pathnavigate);
     // Thực hiện hành động khi người dùng nhấn vào nút "Xem chi tiết" cho từng event
@@ -82,7 +83,11 @@ export default function HistoryList({ events, time, pathnavigate, namePage }) {
 
   return (
     <Grid container justifyContent="center">
+      <div>
+        <TabInProfile/>
+      </div>
       <Grid item xs={12} md={10}> {/* Tăng chiều rộng của khung */}
+      
         <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px', width: '100%' }}>
         <Typography variant="h5" gutterBottom>
             Application List
