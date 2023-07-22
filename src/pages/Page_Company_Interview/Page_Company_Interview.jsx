@@ -1,24 +1,49 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Chip, Autocomplete, TextField, IconButton } from "@mui/material";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import datasjson from "./Page_Company_Interview_Data.json";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   NullString,
   NotStart,
   Pending,
   Completed,
+  Pass,
+  Fail,
 } from "../../components/Label/Label";
 import Grid from "@mui/material/Grid";
+import {
+  NoRowsOverlay,
+  NoResultsOverlay,
+} from "../../components/DataRick/DataRick";
 
 export default function Page_Company_Interview() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [rows, setRows] = useState(datasjson);
+  useEffect(() => {
+    dispatch({ type: "saga/getAllInterview" });
+    dispatch({ type: "saga/getRecruitmentList" });
+    dispatch({ type: "saga/getDepartment" });
+    return () => {
+      dispatch({ type: "interview/clearUpInterview" });
+      dispatch({ type: "recruitment/clearUpRecruitment" });
+    };
+  }, []);
+
+  const loading = useSelector((state) => state.loading);
+  const rows = useSelector((state) => state.interview);
+  const department_draft = useSelector((state) => state.department);
+  const recruitment_draft = useSelector((state) => state.recruitment);
+
+  const departments = department_draft ? department_draft : [];
+  const recruitments = recruitment_draft ? recruitment_draft : [];
+
+  // const [rows, setRows] = useState(datasjson);
 
   // const [anchorEl, setAnchorEl] = useState(null);
 
@@ -26,6 +51,7 @@ export default function Page_Company_Interview() {
 
   const [valueChoose, setValueChoose] = useState(null);
   const [departmentChoose, setDepartmentChoose] = useState(null);
+  const [recruitmentChoose, setRecruitmentChoose] = useState(null);
   const [statusChoose, setStatusChoose] = useState(null);
 
   // function handleMoreClick(event) {
@@ -35,10 +61,6 @@ export default function Page_Company_Interview() {
   // function handleClose() {
   //   setAnchorEl(null);
   // }
-
-  function handleRowClick(id) {
-    alert("Navigate to position id: " + id);
-  }
 
   // function handleAddClick() {
   //   navigate("./create");
@@ -52,10 +74,34 @@ export default function Page_Company_Interview() {
     setValueChoose(value);
     setDepartmentChoose(null);
     setStatusChoose(null);
+    setRecruitmentChoose(null);
+    if (value === null) {
+      dispatch({ type: "saga/getAllInterview" });
+    }
   }
 
   function handleChooseDepartment(value) {
     setDepartmentChoose(value);
+    if (value) {
+      dispatch({
+        type: "saga/getInterviewWithDepartment",
+        payload: { id: value.departmentId },
+      });
+    } else if (value === null) {
+      dispatch({ type: "saga/getAllInterview" });
+    }
+  }
+
+  function handleChooseRecruitment(value) {
+    setRecruitmentChoose(value);
+    if (value) {
+      dispatch({
+        type: "saga/getInterviewWithRecruitment",
+        payload: { id: value.languageId },
+      });
+    } else if (value === null) {
+      dispatch({ type: "saga/getAllInterview" });
+    }
   }
 
   function handleChooseStatus(value) {
@@ -70,16 +116,13 @@ export default function Page_Company_Interview() {
     navigate(`../../profile/${value}`);
   }
 
-  function handleEditClick(value) {
-    navigate(`./${value}/update`);
-  }
-
   const columns = useMemo(() => [
     {
-      field: "id",
+      field: "InterviewId",
       type: "number",
       headerAlign: "left",
       align: "left",
+      flex: 0.2,
       renderHeader: () => <span>ID</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
@@ -102,8 +145,9 @@ export default function Page_Company_Interview() {
       type: "string",
       headerAlign: "left",
       align: "left",
-      flex: 1,
-      renderHeader: () => <span>Ứng viên</span>,
+      minWidth: 180,
+      flex: 0.4,
+      renderHeader: () => <span>Candidate Name</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
         return (
@@ -126,8 +170,9 @@ export default function Page_Company_Interview() {
       type: "string",
       headerAlign: "left",
       align: "left",
-      flex: 1,
-      renderHeader: () => <span>Người phỏng vấn</span>,
+      minWidth: 180,
+      flex: 0.4,
+      renderHeader: () => <span>Interviewer Name</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
         return (
@@ -149,8 +194,9 @@ export default function Page_Company_Interview() {
       type: "string",
       headerAlign: "center",
       align: "center",
-      renderHeader: () => <span>Ngày phỏng vấn</span>,
-      minWidth: 180,
+      renderHeader: () => <span>Date</span>,
+      minWidth: 150,
+      flex: 0.4,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
       },
@@ -160,8 +206,8 @@ export default function Page_Company_Interview() {
       type: "number",
       headerAlign: "center",
       align: "center",
-      renderHeader: () => <span>Ca</span>,
-      minWidth: 80,
+      renderHeader: () => <span>Shift</span>,
+      width: 80,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
       },
@@ -171,7 +217,7 @@ export default function Page_Company_Interview() {
       type: "string",
       headerAlign: "center",
       align: "center",
-      renderHeader: () => <span>Phòng</span>,
+      renderHeader: () => <span>Room</span>,
       minWidth: 100,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
@@ -179,15 +225,31 @@ export default function Page_Company_Interview() {
     },
     {
       field: "Status",
-      minWidth: 180,
+      minWidth: 150,
       headerAlign: "center",
       align: "center",
-      renderHeader: () => <span>Trạng thái</span>,
+      renderHeader: () => <span>Status</span>,
+      renderCell: (params) => {
+        if (params.value) {
+          return <NotStart />;
+        }
+        return <Completed />;
+      },
+    },
+    {
+      field: "Priority",
+      minWidth: 150,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <span>Result</span>,
       renderCell: (params) => {
         switch (params.value) {
-          case "Chưa bắt đầu": return <NotStart />
-          case "Đang diễn ra": return <Pending />
-          case "Kết thúc": return <Completed />
+          case "Pending":
+            return <Pending />;
+          case "Passed":
+            return <Pass />;
+          case "Failed":
+            return <Fail />;
         }
       },
     },
@@ -199,8 +261,8 @@ export default function Page_Company_Interview() {
       align: "right",
       getActions: (params) => [
         <IconButton onClick={() => handleDetailClick(params.row.InterviewId)}>
-          <InfoIcon sx={{color: "#1565C0"}}/>
-        </IconButton>
+          <InfoIcon sx={{ color: "#1565C0" }} />
+        </IconButton>,
       ],
     },
   ]);
@@ -222,7 +284,7 @@ export default function Page_Company_Interview() {
               color: "#1565C0",
             }}
           >
-            Danh sách buổi phỏng vấn
+            Interview
           </Box>
         </Grid>
 
@@ -289,7 +351,7 @@ export default function Page_Company_Interview() {
         <Grid
           item
           xs={12}
-          md={7}
+          md={12}
           sx={{
             display: "flex",
             justifyContent: "flex-start",
@@ -299,22 +361,66 @@ export default function Page_Company_Interview() {
           <Autocomplete
             disablePortal
             id="filter-type"
-            options={["Trạng thái"]}
+            options={["Department", "Recruitment", "Status"]}
             sx={{ width: 200, marginRight: 2 }}
             renderInput={(params) => (
-              <TextField {...params} label="Lọc theo..." />
+              <TextField {...params} label="Filter by..." />
             )}
             value={valueChoose}
             onChange={(event, value) => handleChooseValue(value)}
           />
-          {valueChoose === "Trạng thái" && (
+          {valueChoose === "Department" && (
+            <Autocomplete
+              disablePortal
+              id="filter-type"
+              options={departments}
+              sx={{ width: 200 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Department..." />
+              )}
+              getOptionLabel={(option) => option.departmentName || ""}
+              renderOption={(props, option) => (
+                <li {...props} key={option.departmentId}>
+                  {option.departmentName}
+                </li>
+              )}
+              isOptionEqualToValue={(option, value) => {
+                return option.departmentId === value.departmentId;
+              }}
+              value={departmentChoose}
+              onChange={(event, value) => handleChooseDepartment(value)}
+            />
+          )}
+          {valueChoose === "Recruitment" && (
+            <Autocomplete
+              disablePortal
+              id="filter-type"
+              options={recruitments}
+              sx={{ width: 400 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Recruitment..." />
+              )}
+              getOptionLabel={(option) => option.PositionName || ""}
+              renderOption={(props, option) => (
+                <li {...props} key={option.PositionId}>
+                  {option.PositionId + " - " + option.PositionName}
+                </li>
+              )}
+              isOptionEqualToValue={(option, value) => {
+                return option.PositionId === value.PositionId;
+              }}
+              value={recruitmentChoose}
+              onChange={(event, value) => handleChooseRecruitment(value)}
+            />
+          )}
+          {valueChoose === "Status" && (
             <Autocomplete
               disablePortal
               id="filter-type"
               options={["Chưa bắt đầu", "Đang diễn ra", "Kết thúc"]}
               sx={{ width: 200 }}
               renderInput={(params) => (
-                <TextField {...params} label="Trạng thái..." />
+                <TextField {...params} label="Status..." />
               )}
               value={statusChoose}
               onChange={(event, value) => handleChooseStatus(value)}
@@ -359,14 +465,12 @@ export default function Page_Company_Interview() {
         </Grid> */}
       </Grid>
 
-      <Box
-        sx={{
-          width: "100%",
-        }}
-      >
+      <Box>
         <DataGrid
+          autoHeight
           columns={columns}
-          rows={rows}
+          rows={rows === null ? [] : rows}
+          loading={loading}
           sx={{
             "&.MuiDataGrid-root": {
               borderRadius: 1,
@@ -389,13 +493,12 @@ export default function Page_Company_Interview() {
               color: "white",
             },
           }}
-          slots={{ toolbar: GridToolbar }}
+          slots={{
+            toolbar: GridToolbar,
+            noRowsOverlay: NoRowsOverlay,
+            noResultsOverlay: NoResultsOverlay,
+          }}
           slotProps={{
-            pagination: {
-              labelRowsPerPage: "Số lượng hiển thị",
-              labelDisplayedRows: ({ from, to, count }) =>
-                `${from}–${to} của ${count !== -1 ? count : `hơn ${to}`}`,
-            },
             toolbar: {
               showQuickFilter: true,
               quickFilterProps: {
@@ -423,9 +526,10 @@ export default function Page_Company_Interview() {
               },
             },
           }}
+          getRowId={(row) => row.InterviewId}
           onCellClick={(params, event) => {
-            if (params.field === "id") {
-              handleDetailClick(params.row.id);
+            if (params.field === "InterviewId") {
+              handleDetailClick(params.row.InterviewId);
             }
             if (params.field === "CandidateName") {
               handleProfileDetailClick(params.row.CandidateId);

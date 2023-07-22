@@ -42,6 +42,15 @@ export default function Page_Company_Recruitment() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    dispatch({ type: "saga/getRecruitmentList" });
+    dispatch({ type: "saga/getDepartment" });
+    dispatch({ type: "saga/getLanguage" });
+    return () => {
+      dispatch({ type: "recruitment/clearUpRecruitment" });
+    };
+  }, []);
+
   const loading = useSelector((state) => state.loading);
   const rows = useSelector((state) => state.recruitment);
   const department_draft = useSelector((state) => state.department);
@@ -62,15 +71,6 @@ export default function Page_Company_Recruitment() {
   const [languageChoose, setLanguageChoose] = useState(null);
 
   const [valueReport, setValueReport] = useState(0);
-
-  useEffect(() => {
-    dispatch({ type: "saga/getRecruitmentList" });
-    dispatch({ type: "saga/getDepartment" });
-    dispatch({ type: "saga/getLanguage" });
-    return () => {
-      dispatch({ type: "recruitment/clearUpRecruitment" });
-    };
-  }, []);
 
   // function handleMoreClick(event) {
   //   setAnchorEl(event.currentTarget);
@@ -177,7 +177,7 @@ export default function Page_Company_Recruitment() {
 
   const columns = useMemo(() => [
     {
-      field: "id",
+      field: "PositionId",
       type: "number",
       headerAlign: "left",
       align: "left",
@@ -424,7 +424,7 @@ export default function Page_Company_Recruitment() {
         <Grid
           item
           xs={12}
-          md={7}
+          md={12}
           sx={{
             display: "flex",
             justifyContent: "flex-start",
@@ -590,7 +590,6 @@ export default function Page_Company_Recruitment() {
             loading={loading}
             sx={{
               "&.MuiDataGrid-root": {
-                // border: "1px solid gray",
                 borderRadius: 1,
               },
               "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
@@ -634,7 +633,6 @@ export default function Page_Company_Recruitment() {
                   sx: {
                     width: 300,
                     marginBottom: 1,
-                    border: "none",
                   },
                 },
                 csvOptions: { disableToolbarButton: true },
@@ -655,9 +653,10 @@ export default function Page_Company_Recruitment() {
                 },
               },
             }}
+            getRowId={(row) => row.PositionId}
             onCellClick={(params, event) => {
-              if (params.field === "id" || params.field === "PositionName") {
-                handleDetailClick(params.row.id);
+              if (params.field === "PositionId" || params.field === "PositionName") {
+                handleDetailClick(params.row.PositionId);
               }
             }}
           />

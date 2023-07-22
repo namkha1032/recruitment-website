@@ -9,6 +9,8 @@ import SportsScoreRoundedIcon from '@mui/icons-material/SportsScoreRounded';
 import PsychologyRoundedIcon from '@mui/icons-material/PsychologyRounded';
 import LanguageRoundedIcon from '@mui/icons-material/LanguageRounded';
 import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
+import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
+import { CloseRounded, DoneRounded } from "@mui/icons-material";
 
 export function NullString() {
   return <Chip icon={<PriorityHighIcon />} label="Unavailable" />;
@@ -38,17 +40,17 @@ export function NotStart() {
 export function Pending() {
   return (
     <Chip
-      label="Going"
+      label="Pending"
       variant="outlined"
       style={{
-        color: "#1565C0",
+        color: "#E0E0E0",
         backgroundColor: "white",
-        borderColor: "#1565C0",
+        borderColor: "#E0E0E0",
       }}
       icon={
-        <RocketLaunchRoundedIcon
+        <MoreHorizRoundedIcon
           style={{
-            color: "#1565C0",
+            color: "#E0E0E0",
           }}
         />
       }
@@ -62,12 +64,12 @@ export function Completed() {
       label="Finished"
       variant="outlined"
       style={{
-        color: "#008631",
+        color: "#1565C0",
         backgroundColor: "white",
-        borderColor: "#008631",
+        borderColor: "#1565C0",
       }}
       icon={<SportsScoreRoundedIcon style={{
-        color: "#008631",
+        color: "#1565C0",
       }}/>}
     />
   );
@@ -192,6 +194,44 @@ export function Inactive() {
         <RocketLaunchRoundedIcon
           style={{
             color: "#E0E0E0",
+          }}
+        />
+      }
+    />
+  );
+}
+
+export function Pass() {
+  return (
+    <Chip
+      label="Passed"
+      variant="outlined"
+      style={{
+        color: "#008631",
+        backgroundColor: "white",
+        borderColor: "#008631",
+      }}
+      icon={<DoneRounded style={{
+        color: "#008631",
+      }}/>}
+    />
+  );
+}
+
+export function Fail() {
+  return (
+    <Chip
+      label="Failed"
+      variant="outlined"
+      style={{
+        color: "#cc3300",
+        backgroundColor: "white",
+        borderColor: "#cc3300",
+      }}
+      icon={
+        <CloseRounded
+          style={{
+            color: "#cc3300",
           }}
         />
       }
