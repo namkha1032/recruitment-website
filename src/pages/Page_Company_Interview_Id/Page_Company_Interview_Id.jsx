@@ -56,11 +56,11 @@ const Page_Company_Interview_Id = () => {
                 <Divider sx={{
                     marginY: 10,
                     "&::before, &::after": {
-                        borderColor: "error.main",
+                        borderColor: "primary.main",
                         borderWidth: "1px"
                     },
                 }}>
-                    <Button variant="contained" color="error" sx={{ fontSize: 25, borderRadius: 100 }}>
+                    <Button variant="contained" color="primary" sx={{ fontSize: 25, borderRadius: 100 }}>
                         RESULT OF THE INTERVIEW
                     </Button>
                 </Divider>
@@ -121,7 +121,6 @@ const Page_Company_Interview_Id = () => {
                             Accept
                         </Button>
                     </Grid>
-
                 </Grid>
 
             </>
