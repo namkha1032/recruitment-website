@@ -14,6 +14,9 @@ import {
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+//import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader"
+import GigaCard from "../../components/GigaCard/GigaCard"
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody"
 
 //import LockIcon from "@mui/icons-material/Lock";
 import Visibility from '@mui/icons-material/Visibility';
@@ -94,10 +97,11 @@ const Page_Profile_Id_ChangePassword = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "75%",
+            width: "85%",
           }}
         >
-
+          {/* <GigaCard>
+            <GigaCardBody> */}
           <Grid item md={7} sx={{ display: "flex", justifyContent: "center" }}>
             <Grid
               item
@@ -111,9 +115,11 @@ const Page_Profile_Id_ChangePassword = () => {
                 opacity: "100%",
                 left: "20%",
                 right: "20%",
-                border: "1px solid black",
+                //border: "1px solid black",
               }}
             >
+              <GigaCard>
+                <GigaCardBody>
               <Typography 
                 variant="h2" 
                 align="center" 
@@ -232,8 +238,12 @@ const Page_Profile_Id_ChangePassword = () => {
               </form>
 
               <ToastContainer />
+              </GigaCardBody>
+              </GigaCard>
             </Grid>
           </Grid>
+{/*           </GigaCardBody>
+          </GigaCard> */}
         </Grid>
       </Container>
     </Box>
