@@ -3,7 +3,6 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { skill } from "./RecruitData";
 import NotRInputText from "./NotRequiredText";
 import EmptyTextarea from "./AutoText";
 import AddIcon from "@mui/icons-material/Add";
@@ -56,7 +55,7 @@ export default function ChooseList(prop) {
                 prop.setInputValue(newValue);
                 if (newValue !== null) {
                   console.log(newValue);
-                  prop.setSkillId(skill.filter((comp) => comp.name === newValue.name)[0].id);
+                  prop.setSkillId(prop.skill.filter((comp) => comp.name === newValue.name)[0].id);
                   prop.handleState(newValue.name);
                 }
               }
@@ -80,7 +79,7 @@ export default function ChooseList(prop) {
             clearOnBlur
             handleHomeEndKeys
             id="free-solo-with-text-demo"
-            options={skill}
+            options={prop.skill}
             getOptionLabel={(option) => {
               if (typeof option === "string") {
                 return option;

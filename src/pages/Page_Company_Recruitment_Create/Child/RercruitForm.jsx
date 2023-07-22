@@ -1,14 +1,34 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import recruitInfo from "./RecruitData";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { skill, language, department } from "./RecruitData";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import Box1 from "./Box1";
 import Box2 from "./Box2";
 import Box3 from "./Box3";
+import Box4 from "./box4";
 function RecruitForm() {
+  const dispatch = useDispatch();
+  // fetch Data
+  useEffect(() => {
+    dispatch({ type: "saga/getLanguage" });
+    dispatch({ type: "saga/getSkill" });
+    dispatch({ type: "saga/getDepartment" });
+    return () => {
+      dispatch({ type: "skill/setSkill", payload: null });
+      dispatch({ type: "language/setLanguage", payload: null });
+      dispatch({ type: "department/setDepartment", payload: null });
+    };
+  },[dispatch]);
+  // CV COMPS
+  const skillList = useSelector((state) => state.skill);
+  const languageList = useSelector((state) => state.language);
+  const departmentList = useSelector((state) => state.department);
+  const skill= skillList?skillList:[]
+  const language= languageList?languageList:[]
+  const department= departmentList?departmentList:[]
   // Recruiment comps
   const [RName, setRName] = useState(recruitInfo.name);
   const [description, setDescription] = useState(recruitInfo.description);
@@ -41,22 +61,22 @@ function RecruitForm() {
   // Department comps
   const [express, setExpress] = useState(departments[0] ? true : false);
   const [departmentName, setDeparmentName] = useState(
-    departments[0] ? departments[0].name : ""
+    departments[0] ? departments[0].departmentName : ""
   );
   const [departmentId, setDepartmentId] = useState(
-    departments[0] ? departments[0].id : ""
+    departments[0] ? departments[0].departmentId : null
   );
   const [departmentAddress, setDepartmentAddress] = useState(
-    departments[0] ? departments[0].address : ""
+    departments[0] ? departments[0].departmentAddress : ""
   );
   const [departmentEmail, setDepartmentEmail] = useState(
-    departments[0] ? departments[0].email : ""
+    departments[0] ? departments[0].departmentEmail : ""
   );
   const [departmentPhone, setDepartmentPhone] = useState(
-    departments[0] ? departments[0].phone : ""
+    departments[0] ? departments[0].departmentPhone : ""
   );
   const [departmentWeb, setDepartmentWeb] = useState(
-    departments[0] ? departments[0].website : ""
+    departments[0] ? departments[0].departmentWebsite : ""
   );
   const navigate = useNavigate();
   //FUNCTION
@@ -73,13 +93,12 @@ function RecruitForm() {
       setExpress(true);
       console.log(event.target.value);
       setDeparmentName(event.target.value);
-      let arr = department.filter((comp) => comp.name === event.target.value);
-      console.log(arr);
-      setDepartmentId(arr[0].id);
-      setDepartmentAddress(arr[0].address);
-      setDepartmentEmail(arr[0].email);
-      setDepartmentPhone(arr[0].phone);
-      setDepartmentWeb(arr[0].website);
+      let arr = department.filter((comp) => comp.departmentName === event.target.value);
+      setDepartmentId(arr[0].departmentId);
+      setDepartmentAddress(arr[0].departmentAddress);
+      setDepartmentEmail(arr[0].departmentEmail);
+      setDepartmentPhone(arr[0].departmentPhone);
+      setDepartmentWeb(arr[0].departmentWebsite);
     }
   };
   function handleRname(e) {
@@ -209,12 +228,40 @@ function RecruitForm() {
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6}  sx={{marginTop: "8px",}}>
+          <Grid item xs={12} sm={6} sx={{marginTop: "8px",}}>
+            <Box
+              className={`RecruiteForm Form InputForm`}
+              sx={{
+                borderRadius: 4,
+                boxShadow: 10,
+                width:"90%",
+                backgroundColor: "white",
+                border: (theme) => `1px solid ${theme.palette.divider}`,
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Box className="Container">
+                <Grid
+                  container
+                  spacing={0}
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Grid item xs={10}>
+                    <Box4/>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12}  sx={{marginTop: "16px",}}>
             <Box
               className={`RecruiteForm InputForm`}
               sx={{
                 borderRadius: 4,
-                width:"90%",
+                width:"95%",
                 boxShadow: 10,
                 backgroundColor: "white",
                 border: (theme) => `1px solid ${theme.palette.divider}`,
@@ -248,6 +295,7 @@ function RecruitForm() {
                       endDate={endDate}
                       handleMaxHire={handleMaxHire}
                       maxHire={maxHire}
+                      department={department}
                     />
                   </Grid>
                 </Grid>
@@ -286,10 +334,12 @@ function RecruitForm() {
                       setExperience={setExperience}
                       note={note}
                       setNote={setNote}
+                      skill={skill}
                       setSkillName={setSkillName}
                       skillName={skillName}
                       setSkillId={setSkillId}
                       handleRequirementAdd={handleRequirementAdd}
+                      language={language}
                       languages={languages}
                       handleLanguageDelete={handleLanguageDelete}
                       lInputValue={lInputValue}
@@ -304,7 +354,9 @@ function RecruitForm() {
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={12}></Grid>
+          <Grid item xs={12}>
+          </Grid>
+          <img src="./img/logo.png" alt="" />
           <Button variant="contained" className="AddButton" type="submit">
             Submit
           </Button>

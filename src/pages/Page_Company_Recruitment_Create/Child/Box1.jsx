@@ -7,9 +7,8 @@ import 'react-quill/dist/quill.snow.css';
 function Box1(prop) {
   return (
     <>
-      <Box>
+      <Box >
         <Grid item xs={12}>
-        
           <InputText
             state={"Recuite Name"}
             handleState={prop.handleRname}
