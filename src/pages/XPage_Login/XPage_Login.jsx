@@ -103,7 +103,7 @@ const XPage_Login = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "80%",
+            width: "76%",
           }}
         >
 
@@ -139,7 +139,7 @@ const XPage_Login = () => {
                 fontSize={'28px'}
                 lineHeight={'28px'}
                 fontWeight={'700'}
-                padding={"20px"}
+                padding={"10px"}
               >
                 Hi, welcome back
               </Typography>
@@ -287,7 +287,7 @@ const XPage_Login = () => {
               <Grid
                 item
                 xs={12}
-                sx={{ ...style, display: "flex", justifyContent: "center" }}
+                sx={{ ...style, display: "flex", justifyContent: "center", marginBottom: '0px' }}
               >
                 <Typography variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
                   Didn't have an account?{" "}
