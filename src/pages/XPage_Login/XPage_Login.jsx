@@ -78,6 +78,7 @@ const XPage_Login = () => {
   };
 
   const handleCheck = (event) => {
+    event.preventDefault();
     console.log(event.target.checked);
   };
 
