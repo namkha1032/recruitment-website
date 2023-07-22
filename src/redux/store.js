@@ -30,7 +30,7 @@ const store = configureStore({
         department: departmentSlice.reducer,
         skill: skillSlice.reducer,
         language: languageSlice.reducer,
-        list: listcvSlice.reducer,
+        listcv: listcvSlice.reducer,
         detailposition: detailpositionSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)

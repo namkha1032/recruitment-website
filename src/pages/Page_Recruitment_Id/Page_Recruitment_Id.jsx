@@ -57,7 +57,7 @@ const Page_Recruitment_Id = () => {
         setHelperText('');
     };
     const handleCloseCV = () => setShowCV(true);
-    const list_CV_draft = useSelector(state => state.list);
+    const list_CV_draft = useSelector(state => state.listcv);
     const list_CV = list_CV_draft ? list_CV_draft : []
     const dispatch = useDispatch();
     useEffect(() => {
