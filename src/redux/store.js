@@ -20,6 +20,7 @@ import cvSlice from './reducer/cvReducer'
 // import rootSaga
 import rootSaga from './rootSaga'
 import listcvSlice from './reducer/listcvReducer'
+import detailpositionSlice from './reducer/detailpositionReducer'
 
 
 const sagaMiddleware = createSagaMiddleware()
@@ -38,7 +39,8 @@ const store = configureStore({
         error: errorSlice.reducer,
         listcv: listcvSlice.reducer,
         candidate: candidateSlice.reducer,
-        cv: cvSlice.reducer
+        cv: cvSlice.reducer,
+        detailposition: detailpositionSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]

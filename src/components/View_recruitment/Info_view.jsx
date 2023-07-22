@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -29,6 +29,7 @@ import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import { Chip, Stack } from '@mui/material';
 import View_detail from './View_detail';
 import List_application from './List_application';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Info_view = (props) => {
@@ -42,114 +43,139 @@ const Info_view = (props) => {
     const handleTab2 = (event, newValue) => {
         setTab2(newValue);
     };
+    const detailposition = useSelector(state => state.detailposition);
+  
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch({ type: 'saga/getDetailposition' })
+        return () => {
+            dispatch({ type: 'detailposition/setDetailposition', payload: null })
+        }
+    }, [])
+    // dang bi console 3 lan
+    
+
+
 
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-                <Box>
-                    <img style={{ width: '100%' }} src="https://www.pvcfc.com.vn/Data/Sites/1/News/5510/mau-1.jpg" alt="Tuyển dụng" />
-                </Box>
-            </Grid>
-            <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column" }}>
-                <Box sx={{ width: "100%", height: "100%", borderRadius: "5px", boxShadow: "24", display: "flex", flexDirection: "column" }}>
-                    <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
-                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }} >
-                            <RadarIcon></RadarIcon> Position:
-                        </Typography>
-                        <Typography variant='h6' sx={{ display: "flex", marginLeft: "10px" }} >
-                            Front-end Developer
-                        </Typography>
-                    </Grid>
-
-                    <Grid item xs={12} >
-                        <Box sx={{ display: "flex", flexDirection: "row", marginLeft: "5px", flexWrap: "wrap" }}>
-                            <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }} >
-                                <HourglassBottomRoundedIcon></HourglassBottomRoundedIcon> Time for applied:
+        detailposition  &&
+        <>
+            <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
+                    <Box>
+                        <img style={{ width: '100%' }} src="https://www.pvcfc.com.vn/Data/Sites/1/News/5510/mau-1.jpg" alt="Tuyển dụng" />
+                    </Box>
+                </Grid>
+                <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column" }}>
+                    <Box sx={{ width: "100%", height: "100%", borderRadius: "5px", boxShadow: "24", display: "flex", flexDirection: "column" }}>
+                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
+                            <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start", display: "flex" }} >
+                                <RadarIcon></RadarIcon> Position:
                             </Typography>
-                            
-                                <Chip variant='outlined' color="info" sx={{ display: "flex", marginLeft: "10px" }} label="19/07/2023 - 29/07/2023" />
-                            
-                        </Box>
+                            <Typography variant='h6' sx={{ display: "flex", marginLeft: "10px" }} >
+                                {detailposition[0].positionName}
+                            </Typography>
+                        </Grid>
 
-                    </Grid>
-                    <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
-                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }} >
-                            <ZoomInIcon></ZoomInIcon> Max Hiring:
-                        </Typography>
-                        <Chip variant='outlined' color="info" sx={{ display: "flex", marginLeft: "10px" }} label="10" />
-                    </Grid>
-                    <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
-                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }}>
-                            <RecommendIcon></RecommendIcon> Requirement:
+                        <Grid item xs={12} >
+                            <Box sx={{ display: "flex", flexDirection: "row", marginLeft: "5px", flexWrap: "wrap" }}>
+                                <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start", display: "flex" }} >
+                                    <HourglassBottomRoundedIcon></HourglassBottomRoundedIcon> Time for applied:
+                                </Typography>
 
-                        </Typography>
-                        <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
-                            {requires.map((require) => (
-                                <Chip key={require.id} sx={{ margin: "0px 0px 5px 15px" }} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
-                            ))}
-                        </Stack>
-                    </Grid>
-
-                    <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
-                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }} >
-                            <LanguageIcon></LanguageIcon> Language:
-                        </Typography>
-                        <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
-                            {languages.map((language) => (
-                                <Chip key={language.id} sx={{ margin: "0px 0px 5px 15px" }} value={language.name} label={language.name} variant='outlined' size='medium' color="success" />
-                            ))}
-                        </Stack>
-                    </Grid>
-
-                    <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
-                        <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start",  display: "flex" }}>
-                            <CreditScoreIcon></CreditScoreIcon> Salary:
-                            <Chip sx={{ padding: "0px", marginLeft: "5px" }} label="1000$" variant="outlined" color='info' size="medium" />
-                        </Typography>
-                    </Grid>
-
-
-
-                </Box>
-            </Grid>
-            <Grid item xs={12}>
-                <Box sx={{ width: '100%', typography: 'body1' }}>
-                    {props.tabs == 2 ? (
-                        <TabContext value={tab1}>
-                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-
-                                <TabList onChange={handleTab1} aria-label="lab API tabs example">
-                                    <Tab label="Detail" value="1" />
-                                    <Tab label="List of applications" value="2" />
-
-                                </TabList>
+                                <Chip variant='outlined' color="info" sx={{ display: "flex", marginLeft: "10px" }} label={`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`} />
 
                             </Box>
-                            <TabPanel value="1" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
-                                <View_detail />
-                            </TabPanel>
-                            <TabPanel value="2">
-                                <List_application />
-                            </TabPanel>
 
-                        </TabContext>
-                    ) : (
-                        <TabContext value={tab2}>
-                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                <TabList onChange={handleTab2} aria-label="lab API tabs example">
-                                    <Tab label="Detail" value="3" />
+                        </Grid>
+                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
+                            <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start", display: "flex" }} >
+                                <ZoomInIcon></ZoomInIcon> Max Hiring:
+                            </Typography>
+                            <Chip variant='outlined' color="info" sx={{ display: "flex", marginLeft: "10px" }} label={`${detailposition[0].hireMax}`} />
+                        </Grid>
+                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
+                            <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start", display: "flex" }}>
+                                <RecommendIcon></RecommendIcon> Requirement:
 
-                                </TabList>
-                            </Box>
-                            <TabPanel value="3" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
-                                <View_detail />
-                            </TabPanel>
-                        </TabContext>
-                    )}
+                            </Typography>
+                            <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
+                                {requires.map((require) => (
+                                    <Chip key={require.id} sx={{ margin: "0px 0px 5px 15px" }} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
+                                ))}
+                            </Stack>
+                        </Grid>
 
-                </Box>
+                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
+                            <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start", display: "flex" }} >
+                                <LanguageIcon></LanguageIcon> Language:
+                            </Typography>
+                            <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
+                                {languages.map((language) => (
+                                    <Chip key={language.id} sx={{ margin: "0px 0px 5px 15px" }} value={language.name} label={language.name} variant='outlined' size='medium' color="success" />
+                                ))}
+                            </Stack>
+                        </Grid>
+
+                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginLeft: "5px" }}>
+                            <Typography variant='h6' sx={{ justifyContent: "flex-start", alignItems: "flex-start", display: "flex" }}>
+                                <CreditScoreIcon></CreditScoreIcon> Salary:
+                                <Chip sx={{ padding: "0px", marginLeft: "5px" }} label={`${detailposition[0].salary}`} variant="outlined" color='info' size="medium" />
+                            </Typography>
+                        </Grid>
+
+
+
+                    </Box>
+                </Grid>
+                <Grid item xs={12}>
+                    <Box sx={{ width: '100%', typography: 'body1' }}>
+                        {props.tabs == 2 ? (
+                            <TabContext value={tab1}>
+                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+
+                                    <TabList onChange={handleTab1} aria-label="lab API tabs example">
+                                        <Tab label="Detail" value="1" />
+                                        <Tab label="List of applications" value="2" />
+
+                                    </TabList>
+
+                                </Box>
+                                <TabPanel value="1" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
+                                    <View_detail  />
+                                </TabPanel>
+                                <TabPanel value="2">
+                                    <List_application />
+                                </TabPanel>
+
+                            </TabContext>
+                        ) : (
+                            <TabContext value={tab2}>
+                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                    <TabList onChange={handleTab2} aria-label="lab API tabs example">
+                                        <Tab label="Detail" value="3" />
+
+                                    </TabList>
+                                </Box>
+                                <TabPanel value="3" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
+                                    <View_detail />
+                                </TabPanel>
+                            </TabContext>
+                        )}
+
+                    </Box>
+                </Grid>
             </Grid>
-        </Grid>
+        </> 
+        
+        
+            
+           
+           
+
+       
+
+
 
     )
 }
