@@ -1,5 +1,5 @@
 // import libraries
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -20,7 +20,7 @@ import CelebrationRoundedIcon from '@mui/icons-material/CelebrationRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
-import PsychologyAltRoundedIcon from '@mui/icons-material/PsychologyAltRounded';
+// import PsychologyAltRoundedIcon from '@mui/icons-material/PsychologyAltRounded';
 import TodayRoundedIcon from '@mui/icons-material/TodayRounded';
 
 import picture from '../../assets/img/event.png'
@@ -29,54 +29,34 @@ import GigaCardHeader from '../../components/GigaCardHeader/GigaCardHeader';
 import GigaCardBody from '../../components/GigaCardBody/GigaCardBody';
 
 
-const columns = [
-    {
-        field: 'id',
-        renderHeader: () => <span>Mã</span>,
-        width: 200
-    },
-    {
-        field: 'name',
-        renderHeader: () => <span>Tên</span>,
-        width: 350
-    },
-    {
-        field: 'time',
-        renderHeader: () => <span>Thời điểm đăng ký</span>,
-        width: 350
-    },
-    {
-        field: 'actions',
-        type: 'actions',
-        renderHeader: () => <span>Chi tiết</span>,
-        width: 200,
-        headerAlign: 'center',
-        align: 'center',
-        getActions: (params) => [
-            <GridActionsCellItem
-                icon={<FindInPageIcon></FindInPageIcon>}
-                label="Detail"
-                onClick={() => alert("Navigate to user id: " + params.row.id)} />]
-    }
-];
-
-// Test Data
-const rows = [
-    { id: 1, name: 'Ronaldo' }, { id: 2, name: 'Messi' }, { id: 3, name: 'Salah' },
-    { id: 4, name: 'Bruno' }, { id: 5, name: 'Kevin' }, { id: 6, name: 'Pogba' },
-    { id: 7, name: 'Mbappe' }, { id: 8, name: 'Haaland' }, { id: 9, name: 'Reus' },
-    { id: 10, name: 'Vinicious' }, { id: 11, name: 'Kaka' }, { id: 12, name: 'Beckham' },
-    { id: 13, name: 'Viera' }, { id: 14, name: 'Maldini' }, { id: 15, name: 'Nesta' },
-    { id: 16, name: 'Gullit' }, { id: 17, name: 'Carlos' }, { id: 18, name: 'Pirlo' },
-    { id: 19, name: 'Van Dijk' }, { id: 20, name: 'Dias' }, { id: 21, name: 'Kroos' },
-    { id: 22, name: 'Modric' }, { id: 23, name: 'Xavi' }, { id: 24, name: 'Iniesta' },
-    { id: 25, name: 'Ramos' }, { id: 26, name: 'Pepe' }, { id: 27, name: 'Alaba' },
-    { id: 28, name: 'Robben' }, { id: 29, name: 'Hazard' }, { id: 30, name: 'Bale' }
-];
+// Position
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
+import RecordVoiceOverRoundedIcon from '@mui/icons-material/RecordVoiceOverRounded';
+import PersonSearchRoundedIcon from '@mui/icons-material/PersonSearchRounded';
+import ManageAccountsRoundedIcon from '@mui/icons-material/ManageAccountsRounded';
 
 
 
 const Page_Company_Event_Id = () => {
+
+    // useNavigate
+    const navigate = useNavigate()
+
+
+    // Test Data
+    const rows = [
+        { id: 1, name: 'Ronaldo', time: '22/07/2023 16:00' }, { id: 2, name: 'Messi', time: '22/07/2023 16:00' }, { id: 3, name: 'Salah', time: '22/07/2023 16:00' },
+        { id: 4, name: 'Bruno', time: '22/07/2023 16:00' }, { id: 5, name: 'Kevin', time: '22/07/2023 16:00' }, { id: 6, name: 'Pogba', time: '22/07/2023 16:00' },
+        { id: 7, name: 'Mbappe', time: '22/07/2023 16:00' }, { id: 8, name: 'Haaland', time: '22/07/2023 16:00' }, { id: 9, name: 'Reus', time: '22/07/2023 16:00' },
+        { id: 10, name: 'Vinicious', time: '22/07/2023 16:00' }, { id: 11, name: 'Kaka', time: '22/07/2023 16:00' }, { id: 12, name: 'Beckham', time: '22/07/2023 16:00' },
+        { id: 13, name: 'Viera', time: '22/07/2023 16:00' }, { id: 14, name: 'Maldini', time: '22/07/2023 16:00' }, { id: 15, name: 'Nesta', time: '22/07/2023 16:00' },
+        { id: 16, name: 'Gullit', time: '22/07/2023 16:00' }, { id: 17, name: 'Carlos', time: '22/07/2023 16:00' }, { id: 18, name: 'Pirlo', time: '22/07/2023 16:00' },
+        { id: 19, name: 'Van Dijk', time: '22/07/2023 16:00' }, { id: 20, name: 'Dias', time: '22/07/2023 16:00' }, { id: 21, name: 'Kroos', time: '22/07/2023 16:00' },
+        { id: 22, name: 'Modric', time: '22/07/2023 16:00' }, { id: 23, name: 'Xavi', time: '22/07/2023 16:00' }, { id: 24, name: 'Iniesta', time: '22/07/2023 16:00' },
+        { id: 25, name: 'Ramos', time: '22/07/2023 16:00' }, { id: 26, name: 'Pepe', time: '22/07/2023 16:00' }, { id: 27, name: 'Alaba', time: '22/07/2023 16:00' },
+        { id: 28, name: 'Robben', time: '22/07/2023 16:00' }, { id: 29, name: 'Hazard', time: '22/07/2023 16:00' }, { id: 30, name: 'Bale', time: '22/07/2023 16:00' }
+    ];
+
 
     // useState
     const [value, setValue] = useState('1');
@@ -95,9 +75,108 @@ const Page_Company_Event_Id = () => {
         navigate("/company/event/:eventid/update");
     }
 
+    const handleDetailClick = (value) => {
+        console.log(value);
+        navigate(`/profile/${value}`);
+    }
 
-    // useNavigate
-    const navigate = useNavigate()
+
+    const columns = [
+        {
+            field: 'id',
+            type: 'number',
+            width: 150,
+            headerAlign: 'center',
+            align: 'center',
+            renderHeader: () => <span>Mã</span>,
+            renderCell: (params) => {
+                return (
+                    <Box
+                        sx={{
+                            "&:hover": {
+                                cursor: "pointer",
+                                textDecoration: "underline",
+                            },
+                        }}
+                    >
+                        {params.value}
+                    </Box>
+                );
+            },
+        },
+        {
+            field: 'name',
+            type: 'string',
+            width: 300,
+            headerAlign: 'left',
+            align: 'left',
+            renderHeader: () => <span>Tên</span>,
+            renderCell: (params) => {
+                return (
+                    <Box
+                        sx={{
+                            "&:hover": {
+                                cursor: "pointer",
+                                textDecoration: "underline",
+                            },
+                        }}
+                    >
+                        {params.value}
+                    </Box>
+                );
+            },
+        },
+        {
+            field: 'position',
+            type: 'string',
+            width: 200,
+            headerAlign: 'center',
+            align: 'center',
+            renderHeader: () => <span>Vị trí</span>,
+            renderCell: (params) => {
+                return <Chip
+                    label="Candidate"
+                    variant="outlined"
+                    style={{
+                        color: "green",
+                        backgroundColor: "white",
+                        borderColor: "green",
+                    }}
+                    icon={
+                        <PersonRoundedIcon style={{
+                            color: "green",
+                        }}>
+                        </PersonRoundedIcon>
+                    } />
+            },
+        },
+        {
+            field: 'time',
+            type: 'string',
+            width: 250,
+            headerAlign: 'center',
+            align: 'center',
+            renderHeader: () => <span>Thời điểm đăng ký</span>,
+            renderCell: (params) => {
+
+            },
+        },
+        {
+            field: 'actions',
+            type: 'actions',
+            width: 200,
+            headerAlign: 'center',
+            align: 'center',
+            flex: 1,
+            renderHeader: () => <span>Chi tiết</span>,
+            getActions: (params) => [
+                <GridActionsCellItem
+                    icon={<FindInPageIcon></FindInPageIcon>}
+                    label="Detail"
+                    onClick={() => handleDetailClick(params.row.id)} />,]
+        }
+    ];
+
 
 
     return (
@@ -150,16 +229,20 @@ const Page_Company_Event_Id = () => {
                         <GigaCardBody>
                             <Box sx={{ fontSize: '20px', fontStyle: 'italic', display: 'flex', justifyContent: 'flex-end', marginBottom: 3 }}>
                                 <TodayRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></TodayRoundedIcon>
-                                <span style={{ color: 'darkgray' }}>Tạo lúc 16:40 20/07/2023</span>
+                                <span style={{ color: 'darkgray' }}>20/07/2023 16:40</span>
                             </Box>
+
+                            {/* <div> cannot appear as a descendant of <p> */}
+                            {/* ---------------------------------------------------------------------- */}
                             <p align='justify'>
-                                <h3>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis recusandae sapiente deserunt sequi rerum animi eaque illo excepturi. Iusto saepe cumque ipsa cupiditate ab accusantium dolor soluta veritatis ex hic?</h3>
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae modi rerum enim voluptatibus voluptatem! Alias eum velit, animi harum at vitae! Atque, eum. Eos iste soluta vitae quidem itaque saepe?</p>
-                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus rerum libero cupiditate voluptatem, doloremque quaerat culpa soluta! Soluta assumenda at sint et fugit quo natus id beatae! Et, saepe? Ratione!</p>
-                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum mollitia asperiores quis quos, ut fugiat harum. Voluptates vero animi alias sapiente odit cumque esse culpa, repudiandae error inventore, autem commodi!</span>
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit eum esse quisquam distinctio animi iure possimus omnis tempore dicta consectetur perspiciatis atque in, cupiditate nostrum numquam accusamus blanditiis velit libero!</p>
-                                <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure laborum, ullam necessitatibus harum distinctio similique itaque corrupti qui possimus incidunt quisquam, optio hic molestias et accusantium rem ipsum. Commodi, consequatur.</span>
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis recusandae sapiente deserunt sequi rerum animi eaque illo excepturi. Iusto saepe cumque ipsa cupiditate ab accusantium dolor soluta veritatis ex hic?<br />
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae modi rerum enim voluptatibus voluptatem! Alias eum velit, animi harum at vitae! Atque, eum. Eos iste soluta vitae quidem itaque saepe?<br />
+                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus rerum libero cupiditate voluptatem, doloremque quaerat culpa soluta! Soluta assumenda at sint et fugit quo natus id beatae! Et, saepe? Ratione!<br />
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum mollitia asperiores quis quos, ut fugiat harum. Voluptates vero animi alias sapiente odit cumque esse culpa, repudiandae error inventore, autem commodi!<br />
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit eum esse quisquam distinctio animi iure possimus omnis tempore dicta consectetur perspiciatis atque in, cupiditate nostrum numquam accusamus blanditiis velit libero!<br />
+                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure laborum, ullam necessitatibus harum distinctio similique itaque corrupti qui possimus incidunt quisquam, optio hic molestias et accusantium rem ipsum. Commodi, consequatur.<br />
                             </p>
+                            {/* ---------------------------------------------------------------------- */}
 
                             <Grid container sx={{ marginTop: 8 }}>
                                 <Grid item md={3} sm={4} xs={6}>
@@ -203,7 +286,7 @@ const Page_Company_Event_Id = () => {
                                             <Box sx={{
                                                 fontSize: 16,
                                             }}>
-                                                21/07/2023
+                                                21/07/2023 14:00
                                             </Box>
                                         </Box>
                                         {/* <p style={{ fontWeight: 600, fontSize: 20 }}>21/07/2023</p> */}
@@ -262,6 +345,9 @@ const Page_Company_Event_Id = () => {
                                 "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
                                     outline: "none",
                                 },
+                                "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                                    outline: "none",
+                                },
                                 "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
                                     backgroundColor: "#1565C0",
                                     color: "white",
@@ -315,6 +401,12 @@ const Page_Company_Event_Id = () => {
                                         pageSize: 25
                                     },
                                 },
+                            }}
+                            getRowId={(row) => row.id}
+                            onCellClick={(params, event) => {
+                                if (params.field === "id" || params.field === "name") {
+                                    handleDetailClick(params.row.id);
+                                }
                             }}>
                         </DataGrid>
                     </Box>
