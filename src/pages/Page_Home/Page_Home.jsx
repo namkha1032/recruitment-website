@@ -29,7 +29,7 @@ const styleFont = {
 }
 const styleFontContent = {
   fontFamily: "serif",
-fontWeight: "bold"
+  fontWeight: "bold"
 }
 
 //
@@ -72,8 +72,8 @@ const Page_Home = () => {
     <>
       <main>
         <Box sx={{ padding: '24px' }}>
-          
-        <Carousel />
+
+          <Carousel />
           {/* <Carousel className="Car1">
             <Carousel.Item>
               <img
@@ -415,38 +415,130 @@ const Page_Home = () => {
           </Grid>
         </Box>
         <Box sx={{ padding: '24px', borderTop: '1px solid lightgrey' }} id='AboutUs'>
-          <Box>
-            <h1 style={{ textAlign: 'center', fontFamily: 'serif' }}>About us</h1>
+          <Box sx={{padding:'0px 0px 30px 0px'}}>
+            <Typography sx={{ ...styleFont }} align='center' variant='h3'>About us</Typography>
+
           </Box>
+          <Grid container spacing={1} >
+            <Grid item md={6}>
+              <Box sx={{ padding: '24px 0px 0px 0px' }}>
+                <img src="https://ftmm.com.pk/wp-content/uploads/2022/06/our-mission.webp"
+                  alt=""
+                  style={{ width: '100%' }}
+
+                />
+              </Box>
+            </Grid>
+            <Grid item md={6}>
+              <Box sx={{ padding: '24px 0px 0px 30px' }}>
+                <Box sx={{ padding: '0px 0px 0px 30px' }}>
+                  <Typography
+                    variant="subtitle2"
+                    align="center"
+                    color="text.secondary"
+                    component="p"
+                    sx={{ display: 'flex', justifyContent: 'flex-start' }}
+                  >
+                    About us
+                  </Typography>
+                </Box>
+                <Box sx={{ padding: '0px 0px 0px 30px' }}>
+                  <Typography
+                    variant='h3'
+                    component='header'
+
+                  >
+                    My team
+                  </Typography>
+                </Box>
+                <Box sx={{ padding: '15px 0px 0px 30px' }}>
+                  <Typography
+                    variant='body1'
+                    color="black"
+                    component="p"
+                    sx={{ display: 'flex', justifyContent: 'flex-start' }}
+                  >
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, perspiciatis repellat maxime, adipisci non ipsam at itaque rerum vitae, necessitatibus nulla animi expedita cumque provident inventore? Voluptatum in tempora earum deleniti, culpa odit veniam, ea reiciendis sunt ullam temporibus aut!
+                  </Typography>
+                </Box>
+                <Box sx={{ padding: '10px 0px 0px 30px' }}>
+                  <Typography
+                    variant='body1'
+                    color="black"
+                    component="p"
+                    sx={{ display: 'flex', justifyContent: 'flex-start' }}
+                  >
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, perspiciatis repellat maxime, adipisci non ipsam at itaque rerum vitae, necessitatibus nulla animi expedita cumque provident inventore? Voluptatum in tempora earum deleniti, culpa odit veniam, ea reiciendis sunt ullam temporibus aut!
+                  </Typography>
+                </Box>
+              </Box>
+
+
+            </Grid>
+          </Grid>
+
+
+
+          <Grid container spacing={1} sx={{ padding: '24px 0px 0px 0px' }}>
+            
+            <Grid item md={5.5}>
+              <Box sx={{ padding: '24px 0px 0px 0px' }}>
+                <Box sx={{ padding: '0px 0px 0px 0px' }}>
+                  <Typography
+                    variant="subtitle2"
+                    align="center"
+                    color="text.secondary"
+                    component="p"
+                    sx={{ display: 'flex', justifyContent: 'flex-start' }}
+                  >
+                    Mission & Vision
+                  </Typography>
+                </Box>
+                <Box sx={{ padding: '0px 0px 0px 0px' }}>
+                  <Typography
+                    variant='h3'
+                    component='header'
+
+                  >
+                    Mission & Vision
+                  </Typography>
+                </Box>
+                <Box sx={{ padding: '15px 0px 0px 0px' }}>
+                  <Typography
+                    variant='body1'
+                    color="black"
+                    component="p"
+                    sx={{ display: 'flex', justifyContent: 'flex-start' }}
+                  >
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, perspiciatis repellat maxime, adipisci non ipsam at itaque rerum vitae, necessitatibus nulla animi expedita cumque provident inventore? Voluptatum in tempora earum deleniti, culpa odit veniam, ea reiciendis sunt ullam temporibus aut!
+                  </Typography>
+                </Box>
+                <Box sx={{ padding: '10px 0px 0px 0px' }}>
+                  <Typography
+                    variant='body1'
+                    color="black"
+                    component="p"
+                    sx={{ display: 'flex', justifyContent: 'flex-start' }}
+                  >
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, perspiciatis repellat maxime, adipisci non ipsam at itaque rerum vitae, necessitatibus nulla animi expedita cumque provident inventore? Voluptatum in tempora earum deleniti, culpa odit veniam, ea reiciendis sunt ullam temporibus aut!
+                  </Typography>
+                </Box>
+              </Box>
+
+
+            </Grid>
+            <Grid item md={6.5}>
+              <Box sx={{ padding: '24px 0px 0px 20px' }}>
+                <img src="https://cutewallpaper.org/21/image/Image-Dimensions-Monterey-Regional-Airport.jpeg"
+                  alt=""
+                  style={{ width: '100%' }}
+
+                />
+              </Box>
+            </Grid>
+          </Grid>
         </Box>
 
-
-
-        {/* <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
-              Home Page
-              
-            </Typography>
-            
-            { <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-              <Button variant="contained" onClick={handleNavigateClick}>
-                
-              Sự kiện</Button>
-              <Button variant="contained" onClick={handleNavigateClick1}>Thông tin tuyển dụng</Button>
-            </Stack> }
-          </Container> */}
-        {/* Footer */}
         <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
           <Typography variant="h6" align="center" gutterBottom>
             Team 4
