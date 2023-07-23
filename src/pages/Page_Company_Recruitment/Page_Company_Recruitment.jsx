@@ -47,13 +47,12 @@ export default function Page_Company_Recruitment() {
     dispatch({ type: "saga/getDepartment" });
     // dispatch({ type: "saga/getLanguage" });
     return () => {
-      console.log("XXX")
-      dispatch({ type: "position/cleanUpPosition" });
+      dispatch({ type: "positionList/cleanUpPosition" });
     };
   }, []);
 
   const loading = useSelector((state) => state.loading);
-  const rows = useSelector((state) => state.position);
+  const rows = useSelector((state) => state.positionList);
   const department_draft = useSelector((state) => state.department);
   // const language_draft = useSelector((state) => state.language);
 

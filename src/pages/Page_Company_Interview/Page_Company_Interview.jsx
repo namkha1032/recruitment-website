@@ -38,15 +38,15 @@ export default function Page_Company_Interview() {
     dispatch({ type: "saga/getPositionList" });
     dispatch({ type: "saga/getDepartment" });
     return () => {
-      dispatch({ type: "interview/cleanUpInterview" });
-      dispatch({ type: "position/cleanUpPosition" });
+      dispatch({ type: "interviewList/cleanUpInterviewList" });
+      dispatch({ type: "positionList/cleanUpPositionList" });
     };
   }, []);
-
+  
   const loading = useSelector((state) => state.loading);
-  const rows = useSelector((state) => state.interview);
+  const rows = useSelector((state) => state.interviewList);
   const department_draft = useSelector((state) => state.department);
-  const position_draft = useSelector((state) => state.position);
+  const position_draft = useSelector((state) => state.positionList);
 
   const departments = department_draft ? department_draft : [];
   const positions = position_draft ? position_draft : [];
@@ -151,14 +151,14 @@ export default function Page_Company_Interview() {
   }
 
   function handleDetailClick(value) {
-    dispatch({ type: "interview/cleanUpInterview" });
+    dispatch({ type: "interviewList/cleanUpInterviewList" });
     dispatch({ type: "position/cleanUpPosition" });
     navigate(`./${value}`);
   }
 
   function handleProfileDetailClick(value) {
-    dispatch({ type: "interview/cleanUpInterview" });
-    dispatch({ type: "position/cleanUpPosition" });
+    dispatch({ type: "interviewList/cleanUpInterviewList" });
+    dispatch({ type: "positionList/cleanUpPositionList" });
     navigate(`../../profile/${value}`);
   }
 

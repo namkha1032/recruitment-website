@@ -7,7 +7,7 @@ function* getPositionList() {
     yield put({type: "loading/onLoading"})
     yield call(delay, 1500)
     const response = yield call(axios.get, 'http://localhost:3000/data/positionList.json')
-    yield put({ type: "position/setPosition", payload: response.data })
+    yield put({ type: "positionList/setPositionList", payload: response.data })
     yield put({type: "loading/offLoading"})
 }
 
@@ -16,7 +16,7 @@ function* getPositionListWithDepartment(action) {
     yield call(delay, 1500)
     console.log(action.payload)
     const response = yield call(axios.get, 'http://localhost:3000/data/positionListD.json')
-    yield put({type: "position/setPosition", payload: response.data })
+    yield put({type: "positionList/setPositionList", payload: response.data })
     yield put({type: "loading/offLoading"})
 }
 
@@ -25,7 +25,7 @@ function* getPositionListWithLanguage(action) {
     yield call(delay, 1500)
     console.log(action.payload)
     const response = yield call(axios.get, 'http://localhost:3000/data/positionListL.json')
-    yield put({type: "position/setPosition", payload: response.data })
+    yield put({type: "positionList/setPositionList", payload: response.data })
     yield put({type: "loading/offLoading"})
 }
 
@@ -34,13 +34,13 @@ function* getPositionListWithStatus(action) {
     yield call(delay, 1500)
     console.log(action.payload)
     const response = yield call(axios.get, 'http://localhost:3000/data/positionListS.json')
-    yield put({type: "position/setPosition", payload: response.data })
+    yield put({type: "positionList/setPositionList", payload: response.data })
     yield put({type: "loading/offLoading"})
 }
 
 function* updatePositionList(action) {
     const response = yield call(axios.put, "", action.payload)
-    yield put({type: "position/setPosition", payload: response.data})
+    yield put({type: "positionList/setPositionList", payload: response.data})
 }
 
 

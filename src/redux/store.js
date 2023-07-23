@@ -20,6 +20,10 @@ import cvSlice from './reducer/cvReducer'
 import rootSaga from './rootSaga'
 import positionSlice from './reducer/positionReducer'
 import loadingSlice from './reducer/loadingReducer'
+import interviewListSlice from './reducer/interviewListReducer'
+import positionListSlice from './reducer/positionListReducer'
+import eventListSlice from './reducer/eventListReducer'
+
 
 const sagaMiddleware = createSagaMiddleware()
 const store = configureStore({
@@ -39,6 +43,9 @@ const store = configureStore({
         cv: cvSlice.reducer,
         position: positionSlice.reducer,
         loading: loadingSlice.reducer,
+        interviewList: interviewListSlice.reducer,
+        positionList: positionListSlice.reducer,
+        eventList: eventListSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]
