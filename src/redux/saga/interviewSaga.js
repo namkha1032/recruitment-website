@@ -13,16 +13,9 @@ function* getAllInterview() {
     yield put({type: "loading/offLoading"})
 }
 
-function* getInterviewWithDepartment(action) {
+function* getInterviewWithFilter(action) {
     yield put({type: "loading/onLoading"})
-    yield call(delay, 1500)
-    const response = yield call(axios.get, 'http://localhost:3000/data/interviewAll.json')
-    yield put({ type: "interview/setInterview", payload: response.data })
-    yield put({type: "loading/offLoading"})
-}
-
-function* getInterviewWithRecruitment(action) {
-    yield put({type: "loading/onLoading"})
+    console.log("Payload:", action.payload)
     yield call(delay, 1500)
     const response = yield call(axios.get, 'http://localhost:3000/data/interviewAll.json')
     yield put({ type: "interview/setInterview", payload: response.data })
@@ -70,8 +63,7 @@ function* interviewSaga() {
         takeEvery("saga/getInterviewId", getInterviewId),
         takeEvery("saga/createInterview", createInterview),
         takeLatest("saga/getAllInterview", getAllInterview),
-        takeLatest("saga/getInterviewWithDepartment", getInterviewWithDepartment),
-        takeLatest("saga/getInterviewWithRecruitment", getInterviewWithRecruitment)
+        takeLatest("saga/getInterviewWithFilter", getInterviewWithFilter),
     ])
 }
 

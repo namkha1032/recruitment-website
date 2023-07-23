@@ -35,31 +35,31 @@ export default function Page_Company_Interview() {
 
   useEffect(() => {
     dispatch({ type: "saga/getAllInterview" });
-    dispatch({ type: "saga/getRecruitmentList" });
+    dispatch({ type: "saga/getPositionList" });
     dispatch({ type: "saga/getDepartment" });
     return () => {
       dispatch({ type: "interview/cleanUpInterview" });
-      dispatch({ type: "recruitment/cleanUpRecruitment" });
+      dispatch({ type: "position/cleanUpPosition" });
     };
   }, []);
 
   const loading = useSelector((state) => state.loading);
   const rows = useSelector((state) => state.interview);
   const department_draft = useSelector((state) => state.department);
-  const recruitment_draft = useSelector((state) => state.recruitment);
+  const position_draft = useSelector((state) => state.position);
 
   const departments = department_draft ? department_draft : [];
-  const recruitments = recruitment_draft ? recruitment_draft : [];
+  const positions = position_draft ? position_draft : [];
 
   // const [rows, setRows] = useState(datasjson);
 
   // const [anchorEl, setAnchorEl] = useState(null);
 
   // const [valueSearch, setValueSearch] = useState("");
+  // const [valueChoose, setValueChoose] = useState(null);
 
-  const [valueChoose, setValueChoose] = useState(null);
   const [departmentChoose, setDepartmentChoose] = useState(null);
-  const [recruitmentChoose, setRecruitmentChoose] = useState(null);
+  const [positionChoose, setPositionChoose] = useState(null);
   const [statusChoose, setStatusChoose] = useState(null);
   const [priorityChoose, setPriorityChoose] = useState(null);
 
@@ -79,89 +79,92 @@ export default function Page_Company_Interview() {
   //   alert("Value search: " + valueSearch);
   // }
 
-  function handleChooseValue(value) {
-    setValueChoose(value);
-    setDepartmentChoose(null);
-    setStatusChoose(null);
-    setRecruitmentChoose(null);
-    setPriorityChoose(null);
-    if (value === null) {
-      dispatch({ type: "saga/getAllInterview" });
-    }
-  }
+  // function handleChooseValue(value) {
+  //   setValueChoose(value);
+  //   setDepartmentChoose(null);
+  //   setStatusChoose(null);
+  //   setPositionChoose(null);
+  //   setPriorityChoose(null);
+  //   if (value === null) {
+  //     dispatch({ type: "saga/getAllInterview" });
+  //   }
+  // }
 
   function handleChooseDepartment(value) {
-    setDepartmentChoose(value);
-    if (value) {
-      dispatch({
-        type: "saga/getInterviewWithDepartment",
-        payload: { id: value.departmentId },
-      });
-    } else if (value === null) {
-      dispatch({ type: "saga/getAllInterview" });
+    if (value === null) {
+      setPositionChoose(null)
     }
+    setDepartmentChoose(value);
+    dispatch({
+      type: "saga/getInterviewWithFilter",
+      payload: {
+        departmentId: value ? value.departmentId : null,
+        positionId: positionChoose && value !== null
+          ? positionChoose.PositionId
+          : null,
+        status: statusChoose ? statusChoose : null,
+        priority: priorityChoose ? priorityChoose : null,
+      },
+    });
   }
 
-  function handleChooseRecruitment(value) {
-    setRecruitmentChoose(value);
-    if (value) {
-      dispatch({
-        type: "saga/getInterviewWithRecruitment",
-        payload: { id: value.PositionId },
-      });
-    } else if (value === null) {
-      dispatch({ type: "saga/getAllInterview" });
-    }
+  function handleChoosePosition(value) {
+    setPositionChoose(value);
+    dispatch({
+      type: "saga/getInterviewWithFilter",
+      payload: {
+        departmentId: departmentChoose ? departmentChoose.departmentId : null,
+        positionId: value
+          ? value.PositionId
+          : null,
+        status: statusChoose ? statusChoose : null,
+        priority: priorityChoose ? priorityChoose : null,
+      },
+    });
   }
 
   function handleChooseStatus(value) {
-    setStatusChoose(value);
-    if (value === "Not start") {
-      dispatch({
-        type: "saga/getInterviewWithStatus",
-        payload: { Status: false },
-      });
-    } else if (value === "Finished") {
-      dispatch({
-        type: "saga/getInterviewWithStatus",
-        payload: { Status: true },
-      });
-    } else if (value === null) {
-      dispatch({ type: "saga/getAllInterview" });
+    if (value !== "Finished") {
+      setPriorityChoose(null)
     }
+    setStatusChoose(value);
+    dispatch({
+      type: "saga/getInterviewWithFilter",
+      payload: {
+        departmentId: departmentChoose ? departmentChoose.departmentId : null,
+        positionId: positionChoose
+          ? positionChoose.PositionId
+          : null,
+        status: value ? value : null,
+        priority: priorityChoose && value === "Finished" ? priorityChoose : null,
+      },
+    });
   }
 
   function handleChooseResult(value) {
     setPriorityChoose(value);
-    if (value === "Pending") {
-      dispatch({
-        type: "saga/getInterviewWithPriority",
-        payload: { Priority: "Pending" },
-      });
-    } else if (value === "Passed") {
-      dispatch({
-        type: "saga/getInterviewWithPriority",
-        payload: { Priority: "Passed" },
-      });
-    } else if (value === "Failed") {
-      dispatch({
-        type: "saga/getInterviewWithPriority",
-        payload: { Priority: "Failed" },
-      });
-    } else if (value === null) {
-      dispatch({ type: "saga/getAllInterview" });
-    }
+    dispatch({
+      type: "saga/getInterviewWithFilter",
+      payload: {
+        departmentId: departmentChoose ? departmentChoose.departmentId : null,
+        positionId: positionChoose
+          ? positionChoose.PositionId
+          : null,
+        status: statusChoose ? statusChoose : null,
+        priority: value ? value : null,
+      },
+    });
   }
 
   function handleDetailClick(value) {
     dispatch({ type: "interview/cleanUpInterview" });
-    dispatch({ type: "recruitment/cleanUpRecruitment" });
+    dispatch({ type: "position/cleanUpPosition" });
     navigate(`./${value}`);
   }
 
   function handleProfileDetailClick(value) {
     dispatch({ type: "interview/cleanUpInterview" });
-    dispatch({ type: "recruitment/cleanUpRecruitment" });
+    dispatch({ type: "position/cleanUpPosition" });
     navigate(`../../profile/${value}`);
   }
 
@@ -397,7 +400,7 @@ export default function Page_Company_Interview() {
           </Menu>
         </Grid> */}
 
-        <Grid
+        {/* <Grid
           item
           xs={12}
           md={12}
@@ -410,7 +413,7 @@ export default function Page_Company_Interview() {
           <Autocomplete
             disablePortal
             id="filter-type"
-            options={["Department", "Recruitment", "Status", "Result"]}
+            options={["Department", "Position", "Status", "Result"]}
             sx={{ width: 200, marginRight: 2 }}
             renderInput={(params) => (
               <TextField {...params} label="Filter by..." />
@@ -418,172 +421,217 @@ export default function Page_Company_Interview() {
             value={valueChoose}
             onChange={(event, value) => handleChooseValue(value)}
           />
-          {valueChoose === "Department" && (
-            <Autocomplete
-              disablePortal
-              id="filter-type"
-              options={departments}
-              sx={{ width: 200 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Department..." />
-              )}
-              getOptionLabel={(option) => option.departmentName || ""}
-              renderOption={(props, option) => (
-                <li {...props} key={option.departmentId}>
-                  {option.departmentName}
-                </li>
-              )}
-              isOptionEqualToValue={(option, value) => {
-                return option.departmentId === value.departmentId;
+        </Grid> */}
+        <Grid item xs={12} md={12}>
+          <Grid container spacing={2}>
+            <Grid
+              item
+              xs={12}
+              md={2}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
               }}
-              value={departmentChoose}
-              onChange={(event, value) => handleChooseDepartment(value)}
-            />
-          )}
-          {valueChoose === "Recruitment" && (
-            <Autocomplete
-              disablePortal
-              id="filter-type"
-              options={recruitments}
-              sx={{ width: 400 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Recruitment..." />
-              )}
-              getOptionLabel={(option) => option.PositionName || ""}
-              renderOption={(props, option) => (
-                <li {...props} key={option.PositionId}>
-                  {option.PositionId + " - " + option.PositionName}
-                </li>
-              )}
-              isOptionEqualToValue={(option, value) => {
-                return option.PositionId === value.PositionId;
+            >
+              <Autocomplete
+                disablePortal
+                id="filter-type"
+                options={departments}
+                sx={{ width: 200 }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Department..." />
+                )}
+                getOptionLabel={(option) => option.departmentName || ""}
+                renderOption={(props, option) => (
+                  <li {...props} key={option.departmentId}>
+                    {option.departmentName}
+                  </li>
+                )}
+                isOptionEqualToValue={(option, value) => {
+                  return option.departmentId === value.departmentId;
+                }}
+                value={departmentChoose}
+                onChange={(event, value) => handleChooseDepartment(value)}
+              />
+            </Grid>
+            {departmentChoose !== null && (
+              <Grid
+                item
+                xs={12}
+                md={6}
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+              >
+                <Autocomplete
+                  disablePortal
+                  fullWidth
+                  id="filter-type"
+                  options={positions}
+                  // sx={{ width: 400 }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Position..." />
+                  )}
+                  getOptionLabel={(option) => option.PositionName || ""}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.PositionId}>
+                      {option.PositionId + " - " + option.PositionName}
+                    </li>
+                  )}
+                  isOptionEqualToValue={(option, value) => {
+                    return option.PositionId === value.PositionId;
+                  }}
+                  value={positionChoose}
+                  onChange={(event, value) => handleChoosePosition(value)}
+                />
+              </Grid>
+            )}
+            <Grid
+              item
+              xs={12}
+              md={2}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
               }}
-              value={recruitmentChoose}
-              onChange={(event, value) => handleChooseRecruitment(value)}
-            />
-          )}
-          {valueChoose === "Status" && (
-            <Autocomplete
-              disablePortal
-              id="filter-type"
-              options={["Not start", "Finished"]}
-              sx={{ width: 200 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Status..." />
-              )}
-              renderOption={(props, option) => {
-                if (option === "Not start") {
-                  return (
-                    <Box
-                      component="li"
-                      {...props}
-                      sx={{
-                        color: "#E0E0E0",
-                      }}
-                    >
-                      <EventNoteRounded
+            >
+              <Autocomplete
+                disablePortal
+                id="filter-type"
+                options={["Not start", "Finished"]}
+                sx={{ width: 200 }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Status..." />
+                )}
+                renderOption={(props, option) => {
+                  if (option === "Not start") {
+                    return (
+                      <Box
+                        component="li"
+                        {...props}
                         sx={{
                           color: "#E0E0E0",
-                          marginRight: 1,
                         }}
-                      />
-                      Not start
-                    </Box>
-                  );
-                } else {
-                  return (
-                    <Box
-                      component="li"
-                      {...props}
-                      sx={{
-                        color: "#1565C0",
-                      }}
-                    >
-                      <SportsScoreRounded
+                      >
+                        <EventNoteRounded
+                          sx={{
+                            color: "#E0E0E0",
+                            marginRight: 1,
+                          }}
+                        />
+                        Not start
+                      </Box>
+                    );
+                  } else {
+                    return (
+                      <Box
+                        component="li"
+                        {...props}
                         sx={{
                           color: "#1565C0",
-                          marginRight: 1,
                         }}
-                      />
-                      Finished
-                    </Box>
-                  );
-                }
-              }}
-              value={statusChoose}
-              onChange={(event, value) => handleChooseStatus(value)}
-            />
-          )}
-          {valueChoose === "Result" && (
-            <Autocomplete
-              disablePortal
-              id="filter-type3"
-              options={["Pending", "Passed", "Failed"]}
-              sx={{ width: 200 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Result..." />
-              )}
-              renderOption={(props, option) => {
-                if (option === "Pending") {
-                  return (
-                    <Box
-                      component="li"
-                      {...props}
-                      sx={{
-                        color: "#E0E0E0",
-                      }}
-                    >
-                      <MoreHorizRounded
-                        sx={{
-                          color: "#E0E0E0",
-                          marginRight: 1,
-                        }}
-                      />
-                      Pending
-                    </Box>
-                  );
-                } else if (option === "Passed") {
-                  return (
-                    <Box
-                      component="li"
-                      {...props}
-                      sx={{
-                        color: "#008631",
-                      }}
-                    >
-                      <DoneRounded
-                        sx={{
-                          color: "#008631",
-                          marginRight: 1,
-                        }}
-                      />
-                      Passed
-                    </Box>
-                  );
-                } else {
-                  return (
-                    <Box
-                      component="li"
-                      {...props}
-                      sx={{
-                        color: "#cc3300",
-                      }}
-                    >
-                      <CloseRounded
-                        sx={{
-                          color: "#cc3300",
-                          marginRight: 1,
-                        }}
-                      />
-                      Failed
-                    </Box>
-                  );
-                }
-              }}
-              value={priorityChoose}
-              onChange={(event, value) => handleChooseResult(value)}
-            />
-          )}
+                      >
+                        <SportsScoreRounded
+                          sx={{
+                            color: "#1565C0",
+                            marginRight: 1,
+                          }}
+                        />
+                        Finished
+                      </Box>
+                    );
+                  }
+                }}
+                value={statusChoose}
+                onChange={(event, value) => handleChooseStatus(value)}
+              />
+            </Grid>
+            {statusChoose === "Finished" && (
+              <Grid
+                item
+                xs={12}
+                md={2}
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+              >
+                <Autocomplete
+                  disablePortal
+                  id="filter-type3"
+                  options={["Pending", "Passed", "Failed"]}
+                  sx={{ width: 200 }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Result..." />
+                  )}
+                  renderOption={(props, option) => {
+                    if (option === "Pending") {
+                      return (
+                        <Box
+                          component="li"
+                          {...props}
+                          sx={{
+                            color: "#E0E0E0",
+                          }}
+                        >
+                          <MoreHorizRounded
+                            sx={{
+                              color: "#E0E0E0",
+                              marginRight: 1,
+                            }}
+                          />
+                          Pending
+                        </Box>
+                      );
+                    } else if (option === "Passed") {
+                      return (
+                        <Box
+                          component="li"
+                          {...props}
+                          sx={{
+                            color: "#008631",
+                          }}
+                        >
+                          <DoneRounded
+                            sx={{
+                              color: "#008631",
+                              marginRight: 1,
+                            }}
+                          />
+                          Passed
+                        </Box>
+                      );
+                    } else {
+                      return (
+                        <Box
+                          component="li"
+                          {...props}
+                          sx={{
+                            color: "#cc3300",
+                          }}
+                        >
+                          <CloseRounded
+                            sx={{
+                              color: "#cc3300",
+                              marginRight: 1,
+                            }}
+                          />
+                          Failed
+                        </Box>
+                      );
+                    }
+                  }}
+                  value={priorityChoose}
+                  onChange={(event, value) => handleChooseResult(value)}
+                />
+              </Grid>
+            )}
+          </Grid>
         </Grid>
 
         {/* <Grid
@@ -661,7 +709,7 @@ export default function Page_Company_Interview() {
               showQuickFilter: true,
               quickFilterProps: {
                 debounceMs: 500,
-                placeholder: "Tìm kiếm...",
+                placeholder: "Search...",
                 sx: {
                   width: 300,
                   marginBottom: 1,

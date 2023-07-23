@@ -43,21 +43,31 @@ export default function Page_Company_Recruitment() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch({ type: "saga/getRecruitmentList" });
+    dispatch({ type: "saga/getPositionList" });
     dispatch({ type: "saga/getDepartment" });
-    dispatch({ type: "saga/getLanguage" });
+    // dispatch({ type: "saga/getLanguage" });
     return () => {
-      dispatch({ type: "recruitment/cleanUpRecruitment" });
+      dispatch({ type: "position/cleanUpPosition" });
     };
   }, []);
-
+  console.log(useSelector((state) => state.position))
   const loading = useSelector((state) => state.loading);
-  const rows = useSelector((state) => state.recruitment);
+  const rows = useSelector((state) => state.position);
+  // const rows = [{
+  //   "PositionId": 8,
+  //   "PositionName": "Front-end",
+  //   "Description": "Front-end web development is the development of the graphical user interface of a website, through the use of HTML, CSS, and JavaScript, so that users can view and interact with that website.",
+  //   "MaxHiringQty": 30,
+  //   "HiredQty": 80,
+  //   "StartDate": "11/09/2023, 10:00 AM",
+  //   "EndDate": "11/12/2023, 10:00 AM",
+  //   "Status": true
+  // }]
   const department_draft = useSelector((state) => state.department);
-  const language_draft = useSelector((state) => state.language);
+  // const language_draft = useSelector((state) => state.language);
 
   const departments = department_draft ? department_draft : [];
-  const languages = language_draft ? language_draft : [];
+  // const languages = language_draft ? language_draft : [];
 
   // const [rows, setRows] = useState(datasjson);
 
@@ -68,7 +78,7 @@ export default function Page_Company_Recruitment() {
 
   const [departmentChoose, setDepartmentChoose] = useState(null);
   const [statusChoose, setStatusChoose] = useState(null);
-  const [languageChoose, setLanguageChoose] = useState(null);
+  // const [languageChoose, setLanguageChoose] = useState(null);
 
   const [valueReport, setValueReport] = useState(0);
 
@@ -97,9 +107,9 @@ export default function Page_Company_Recruitment() {
     setValueChoose(value);
     setDepartmentChoose(null);
     setStatusChoose(null);
-    setLanguageChoose(null);
+    // setLanguageChoose(null);
     if (value === null) {
-      dispatch({ type: "saga/getRecruitmentList" });
+      dispatch({ type: "saga/getPositionList" });
     }
   }
 
@@ -107,40 +117,40 @@ export default function Page_Company_Recruitment() {
     setDepartmentChoose(value);
     if (value) {
       dispatch({
-        type: "saga/getRecruitmentListWithDepartment",
+        type: "saga/getPositionListWithDepartment",
         payload: { id: value.departmentId },
       });
     } else if (value === null) {
-      dispatch({ type: "saga/getRecruitmentList" });
+      dispatch({ type: "saga/getPositionList" });
     }
   }
 
-  function handleChooseLanguage(value) {
-    setLanguageChoose(value);
-    if (value) {
-      dispatch({
-        type: "saga/getRecruitmentListWithLanguage",
-        payload: { id: value.languageId },
-      });
-    } else if (value === null) {
-      dispatch({ type: "saga/getRecruitmentList" });
-    }
-  }
+  // function handleChooseLanguage(value) {
+  //   setLanguageChoose(value);
+  //   if (value) {
+  //     dispatch({
+  //       type: "saga/getPositionListWithLanguage",
+  //       payload: { id: value.languageId },
+  //     });
+  //   } else if (value === null) {
+  //     dispatch({ type: "saga/getPositionList" });
+  //   }
+  // }
 
   function handleChooseStatus(value) {
     setStatusChoose(value);
     if (value === "Active") {
       dispatch({
-        type: "saga/getRecruitmentListWithStatus",
+        type: "saga/getPositionListWithStatus",
         payload: { Status: true },
       });
     } else if (value === "Inactive") {
       dispatch({
-        type: "saga/getRecruitmentListWithStatus",
+        type: "saga/getPositionListWithStatus",
         payload: { Status: false },
       });
     } else if (value === null) {
-      dispatch({ type: "saga/getRecruitmentList" });
+      dispatch({ type: "saga/getPositionList" });
     }
   }
 
@@ -159,14 +169,14 @@ export default function Page_Company_Recruitment() {
 
   function handleActiveClick(value) {
     dispatch({
-      type: "saga/updateRecruitmentList",
+      type: "saga/updatePositionList",
       payload: { id: value, Status: true },
     });
   }
 
   function handleInactiveClick(value) {
     dispatch({
-      type: "saga/updateRecruitmentList",
+      type: "saga/updatePositionList",
       payload: { id: value, Status: false },
     });
   }
@@ -304,7 +314,7 @@ export default function Page_Company_Recruitment() {
             />,
             <GridActionsCellItem
               icon={<PlayCircleOutlineRoundedIcon sx={{ color: "#1565C0" }} />}
-              label="Active recruitment"
+              label="Active position"
               onClick={() => handleActiveClick(params.row.id)}
               showInMenu
               sx={{
@@ -328,7 +338,7 @@ export default function Page_Company_Recruitment() {
             />,
             <GridActionsCellItem
               icon={<PauseCircleOutlineRoundedIcon sx={{ color: "#cc3300" }} />}
-              label="Inactive recruitment"
+              label="Inactive position"
               onClick={() => handleInactiveClick(params.row.id)}
               showInMenu
               sx={{
@@ -358,7 +368,7 @@ export default function Page_Company_Recruitment() {
               color: "#1565C0",
             }}
           >
-            Recruitment
+            Position
           </Box>
         </Grid>
 
@@ -386,7 +396,7 @@ export default function Page_Company_Recruitment() {
             onClick={handleAddClick}
           >
             <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
-            Create recruitment
+            Create position
           </Button>
           {/* <IconButton onClick={handleMoreClick} sx={{
             marginLeft: 1,
@@ -434,7 +444,7 @@ export default function Page_Company_Recruitment() {
           <Autocomplete
             disablePortal
             id="filter-type"
-            options={["Department", "Status", "Language", "Technology"]}
+            options={["Department", "Status"]}
             sx={{ width: 200, marginRight: 2 }}
             renderInput={(params) => (
               <TextField {...params} label="Filter by..." />
@@ -515,7 +525,7 @@ export default function Page_Company_Recruitment() {
               onChange={(event, value) => handleChooseStatus(value)}
             />
           )}
-          {valueChoose === "Language" && (
+          {/* {valueChoose === "Language" && (
             <Autocomplete
               disablePortal
               id="filter-type"
@@ -536,7 +546,7 @@ export default function Page_Company_Recruitment() {
               value={languageChoose}
               onChange={(event, value) => handleChooseLanguage(value)}
             />
-          )}
+          )} */}
         </Grid>
 
         {/* <Grid
