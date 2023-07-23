@@ -91,17 +91,16 @@ export default function Page_Company_Interview() {
   // }
 
   function handleChooseDepartment(value) {
-    if (value === null) {
-      setPositionChoose(null)
-    }
+    setPositionChoose(null);
     setDepartmentChoose(value);
     dispatch({
       type: "saga/getInterviewWithFilter",
       payload: {
         departmentId: value ? value.departmentId : null,
-        positionId: positionChoose && value !== null
-          ? positionChoose.PositionId
-          : null,
+        // positionId: positionChoose && value !== null
+        //   ? positionChoose.PositionId
+        //   : null,
+        positionId: null,
         status: statusChoose ? statusChoose : null,
         priority: priorityChoose ? priorityChoose : null,
       },
@@ -114,9 +113,7 @@ export default function Page_Company_Interview() {
       type: "saga/getInterviewWithFilter",
       payload: {
         departmentId: departmentChoose ? departmentChoose.departmentId : null,
-        positionId: value
-          ? value.PositionId
-          : null,
+        positionId: value ? value.PositionId : null,
         status: statusChoose ? statusChoose : null,
         priority: priorityChoose ? priorityChoose : null,
       },
@@ -125,18 +122,17 @@ export default function Page_Company_Interview() {
 
   function handleChooseStatus(value) {
     if (value !== "Finished") {
-      setPriorityChoose(null)
+      setPriorityChoose(null);
     }
     setStatusChoose(value);
     dispatch({
       type: "saga/getInterviewWithFilter",
       payload: {
         departmentId: departmentChoose ? departmentChoose.departmentId : null,
-        positionId: positionChoose
-          ? positionChoose.PositionId
-          : null,
+        positionId: positionChoose ? positionChoose.PositionId : null,
         status: value ? value : null,
-        priority: priorityChoose && value === "Finished" ? priorityChoose : null,
+        priority:
+          priorityChoose && value === "Finished" ? priorityChoose : null,
       },
     });
   }
@@ -147,9 +143,7 @@ export default function Page_Company_Interview() {
       type: "saga/getInterviewWithFilter",
       payload: {
         departmentId: departmentChoose ? departmentChoose.departmentId : null,
-        positionId: positionChoose
-          ? positionChoose.PositionId
-          : null,
+        positionId: positionChoose ? positionChoose.PositionId : null,
         status: statusChoose ? statusChoose : null,
         priority: value ? value : null,
       },

@@ -47,22 +47,13 @@ export default function Page_Company_Recruitment() {
     dispatch({ type: "saga/getDepartment" });
     // dispatch({ type: "saga/getLanguage" });
     return () => {
+      console.log("XXX")
       dispatch({ type: "position/cleanUpPosition" });
     };
   }, []);
-  console.log(useSelector((state) => state.position))
+
   const loading = useSelector((state) => state.loading);
   const rows = useSelector((state) => state.position);
-  // const rows = [{
-  //   "PositionId": 8,
-  //   "PositionName": "Front-end",
-  //   "Description": "Front-end web development is the development of the graphical user interface of a website, through the use of HTML, CSS, and JavaScript, so that users can view and interact with that website.",
-  //   "MaxHiringQty": 30,
-  //   "HiredQty": 80,
-  //   "StartDate": "11/09/2023, 10:00 AM",
-  //   "EndDate": "11/12/2023, 10:00 AM",
-  //   "Status": true
-  // }]
   const department_draft = useSelector((state) => state.department);
   // const language_draft = useSelector((state) => state.language);
 
@@ -155,6 +146,7 @@ export default function Page_Company_Recruitment() {
   }
 
   function handleDetailClick(value) {
+    console.log(value)
     navigate(`./${value}`);
   }
 
@@ -303,19 +295,19 @@ export default function Page_Company_Recruitment() {
             <GridActionsCellItem
               icon={<InfoRoundedIcon variant="outlined" />}
               label="Detail"
-              onClick={() => handleDetailClick(params.row.id)}
+              onClick={() => handleDetailClick(params.row.PositionId)}
               showInMenu
             />,
             <GridActionsCellItem
               icon={<QueryStatsRoundedIcon />}
               label="Report"
-              onClick={() => handleReportClick(params.row.id)}
+              onClick={() => handleReportClick(params.row.PositionId)}
               showInMenu
             />,
             <GridActionsCellItem
               icon={<PlayCircleOutlineRoundedIcon sx={{ color: "#1565C0" }} />}
               label="Active position"
-              onClick={() => handleActiveClick(params.row.id)}
+              onClick={() => handleActiveClick(params.row.PositionId)}
               showInMenu
               sx={{
                 color: "#1565C0",
@@ -327,19 +319,19 @@ export default function Page_Company_Recruitment() {
             <GridActionsCellItem
               icon={<InfoRoundedIcon variant="outlined" />}
               label="Detail"
-              onClick={() => handleDetailClick(params.row.id)}
+              onClick={() => handleDetailClick(params.row.PositionId)}
               showInMenu
             />,
             <GridActionsCellItem
               icon={<QueryStatsRoundedIcon />}
               label="Report"
-              onClick={() => handleReportClick(params.row.id)}
+              onClick={() => handleReportClick(params.row.PositionId)}
               showInMenu
             />,
             <GridActionsCellItem
               icon={<PauseCircleOutlineRoundedIcon sx={{ color: "#cc3300" }} />}
               label="Inactive position"
-              onClick={() => handleInactiveClick(params.row.id)}
+              onClick={() => handleInactiveClick(params.row.PositionId)}
               showInMenu
               sx={{
                 color: "#cc3300",
