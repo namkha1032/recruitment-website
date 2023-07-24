@@ -13,7 +13,8 @@ import {
 } from "@mui/material";
 
 import imageBackground from "../../assets/img/background.jpg";
-/* import EmailIcon from "@mui/icons-material/Email"; */
+import GigaCard from "../../components/GigaCard/GigaCard";
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 
 const style = {
   marginTop: "15px",
@@ -48,7 +49,7 @@ const Recovery = (props) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "75%",
+            width: "76%",
           }}
         >
 
@@ -61,16 +62,18 @@ const Recovery = (props) => {
               item
               xs={9}
               sx={{
-                borderRadius: "10px",
+                /* borderRadius: "10px",
                 padding: "20px",
                 paddingTop: "10px",
                 paddingBottom: "10px",
-                backgroundColor: "white",
+                backgroundColor: "white", */
                 opacity: "100%",
                 left: "20%",
                 right: "20%",
               }}
             >
+              <GigaCard>
+                <GigaCardBody>
 
               <Typography 
                 variant="h2" 
@@ -81,7 +84,7 @@ const Recovery = (props) => {
                 fontSize={'28px'}
                 lineHeight={'28px'}
                 fontWeight={'700'}
-                padding={"20px"}
+                padding={"10px"}
               >
                 Recovery
               </Typography>
@@ -100,18 +103,37 @@ const Recovery = (props) => {
                     type="email"
                     value={props.email}
                     InputProps={{
-                      /* endAdornment: (
-                        <InputAdornment position="end">
-                          <EmailIcon />
-                        </InputAdornment>
-                      ), */
 
                       style: { borderRadius: "12px" },
                     }}
-                    onChange={(e) => {
-                      props.onChangeEmail(e.target.value);
-                    }}
+                    onChange={props.handleEmailChange}
+                    error={!props.validEmail}
                   />
+                  {!props.validEmail && (
+                    <Box
+                    margin="3px 14px 0px"
+                  >
+                    {
+                      props.email === "" ? (
+                        <Typography 
+                          color="#f44336"
+                          fontSize="12px"
+                          lineHeight="20px"
+                        >
+                        Email is required
+                        </Typography>
+                      ) : (
+                        <Typography color="#f44336"
+                        fontSize="12px"
+                          lineHeight="20px"
+                        >
+                        Must be a valid email
+                        </Typography>
+                      )
+                    }
+                    
+                  </Box>
+                  )}
                 </Grid>
 
                 <Grid
@@ -140,12 +162,16 @@ const Recovery = (props) => {
               <Grid
                 item
                 xs={12}
-                sx={{ ...style, display: "flex", justifyContent: "center" }}
+                sx={{ ...style, display: "flex", justifyContent: "center", marginBottom: "0px" }}
               >
                 <Typography component={Link} to="/login" variant="subtitle1" sx={{ textDecoration: 'none', color: '#1976d2' }}>
                   Back to login{" "}
                 </Typography>
               </Grid>
+              
+              </GigaCardBody>
+              </GigaCard>
+
             </Grid>
           </Grid>
         </Grid>

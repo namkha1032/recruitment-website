@@ -49,6 +49,9 @@ import XPage_Recovery from './pages/XPage_Recovery/XPage_Recovery';
 
 import PageTest from './pages/xpagetest/PageTest';
 import PageTest2 from './pages/xpagetest2/PageTest2';
+import MissingPage from './components/MissingPage/MissingPage';
+import Unauthorized from './components/Unauthorized/Unauthorized';
+import RequireAuth from './components/RequireAuth/RequireAuth';
 
 import TestLayout from './components/TestLayout/TestLayout';
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -97,18 +100,19 @@ function App() {
             <Route path="/recruitment" element={<Page_Recruitment />} />
             <Route path="/recruitment/:recruitmentid" element={<Page_Recruitment_Id />} />
             <Route path="/recruitment/:recruitmentid/application/:applicationid" element={<Page_Recruitment_Id_Application_Id />} />
-
+            
+            <Route element={<RequireAuth allowedRoles={"candidate"} />}>
             <Route path="/test" element={<PageTest />} />
-
+            </Route>
+  
           </Route>
 
           <Route path="/login" element={<XPage_Login />} />
           <Route path="/recovery" element={<XPage_Recovery />} />
           <Route path="/register" element={<XPage_Register />} />
           <Route path="/test2" element={<PageTest2 />} />
-          <Route path="/layout" element={<TestLayout />}>
-            <Route path="/layout/interview" element={<Page_Company_Interview_Id />} />
-          </Route>
+          <Route path="*" element={<MissingPage />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
 
         </Routes>
       </BrowserRouter>

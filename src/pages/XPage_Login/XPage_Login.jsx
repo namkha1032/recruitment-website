@@ -17,12 +17,14 @@ import {
   VisibilityOff, */
 } from "@mui/material";
 
+import GigaCard from "../../components/GigaCard/GigaCard"
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody"
+
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
-/* import EmailIcon from "@mui/icons-material/Email"; */
-/* import LockIcon from "@mui/icons-material/Lock"; */
 import imageBackground from "../../assets/img/background.jpg";
+
+//import ErrorIcon from '@mui/icons-material/Error';
 
 const style = {
   marginTop: "15px",
@@ -37,23 +39,24 @@ const theme = createTheme({
   }
 });
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
 
 const XPage_Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [validUsername, setValidUsername] = useState(true);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false); 
-  const [validEmail, setValidEmail] = useState(true);
+  const [check, setCheck] = useState(false);
 
-  const handleEmailChange = (event) => {
+  const handleUsernameChange = (event) => {
     let value = event.target.value;
-    setEmail(value);
-    if (!emailRegex.test(value)) {
-      setValidEmail(false)
+    setUsername(value);
+    if (!usernameRegex.test(value)) {
+      setValidUsername(false)
     }
     else {
-      setValidEmail(true)
+      setValidUsername(true)
     }
   }
 
@@ -63,23 +66,22 @@ const XPage_Login = () => {
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
-    /* setShowPassword(!showPassword); */
   }
 
   const handleLogin = (event) => {
     event.preventDefault();
-    if (validEmail) {
+    if (validUsername) {
       navigate("/home");
     }
     else {
-      setValidEmail(false);
-      setEmail("");
+      setValidUsername(false);
+      setUsername("");
     }
   };
 
   const handleCheck = (event) => {
     event.preventDefault();
-    console.log(event.target.checked);
+    setCheck(!check);
   };
 
   return (
@@ -103,7 +105,7 @@ const XPage_Login = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "75%",
+            width: "76%",
           }}
         >
 
@@ -116,16 +118,15 @@ const XPage_Login = () => {
               item
               xs={9}
               sx={{
-                borderRadius: "10px",
-                padding: "20px",
-                paddingTop: "10px",
-                paddingBottom: "10px",
-                backgroundColor: "white",
                 opacity: "100%",
                 left: "20%",
                 right: "20%",
               }}
             >
+              <GigaCard>
+              <GigaCardBody>
+                
+
               <Typography 
                 variant="h2" 
                 align="center" 
@@ -135,7 +136,7 @@ const XPage_Login = () => {
                 fontSize={'28px'}
                 lineHeight={'28px'}
                 fontWeight={'700'}
-                padding={"20px"}
+                padding={"10px"}
               >
                 Hi, welcome back
               </Typography>
@@ -149,35 +150,38 @@ const XPage_Login = () => {
                   <TextField
                     fullWidth
                     required
-                    label="Email"
-                    type="email"
-                    value={email}
+                    label="Username"
+                    type="text"
+                    value={username}
                     InputProps={{
                       style: { borderRadius: "12px" },
                     }}
-                    onChange={handleEmailChange}
-                    error={!validEmail}
+                    onChange={handleUsernameChange}
+                    error={!validUsername}
                   />
 
-                  {!validEmail && (
+                  {!validUsername && (
                     <Box
                       margin="3px 14px 0px"
+                      display="flex"
+                      alignItems="center"
                     >
+                      {/* <ErrorIcon fontSize="small" style={{ color: 'red', marginRight: '2px' }}/> */}
                       {
-                        email === "" ? (
+                        username === "" ? (
                           <Typography 
                             color="#f44336"
                             fontSize="12px"
                             lineHeight="20px"
                           >
-                          Email is required
+                            Username is required
                           </Typography>
                         ) : (
                           <Typography color="#f44336"
                           fontSize="12px"
                             lineHeight="20px"
                           >
-                          Must be a valid email
+                            Username must be 3-20 characters long and can only contain letters, numbers and underscores
                           </Typography>
                         )
                       }
@@ -228,7 +232,7 @@ const XPage_Login = () => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          defaultChecked
+                          checked={check}
                           theme={theme}
                           color="secondary"
                           onClick={handleCheck}
@@ -283,7 +287,7 @@ const XPage_Login = () => {
               <Grid
                 item
                 xs={12}
-                sx={{ ...style, display: "flex", justifyContent: "center" }}
+                sx={{ ...style, display: "flex", justifyContent: "center", marginBottom: '0px' }}
               >
                 <Typography variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
                   Didn't have an account?{" "}
@@ -292,6 +296,10 @@ const XPage_Login = () => {
                   </Typography>
                 </Typography>
               </Grid>
+              
+              </GigaCardBody>
+              </GigaCard>
+              
             </Grid>
           </Grid>
         </Grid>

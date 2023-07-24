@@ -14,6 +14,8 @@ import {
 //import LockIcon from "@mui/icons-material/Lock";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import GigaCard from "../../components/GigaCard/GigaCard";
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 
 import imageBackground from "../../assets/img/background.jpg";
 
@@ -66,7 +68,7 @@ const ResetPassword = (props) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "75%",
+            width: "76%",
           }}
         >
 
@@ -79,17 +81,18 @@ const ResetPassword = (props) => {
               item
               xs={9}
               sx={{
-                borderRadius: "10px",
+                /* borderRadius: "10px",
                 padding: "20px",
                 paddingTop: "10px",
                 paddingBottom: "10px",
-                backgroundColor: "white",
+                backgroundColor: "white", */
                 opacity: "100%",
                 left: "20%",
                 right: "20%",
               }}
             >
-
+              <GigaCard>
+              <GigaCardBody>
               <Typography 
                 variant="h2" 
                 align="center" 
@@ -99,7 +102,7 @@ const ResetPassword = (props) => {
                 fontSize={'28px'}
                 lineHeight={'28px'}
                 fontWeight={'700'}
-                padding={"20px"}
+                padding={"10px"}
               >
                 Reset password
               </Typography>
@@ -131,10 +134,34 @@ const ResetPassword = (props) => {
 
                       style: { borderRadius: "12px" },
                     }}
-                    onChange={(e) => {
-                      props.onChangeNewPassword(e.target.value);
-                    }}
+                    onChange={props.handleNewPasswordChange}
+                    error={!props.validNewPassword}
                   />
+                  {!props.validNewPassword && (
+                    <Box
+                    margin="3px 14px 0px"
+                    >
+                      {
+                        props.newPassword === "" ? (
+                          <Typography 
+                            color="#f44336"
+                            fontSize="12px"
+                            lineHeight="20px"
+                          >
+                          Password is required
+                          </Typography>
+                        ) : (
+                          <Typography color="#f44336"
+                          fontSize="12px"
+                            lineHeight="20px"
+                          >
+                          Your password must be at least 8 characters 
+                          </Typography>
+                        )
+                      }
+                      
+                    </Box>
+                  )}
                 </Grid>
 
                 <Grid item xs={12} md={12} sx={{ ...style }}>
@@ -159,9 +186,7 @@ const ResetPassword = (props) => {
 
                       style: { borderRadius: "12px" },
                     }}
-                    onChange={(e) => {
-                      props.onChangeConfirmPassword(e.target.value);
-                    }}
+                    onChange={props.handleConfirmPasswordChange}
                   />
                 </Grid>
 
@@ -187,7 +212,8 @@ const ResetPassword = (props) => {
                   </Button>
                 </Grid>
               </form>
-
+              </GigaCardBody>
+              </GigaCard>
             </Grid>
           </Grid>
         </Grid>

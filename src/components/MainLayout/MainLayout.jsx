@@ -9,7 +9,12 @@ import Sidebar from '../Sidebar/Sidebar';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+
 const drawerWidth = 240;
+
 
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -49,7 +54,23 @@ function MainLayout() {
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
 
     let showSidebar = params.get("can") == "true" ? false : true
-    // let showSidebar = false
+    /* let showSidebar = false */
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+        console.log("MainLayout useEffect")
+        dispatch({ type: 'saga/userGetRole' })
+    }, [])
+    
+    const user = useSelector(state => state.user)
+
+    if (!user) {
+        showSidebar = false
+    }
+    else if (user.roleName == "candidate") {
+        showSidebar = true
+        console.log(user.roleName)
+    }
     return (
         <>
             <Box sx={{ display: 'flex' }}>
