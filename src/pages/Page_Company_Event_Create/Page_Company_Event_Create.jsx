@@ -21,6 +21,12 @@ import ReactQuill from 'react-quill'
 // import GigaCardHeader from '../../components/GigaCardHeader/GigaCardHeader'
 import CloudUploadRoundedIcon from '@mui/icons-material/CloudUploadRounded';
 import InsertPhotoRoundedIcon from '@mui/icons-material/InsertPhotoRounded';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+
+import InputAdornment from '@mui/material/InputAdornment';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import GroupAddRoundedIcon from '@mui/icons-material/GroupAddRounded';
+import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 
 
 
@@ -91,14 +97,14 @@ const Page_Company_Event_Create = () => {
     return (
         <form onSubmit={handleSubmit}>
             <GigaCard>
-                <Container sx={{ p: 5 }} className='eventcreate' >
+                <Container sx={{ marginTop: 5 }} className='eventcreate' >
                     <Box sx={{
                         fontSize: 50,
                         fontWeight: 600,
-                        // color: '#1565C0',
+                        color: '#1565C0',
                         display: 'flex',
-                        justifyContent: 'center',
-                        marginBottom: 3
+                        justifyContent: 'flex-start',
+                        marginBottom: 5
                     }}>
                         Create Events
                     </Box>
@@ -117,6 +123,13 @@ const Page_Company_Event_Create = () => {
                                 fullWidth
                                 required
                                 onChange={handleName}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <AccountCircleRoundedIcon></AccountCircleRoundedIcon>
+                                        </InputAdornment>
+                                    ),
+                                }}
                             >
                             </TextField>
                         </Grid>
@@ -136,12 +149,20 @@ const Page_Company_Event_Create = () => {
                                 type='number'
                                 inputProps={{ min: '0' }}
                                 onChange={handleMaxQuantity}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <GroupAddRoundedIcon></GroupAddRoundedIcon>
+                                        </InputAdornment>
+                                    ),
+                                }}
                             >
                             </TextField>
                         </Grid>
+
                         <Grid container sx={{ marginTop: 4 }}>
-                            <Grid item xs={6}>
-                                <Grid container rowSpacing={5}>
+                            <Grid item xs={6} sx={{ paddingRight: 2 }}>
+                                <Grid container rowSpacing={6}>
                                     <Grid
                                         item
                                         xs={12}
@@ -167,8 +188,8 @@ const Page_Company_Event_Create = () => {
                                                     slotProps={{ textField: { required: true } }}
                                                     value={time}
                                                     onChange={(newValue) => {
-                                                        console.log("hentai: ", newValue)
-                                                        console.log("jav: ", newValue.$d)
+                                                        console.log("main: ", newValue)
+                                                        console.log("sub: ", newValue.$d)
                                                         const newDate = new Date(newValue.$d)
                                                         console.log("newDate: ", newDate)
                                                         console.log("type: ", typeof (newValue.$d.toLocaleTimeString()))
@@ -191,71 +212,125 @@ const Page_Company_Event_Create = () => {
                                             multiline
                                             rows={3}
                                             onChange={handleLocation}
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                                                        <Box>
+                                                            <LocationOnRoundedIcon></LocationOnRoundedIcon>
+                                                        </Box>
+                                                    </InputAdornment>
+                                                ),
+                                            }}
                                         >
                                         </TextField>
-                                    </Grid>
-                                    <Grid
-                                        item
-                                        xs={12}
-                                    >
-                                        <Box>
-                                            <Box sx={{ color: 'black', display: "flex", alignItems: "center", columnGap: 1 }}>
-                                                <Box sx={{ fontSize: 40, display: "flex", alignItems: "center" }}>
-                                                    <EditNoteRoundedIcon fontSize='large'></EditNoteRoundedIcon>
-                                                </Box>
-                                                <Box sx={{
-                                                    fontSize: 25,
-                                                    fontWeight: 600,
-                                                    // color: '#1565C0',
-                                                    display: 'flex',
-                                                    justifyContent: 'flex-start',
-                                                }}>
-                                                    Event Content
-                                                </Box>
-                                            </Box>
-                                        </Box>
-                                        <ReactQuill
-                                            theme='snow'
-                                        >
-                                        </ReactQuill>
                                     </Grid>
                                 </Grid>
                             </Grid>
 
-                            <Grid item xs={6} sx={{ padding: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <div style={{
-                                    border: '2px dashed #1565C0',
-                                    borderRadius: '5px',
-                                    width: '100%'
+                            <Grid
+                                item
+                                xs={6}
+                                sx={{
+                                    paddingLeft: 2,
+                                    // display: 'flex',
+                                    // justifyContent: 'center',
+                                    // alignItems: 'center'
+                                    marginTop: 1.25
                                 }}
-                                    onClick={() => document.querySelector(".input-field").click()}
+                            >
+                                <Grid
+                                    item
+                                    xs={12}
                                 >
-                                    <input
-                                        type="file"
-                                        accept='image/*'
-                                        className='input-field'
-                                        hidden
-                                        onChange={({ target: { files } }) => {
-                                            files[0] && setFileName(files[0].name)
-                                            if (files) {
-                                                setImage(URL.createObjectURL(files[0]))
-                                            }
-                                        }}
-                                    />
-                                    {image ? <img src={image} style={{ width: '100%', height: '100%', objectFit: 'cover' }}></img> :
-                                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                            <CloudUploadRoundedIcon fontSize='large'></CloudUploadRoundedIcon>
-                                            <p>Browse Files to upload</p>
-                                        </div>}
-                                </div>
-                                <div>
-                                    <span>
-                                        {fileName}
-                                    </span>
-                                </div>
+                                    {/* <Box>
+                                        <Box sx={{ color: 'black', display: "flex", alignItems: "center", columnGap: 1 }}>
+                                            <Box sx={{ fontSize: 40, display: "flex", alignItems: "center" }}>
+                                                <EditNoteRoundedIcon fontSize='large'></EditNoteRoundedIcon>
+                                            </Box>
+                                            <Box sx={{
+                                                fontSize: 25,
+                                                fontWeight: 600,
+                                                // color: '#1565C0',
+                                                display: 'flex',
+                                                justifyContent: 'flex-start',
+                                            }}>
+                                                Event Content
+                                            </Box>
+                                        </Box>
+                                    </Box> */}
+                                    <ReactQuill
+                                        theme='snow'
+                                        placeholder='Typing Event Content here...'
+                                    >
+                                    </ReactQuill>
+                                </Grid>
                             </Grid>
 
-                            <Grid item xs={12} align='right' sx={{ marginTop: 20 }}>
+                            <div style={{
+                                border: '2px dashed #1565C0',
+                                borderRadius: '5px',
+                                width: '100%',
+                                marginTop: '60px',
+                                cursor: 'pointer'
+                            }}
+                                onClick={() => document.querySelector(".input-field").click()}
+                            >
+                                <input
+                                    type="file"
+                                    accept='image/*'
+                                    className='input-field'
+                                    hidden
+                                    onChange={({ target: { files } }) => {
+                                        files[0] && setFileName(files[0].name)
+                                        if (files) {
+                                            setImage(URL.createObjectURL(files[0]))
+                                        }
+                                    }}
+                                />
+                                {image ?
+                                    <img
+                                        src={image}
+                                        style={{
+                                            width: '100%',
+                                            height: '100%',
+                                            objectFit: 'cover'
+                                        }}>
+                                    </img> :
+                                    <div style={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        paddingTop: 20
+                                    }}
+                                    >
+                                        <CloudUploadRoundedIcon fontSize='large'></CloudUploadRoundedIcon>
+                                        <p>Browse Photos to upload</p>
+                                    </div>
+                                }
+                            </div>
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                marginTop: '10px'
+                            }}>
+                                {/* <InsertPhotoRoundedIcon fontSize='medium'></InsertPhotoRoundedIcon> */}
+                                <span>
+                                    {fileName}
+                                </span>
+                                <DeleteRoundedIcon
+                                    sx={{
+                                        cursor: 'pointer',
+                                        // marginLeft: 5
+                                        // ADD COLOR
+                                    }}
+                                    onClick={() => {
+                                        setFileName("No selected file")
+                                        setImage(null)
+                                    }}></DeleteRoundedIcon>
+                            </div>
+                            <Grid item xs={12} align='right' sx={{ marginTop: 5 }}>
                                 <Button type="submit" variant="contained" size='large'>
                                     Save
                                 </Button>
