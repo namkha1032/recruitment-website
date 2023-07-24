@@ -48,7 +48,7 @@ const store = configureStore({
         interviewList: interviewListSlice.reducer,
         positionList: positionListSlice.reducer,
         eventList: eventListSlice.reducer,
-        questionList: questionListSlice.reducer,,
+        questionList: questionListSlice.reducer,
         application: applicationSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)

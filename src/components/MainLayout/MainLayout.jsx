@@ -59,9 +59,8 @@ function MainLayout() {
     const dispatch = useDispatch()
     useEffect(() => {
         console.log("MainLayout useEffect")
-        dispatch({ type: 'saga/userGetRole' })
     }, [])
-    
+
     const user = useSelector(state => state.user)
 
     if (!user) {

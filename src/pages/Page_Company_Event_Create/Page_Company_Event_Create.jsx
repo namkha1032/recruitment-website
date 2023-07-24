@@ -165,6 +165,15 @@ const Page_Company_Event_Create = () => {
                                                     label="Time"
                                                     sx={{ width: "100%" }}
                                                     slotProps={{ textField: { required: true } }}
+                                                    value={time}
+                                                    onChange={(newValue) => {
+                                                        console.log("hentai: ", newValue)
+                                                        console.log("jav: ", newValue.$d)
+                                                        const newDate = new Date(newValue.$d)
+                                                        console.log("newDate: ", newDate)
+                                                        console.log("type: ", typeof (newValue.$d.toLocaleTimeString()))
+                                                        setTime(newValue)
+                                                    }}
                                                 />
                                             </DemoContainer>
                                         </LocalizationProvider>
@@ -214,12 +223,12 @@ const Page_Company_Event_Create = () => {
                             </Grid>
 
                             <Grid item xs={6} sx={{ padding: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <div style={{ 
-                                    border: '2px dashed #1565C0', 
+                                <div style={{
+                                    border: '2px dashed #1565C0',
                                     borderRadius: '5px',
-                                    width: '100%' 
-                                }} 
-                                onClick={() => document.querySelector(".input-field").click()}
+                                    width: '100%'
+                                }}
+                                    onClick={() => document.querySelector(".input-field").click()}
                                 >
                                     <input
                                         type="file"

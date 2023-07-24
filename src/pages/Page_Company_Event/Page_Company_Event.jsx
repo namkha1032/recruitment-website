@@ -29,7 +29,7 @@ import datasjson from "./Page_Company_Event_Data.json";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
-
+import cleanStore from "../../utils/cleanStore";
 export default function Page_Company_Event() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ export default function Page_Company_Event() {
   useEffect(() => {
     dispatch({ type: "saga/getEventList" });
     return () => {
-      dispatch({ type: "eventList/cleanUpEventList" });
+      cleanStore(dispatch);
     };
   }, []);
 
@@ -60,7 +60,7 @@ export default function Page_Company_Event() {
   // }
 
   function handleAddClick() {
-    dispatch({ type: "eventList/cleanUpEventList" });
+    cleanStore(dispatch)
     navigate("./create");
   }
 
@@ -78,7 +78,7 @@ export default function Page_Company_Event() {
   }
 
   function handleDetailClick(value) {
-    dispatch({ type: "eventList/cleanUpEventList" });
+    cleanStore(dispatch)
     navigate(`./${value}`);
   }
 

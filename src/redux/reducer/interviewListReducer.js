@@ -6,9 +6,6 @@ const interviewListSlice = createSlice({
     reducers: {
         setInterviewList(state, action) {
             return action.payload
-        },
-        cleanUpInterviewList() {
-            return null
         }
     }
 })

@@ -28,6 +28,7 @@ import {
   SportsScoreRounded,
   CloseRounded,
 } from "@mui/icons-material";
+import cleanStore from "../../utils/cleanStore";
 
 export default function Page_Company_Interview() {
   const dispatch = useDispatch();
@@ -38,8 +39,7 @@ export default function Page_Company_Interview() {
     dispatch({ type: "saga/getPositionList" });
     dispatch({ type: "saga/getDepartment" });
     return () => {
-      dispatch({ type: "interviewList/cleanUpInterviewList" });
-      dispatch({ type: "positionList/cleanUpPositionList" });
+      cleanStore(dispatch)
     };
   }, []);
 
@@ -151,7 +151,7 @@ export default function Page_Company_Interview() {
   }
 
   function handleDetailClick(value) {
-    dispatch({ type: "interviewList/cleanUpInterviewList" });
+    cleanStore(dispatch)
     dispatch({ type: "position/cleanUpPosition" });
     navigate(`./${value}`);
   }
