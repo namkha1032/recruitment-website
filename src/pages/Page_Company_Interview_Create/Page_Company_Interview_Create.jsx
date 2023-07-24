@@ -41,6 +41,8 @@ import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import RoomIcon from '@mui/icons-material/Room';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
+// import utilities
+import cleanStore from "../../utils/cleanStore";
 const Page_Company_Interview_Create = () => {
     // useState
     let [chosenInterviewer, setChosenInterviewer] = useState(null)
@@ -56,7 +58,6 @@ const Page_Company_Interview_Create = () => {
     const dispatch = useDispatch()
     // fetch Data
     useEffect(() => {
-        console.log("use effect first")
         dispatch({ type: "saga/getUpcomingInterview" })
         dispatch({ type: "saga/getDepartmentInterviewer" })
         dispatch({ type: "saga/getRoom" })
@@ -77,7 +78,6 @@ const Page_Company_Interview_Create = () => {
 
     // set busyInterviewer and busyRoom
     useEffect(() => {
-        console.log("use effect shift")
         setBusyInterviewer(oldList => [])
         setBusyRoom(oldList => [])
         if (chosenShift) {
@@ -101,13 +101,8 @@ const Page_Company_Interview_Create = () => {
     }, [chosenShift])
 
     useEffect(() => {
-        console.log("use effect error")
         if (newError.status == "no") {
-            dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
-            dispatch({ type: "interview/setInterview", payload: null })
-            dispatch({ type: "interviewer/setInterviewer", payload: null })
-            dispatch({ type: "room/setRoom", payload: null })
-            dispatch({ type: "shift/setShift", payload: null })
+            cleanStore(dispatch)
             navigate("/company/interview/1")
         }
         if (newError.status == "yes") {
