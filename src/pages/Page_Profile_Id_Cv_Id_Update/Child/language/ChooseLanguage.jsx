@@ -51,7 +51,7 @@ export default function ChooseLanguage(prop) {
                 prop.setInputValue(newValue);
                 if (newValue !== null) {
                   console.log(newValue);
-                  prop.setSkillId(prop.languageData.filter((comp) => comp.name === newValue.name)[0].id);
+                  prop.setLanguageId(prop.languageData.filter((comp) => comp.name === newValue.name)[0].id);
                   prop.handleState(newValue.name);
                 }
               }

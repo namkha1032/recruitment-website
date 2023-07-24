@@ -3,25 +3,29 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import AddIcon from '@mui/icons-material/Add';
-
-
+import AddIcon from "@mui/icons-material/Add";
+import UlList from "./UlList";
+import NotRInputText from "../NotRequiredText";
 
 const filter = createFilterOptions();
-export default function ChooseLanguage(prop) {
+export default function ChooseSkill(prop) {
+  function handleSExp(e) {
+    console.log(e.target.value);
+    prop.setSExp(e.target.value);
+  }
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      event.preventDefault()
+      event.preventDefault();
       const inputValue = event.target.value;
       console.log(prop.lInputValue);
       console.log(inputValue);
-      if (prop.lInputValue === null) {
+      if (prop.sInputValue === null) {
         if (inputValue.trim() !== "") {
-          prop.setInputValue(null);
+          prop.setSInputValue(null);
           prop.handleState(inputValue);
         }
       } else {
-        prop.setInputValue(null);
+        prop.setSInputValue(null);
         return prop.onPress();
       }
     }
@@ -29,29 +33,35 @@ export default function ChooseLanguage(prop) {
   return (
     <>
       <Grid container spacing={0} justifyContent="center" alignItems="center">
-        <Grid item xs={12}>
+        <UlList comps={prop.skills} handleDelete={prop.handleSkilltDelete} />
+        <Grid item xs={12}></Grid>
+        <Grid item xs={9}>
           <Autocomplete
-            value={prop.lInputValue}
+            value={prop.sInputValue}
             onChange={(event, newValue) => {
               if (typeof newValue === "string") {
-                return ()=>prop.setValue({
-                  name: newValue,
-                });
+                return () =>
+                  prop.setValue({
+                    name: newValue,
+                  });
               } else if (newValue && newValue.inputValue) {
-                
-                prop.setInputValue({
+                prop.setSInputValue({
                   name: newValue.inputValue,
                 });
-                console.log(newValue.name)
+                console.log(newValue.name);
                 if (newValue !== null) {
                   console.log(newValue);
                   prop.handleState(newValue);
                 }
               } else {
-                prop.setInputValue(newValue);
+                prop.setSInputValue(newValue);
                 if (newValue !== null) {
                   console.log(newValue);
-                  prop.setLanguageId(prop.languageData.filter((comp) => comp.name === newValue.name)[0].id);
+                  prop.setSkillId(
+                    prop.skillData.filter(
+                      (comp) => comp.name === newValue.name
+                    )[0].id
+                  );
                   prop.handleState(newValue.name);
                 }
               }
@@ -75,7 +85,7 @@ export default function ChooseLanguage(prop) {
             clearOnBlur
             handleHomeEndKeys
             id="free-solo-with-text-demo"
-            options={prop.languageData}
+            options={prop.skillData}
             getOptionLabel={(option) => {
               if (typeof option === "string") {
                 return option;
@@ -91,15 +101,26 @@ export default function ChooseLanguage(prop) {
                 m: 1,
                 display: "flex",
                 margin: "0",
+                marginTop: "8px",
                 padding: "0",
                 marginLeft: "1%",
-                width:"98%"
               },
             }}
             freeSolo
             renderInput={(params) => (
               <TextField {...params} label={prop.state} id={prop.state} />
             )}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <NotRInputText
+            type="number"
+            state={"Experiece(Year)"}
+            width="90%"
+            value={prop.SExp}
+            margin="0"
+            marginLeft="6%"
+            handleState={handleSExp}
           />
         </Grid>
         <Button
@@ -110,7 +131,7 @@ export default function ChooseLanguage(prop) {
           size="medium"
           variant="outlined"
           className="AddCompButton"
-          startIcon={<AddIcon/>}
+          startIcon={<AddIcon />}
           onClick={() => {
             prop.onPress();
           }}
