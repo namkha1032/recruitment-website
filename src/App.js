@@ -50,6 +50,7 @@ import XPage_Recovery from './pages/XPage_Recovery/XPage_Recovery';
 import PageTest from './pages/xpagetest/PageTest';
 import PageTest2 from './pages/xpagetest2/PageTest2';
 
+import TestLayout from './components/TestLayout/TestLayout';
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function App() {
   return (
@@ -98,13 +99,16 @@ function App() {
             <Route path="/recruitment/:recruitmentid/application/:applicationid" element={<Page_Recruitment_Id_Application_Id />} />
 
             <Route path="/test" element={<PageTest />} />
-  
+
           </Route>
 
           <Route path="/login" element={<XPage_Login />} />
           <Route path="/recovery" element={<XPage_Recovery />} />
           <Route path="/register" element={<XPage_Register />} />
           <Route path="/test2" element={<PageTest2 />} />
+          <Route path="/layout" element={<TestLayout />}>
+            <Route path="/layout/interview" element={<Page_Company_Interview_Id />} />
+          </Route>
 
         </Routes>
       </BrowserRouter>
