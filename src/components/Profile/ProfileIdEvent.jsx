@@ -45,10 +45,15 @@ export default function EventList({ events, time, status }) {
   }));
 
   return (
-    <Grid container justifyContent="center">
-      <div>
-        <TabInProfile/>
-      </div>
+    <Grid container direction="column">
+      <Grid item>
+          <Typography variant="h4" gutterBottom>
+            My Story
+          </Typography>
+        </Grid>
+        <Grid item>
+          <TabInProfile />
+        </Grid>
       <Grid item xs={12} md={8}>
         <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px', width: '100%' }}>
           <Typography variant="h5" gutterBottom>
@@ -71,27 +76,7 @@ export default function EventList({ events, time, status }) {
               border: "none",
             },
           }}
-          slots={{ toolbar: GridToolbar }}
-          slotProps={{
-            pagination: {
-              labelRowsPerPage: "Số lượng hiển thị",
-              labelDisplayedRows: ({ from, to, count }) =>
-                `${from}–${to} của ${count !== -1 ? count : `hơn ${to}`}`,
-            },
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500, placeholder: "Tìm kiếm...", sx: {
-                width: 300,
-                marginBottom: 1,
-              }},
-              csvOptions: { disableToolbarButton: true },
-              printOptions: { disableToolbarButton: true }
-          }
-        }} 
-        disableColumnMenu
-        disableColumnFilter
-        disableColumnSelector
-        disableDensitySelector
+          
           />
         </Paper>
       </Grid>

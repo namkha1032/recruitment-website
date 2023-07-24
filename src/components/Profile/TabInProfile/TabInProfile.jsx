@@ -8,10 +8,11 @@ const theme = createTheme({
     MuiTabs: {
       styleOverrides: {
         root: {
-          backgroundColor: '#f8f8ff', // Set the background color of the tabs
+          backgroundColor: 'rgb(255, 255, 255)', // Set the background color of the tabs
           color: '#d3d3d3', // Set the text color of the tabs
           textTransform: 'none',
-          marginLeft: 0,
+          borderBottom: '1px solid #ccc', // Add a border at the bottom
+          boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)', // Add a box shadow
         },
       },
     },
@@ -36,14 +37,14 @@ export default function TabInProfile() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box mt={3} mb={5}> {/* Add margin (10px) on top and bottom */}
+      <Box mt={2} mb={5}> {/* Add margin (10px) on top and bottom */}
         <Tabs value={location.pathname}>
           <Tab
             label="My Event List"
             value="/profile/:profileid/event"
             component={Link}
             to="/profile/:profileid/event"
-            
+           
           />
           <Tab
             label="My Application List"
