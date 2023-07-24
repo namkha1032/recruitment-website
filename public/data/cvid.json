@@ -18,9 +18,9 @@
         },
         {
             "certificateid": 1,
-            "name": "HTML CSS",
-            "decription": "HTML CSS",
-            "Orgranizationname": "HTML CSS",
+            "name": "Javasctipt",
+            "decription": "Javasctipt",
+            "Orgranizationname": "Javasctipt",
             "dateearned": "12-12-2022",
             "expirationdate": "12-12-2023",
             "link": "abc.com"
