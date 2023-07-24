@@ -4,8 +4,8 @@ import {
   Routes, Route
 } from 'react-router-dom'
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
 // import components
 import MainLayout from './components/MainLayout/MainLayout';
 // import pages
@@ -60,7 +60,8 @@ import TestLayout from './components/TestLayout/TestLayout';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function App() {
-  let userRole = null
+  const [userRole, setUserRole] = useState(null)
+  const dispatch = useDispatch()
   let token = useSelector(state => state.user.token)
   useEffect(() => {
     async function callApiGetRole() {
@@ -68,9 +69,12 @@ function App() {
       let response = await axios.get('http://localhost:3000/data/role.json', token)
       let role = await response.data
       console.log("role: ", role)
-      userRole = await role.roleName
+      setUserRole(role.roleName)
     }
-    callApiGetRole()
+    // callApiGetRole()
+    const a = dispatch({ type: "saga/userGetRole" })
+    console.log("a: ", a)
+
   }, [])
   console.log("userRole: ", userRole)
   return (
