@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom'
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 // import components
 import MainLayout from './components/MainLayout/MainLayout';
 // import pages
@@ -60,7 +60,8 @@ import TestLayout from './components/TestLayout/TestLayout';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function App() {
-  let userRole = null
+  //let userRole = null
+  const [userRole, setUserRole] = useState(null)
   let token = useSelector(state => state.user.token)
   useEffect(() => {
     async function callApiGetRole() {
@@ -68,10 +69,10 @@ function App() {
       let response = await axios.get('http://localhost:3000/data/role.json', token)
       let role = await response.data
       console.log("role: ", role)
-      userRole = await role.roleName
+      setUserRole(await role.roleName)
     }
     callApiGetRole()
-  }, [])
+  }, [userRole])
   console.log("userRole: ", userRole)
   return (
     <div className="App">

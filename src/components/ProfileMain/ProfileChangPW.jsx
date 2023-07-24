@@ -90,7 +90,7 @@ const ProfileChangePW = () => {
         <Grid
           container
           sx={{
-            paddingTop: "60px",
+            paddingTop: "10px",
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
@@ -111,7 +111,7 @@ const ProfileChangePW = () => {
                 opacity: "100%",
                 left: "20%",
                 right: "20%",
-                border: "1px solid black",
+                //border: "1px solid black",
               }}
             >
               <Typography 
@@ -226,7 +226,7 @@ const ProfileChangePW = () => {
                       marginTop: "15px",
                     }}
                   >
-                    Reset
+                    change
                   </Button>
                 </Grid>
               </form>

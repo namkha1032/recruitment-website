@@ -4,13 +4,22 @@ import axios from 'axios'
 
 function* userLogin(action) {
     try {
-        const response = yield call(axios.post, 'http://localhost:3001/api/login', action.payload)
+        /* const response = yield call(axios.post, 'http://localhost:3001/api/login', action.payload)
         yield call(window.localStorage.setItem, 'user', JSON.stringify(response.data))
-        yield put({ type: "user/userLogin", payload: response.data })
+        yield put({ type: "user/userLogin", payload: response.data }) */
 
+        /* throw {
+            response: {
+                data: {
+                    error: "username or password is incorrect"
+                }
+            }
+        } */
+        yield put({ type: "error/setError", payload: { status: "no", message: "" } })
     }
     catch (error) {
-        console.log("error is: ", error)
+        yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
+        console.log("err: ", error)
     }
 }
 
@@ -22,13 +31,21 @@ function* userLogin(action) {
 
 function* userRegister(action) {
     try {
-        const response = yield call(axios.post, 'http://localhost:3001/api/register', action.payload)
+        /* const response = yield call(axios.post, 'http://localhost:3001/api/register', action.payload) */
         /* yield call(window.localStorage.setItem, 'user', JSON.stringify(response.data))
         yield put({ type: "user/userRegister", payload: response.data }) */
-
+        /* throw {
+            response: {
+                data: {
+                    error: "username or email is already exist"
+                }
+            }
+        } */
+        yield put({ type: "error/setError", payload: { status: "no", message: "" } })
     }
     catch (error) {
-        console.log("error is: ", error)
+        yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
+        console.log("err: ", error)
     }
 }
 

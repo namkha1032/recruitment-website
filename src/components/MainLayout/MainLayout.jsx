@@ -53,23 +53,11 @@ function MainLayout() {
     const theme = useTheme();
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
 
-    let showSidebar = params.get("can") == "true" ? false : true
-    /* let showSidebar = false */
+    let userRole = useSelector(state => state.user.roleName)
 
-    const dispatch = useDispatch()
-    useEffect(() => {
-        console.log("MainLayout useEffect")
-    }, [])
+    console.log(userRole)
+    let showSidebar = userRole != "candidate" ? true : false
 
-    const user = useSelector(state => state.user)
-
-    if (!user) {
-        showSidebar = false
-    }
-    else if (user.roleName == "candidate") {
-        showSidebar = true
-        console.log(user.roleName)
-    }
     return (
         <>
             <Box sx={{ display: 'flex' }}>

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
   TextField,
@@ -15,6 +16,9 @@ import {
 
 import GigaCard from "../../components/GigaCard/GigaCard"
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody"
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import imageBackground from "../../assets/img/background.jpg";
@@ -49,6 +53,28 @@ const XPage_Register = () => {
   const [validUsername, setValidUsername] = useState(true);
   const [validEmail, setValidEmail] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
+  
+  const [errorSnackbar, setErrorSnackbar] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const newError = useSelector((state) => state.error);
+
+  useEffect(() => {
+    if (newError.status === "no") {
+      dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+      navigate("/login");
+    }
+    if (newError.status === "yes") {
+      setErrorSnackbar(true)
+      setUsername("");
+      setEmail("");
+      setTimeout(() => {
+          setErrorSnackbar(false)
+          dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+      }, 5000)
+    }
+  }, [newError]);
 
   const handleFullNameChange = (event) => {
     let value = event.target.value;
@@ -105,8 +131,15 @@ const XPage_Register = () => {
   const handleRegister = (event) => {
     event.preventDefault();
     if (validFullName && validUsername && validEmail && validPassword) {
-      console.log("Register success");
-      navigate("/login");
+      dispatch({
+        type: "saga/userRegister",
+        payload: {
+          fullName: fullName,
+          username: username,
+          email: email,
+          password: password,
+        },
+      });
     }
     else {
       if (!validFullName) {
@@ -153,12 +186,12 @@ const XPage_Register = () => {
 
           <Grid
             item
-            xs={7}
+            md={7}
             sx={{ display: "flex", justifyContent: "center" }}
           >
             <Grid
               item
-              xs={9}
+              md={9}
               sx={{
                 opacity: "100%",
                 left: "20%",
@@ -362,7 +395,7 @@ const XPage_Register = () => {
 
                 <Grid
                   item
-                  xs={12}
+                  md={12}
                   sx={{ display: "flex", justifyContent: "center", ...style }}
                 >
                   <Button
@@ -385,7 +418,7 @@ const XPage_Register = () => {
 
               <Grid
                 item
-                xs={12}
+                md={12}
                 sx={{ ...style, display: "flex", justifyContent: "center", marginBottom: '0px' }}
               >
                 <Typography variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
@@ -402,6 +435,20 @@ const XPage_Register = () => {
           </Grid>
         </Grid>
       </Container>
+
+      <Snackbar
+        open={errorSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setErrorSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert 
+          severity="error"
+          onClose={() => setErrorSnackbar(false)}
+        >
+          {newError.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
