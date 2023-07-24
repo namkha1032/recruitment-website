@@ -414,11 +414,11 @@ const Page_Home = () => {
             </Grid>
           </Grid>
         </Box>
-        <Box sx={{ padding: '24px', borderTop: '1px solid lightgrey' }} id='AboutUs'>
+        {/* <Box sx={{ padding: '24px', borderTop: '1px solid lightgrey' }} id='AboutUs'>
           <Box>
             <h1 style={{ textAlign: 'center', fontFamily: 'serif' }}>About us</h1>
           </Box>
-        </Box>
+        </Box> */}
 
 
 
@@ -447,7 +447,7 @@ const Page_Home = () => {
             </Stack> }
           </Container> */}
         {/* Footer */}
-        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
+        {/* <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
           <Typography variant="h6" align="center" gutterBottom>
             Team 4
           </Typography>
@@ -460,7 +460,7 @@ const Page_Home = () => {
             Something here to give the footer a purpose!
           </Typography>
           <Copyright />
-        </Box>
+        </Box> */}
         {/* End footer */}
 
 
