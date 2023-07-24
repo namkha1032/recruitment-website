@@ -3,24 +3,16 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+
 const  ModalCertificates = ({certificate}) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  const [scroll, setScroll] = React.useState("paper");
   return (
+    <>
     <Box
       sx={{
         display: "flex",
@@ -38,35 +30,41 @@ const  ModalCertificates = ({certificate}) => {
       onClick={handleOpen}
     >
       <Box>{certificate.name}</Box>
-      <Box>Exp: {certificate.expirationdate}</Box>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-          Name: {certificate.name}
-          </Typography>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-          Decription: {certificate.decription}
-          </Typography>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-          Orgranizationname: {certificate.Orgranizationname}
-          </Typography>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-          Dateearned: {certificate.dateearned}
-          </Typography>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-          Expirationdate: {certificate.expirationdate}
-          </Typography>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-          Link: {certificate.link}
-          </Typography>
-        </Box>
-      </Modal>
+      <Box>Exp: {certificate.expirationdate}</Box>   
     </Box>
+    <Dialog
+    open={open}
+    onClose={handleClose}
+  //   scroll={scroll}
+    aria-labelledby="scroll-dialog-title"
+    aria-describedby="scroll-dialog-description"
+  >
+    <DialogTitle id="scroll-dialog-title">{certificate.name}</DialogTitle>
+    <DialogContent >
+
+    <Typography id="scroll-dialog-description" variant="h6" component="h2">
+    Name: {certificate.name}
+    </Typography>
+    
+    <Typography id="scroll-dialog-description" variant="h6" component="h2">
+    Decription: {certificate.decription}
+    </Typography>
+    <Typography id="scroll-dialog-description" variant="h6" component="h2">
+    Orgranizationname: {certificate.Orgranizationname}
+    </Typography>
+    <Typography id="scroll-dialog-description" variant="h6" component="h2">
+    Dateearned: {certificate.dateearned}
+    </Typography>
+    <Typography id="scroll-dialog-description" variant="h6" component="h2">
+    Expirationdate: {certificate.expirationdate}
+    </Typography>
+    <Typography id="scroll-dialog-description" variant="h6" component="h2">
+    Link: {certificate.link}
+    </Typography>
+
+    </DialogContent>
+  </Dialog>
+  </>
   );
 }
 

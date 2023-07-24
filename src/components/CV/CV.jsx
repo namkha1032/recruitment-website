@@ -59,7 +59,7 @@ const CV = ({ cvid }) => {
           </Grid>
           <Grid item md={1} xs={2}></Grid>
           <Grid item md={8} xs={7}>
-            <Box component="h1" sx={{ margin: "24px 0px 0px  24px" }}>
+            <Box component="h1" sx={{ margin: "24px 0px 0px  0px" }}>
                 {candidate.name}
             </Box>
             <Box sx={{display:'flex',flexWrap:'wrap',justifyContent:'flex-start'}}>

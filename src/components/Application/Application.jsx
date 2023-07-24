@@ -27,7 +27,7 @@ const Application = ({ cvid, user}) => {
   }, []);
 
   return (
-    <>
+    detailposition && <>
       <Typography variant="h3" align="center">
         Detail of the Application
       </Typography>
@@ -39,7 +39,7 @@ const Application = ({ cvid, user}) => {
               <Typography variant="h5" align="center">
                 Information Of Position
               </Typography>
-              {detailposition !== null && (
+              {(
                 <Grid container spacing={2}>
                   <Grid
                     item
