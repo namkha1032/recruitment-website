@@ -1,10 +1,11 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { Grid, Box, Button } from '@mui/material';
 import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import PendingIcon from '@mui/icons-material/Pending';
 import FmdBadIcon from '@mui/icons-material/FmdBad';
 import GradingIcon from '@mui/icons-material/Grading';
+import { useSelector, useDispatch } from 'react-redux';
 function QuickSearchToolbar() {
     return (
         <Box
@@ -46,11 +47,15 @@ const List_application = () => {
     const reject = datas.filter(data => {
         return data.priority === false
     });
+    // const application = useSelector(state => state.application);
+    // const dispatch = useDispatch();
+    // useEffect(() => {
+    //     dispatch({type: 'saga/getApplication'})
+    // }, [])
+    // console.log("application", application);
     const handleEditClick = (params) => {
         navigate(`/company/recruitment/:recruitmentid/application/${params.id}`);
     }
-
-
     const columns = [
         {
             field: "id",
@@ -126,13 +131,7 @@ const List_application = () => {
 
                                 fontSize: 16
                             },
-                            "& .MuiDataGrid-cell": {
-                                border: 1,
-                                borderRight: 1,
-                                borderTop: 1,
-                                borderBottom: 1
-
-                            },
+                           
                         }}
                         slots={{ toolbar: QuickSearchToolbar }}
 
