@@ -23,8 +23,8 @@ import {
   NoResultsOverlay,
 } from "../../components/DataRick/DataRick";
 import Box from "@mui/material/Box";
-import EventNoteRounded from '@mui/icons-material/EventNoteRounded';
-import SportsScoreRounded from '@mui/icons-material/SportsScoreRounded';
+import EventNoteRounded from "@mui/icons-material/EventNoteRounded";
+import SportsScoreRounded from "@mui/icons-material/SportsScoreRounded";
 import datasjson from "./Page_Company_Event_Data.json";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Grid from "@mui/material/Grid";
@@ -60,7 +60,7 @@ export default function Page_Company_Event() {
   // }
 
   function handleAddClick() {
-    cleanStore(dispatch)
+    cleanStore(dispatch);
     navigate("./create");
   }
 
@@ -75,15 +75,21 @@ export default function Page_Company_Event() {
 
   function handleChooseStatus(value) {
     setStatusChoose(value);
+    dispatch({
+      type: "saga/getEventListWithFilter",
+      payload: {
+        status: value ? value : null,
+      },
+    });
   }
 
   function handleDetailClick(value) {
-    cleanStore(dispatch)
+    cleanStore(dispatch);
     navigate(`./${value}`);
   }
 
   function handleAccountDetailClick(value) {
-    navigate(`../../profile/${value}`);
+    window.open(`../../profile/${value}`);
   }
 
   const columns = useMemo(() => [
@@ -93,7 +99,7 @@ export default function Page_Company_Event() {
       headerAlign: "left",
       align: "left",
       flex: 0.2,
-      minWidth: 30,
+      minWidth: 50,
       renderHeader: () => <span>ID</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
@@ -117,6 +123,7 @@ export default function Page_Company_Event() {
       headerAlign: "left",
       align: "left",
       flex: 1,
+      minWidth: 200,
       renderHeader: () => <span>Event Name</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
@@ -180,9 +187,9 @@ export default function Page_Company_Event() {
       renderHeader: () => <span>Status</span>,
       renderCell: (params) => {
         if (params.value) {
-          return <Upcoming />
+          return <Upcoming />;
         }
-        return <Completed />
+        return <Completed />;
       },
     },
     {
@@ -208,7 +215,7 @@ export default function Page_Company_Event() {
           marginBottom: 5,
         }}
       >
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} sm={6} md={8}>
           <Box
             sx={{
               fontSize: 40,
@@ -223,11 +230,13 @@ export default function Page_Company_Event() {
         <Grid
           item
           xs={12}
+          sm={6}
           md={4}
           sx={{
             display: "flex",
             justifyContent: {
               md: "flex-end",
+              sm: "flex-end",
               xs: "flex-start",
             },
             alignItems: "center",
@@ -239,7 +248,11 @@ export default function Page_Company_Event() {
               backgroundColor: "#1565C0",
               textTransform: "none",
               height: 50,
-              width: 250,
+              width: {
+                md: 250,
+                sm: 250,
+                xs: "100%"
+              },
             }}
             onClick={handleAddClick}
           >
@@ -283,7 +296,8 @@ export default function Page_Company_Event() {
         <Grid
           item
           xs={12}
-          md={7}
+          sm={12}
+          md={12}
           sx={{
             display: "flex",
             justifyContent: "flex-start",
@@ -293,8 +307,8 @@ export default function Page_Company_Event() {
           <Autocomplete
             disablePortal
             id="filter-type"
-            options={["Upcoming", "Completed"]}
-            sx={{ width: 200 }}
+            options={["Upcoming", "Finished"]}
+            sx={{ width: {md: 200, sm: 200, xs: "100%"} }}
             renderInput={(params) => (
               <TextField {...params} label="Status..." />
             )}

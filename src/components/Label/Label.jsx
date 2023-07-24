@@ -195,7 +195,7 @@ export function Inactive() {
         borderColor: "#E0E0E0",
       }}
       icon={
-        <RocketLaunchRoundedIcon
+        <DoNotDisturbOnRoundedIcon
           style={{
             color: "#E0E0E0",
           }}
