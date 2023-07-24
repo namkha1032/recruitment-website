@@ -49,6 +49,7 @@ const Info_view = (props) => {
     useEffect(() => {
         dispatch({ type: 'saga/getPosition' })
         return () => {
+            console.log("ZZZZZ")
             dispatch({ type: 'position/setPosition', payload: null })
         }
     }, [])

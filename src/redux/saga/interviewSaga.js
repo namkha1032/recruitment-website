@@ -1,7 +1,26 @@
 // import libraries
 import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects"
 import axios from 'axios'
+import { delay } from "../../utils/delay"
+
 // const fs = require("fs");
+
+function* getAllInterview() {
+    yield put({type: "loading/onLoading"})
+    yield call(delay, 1500)
+    const response = yield call(axios.get, 'http://localhost:3000/data/interviewAll.json')
+    yield put({ type: "interviewList/setInterviewList", payload: response.data })
+    yield put({type: "loading/offLoading"})
+}
+
+function* getInterviewWithFilter(action) {
+    yield put({type: "loading/onLoading"})
+    console.log("Payload:", action.payload)
+    yield call(delay, 1500)
+    const response = yield call(axios.get, 'http://localhost:3000/data/interviewAll.json')
+    yield put({ type: "interviewList/setInterviewList", payload: response.data })
+    yield put({type: "loading/offLoading"})
+}
 
 function* getUpcomingInterview(action) {
     const response = yield call(axios.get, 'http://localhost:3000/data/interviewlist.json')
@@ -42,7 +61,9 @@ function* interviewSaga() {
         takeEvery("saga/getUpcomingInterview", getUpcomingInterview),
         takeEvery("saga/scoreInterview", scoreInterview),
         takeEvery("saga/getInterviewId", getInterviewId),
-        takeEvery("saga/createInterview", createInterview)
+        takeEvery("saga/createInterview", createInterview),
+        takeLatest("saga/getAllInterview", getAllInterview),
+        takeLatest("saga/getInterviewWithFilter", getInterviewWithFilter),
     ])
 }
 

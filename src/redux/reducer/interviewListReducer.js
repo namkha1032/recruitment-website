@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const interviewSlice = createSlice({
-    name: "interview",
+const interviewListSlice = createSlice({
+    name: "interviewList",
     initialState: null,
     reducers: {
-        setInterview(state, action) {
+        setInterviewList(state, action) {
             return action.payload
         },
-        cleanUpInterview() {
+        cleanUpInterviewList() {
             return null
         }
     }
 })
 
-export default interviewSlice
+export default interviewListSlice

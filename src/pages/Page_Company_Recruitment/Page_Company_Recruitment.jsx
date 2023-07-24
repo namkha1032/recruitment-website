@@ -3,54 +3,72 @@ import {
   Button,
   Autocomplete,
   TextField,
+  LinearProgress,
+  CircularProgress,
 } from "@mui/material";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import QueryStatsRoundedIcon from '@mui/icons-material/QueryStatsRounded';
+import RocketLaunchRoundedIcon from "@mui/icons-material/RocketLaunchRounded";
+import QueryStatsRoundedIcon from "@mui/icons-material/QueryStatsRounded";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import DoNotDisturbOnRoundedIcon from '@mui/icons-material/DoNotDisturbOnRounded';
-import PlayCircleOutlineRoundedIcon from '@mui/icons-material/PlayCircleOutlineRounded';
+import DoNotDisturbOnRoundedIcon from "@mui/icons-material/DoNotDisturbOnRounded";
+import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineRounded";
+import PauseCircleOutlineRoundedIcon from "@mui/icons-material/PauseCircleOutlineRounded";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-import { NullString, NotStart, Pending, Completed, Postpone } from "../../components/Label/Label";
+import {
+  NullString,
+  NotStart,
+  Pending,
+  Completed,
+  Postpone,
+  Active,
+  Inactive,
+} from "../../components/Label/Label";
 import { useDispatch, useSelector } from "react-redux";
-import { EventNoteRounded, RocketLaunchRounded, SportsScoreRounded } from "@mui/icons-material";
-
-
+import {
+  EventNoteRounded,
+  RocketLaunchRounded,
+  SportsScoreRounded,
+} from "@mui/icons-material";
+import {
+  NoRowsOverlay,
+  NoResultsOverlay,
+} from "../../components/DataRick/DataRick";
 
 export default function Page_Company_Recruitment() {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch({type: "saga/getRecruitmentList"})
-    dispatch({type: "saga/getDepartment"})
-    dispatch({type: "saga/getLanguage"})
+    dispatch({ type: "saga/getPositionList" });
+    dispatch({ type: "saga/getDepartment" });
+    // dispatch({ type: "saga/getLanguage" });
     return () => {
-      dispatch({type: "recruitment/clearUpRecruitment"})
-    }
-  }, [])
+      dispatch({ type: "positionList/cleanUpPosition" });
+    };
+  }, []);
 
-  const rows = useSelector(state => state.recruitment)
-  const department_draft = useSelector(state => state.department)
-  const language_draft = useSelector(state => state.language)
+  const loading = useSelector((state) => state.loading);
+  const rows = useSelector((state) => state.positionList);
+  const department_draft = useSelector((state) => state.department);
+  // const language_draft = useSelector((state) => state.language);
 
-  const departments = department_draft ? department_draft : []
-  const languages = language_draft ? language_draft : []
+  const departments = department_draft ? department_draft : [];
+  // const languages = language_draft ? language_draft : [];
 
   // const [rows, setRows] = useState(datasjson);
 
   // const [anchorEl, setAnchorEl] = useState(null);
   // const [valueSearch, setValueSearch] = useState("");
-  
+
   const [valueChoose, setValueChoose] = useState(null);
 
   const [departmentChoose, setDepartmentChoose] = useState(null);
-
   const [statusChoose, setStatusChoose] = useState(null);
+  // const [languageChoose, setLanguageChoose] = useState(null);
 
   const [valueReport, setValueReport] = useState(0);
 
@@ -74,42 +92,84 @@ export default function Page_Company_Recruitment() {
   //   alert("Value search: " + valueSearch);
   // }
 
+  // Reset state when change filter option
   function handleChooseValue(value) {
     setValueChoose(value);
     setDepartmentChoose(null);
     setStatusChoose(null);
+    // setLanguageChoose(null);
+    if (value === null) {
+      dispatch({ type: "saga/getPositionList" });
+    }
   }
 
   function handleChooseDepartment(value) {
     setDepartmentChoose(value);
     if (value) {
-      dispatch({type: "saga/getRecruitmentListWithDepartment", payload: {id: value.departmentId}});
+      dispatch({
+        type: "saga/getPositionListWithDepartment",
+        payload: { id: value.departmentId },
+      });
+    } else if (value === null) {
+      dispatch({ type: "saga/getPositionList" });
     }
   }
 
+  // function handleChooseLanguage(value) {
+  //   setLanguageChoose(value);
+  //   if (value) {
+  //     dispatch({
+  //       type: "saga/getPositionListWithLanguage",
+  //       payload: { id: value.languageId },
+  //     });
+  //   } else if (value === null) {
+  //     dispatch({ type: "saga/getPositionList" });
+  //   }
+  // }
+
   function handleChooseStatus(value) {
     setStatusChoose(value);
+    if (value === "Active") {
+      dispatch({
+        type: "saga/getPositionListWithStatus",
+        payload: { Status: true },
+      });
+    } else if (value === "Inactive") {
+      dispatch({
+        type: "saga/getPositionListWithStatus",
+        payload: { Status: false },
+      });
+    } else if (value === null) {
+      dispatch({ type: "saga/getPositionList" });
+    }
   }
 
   function handleDetailClick(value) {
-    navigate(`./${value}`)
+    console.log(value)
+    navigate(`./${value}`);
   }
 
   function handleReportClick(value) {
-    setValueReport(value)
-    navigate(`./${value}/report`, { 
+    setValueReport(value);
+    navigate(`./${value}/report`, {
       state: {
         positionId: value,
-      }
-    })
+      },
+    });
   }
 
-  function handleContinueClick(value) {
-    dispatch({type: "saga/updateRecruitment", payload: {id: value, Status: "Đang diễn ra"}})
+  function handleActiveClick(value) {
+    dispatch({
+      type: "saga/updatePositionList",
+      payload: { id: value, Status: true },
+    });
   }
 
-  function handlePostponeClick(value) {
-    dispatch({type: "saga/updateRecruitment", payload: {id: value, Status: "Tạm ngừng"}})
+  function handleInactiveClick(value) {
+    dispatch({
+      type: "saga/updatePositionList",
+      payload: { id: value, Status: false },
+    });
   }
 
   // function handleEditClick(value) {
@@ -118,7 +178,7 @@ export default function Page_Company_Recruitment() {
 
   const columns = useMemo(() => [
     {
-      field: "id",
+      field: "PositionId",
       type: "number",
       headerAlign: "left",
       align: "left",
@@ -148,7 +208,7 @@ export default function Page_Company_Recruitment() {
       align: "left",
       minWidth: 200,
       flex: 0.6,
-      renderHeader: () => <span>Tên vị trí</span>,
+      renderHeader: () => <span>Name</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
         return (
@@ -171,7 +231,7 @@ export default function Page_Company_Recruitment() {
       type: "string",
       headerAlign: "left",
       align: "left",
-      renderHeader: () => <span>Ngày bắt đầu</span>,
+      renderHeader: () => <span>Start Date</span>,
       minWidth: 180,
       flex: 0.4,
       renderCell: (params) => {
@@ -183,7 +243,7 @@ export default function Page_Company_Recruitment() {
       type: "string",
       headerAlign: "left",
       align: "left",
-      renderHeader: () => <span>Ngày kết thúc</span>,
+      renderHeader: () => <span>End Date</span>,
       minWidth: 180,
       flex: 0.4,
       renderCell: (params) => {
@@ -204,7 +264,7 @@ export default function Page_Company_Recruitment() {
       type: "number",
       headerAlign: "center",
       align: "center",
-      renderHeader: () => <span>Đã đăng ký</span>,
+      renderHeader: () => <span>Applied</span>,
       minWidth: 100,
       flex: 0.2,
     },
@@ -214,18 +274,12 @@ export default function Page_Company_Recruitment() {
       flex: 0.3,
       headerAlign: "center",
       align: "center",
-      renderHeader: () => <span>Trạng thái</span>,
+      renderHeader: () => <span>Status</span>,
       renderCell: (params) => {
-        switch (params.value) {
-          case "Chưa bắt đầu":
-            return <NotStart />;
-          case "Đang diễn ra":
-            return <Pending />;
-          case "Kết thúc":
-            return <Completed />;
-          default:
-            return <Postpone />;
+        if (params.value) {
+          return <Active />;
         }
+        return <Inactive />;
       },
     },
     {
@@ -235,71 +289,54 @@ export default function Page_Company_Recruitment() {
       headerAlign: "right",
       align: "right",
       getActions: (params) => {
-        if (params.row.Status === "Tạm ngừng") {
+        if (params.row.Status === false) {
           return [
             <GridActionsCellItem
               icon={<InfoRoundedIcon variant="outlined" />}
-              label="Chi tiết"
-              onClick={() => handleDetailClick(params.row.id)}
+              label="Detail"
+              onClick={() => handleDetailClick(params.row.PositionId)}
               showInMenu
             />,
             <GridActionsCellItem
               icon={<QueryStatsRoundedIcon />}
-              label="Báo cáo"
-              onClick={() => handleReportClick(params.row.id)}
+              label="Report"
+              onClick={() => handleReportClick(params.row.PositionId)}
               showInMenu
             />,
             <GridActionsCellItem
-              icon={<PlayCircleOutlineRoundedIcon sx={{ color: "#1565C0" }}/>}
-              label="Tiếp tục tuyển dụng"
-              onClick={() => handleContinueClick(params.row.id)}
+              icon={<PlayCircleOutlineRoundedIcon sx={{ color: "#1565C0" }} />}
+              label="Active position"
+              onClick={() => handleActiveClick(params.row.PositionId)}
               showInMenu
-              sx={{ 
-                color: "#1565C0" 
+              sx={{
+                color: "#1565C0",
               }}
             />,
-          ]
-        }
-        else if (params.row.Status === "Đang diễn ra") {
+          ];
+        } else {
           return [
             <GridActionsCellItem
               icon={<InfoRoundedIcon variant="outlined" />}
-              label="Chi tiết"
-              onClick={() => handleDetailClick(params.row.id)}
+              label="Detail"
+              onClick={() => handleDetailClick(params.row.PositionId)}
               showInMenu
             />,
             <GridActionsCellItem
               icon={<QueryStatsRoundedIcon />}
-              label="Báo cáo"
-              onClick={() => handleReportClick(params.row.id)}
+              label="Report"
+              onClick={() => handleReportClick(params.row.PositionId)}
               showInMenu
             />,
             <GridActionsCellItem
-              icon={<DoNotDisturbOnRoundedIcon sx={{ color: "#cc3300" }}/>}
-              label="Tạm ngừng tuyển dụng"
-              onClick={() => handlePostponeClick(params.row.id)}
+              icon={<PauseCircleOutlineRoundedIcon sx={{ color: "#cc3300" }} />}
+              label="Inactive position"
+              onClick={() => handleInactiveClick(params.row.PositionId)}
               showInMenu
-              sx={{ 
-                color: "#cc3300" 
+              sx={{
+                color: "#cc3300",
               }}
             />,
-          ]
-        }
-        else {
-          return [
-            <GridActionsCellItem
-              icon={<InfoRoundedIcon variant="outlined" />}
-              label="Chi tiết"
-              onClick={() => handleDetailClick(params.row.id)}
-              showInMenu
-            />,
-            <GridActionsCellItem
-              icon={<QueryStatsRoundedIcon />}
-              label="Báo cáo"
-              onClick={() => handleReportClick(params.row.id)}
-              showInMenu
-            />,
-          ]
+          ];
         }
       },
     },
@@ -322,7 +359,7 @@ export default function Page_Company_Recruitment() {
               color: "#1565C0",
             }}
           >
-            Danh sách vị trí tuyển dụng
+            Position
           </Box>
         </Grid>
 
@@ -350,7 +387,7 @@ export default function Page_Company_Recruitment() {
             onClick={handleAddClick}
           >
             <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
-            Tạo vị trí tuyển dụng
+            Create position
           </Button>
           {/* <IconButton onClick={handleMoreClick} sx={{
             marginLeft: 1,
@@ -388,7 +425,7 @@ export default function Page_Company_Recruitment() {
         <Grid
           item
           xs={12}
-          md={7}
+          md={12}
           sx={{
             display: "flex",
             justifyContent: "flex-start",
@@ -398,90 +435,80 @@ export default function Page_Company_Recruitment() {
           <Autocomplete
             disablePortal
             id="filter-type"
-            options={["Phòng ban", "Trạng thái", "Ngôn ngữ", "Chuyên môn"]}
+            options={["Department", "Status"]}
             sx={{ width: 200, marginRight: 2 }}
             renderInput={(params) => (
-              <TextField {...params} label="Lọc theo..." />
+              <TextField {...params} label="Filter by..." />
             )}
             value={valueChoose}
             onChange={(event, value) => handleChooseValue(value)}
           />
-          {valueChoose === "Phòng ban" && (
+          {valueChoose === "Department" && (
             <Autocomplete
               disablePortal
               id="filter-type"
               options={departments}
               sx={{ width: 200 }}
               renderInput={(params) => (
-                <TextField {...params} label="Phòng ban..." />
+                <TextField {...params} label="Department..." />
               )}
               getOptionLabel={(option) => option.departmentName || ""}
               renderOption={(props, option) => (
-                <li {...props} key={option.departmentId}> {option.departmentName} </li>
+                <li {...props} key={option.departmentId}>
+                  {option.departmentName}
+                </li>
               )}
               isOptionEqualToValue={(option, value) => {
-                return option.departmentId === value.departmentId
+                return option.departmentId === value.departmentId;
               }}
               value={departmentChoose}
               onChange={(event, value) => handleChooseDepartment(value)}
             />
           )}
-          {valueChoose === "Trạng thái" && (
+          {valueChoose === "Status" && (
             <Autocomplete
               disablePortal
               id="filter-type"
-              options={["Chưa bắt đầu", "Đang diễn ra", "Kết thúc", "Tạm hoãn"]}
+              options={["Active", "Inactive"]}
               sx={{ width: 200 }}
               renderInput={(params) => (
-                <TextField {...params} label="Trạng thái..." />
+                <TextField {...params} label="Status..." />
               )}
               renderOption={(props, option) => {
-                if (option === "Chưa bắt đầu")
+                if (option === "Active")
                   return (
-                    <Box component="li" {...props} sx={{
-                      color: "#E0E0E0",
-                    }}>
-                      <EventNoteRounded sx={{
-                        color: "#E0E0E0",
-                        marginRight: 1,
-                      }}/>
-                      Not start
-                    </Box>
-                  );
-                else if (option === "Đang diễn ra")
-                  return (
-                    <Box component="li" {...props} sx={{
-                      color: "#1565C0",
-                    }}>
-                      <RocketLaunchRounded sx={{
+                    <Box
+                      component="li"
+                      {...props}
+                      sx={{
                         color: "#1565C0",
-                        marginRight: 1,
-                      }}/>
-                      Going
+                      }}
+                    >
+                      <RocketLaunchRoundedIcon
+                        sx={{
+                          color: "#1565C0",
+                          marginRight: 1,
+                        }}
+                      />
+                      Active
                     </Box>
                   );
-                else if (option === "Kết thúc")
+                else if (option === "Inactive")
                   return (
-                    <Box component="li" {...props} sx={{
-                      color: "#008631",
-                    }}>
-                      <SportsScoreRounded sx={{
-                        color: "#008631",
-                        marginRight: 1,
-                      }}/>
-                      Finished
-                    </Box>
-                  );
-                  else if (option === "Tạm hoãn")
-                  return (
-                    <Box component="li" {...props} sx={{
-                      color: "#cc3300",
-                    }}>
-                      <DoNotDisturbOnRoundedIcon sx={{
-                        color: "#cc3300",
-                        marginRight: 1,
-                      }}/>
-                      Postponed
+                    <Box
+                      component="li"
+                      {...props}
+                      sx={{
+                        color: "#E0E0E0",
+                      }}
+                    >
+                      <DoNotDisturbOnRoundedIcon
+                        sx={{
+                          color: "#E0E0E0",
+                          marginRight: 1,
+                        }}
+                      />
+                      Inactive
                     </Box>
                   );
               }}
@@ -489,19 +516,28 @@ export default function Page_Company_Recruitment() {
               onChange={(event, value) => handleChooseStatus(value)}
             />
           )}
-          {valueChoose === "Ngôn ngữ" && (
+          {/* {valueChoose === "Language" && (
             <Autocomplete
               disablePortal
               id="filter-type"
               options={languages}
               sx={{ width: 200 }}
               renderInput={(params) => (
-                <TextField {...params} label="Phòng ban..." />
+                <TextField {...params} label="Language..." />
               )}
-              value={departmentChoose}
-              onChange={(event, value) => handleChooseDepartment(value)}
+              getOptionLabel={(option) => option.languageName || ""}
+              renderOption={(props, option) => (
+                <li {...props} key={option.languageId}>
+                  {option.languageName}
+                </li>
+              )}
+              isOptionEqualToValue={(option, value) => {
+                return option.languageId === value.languageId;
+              }}
+              value={languageChoose}
+              onChange={(event, value) => handleChooseLanguage(value)}
             />
-          )}
+          )} */}
         </Grid>
 
         {/* <Grid
@@ -544,79 +580,88 @@ export default function Page_Company_Recruitment() {
           </Box>
         </Grid> */}
       </Grid>
-      
+
       <Grid item xs={12} md={12}>
-        <DataGrid
-          columns={columns}
-          rows={rows === null ? [] : rows}
-          loading={rows === null}
-          sx={{
-            "&.MuiDataGrid-root": {
-              borderRadius: 1,
-            },
-            "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
-              outline: "none",
-            },
-            "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
-              outline: "none",
-            },
-            "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
-              backgroundColor: "#1565C0",
-              color: "white",
-              fontWeight: 700,
-              fontSize: 14,
-              border: "none",
-            },
-            "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
-              display: "none",
-            },
-            '&.MuiDataGrid-root .MuiDataGrid-virtualScroller::-webkit-scrollbar': {
-              display: "none",
-            },
-            // "&.MuiDataGrid-root .MuiDataGrid-virtualScrollerContent--overflowed": {
-            //   display: "none",
-            // },
-            "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
-              color: "white",
-            },
-          }}
-          slots={{ toolbar: GridToolbar }}
-          slotProps={{
-            pagination: {
-              labelRowsPerPage: "Số lượng hiển thị",
-              labelDisplayedRows: ({ from, to, count }) =>
-                `${from}–${to} của ${count !== -1 ? count : `hơn ${to}`}`,
-            },
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500, placeholder: "Tìm kiếm...", sx: {
-                width: 300,
-                marginBottom: 1,
-              }},
-              csvOptions: { disableToolbarButton: true },
-              printOptions: { disableToolbarButton: true }
-          },
-          }}
-          disableColumnMenu
-          disableColumnFilter
-          disableColumnSelector
-          disableDensitySelector
-          disableSelectionOnClick
-          pagination
-          pageSizeOptions={[5, 10, 15, 25, 50, 100]}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
+        <Box>
+          <DataGrid
+            autoHeight
+            columns={columns}
+            rows={rows === null ? [] : rows}
+            // loading={rows === null}
+            loading={loading}
+            sx={{
+              "&.MuiDataGrid-root": {
+                borderRadius: 1,
               },
-            },
-          }}
-          onCellClick={(params, event) => {
-            if (params.field === "id" || params.field === "PositionName") {
-              handleDetailClick(params.row.id)
-            }
-          }}
-        />
+              "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                outline: "none",
+              },
+              "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                outline: "none",
+              },
+              "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
+                backgroundColor: "#1565C0",
+                color: "white",
+                fontWeight: 700,
+                fontSize: 14,
+                border: "none",
+              },
+              "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                display: "none",
+              },
+              "&.MuiDataGrid-root .MuiDataGrid-virtualScroller::-webkit-scrollbar":
+                {
+                  display: "none",
+                },
+              // "&.MuiDataGrid-root .MuiDataGrid-virtualScrollerContent--overflowed": {
+              //   display: "none",
+              // },
+              "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+                color: "white",
+              },
+            }}
+            slots={{
+              toolbar: GridToolbar,
+              noRowsOverlay: NoRowsOverlay,
+              noResultsOverlay: NoResultsOverlay,
+            }}
+            slotProps={{
+              toolbar: {
+                showQuickFilter: true,
+                quickFilterProps: {
+                  debounceMs: 500,
+                  placeholder: "Search...",
+                  sx: {
+                    width: 300,
+                    marginBottom: 1,
+                  },
+                },
+                csvOptions: { disableToolbarButton: true },
+                printOptions: { disableToolbarButton: true },
+              },
+            }}
+            disableColumnMenu
+            disableColumnFilter
+            disableColumnSelector
+            disableDensitySelector
+            disableSelectionOnClick
+            pagination
+            pageSizeOptions={[5, 10, 15, 25, 50, 100]}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                },
+              },
+            }}
+            getRowId={(row) => row.PositionId}
+            onCellClick={(params, event) => {
+              if (params.field === "PositionId" || params.field === "PositionName") {
+                handleDetailClick(params.row.PositionId);
+              }
+            }}
+          />
+        </Box>
       </Grid>
     </Box>
   );
