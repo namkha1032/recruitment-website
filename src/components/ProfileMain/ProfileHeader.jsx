@@ -1,10 +1,11 @@
 import { CameraAltOutlined } from "@mui/icons-material";
-import { Box, IconButton, Tab, Tabs } from "@mui/material";
+import { Box, IconButton} from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import GigaCard from "../GigaCard/GigaCard";
 
-const ProfileHeader = ({ tabValue, setTabValue, id, userName }) => {
+const ProfileHeader = ({  id, userName }) => {
   const [selectedImage, setSelectedImage] = useState(
     "https://pbs.twimg.com/media/EYVxlOSXsAExOpX.jpg"
   );
@@ -20,12 +21,11 @@ const ProfileHeader = ({ tabValue, setTabValue, id, userName }) => {
   const navigate = useNavigate();
   const location = useLocation();
   return (
-    <>
+    <GigaCard>
       <img
-        height="100%"
-        width="100%"
-        style={{ objectFit: "cover" }}
-        src="https://uko-react.vercel.app/static/background/user-cover-pic.png"
+        height="250px"
+        style={{ objectFit:'initial' ,borderTopRightRadius:'10px',borderTopLeftRadius:'10px',widtd:'max-width'}}
+        src="https://indochinapost.com/wp-content/uploads/chuyen-phat-nhanh-tnt-di-anh.jpg"
         alt=""
       />
 
@@ -99,51 +99,9 @@ const ProfileHeader = ({ tabValue, setTabValue, id, userName }) => {
           <Box sx={{ margin: "24px 0px 0px  24px" }}>{userName}</Box>
         </Box>
 
-        <Tabs
-          className="tab"
-          centered={true}
-          sx={{
-            height: "48px",
-          }}
-          value={tabValue}
-          // {onChange={(e, newvalue) => {
-          //   if (newvalue === "CVs") navigate(`/profile/${id}/cv`);
-          //   if (newvalue === "Profile") navigate(`/profile/${id}`);
-          //   if (newvalue === "Applications")
-          //     navigate(`/profile/${id}/application`);
-          //   if (newvalue === "Interviews") navigate(`/profile/${id}/interview`);
-          //   if (newvalue === "Events") navigate(`/profile/${id}/event`);
-          // }}
-          // aria-label="basic tabs example"}
-        >
-          <Tab
-            sx={{ padding: "0px 8px", margin: "0px 16px 0px 0px" }}
-            value="Profile"
-            label="Profile"
-          />
-          {/*<Tab
-            sx={{ padding: "0px 8px", margin: "0px 0px 0px 16px" }}
-            value="CVs"
-            label="CVs"
-          />
-          <Tab
-            sx={{ padding: "0px 8px", margin: "0px 0px 0px 16px" }}
-            value="Applications"
-            label="Applications"
-          />
-          <Tab
-            sx={{ padding: "0px 8px", margin: "0px 0px 0px 16px" }}
-            value="Interviews"
-            label="Interviews"
-          />
-          <Tab
-            sx={{ padding: "0px 8px", margin: "0px 0px 0px 16px" }}
-            value="Events"
-            label="Events"
-          />*/}
-        </Tabs>
+        
       </Box>
-    </>
+      </GigaCard>
   );
 };
 

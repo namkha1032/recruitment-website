@@ -1,8 +1,12 @@
 import {
+  Email,
   EmojiEvents,
   IntegrationInstructions,
   Language,
+  LocationOn,
   Person,
+  Phone,
+  Public,
   School,
 } from "@mui/icons-material";
 import {
@@ -16,9 +20,9 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import ModalCertificates from "./ModalCertificates";
 
 const CV = ({ cvid }) => {
-  console.log(cvid);
   const dispatch = useDispatch();
   const cv = useSelector((state) => state.cv);
   const candidate = useSelector((state) => state.candidate);
@@ -34,7 +38,7 @@ const CV = ({ cvid }) => {
     cv && candidate && (
       <>
         <Grid container spacing={2}>
-          <Grid item md={3}
+          <Grid item md={3} xs={3}
             sx={{
               display: "flex",
               alignItems: "center",
@@ -46,39 +50,46 @@ const CV = ({ cvid }) => {
               sx={{
                 borderRadius: "50%",
                 border: "1px solid #ccc",
-                width: "200px",
-                height: "200px",
+                width: "150px",
+                height: "150px",
               }}
               src={candidate.image}
               alt=""
             />
           </Grid>
-          <Grid item md={9}>
+          <Grid item md={1} xs={2}></Grid>
+          <Grid item md={8} xs={7}>
             <Box component="h1" sx={{ margin: "24px 0px 0px  24px" }}>
-              {candidate.name}
+                {candidate.name}
             </Box>
-            <Box sx={{ padding: "10px 0 0 0", display: 'flex', flexWrap: 'wrap' }}>
-
-
-              <Person fontSize="large" />
-              <a>{candidate.email}</a>
-            </Box>
-            <Box>{candidate.phone}</Box>
-            <Box>{candidate.address}</Box>
-
+            <Box sx={{display:'flex',flexWrap:'wrap',justifyContent:'flex-start'}}>
+              <Box sx={{ padding: "10px 24px 0 0", display: 'flex', flexWrap: 'no-wrap' }}>
+                <Email  fontSize="small" />
+                <Box sx={{pl:'10px'}}>{candidate.email}</Box>
+              </Box>
+              <Box sx={{ padding: "10px 24px 0 0", display: 'flex', flexWrap: 'no-wrap' }}>
+                <Phone  fontSize="small" />
+                <Box sx={{pl:'10px'}}>{candidate.phone}</Box>
+              </Box>
+              <Box sx={{ padding: "10px 24px 0 0", display: 'flex', flexWrap: 'no-wrap' }}>
+                <LocationOn fontSize="small" />
+                <Box sx={{pl:'10px'}}>{candidate.address}</Box>
+              </Box>
+           
+              </Box>
           </Grid>
 
 
-          <Grid item lg={3} md={3} sx={{}}><Box component='h2'>About</Box></Grid>
-          <Grid item lg={9} md={9}>
+         
+          <Grid item lg={12} md={12}>
             <Box>
               <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-                <Person sx={{ mr: "15px" }} />
+                <Public sx={{ mr: "15px" }} />
                 <Box
                   component="h2"
                   sx={{ position: "relative", top: "5.5px", m: 0 }}
                 >
-                  Profile
+                  Introduction
                 </Box>
               </Box>
               <Box sx={{ padding: "10px 0 0 40px" }}>{cv.experience}</Box>
@@ -95,18 +106,15 @@ const CV = ({ cvid }) => {
                 </Box>
               </Box>
               <Box sx={{ padding: "0px 0 0 40px" }}>
-                <Stack
-                  direction="row"
-                  sx={{ display: "flex", flexWrap: "wrap" }}
-                >
+                
                   {cv.skills.map((skill, index) => (
-                    <Chip
-                      key={index}
-                      sx={{ margin: "10px 16px 0 0" }}
-                      label={skill.skillname}
-                    />
+                    <Box key={index} sx={{display:'flex',justifyContent:'space-between',flexWrap:'wrap', margin: "10px 16px 0 0", border:'1px solid black',borderRadius:'3px',p:'16px' }}>
+                      
+                      <Box>{skill.skillname}</Box>
+                      <Box>Số năm kinh nghiệm: 1 năm</Box>
+                    </Box>
                   ))}
-                </Stack>
+            
               </Box>
             </Box>
 
@@ -122,18 +130,13 @@ const CV = ({ cvid }) => {
                 </Box>
               </Box>
               <Box sx={{ padding: "0px 0 0 40px" }}>
-                <Stack
-                  direction="row"
-                  sx={{ display: "flex", flexWrap: "wrap" }}
-                >
+                <Box sx={{display:'flex',justifyContent:'flex-start',flexWrap:'wrap'}} >
                   {cv.certificates.map((certificate, index) => (
-                    <Chip
-                      key={index}
-                      label={certificate.name}
-                      sx={{ margin: "10px 16px 0 0" }}
-                    />
+                    <Box key={index}>
+                    <ModalCertificates certificate={certificate} />
+                    </Box>
                   ))}
-                </Stack>
+                </Box>
               </Box>
             </Box>
             <Divider sx={{ backgroundColor: "black", mt: "16px" }} />
