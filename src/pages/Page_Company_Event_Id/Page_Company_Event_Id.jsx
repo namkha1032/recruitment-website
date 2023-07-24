@@ -138,13 +138,13 @@ const Page_Company_Event_Id = () => {
                     label="Candidate"
                     variant="outlined"
                     style={{
-                        color: "green",
+                        color: "#008631",
                         backgroundColor: "white",
-                        borderColor: "green",
+                        borderColor: "#008631",
                     }}
                     icon={
                         <PersonRoundedIcon style={{
-                            color: "green",
+                            color: "#008631",
                         }}>
                         </PersonRoundedIcon>
                     } />
@@ -183,7 +183,7 @@ const Page_Company_Event_Id = () => {
         <Container sx={{ p: 0 }} className='companyeventid'>
             {/* <CelebrationRoundedIcon color='primary' fontSize='large' sx={{ marginRight: 1 }}></CelebrationRoundedIcon> */}
             <Box sx={{
-                fontSize: 40,
+                fontSize: 50,
                 fontWeight: 600,
                 color: '#1565C0',
                 display: 'flex',
@@ -222,10 +222,29 @@ const Page_Company_Event_Id = () => {
                     <GigaCard>
                         {/* <GigaCardHeader headerIcon={<PsychologyAltRoundedIcon fontSize='large'></PsychologyAltRoundedIcon>}>
                             How To Think Critically and Avoid Fallacies
-                        </GigaCardHeader> */}
+                        </GigaCardHeader>
                         <GigaCardHeader headerIcon={<CelebrationRoundedIcon fontSize='large'></CelebrationRoundedIcon>}>
                             How To Think Critically and Avoid Fallacies
-                        </GigaCardHeader>
+                        </GigaCardHeader> */}
+                        <Box sx={{ paddingLeft: 4, paddingTop: 4 }}>
+                            <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
+                                <Box sx={{ fontSize: 40, display: "flex", alignItems: "center" }}>
+                                    <CelebrationRoundedIcon fontSize='large'></CelebrationRoundedIcon>
+                                </Box>
+                                <Box sx={{
+                                    fontSize: 40,
+                                    fontWeight: 600,
+                                    // color: '#1565C0',
+                                    display: 'flex',
+                                    justifyContent: 'start',
+                                    // justifyContent: 'center'
+                                    display: 'inline-block',
+                                    // marginBottom: 1
+                                }}>
+                                    How To Think Critically and Avoid Fallacies
+                                </Box>
+                            </Box>
+                        </Box>
                         <GigaCardBody>
                             <Box sx={{ fontSize: '20px', fontStyle: 'italic', display: 'flex', justifyContent: 'flex-end', marginBottom: 3 }}>
                                 <TodayRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></TodayRoundedIcon>
