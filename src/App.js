@@ -60,23 +60,6 @@ import TestLayout from './components/TestLayout/TestLayout';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function App() {
-  const [userRole, setUserRole] = useState(null)
-  const dispatch = useDispatch()
-  let token = useSelector(state => state.user.token)
-  useEffect(() => {
-    async function callApiGetRole() {
-      console.log("token: ", token)
-      let response = await axios.get('http://localhost:3000/data/role.json', token)
-      let role = await response.data
-      console.log("role: ", role)
-      setUserRole(role.roleName)
-    }
-    // callApiGetRole()
-    const a = dispatch({ type: "saga/userGetRole" })
-    console.log("a: ", a)
-
-  }, [])
-  console.log("userRole: ", userRole)
   return (
     <div className="App">
       <BrowserRouter>
@@ -90,7 +73,7 @@ function App() {
             <Route path="/company/event/create" element={<Page_Company_Event_Create />} />
             <Route path="/company/event/:eventid" element={<Page_Company_Event_Id />} />
             <Route path="/company/event/:eventid/update" element={<Page_Company_Event_Id_Update />} />
-            <Route path="/company/interview" element={userRole == "interviewer" ? <Page_Profile_Id_Interview /> : <Page_Company_Interview />} />
+            <Route path="/company/interview" element={<Page_Company_Interview />} />
             <Route path="/company/interview/create" element={<Page_Company_Interview_Create />} />
             <Route path="/company/interview/:interviewid" element={<Page_Company_Interview_Id />} />
             <Route path="/company/interview/:interviewid/start" element={<Page_Company_Interview_Id_Start />} />
