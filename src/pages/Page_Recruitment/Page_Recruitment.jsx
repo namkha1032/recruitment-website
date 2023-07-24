@@ -62,20 +62,20 @@ const Page_Recruitment = () => {
 <Box
   sx=
   {{
-    backgroundImage: 'url(https://img4.thuthuatphanmem.vn/uploads/2020/12/25/anh-bia-background-tuyen-dung_055954570.jpg)',
+    backgroundImage: 'url(https://haycafe.vn/wp-content/uploads/2022/05/Nen-xanh-duong-pastel.jpg)',
     height: '300px',
     borderRadius: '10px',
     boxShadow: 5
   }}>
   <Box sx={{ padding: '150px 750px 0px 110px' }}>
-    <Typography variant='h3' align='left' color='white' fontFamily='serif' sx={{ borderBottom: '3px solid #0099FF' }}>
-      Tuyển dụng
+    <Typography variant='h3' align='left' color='black' fontFamily='serif' sx={{ borderBottom: '3px solid #0099FF' }}>
+      Recruitment
     </Typography>
 
   </Box>
 
   <Box sx={{ padding: '10px 350px 0px 110px' }}>
-    <Typography variant='h6' align='left' color='lightgrey' fontFamily='serif' >
+    <Typography variant='h6' align='left' color='#808080' fontFamily='serif' >
       Các sự kiện sôi động sẽ cập nhật liên tục, hãy theo dõi tin tức sự kiện để có thể đăng kí tham gia.
     </Typography>
   </Box>
@@ -107,12 +107,12 @@ const Page_Recruitment = () => {
         </Box> */}
         <Container sx={{ py: 4 }} maxWidth="md">
           {/* End hero unit */
-          <Typography variant='h4' align="left" sx={{marginBottom:'15px'}}> View Recruitment</Typography>
+          <Typography variant='h4' align="left" sx={{marginBottom:'15px',borderTop: '1px solid lightgrey'}}> View Recruitment</Typography>
           }
           <Grid container spacing={8}>
             {cards1.map((card) => (
               <Grid item key={card} xs={12}>
-                  <Box sx={{backgroundColor:'#99CCFF', borderRadius:'5px', boxShadow:10 } }>
+                  <Box sx={{backgroundColor:'#EEEEEE', borderRadius:'5px', boxShadow:10 } }>
                     <Grid container>
                       <Grid item xs={9}>
                         <Box sx={{margin:'15px',display:'flex'}}>
