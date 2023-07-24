@@ -609,10 +609,10 @@ export default function Page_Company_Recruitment() {
               "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
                 display: "none",
               },
-              "&.MuiDataGrid-root .MuiDataGrid-virtualScroller::-webkit-scrollbar":
-                {
-                  display: "none",
-                },
+              // "&.MuiDataGrid-root .MuiDataGrid-virtualScroller::-webkit-scrollbar":
+              //   {
+              //     display: "none",
+              //   },
               // "&.MuiDataGrid-root .MuiDataGrid-virtualScrollerContent--overflowed": {
               //   display: "none",
               // },

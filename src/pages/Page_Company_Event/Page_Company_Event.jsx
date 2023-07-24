@@ -16,12 +16,15 @@ import {
   NotStart,
   Pending,
   Completed,
+  Upcoming,
 } from "../../components/Label/Label";
 import {
   NoRowsOverlay,
   NoResultsOverlay,
 } from "../../components/DataRick/DataRick";
 import Box from "@mui/material/Box";
+import EventNoteRounded from '@mui/icons-material/EventNoteRounded';
+import SportsScoreRounded from '@mui/icons-material/SportsScoreRounded';
 import datasjson from "./Page_Company_Event_Data.json";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Grid from "@mui/material/Grid";
@@ -176,16 +179,10 @@ export default function Page_Company_Event() {
       flex: 0.3,
       renderHeader: () => <span>Status</span>,
       renderCell: (params) => {
-        switch (params.value) {
-          case "Chưa bắt đầu":
-            return <NotStart />;
-          case "Đang diễn ra":
-            return <Pending />;
-          case "Kết thúc":
-            return <Completed />;
-          default:
-            return <NullString />;
+        if (params.value) {
+          return <Upcoming />
         }
+        return <Completed />
       },
     },
     {
@@ -296,11 +293,50 @@ export default function Page_Company_Event() {
           <Autocomplete
             disablePortal
             id="filter-type"
-            options={["Chưa bắt đầu", "Đang diễn ra", "Kết thúc"]}
+            options={["Upcoming", "Completed"]}
             sx={{ width: 200 }}
             renderInput={(params) => (
               <TextField {...params} label="Status..." />
             )}
+            renderOption={(props, option) => {
+              if (option === "Upcoming") {
+                return (
+                  <Box
+                    component="li"
+                    {...props}
+                    sx={{
+                      color: "#E0E0E0",
+                    }}
+                  >
+                    <EventNoteRounded
+                      sx={{
+                        color: "#E0E0E0",
+                        marginRight: 1,
+                      }}
+                    />
+                    Upcoming
+                  </Box>
+                );
+              } else {
+                return (
+                  <Box
+                    component="li"
+                    {...props}
+                    sx={{
+                      color: "#1565C0",
+                    }}
+                  >
+                    <SportsScoreRounded
+                      sx={{
+                        color: "#1565C0",
+                        marginRight: 1,
+                      }}
+                    />
+                    Finished
+                  </Box>
+                );
+              }
+            }}
             value={statusChoose}
             onChange={(event, value) => handleChooseStatus(value)}
           />
