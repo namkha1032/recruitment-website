@@ -19,13 +19,15 @@ import ForumIcon from '@mui/icons-material/Forum';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import useMediaQuery from '@mui/material/useMediaQuery';
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
 }));
 const Sidebar = (props) => {
     const navigate = useNavigate()
@@ -64,6 +66,9 @@ const Sidebar = (props) => {
 
     ];
     const theme = useTheme();
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    // ///////////////////////////////////////
+    // ///////////////////////////////////////
     return (
         <Drawer
             sx={{
@@ -75,9 +80,12 @@ const Sidebar = (props) => {
                     backgroundColor: "grey.900"
                 },
             }}
-            variant="persistent"
+            variant={isMd ? "persistent" : "temporary"}
+            // variant={"persistent"}
+            // variant={"temporary"}
             anchor="left"
             open={props.showSidebar ? props.open : false}
+            onClose={() => props.setOpen(false)}
         >
             <DrawerHeader>
                 <IconButton onClick={() => props.setOpen(false)}>
