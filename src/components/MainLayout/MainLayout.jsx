@@ -7,7 +7,12 @@ import { DrawerHeader } from '../../components/Sidebar/Sidebar';
 import { styled } from '@mui/material/styles';
 import Sidebar from '../Sidebar/Sidebar';
 import Navbar from '../Navbar/Navbar';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+
 const drawerWidth = 240;
+
 
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -34,7 +39,23 @@ function MainLayout() {
     const [open, setOpen] = React.useState(false);
     const [params, setParams] = useSearchParams();
     let showSidebar = params.get("can") == "true" ? false : true
-    // let showSidebar = false
+    /* let showSidebar = false */
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+        console.log("MainLayout useEffect")
+        dispatch({ type: 'saga/userGetRole' })
+    }, [])
+    
+    const user = useSelector(state => state.user)
+
+    if (!user) {
+        showSidebar = false
+    }
+    else if (user.roleName == "candidate") {
+        showSidebar = true
+        console.log(user.roleName)
+    }
     return (
         <Box sx={{ display: 'flex' }}>
             <Navbar open={showSidebar ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} />

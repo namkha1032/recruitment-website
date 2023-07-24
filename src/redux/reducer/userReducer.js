@@ -8,6 +8,9 @@ const userSlice = createSlice({
         userLogin(state, action) {
             return action.payload
         },
+        userGetRole(state, action) {
+            return action.payload
+        },
         userRegister(state, action) {
             return action.payload
         },

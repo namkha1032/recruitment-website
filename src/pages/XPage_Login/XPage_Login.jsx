@@ -24,6 +24,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import imageBackground from "../../assets/img/background.jpg";
 
+//import ErrorIcon from '@mui/icons-material/Error';
+
 const style = {
   marginTop: "15px",
   marginBottom: "15px",
@@ -116,11 +118,6 @@ const XPage_Login = () => {
               item
               xs={9}
               sx={{
-                /* borderRadius: "10px",
-                padding: "20px",
-                paddingTop: "10px",
-                paddingBottom: "10px",
-                backgroundColor: "white", */
                 opacity: "100%",
                 left: "20%",
                 right: "20%",
@@ -166,7 +163,10 @@ const XPage_Login = () => {
                   {!validUsername && (
                     <Box
                       margin="3px 14px 0px"
+                      display="flex"
+                      alignItems="center"
                     >
+                      {/* <ErrorIcon fontSize="small" style={{ color: 'red', marginRight: '2px' }}/> */}
                       {
                         username === "" ? (
                           <Typography 
