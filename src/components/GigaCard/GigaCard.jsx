@@ -9,7 +9,8 @@ const GigaCard = (props) => {
             border: (theme) => `1px solid ${theme.palette.divider}`,
             height: "100%",
             display: "flex",
-            flexDirection: "column"
+            flexDirection: "column",
+            width: "100%"
         }}>
             {props.children}
         </Box>

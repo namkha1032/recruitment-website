@@ -1,19 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+// import { createSlice } from "@reduxjs/toolkit";
 
-const recruitmentSlice = createSlice({
-  name: "recruitment",
-  initialState: null,
-  reducers: {
-    setRecruitment(state, action) {
-      return action.payload;
-    },
-    updateRecruitment(state, action) {
-      return action.payload;
-    },
-    clearUpRecruitment() {
-      return null
-    }
-  },
-});
+// const recruitmentSlice = createSlice({
+//   name: "recruitment",
+//   initialState: null,
+//   reducers: {
+//     setRecruitment(state, action) {
+//       return action.payload;
+//     },
+//     updateRecruitment(state, action) {
+//       return action.payload;
+//     },
+//     cleanUpRecruitment() {
+//       return null
+//     }
+//   },
+// });
 
-export default recruitmentSlice;
+// export default recruitmentSlice;

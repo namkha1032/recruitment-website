@@ -8,12 +8,13 @@ import questionSaga from "./saga/questionSaga";
 import departmentSaga from "./saga/departmentSaga"
 import languageSaga from "./saga/languageSaga"
 import skillSaga from "./saga/skillSaga"
-import recruitmentSaga from "./saga/recruitmentSaga";
+// import recruitmentSaga from "./saga/recruitmentSaga";
 import cvSaga from "./saga/cvSaga";
 import candidateSaga from "./saga/candidateSaga";
 // import libraries
 import { all } from "redux-saga/effects"
 import positionSaga from "./saga/positionSaga";
+import eventSaga from "./saga/eventSaga";
 
 function* rootSaga() {
     yield all([
@@ -26,10 +27,10 @@ function* rootSaga() {
         departmentSaga(),
         languageSaga(),
         skillSaga(),
-        recruitmentSaga(),
         cvSaga(),
         candidateSaga(),
-        positionSaga()
+        positionSaga(),
+        eventSaga(),
     ])
 }
 

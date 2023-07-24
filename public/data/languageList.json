@@ -1,7 +1,8 @@
 [
-  { "id": 0, "name": "English" },
-  { "id": 1, "name": "Japanese" },
-  { "id": 2, "name": "Chinese" },
-  { "id": 3, "name": "VietNamese" },
-  { "id": 4, "name": "France" }
+  { "languageId": 0, "languageName": "English" },
+  { "languageId": 1, "languageName": "Japanese" },
+  { "languageId": 2, "languageName": "Chinese" },
+  { "languageId": 3, "languageName": "Vietnamese" },
+  { "languageId": 4, "languageName": "France" },
+  { "languageId": 5, "languageName": "Korean" }
 ]

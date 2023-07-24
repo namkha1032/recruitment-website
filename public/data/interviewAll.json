@@ -1,6 +1,6 @@
 [
     {
-      "id": 1,
+      "InterviewId": 1,
       "InterviewerName": "Nguyễn Văn A",
       "InterviewerId": 1234,
       "CandidateName": "Trần Thị B",
@@ -8,106 +8,117 @@
       "StartTime": "11/07/2023",
       "Shift": 1,
       "Room": "1234",
-      "Status": "Kết thúc"
+      "Status": true,
+      "Priority": "Passed"
     },
     {
-      "id": 2,
+      "InterviewId": 2,
       "InterviewerName": "Nguyễn Văn A",
       "CandidateName": "Trần Thị B",
       "CandidateId": 12,
       "StartTime": "11/07/2023",
       "Shift": 1,
       "Room": "1234",
-      "Status": "Chưa bắt đầu"
+      "Status": false,
+      "Priority": "Passed"
     },
     {
-      "id": 333,
+      "InterviewId": 333,
       "InterviewerName": "Nguyễn Văn A",
       "CandidateName": "Trần Thị B",
       "CandidateId": 1345,
       "StartTime": "11/07/2023",
       "Shift": 1,
       "Room": "1234",
-      "Status": "Kết thúc"
+      "Status": true,
+      "Priority": "Pending"
     },
     {
-      "id": 4,
+      "InterviewId": 4,
       "InterviewerName": "Nguyễn Văn A",
       "CandidateName": "Trần Thị B",
       "CandidateId": 1,
       "StartTime": "11/07/2023",
       "Shift": 1,
       "Room": "1234",
-      "Status": "Chưa bắt đầu"
+      "Status": false,
+      "Priority": "Pending"
     },
     {
-      "id": 5,
+      "InterviewId": 5,
       "InterviewerName": "Nguyễn Văn A",
       "CandidateName": "Trần Thị B",
       "CandidateId": 1,
       "StartTime": "11/07/2023",
       "Shift": 1,
       "Room": "1234",
-      "Status": "Chưa bắt đầu"
+      "Status": false,
+      "Priority": "Failed"
     },
     {
-      "id": 6666,
+      "InterviewId": 6666,
       "InterviewerName": "Nguyễn Văn A",
       "CandidateName": "Trần Thị B",
       "CandidateId": 2221,
       "StartTime": "11/07/2023",
       "Shift": 1,
       "Room": "1234",
-      "Status": "Kết thúc"
+      "Status": true,
+      "Priority": "Passed"
     },
     {
-      "id": 13450,
+      "InterviewId": 13450,
       "InterviewerName": "Nguyễn Văn A",
       "CandidateName": "Trần Thị B",
       "CandidateId": 1,
       "StartTime": "11/07/2023",
       "Shift": 1,
       "Room": "1234",
-      "Status": "Đang diễn ra"
+      "Status": false,
+      "Priority": "Passed"
     },
     {
-      "id": 7,
+      "InterviewId": 7,
       "InterviewerName": "Nguyễn Văn A",
       "CandidateName": "Trần Thị B",
       "CandidateId": 190,
       "StartTime": "11/07/2023",
       "Shift": 1,
       "Room": "1234",
-      "Status": "Chưa bắt đầu"
+      "Status": false,
+      "Priority": "Pending"
     },
     {
-      "id": 88,
+      "InterviewId": 88,
       "InterviewerName": "Nguyễn Văn A",
       "CandidateName": "Trần Thị B",
       "CandidateId": 1,
       "StartTime": "11/07/2023",
       "Shift": 1,
       "Room": "1234",
-      "Status": "Kết thúc"
+      "Status": true,
+      "Priority": "Failed"
     },
     {
-      "id": 9,
+      "InterviewId": 9,
       "InterviewerName": "Nguyễn Văn A",
       "CandidateName": "Trần Thị B",
       "CandidateId": 1,
       "StartTime": "11/07/2023",
       "Shift": 1,
       "Room": "1234",
-      "Status": "Chưa bắt đầu"
+      "Status": false,
+      "Priority": "Pending"
     },
     {
-      "id": 10,
+      "InterviewId": 10,
       "InterviewerName": "Nguyễn Văn A",
       "CandidateName": "Trần Thị B",
       "CandidateId": 1,
       "StartTime": "11/07/2023",
       "Shift": 1,
       "Room": "1234",
-      "Status": "Chưa bắt đầu"
+      "Status": false,
+      "Priority": "Passed"
     }
 ]
