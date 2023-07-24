@@ -13,4 +13,4 @@ function* positionSaga() {
     ])
 }
 
-export default getPosition
+export default positionSaga
