@@ -14,11 +14,12 @@ function* userLogin(action) {
     }
 }
 
-// function* userGetRole(action) {
-//     const response = yield call(axios.get, 'http://localhost:3000/data/role.json', action.payload)
-//     //console.log("response is: ", response)
-//     yield put({ type: "user/userGetRole", payload: response.data })
-// }
+function* userGetRole(action) {
+    return "hahaha"
+    // const response = yield call(axios.get, 'http://localhost:3000/data/role.json', action.payload)
+    // //console.log("response is: ", response)
+    // yield put({ type: "user/userGetRole", payload: response.data })
+}
 
 function* userRegister(action) {
     try {
@@ -42,6 +43,7 @@ function* userSaga() {
     yield all([
         takeEvery("saga/userLogin", userLogin),
         takeEvery("saga/userRegister", userRegister),
+        takeEvery("saga/userGetRole", userGetRole),
         takeEvery("saga/userLogout", userLogout)
     ])
 }
