@@ -2,7 +2,6 @@ import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Require from "./Require";
 import ChooseLanguage from "./ChooseLanguage";
-import LanguageUlList from "./LanguageUlList";
 
 function Box3(prop) {
   return (
@@ -27,11 +26,13 @@ function Box3(prop) {
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ margin: "auto", width: "98%", marginTop: "8px" }}>
-            <LanguageUlList
+            {/* <LanguageUlList
               comps={prop.languages}
               handleDelete={prop.handleLanguageDelete}
-            />
+            /> */}
             <ChooseLanguage
+              setLanguages={prop.setLanguages}
+              lvalue={prop.lvalue}
               language={prop.language}
               inputValue={prop.lInputValue}
               setInputValue={prop.setLInputValue}

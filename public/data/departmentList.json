@@ -2,25 +2,25 @@
   {
     "departmentId": 0,
     "departmentName": "Recruite",
-    "departmentAddress": "F Town 1",
-    "departmentEmail": "recruite@fpt.com",
-    "departmentPhone": "0123456789",
-    "departmentWebsite": "https://fpt.recruit.com"
+    "address": "F Town 1",
+    "email": "recruite@fpt.com",
+    "phone": "0123456789",
+    "website": "https://fpt.recruit.com"
   },
   {
     "departmentId": 1,
     "departmentName": "FrontEnd",
-    "departmentAddress": "F Town 2",
-    "departmentEmail": "frontend@fpt.com",
-    "departmentPhone": "0123456789",
-    "departmentWebsite": "https://fpt.frontend.com"
+    "address": "F Town 2",
+    "email": "frontend@fpt.com",
+    "phone": "0123456789",
+    "website": "https://fpt.frontend.com"
   },
   {
     "departmentId": 2,
     "departmentName": "BackEnd",
-    "departmentAddress": "F Town 3",
-    "departmentEmail": "backend@fpt.com",
-    "departmentPhone": "0123456789",
-    "departmentWebsite": "https://fpt.Backend.com"
+    "address": "F Town 3",
+    "email": "backend@fpt.com",
+    "phone": "0123456789",
+    "website": "https://fpt.Backend.com"
   }
 ]

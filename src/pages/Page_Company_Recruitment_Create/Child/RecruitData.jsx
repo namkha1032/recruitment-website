@@ -7,7 +7,7 @@ const recruitInfo = {
   startDate: null,
   endDate: null,
   departmentId: null,
-  language: [],
+  languageId: null,
   recruiterId: null,
   status: "",
   requirement: [],
