@@ -74,6 +74,67 @@ function* userRegister(action) {
     }
 }
 
+function* emailRecovery(action) {
+    try {
+        /* throw {
+            response: {
+                data: {
+                    error: "email is incorrect"
+                }
+            }
+        } */
+        yield put({ type: "error/setError", payload: { status: "no", message: "" } })
+    }
+    catch (error) {
+        yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
+        console.log("err: ", error)
+    }
+}
+
+function* otpRecovery(action) {
+    try {
+        yield put({ type: "error/setError", payload: { status: "no", message: "" } })
+    }
+    catch (error) {
+        yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
+        console.log("err: ", error)
+    }
+}
+
+function* userResetPassword(action) {
+    try {
+        /* throw {
+            response: {
+                data: {
+                    error: "email is incorrect"
+                }
+            }
+        } */
+        yield put({ type: "error/setError", payload: { status: "no", message: "" } })
+    }
+    catch (error) {
+        yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
+        console.log("err: ", error)
+    }
+}
+
+function* userChangePassword(action) {
+    try {
+        /* throw {
+            response: {
+                data: {
+                    error: "email is incorrect"
+                }
+            }
+        } */
+        yield put({ type: "error/setError", payload: { status: "no", message: "" } })
+    }
+    catch (error) {
+        yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
+        console.log("err: ", error)
+    }
+}
+
 function* userLogout() {
     // yield call(window.localStorage.removeItem, 'user')
     // yield call(window.sessionStorage.removeItem, 'user')
@@ -88,6 +149,10 @@ function* userSaga() {
         takeEvery("saga/userLogin", userLogin),
         takeEvery("saga/userRegister", userRegister),
         takeEvery("saga/userGetRole", userGetRole),
+        takeEvery("saga/emailRecovery", emailRecovery),
+        takeEvery("saga/otpRecovery", otpRecovery),
+        takeEvery("saga/userResetPassword", userResetPassword),
+        takeEvery("saga/userChangePassword", userChangePassword),
         takeEvery("saga/userLogout", userLogout)
     ])
 }
