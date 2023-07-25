@@ -21,6 +21,7 @@ import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import useGetRole from '../../hooks/useGetRole';
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
@@ -32,6 +33,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const Sidebar = (props) => {
     const navigate = useNavigate()
     const location = useLocation()
+    const role = useGetRole()
     const sidebarList = [
         {
             name: "Account",
@@ -93,33 +95,46 @@ const Sidebar = (props) => {
                 </IconButton>
             </DrawerHeader>
             <List spacing={2} sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                {sidebarList.map((sidebarItem, index) => (
-                    <ListItem key={index} disablePadding onClick={() => { navigate(sidebarItem.to) }}
-                        sx={{
-                            backgroundColor: sidebarItem.active ? "grey.600" : "transparent",
-                            borderRadius: 4,
-                            width: "80%",
-                            marginTop: 1,
-                            marginBottom: 1,
-                            "&:hover": {
-                                backgroundColor: "grey.600"
-                            }
-                        }} >
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {sidebarItem.icon}
-                            </ListItemIcon>
-                            <ListItemText primary={sidebarItem.name} sx={{
-                                "& .MuiListItemText-primary": {
-                                    color: "common.white"
-                                }
-                            }} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+                {sidebarList.map((sidebarItem, index) => {
+                    if (role != "admin" && index == 0) {
+                        return <Box key={index} />
+                    }
+                    else if ((role != "admin" && role != "recruiter") && (index == 1 || index == 3)) {
+                        return < Box key={index} />
+                    }
+                    else if (role != "admin" && role != "recruiter" && role != "interviewer") {
+                        return < Box key={index} />
+                    }
+                    else {
+                        return (
+                            <ListItem key={index} disablePadding onClick={() => { navigate(sidebarItem.to) }}
+                                sx={{
+                                    backgroundColor: sidebarItem.active ? "grey.600" : "transparent",
+                                    borderRadius: 4,
+                                    width: "80%",
+                                    marginTop: 1,
+                                    marginBottom: 1,
+                                    "&:hover": {
+                                        backgroundColor: "grey.600"
+                                    }
+                                }} >
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        {sidebarItem.icon}
+                                    </ListItemIcon>
+                                    <ListItemText primary={sidebarItem.name} sx={{
+                                        "& .MuiListItemText-primary": {
+                                            color: "common.white"
+                                        }
+                                    }} />
+                                </ListItemButton>
+                            </ListItem>
+                        )
+                    }
+                })}
             </List>
             {/* <Divider /> */}
-        </Drawer>
+        </Drawer >
     )
 }
 
