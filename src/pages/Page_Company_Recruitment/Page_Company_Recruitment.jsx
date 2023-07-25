@@ -632,7 +632,7 @@ export default function Page_Company_Recruitment() {
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
-            disableSelectionOnClick
+            disableRowSelectionOnClick
             pagination
             pageSizeOptions={[5, 10, 15, 25, 50, 100]}
             initialState={{

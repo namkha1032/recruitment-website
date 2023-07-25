@@ -73,11 +73,12 @@ export default function QuestionModal(props) {
       category !== null
     ) {
       props.handleUpdateQuestion({
-        id: props.value.id,
-        question: question,
-        category: category,
-        skill: skill,
+        QuestionId: props.value.id,
+        QuestionName: question,
+        Category: category,
+        Skill: skill,
       });
+      handleResetForm();
       props.handleModalClose();
     }
   }
@@ -160,7 +161,7 @@ export default function QuestionModal(props) {
                 marginBottom: 1,
               }}
             >
-              <Box>Câu hỏi</Box>
+              <Box>Question</Box>
             </Grid>
             <Grid
               item
