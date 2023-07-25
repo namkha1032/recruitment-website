@@ -7,10 +7,19 @@ function* getDepartmentInterviewer(action) {
     yield put({ type: "interviewer/setInterviewer", payload: response.data })
 }
 
+function* getAllInterviewCandidate() {
+
+    const response = yield call(axios.get, 'http://localhost:3000/data/interviewAllOfCandidate.json')
+    yield put({ type: "interviewCandidate/setInterviewList", payload: response.data })
+
+}
+
 function* interviewerSaga() {
     yield all([
-        takeEvery("saga/getDepartmentInterviewer", getDepartmentInterviewer)
+        takeEvery("saga/getDepartmentInterviewer", getDepartmentInterviewer),
+        takeEvery("saga/getAllInterviewCandidate", getAllInterviewCandidate)
     ])
 }
+
 
 export default interviewerSaga
