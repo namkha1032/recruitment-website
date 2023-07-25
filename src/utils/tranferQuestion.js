@@ -1,7 +1,10 @@
 import { Category } from "@mui/icons-material";
 
+function flatten(arr) {
+    return 
+}
+
 export function tranferAllQuestion(input) {
-    function tranferAllQuestion(input) {
         const flatten1 = input.map((category) => {
             if (category.skills) {
                 return category.skills.map((skill) => {
@@ -45,5 +48,4 @@ export function tranferAllQuestion(input) {
             
         })
         console.log(flatten1)
-    }
 }

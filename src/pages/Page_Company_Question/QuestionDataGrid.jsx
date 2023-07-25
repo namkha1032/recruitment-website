@@ -53,6 +53,7 @@ export default function QuestionDataGrid(props) {
         disableColumnFilter
         disableColumnSelector
         disableDensitySelector
+        disableRowSelectionOnClick
         pagination
         pageSizeOptions={[5, 10, 25, 50, 100]}
         initialState={{
@@ -67,7 +68,7 @@ export default function QuestionDataGrid(props) {
           if (params.field === "QuestionId" || params.field === "QuestionName") {
             props.handleModalOpen(
               {
-                id: params.row.QuestionId,
+                QuestionId: params.row.QuestionId,
                 QuestionName: params.row.QuestionName,
                 Category: params.row.Category,
                 Skill: params.row.Skill,

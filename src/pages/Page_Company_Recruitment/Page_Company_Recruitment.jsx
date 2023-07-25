@@ -6,6 +6,7 @@ import {
   LinearProgress,
   CircularProgress,
 } from "@mui/material";
+import Tooltip from '@mui/material/Tooltip';
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import RocketLaunchRoundedIcon from "@mui/icons-material/RocketLaunchRounded";
@@ -37,6 +38,7 @@ import {
   NoRowsOverlay,
   NoResultsOverlay,
 } from "../../components/DataRick/DataRick";
+import cleanStore from "../../utils/cleanStore";
 
 export default function Page_Company_Recruitment() {
   const dispatch = useDispatch();
@@ -47,7 +49,7 @@ export default function Page_Company_Recruitment() {
     dispatch({ type: "saga/getDepartment" });
     // dispatch({ type: "saga/getLanguage" });
     return () => {
-      dispatch({ type: "positionList/cleanUpPosition" });
+      cleanStore(dispatch);
     };
   }, []);
 
@@ -64,7 +66,7 @@ export default function Page_Company_Recruitment() {
   // const [anchorEl, setAnchorEl] = useState(null);
   // const [valueSearch, setValueSearch] = useState("");
 
-  const [valueChoose, setValueChoose] = useState(null);
+  // const [valueChoose, setValueChoose] = useState(null);
 
   const [departmentChoose, setDepartmentChoose] = useState(null);
   const [statusChoose, setStatusChoose] = useState(null);
@@ -93,26 +95,25 @@ export default function Page_Company_Recruitment() {
   // }
 
   // Reset state when change filter option
-  function handleChooseValue(value) {
-    setValueChoose(value);
-    setDepartmentChoose(null);
-    setStatusChoose(null);
-    // setLanguageChoose(null);
-    if (value === null) {
-      dispatch({ type: "saga/getPositionList" });
-    }
-  }
+  // function handleChooseValue(value) {
+  //   setValueChoose(value);
+  //   setDepartmentChoose(null);
+  //   setStatusChoose(null);
+  //   // setLanguageChoose(null);
+  //   if (value === null) {
+  //     dispatch({ type: "saga/getPositionList" });
+  //   }
+  // }
 
   function handleChooseDepartment(value) {
     setDepartmentChoose(value);
-    if (value) {
-      dispatch({
-        type: "saga/getPositionListWithDepartment",
-        payload: { id: value.departmentId },
-      });
-    } else if (value === null) {
-      dispatch({ type: "saga/getPositionList" });
-    }
+    dispatch({
+      type: "saga/getPositionListWithFilter",
+      payload: {
+        departmentId: value ? value.departmentId : null,
+        status: statusChoose,
+      },
+    });
   }
 
   // function handleChooseLanguage(value) {
@@ -129,23 +130,17 @@ export default function Page_Company_Recruitment() {
 
   function handleChooseStatus(value) {
     setStatusChoose(value);
-    if (value === "Active") {
-      dispatch({
-        type: "saga/getPositionListWithStatus",
-        payload: { Status: true },
-      });
-    } else if (value === "Inactive") {
-      dispatch({
-        type: "saga/getPositionListWithStatus",
-        payload: { Status: false },
-      });
-    } else if (value === null) {
-      dispatch({ type: "saga/getPositionList" });
-    }
+    dispatch({
+      type: "saga/getPositionListWithFilter",
+      payload: {
+        departmentId: departmentChoose ? departmentChoose.departmentId : null,
+        status: value ? value : null,
+      },
+    });
   }
 
   function handleDetailClick(value) {
-    console.log(value)
+    console.log(value);
     navigate(`./${value}`);
   }
 
@@ -351,7 +346,7 @@ export default function Page_Company_Recruitment() {
           marginBottom: 5,
         }}
       >
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} sm={6} md={6}>
           <Box
             sx={{
               fontSize: 40,
@@ -366,12 +361,14 @@ export default function Page_Company_Recruitment() {
         <Grid
           item
           xs={12}
-          md={4}
+          sm={6}
+          md={6}
           sx={{
             display: "flex",
             justifyContent: {
               md: "flex-end",
-              xs: "flex-start",
+              sm: "flex-end",
+              xs: "flex-start"
             },
             alignItems: "center",
           }}
@@ -382,7 +379,11 @@ export default function Page_Company_Recruitment() {
               backgroundColor: "#1565C0",
               textTransform: "none",
               height: 50,
-              width: 250,
+              width: {
+                md: 250,
+                sm: 250,
+                xs: "100%"
+              }
             }}
             onClick={handleAddClick}
           >
@@ -425,6 +426,7 @@ export default function Page_Company_Recruitment() {
         <Grid
           item
           xs={12}
+          sm={12}
           md={12}
           sx={{
             display: "flex",
@@ -435,87 +437,74 @@ export default function Page_Company_Recruitment() {
           <Autocomplete
             disablePortal
             id="filter-type"
-            options={["Department", "Status"]}
-            sx={{ width: 200, marginRight: 2 }}
+            options={departments}
+            sx={{ width: 200, marginRight: {md: 2, sm: 2, xs: 2} }}
             renderInput={(params) => (
-              <TextField {...params} label="Filter by..." />
+              <TextField {...params} label="Department..." />
             )}
-            value={valueChoose}
-            onChange={(event, value) => handleChooseValue(value)}
+            getOptionLabel={(option) => option.departmentName || ""}
+            renderOption={(props, option) => (
+              <li {...props} key={option.departmentId}>
+                {option.departmentName}
+              </li>
+            )}
+            isOptionEqualToValue={(option, value) => {
+              return option.departmentId === value.departmentId;
+            }}
+            value={departmentChoose}
+            onChange={(event, value) => handleChooseDepartment(value)}
           />
-          {valueChoose === "Department" && (
-            <Autocomplete
-              disablePortal
-              id="filter-type"
-              options={departments}
-              sx={{ width: 200 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Department..." />
-              )}
-              getOptionLabel={(option) => option.departmentName || ""}
-              renderOption={(props, option) => (
-                <li {...props} key={option.departmentId}>
-                  {option.departmentName}
-                </li>
-              )}
-              isOptionEqualToValue={(option, value) => {
-                return option.departmentId === value.departmentId;
-              }}
-              value={departmentChoose}
-              onChange={(event, value) => handleChooseDepartment(value)}
-            />
-          )}
-          {valueChoose === "Status" && (
-            <Autocomplete
-              disablePortal
-              id="filter-type"
-              options={["Active", "Inactive"]}
-              sx={{ width: 200 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Status..." />
-              )}
-              renderOption={(props, option) => {
-                if (option === "Active")
-                  return (
-                    <Box
-                      component="li"
-                      {...props}
+
+          <Autocomplete
+            disablePortal
+            id="filter-type"
+            options={["Active", "Inactive"]}
+            sx={{ width: 200 }}
+            renderInput={(params) => (
+              <TextField {...params} label="Status..." />
+            )}
+            renderOption={(props, option) => {
+              if (option === "Active")
+                return (
+                  <Box
+                    component="li"
+                    {...props}
+                    sx={{
+                      color: "#1565C0",
+                    }}
+                  >
+                    <RocketLaunchRoundedIcon
                       sx={{
                         color: "#1565C0",
+                        marginRight: 1,
                       }}
-                    >
-                      <RocketLaunchRoundedIcon
-                        sx={{
-                          color: "#1565C0",
-                          marginRight: 1,
-                        }}
-                      />
-                      Active
-                    </Box>
-                  );
-                else if (option === "Inactive")
-                  return (
-                    <Box
-                      component="li"
-                      {...props}
+                    />
+                    Active
+                  </Box>
+                );
+              else if (option === "Inactive")
+                return (
+                  <Box
+                    component="li"
+                    {...props}
+                    sx={{
+                      color: "#E0E0E0",
+                    }}
+                  >
+                    <DoNotDisturbOnRoundedIcon
                       sx={{
                         color: "#E0E0E0",
+                        marginRight: 1,
                       }}
-                    >
-                      <DoNotDisturbOnRoundedIcon
-                        sx={{
-                          color: "#E0E0E0",
-                          marginRight: 1,
-                        }}
-                      />
-                      Inactive
-                    </Box>
-                  );
-              }}
-              value={statusChoose}
-              onChange={(event, value) => handleChooseStatus(value)}
-            />
-          )}
+                    />
+                    Inactive
+                  </Box>
+                );
+            }}
+            value={statusChoose}
+            onChange={(event, value) => handleChooseStatus(value)}
+          />
+
           {/* {valueChoose === "Language" && (
             <Autocomplete
               disablePortal
@@ -581,7 +570,6 @@ export default function Page_Company_Recruitment() {
         </Grid> */}
       </Grid>
 
-      <Grid item xs={12} md={12}>
         <Box>
           <DataGrid
             autoHeight
@@ -644,7 +632,7 @@ export default function Page_Company_Recruitment() {
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
-            disableSelectionOnClick
+            disableRowSelectionOnClick
             pagination
             pageSizeOptions={[5, 10, 15, 25, 50, 100]}
             initialState={{
@@ -656,13 +644,15 @@ export default function Page_Company_Recruitment() {
             }}
             getRowId={(row) => row.PositionId}
             onCellClick={(params, event) => {
-              if (params.field === "PositionId" || params.field === "PositionName") {
+              if (
+                params.field === "PositionId" ||
+                params.field === "PositionName"
+              ) {
                 handleDetailClick(params.row.PositionId);
               }
             }}
           />
         </Box>
-      </Grid>
     </Box>
   );
 }

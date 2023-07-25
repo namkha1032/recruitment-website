@@ -11,29 +11,11 @@ function* getPositionList() {
     yield put({type: "loading/offLoading"})
 }
 
-function* getPositionListWithDepartment(action) {
+function* getPositionListWithFilter(action) {
+    console.log(action.payload)
     yield put({type: "loading/onLoading"})
     yield call(delay, 1500)
-    console.log(action.payload)
     const response = yield call(axios.get, 'http://localhost:3000/data/positionListD.json')
-    yield put({type: "positionList/setPositionList", payload: response.data })
-    yield put({type: "loading/offLoading"})
-}
-
-function* getPositionListWithLanguage(action) {
-    yield put({type: "loading/onLoading"})
-    yield call(delay, 1500)
-    console.log(action.payload)
-    const response = yield call(axios.get, 'http://localhost:3000/data/positionListL.json')
-    yield put({type: "positionList/setPositionList", payload: response.data })
-    yield put({type: "loading/offLoading"})
-}
-
-function* getPositionListWithStatus(action) {
-    yield put({type: "loading/onLoading"})
-    yield call(delay, 1500)
-    console.log(action.payload)
-    const response = yield call(axios.get, 'http://localhost:3000/data/positionListS.json')
     yield put({type: "positionList/setPositionList", payload: response.data })
     yield put({type: "loading/offLoading"})
 }
@@ -54,9 +36,7 @@ function* positionSaga() {
         takeEvery('saga/getPosition', getPosition),
         takeLatest("saga/getPositionList", getPositionList),
         takeLatest("saga/updatePositionList", updatePositionList),
-        takeLatest("saga/getPositionListWithDepartment", getPositionListWithDepartment),
-        takeLatest("saga/getPositionListWithLanguage", getPositionListWithLanguage),
-        takeLatest("saga/getPositionListWithStatus", getPositionListWithStatus)
+        takeLatest("saga/getPositionListWithFilter", getPositionListWithFilter),
     ])
 }
 

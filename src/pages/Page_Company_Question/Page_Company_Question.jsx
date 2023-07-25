@@ -57,7 +57,7 @@ export default function Page_Company_Question() {
 
   const [modalStatus, setModalStatus] = useState(false);
   const [valueUpdate, setValueUpdate] = useState({
-    id: -1,
+    QuestionId: -1,
     QuestionName: "",
     Category: "",
     Skill: "",
@@ -116,7 +116,7 @@ export default function Page_Company_Question() {
     setRows([
       ...rows,
       {
-        id: rows.length + 1,
+        QuestionId: rows.length + 1,
         QuestionName: value.question,
         Category: value.category,
         Skill: value.skill,
@@ -233,9 +233,9 @@ export default function Page_Company_Question() {
       renderHeader: () => <span>Category</span>,
       renderCell: (params) => {
         if (params.value === undefined) return <NullString />;
-        else if (params.value === "Chuyên môn") return <Technology />;
-        else if (params.value === "Ngôn ngữ") return <Language />;
-        else if (params.value === "Kỹ năng mềm") return <SoftSkill />;
+        else if (params.value === "Technology") return <Technology />;
+        else if (params.value === "Language") return <Language />;
+        else if (params.value === "Soft Skills") return <SoftSkill />;
       },
     },
     {
@@ -261,7 +261,7 @@ export default function Page_Company_Question() {
           onClick={() =>
             handleModalOpen(
               {
-                id: params.row.id,
+                QuestionId: params.row.QuestionId,
                 QuestionName: params.row.QuestionName,
                 Category: params.row.Category,
                 Skill: params.row.Skill,
@@ -277,7 +277,7 @@ export default function Page_Company_Question() {
           onClick={() =>
             handleModalOpen(
               {
-                id: params.row.id,
+                QuestionId: params.row.QuestionId,
                 QuestionName: params.row.QuestionName,
                 Category: params.row.Category,
                 Skill: params.row.Skill,
