@@ -445,7 +445,6 @@ export default function Page_Company_Event() {
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
-          disableRowSelectionOnClick
           pagination
           pageSizeOptions={[5, 10, 25, 50, 100]}
           initialState={{
