@@ -8,7 +8,7 @@ const recruitInfo = {
   hired: "",
   startDate: dayjs('2022-04-17'),
   endDate: dayjs('2023-06-11'),
-  departmentId: 1,
+  departmentId: 2,
   language: [
     { id: 0, languageId: 0, languageName: "English" },
     { id: 1, languageId: 1, languageName: "Japanese" },

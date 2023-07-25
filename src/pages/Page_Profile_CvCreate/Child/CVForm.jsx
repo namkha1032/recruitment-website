@@ -141,7 +141,7 @@ function CVForm() {
     console.log(lInputValue);
     console.log(languageName);
     let arr = languageData.filter(
-      (comp) => comp.name === (lInputValue !== null ? lInputValue.name : "")
+      (comp) => comp.languageName === (lInputValue !== null ? lInputValue.languageName : "")
     );
     console.log(arr);
     if (arr[0] === undefined) {

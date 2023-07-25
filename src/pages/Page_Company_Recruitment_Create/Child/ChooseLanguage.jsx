@@ -48,8 +48,8 @@ export default function ChooseLanguage(prop) {
                 prop.setInputValue(newValue);
                 if (newValue !== null) {
                   console.log(newValue);
-                  prop.setSkillId(prop.language.filter((comp) => comp.name === newValue.name)[0].id);
-                  prop.handleState(newValue.name);
+                  prop.setSkillId(prop.language.filter((comp) => comp.languageName === newValue.languageName)[0].languageId);
+                  prop.handleState(newValue.languageName);
                 }
               }
             }}
@@ -58,7 +58,7 @@ export default function ChooseLanguage(prop) {
               const filtered = filter(options, params);
               const { inputValue } = params;
               const isExisting = options.some(
-                (option) => inputValue === option.name
+                (option) => inputValue === option.languageName
               );
               if (inputValue.trim() !== "" && !isExisting) {
                 filtered.push({
@@ -80,9 +80,9 @@ export default function ChooseLanguage(prop) {
               if (option.inputValue) {
                 return option.inputValue;
               }
-              return option.name;
+              return option.languageName;
             }}
-            renderOption={(props, option) => <li {...props}>{option.name}</li>}
+            renderOption={(props, option) => <li {...props}>{option.languageName}</li>}
             sx={{
               "& > :not(style)": {
                 m: 1,
