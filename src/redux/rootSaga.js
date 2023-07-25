@@ -16,7 +16,7 @@ import { all } from "redux-saga/effects"
 import positionSaga from "./saga/positionSaga";
 import eventSaga from "./saga/eventSaga";
 import applicationSaga from "./saga/applicationSaga";
-
+import interviewCandidateSaga from "./saga/interviewCandidateSaga";
 function* rootSaga() {
     yield all([
         userSaga(),
@@ -32,7 +32,8 @@ function* rootSaga() {
         candidateSaga(),
         positionSaga(),
         eventSaga(),
-        applicationSaga()
+        applicationSaga(),
+        interviewCandidateSaga(),
     ])
 }
 
