@@ -32,14 +32,14 @@ export default function ChooseLanguage(prop) {
             onChange={(event, newValue) => {
               if (typeof newValue === "string") {
                 return ()=>prop.setValue({
-                  name: newValue,
+                  languageName: newValue,
                 });
               } else if (newValue && newValue.inputValue) {
                 
                 prop.setInputValue({
-                  name: newValue.inputValue,
+                  languageName: newValue.inputValue,
                 });
-                console.log(newValue.name)
+                console.log(newValue.languageName)
                 if (newValue !== null) {
                   console.log(newValue);
                   prop.handleState(newValue);
@@ -63,7 +63,7 @@ export default function ChooseLanguage(prop) {
               if (inputValue.trim() !== "" && !isExisting) {
                 filtered.push({
                   inputValue,
-                  name: `${inputValue}`,
+                  languageName: `${inputValue}`,
                 });
               }
               return filtered;
