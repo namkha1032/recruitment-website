@@ -29,6 +29,7 @@ import applicationSlice from './reducer/applicationReducer'
 import submitcvSlice from './reducer/submitcvReducer'
 import eventSlice from './reducer/eventReducer'
 
+
 const sagaMiddleware = createSagaMiddleware()
 const store = configureStore({
     reducer: {

@@ -16,7 +16,7 @@ function* postCv(action) {
 function* applicationSaga() {
     yield all([
         takeEvery('saga/getApplication', getApplication),
-        takeEvery('saga/postCv', getApplication)
+        
     ])
 }
 

@@ -20,9 +20,10 @@ const View_detail = (props) => {
     let gridSx = {
         display: "flex", alignItems: "center"
     }
-    console.log("hello", props.detailposition);
+    // console.log("hello", props.detailposition);
     return (
         props.detailposition &&
+        // props.detail &&
         <>
             <Grid container spacing={1} sx={{ marginTop: "10px" }}>
                 <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
@@ -34,6 +35,7 @@ const View_detail = (props) => {
                     </Box>
                     <Box sx={{ marginLeft: "15px", textAlign: "justify", fontSize: "16px" }}>
                         {props.detailposition.description}
+                        {/* {props.detail.Description} */}
                     </Box>
                 </Grid>
 
@@ -42,7 +44,7 @@ const View_detail = (props) => {
                     <Box sx={gridSx}>
                         <LocationCityIcon color="primary"/>
                         <Typography  color="primary" variant='h5' sx={{ fontWeight: "bold" }}>
-                        Description
+                        Department
                         </Typography>
                     </Box>
                 </Grid>
@@ -52,6 +54,7 @@ const View_detail = (props) => {
                         <GroupIcon>  </GroupIcon>
                         <Box>
                             {props.detailposition.departmentName}
+                            {/* {props.detail.departmentName} */}
                         </Box>
                     </Typography>
                 </Grid>
@@ -60,6 +63,7 @@ const View_detail = (props) => {
                         <PhoneIcon></PhoneIcon>
                         <Box>
                             {props.detailposition.departmentPhone}
+                            {/* {props.detail.departmentPhone} */}
                         </Box>
                     </Typography>
                 </Grid>
@@ -68,6 +72,7 @@ const View_detail = (props) => {
                     <Typography align='center' variant='subtitle1' sx={{ display: "flex" }}>
                         <RoomIcon>  </RoomIcon>
                         {props.detailposition.departmentAddress}
+                        {/* {props.detail.departmentAddress} */}
 
                     </Typography>
                 </Grid>
@@ -77,6 +82,7 @@ const View_detail = (props) => {
                         <EmailIcon>  </EmailIcon>
                         <Box>
                             {props.detailposition.departmentEmail}
+                            {/* {props.detail.departmentEmail} */}
                         </Box>
                     </Typography>
                 </Grid>
@@ -85,6 +91,7 @@ const View_detail = (props) => {
                         <WebAssetIcon></WebAssetIcon>
                         <Box>
                             <a href={props.detailposition.departmentWebsite} > FPT</a>
+                            {/* <a href={props.detail.departmentWebsite} > FPT</a> */}
                         </Box>
                     </Typography>
                 </Grid>
