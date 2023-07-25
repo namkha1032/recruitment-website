@@ -1,8 +1,8 @@
 import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects"
 import axios from 'axios'
-
+import host from "../host"
 function* getLanguage(action) {
-    const response = yield call(axios.get, 'http://localhost:3000/data/languageList.json')
+    const response = yield call(axios.get, `${host.name}/data/languageList.json`)
     yield put({ type: "language/setLanguage", payload: response.data })
 }
 

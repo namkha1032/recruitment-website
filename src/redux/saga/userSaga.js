@@ -1,7 +1,7 @@
 // import libraries
 import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects"
 import axios from 'axios'
-
+import host from "../host"
 function* userLogin(action) {
     try {
         /* const response = yield call(axios.post, 'http://localhost:3001/api/login', action.payload)
@@ -10,16 +10,16 @@ function* userLogin(action) {
         const { username, password, check } = action.payload
         let api = ""
         if (username == "candidate1" && password == "candidate1") {
-            api = 'http://localhost:3000/data/userCandidate.json'
+            api = `${host.name}/data/userCandidate.json`
         }
         else if (username == "interviewer1" && password == "interviewer1") {
-            api = 'http://localhost:3000/data/userInterviewer.json'
+            api = `${host.name}/data/userInterviewer.json`
         }
         else if (username == "recruiter1" && password == "recruiter1") {
-            api = 'http://localhost:3000/data/userRecruiter.json'
+            api = `${host.name}/data/userRecruiter.json`
         }
         else if (username == "admin1" && password == "admin1") {
-            api = 'http://localhost:3000/data/userAdmin.json'
+            api = `${host.name}/data/userAdmin.json`
         }
         else {
             throw {
@@ -39,7 +39,7 @@ function* userLogin(action) {
             window.sessionStorage.setItem("user", JSON.stringify(response.data))
         }
         yield put({ type: "error/setError", payload: { status: "no", message: "" } })
-        
+
     }
     catch (error) {
         yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
@@ -49,7 +49,7 @@ function* userLogin(action) {
 
 function* userGetRole(action) {
     return "hahaha"
-    // const response = yield call(axios.get, 'http://localhost:3000/data/role.json', action.payload)
+    // const response = yield call(axios.get, `${host.name}/data/role.json`, action.payload)
     // //console.log("response is: ", response)
     // yield put({ type: "user/userGetRole", payload: response.data })
 }
