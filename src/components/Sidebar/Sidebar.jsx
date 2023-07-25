@@ -82,8 +82,8 @@ const Sidebar = (props) => {
                     backgroundColor: "grey.900"
                 },
             }}
-            variant={isMd ? "persistent" : "temporary"}
-            // variant={"persistent"}
+            // variant={isMd ? "persistent" : "temporary"}
+            variant={"persistent"}
             // variant={"temporary"}
             anchor="left"
             open={props.showSidebar ? props.open : false}

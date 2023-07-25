@@ -32,9 +32,9 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
             // maxWidth: "100%",
             // height: "100%",
             // maxHeight: "100vh",
-            overflowY: "scroll",
-            marginLeft: isMd ? `-${drawerWidth}px` : "0px",
-            // marginLeft: `-${drawerWidth}px`,
+            // overflowY: "scroll",
+            // marginLeft: isMd ? `-${drawerWidth}px` : "0px",
+            marginLeft: `-${drawerWidth}px`,
             ...(open && {
                 transition: theme.transitions.create('margin', {
                     easing: theme.transitions.easing.easeOut,
@@ -42,7 +42,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
                 }),
                 marginLeft: 0,
             }),
-            // backgroundColor: "red",
+            // backgroundColor: theme.palette.grey[200],
         }
     },
 );

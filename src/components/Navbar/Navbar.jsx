@@ -175,20 +175,22 @@ const NavbarContent = () => {
                 {/* Navbar content */}
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                     {navbarNavigate.map((navbarItem, index) => (
-                        <Button
+                        <Typography
+                            variant="button"
                             key={index}
                             onClick={() => { navigate(navbarItem.to) }}
                             sx={{
-                                my: 2, color: 'white', display: 'block',
-                                backgroundColor: navbarItem.active ? "primary.light" : "transparent",
+                                cursor: "pointer",
+                                my: 2, color: 'black', display: 'block',
+                                // backgroundColor: navbarItem.active ? "primary.light" : "transparent",
                                 borderRadius: 3,
                                 marginLeft: 1,
                                 marginRight: 1,
-                                "&:hover": { backgroundColor: "primary.light" }
+                                // "&:hover": { backgroundColor: "primary.light" }
                             }}
                         >
                             {navbarItem.name}
-                        </Button>
+                        </Typography>
                     ))}
                 </Box>
                 {/* Dropdown */}
@@ -263,7 +265,7 @@ const NavbarContent = () => {
                                 })}
                             </Menu>
                         </>
-                        : <Typography variant="button" sx={{ color: "white", cursor: "pointer" }} onClick={() => { navigate("/login") }}>Log in</Typography>}
+                        : <Typography variant="button" sx={{ color: "black", cursor: "pointer" }} onClick={() => { navigate("/login") }}>Log in</Typography>}
                 </Box>
             </Container>
             {/* Dropdown responsive */}
@@ -358,14 +360,15 @@ const CustomAppBar = styled(AppBar, {
             duration: theme.transitions.duration.enteringScreen,
         }),
     }),
-    // backgroundColor: theme.palette.grey[600],
-    // color: "black"
+    backgroundColor: "white",
+    color: "black",
+    boxShadow: 0
 }));
 const Navbar = (props) => {
     innerDrawerWidth = props.drawerWidth
     return (
         <CustomAppBar position="fixed" open={props.open} >
-            <Toolbar>
+            <Toolbar sx={{ boxShadow: 0 }}>
                 {props.showSidebar ? <IconButton
                     color="inherit"
                     aria-label="open drawer"

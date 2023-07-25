@@ -78,7 +78,7 @@ const Info_view = (props) => {
                         Detail of the position
                     </Typography>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={12}>
                     <GigaCard>
                         <img style={{ width: '100%', height: "100%" }} src={detailposition[0].imageUrl} alt="Tuyển dụng" />
                     </GigaCard>

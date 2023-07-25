@@ -17,7 +17,7 @@ import GigaCardHeader from '../../components/GigaCardHeader/GigaCardHeader';
 import GigaCardBody from '../../components/GigaCardBody/GigaCardBody';
 import { useDispatch, useSelector } from 'react-redux';
 import cleanStore from '../../utils/cleanStore';
-
+import useGetRole from '../../hooks/useGetRole';
 
 const Page_Event_Id = () => {
 
@@ -30,7 +30,7 @@ const Page_Event_Id = () => {
     }, [])
 
     const event = useSelector((state) => state.event)
-
+    const role = useGetRole()
     // handle events
     const handleRegister = (e) => {
         alert("Register successfully!");
@@ -185,13 +185,14 @@ const Page_Event_Id = () => {
                                     </Box>
                                 </Grid>
                             </Grid>
-
-                            <Grid item xs={12} align='right' sx={{ marginTop: 8 }}>
-                                <Button variant='contained' size='large' className='btnregister' sx={{ mx: 3 }} onClick={handleRegister}>
-                                    {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
-                                    Đăng ký
-                                </Button>
-                            </Grid>
+                            {role ?
+                                <Grid item xs={12} align='right' sx={{ marginTop: 8 }}>
+                                    <Button variant='contained' size='large' className='btnregister' sx={{ mx: 3 }} onClick={handleRegister}>
+                                        {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
+                                        Đăng ký
+                                    </Button>
+                                </Grid>
+                                : null}
                         </GigaCardBody>
                     </GigaCard>
                 </Box>
