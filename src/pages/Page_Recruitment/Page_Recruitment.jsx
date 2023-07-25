@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
+
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
@@ -18,6 +19,7 @@ import Pagination from '@mui/material/Pagination';
 import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader"
 import GigaCard from "../../components/GigaCard/GigaCard"
 import { Favorite, FavoriteBorder, FavoriteOutlined } from '@mui/icons-material';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const cards1 = [1, 2, 3, 4, 5, 6];
@@ -44,13 +46,18 @@ function Copyright() {
 //
 const Page_Recruitment = () => {
     const [like,setLike] = React.useState(true)
-
+    const dispatch = useDispatch();
+    const positionList = useSelector(state => state.positionList)
     //
-    const navigate = useNavigate()
-    const handleNavigateClick1 = () => {
-      navigate('/recruitment/id')
+    const navigate = useNavigate()  
+    const handleNavigateClick1 = (id) => {
+      navigate(`/recruitment/${id}`)
     }
-
+    useEffect(()=>{
+      console.log('a')
+      dispatch({type:'saga/getPositionList'})
+    },[])
+    console.log(positionList)
     return (
         <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
@@ -105,7 +112,7 @@ const Page_Recruitment = () => {
         
           </Container>
         </Box> */}
-        <Container sx={{ py: 4 }} maxWidth="md">
+       {positionList  &&  <Container sx={{ py: 4 }} maxWidth="md">
           {/* End hero unit */
           <Box sx={{ padding: '10px 0px 10px 0px', borderTop: '1px solid lightgrey'  }}>
           <Typography variant='h4' align="left" fontFamily='serif' > View Recruitment</Typography>
@@ -113,8 +120,8 @@ const Page_Recruitment = () => {
           }
       
           <Grid container spacing={8} sx={{padding:'30px 0px 0px 0px'}}>
-            {cards1.map((card) => (
-              <Grid item key={card} xs={12}>
+            {positionList.map((card) => (
+              <Grid item key={card.PositionId} xs={12}>
                   <Box sx={{backgroundColor:'#EEEEEE', borderRadius:'5px', boxShadow:10 } }>
                     <Grid container>
                       <Grid item xs={9}>
@@ -130,8 +137,8 @@ const Page_Recruitment = () => {
                           </Box>
                           <Box sx={{marginLeft:'15px',display:'flex',flexDirection:'column',justifyContent:'space-between'}}>
                             <Box>
-                            <Typography>Lập trình viên FrontEnd </Typography>
-                            <Typography>Công Ty TNHH USMART</Typography>
+                            <Typography>{card.PositionName} </Typography>
+                            <Typography> {card.Description}</Typography>
                             </Box>
                             
                             <Box sx={{display:'flex',flexWrap:'wrap'}}>
@@ -148,7 +155,7 @@ const Page_Recruitment = () => {
                           <Typography align='right'></Typography>
                         </Box>
                         <Box sx={{margin:'15px',display:'flex',justifyContent:'end'}}>
-                          <Button onClick={handleNavigateClick1} variant='contained' size='small'>Chi tiết</Button>
+                          <Button onClick={() => handleNavigateClick1(card.PositionId)} variant='contained' size='small'>Chi tiết</Button>
                           
                         </Box>
                       </Grid>
@@ -163,7 +170,7 @@ const Page_Recruitment = () => {
           </Box>
           
          
-        </Container>
+        </Container>}
       </main>
        {/* Footer */}
        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">

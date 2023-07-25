@@ -3,10 +3,12 @@ import axios from 'axios';
 import { delay } from "../../utils/delay"
 
 
-function* getPositionList() {
+function* getPositionList(action) {
     yield put({type: "loading/onLoading"})
     yield call(delay, 1500)
     const response = yield call(axios.get, 'http://localhost:3000/data/positionList.json')
+    console.log(response.data)
+
     yield put({ type: "positionList/setPositionList", payload: response.data })
     yield put({type: "loading/offLoading"})
 }

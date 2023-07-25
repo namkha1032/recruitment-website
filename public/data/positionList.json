@@ -11,7 +11,7 @@
     },
     {
       "PositionId": 2,
-      "PositionName": "Front-end",
+      "PositionName": "Back-end",
       "Description": "Front-end web development is the development of the graphical user interface of a website, through the use of HTML, CSS, and JavaScript, so that users can view and interact with that website.",
       "MaxHiringQty": 30,
       "HiredQty": 80,
@@ -21,7 +21,7 @@
     },
     {
       "PositionId": 3,
-      "PositionName": "Front-end",
+      "PositionName": "ReactJS",
       "Description": "Front-end web development is the development of the graphical user interface of a website, through the use of HTML, CSS, and JavaScript, so that users can view and interact with that website.",
       "MaxHiringQty": 30,
       "HiredQty": 80,
@@ -31,7 +31,7 @@
     },
     {
       "PositionId": 4,
-      "PositionName": "Back-end",
+      "PositionName": "NodeJS",
       "Description": "Front-end web development is the development of the graphical user interface of a website, through the use of HTML, CSS, and JavaScript, so that users can view and interact with that website.",
       "MaxHiringQty": 30,
       "HiredQty": 100,
