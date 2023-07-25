@@ -39,7 +39,7 @@ const Info_view = (props) => {
         setTab2(newValue);
     };
     const navigate = useNavigate();
-    
+
     const detailposition = useSelector(state => state.position);
     const applications = useSelector(state => state.application);
     const dispatch = useDispatch();
@@ -72,7 +72,7 @@ const Info_view = (props) => {
     // const requires = detail ? detail[recruitmentid].requirement : [];
     // console.log("detail", detail)
     const requirements = detailposition ? detailposition[0].requirement : [];
-    console.log("require", requirements );
+    console.log("require", requirements);
     console.log("father", detailposition);
     console.log("father2", applications);
     let left = 5
@@ -94,7 +94,7 @@ const Info_view = (props) => {
                         Detail of the position
                     </Typography>
                 </Grid>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12} md={6}>
                     <GigaCard>
                         <img style={{ width: '100%', height: "100%" }} src={detailposition[0].imageUrl} alt="Tuyển dụng" />
                     </GigaCard>
@@ -142,8 +142,8 @@ const Info_view = (props) => {
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
                                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-                                            {`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`}
-                                            {/* {`${detail[recruitmentid].StartDate}${' - '}${detail[recruitmentid].EndDate}`} */}
+                                        {`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`}
+                                        {/* {`${detail[recruitmentid].StartDate}${' - '}${detail[recruitmentid].EndDate}`} */}
 
                                     </Typography>
                                     {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`} /> */}
@@ -188,7 +188,7 @@ const Info_view = (props) => {
                                 <Grid item md={right} sx={gridSx}>
                                     <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-start", alignItems: "flex-start" }}>
                                         {requirements.map((require) => (
-                                               
+
                                             <Chip key={require.skillId} sx={{ margin: "0px 0px 5px 8px" }} value={require.skillName} label={require.skillName} variant='outlined' size='medium' color="warning" />
                                         ))}
                                         {/* {requires.map((require) => (
@@ -213,8 +213,8 @@ const Info_view = (props) => {
                                     </Typography>
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
-                                <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].languageName}`} />
-                                {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detail[recruitmentid].languageName}`} /> */}
+                                    <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].languageName}`} />
+                                    {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detail[recruitmentid].languageName}`} /> */}
                                 </Grid>
                             </Box>
                             <Box sx={{ display: "flex", flexDirection: "row" }}>

@@ -9,7 +9,7 @@ function* getDepartmentInterviewer(action) {
 
 function* getAllInterviewCandidate() {
 
-    const response = yield call(axios.get, 'http://localhost:3000/data/interviewAllOfCandidate.json')
+    const response = yield call(axios.get, `${host.name}/data/interviewAllOfCandidate.json`)
     yield put({ type: "interviewCandidate/setInterviewList", payload: response.data })
 
 }

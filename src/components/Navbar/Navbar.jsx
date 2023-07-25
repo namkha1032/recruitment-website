@@ -173,24 +173,30 @@ const NavbarContent = () => {
                     </Typography>
                 </Box>
                 {/* Navbar content */}
-                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                <Box sx={{ flexGrow: 1, columnGap: 2, display: { xs: 'none', md: 'flex' } }}>
                     {navbarNavigate.map((navbarItem, index) => (
-                        <Typography
-                            variant="button"
-                            key={index}
+                        <Box
                             onClick={() => { navigate(navbarItem.to) }}
                             sx={{
-                                cursor: "pointer",
-                                my: 2, color: 'black', display: 'block',
-                                // backgroundColor: navbarItem.active ? "primary.light" : "transparent",
-                                borderRadius: 3,
-                                marginLeft: 1,
-                                marginRight: 1,
-                                // "&:hover": { backgroundColor: "primary.light" }
-                            }}
-                        >
-                            {navbarItem.name}
-                        </Typography>
+                                "&:hover": { borderBottom: "5px solid black" },
+                                borderBottom: navbarItem.active ? "5px solid black" : "none",
+                                cursor: "pointer"
+                            }}>
+
+                            <Typography
+                                variant="button"
+                                key={index}
+                                sx={{
+                                    my: 2, color: 'black', display: 'block',
+                                    // backgroundColor: navbarItem.active ? "primary.light" : "transparent",
+                                    borderRadius: 3,
+                                    marginLeft: 1,
+                                    marginRight: 1,
+                                }}
+                            >
+                                {navbarItem.name}
+                            </Typography>
+                        </Box>
                     ))}
                 </Box>
                 {/* Dropdown */}
