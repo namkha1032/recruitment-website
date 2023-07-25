@@ -7,16 +7,10 @@ function* getApplication(action) {
 
 }
 
-
-function* postCv(action) {
-    const reponse = yield call(axios.post, 'http://localhost:3000/data/applicationList.json')
-    yield put({ type: 'submitcv/setSubmitcv', payload: reponse.data })
-
-}
 function* applicationSaga() {
     yield all([
         takeEvery('saga/getApplication', getApplication),
-        takeEvery('saga/postCv', getApplication)
+        
     ])
 }
 

@@ -26,9 +26,10 @@ import List_application from './List_application';
 import { useDispatch, useSelector } from 'react-redux';
 import cleanStore from '../../utils/cleanStore';
 import EditIcon from '@mui/icons-material/Edit';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 const Info_view = (props) => {
-
+    // const {recruitmentid} = useParams();
+    // console.log("number", recruitmentid);
     const [tab1, setTab1] = useState('1');
     const [tab2, setTab2] = useState('3');
     const handleTab1 = (event, newValue) => {
@@ -55,6 +56,21 @@ const Info_view = (props) => {
             dispatch({ type: "positon/setPosition", payload: null })
         }
     }, [])
+    // useEffect(() => {
+    //     dispatch({ type: 'saga/getDetailPosition'  })
+    //     return () => {
+    //         dispatch({ type: "positon/setDetailPosition", payload: null })
+    //     }
+    // }, [])
+    // const detail = useSelector(state => state.detail)
+    // useEffect(() => {
+    //     dispatch({ type: 'saga/getDetailPosition', payload: recruitmentid})
+    //     return () => {
+    //         dispatch({ type: "detail/setDetail", payload: null })
+    //     }
+    // }, [])
+    // const requires = detail ? detail[recruitmentid].requirement : [];
+    // console.log("detail", detail)
     const requirements = detailposition ? detailposition[0].requirement : [];
     console.log("require", requirements );
     console.log("father", detailposition);
@@ -106,6 +122,7 @@ const Info_view = (props) => {
                                 <Grid item md={right} sx={gridSx}>
                                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
                                         {detailposition[0].positionName}
+                                        {/* {detail[recruitmentid].PositionName} */}
                                     </Typography>
                                 </Grid>
                             </Box>
@@ -125,7 +142,9 @@ const Info_view = (props) => {
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
                                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-                                        {`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`}
+                                            {`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`}
+                                            {/* {`${detail[recruitmentid].StartDate}${' - '}${detail[recruitmentid].EndDate}`} */}
+
                                     </Typography>
                                     {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`} /> */}
                                 </Grid>
@@ -147,6 +166,7 @@ const Info_view = (props) => {
                                 <Grid item md={right} sx={gridSx}>
                                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
                                         {detailposition[0].hireMax}
+                                        {/* {detail[recruitmentid].MaxHiringQty} */}
                                     </Typography>
                                     {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].hireMax}`} /> */}
                                 </Grid>
@@ -171,6 +191,10 @@ const Info_view = (props) => {
                                                
                                             <Chip key={require.skillId} sx={{ margin: "0px 0px 5px 8px" }} value={require.skillName} label={require.skillName} variant='outlined' size='medium' color="warning" />
                                         ))}
+                                        {/* {requires.map((require) => (
+                                               
+                                               <Chip key={require.skillId} sx={{ margin: "0px 0px 5px 8px" }} value={require.skillName} label={require.skillName} variant='outlined' size='medium' color="warning" />
+                                           ))} */}
                                     </Stack>
                                 </Grid>
                             </Box>
@@ -190,6 +214,7 @@ const Info_view = (props) => {
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
                                 <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].languageName}`} />
+                                {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detail[recruitmentid].languageName}`} /> */}
                                 </Grid>
                             </Box>
                             <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -209,6 +234,7 @@ const Info_view = (props) => {
                                 <Grid item md={right} sx={gridSx}>
                                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
                                         {detailposition[0].salary}
+                                        {/* {detail[recruitmentid].salary} */}
                                     </Typography>
                                     {/* <Chip sx={{ padding: "0px", marginLeft: "5px" }} label={`${detailposition[0].salary}`} variant="outlined" color='info' size="medium" /> */}
                                 </Grid>
@@ -232,6 +258,7 @@ const Info_view = (props) => {
                                 <TabPanel value="1" sx={{ display: "flex", flexDirection: "column", padding: "0px" }}>
                                     <Box>
                                         <View_detail detailposition={detailposition[0]} />
+                                        {/* <View_detail detail={detail[recruitmentid]} /> */}
                                     </Box>
                                     <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
                                         <Button sx={{ bgcolor: 'primary.main', color: 'black', border: '2px solid black' }} variant='outlined' onClick={handleEdit}>
@@ -255,6 +282,7 @@ const Info_view = (props) => {
                                 </Box>
                                 <TabPanel value="3" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
                                     <View_detail detailposition={detailposition[0]} />
+                                    {/* <View_detail detail={detail[recruitmentid]} /> */}
                                 </TabPanel>
                             </TabContext>
                         )}
