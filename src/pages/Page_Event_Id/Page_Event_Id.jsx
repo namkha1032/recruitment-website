@@ -80,7 +80,7 @@ const Page_Event_Id = () => {
                         </Box>
                     </Box>
                     <GigaCardBody>
-                        <Box sx={{ fontSize: '20px', fontStyle: 'italic', display: 'flex', justifyContent: 'flex-end', marginBottom: 3 }}>
+                        <Box sx={{ fontSize: '18px', fontStyle: 'italic', display: 'flex', justifyContent: 'flex-end', marginBottom: 3 }}>
                             <TodayRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></TodayRoundedIcon>
                             <span style={{ color: 'darkgray' }}>20/07/2023 16:40</span>
                         </Box>

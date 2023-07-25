@@ -11,6 +11,10 @@ function* getEventList() {
     yield put({type: "loading/offLoading"})
 }
 
+function* getEvent() {
+    
+}
+
 function* eventSaga() {
     yield all([
         takeLatest("saga/getEventList", getEventList)
