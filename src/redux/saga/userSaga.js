@@ -13,7 +13,7 @@ function* userLogin(action) {
             api = 'http://localhost:3000/data/userCandidate.json'
         }
         else if (username == "interviewer1" && password == "interviewer1") {
-            api = 'http://localhost:3000/data/userInterview.json'
+            api = 'http://localhost:3000/data/userInterviewer.json'
         }
         else if (username == "recruiter1" && password == "recruiter1") {
             api = 'http://localhost:3000/data/userRecruiter.json'
