@@ -95,7 +95,7 @@ const Page_Event_Id = () => {
                         <GigaCardBody>
                             <Box sx={{ fontSize: '18px', fontStyle: 'italic', display: 'flex', justifyContent: 'flex-end', marginBottom: 3 }}>
                                 <TodayRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></TodayRoundedIcon>
-                                <span style={{ color: 'darkgray' }}>20/07/2023 16:40</span>
+                                <span style={{ color: 'darkgray' }}>{event.createdTime}</span>
                             </Box>
 
                             {/* <div> cannot appear as a descendant of <p> */}
@@ -108,6 +108,7 @@ const Page_Event_Id = () => {
                                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit eum esse quisquam distinctio animi iure possimus omnis tempore dicta consectetur perspiciatis atque in, cupiditate nostrum numquam accusamus blanditiis velit libero!<br />
                                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure laborum, ullam necessitatibus harum distinctio similique itaque corrupti qui possimus incidunt quisquam, optio hic molestias et accusantium rem ipsum. Commodi, consequatur.<br />
                             </p>
+                            {/* {event.content} */}
                             {/* ---------------------------------------------------------------------- */}
 
                             <Grid container sx={{ marginTop: 8 }}>
@@ -128,7 +129,7 @@ const Page_Event_Id = () => {
                                             <Box sx={{
                                                 fontSize: 16,
                                             }}>
-                                                500/1000
+                                                {event.quantity} / {event.maxQuantity}
                                             </Box>
                                         </Box>
                                         {/* <p style={{ fontWeight: 600, fontSize: 20 }}>500/1000</p> */}
@@ -153,7 +154,7 @@ const Page_Event_Id = () => {
                                             <Box sx={{
                                                 fontSize: 16,
                                             }}>
-                                                21/07/2023 14:00
+                                                {event.time}
                                             </Box>
                                         </Box>
                                         {/* <p style={{ fontWeight: 600, fontSize: 20 }}>21/07/2023</p> */}
@@ -178,7 +179,7 @@ const Page_Event_Id = () => {
                                             <Box sx={{
                                                 fontSize: 16,
                                             }}>
-                                                268 Lý Thường Kiệt, phường 14, quận 10, Thành phố Hồ Chí Minh
+                                                {event.location}
                                             </Box>
                                         </Box>
                                         {/* <p style={{ fontWeight: 600, fontSize: 20 }}>268 Lý Thường Kiệt, phường 14, quận 10</p> */}
