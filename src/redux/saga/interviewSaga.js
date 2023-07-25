@@ -6,20 +6,20 @@ import { delay } from "../../utils/delay"
 // const fs = require("fs");
 
 function* getAllInterview() {
-    yield put({type: "loading/onLoading"})
+    yield put({ type: "loading/onLoading" })
     yield call(delay, 1500)
     const response = yield call(axios.get, 'http://localhost:3000/data/interviewAll.json')
     yield put({ type: "interviewList/setInterviewList", payload: response.data })
-    yield put({type: "loading/offLoading"})
+    yield put({ type: "loading/offLoading" })
 }
 
 function* getInterviewWithFilter(action) {
-    yield put({type: "loading/onLoading"})
+    yield put({ type: "loading/onLoading" })
     console.log("Payload:", action.payload)
     yield call(delay, 1500)
     const response = yield call(axios.get, 'http://localhost:3000/data/interviewAll.json')
     yield put({ type: "interviewList/setInterviewList", payload: response.data })
-    yield put({type: "loading/offLoading"})
+    yield put({ type: "loading/offLoading" })
 }
 
 function* getUpcomingInterview(action) {
