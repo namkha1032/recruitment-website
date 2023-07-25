@@ -107,9 +107,12 @@ const Page_Recruitment = () => {
         </Box> */}
         <Container sx={{ py: 4 }} maxWidth="md">
           {/* End hero unit */
-          <Typography variant='h4' align="left" sx={{marginBottom:'15px',borderTop: '1px solid lightgrey'}}> View Recruitment</Typography>
+          <Box sx={{ padding: '10px 0px 10px 0px', borderTop: '1px solid lightgrey'  }}>
+          <Typography variant='h4' align="left" fontFamily='serif' > View Recruitment</Typography>
+          </Box>
           }
-          <Grid container spacing={8}>
+      
+          <Grid container spacing={8} sx={{padding:'30px 0px 0px 0px'}}>
             {cards1.map((card) => (
               <Grid item key={card} xs={12}>
                   <Box sx={{backgroundColor:'#EEEEEE', borderRadius:'5px', boxShadow:10 } }>
