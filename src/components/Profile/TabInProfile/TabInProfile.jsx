@@ -40,20 +40,20 @@ export default function TabInProfile() {
       <Box mt={2} mb={5}> {/* Add margin (10px) on top and bottom */}
         <Tabs value={location.pathname}>
           <Tab
-            label="My Event List"
+            label="Event List"
             value="/profile/:profileid/event"
             component={Link}
             to="/profile/:profileid/event"
            
           />
           <Tab
-            label="My Application List"
+            label="Application List"
             value="/profile/:profileid/application"
             component={Link}
             to="/profile/:profileid/application"
           />
           <Tab
-            label="My Interview List"
+            label="Interview List"
             value="/profile/:profileid/interview"
             component={Link}
             to="/profile/:profileid/interview"

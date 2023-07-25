@@ -5,67 +5,68 @@ export default function Page_Profile_Id_Application(){
         {
           id: 1,
           name: 'Application 1',
-          status: 'Kết thúc',
+          status: 'Đang chờ',
         },
         {
           id: 2,
           name: 'Application 2',
-          status: 'Sắp diễn ra',
+          status: 'Đã đậu',
         },
         {
           id: 3,
           name: 'Application 3',
-          status: 'Sắp diễn ra',
+          status: 'Đã đậu',
         },
         {
           id: 4,
           name: 'Application 4',
-          status: 'Sắp diễn ra',
+          status: 'Đang chờ',
         },
         {
           id: 5,
           name: 'Application 5',
-          status: 'Kết thúc',
+          status: 'Đang chờ',
         },
         {
           id: 6,
           name: 'Application 6',
-          status: 'Kết thúc',
+          status: 'Đang chờ',
         },
         {
           id: 7,
           name: 'Application 7',
-          status: 'Kết thúc',
+          status: 'Đang chờ',
         },
         {
           id: 8,
           name: 'Application 8',
-          status: 'Kết thúc',
+          status: 'Đã đậu',
         },
         {
           id: 9,
           name: 'Application 9',
-          status: 'Kết thúc',
+          status: 'Đã đậu',
         },
         {
           id: 10,
           name: 'Application 10',
-          status: 'Kết thúc',
+          status: 'Đã đậu',
         },
         {
           id: 11,
           name: 'Application 11',
-          status: 'Kết thúc',
+          status: 'Đã đậu',
         },
         // Thêm các dữ liệu cho các event khác
       ];
       const time = '12/07/2023 10:00';
-      const status = 'Đã đăng ký';
+     
       const itemsPerPage = 10;
       const pathnavigate = '/recruitment/:recruitmentid/application/1';
-      const namePage = 'Position name';
+      const NameList = 'Application List';
+      const NamePage = 'Application';
       return(
-        <HistoryList events={eventsData} time={time} itemsPerPage={itemsPerPage} pathnavigate={pathnavigate} namePage={namePage} />
+        <HistoryList events={eventsData} time={time} itemsPerPage={itemsPerPage} pathnavigate={pathnavigate} NameList={NameList} namePage={NamePage} />
       )
       
 }
