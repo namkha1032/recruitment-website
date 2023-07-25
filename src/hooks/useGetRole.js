@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import host from "../redux/host";
 // -------------------README !!!---------------------------
 // Hook này có thể trả về 1 trong 5 giá trị:
 // - "admin"
@@ -17,16 +18,16 @@ function useGetRole() {
             // -----------------------------------------------------------
             let api = ""
             if (user.token == "hentai.jav.admin") {
-                api = "http://localhost:3000/data/roleAdmin.json"
+                api = `${host.name}/data/roleAdmin.json`
             }
             else if (user.token == "hentai.jav.recruiter") {
-                api = "http://localhost:3000/data/roleRecruiter.json"
+                api = `${host.name}/data/roleRecruiter.json`
             }
             else if (user.token == "hentai.jav.interviewer") {
-                api = "http://localhost:3000/data/roleInterviewer.json"
+                api = `${host.name}/data/roleInterviewer.json`
             }
             else if (user.token == "hentai.jav.candidate") {
-                api = "http://localhost:3000/data/roleCandidate.json"
+                api = `${host.name}/data/roleCandidate.json`
             }
             // -----------------------------------------------------------
             let token = `Bearer ${user.token}`
