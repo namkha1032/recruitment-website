@@ -24,6 +24,9 @@ import Container from '@mui/material/Container';
 import { Divider } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import useGetRole from '../../hooks/useGetRole';
+
 let innerDrawerWidth;
 
 
@@ -32,6 +35,9 @@ const NavbarContent = () => {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate()
     const location = useLocation()
+    const dispatch = useDispatch()
+    const role = useGetRole()
+    const user = useSelector(state => state.user)
     const navbarNavigate = [
         {
             name: "Home",
@@ -187,108 +193,134 @@ const NavbarContent = () => {
                 </Box>
                 {/* Dropdown */}
                 <Box sx={{ flexGrow: 0, display: { xs: "none", md: "block" } }}>
-                    <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={(event) => { setAnchorElUser(event.currentTarget) }}>
-                        <Typography variant="subtitle1" sx={{ marginRight: 2 }}>Giga Chad</Typography>
-                        <Tooltip title="Open settings">
-                            <IconButton sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="https://i.kym-cdn.com/entries/icons/original/000/026/152/gigachadd.jpg" />
-                            </IconButton>
-                        </Tooltip>
-                    </Box>
-                    <Menu
-                        sx={{
-                            mt: '45px'
-                        }}
-                        id="menu-appbar"
-                        anchorEl={anchorElUser}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        open={Boolean(anchorElUser)}
-                        onClose={() => { setAnchorElUser(null) }}
-                    >
-                        {dropdownNavigate.map((dropdown, index) => (
-                            <Box key={index}>
-                                {index == 1 || index == dropdownNavigate.length - 1 ? <Divider /> : null}
-                                <MenuItem onClick={() => { navigate(dropdown.to) }}
-                                    sx={{
-                                        backgroundColor: dropdown.active ? "grey.400" : "transparent",
-                                        "&:hover": {
-                                            backgroundColor: "grey.400"
-                                        }
-                                    }}>
-                                    <Grid container columns={{ md: 12 }}>
-                                        <Grid item md={3}>
-                                            {dropdown.icon}
-                                        </Grid>
-                                        <Grid item md={9} sx={{ paddingRight: 3 }}>
-                                            <Typography>{dropdown.name}</Typography>
-                                            {/* <Typography>hehe hehehheheheheh ehehehehehehehehehehehe</Typography> */}
-                                        </Grid>
-                                    </Grid>
-                                </MenuItem>
+                    {role
+                        ? <>
+                            <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={(event) => { setAnchorElUser(event.currentTarget) }}>
+                                <Typography variant="subtitle1" sx={{ marginRight: 2 }}>{user ? user.name : ""}</Typography>
+                                <Tooltip title="Open settings">
+                                    <IconButton sx={{ p: 0 }}>
+                                        <Avatar alt="Remy Sharp" src={user ? user.image : ""} />
+                                    </IconButton>
+                                </Tooltip>
                             </Box>
-                        ))}
-                    </Menu>
+                            <Menu
+                                sx={{
+                                    mt: '45px'
+                                }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={() => { setAnchorElUser(null) }}
+                            >
+                                {dropdownNavigate.map((dropdown, index) => (
+                                    <Box key={index}>
+                                        {index == 1 || index == dropdownNavigate.length - 1 ? <Divider /> : null}
+                                        <MenuItem onClick={() => {
+                                            if (index == dropdownNavigate.length - 1) {
+                                                console.log("logout")
+                                                dispatch({ type: "saga/userLogout" })
+                                                navigate("/home")
+                                            }
+                                            else {
+                                                navigate(dropdown.to)
+                                            }
+                                        }}
+                                            sx={{
+                                                backgroundColor: dropdown.active ? "grey.400" : "transparent",
+                                                "&:hover": {
+                                                    backgroundColor: "grey.400"
+                                                }
+                                            }}>
+                                            <Grid container columns={{ md: 12 }}>
+                                                <Grid item md={3}>
+                                                    {dropdown.icon}
+                                                </Grid>
+                                                <Grid item md={9} sx={{ paddingRight: 3 }}>
+                                                    <Typography>{dropdown.name}</Typography>
+                                                    {/* <Typography>hehe hehehheheheheh ehehehehehehehehehehehe</Typography> */}
+                                                </Grid>
+                                            </Grid>
+                                        </MenuItem>
+                                    </Box>
+                                ))}
+                            </Menu>
+                        </>
+                        : <Typography variant="button" sx={{ color: "white", cursor: "pointer" }} onClick={() => { navigate("/login") }}>Log in</Typography>}
                 </Box>
             </Container>
             {/* Dropdown responsive */}
             <Box sx={{ flexGrow: 0, display: { xs: "block", md: "none" } }}>
-                <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={(event) => { setAnchorElUser(event.currentTarget) }}>
-                    <Typography variant="subtitle1" sx={{ marginRight: 2 }}>Giga Chad</Typography>
-                    <Tooltip title="Open settings">
-                        <IconButton sx={{ p: 0 }}>
-                            <Avatar alt="Remy Sharp" src="https://i.kym-cdn.com/entries/icons/original/000/026/152/gigachadd.jpg" />
-                        </IconButton>
-                    </Tooltip>
-                </Box>
-                <Menu
-                    sx={{
-                        mt: '45px'
-                    }}
-                    id="menu-appbar"
-                    anchorEl={anchorElUser}
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                    open={Boolean(anchorElUser)}
-                    onClose={() => { setAnchorElUser(null) }}
-                >
-                    {dropdownNavigate.map((dropdown, index) => (
-                        <Box key={index}>
-                            {index == 1 || index == dropdownNavigate.length - 1 ? <Divider /> : null}
-                            <MenuItem onClick={() => { navigate(dropdown.to) }}
-                                sx={{
-                                    backgroundColor: dropdown.active ? "grey.400" : "transparent",
-                                    "&:hover": {
-                                        backgroundColor: "grey.400"
-                                    }
-                                }}>
-                                <Grid container columns={{ md: 12 }}>
-                                    <Grid item md={3}>
-                                        {dropdown.icon}
-                                    </Grid>
-                                    <Grid item md={9} sx={{ paddingRight: 3 }}>
-                                        <Typography>{dropdown.name}</Typography>
-                                        {/* <Typography>hehe hehehheheheheh ehehehehehehehehehehehe</Typography> */}
-                                    </Grid>
-                                </Grid>
-                            </MenuItem>
+                {role
+                    ? <>
+                        <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={(event) => { setAnchorElUser(event.currentTarget) }}>
+                            <Typography variant="subtitle1" sx={{ marginRight: 2 }}>{user ? user.name : ""}</Typography>
+                            <Tooltip title="Open settings">
+                                <IconButton sx={{ p: 0 }}>
+                                    <Avatar alt="Remy Sharp" src={user ? user.image : ""} />
+                                </IconButton>
+                            </Tooltip>
                         </Box>
-                    ))}
-                </Menu>
+                        <Menu
+                            sx={{
+                                mt: '45px'
+                            }}
+                            id="menu-appbar"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={() => { setAnchorElUser(null) }}
+                        >
+                            {dropdownNavigate.map((dropdown, index) => (
+                                <Box key={index}>
+                                    {index == 1 || index == dropdownNavigate.length - 1 ? <Divider /> : null}
+                                    <MenuItem onClick={() => {
+                                        if (index == dropdownNavigate.length - 1) {
+                                            console.log("logout")
+                                            dispatch({ type: "saga/userLogout" })
+                                            navigate("/home")
+                                        }
+                                        else {
+                                            navigate(dropdown.to)
+                                        }
+                                    }}
+                                        sx={{
+                                            backgroundColor: dropdown.active ? "grey.400" : "transparent",
+                                            "&:hover": {
+                                                backgroundColor: "grey.400"
+                                            }
+                                        }}>
+                                        <Grid container columns={{ md: 12 }}>
+                                            <Grid item md={3}>
+                                                {dropdown.icon}
+                                            </Grid>
+                                            <Grid item md={9} sx={{ paddingRight: 3 }}>
+                                                <Typography>{dropdown.name}</Typography>
+                                                {/* <Typography>hehe hehehheheheheh ehehehehehehehehehehehe</Typography> */}
+                                            </Grid>
+                                        </Grid>
+                                    </MenuItem>
+                                </Box>
+                            ))}
+                        </Menu>
+                    </>
+                    : <Typography variant="button" sx={{ color: "white", cursor: "pointer" }} onClick={() => { navigate("/login") }}>Log in</Typography>}
             </Box>
         </>
     );

@@ -30,13 +30,14 @@ body,
     height: 100%
 } */
 /* ------------------------------------------------------------------ */
-/* .App>.MuiBox-root>main>.MuiContainer-root {
-    height: fit-content
-} */
+.App>.MuiBox-root>main>.MuiContainer-root {
+    min-height: 100%
+}
 
 body {
     overflow: hidden;
 }
+
 /* ------------------------------------------------------------------ */
 
 /* body::-webkit-scrollbar {

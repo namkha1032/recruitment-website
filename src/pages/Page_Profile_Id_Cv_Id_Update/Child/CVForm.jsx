@@ -17,14 +17,14 @@ function CVForm() {
       dispatch({ type: "skill/setSkill", payload: null });
       dispatch({ type: "language/setLanguage", payload: null });
     };
-  },[dispatch]);
+  }, [dispatch]);
   // CV COMPS
   const skillList = useSelector((state) => state.skill);
   const languageList = useSelector((state) => state.language);
 
-  const skillData= skillList?skillList:[]
-  const languageData= languageList?languageList:[]
-  const [cvtitle,setTitle] = useState(cvinfo.title)
+  const skillData = skillList ? skillList : [];
+  const languageData = languageList ? languageList : [];
+  const [cvtitle, setTitle] = useState(cvinfo.title);
   const [intro, setIntro] = useState(cvinfo.intro);
   const [education, setEducation] = useState(cvinfo.education);
   const [experience, setExperience] = useState(cvinfo.experience);
@@ -32,7 +32,7 @@ function CVForm() {
   const [skills, setSkills] = useState(cvinfo.skills);
   const [languages, setLanguages] = useState(cvinfo.language);
   // CERTIFICATE COMPS
-  const [Cid, setCid] = useState(certs.length> 0 ? certs.length : 0);
+  const [Cid, setCid] = useState(certs.length > 0 ? certs.length : 0);
   const [Cname, setCName] = useState("");
   const [organize, setOrganize] = useState("");
   const [startDate, setStartDate] = useState(null);
@@ -41,9 +41,11 @@ function CVForm() {
   const [link, setLink] = useState("");
   const [open, setOpen] = useState(false);
   //SKILL COMPS
-  const [name, setName] = useState("");
+  const [sname, setSName] = useState("");
+  const [skillId, setSkillId] = useState(null);
   const [Sid, setSid] = useState(skills.length > 0 ? skills.length : 0);
   const [SExp, setSExp] = useState("");
+  const [sInputValue, setSInputValue] = useState("");
   // Language comps
   const [lId, setLId] = useState(languages.length > 0 ? languages.length : 0);
   const [languageId, setLanguageId] = useState(null);
@@ -52,28 +54,53 @@ function CVForm() {
   //FUNCTION
   function handleTitle(e) {
     setTitle(e.target.value);
-    
   }
   function handleIntro(e) {
     setIntro(e.target.value);
   }
-  function handleEdu(e) {
-    setEducation(e.target.value);
-  }
   function handleExp(e) {
     setExperience(e.target.value);
   }
-  function handleSkillAdd() {
-    console.log(name);
-    console.log(SExp);
-    const newSkill = {
-      id: Sid,
-      name: name,
-      skillExperienc: SExp,
-    };
-    if (name !== "") {
+  // function handleSkillAdd() {
+  //   console.log(sname);
+  //   console.log(SExp);
+  //   const newSkill = {
+  //     id: Sid,
+  //     name: sname,
+  //     skillExperienc: SExp,
+  //   };
+  //   if (sname !== "") {
+  //     setSkills([...skills, newSkill]);
+  //     setSName("");
+  //     setSExp("");
+  //     setSid((prev) => (prev += 1));
+  //   }
+  // }
+  function handleSkillAdd2() {
+    console.log(lInputValue);
+    console.log(languageName);
+    let arr = skillData.filter(
+      (comp) => comp.name === (sInputValue !== null ? sInputValue.name : "")
+    );
+    console.log(arr);
+    if (arr[0] === undefined) {
+      alert("wrong skill");
+      setSkillId(null);
+      setSName("");
+      setSInputValue("");
+      setSExp("");
+    } else {
+      const newSkill = {
+        id: Sid,
+        skillId: skillId,
+        name: sname,
+        skillExperienc: SExp,
+      };
+      console.log(newSkill);
       setSkills([...skills, newSkill]);
-      setName("");
+      setSkillId(null);
+      setSName("");
+      setSInputValue("");
       setSExp("");
       setSid((prev) => (prev += 1));
     }
@@ -109,7 +136,7 @@ function CVForm() {
   function handleCertDelete(id) {
     setCerts(certs.filter((component) => component.id !== id));
   }
-  
+
   function handleLanguageAdd() {
     console.log(lInputValue);
     console.log(languageName);
@@ -150,7 +177,7 @@ function CVForm() {
   };
   function handleSubmit(e) {
     e.preventDefault();
-    navigate("/profile/:profileid/cv/:cvid")
+    navigate("/profile/:profileid/cv/:cvid");
   }
   //COMPS
   return (
@@ -158,6 +185,8 @@ function CVForm() {
       <Grid container spacing={0} justifyContent="center" alignItems="center">
         <Grid item xs={12}>
           <CreateCv
+          //////////Skill////////
+            setSkillId={setSkillId}
             intro={intro}
             setIntro={setIntro}
             education={education}
@@ -184,16 +213,17 @@ function CVForm() {
             setLink={setLink}
             open={open}
             setOpen={setOpen}
-            name={name}
-            setName={setName}
+            name={sname}
+            setName={setSName}
             Sid={Sid}
             setSid={setSid}
             SExp={SExp}
             setSExp={setSExp}
+            sInputValue={sInputValue}
+            setSInputValue={setSInputValue}
             handleIntro={handleIntro}
-            handleEdu={handleEdu}
             handleExp={handleExp}
-            handleSkillAdd={handleSkillAdd}
+            handleSkillAdd={handleSkillAdd2}
             handleSkilltDelete={handleSkilltDelete}
             handleCertificateAdd={handleCertificateAdd}
             handleCertDelete={handleCertDelete}

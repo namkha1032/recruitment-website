@@ -6,9 +6,6 @@ const eventListSlice = createSlice({
     reducers: {
         setEventList(state, action) {
             return action.payload
-        },
-        cleanUpEventList(state, action) {
-            return null
         }
     }
 })

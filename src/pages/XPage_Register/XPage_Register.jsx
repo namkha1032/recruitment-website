@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
   TextField,
@@ -13,12 +14,13 @@ import {
   IconButton,
 } from "@mui/material";
 
-/* import EmailIcon from "@mui/icons-material/Email";
-import LockIcon from "@mui/icons-material/Lock"; */
+import GigaCard from "../../components/GigaCard/GigaCard"
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody"
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-/* import PersonRoundedIcon from "@mui/icons-material/PersonRounded"; */
-
 import imageBackground from "../../assets/img/background.jpg";
 
 const style = {
@@ -34,17 +36,67 @@ const theme = createTheme({
   }
 });
 
+const fullnameRegex = /^[a-zA-Z-' ]{2,}$/;
+const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^.{8,}$/;
 
 const XPage_Register = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
+  const [validFullName, setValidFullName] = useState(true);
+  const [validUsername, setValidUsername] = useState(true);
   const [validEmail, setValidEmail] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
+  
+  const [errorSnackbar, setErrorSnackbar] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const newError = useSelector((state) => state.error);
+
+  useEffect(() => {
+    if (newError.status === "no") {
+      dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+      navigate("/login");
+    }
+    if (newError.status === "yes") {
+      setErrorSnackbar(true)
+      setUsername("");
+      setEmail("");
+      setTimeout(() => {
+          setErrorSnackbar(false)
+          dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+      }, 5000)
+    }
+  }, [newError]);
+
+  const handleFullNameChange = (event) => {
+    let value = event.target.value;
+    setFullName(value);
+    if (!fullnameRegex.test(value)) {
+      setValidFullName(false)
+    }
+    else {
+      setValidFullName(true)
+    }
+  }
+
+  const handleUsernameChange = (event) => {
+    let value = event.target.value;
+    setUsername(value);
+    if (!usernameRegex.test(value)) {
+      setValidUsername(false)
+    }
+    else {
+      setValidUsername(true)
+    }
+  }
 
   const handleEmailChange = (event) => {
     let value = event.target.value;
@@ -78,18 +130,34 @@ const XPage_Register = () => {
 
   const handleRegister = (event) => {
     event.preventDefault();
-    if (!validEmail || !validPassword) {
+    if (validFullName && validUsername && validEmail && validPassword) {
+      dispatch({
+        type: "saga/userRegister",
+        payload: {
+          fullName: fullName,
+          username: username,
+          email: email,
+          password: password,
+        },
+      });
+    }
+    else {
+      if (!validFullName) {
+        setValidFullName(false)
+        setFullName("")
+      }
+      if (!validUsername) {
+        setValidUsername(false)
+        setUsername("")
+      }
       if (!validEmail) {
         setValidEmail(false)
         setEmail("")
       }
-      else {
+      if (!validPassword) {
         setValidPassword(false)
         setPassword("")
       }
-    }
-    else {
-      navigate("/login");
     }
   };
 
@@ -112,29 +180,27 @@ const XPage_Register = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "75%",
+            width: "76%",
           }}
         >
 
           <Grid
             item
-            xs={7}
+            md={7}
             sx={{ display: "flex", justifyContent: "center" }}
           >
             <Grid
               item
-              xs={9}
+              md={9}
               sx={{
-                borderRadius: "10px",
-                padding: "20px",
-                paddingTop: "10px",
-                paddingBottom: "10px",
-                backgroundColor: "white",
                 opacity: "100%",
                 left: "20%",
                 right: "20%",
               }}
             >
+              <GigaCard>
+                <GigaCardBody>
+                
               <Typography 
                 variant="h2" 
                 align="center" 
@@ -144,7 +210,7 @@ const XPage_Register = () => {
                 fontSize={'28px'}
                 lineHeight={'28px'}
                 fontWeight={'700'}
-                padding={"20px"}
+                padding={"10px"}
               >
                 Register
               </Typography>
@@ -159,16 +225,78 @@ const XPage_Register = () => {
                   <TextField
                     fullWidth
                     required
-                    label="Name"
+                    label="Full name"
                     type="text"
-                    value={name}
+                    value={fullName}
                     InputProps={{
                       style: { borderRadius: "12px" },
                     }}
-                    onChange={(e) => {
-                      setName(e.target.value);
-                    }}
+                    onChange={handleFullNameChange}
+                    error={!validFullName}
                   />
+                  {!validFullName && (
+                    <Box
+                    margin="3px 14px 0px"
+                    >
+                      {
+                        fullName === "" ? (
+                          <Typography 
+                            color="#f44336"
+                            fontSize="12px"
+                            lineHeight="20px"
+                          >
+                            Full name is required
+                          </Typography>
+                        ) : (
+                          <Typography color="#f44336"
+                          fontSize="12px"
+                            lineHeight="20px"
+                          >
+                            Full name must be at least 2 characters long and can only contain letters, spaces and hyphens
+                          </Typography>
+                        )
+                      }
+                    </Box>
+                  )}
+                </Grid>
+
+                <Grid item xs={12} md={12} sx={{ ...style }}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Username"
+                    type="text"
+                    value={username}
+                    InputProps={{
+                      style: { borderRadius: "12px" },
+                    }}
+                    onChange={handleUsernameChange}
+                    error={!validUsername}
+                  />
+                  {!validUsername && (
+                    <Box
+                    margin="3px 14px 0px"
+                    >
+                      {
+                        username === "" ? (
+                          <Typography 
+                            color="#f44336"
+                            fontSize="12px"
+                            lineHeight="20px"
+                          >
+                            Username is required
+                          </Typography>
+                        ) : (
+                          <Typography color="#f44336"
+                          fontSize="12px"
+                            lineHeight="20px"
+                          >
+                            Username must be 3-20 characters long and can only contain letters, numbers and underscores
+                          </Typography>
+                        )
+                      }
+                    </Box>
+                  )}
                 </Grid>
 
                 <Grid item xs={12} md={12} sx={{ ...style }}>
@@ -267,7 +395,7 @@ const XPage_Register = () => {
 
                 <Grid
                   item
-                  xs={12}
+                  md={12}
                   sx={{ display: "flex", justifyContent: "center", ...style }}
                 >
                   <Button
@@ -290,8 +418,8 @@ const XPage_Register = () => {
 
               <Grid
                 item
-                xs={12}
-                sx={{ ...style, display: "flex", justifyContent: "center" }}
+                md={12}
+                sx={{ ...style, display: "flex", justifyContent: "center", marginBottom: '0px' }}
               >
                 <Typography variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
                   Already have account?{" "}
@@ -300,10 +428,27 @@ const XPage_Register = () => {
                   </Typography>
                 </Typography>
               </Grid>
+
+              </GigaCardBody>
+              </GigaCard>
             </Grid>
           </Grid>
         </Grid>
       </Container>
+
+      <Snackbar
+        open={errorSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setErrorSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert 
+          severity="error"
+          onClose={() => setErrorSnackbar(false)}
+        >
+          {newError.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

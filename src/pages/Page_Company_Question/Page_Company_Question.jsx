@@ -30,6 +30,7 @@ import {
   PsychologyRounded,
   SchoolRounded,
 } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
 
 const listOfSkills = {
   skill: ["React", "Angular", "Java", "Python", "Figma", ".NET", "C", "C++"],
@@ -38,6 +39,11 @@ const listOfSkills = {
 
 export default function Page_Company_Question() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({type: "saga/getAllQuestion"})
+  },[])
 
   const [rows, setRows] = useState(datasjson);
   // const [anchorEl, setAnchorEl] = useState(null);
@@ -62,11 +68,6 @@ export default function Page_Company_Question() {
   const [valueDelete, setValueDelete] = useState(0);
 
   // const [successAlert, setSuccessAlert] = useState(false);
-
-  // useEffect(() => {
-  //   const id = setTimeout(() => {handleCloseSuccessAlert()}, 1500);
-  //   return () => {clearTimeout(id)}
-  // })
 
   // function handleMoreClick(event) {
   //   setAnchorEl(event.currentTarget);
@@ -175,10 +176,12 @@ export default function Page_Company_Question() {
 
   const columns = useMemo(() => [
     {
-      field: "id",
+      field: "QuestionId",
       type: "number",
       headerAlign: "left",
       align: "left",
+      flex: 0.2,
+      minWidth: 30,
       renderHeader: () => <span>ID</span>,
       renderCell: (params) => {
         if (params.value === undefined) return <NullString />;
@@ -202,7 +205,8 @@ export default function Page_Company_Question() {
       headerAlign: "left",
       align: "left",
       flex: 1,
-      renderHeader: () => <span>Câu hỏi</span>,
+      minWidth: 250,
+      renderHeader: () => <span>Question</span>,
       renderCell: (params) => {
         if (params.value === undefined) return <NullString />;
         return (
@@ -224,9 +228,9 @@ export default function Page_Company_Question() {
       type: "string",
       headerAlign: "center",
       align: "center",
-      flex: 0.5,
+      flex: 0.4,
       minWidth: 80,
-      renderHeader: () => <span>Loại</span>,
+      renderHeader: () => <span>Category</span>,
       renderCell: (params) => {
         if (params.value === undefined) return <NullString />;
         else if (params.value === "Chuyên môn") return <Technology />;
@@ -240,7 +244,7 @@ export default function Page_Company_Question() {
       headerAlign: "center",
       align: "center",
       minWidth: 50,
-      renderHeader: () => <span>Kỹ năng</span>,
+      renderHeader: () => <span>Type</span>,
       renderCell: (params) => {
         if (params.value === undefined) return <NullString />;
       },
@@ -253,7 +257,7 @@ export default function Page_Company_Question() {
       getActions: (params) => [
         <GridActionsCellItem
           icon={<InfoIcon variant="outlined" />}
-          label="Chi tiết"
+          label="Detail"
           onClick={() =>
             handleModalOpen(
               {
@@ -269,7 +273,7 @@ export default function Page_Company_Question() {
         />,
         <GridActionsCellItem
           icon={<EditIcon />}
-          label="Chỉnh sửa"
+          label="Edit question"
           onClick={() =>
             handleModalOpen(
               {
@@ -285,7 +289,7 @@ export default function Page_Company_Question() {
         />,
         <GridActionsCellItem
           icon={<DeleteIcon sx={{ color: "#cc3300" }} />}
-          label="Xoá câu hỏi"
+          label="Delete question"
           onClick={() => handleDeleteModalOpen(params.row.id)}
           showInMenu
           sx={{
@@ -313,7 +317,7 @@ export default function Page_Company_Question() {
               color: "#1565C0",
             }}
           >
-            Danh sách câu hỏi
+            Question
           </Box>
         </Grid>
 
@@ -341,7 +345,7 @@ export default function Page_Company_Question() {
             onClick={handleAddModalOpen}
           >
             <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
-            Tạo câu hỏi
+            Create Question
           </Button>
           {/* <IconButton
             onClick={handleMoreClick}
@@ -395,7 +399,7 @@ export default function Page_Company_Question() {
             options={["Technology", "Language", "Soft Skills"]}
             sx={{ width: 200, marginRight: 2 }}
             renderInput={(params) => (
-              <TextField {...params} label="Lọc theo..." />
+              <TextField {...params} label="Category..." />
             )}
             renderOption={(props, option) => {
               if (option === "Technology") {
@@ -464,7 +468,7 @@ export default function Page_Company_Question() {
               options={listOfSkills.skill}
               sx={{ width: 200 }}
               renderInput={(params) => (
-                <TextField {...params} label="Kỹ năng..." />
+                <TextField {...params} label="Skill..." />
               )}
               value={statusChoose}
               onChange={(event, value) => handleChooseStatus(value)}
@@ -477,7 +481,7 @@ export default function Page_Company_Question() {
               options={listOfSkills.language}
               sx={{ width: 200 }}
               renderInput={(params) => (
-                <TextField {...params} label="Ngôn ngữ..." />
+                <TextField {...params} label="Language..." />
               )}
               value={statusChoose}
               onChange={(event, value) => handleChooseStatus(value)}

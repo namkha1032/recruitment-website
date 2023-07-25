@@ -2,14 +2,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { department } from "./RecruitData";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import { BorderAllRounded } from "@mui/icons-material";
 
 const Department = (prop) => {
   return (
@@ -39,9 +33,9 @@ const Department = (prop) => {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              {department.map((comp) => (
-                <MenuItem key={comp.id} value={comp.name}>
-                  {comp.name}
+              {prop.department.map((comp) => (
+                <MenuItem key={comp.departmentId} value={comp.departmentName}>
+                  {comp.departmentName}
                 </MenuItem>
               ))}
             </Select>
@@ -113,7 +107,7 @@ const Department = (prop) => {
                 variant="h6"
                 gutterBottom
               >
-                Address
+                Website
               </Typography>
             </Grid>
             <Grid item xs={5}>

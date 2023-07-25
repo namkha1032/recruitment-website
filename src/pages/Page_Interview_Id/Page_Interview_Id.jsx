@@ -14,6 +14,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import './Page_Interview_Id.css'
 import Divider from "@mui/material/Divider";
 import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward';
+import ArticleIcon from '@mui/icons-material/Article';
+import DetailsIcon from '@mui/icons-material/Details';
 // import gigacard
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
@@ -21,53 +23,16 @@ import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader";
 // import Page_Profile_Id_Cv_Id from "../Page_Profile_Id_Cv_Id/Page_Profile_Id_Cv"
 import CV from "../../components/CV/CV"
 
-const styleofbox = {
-    borderRadius: "8px",
-    boxShadow: 10,
-    marginTop: "10px",
-    display: "flex",
-    flexDirection: "row",
-    padding: 2,
-}
-
-const boxcandidate = {
-    borderRadius: "8px",
-    boxShadow: 10,
-    marginTop: "10px",
-    display: "flex",
-    flexDirection: "column",
-    padding: 2
-
-}
-
-const titlebox = {
-    fontWeight: "bold",
-
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-}
-
-const texttitle = {
-
-    fontWeight: "bold",
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    marginLeft: "5px"
-}
-
-const textinfo = {
-    display: "flex",
-    marginLeft: "5px",
-    flexWrap: "wrap",
-
-}
-
 
 const Page_Interview_Id = () => {
     const requires = require('../../data/View_recruitment/requires.json');
     const languages = require('../../data/View_recruitment/languages.json');
+    let left = 5
+    let right = 6
+    let gap = 1
+    let gridSx = {
+        display: "flex", alignItems: "center", columnGap: gap
+    }
     return (
         <>
             <Grid container spacing={2}>
@@ -76,152 +41,208 @@ const Page_Interview_Id = () => {
                         Detail of the interview
                     </Typography>
                 </Grid>
-                <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
-                    <Box sx={styleofbox}>
-                        <Grid item xs={6}>
-
-                        </Grid>
-                        <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
-                            <Typography variant="h5" sx={titlebox}>
-                                Detail of the candidate
-                            </Typography>
-                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
-                                <Typography variant="h6" sx={texttitle}>
-                                    <AccountBoxIcon></AccountBoxIcon>  Name:
-                                </Typography>
-                                <Typography variant="h6" sx={textinfo}>
-                                    Ngo Quang Huy
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
-                                <Typography variant="h6" sx={texttitle}>
-                                    <EmailIcon></EmailIcon>  Email:
-                                </Typography>
-                                <Typography variant="h6" sx={{ ...textinfo, wordBreak: "break-word" }}>
-                                    huy.ngoquanghuy@hcmut.edu.vn
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
-                                <Typography variant="h6" sx={texttitle}>
-                                    <PhoneIphoneIcon></PhoneIphoneIcon>  Phone:
-                                </Typography>
-                                <Typography variant="h6" sx={textinfo}>
-                                    1234567890
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
-                                <Typography variant="h6" sx={texttitle}>
-                                    <HomeIcon></HomeIcon> Address:
-                                </Typography>
-                                <Typography variant="h6" sx={textinfo}>
-                                    G Floor, F-Town 1 Building, High-tech Park, Tan Phu Ward, District 9, Ho Chi Minh City, Vietnam
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                </Grid>
-
                 <Grid item xs={5} sx={{ display: "flex", flexDirection: "column", rowGap: 2 }}>
                     <GigaCard>
-                        <GigaCardHeader color={"primary.main"} headerIcon={<AccessibleForwardIcon sx={{ fontSize: "inherit" }} />}>
+                        <GigaCardHeader color={"primary.main"} headerIcon={<ArticleIcon sx={{ fontSize: "inherit" }} />}>
                             General information
                         </GigaCardHeader>
-                        <GigaCardBody>
-                            {/* <Typography variant="h5" sx={titlebox}>
-                                General information
-                            </Typography> */}
-                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
-                                <Box sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-                                    <Typography variant="h6" sx={texttitle}>
-                                        <ScheduleIcon></ScheduleIcon> Date Time:
+                        <GigaCardBody >
+                            <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Box sx={gridSx}>
+                                        <ScheduleIcon />
+                                        <Typography variant="h6">
+                                            Date time
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Typography variant="h6">
+                                        :
                                     </Typography>
-                                    <Typography variant="h6" sx={textinfo}>
-                                        14:00 12/06/2023
+                                </Grid>
+                                <Grid item md={right} sx={gridSx}>
+                                    <Typography variant="h6" sx ={{marginLeft: "8px"}}>
+                                        14:00 25/07/2023
                                     </Typography>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
-                                <Typography variant="h6" sx={texttitle}>
-                                    <RoomIcon></RoomIcon> Room:
-                                </Typography>
-                                <Typography variant="h6" sx={textinfo}>
-                                    202B4
-                                </Typography>
-                            </Grid>
+                                </Grid>
+                            </Box>
+                            <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Box sx={gridSx}>
+                                        <RoomIcon />
+                                        <Typography variant="h6">
+                                            Room
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Typography variant="h6">
+                                        :
+                                    </Typography>
+                                </Grid>
+                                <Grid item md={right} sx={gridSx}>
+                                    <Typography variant="h6" sx ={{marginLeft: "8px"}}>
+                                        202B4
+                                    </Typography>
+                                </Grid>
+                            </Box>
                             <Divider sx={{ marginY: 3 }} />
-                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
-                                <Typography variant="h6" sx={texttitle}>
-                                    <RadarIcon></RadarIcon> Position:
-                                </Typography>
-                                <Typography variant="h6" sx={textinfo}>
-                                    Front-end Developer
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
-                                <Typography variant="h6" sx={texttitle}>
-                                    <RecommendIcon></RecommendIcon> Requirement:
-                                </Typography>
-                                <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
-                                    {requires.map((require) => (
+                            <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Box sx={gridSx}>
+                                        <RadarIcon />
+                                        <Typography variant="h6">
+                                            Position
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Typography variant="h6">
+                                        :
+                                    </Typography>
+                                </Grid>
+                                <Grid item md={right} sx={gridSx}>
+                                    <Typography variant="h6" sx ={{marginLeft: "8px"}} >
+                                        Front-end Development
+                                    </Typography>
+                                </Grid>
+                            </Box>
+                            <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Box sx={gridSx}>
+                                        <RecommendIcon />
+                                        <Typography variant="h6">
+                                            Requirement
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Typography variant="h6">
+                                        :
+                                    </Typography>
+                                </Grid>
+                                <Grid item md={right} sx={gridSx}>
+                                    <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-start", alignItems: "flex-start" }}>
+                                        {requires.map((require) => (
 
-                                        <Chip key={require.id} sx={{ margin: "0px 0px 5px 15px" }} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
+                                            <Chip key={require.id} sx={{ margin: "0px 0px 5px 8px" }} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
 
-                                    ))}
-                                </Stack>
-                            </Grid>
-                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", marginTop: "5px", marginBottom: "5px" }}>
-                                <Typography variant="h6" sx={texttitle}>
-                                    <LanguageIcon></LanguageIcon>  Language:
-                                </Typography>
-                                <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
-                                    {languages.map((language) => (
-                                        <Chip key={language.id} sx={{ margin: "0px 0px 5px 15px" }} value={language.name} label={language.name} variant='outlined' size='medium' color="success" />
-                                    ))}
-                                </Stack>
-                            </Grid>
-
+                                        ))}
+                                    </Stack>
+                                </Grid>
+                            </Box>
+                            <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Box sx={gridSx}>
+                                        <LanguageIcon />
+                                        <Typography variant="h6">
+                                            Language
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Typography variant="h6">
+                                        :
+                                    </Typography>
+                                </Grid>
+                                <Grid item md={right} sx={gridSx}>
+                                    <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
+                                        {languages.map((language) => (
+                                            <Chip key={language.id} sx={{ margin: "0px 0px 5px 8px" }} value={language.name} label={language.name} variant='outlined' size='medium' color="success" />
+                                        ))}
+                                    </Stack>
+                                </Grid>
+                            </Box>
                         </GigaCardBody>
                     </GigaCard>
                     <GigaCard>
+                        <GigaCardHeader color={"primary.main"} headerIcon={<DetailsIcon sx={{ fontSize: "inherit" }} />}>
+                            Interviewer
+                        </GigaCardHeader>
                         <GigaCardBody>
-                            <Typography variant="h5" sx={titlebox}>
-                                Detail of the interviewer
-                            </Typography>
-                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row" }}>
-                                <Typography variant="h6" sx={texttitle}>
-                                    <AccountBoxIcon></AccountBoxIcon>  Name:
-                                </Typography>
-                                <Typography variant="h6" sx={textinfo}>
-                                    Cong Pham  Quoc Viet
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
-                                <Typography variant="h6" sx={texttitle}>
-                                    <EmailIcon></EmailIcon> Email:
-                                </Typography>
-                                <Typography variant="h6" sx={textinfo}>
-                                    vietcpq@fpt.com
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
-                                <Typography variant="h6" sx={texttitle}>
-                                    <PhoneIphoneIcon></PhoneIphoneIcon> Phone:
-                                </Typography>
-                                <Typography variant="h6" sx={textinfo}>
-                                    09123456788
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} sx={{ display: "flex", flexDirection: "row", letterSpacing: "10px" }}>
-                                <Typography variant="h6" sx={texttitle}>
-                                    <LocationCityIcon></LocationCityIcon> Department:
-                                </Typography>
-                                <Typography variant="h6" sx={textinfo}>
-                                    ITROOM
-                                </Typography>
-                            </Grid>
+                            <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Box sx={gridSx}>
+                                        <AccountBoxIcon />
+                                        <Typography variant="h6">
+                                            Name
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Typography variant="h6">
+                                        :
+                                    </Typography>
+                                </Grid>
+                                <Grid item md={right} sx={gridSx}>
+                                    <Typography variant="h6" sx ={{marginLeft: "8px"}} >
+                                        Cong Pham Quoc Viet
+                                    </Typography>
+                                </Grid>
+                            </Box>
+                            <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Box sx={gridSx}>
+                                        <EmailIcon />
+                                        <Typography variant="h6">
+                                            Email
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Typography variant="h6">
+                                        :
+                                    </Typography>
+                                </Grid>
+                                <Grid item md={right} sx={gridSx}>
+                                    <Typography variant="h6" sx ={{marginLeft: "8px"}}>
+                                        vietcpq@fpt.com
+                                    </Typography>
+                                </Grid>
+                            </Box>
+                            <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Box sx={gridSx}>
+                                        <PhoneIphoneIcon />
+                                        <Typography variant="h6">
+                                            Phone
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Typography variant="h6">
+                                        :
+                                    </Typography>
+                                </Grid>
+                                <Grid item md={right} sx={gridSx}>
+                                    <Typography variant="h6" sx ={{marginLeft: "8px"}} >
+                                        0123456789
+                                    </Typography>
+                                </Grid>
+                            </Box>
+                            <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Box sx={gridSx}>
+                                        <LocationCityIcon />
+                                        <Typography variant="h6">
+                                            Department
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Typography variant="h6">
+                                        :
+                                    </Typography>
+                                </Grid>
+                                <Grid item md={right} sx={gridSx}>
+                                    <Typography variant="h6" sx ={{marginLeft: "8px"}} >
+                                        ITROOM
+                                    </Typography>
+                                </Grid>
+                            </Box>
                         </GigaCardBody>
                     </GigaCard>
-
                 </Grid>
                 <Grid item xs={7}>
                     <GigaCard>

@@ -3,7 +3,6 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { language } from "./RecruitData";
 import AddIcon from "@mui/icons-material/Add";
 
 const filter = createFilterOptions();
@@ -49,7 +48,7 @@ export default function ChooseLanguage(prop) {
                 prop.setInputValue(newValue);
                 if (newValue !== null) {
                   console.log(newValue);
-                  prop.setSkillId(language.filter((comp) => comp.name === newValue.name)[0].id);
+                  prop.setSkillId(prop.language.filter((comp) => comp.name === newValue.name)[0].id);
                   prop.handleState(newValue.name);
                 }
               }
@@ -73,7 +72,7 @@ export default function ChooseLanguage(prop) {
             clearOnBlur
             handleHomeEndKeys
             id="free-solo-with-text-demo"
-            options={language}
+            options={prop.language}
             getOptionLabel={(option) => {
               if (typeof option === "string") {
                 return option;

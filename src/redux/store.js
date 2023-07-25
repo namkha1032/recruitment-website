@@ -23,7 +23,9 @@ import loadingSlice from './reducer/loadingReducer'
 import interviewListSlice from './reducer/interviewListReducer'
 import positionListSlice from './reducer/positionListReducer'
 import eventListSlice from './reducer/eventListReducer'
+import questionListSlice from './reducer/questionListReducer'
 
+import applicationSlice from './reducer/applicationReducer'
 
 const sagaMiddleware = createSagaMiddleware()
 const store = configureStore({
@@ -46,6 +48,8 @@ const store = configureStore({
         interviewList: interviewListSlice.reducer,
         positionList: positionListSlice.reducer,
         eventList: eventListSlice.reducer,
+        questionList: questionListSlice.reducer,
+        application: applicationSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]

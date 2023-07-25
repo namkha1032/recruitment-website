@@ -56,156 +56,159 @@ const CreateCv = (prop) => {
             alignItems: "center",
           }}
         >
-        <Box className={`CVForm InputForm`}>
-          <Box
-            className="Container"
-            sx={{
-              borderRadius: 4,
-              boxShadow: 10,
-              backgroundColor: "white",
-              border: (theme) => `1px solid ${theme.palette.divider}`,
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              paddingTop: "16px",
-              paddingBottom: "8px",
-            }}
-          >
-            <Grid
-              container
-              spacing={0}
-              justifyContent="center"
-              alignItems="center"
+          <Box className={`CVForm InputForm`}>
+            <Box
+              className="Container"
+              sx={{
+                borderRadius: 4,
+                boxShadow: 10,
+                backgroundColor: "white",
+                border: (theme) => `1px solid ${theme.palette.divider}`,
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                paddingTop: "16px",
+                paddingBottom: "8px",
+              }}
             >
-              <Grid item xs={12}>
-                <Stepper
-                  alternativeLabel
-                  activeStep={activeStep}
-                  connector={<ColorlibConnector />}
-                >
-                  {steps.map((label, index) => (
-                    <Step key={label}>
-                      <StepLabel
-                        StepIconComponent={ColorlibStepIcon}
-                        onClick={handleStep(index)}
-                      >
-                        {label}
-                      </StepLabel>
-                    </Step>
-                  ))}
-                </Stepper>
-              </Grid>
-              <Grid item xs={12}>
-                <Box>
-                  <React.Fragment>
-                    {activeStep === 0 ? (
-                      <Grid item xs={12}>
-                        <CvStep1
-                          handleTitle={prop.handleTitle}
-                          cvtitle={prop.cvtitle}
-                          handleIntro={prop.handleIntro}
-                          intro={prop.intro}
-                          handleEdu={prop.handleEdu}
-                          education={prop.education}
-                        />
-                      </Grid>
-                    ) : activeStep === 1 ? (
-                      <Grid item xs={12}>
-                        <CvStep2
-                          skillData={prop.skillData}
-                          languageData={prop.languageData}
-                          skills={prop.skills}
-                          handleSkilltDelete={prop.handleSkilltDelete}
-                          SExp={prop.SExp}
-                          setExperience={prop.setExperience}
-                          experience={prop.experience}
-                          setSExp={prop.setSExp}
-                          setName={prop.setName}
-                          name={prop.name}
-                          handleSkillAdd={prop.handleSkillAdd}
-                          languages={prop.languages}
-                          handleLanguageDelete={prop.handleLanguageDelete}
-                          lInputValue={prop.lInputValue}
-                          setLInputValue={prop.setLInputValue}
-                          setLanguageName={prop.setLanguageName}
-                          languageName={prop.languageName}
-                          setLanguageId={prop.setLanguageId}
-                          handleLanguageAdd={prop.handleLanguageAdd}
-                        />
-                      </Grid>
-                    ) : (
-                      <Grid item xs={12}>
-                        <CvStep3
-                          cvalue={prop.cvalue}
-                          setCValue={prop.setCValue}
-                          open={prop.open}
-                          setOpen={prop.setOpen}
-                          certs={prop.certs}
-                          handleCertDelete={prop.handleCertDelete}
-                          setCName={prop.setCName}
-                          setOrganize={prop.setOrganize}
-                          setStartDate={prop.setStartDate}
-                          setEndDate={prop.setEndDate}
-                          handleCertificateAdd={prop.handleCertificateAdd}
-                          Cname={prop.Cname}
-                          startDate={prop.startDate}
-                          endDate={prop.endDate}
-                          organize={prop.organize}
-                          detail={prop.detail}
-                          setDetail={prop.setDetail}
-                          link={prop.link}
-                          setLink={prop.setLink}
-                          handleSetOpen={prop.handleSetOpen}
-                          handleClose={prop.handleClose}
-                        />
-                      </Grid>
-                    )}
-
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        pt: 2,
-                        width: "80%",
-                        margin: "auto",
-                      }}
-                    >
-                      <Button
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
-                        variant="contained"
-                        className="AddButton"
-                        sx={{ mr: 1 }}
-                      >
-                        Back
-                      </Button>
-                      <Box sx={{ flex: "1 1 auto" }} />
-                      {activeStep === 2 ? (
-                        <Button
-                          variant="contained"
-                          className="AddButton"
-                          onClick={prop.handleSubmit}
+              <Grid
+                container
+                spacing={0}
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Grid item xs={12}>
+                  <Stepper
+                    alternativeLabel
+                    activeStep={activeStep}
+                    connector={<ColorlibConnector />}
+                  >
+                    {steps.map((label, index) => (
+                      <Step key={label}>
+                        <StepLabel
+                          StepIconComponent={ColorlibStepIcon}
+                          onClick={handleStep(index)}
                         >
-                          Finish
-                        </Button>
+                          {label}
+                        </StepLabel>
+                      </Step>
+                    ))}
+                  </Stepper>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box>
+                    <React.Fragment>
+                      {activeStep === 0 ? (
+                        <Grid item xs={12}>
+                          <CvStep1
+                            handleTitle={prop.handleTitle}
+                            cvtitle={prop.cvtitle}
+                            handleIntro={prop.handleIntro}
+                            intro={prop.intro}
+                            setEducation={prop.setEducation}
+                            education={prop.education}
+                          />
+                        </Grid>
+                      ) : activeStep === 1 ? (
+                        <Grid item xs={12}>
+                          <CvStep2
+                            sInputValue={prop.sInputValue}
+                            setSInputValue={prop.setSInputValue}
+                            setSkillId={prop.setSkillId}
+                            skillData={prop.skillData}
+                            skills={prop.skills}
+                            handleSkilltDelete={prop.handleSkilltDelete}
+                            languageData={prop.languageData}
+                            SExp={prop.SExp}
+                            setSExp={prop.setSExp}
+                            setName={prop.setName}
+                            name={prop.name}
+                            setExperience={prop.setExperience}
+                            handleSkillAdd={prop.handleSkillAdd}
+                            experience={prop.experience}
+                            languages={prop.languages}
+                            handleLanguageDelete={prop.handleLanguageDelete}
+                            lInputValue={prop.lInputValue}
+                            setLInputValue={prop.setLInputValue}
+                            setLanguageName={prop.setLanguageName}
+                            languageName={prop.languageName}
+                            setLanguageId={prop.setLanguageId}
+                            handleLanguageAdd={prop.handleLanguageAdd}
+                          />
+                        </Grid>
                       ) : (
+                        <Grid item xs={12}>
+                          <CvStep3
+                            cvalue={prop.cvalue}
+                            setCValue={prop.setCValue}
+                            open={prop.open}
+                            setOpen={prop.setOpen}
+                            certs={prop.certs}
+                            handleCertDelete={prop.handleCertDelete}
+                            setCName={prop.setCName}
+                            setOrganize={prop.setOrganize}
+                            setStartDate={prop.setStartDate}
+                            setEndDate={prop.setEndDate}
+                            handleCertificateAdd={prop.handleCertificateAdd}
+                            Cname={prop.Cname}
+                            startDate={prop.startDate}
+                            endDate={prop.endDate}
+                            organize={prop.organize}
+                            detail={prop.detail}
+                            setDetail={prop.setDetail}
+                            link={prop.link}
+                            setLink={prop.setLink}
+                            handleSetOpen={prop.handleSetOpen}
+                            handleClose={prop.handleClose}
+                          />
+                        </Grid>
+                      )}
+
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          pt: 2,
+                          width: "80%",
+                          margin: "auto",
+                        }}
+                      >
                         <Button
+                          disabled={activeStep === 0}
+                          onClick={handleBack}
                           variant="contained"
                           className="AddButton"
-                          onClick={handleNext}
                           sx={{ mr: 1 }}
                         >
-                          Next
+                          Back
                         </Button>
-                      )}
-                    </Box>
-                  </React.Fragment>
-                </Box>
+                        <Box sx={{ flex: "1 1 auto" }} />
+                        {activeStep === 2 ? (
+                          <Button
+                            variant="contained"
+                            className="AddButton"
+                            onClick={prop.handleSubmit}
+                          >
+                            Finish
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="contained"
+                            className="AddButton"
+                            onClick={handleNext}
+                            sx={{ mr: 1 }}
+                          >
+                            Next
+                          </Button>
+                        )}
+                      </Box>
+                    </React.Fragment>
+                  </Box>
+                </Grid>
               </Grid>
-            </Grid>
+            </Box>
           </Box>
-        </Box>
-        </Grid> 
+        </Grid>
       </Grid>
     </form>
   );

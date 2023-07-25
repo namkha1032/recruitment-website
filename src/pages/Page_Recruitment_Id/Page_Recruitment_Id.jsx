@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Grid, Button, Modal, Box, Alert, AlertTitle, Link } from '@mui/material';
+import { Grid, Button, Modal, Box} from '@mui/material';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -12,35 +12,26 @@ import Info_view from '../../components/View_recruitment/Info_view';
 import CloseIcon from '@mui/icons-material/Close';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
-import Page_Profile_Id_Cv_Id from '../Page_Profile_Id_Cv_Id/Page_Profile_Id_Cv_Id';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { ToastContainer,  toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 600,
-    height: 300,
+    height: "60%",
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
     display: "flex",
-    flexDirection: "column"
-
+    flexDirection: "column",
+    overflow: "auto"
 };
-const success_notice = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 500,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4
-}
+
 
 const Page_Recruitment_Id = () => {
     const navigate = useNavigate();
@@ -69,7 +60,7 @@ const Page_Recruitment_Id = () => {
     }, [])
 
     const handleTextClick = () => {
-        window.open('/profile/:profileid/cv/:cvid');
+        window.open(`/profile/:profileid/cv/:cvid`);
     };
 
 
@@ -89,11 +80,21 @@ const Page_Recruitment_Id = () => {
                 setCV('')
                 console.log(CV);
                 setSubmit(false);
-                setTimeout(() => {
-                    setOpen(false);
-                    setNotice(false);
-                }, 3000)
-
+                // setTimeout(() => {
+                //     setOpen(false);
+                //     setNotice(false);
+                // }, 3000)
+                setOpen(false);
+                toast.success('You submited successfully.', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
             }
         }
         else {
@@ -120,34 +121,35 @@ const Page_Recruitment_Id = () => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2" >
                         Choose your CV
                     </Typography>
                     <form onSubmit={handleSubmit}>
-                        <FormControl sx={{ margin: "auto" }} variant="standard">
-
-                            <RadioGroup
-                                aria-labelledby="demo-error-radios"
-                                name="choose CV"
-                                value={CV}
-                                onChange={handleCVChange}
-
-
-                            >
-
-                                {list_CV.map((CV) => (
-                                    <FormControlLabel key={CV.CVid} value={CV.CVname} control={<Radio />} label={<span onClick={handleTextClick}>
-
-                                        {CV.CVname}
-                                    </span>} />
-                                ))}
-
-
-                            </RadioGroup>
-
-
+                        <FormControl sx={{ margin: "auto", display: "flex", flexDirection: "row" }} variant="standard">
+                            <Grid item xs={4}>
+                                <Box>
+                                    <RadioGroup
+                                        aria-labelledby="demo-error-radios"
+                                        name="choose CV"
+                                        value={CV}
+                                        onChange={handleCVChange}
+                                    >
+                                        {list_CV.map((CV) => (
+                                            <FormControlLabel key={CV.CVid} value={CV.CVname} control={<Radio />} label={CV.CVname} />
+                                        ))}
+                                    </RadioGroup>
+                                </Box>
+                            </Grid>
+                            <Grid item xs={2}>
+                                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                                    {list_CV.map((CV) => (
+                                        <Button key={CV.CVid} sx={{ marginBottom: "5.5px" }} variant="contained" onClick={handleTextClick}>
+                                            Hello
+                                        </Button>
+                                    ))}
+                                </Box>
+                            </Grid>
                             <FormHelperText sx={{ fontSize: "20px", color: "red", fontWeight: "bold" }}>{helperText}</FormHelperText>
                         </FormControl>
                         <Box sx={{ display: "flex" }}>
@@ -160,68 +162,24 @@ const Page_Recruitment_Id = () => {
                                 <Button size="large" type="submit" variant="contained" onClick={hanldebutton}   >
                                     <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit your CV
                                 </Button>
+
                             </Grid>
-                            {/* <Modal
-                                open={notice}
-                                onClose={handleclose_notice_modal}
-                                aria-labelledby="child-modal-title"
-                                aria-describedby="child-modal-description"
-                            >
-                                <Box sx={{ ...success_notice, width: 300, height: 200, display: "flex", flexDirection: "column" }}>
-                                    <Grid item xs={12}>
-                                        <Typography color='success' variant='subtitle1' sx={{ display: "flex" }}>
-                                            <DoneOutlineTwoToneIcon color='success'></DoneOutlineTwoToneIcon>
-                                            You submited successfully. Please wait for further information.
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                                            <Button variant='contained' color="success" onClick={handleclose_notice_modal}>
-                                                <DoneAllIcon></DoneAllIcon> OK
-                                            </Button>
-
-                                        </Box>
-                                    </Grid>
-                                </Box>
-                            </Modal> */}
-                            {notice == true ? (
-                                <Box sx={{ ...success_notice, height: 200, display: "flex", flexDirection: "column" }}>
-
-                                    <Alert severity="success" sx={{ fontSize: "18px" }} >
-                                        <AlertTitle sx={{ fontSize: "20px", fontWeight: "bold" }}>Success</AlertTitle>
-                                        You submited successfully. Please wait for further information.
-                                    </Alert>
-                                </Box>
-                            ) : null
-                            }
-                            {/* <Grid item xs={12}>
-                                        <Typography color='success' variant='subtitle1' sx={{ display: "flex" }}>
-                                            <DoneOutlineTwoToneIcon color='success'></DoneOutlineTwoToneIcon>
-                                            You submited successfully. Please wait for further information.
-                                        </Typography>
-                                    </Grid> */}
-                            {/* <Grid item xs={12}>
-                                    <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                                        <Button variant='contained' color="success" onClick={handleclose_notice_modal}>
-                                            <DoneAllIcon></DoneAllIcon> OK
-                                        </Button>
-
-                                    </Box>
-                                </Grid> */}
                         </Box>
-
-
-
-
                     </form>
                 </Box>
             </Modal>
-
-
-
-
-
-            {/* <Grid item xs={3}></Grid> */}
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover={false}
+                theme="colored"
+            />
         </Grid>
     )
 }

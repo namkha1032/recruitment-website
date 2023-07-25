@@ -28,6 +28,7 @@ import {
   SportsScoreRounded,
   CloseRounded,
 } from "@mui/icons-material";
+import cleanStore from "../../utils/cleanStore";
 
 export default function Page_Company_Interview() {
   const dispatch = useDispatch();
@@ -38,11 +39,10 @@ export default function Page_Company_Interview() {
     dispatch({ type: "saga/getPositionList" });
     dispatch({ type: "saga/getDepartment" });
     return () => {
-      dispatch({ type: "interviewList/cleanUpInterviewList" });
-      dispatch({ type: "positionList/cleanUpPositionList" });
+      cleanStore(dispatch)
     };
   }, []);
-  
+
   const loading = useSelector((state) => state.loading);
   const rows = useSelector((state) => state.interviewList);
   const department_draft = useSelector((state) => state.department);
@@ -151,15 +151,16 @@ export default function Page_Company_Interview() {
   }
 
   function handleDetailClick(value) {
-    dispatch({ type: "interviewList/cleanUpInterviewList" });
+    cleanStore(dispatch)
     dispatch({ type: "position/cleanUpPosition" });
     navigate(`./${value}`);
   }
 
   function handleProfileDetailClick(value) {
-    dispatch({ type: "interviewList/cleanUpInterviewList" });
-    dispatch({ type: "positionList/cleanUpPositionList" });
-    navigate(`../../profile/${value}`);
+    // dispatch({ type: "interviewList/cleanUpInterviewList" });
+    // dispatch({ type: "positionList/cleanUpPositionList" });
+    window.open(`../../profile/${value}`)
+    // navigate(`../../profile/${value}`);
   }
 
   const columns = useMemo(() => [
@@ -665,7 +666,11 @@ export default function Page_Company_Interview() {
         </Grid> */}
       </Grid>
 
-      <Box>
+      <Box
+        sx={{
+          minHeight: 500,
+        }}
+      >
         <DataGrid
           autoHeight
           columns={columns}

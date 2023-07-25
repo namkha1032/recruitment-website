@@ -10,6 +10,34 @@
     {
         "CVid": 3,
         "CVname": "Full-stack"
+    },
+    {
+        "CVid": 4,
+        "CVname": "Java"
+    },
+    {
+        "CVid": 5,
+        "CVname": "OJT"
+    },
+    {
+        "CVid": 6,
+        "CVname": "Database"
+    },
+    {
+        "CVid": 7,
+        "CVname": "Intern"
+    },
+    {
+        "CVid": 8,
+        "CVname": "Fresher"
+    },
+    {
+        "CVid": 9,
+        "CVname": "HTML"
+    },
+    {
+        "CVid": 10,
+        "CVname": "CSS"
     }
 
 ]
