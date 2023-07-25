@@ -15,6 +15,25 @@
         "hireMax": 10,
         "salary": "10000$",
         "applyedNumber": 30,
+        "requirement": [
+            {
+                "skillId": 4,
+                "skillName": "HTML"
+            },
+            {
+                "skillId": 1,
+                "skillName": "CSS"
+            },
+            {
+                "skillId": 2,
+                "skillName": "JavaScript"
+            },
+            {
+                "skillId": 3,
+                "skillName": "Python"
+            }
+        ],
+        "languageName": "Japanese",
         "status": "active"
     }
 ]

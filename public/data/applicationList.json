@@ -1,0 +1,184 @@
+[
+    {
+        "applicationid": 1231,
+        "candidateName": "John Smith ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đang chờ"
+    },
+    {
+        "applicationid": 1002,
+        "candidateName": "Emily Johnson ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đang chờ"
+    },
+    {
+        "applicationid": 1003,
+        "candidateName": "Michael Williams ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đang chờ"
+    },
+    {
+        "applicationid": 1004,
+        "candidateName": "Jessica Brown ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đang chờ"
+    },
+    {
+        "applicationid": 1005,
+        "candidateName": "Davapplicationid Jones",
+        "positionName": "Front-end Developer",
+        "company_status": "Đang chờ"
+    },
+    {
+        "applicationid": 1006,
+        "candidateName": "Sarah Davis ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đang chờ"
+    },
+    {
+        "applicationid": 1007,
+        "candidateName": "Robert Miller ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đang chờ"
+    },
+    {
+        "applicationid": 1008,
+        "candidateName": "Jennifer Wilson ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đang chờ"
+    },
+    {
+        "applicationid": 1009,
+        "candidateName": "William Taylor ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đang chờ"
+    },
+    {
+        "applicationid": 1010,
+        "candidateName": "Elizabeth Anderson  ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đang chờ"
+    },
+    {
+        "applicationid": 1011,
+        "candidateName": "Christopher Clark ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã từ chối"
+      },
+      {
+        "applicationid": 1012,
+        "candidateName": "Amanda Rodriguez ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã từ chối"
+      },
+      {
+        "applicationid": 1013,
+        "candidateName": "Matthew Martinez ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã từ chối"
+      },
+      {
+        "applicationid": 1014,
+        "candidateName": "Laura Lewis ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã từ chối"
+      },
+      {
+        "applicationid": 1015,
+        "candidateName": "Daniel Lee ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã từ chối"
+      },
+      {
+        "applicationid": 1016,
+        "candidateName": "Jessica Hernandez  ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã từ chối"
+      },
+      {
+        "applicationid": 1017,
+        "candidateName": "Brian Gonzalez ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã từ chối"
+      },
+      {
+        "applicationid": 1018,
+        "candidateName": "Sophia White ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã từ chối"
+      },
+      {
+        "applicationid": 1019,
+        "candidateName": "James Thompson  ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã từ chối"
+      },
+      {
+        "applicationid": 1020,
+        "candidateName": "Ashley Hall ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã từ chối"
+      },
+      {
+        "applicationid": 1021,
+        "candidateName": "Joshua Patel ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã duyệt"
+      },
+      {
+        "applicationid": 1022,
+        "candidateName": "Kimberly Mitchell",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã duyệt"
+      },
+      {
+        "applicationid": 1023,
+        "candidateName": "Joseph Carter ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã duyệt"
+      },
+      {
+        "applicationid": 1024,
+        "candidateName": "Mary Adams ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã duyệt"
+      },
+      {
+        "applicationid": 1025,
+        "candidateName": "Nicholas Nelson ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã duyệt"
+      },
+      {
+        "applicationid": 1026,
+        "candidateName": "Megan Turner  ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã duyệt"
+      },
+      {
+        "applicationid": 1027,
+        "candidateName": "Benjamin Scott ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã duyệt"
+      },
+      {
+        "applicationid": 1028,
+        "candidateName": "Olivia Phillips ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã duyệt"
+      },
+      {
+        "applicationid": 1029,
+        "candidateName": "Ethan Wilson   ",
+        "positionName": "Front-end Developer",
+        "company_status": "Đã duyệt"
+      },
+      {
+        "applicationid": 1030,
+        "candidateName": "Ava Martin  ",
+        "positionName": "Front-end Developer",   
+        "company_status": "Đã duyệt"
+      }
+]
+    
+   
