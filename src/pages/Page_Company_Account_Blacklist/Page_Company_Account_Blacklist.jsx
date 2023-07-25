@@ -67,15 +67,14 @@ const Page_Company_Account = () => {
     const [account, setAccount] = useState('');
     function QuickSearchToolbar() {
         return (
-            <Box
-                sx={{
-                    p: 0.5,
-                    pb: 0,
-                }}
-            >
+            <Grid container margin={1}>
+                <Grid item xs={4} display="flex">
                 <GridToolbarQuickFilter />
-                <GridToolbar></GridToolbar>
-            </Box>
+                </Grid>
+                <Grid item xs={8} justifyContent="right" display="flex">
+                <GridToolbar />
+                </Grid>
+            </Grid>
         );
     }
     const columns = [
@@ -155,13 +154,14 @@ const Page_Company_Account = () => {
                     display:'flex',
                     // border: "1px solid black",
                     // borderRadius: 1,
-                    padding:4,
+                    // padding:4,
                     mt:4
                 }}>
+                <Grid container>
                 <Grid
-                    width="77vw"
+                    // width="100%"
                     item
-                    m="0px 10px 0px 10px"
+                    // m="0px 10px 0px 10px"
                     xs={12}
                     display="flex"
                     sx={{
@@ -199,6 +199,7 @@ const Page_Company_Account = () => {
                         columns={columns}
                         slots={{ toolbar: QuickSearchToolbar }}
                     />
+                </Grid>
                 </Grid>
             </Card>
         </Grid>

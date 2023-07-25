@@ -25,7 +25,7 @@ const Page_Company_Account_Create = () => {
             }}>
         <Grid
             container
-            rowSpacing={5}
+            rowSpacing={3}
         >
             <Grid
                     item
@@ -38,6 +38,34 @@ const Page_Company_Account_Create = () => {
                         m="10px 0 10px 0">
                     Create Advanced Accounts
             </Typography>
+            </Grid>
+            <Grid
+                item
+                xs={12}
+                display="flex"
+                alignItems="center"
+                justifyContent="left"
+            >
+                <TextField
+                    id="accountemail"
+                    label="Username"
+                    variant="outlined"
+                    fullWidth
+                />
+            </Grid>
+            <Grid
+                item
+                xs={12}
+                display="flex"
+                alignItems="center"
+                justifyContent="left"
+            >
+                <TextField
+                    id="accountemail"
+                    label="Fullname"
+                    variant="outlined"
+                    fullWidth
+                />
             </Grid>
             <Grid
                 item
