@@ -9,7 +9,7 @@ const SelectDate = (prop) => {
     <>
       <Grid container spacing={0}>
         <Grid item xs={6}>
-          <div style={{ marginLeft: "4%", marginTop: "8px" }}>
+          <div style={{ marginLeft: "2%", marginTop: "8px" }}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 sx={{
@@ -32,7 +32,7 @@ const SelectDate = (prop) => {
           </div>
         </Grid>
         <Grid item xs={6}>
-          <div style={{ marginLeft: "3%", marginTop: "8px" }}>
+          <div style={{ marginLeft: "3%", marginTop: "8px", marginRight: "2%" }}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 sx={{

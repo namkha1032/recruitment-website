@@ -1,24 +1,35 @@
 import React from "react";
+import { Link } from "react-router-dom"
 import {
   Grid,
   TextField,
   Button,
   Typography,
-  Link,
+  /* Link, */
   Box,
   Container,
-  InputAdornment,
+  /* InputAdornment, */
+  createTheme,
 } from "@mui/material";
 
 import imageBackground from "../../assets/img/background.jpg";
-import EmailIcon from "@mui/icons-material/Email";
+import GigaCard from "../../components/GigaCard/GigaCard";
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 
 const style = {
   marginTop: "15px",
   marginBottom: "15px",
 };
 
-const Recovery = ({ email, onChangeEmail, handleSubmit }) => {
+const theme = createTheme({
+  palette: {
+    secondary: {
+      main: '#1976d2'
+    }
+  }
+});
+
+const Recovery = (props) => {
   return (
     <Box
       sx={{
@@ -34,67 +45,95 @@ const Recovery = ({ email, onChangeEmail, handleSubmit }) => {
         <Grid
           container
           sx={{
-            paddingTop: "60px",
+            paddingTop: "10%",
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "80%",
+            width: "76%",
           }}
         >
-          <Grid item md={7} padding="20px">
-            <Grid item xs={12} display="flex" justifyContent="center">
-              <Typography variant="h1" color='white'>
-                Recovery
-              </Typography>
-            </Grid>
-          </Grid>
 
-          <Grid item md={7} sx={{ display: "flex", justifyContent: "center" }}>
+          <Grid
+            item
+            xs={7}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
             <Grid
               item
-              md={9}
+              xs={9}
               sx={{
-                borderRadius: "20px",
+                /* borderRadius: "10px",
                 padding: "20px",
                 paddingTop: "10px",
                 paddingBottom: "10px",
-                backgroundColor: "white",
+                backgroundColor: "white", */
                 opacity: "100%",
                 left: "20%",
                 right: "20%",
               }}
             >
-              <Grid
-                item
-                xs={12}
-                sx={{ ...style, display: "flex", justifyContent: "center" }}
-              >
-                <Typography variant="h5" align="center">
-                  Enter your email address
-                </Typography>
-              </Grid>
+              <GigaCard>
+                <GigaCardBody>
 
-              <form onSubmit={handleSubmit}>
+              <Typography 
+                variant="h2" 
+                align="center" 
+                color='#1976d2' 
+                gutterBottom
+                fontFamily={'Roboto'}
+                fontSize={'28px'}
+                lineHeight={'28px'}
+                fontWeight={'700'}
+                padding={"10px"}
+              >
+                Recovery
+              </Typography>
+
+              <form
+                onSubmit={
+                  props.handleSubmit
+                } 
+              >
+
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
                     required
                     label="Email"
                     type="email"
-                    value={email}
+                    value={props.email}
                     InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <EmailIcon />
-                        </InputAdornment>
-                      ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "12px" },
                     }}
-                    onChange={(e) => {
-                      onChangeEmail(e.target.value);
-                    }}
+                    onChange={props.handleEmailChange}
+                    error={!props.validEmail}
                   />
+                  {!props.validEmail && (
+                    <Box
+                    margin="3px 14px 0px"
+                  >
+                    {
+                      props.email === "" ? (
+                        <Typography 
+                          color="#f44336"
+                          fontSize="12px"
+                          lineHeight="20px"
+                        >
+                        Email is required
+                        </Typography>
+                      ) : (
+                        <Typography color="#f44336"
+                        fontSize="12px"
+                          lineHeight="20px"
+                        >
+                        Must be a valid email
+                        </Typography>
+                      )
+                    }
+                    
+                  </Box>
+                  )}
                 </Grid>
 
                 <Grid
@@ -103,12 +142,15 @@ const Recovery = ({ email, onChangeEmail, handleSubmit }) => {
                   sx={{ display: "flex", justifyContent: "center", ...style }}
                 >
                   <Button
+                    theme={theme}
                     variant="contained"
                     type="submit"
+                    color="secondary"
+                  
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "20px",
+                      borderRadius: "5px",
                       marginTop: "15px",
                     }}
                   >
@@ -120,12 +162,16 @@ const Recovery = ({ email, onChangeEmail, handleSubmit }) => {
               <Grid
                 item
                 xs={12}
-                sx={{ ...style, display: "flex", justifyContent: "center" }}
+                sx={{ ...style, display: "flex", justifyContent: "center", marginBottom: "0px" }}
               >
-                <Typography variant="small" align="center">
-                  <Link href="/login">Back to login</Link>
+                <Typography component={Link} to="/login" variant="subtitle1" sx={{ textDecoration: 'none', color: '#1976d2' }}>
+                  Back to login{" "}
                 </Typography>
               </Grid>
+              
+              </GigaCardBody>
+              </GigaCard>
+
             </Grid>
           </Grid>
         </Grid>

@@ -20,9 +20,13 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Grid from '@mui/material/Grid';
 import BusinessIcon from '@mui/icons-material/Business';
+import Container from '@mui/material/Container';
 import { Divider } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import useGetRole from '../../hooks/useGetRole';
+
 let innerDrawerWidth;
 
 
@@ -31,6 +35,9 @@ const NavbarContent = () => {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate()
     const location = useLocation()
+    const dispatch = useDispatch()
+    const role = useGetRole()
+    const user = useSelector(state => state.user)
     const navbarNavigate = [
         {
             name: "Home",
@@ -87,26 +94,6 @@ const NavbarContent = () => {
     ]
     return (
         <>
-            {/* Logo */}
-            <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={() => { navigate("/home") }}>
-                <FavoriteIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                <Typography
-                    variant="h6"
-                    noWrap
-                    component="a"
-                    sx={{
-                        mr: 2,
-                        display: { xs: 'none', md: 'flex' },
-                        fontFamily: 'monospace',
-                        fontWeight: 700,
-                        letterSpacing: '.3rem',
-                        color: 'inherit',
-                        textDecoration: 'none',
-                    }}
-                >
-                    TEAM4
-                </Typography>
-            </Box>
             {/* Navbar content responsive */}
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                 <IconButton
@@ -145,7 +132,7 @@ const NavbarContent = () => {
                 </Menu>
             </Box>
             {/* Icon responsive */}
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+            <FavoriteIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
             <Typography
                 variant="h5"
                 noWrap
@@ -164,78 +151,177 @@ const NavbarContent = () => {
             >
                 TEAM4
             </Typography>
-            {/* Navbar content */}
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                {navbarNavigate.map((navbarItem, index) => (
-                    <Button
-                        key={index}
-                        onClick={() => { navigate(navbarItem.to) }}
+            <Container sx={{ display: { md: "flex", xs: "none" }, alignItems: "center" }}>
+                {/* Logo */}
+                <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={() => { navigate("/home") }}>
+                    <FavoriteIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        component="a"
                         sx={{
-                            my: 2, color: 'white', display: 'block',
-                            backgroundColor: navbarItem.active ? "primary.light" : "transparent",
-                            borderRadius: 3,
-                            marginLeft: 1,
-                            marginRight: 1,
-                            "&:hover": { backgroundColor: "primary.light" }
+                            mr: 2,
+                            display: { xs: 'none', md: 'flex' },
+                            fontFamily: 'monospace',
+                            fontWeight: 700,
+                            letterSpacing: '.3rem',
+                            color: 'inherit',
+                            textDecoration: 'none',
                         }}
                     >
-                        {navbarItem.name}
-                    </Button>
-                ))}
-            </Box>
-            {/* Dropdown */}
-            <Box sx={{ flexGrow: 0 }}>
-                <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={(event) => { setAnchorElUser(event.currentTarget) }}>
-                    <Typography variant="subtitle1" sx={{ marginRight: 2 }}>Giga Chad</Typography>
-                    <Tooltip title="Open settings">
-                        <IconButton sx={{ p: 0 }}>
-                            <Avatar alt="Remy Sharp" src="https://i.kym-cdn.com/entries/icons/original/000/026/152/gigachadd.jpg" />
-                        </IconButton>
-                    </Tooltip>
+                        TEAM4
+                    </Typography>
                 </Box>
-                <Menu
-                    sx={{
-                        mt: '45px'
-                    }}
-                    id="menu-appbar"
-                    anchorEl={anchorElUser}
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                    open={Boolean(anchorElUser)}
-                    onClose={() => { setAnchorElUser(null) }}
-                >
-                    {dropdownNavigate.map((dropdown, index) => (
-                        <Box key={index}>
-                            {index == 1 || index == dropdownNavigate.length - 1 ? <Divider /> : null}
-                            <MenuItem onClick={() => { navigate(dropdown.to) }}
-                                sx={{
-                                    backgroundColor: dropdown.active ? "grey.400" : "transparent",
-                                    "&:hover": {
-                                        backgroundColor: "grey.400"
-                                    }
-                                }}>
-                                <Grid container columns={{ md: 12 }}>
-                                    <Grid item md={3}>
-                                        {dropdown.icon}
-                                    </Grid>
-                                    <Grid item md={9} sx={{ paddingRight: 3 }}>
-                                        <Typography>{dropdown.name}</Typography>
-                                        {/* <Typography>hehe hehehheheheheh ehehehehehehehehehehehe</Typography> */}
-                                    </Grid>
-                                </Grid>
-                            </MenuItem>
-                        </Box>
+                {/* Navbar content */}
+                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    {navbarNavigate.map((navbarItem, index) => (
+                        <Button
+                            key={index}
+                            onClick={() => { navigate(navbarItem.to) }}
+                            sx={{
+                                my: 2, color: 'white', display: 'block',
+                                backgroundColor: navbarItem.active ? "primary.light" : "transparent",
+                                borderRadius: 3,
+                                marginLeft: 1,
+                                marginRight: 1,
+                                "&:hover": { backgroundColor: "primary.light" }
+                            }}
+                        >
+                            {navbarItem.name}
+                        </Button>
                     ))}
-                </Menu>
+                </Box>
+                {/* Dropdown */}
+                <Box sx={{ flexGrow: 0, display: { xs: "none", md: "block" } }}>
+                    {role
+                        ? <>
+                            <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={(event) => { setAnchorElUser(event.currentTarget) }}>
+                                <Typography variant="subtitle1" sx={{ marginRight: 2 }}>{user ? user.name : ""}</Typography>
+                                <Tooltip title="Open settings">
+                                    <IconButton sx={{ p: 0 }}>
+                                        <Avatar alt="Remy Sharp" src={user ? user.image : ""} />
+                                    </IconButton>
+                                </Tooltip>
+                            </Box>
+                            <Menu
+                                sx={{
+                                    mt: '45px'
+                                }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={() => { setAnchorElUser(null) }}
+                            >
+                                {dropdownNavigate.map((dropdown, index) => (
+                                    <Box key={index}>
+                                        {index == 1 || index == dropdownNavigate.length - 1 ? <Divider /> : null}
+                                        <MenuItem onClick={() => {
+                                            if (index == dropdownNavigate.length - 1) {
+                                                console.log("logout")
+                                                dispatch({ type: "saga/userLogout" })
+                                                navigate("/home")
+                                            }
+                                            else {
+                                                navigate(dropdown.to)
+                                            }
+                                        }}
+                                            sx={{
+                                                backgroundColor: dropdown.active ? "grey.400" : "transparent",
+                                                "&:hover": {
+                                                    backgroundColor: "grey.400"
+                                                }
+                                            }}>
+                                            <Grid container columns={{ md: 12 }}>
+                                                <Grid item md={3}>
+                                                    {dropdown.icon}
+                                                </Grid>
+                                                <Grid item md={9} sx={{ paddingRight: 3 }}>
+                                                    <Typography>{dropdown.name}</Typography>
+                                                    {/* <Typography>hehe hehehheheheheh ehehehehehehehehehehehe</Typography> */}
+                                                </Grid>
+                                            </Grid>
+                                        </MenuItem>
+                                    </Box>
+                                ))}
+                            </Menu>
+                        </>
+                        : <Typography variant="button" sx={{ color: "white", cursor: "pointer" }} onClick={() => { navigate("/login") }}>Log in</Typography>}
+                </Box>
+            </Container>
+            {/* Dropdown responsive */}
+            <Box sx={{ flexGrow: 0, display: { xs: "block", md: "none" } }}>
+                {role
+                    ? <>
+                        <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={(event) => { setAnchorElUser(event.currentTarget) }}>
+                            <Typography variant="subtitle1" sx={{ marginRight: 2 }}>{user ? user.name : ""}</Typography>
+                            <Tooltip title="Open settings">
+                                <IconButton sx={{ p: 0 }}>
+                                    <Avatar alt="Remy Sharp" src={user ? user.image : ""} />
+                                </IconButton>
+                            </Tooltip>
+                        </Box>
+                        <Menu
+                            sx={{
+                                mt: '45px'
+                            }}
+                            id="menu-appbar"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={() => { setAnchorElUser(null) }}
+                        >
+                            {dropdownNavigate.map((dropdown, index) => (
+                                <Box key={index}>
+                                    {index == 1 || index == dropdownNavigate.length - 1 ? <Divider /> : null}
+                                    <MenuItem onClick={() => {
+                                        if (index == dropdownNavigate.length - 1) {
+                                            console.log("logout")
+                                            dispatch({ type: "saga/userLogout" })
+                                            navigate("/home")
+                                        }
+                                        else {
+                                            navigate(dropdown.to)
+                                        }
+                                    }}
+                                        sx={{
+                                            backgroundColor: dropdown.active ? "grey.400" : "transparent",
+                                            "&:hover": {
+                                                backgroundColor: "grey.400"
+                                            }
+                                        }}>
+                                        <Grid container columns={{ md: 12 }}>
+                                            <Grid item md={3}>
+                                                {dropdown.icon}
+                                            </Grid>
+                                            <Grid item md={9} sx={{ paddingRight: 3 }}>
+                                                <Typography>{dropdown.name}</Typography>
+                                                {/* <Typography>hehe hehehheheheheh ehehehehehehehehehehehe</Typography> */}
+                                            </Grid>
+                                        </Grid>
+                                    </MenuItem>
+                                </Box>
+                            ))}
+                        </Menu>
+                    </>
+                    : <Typography variant="button" sx={{ color: "white", cursor: "pointer" }} onClick={() => { navigate("/login") }}>Log in</Typography>}
             </Box>
-            {/* Dropdown end */}
         </>
     );
 }
@@ -254,6 +340,8 @@ const CustomAppBar = styled(AppBar, {
             duration: theme.transitions.duration.enteringScreen,
         }),
     }),
+    // backgroundColor: theme.palette.grey[600],
+    // color: "black"
 }));
 const Navbar = (props) => {
     innerDrawerWidth = props.drawerWidth
@@ -265,11 +353,16 @@ const Navbar = (props) => {
                     aria-label="open drawer"
                     onClick={() => props.setOpen(true)}
                     edge="start"
-                    sx={{ mr: 2, ...(props.open && { display: 'none' }) }}
+                    sx={{
+                        mr: 1,
+                        position: { xs: "block", lg: "absolute" },
+                        // zIndex: 2,
+                        ...(props.open && { display: 'none' })
+                    }}
                 >
                     <BusinessIcon />
                 </IconButton> : null}
-                <NavbarContent></NavbarContent>
+                <NavbarContent />
             </Toolbar>
         </CustomAppBar>
     )

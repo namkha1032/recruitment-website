@@ -7,9 +7,16 @@ import {
   Box,
   Container,
   InputAdornment,
+  createTheme,
+  IconButton,
 } from "@mui/material";
 
-import LockIcon from "@mui/icons-material/Lock";
+//import LockIcon from "@mui/icons-material/Lock";
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import GigaCard from "../../components/GigaCard/GigaCard";
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+
 import imageBackground from "../../assets/img/background.jpg";
 
 const style = {
@@ -17,13 +24,31 @@ const style = {
   marginBottom: "15px",
 };
 
-const ResetPassword = ({
-  newPassword,
-  confirmPassword,
-  onChangeNewPassword,
-  onChangeConfirmPassword,
-  handleSubmit,
-}) => {
+const theme = createTheme({
+  palette: {
+    secondary: {
+      main: '#1976d2'
+    }
+  }
+});
+
+const ResetPassword = (props) => {
+
+  const [showNewPassword, setShowNewPassword] = React.useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+
+  const handleClickShowNewPassword = () => {
+    setShowNewPassword(!showNewPassword);
+  }
+
+  const handleClickShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  }
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  }
+
   return (
     <Box
       sx={{
@@ -39,67 +64,104 @@ const ResetPassword = ({
         <Grid
           container
           sx={{
-            paddingTop: "60px",
+            paddingTop: "10%",
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "80%",
+            width: "76%",
           }}
         >
-          <Grid item md={7} padding="20px">
-            <Grid item xs={12} display="flex" justifyContent="center">
-              <Typography variant="h1" color='white'>
-                Recovery
-              </Typography>
-            </Grid>
-          </Grid>
 
-          <Grid item md={7} sx={{ display: "flex", justifyContent: "center" }}>
+          <Grid
+            item
+            xs={7}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
             <Grid
               item
-              md={9}
+              xs={9}
               sx={{
-                borderRadius: "20px",
+                /* borderRadius: "10px",
                 padding: "20px",
                 paddingTop: "10px",
                 paddingBottom: "10px",
-                backgroundColor: "white",
+                backgroundColor: "white", */
                 opacity: "100%",
                 left: "20%",
                 right: "20%",
               }}
             >
-              <Grid
-                item
-                xs={12}
-                sx={{ ...style, display: "flex", justifyContent: "center" }}
+              <GigaCard>
+              <GigaCardBody>
+              <Typography 
+                variant="h2" 
+                align="center" 
+                color='#1976d2' 
+                gutterBottom
+                fontFamily={'Roboto'}
+                fontSize={'28px'}
+                lineHeight={'28px'}
+                fontWeight={'700'}
+                padding={"10px"}
               >
-                <Typography variant="h5" align="center">
-                  Enter your new password
-                </Typography>
-              </Grid>
+                Reset password
+              </Typography>
 
-              <form onSubmit={handleSubmit}>
+              <form
+                onSubmit={
+                  props.handleSubmit
+                } 
+              >
+
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
                     required
                     label="New Password"
-                    type="password"
-                    value={newPassword}
+                    type={showNewPassword ? "text" : "password"}
+                    value={props.newPassword}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <LockIcon />
+                          <IconButton
+                            onClick={handleClickShowNewPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showNewPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "12px" },
                     }}
-                    onChange={(e) => {
-                      onChangeNewPassword(e.target.value);
-                    }}
+                    onChange={props.handleNewPasswordChange}
+                    error={!props.validNewPassword}
                   />
+                  {!props.validNewPassword && (
+                    <Box
+                    margin="3px 14px 0px"
+                    >
+                      {
+                        props.newPassword === "" ? (
+                          <Typography 
+                            color="#f44336"
+                            fontSize="12px"
+                            lineHeight="20px"
+                          >
+                          Password is required
+                          </Typography>
+                        ) : (
+                          <Typography color="#f44336"
+                          fontSize="12px"
+                            lineHeight="20px"
+                          >
+                          Your password must be at least 8 characters 
+                          </Typography>
+                        )
+                      }
+                      
+                    </Box>
+                  )}
                 </Grid>
 
                 <Grid item xs={12} md={12} sx={{ ...style }}>
@@ -107,21 +169,24 @@ const ResetPassword = ({
                     fullWidth
                     required
                     label="Confirm Password"
-                    type="password"
-                    value={confirmPassword}
+                    type={showConfirmPassword ? "text" : "password"}
+                    value={props.confirmPassword}
                     variant="outlined"
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <LockIcon />
+                          <IconButton
+                            onClick={handleClickShowConfirmPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
                         </InputAdornment>
                       ),
 
-                      style: { borderRadius: "25px" },
+                      style: { borderRadius: "12px" },
                     }}
-                    onChange={(e) => {
-                      onChangeConfirmPassword(e.target.value);
-                    }}
+                    onChange={props.handleConfirmPasswordChange}
                   />
                 </Grid>
 
@@ -131,19 +196,24 @@ const ResetPassword = ({
                   sx={{ display: "flex", justifyContent: "center", ...style }}
                 >
                   <Button
+                    theme={theme}
                     variant="contained"
                     type="submit"
+                    color="secondary"
+                  
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "20px",
-                      marginTop: "15px",
+                      borderRadius: "5px",
+                      marginTop: "5px",
                     }}
                   >
                     Reset
                   </Button>
                 </Grid>
               </form>
+              </GigaCardBody>
+              </GigaCard>
             </Grid>
           </Grid>
         </Grid>

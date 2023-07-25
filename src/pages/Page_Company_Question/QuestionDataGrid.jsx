@@ -1,18 +1,18 @@
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
+import {
+  NoRowsOverlay,
+  NoResultsOverlay,
+} from "../../components/DataRick/DataRick";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function QuestionDataGrid(props) {
   return (
-    <Box
-      sx={{
-        height: 600,
-        width: "100%",
-      }}
-    >
+    <Box>
       <DataGrid
+        autoHeight
         columns={props.columns}
-        rows={props.rows}
+        rows={props.rows ? props.rows : []}
         sx={{
           "&.MuiDataGrid-root": {
             borderRadius: 1,
@@ -25,19 +25,21 @@ export default function QuestionDataGrid(props) {
             color: "white",
             fontWeight: 700,
           },
-        }}
-        slots={{ toolbar: GridToolbar }}
-        slotProps={{
-          pagination: {
-            labelRowsPerPage: "Số lượng hiển thị",
-            labelDisplayedRows: ({ from, to, count }) =>
-              `${from}–${to} của ${count !== -1 ? count : `hơn ${to}`}`,
+          "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+            display: "none",
           },
+          "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+            color: "white",
+          },
+        }}
+        slots={{ toolbar: GridToolbar, noRowsOverlay: NoRowsOverlay,
+          noResultsOverlay: NoResultsOverlay, }}
+        slotProps={{
           toolbar: {
             showQuickFilter: true,
             quickFilterProps: {
               debounceMs: 500,
-              placeholder: "Tìm kiếm...",
+              placeholder: "Search...",
               sx: {
                 width: 300,
                 marginBottom: 1,
@@ -60,11 +62,12 @@ export default function QuestionDataGrid(props) {
             },
           },
         }}
+        getRowId={(row) => row.QuestionId}
         onCellClick={(params, event) => {
-          if (params.field === "id" || params.field === "QuestionName") {
+          if (params.field === "QuestionId" || params.field === "QuestionName") {
             props.handleModalOpen(
               {
-                id: params.row.id,
+                id: params.row.QuestionId,
                 QuestionName: params.row.QuestionName,
                 Category: params.row.Category,
                 Skill: params.row.Skill,

@@ -6,6 +6,7 @@ import {
   Typography,
   Box,
   Container,
+  createTheme,
 } from "@mui/material";
 
 import imageBackground from "../../assets/img/background.jpg";
@@ -15,11 +16,19 @@ const style = {
   marginBottom: "15px",
 };
 
-const CheckOTP = ({ otp, onChangeOTP, handleSubmit }) => {
+const theme = createTheme({
+  palette: {
+    secondary: {
+      main: '#1976d2'
+    }
+  }
+});
+
+const CheckOTP = (props) => {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(10);
 
-  const Resend = () => {
+  const handleResend = () => {
     setMinutes(0);
     setSeconds(11);
   };
@@ -60,27 +69,24 @@ const CheckOTP = ({ otp, onChangeOTP, handleSubmit }) => {
         <Grid
           container
           sx={{
-            paddingTop: "60px",
+            paddingTop: "10%",
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            width: "80%",
+            width: "75%",
           }}
         >
-          <Grid item md={7} padding="20px">
-            <Grid item xs={12} display="flex" justifyContent="center">
-              <Typography variant="h1" color='white'>
-                Recovery
-              </Typography>
-            </Grid>
-          </Grid>
 
-          <Grid item md={7} sx={{ display: "flex", justifyContent: "center" }}>
+          <Grid
+            item
+            xs={7}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
             <Grid
               item
-              md={9}
+              xs={9}
               sx={{
-                borderRadius: "20px",
+                borderRadius: "10px",
                 padding: "20px",
                 paddingTop: "10px",
                 paddingBottom: "10px",
@@ -90,30 +96,41 @@ const CheckOTP = ({ otp, onChangeOTP, handleSubmit }) => {
                 right: "20%",
               }}
             >
-              <Grid
-                item
-                xs={12}
-                sx={{ ...style, display: "flex", justifyContent: "center" }}
-              >
-                <Typography variant="h5" align="center">
-                  OTP Verification
-                </Typography>
-              </Grid>
 
-              <form onSubmit={handleSubmit}>
+              <Typography 
+                variant="h2" 
+                align="center" 
+                color='#1976d2' 
+                gutterBottom
+                fontFamily={'Roboto'}
+                fontSize={'28px'}
+                lineHeight={'28px'}
+                fontWeight={'700'}
+                padding={"20px"}
+              >
+                OTP Verification
+              </Typography>
+
+              <form
+                onSubmit={
+                  props.handleSubmit
+                } 
+              >
+
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
                     required
                     label="OTP"
                     type="text"
-                    value={otp}
+                    value={props.otp}
                     variant="outlined"
                     InputProps={{
-                      style: { borderRadius: "25px" },
+
+                      style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
-                      onChangeOTP(e.target.value);
+                      props.onChangeOTP(e.target.value);
                     }}
                   />
                 </Grid>
@@ -126,29 +143,40 @@ const CheckOTP = ({ otp, onChangeOTP, handleSubmit }) => {
                   <Grid
                     item
                     xs={6}
-                    md={6}
-                    paddingLeft="5px"
-                    align="left"
-                    display="flex"
-                    justifyContent="left"
-                    alignItems="center"
+                    md={6} 
+                    paddingLeft='5px'
+                    align='left'
+                    display='flex'
+                    justifyContent='left'
+                    alignItems='center'
                   >
-                    {seconds > 0 || minutes > 0 ? (
-                      <Typography variant="p">
-                        Time Remaining: {minutes > 10 ? `0${minutes}` : minutes}
-                        :{seconds < 10 ? `0${seconds}` : seconds}
+                    {
+                      seconds > 0 || minutes > 0 ? 
+                      <Typography variant='p'>
+                        Time Remaining: {minutes > 10 ? `0${minutes}` : minutes}:
+                        {seconds < 10 ? `0${seconds}` : seconds}
                       </Typography>
-                    ) : (
-                      <Typography variant="p">Didn't receive OTP?</Typography>
-                    )}
+                      :
+                      <Typography variant='p'>
+                        Didn't receive OTP?
+                      </Typography>
+                    }
                   </Grid>
 
-                  <Grid item xs={6} md={6} paddingRight="5px" align="right">
+                  <Grid item 
+                    xs={6} 
+                    md={6} 
+                    paddingRight='5px' 
+                    align='right'
+                    
+                  >
                     <Button
                       variant="text"
-                      disabled={seconds > 0 || minutes > 0}
-                      height="5px"
-                      onClick={Resend}
+                      disabled={seconds >0 || minutes > 0}
+                      height='5px'
+                      onClick={handleResend}
+                      theme={theme}
+                      color="secondary"
                     >
                       Resend OTP
                     </Button>
@@ -161,16 +189,19 @@ const CheckOTP = ({ otp, onChangeOTP, handleSubmit }) => {
                   sx={{ display: "flex", justifyContent: "center", ...style }}
                 >
                   <Button
+                    theme={theme}
                     variant="contained"
                     type="submit"
+                    color="secondary"
+                  
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "20px",
-                      marginTop: "15px",
+                      borderRadius: "5px",
+                      marginTop: "5px",
                     }}
                   >
-                    Login
+                    Send
                   </Button>
                 </Grid>
               </form>

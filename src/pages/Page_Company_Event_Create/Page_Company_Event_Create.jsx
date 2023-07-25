@@ -1,5 +1,5 @@
 // import libraries
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -12,8 +12,15 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { Box } from '@mui/system'
+import GigaCard from '../../components/GigaCard/GigaCard'
+import ReactQuill from 'react-quill'
+// import GigaCardHeader from '../../components/GigaCardHeader/GigaCardHeader'
+import CloudUploadRoundedIcon from '@mui/icons-material/CloudUploadRounded';
+import InsertPhotoRoundedIcon from '@mui/icons-material/InsertPhotoRounded';
 
 
 
@@ -25,7 +32,9 @@ const Page_Company_Event_Create = () => {
     const [maxQuantity, setMaxQuantity] = useState(null);
     const [time, setTime] = useState(null);
     const [location, setLocation] = useState(null);
+
     const [image, setImage] = useState(null);
+    const [fileName, setFileName] = useState("No selected file");
     // const [fileSelected, setFileSelected] = useState(false);
 
 
@@ -78,86 +87,183 @@ const Page_Company_Event_Create = () => {
     const navigate = useNavigate()
 
 
+
     return (
         <form onSubmit={handleSubmit}>
-            <Container sx={{ p: 0 }} className='eventcreate' >
-            <Box sx={{ 
-                fontSize: 40, 
-                fontWeight: 600, 
-                color: '#1565C0', 
-                display: 'flex', 
-                justifyContent: 'center' 
-            }}>
-                Tạo sự kiện
-            </Box>
-                <Container style={{ border: '2px solid black', borderRadius: '15px', background: 'white', margin: 17 }}>
-                    <Grid container spacing={2.5} sx={{
-                        p: 1,
-                        display: "flex",
-                        alignItems: "center"
+            <GigaCard>
+                <Container sx={{ p: 5 }} className='eventcreate' >
+                    <Box sx={{
+                        fontSize: 50,
+                        fontWeight: 600,
+                        // color: '#1565C0',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        marginBottom: 3
                     }}>
-                        <Grid item md={3} sm={4} xs={5}>
-                            <Typography variant='span' className='header'>Tên sự kiện</Typography>
+                        Create Events
+                    </Box>
+                    <Grid container rowSpacing={5} sx={{ marginBottom: 10 }}>
+                        <Grid
+                            item
+                            xs={12}
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="flex-start"
+                        >
+                            <TextField
+                                id="eventname"
+                                label="Event Name"
+                                variant="outlined"
+                                fullWidth
+                                required
+                                onChange={handleName}
+                            >
+                            </TextField>
                         </Grid>
-                        <Grid item md={9} sm={8} xs={7}>
-                            <TextField required fullWidth placeholder='Nhập tên sự kiện' onChange={handleName}></TextField>
+                        <Grid
+                            item
+                            xs={12}
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="flex-start"
+                        >
+                            <TextField
+                                id="maximumnumber"
+                                label="Maximum number of participants"
+                                variant="outlined"
+                                fullWidth
+                                required
+                                type='number'
+                                inputProps={{ min: '0' }}
+                                onChange={handleMaxQuantity}
+                            >
+                            </TextField>
                         </Grid>
-                        <Grid item md={3} sm={4} xs={5}>
-                            <Typography variant='span' className='header'>Nội dung</Typography>
-                        </Grid>
-                        <Grid item md={9} sm={8} xs={7}>
-                            <TextField required fullWidth multiline rows={3} placeholder="Nhập nội dung" onChange={handleContent} />
-                        </Grid>
-                        <Grid item md={3} sm={4} xs={5}>
-                            <Typography variant='span' className='header'>Số lượng tham gia tối đa</Typography>
-                        </Grid>
-                        <Grid item md={9} sm={8} xs={7}>
-                            <TextField type='number' required inputProps={{ min: '0' }} fullWidth placeholder='Nhập số lượng' onChange={handleMaxQuantity}></TextField>
-                        </Grid>
-                        <Grid item md={3} sm={4} xs={5}>
-                            <Typography variant='span' className='header'>Hình ảnh</Typography>
-                        </Grid>
-                        <Grid item md={9} sm={8} xs={7}>
-                            {/* <Button variant='outlined' size='medium' className='btnfile'>
-                                <label htmlFor="customFile" className='choice'>Chọn tệp</label>
-                            </Button> */}
-                            {/* <input type="file" classname="form-control" id="customFile" style={{display: 'none'}} /> */}
-                            {/* <input type="file" classname="form-control" id="customFile" onChange={handlechange}/> */}
-                            {/* <Input type='file' onChange={handleFileChange} disabled={fileSelected}></Input> */}
-                            <Input type='file' onChange={handleImage}></Input>
-                        </Grid>
-                        <Grid item md={3} sm={4} xs={5}>
-                            <Typography variant='span' className='header'>Thời gian</Typography>
-                        </Grid>
-                        <Grid item md={9} sm={8} xs={7}>
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DemoContainer components={['DatePicker']}>
-                                    <DatePicker value={time} onChange={(newValue) => {
-                                        let newDate = new Date(newValue.$d)
-                                        const year = newDate.toLocaleString('default', { year: 'numeric' });
-                                        const month = newDate.toLocaleString('default', { month: '2-digit' });
-                                        const day = newDate.toLocaleString('default', { day: '2-digit' });
-                                        newDate = year + "-" + month + "-" + day
-                                        setTime(newDate)
-                                    }} format='DD-MM-YYYY' slotProps={{ textField: { required: true } }} />
-                                </DemoContainer>
-                            </LocalizationProvider>
-                        </Grid>
-                        <Grid item md={3} sm={4} xs={5}>
-                            <Typography variant='span' className='header'>Địa điểm</Typography>
-                        </Grid>
-                        <Grid item md={9} sm={8} xs={7}>
-                            <TextField required fullWidth placeholder='Nhập địa điểm' onChange={handleLocation}></TextField>
-                        </Grid>
-                        <Grid item xs={12} align='right'>
-                            <Button type="submit" variant="contained" size='large'>
-                                <TaskAltIcon sx={{ marginRight: 1 }}></TaskAltIcon>
-                                Lưu
-                            </Button>
+                        <Grid container sx={{ marginTop: 4 }}>
+                            <Grid item xs={6}>
+                                <Grid container rowSpacing={5}>
+                                    <Grid
+                                        item
+                                        xs={12}
+                                    >
+                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                            <DemoContainer components={['DateTimePicker']}>
+                                                {/* <DatePicker 
+                                        value={time} 
+                                        onChange={(newValue) => {
+                                            let newDate = new Date(newValue.$d)
+                                            const year = newDate.toLocaleString('default', { year: 'numeric' });
+                                            const month = newDate.toLocaleString('default', { month: '2-digit' });
+                                            const day = newDate.toLocaleString('default', { day: '2-digit' });
+                                            newDate = year + "-" + month + "-" + day
+                                            setTime(newDate)
+                                        }} 
+                                        format='DD-MM-YYYY' 
+                                        slotProps={{ textField: { required: true } }} 
+                                    /> */}
+                                                <DateTimePicker
+                                                    label="Time"
+                                                    sx={{ width: "100%" }}
+                                                    slotProps={{ textField: { required: true } }}
+                                                    value={time}
+                                                    onChange={(newValue) => {
+                                                        console.log("hentai: ", newValue)
+                                                        console.log("jav: ", newValue.$d)
+                                                        const newDate = new Date(newValue.$d)
+                                                        console.log("newDate: ", newDate)
+                                                        console.log("type: ", typeof (newValue.$d.toLocaleTimeString()))
+                                                        setTime(newValue)
+                                                    }}
+                                                />
+                                            </DemoContainer>
+                                        </LocalizationProvider>
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        xs={12}
+                                    >
+                                        <TextField
+                                            id="location"
+                                            label="Location"
+                                            variant="outlined"
+                                            fullWidth
+                                            required
+                                            multiline
+                                            rows={3}
+                                            onChange={handleLocation}
+                                        >
+                                        </TextField>
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        xs={12}
+                                    >
+                                        <Box>
+                                            <Box sx={{ color: 'black', display: "flex", alignItems: "center", columnGap: 1 }}>
+                                                <Box sx={{ fontSize: 40, display: "flex", alignItems: "center" }}>
+                                                    <EditNoteRoundedIcon fontSize='large'></EditNoteRoundedIcon>
+                                                </Box>
+                                                <Box sx={{
+                                                    fontSize: 25,
+                                                    fontWeight: 600,
+                                                    // color: '#1565C0',
+                                                    display: 'flex',
+                                                    justifyContent: 'flex-start',
+                                                }}>
+                                                    Event Content
+                                                </Box>
+                                            </Box>
+                                        </Box>
+                                        <ReactQuill
+                                            theme='snow'
+                                        >
+                                        </ReactQuill>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            <Grid item xs={6} sx={{ padding: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <div style={{
+                                    border: '2px dashed #1565C0',
+                                    borderRadius: '5px',
+                                    width: '100%'
+                                }}
+                                    onClick={() => document.querySelector(".input-field").click()}
+                                >
+                                    <input
+                                        type="file"
+                                        accept='image/*'
+                                        className='input-field'
+                                        hidden
+                                        onChange={({ target: { files } }) => {
+                                            files[0] && setFileName(files[0].name)
+                                            if (files) {
+                                                setImage(URL.createObjectURL(files[0]))
+                                            }
+                                        }}
+                                    />
+                                    {image ? <img src={image} style={{ width: '100%', height: '100%', objectFit: 'cover' }}></img> :
+                                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                            <CloudUploadRoundedIcon fontSize='large'></CloudUploadRoundedIcon>
+                                            <p>Browse Files to upload</p>
+                                        </div>}
+                                </div>
+                                <div>
+                                    <span>
+                                        {fileName}
+                                    </span>
+                                </div>
+                            </Grid>
+
+                            <Grid item xs={12} align='right' sx={{ marginTop: 20 }}>
+                                <Button type="submit" variant="contained" size='large'>
+                                    Save
+                                </Button>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Container>
-            </Container >
+            </GigaCard>
         </form>
     )
 }

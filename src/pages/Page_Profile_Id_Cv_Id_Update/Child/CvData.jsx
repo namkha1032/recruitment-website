@@ -1,18 +1,4 @@
 import dayjs from "dayjs";
-
-export const certificateList = [
-  { name: "IELTS" },
-  { name: "TOEIC" },
-  { name: "python" },
-  { name: "javaScript" },
-];
-export const skillList = [
-  { name: "html" },
-  { name: "css" },
-  { name: "python" },
-  { name: "javaScript" },
-];
-
 const cvinfo = {
   title: "New Cv",
   intro: "sdasdasd",
@@ -27,7 +13,7 @@ const cvinfo = {
       link: "dadadadadadasd",
     },
   ],
-  skills: [{ id: 0, name: "html" }],
+  skills: [{ id: 0, name: "html", exp:2 }],
   language: [
     { id: 0, languageId: 0, languageName: "English" },
     { id: 1, languageId: 1, languageName: "Japanese" },
@@ -35,10 +21,11 @@ const cvinfo = {
   education: "ada",
   experience: "dasdad",
 };
-export const language = [
-  { id: 0, name: "English" },
-  { id: 1, name: "Japanese" },
-  { id: 2, name: "Chinese" },
-  { id: 3, name: "VietNamese" },
-];
+// export const certificateList = [
+//   { name: "IELTS" },
+//   { name: "TOEIC" },
+//   { name: "python" },
+//   { name: "javaScript" },
+// ];
+export const steps = ["Cv Infor", "Yout Experience", "Yout Certificate"];
 export default cvinfo;

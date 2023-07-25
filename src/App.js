@@ -3,6 +3,9 @@ import {
   BrowserRouter,
   Routes, Route
 } from 'react-router-dom'
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
 // import components
 import MainLayout from './components/MainLayout/MainLayout';
 // import pages
@@ -41,6 +44,7 @@ import Page_Profile_Id_Interview from './pages/Page_Profile_Id_Interview/Page_Pr
 import Page_Recruitment from './pages/Page_Recruitment/Page_Recruitment';
 import Page_Recruitment_Id from './pages/Page_Recruitment_Id/Page_Recruitment_Id';
 import Page_Recruitment_Id_Application_Id from './pages/Page_Recruitment_Id_Application_Id/Page_Recruitment_Id_Application_Id';
+import Page_Company_Recruitment_Id_Report from './pages/Page_Company_Recruitment_Id_Report/Page_Company_Recruitment_Id_Report';
 
 import XPage_Login from './pages/XPage_Login/XPage_Login';
 import XPage_Register from './pages/XPage_Register/XPage_Register';
@@ -48,11 +52,16 @@ import XPage_Recovery from './pages/XPage_Recovery/XPage_Recovery';
 
 import PageTest from './pages/xpagetest/PageTest';
 import PageTest2 from './pages/xpagetest2/PageTest2';
+import MissingPage from './components/MissingPage/MissingPage';
+import Unauthorized from './components/Unauthorized/Unauthorized';
+import RequireAuth from './components/RequireAuth/RequireAuth';
+
+import TestLayout from './components/TestLayout/TestLayout';
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function App() {
   return (
     <div className="App">
-    a
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainLayout />}>
@@ -75,6 +84,7 @@ function App() {
             <Route path="/company/recruitment/:recruitmentid" element={<Page_Company_Recruitment_Id />} />
             <Route path="/company/recruitment/:recruitmentid/application/:applicationid" element={<Page_Company_Recruitment_Id_Application_Id />} />
             <Route path="/company/recruitment/:recruitmentid/update" element={<Page_Company_Recruitment_Id_Update />} />
+            <Route path="/company/recruitment/:recruitmentid/report" element={<Page_Company_Recruitment_Id_Report />} />
             {/* ------------------------------------------------------------------------------------------------------------------------------------ */}
             {/* ------------------------------------------------------------------------------------------------------------------------------------ */}
             {/* ------------------------------------------------------------------------------------------------------------------------------------ */}
@@ -95,13 +105,18 @@ function App() {
             <Route path="/recruitment/:recruitmentid" element={<Page_Recruitment_Id />} />
             <Route path="/recruitment/:recruitmentid/application/:applicationid" element={<Page_Recruitment_Id_Application_Id />} />
 
-            <Route path="/test" element={<PageTest />} />
+            <Route element={<RequireAuth allowedRoles={"candidate"} />}>
+              <Route path="/test" element={<PageTest />} />
+            </Route>
+
           </Route>
 
           <Route path="/login" element={<XPage_Login />} />
           <Route path="/recovery" element={<XPage_Recovery />} />
           <Route path="/register" element={<XPage_Register />} />
           <Route path="/test2" element={<PageTest2 />} />
+          <Route path="*" element={<MissingPage />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
 
         </Routes>
       </BrowserRouter>

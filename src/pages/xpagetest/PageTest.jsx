@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-
-export default function MyComponent() {
-    const [value, setValue] = useState('');
-    console.log("value: ", value)
-    return <ReactQuill style={{ height: "600px" }} theme="snow" value={value} onChange={setValue} />;
+const PageTest = () => {
+    return (
+        <>
+        </>
+    )
 }
+
+export default PageTest

@@ -1,101 +1,54 @@
-// import { Typography } from "@mui/material";
-
-// const Page_Company_Event = () => {
-//     return (
-//         <Typography variant="body1">Page_Company_Event</Typography>
-//     )
-// }
-
-// export default Page_Company_Event
-
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Chip,
   Button,
-  Menu,
-  MenuItem,
-  Input,
   Autocomplete,
   TextField,
+  IconButton,
 } from "@mui/material";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
-import DoNotDisturbOnIcon from "@mui/icons-material/DoNotDisturbOn";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import QueryStatsIcon from "@mui/icons-material/QueryStats";
-import GetAppIcon from "@mui/icons-material/GetApp";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import FlagIcon from "@mui/icons-material/Flag";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
+import {
+  NullString,
+  NotStart,
+  Pending,
+  Completed,
+  Upcoming,
+} from "../../components/Label/Label";
+import {
+  NoRowsOverlay,
+  NoResultsOverlay,
+} from "../../components/DataRick/DataRick";
 import Box from "@mui/material/Box";
+import EventNoteRounded from '@mui/icons-material/EventNoteRounded';
+import SportsScoreRounded from '@mui/icons-material/SportsScoreRounded';
 import datasjson from "./Page_Company_Event_Data.json";
-import { useNavigate } from "react-router-dom";
-import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
-// import { localeVN } from "../../locale/locale";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-// import "./Company_Recruitment.scss"
-
-
-function NullString() {
-  return <Chip icon={<PriorityHighIcon />} label="Trống" />;
-}
-function NotStart() {
-  return (
-    <Chip
-      label="Chưa bắt đầu"
-      variant="outlined"
-      style={{
-        color: "#E0E0E0",
-        backgroundColor: "white",
-        borderColor: "#E0E0E0",
-      }}
-    />
-  );
-}
-
-function Pending() {
-  return (
-    <Chip
-      label="Đang diễn ra"
-      variant="outlined"
-      style={{
-        color: "#00C853",
-        backgroundColor: "white",
-        borderColor: "#00C853",
-      }}
-    />
-  );
-}
-
-function Completed() {
-  return (
-    <Chip
-      label="Kết thúc"
-      variant="outlined"
-      style={{
-        color: "#D84315",
-        backgroundColor: "white",
-        borderColor: "#D84315",
-      }}
-    />
-  );
-}
-
+import { useDispatch, useSelector } from "react-redux";
+import cleanStore from "../../utils/cleanStore";
 export default function Page_Company_Event() {
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [rows, setRows] = useState(datasjson);
- 
+  useEffect(() => {
+    dispatch({ type: "saga/getEventList" });
+    return () => {
+      cleanStore(dispatch);
+    };
+  }, []);
+
+  const rows = useSelector((state) => state.eventList);
+
   // const [anchorEl, setAnchorEl] = useState(null);
   // const [valueSearch, setValueSearch] = useState("");
-  
-  const [valueChoose, setValueChoose] = useState(null);
-  const [departmentChoose, setDepartmentChoose] = useState(null);
+
+  const loading = useSelector((state) => state.loading);
+  // const [valueChoose, setValueChoose] = useState(null);
+  // const [departmentChoose, setDepartmentChoose] = useState(null);
   const [statusChoose, setStatusChoose] = useState(null);
 
   // function handleMoreClick(event) {
@@ -106,11 +59,8 @@ export default function Page_Company_Event() {
   //   setAnchorEl(null);
   // }
 
-  function handleRowClick(id) {
-    alert("Navigate to position id: " + id);
-  }
-
   function handleAddClick() {
+    cleanStore(dispatch)
     navigate("./create");
   }
 
@@ -118,39 +68,33 @@ export default function Page_Company_Event() {
   //   alert("Value search: " + valueSearch);
   // }
 
-  function handleChooseValue(value) {
-    setValueChoose(value);
-    setDepartmentChoose(null);
-    setStatusChoose(null);
-  }
-
-  function handleChooseDepartment(value) {
-    setDepartmentChoose(value);
-  }
+  // function handleChooseValue(value) {
+  //   setValueChoose(value);
+  //   setStatusChoose(null);
+  // }
 
   function handleChooseStatus(value) {
     setStatusChoose(value);
   }
 
   function handleDetailClick(value) {
-    navigate(`./${value}`)
+    cleanStore(dispatch)
+    navigate(`./${value}`);
   }
 
   function handleAccountDetailClick(value) {
-    navigate(`../../profile/${value}`)
-  }
-
-  function handleEditClick(value) {
-    navigate(`./${value}/update`)
+    navigate(`../../profile/${value}`);
   }
 
   const columns = useMemo(() => [
     {
-      field: "id",
+      field: "EventId",
       type: "number",
       headerAlign: "left",
       align: "left",
-      renderHeader: () => <span>Mã</span>,
+      flex: 0.2,
+      minWidth: 30,
+      renderHeader: () => <span>ID</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
         return (
@@ -173,7 +117,7 @@ export default function Page_Company_Event() {
       headerAlign: "left",
       align: "left",
       flex: 1,
-      renderHeader: () => <span>Sự kiện</span>,
+      renderHeader: () => <span>Event Name</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
         return (
@@ -195,8 +139,9 @@ export default function Page_Company_Event() {
       type: "string",
       headerAlign: "center",
       align: "center",
-      flex: 1,
-      renderHeader: () => <span>Tạo bởi</span>,
+      flex: 0.5,
+      minWidth: 180,
+      renderHeader: () => <span>Created by</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
         return (
@@ -218,30 +163,38 @@ export default function Page_Company_Event() {
       type: "number",
       headerAlign: "center",
       align: "center",
-      renderHeader: () => <span>Đã tham gia</span>,
+      flex: 0.3,
+      minWidth: 150,
+      renderHeader: () => <span>Participated</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
       },
     },
     {
+      field: "Status",
+      type: "string",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 180,
+      flex: 0.3,
+      renderHeader: () => <span>Status</span>,
+      renderCell: (params) => {
+        if (params.value) {
+          return <Upcoming />
+        }
+        return <Completed />
+      },
+    },
+    {
       field: "actions",
       type: "actions",
-      width: 60,
+      width: 30,
       headerAlign: "right",
       align: "right",
       getActions: (params) => [
-        <GridActionsCellItem
-          icon={<InfoIcon variant="outlined" />}
-          label="Chi tiết"
-          onClick={() => handleDetailClick(params.row.id)}
-          showInMenu
-        />,
-        <GridActionsCellItem
-          icon={<EditIcon />}
-          label="Chỉnh sửa"
-          onClick={() => handleEditClick(params.row.id)}
-          showInMenu
-        />,
+        <IconButton onClick={() => handleDetailClick(params.row.InterviewId)}>
+          <InfoIcon sx={{ color: "#1565C0" }} />
+        </IconButton>,
       ],
     },
   ]);
@@ -263,7 +216,7 @@ export default function Page_Company_Event() {
               color: "#1565C0",
             }}
           >
-            Danh sách sự kiện
+            Event
           </Box>
         </Grid>
 
@@ -291,7 +244,7 @@ export default function Page_Company_Event() {
             onClick={handleAddClick}
           >
             <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
-            Tạo sự kiện
+            Create event
           </Button>
 
           {/* <IconButton onClick={handleMoreClick} sx={{
@@ -340,27 +293,53 @@ export default function Page_Company_Event() {
           <Autocomplete
             disablePortal
             id="filter-type"
-            options={["Trạng thái"]}
-            sx={{ width: 200, marginRight: 2 }}
+            options={["Upcoming", "Completed"]}
+            sx={{ width: 200 }}
             renderInput={(params) => (
-              <TextField {...params} label="Lọc theo..." />
+              <TextField {...params} label="Status..." />
             )}
-            value={valueChoose}
-            onChange={(event, value) => handleChooseValue(value)}
+            renderOption={(props, option) => {
+              if (option === "Upcoming") {
+                return (
+                  <Box
+                    component="li"
+                    {...props}
+                    sx={{
+                      color: "#E0E0E0",
+                    }}
+                  >
+                    <EventNoteRounded
+                      sx={{
+                        color: "#E0E0E0",
+                        marginRight: 1,
+                      }}
+                    />
+                    Upcoming
+                  </Box>
+                );
+              } else {
+                return (
+                  <Box
+                    component="li"
+                    {...props}
+                    sx={{
+                      color: "#1565C0",
+                    }}
+                  >
+                    <SportsScoreRounded
+                      sx={{
+                        color: "#1565C0",
+                        marginRight: 1,
+                      }}
+                    />
+                    Finished
+                  </Box>
+                );
+              }
+            }}
+            value={statusChoose}
+            onChange={(event, value) => handleChooseStatus(value)}
           />
-          {valueChoose === "Trạng thái" && (
-            <Autocomplete
-              disablePortal
-              id="filter-type"
-              options={["Chưa bắt đầu", "Đang diễn ra", "Kết thúc"]}
-              sx={{ width: 200 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Trạng thái..." />
-              )}
-              value={statusChoose}
-              onChange={(event, value) => handleChooseStatus(value)}
-            />
-          )}
         </Grid>
 
         {/* <Grid
@@ -384,7 +363,7 @@ export default function Page_Company_Event() {
             }}
           >
             <Input
-              placeholder="Nhập mã, tên sự kiện..."
+              placeholder="Nhập ID, tên sự kiện..."
               disableUnderline
               value={valueSearch}
               onChange={(e) => setValueSearch(e.target.value)}
@@ -400,15 +379,12 @@ export default function Page_Company_Event() {
         </Grid> */}
       </Grid>
 
-      <Box
-        sx={{
-          height: 600,
-          width: "100%",
-        }}
-      >
+      <Box>
         <DataGrid
+          autoHeight
+          loading={loading}
           columns={columns}
-          rows={rows}
+          rows={rows === null ? [] : rows}
           sx={{
             "&.MuiDataGrid-root": {
               borderRadius: 1,
@@ -416,28 +392,40 @@ export default function Page_Company_Event() {
             "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
               outline: "none",
             },
+            "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+              outline: "none",
+            },
             "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
               backgroundColor: "#1565C0",
               color: "white",
               fontWeight: 700,
             },
-          }}
-          slots={{ toolbar: GridToolbar }}
-          slotProps={{
-            pagination: {
-              labelRowsPerPage: "Số lượng hiển thị",
-              labelDisplayedRows: ({ from, to, count }) =>
-                `${from}–${to} của ${count !== -1 ? count : `hơn ${to}`}`,
+            "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+              display: "none",
             },
+            "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+              color: "white",
+            },
+          }}
+          slots={{
+            toolbar: GridToolbar,
+            noRowsOverlay: NoRowsOverlay,
+            noResultsOverlay: NoResultsOverlay,
+          }}
+          slotProps={{
             toolbar: {
               showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500, placeholder: "Tìm kiếm...", sx: {
-                width: 300,
-                marginBottom: 1,
-              }},
+              quickFilterProps: {
+                debounceMs: 500,
+                placeholder: "Search...",
+                sx: {
+                  width: 300,
+                  marginBottom: 1,
+                },
+              },
               csvOptions: { disableToolbarButton: true },
-              printOptions: { disableToolbarButton: true }
-          },
+              printOptions: { disableToolbarButton: true },
+            },
           }}
           disableColumnMenu
           disableColumnFilter
@@ -452,12 +440,13 @@ export default function Page_Company_Event() {
               },
             },
           }}
+          getRowId={(row) => row.EventId}
           onCellClick={(params, event) => {
-            if (params.field === "id" || params.field === "EventName") {
-              handleDetailClick(params.row.id)
+            if (params.field === "EventId" || params.field === "EventName") {
+              handleDetailClick(params.row.EventId);
             }
             if (params.field === "CreatedByName") {
-              handleAccountDetailClick(params.row.CreatedById)
+              handleAccountDetailClick(params.row.CreatedById);
             }
           }}
         />

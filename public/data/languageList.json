@@ -1,0 +1,8 @@
+[
+  { "languageId": 0, "languageName": "English" },
+  { "languageId": 1, "languageName": "Japanese" },
+  { "languageId": 2, "languageName": "Chinese" },
+  { "languageId": 3, "languageName": "Vietnamese" },
+  { "languageId": 4, "languageName": "France" },
+  { "languageId": 5, "languageName": "Korean" }
+]

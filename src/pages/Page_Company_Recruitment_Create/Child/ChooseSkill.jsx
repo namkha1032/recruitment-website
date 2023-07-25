@@ -3,9 +3,9 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { skill } from "./RecruitData";
 import NotRInputText from "./NotRequiredText";
 import EmptyTextarea from "./AutoText";
+import AddIcon from "@mui/icons-material/Add";
 
 const filter = createFilterOptions();
 export default function ChooseList(prop) {
@@ -34,28 +34,6 @@ export default function ChooseList(prop) {
     <>
       <Grid container spacing={0} justifyContent="center" alignItems="center">
         <Grid item xs={9}>
-          {/* <Autocomplete
-            sx={{
-              "& > :not(style)": {
-           
-                display: "flex",
-                margin: "0",
-                marginTop: "8px",
-                padding: "0",
-                marginRight: "1%",
-              },
-            }}
-            inputValue={prop.inputValue}
-            onInputChange={(event, newInputValue) => {
-              prop.setInputValue(newInputValue);
-            }}
-            id="free-solo-demo"
-            freeSolo
-            options={skill.map((option) => option.name)}
-            renderInput={(params) => <TextField {...params} label="freeSolo" />}
-            onChange={(event, option) => handleSkill(event, option)}
-            value={prop.value}
-          /> */}
           <Autocomplete
             value={prop.inputValue}
             onChange={(event, newValue) => {
@@ -77,7 +55,7 @@ export default function ChooseList(prop) {
                 prop.setInputValue(newValue);
                 if (newValue !== null) {
                   console.log(newValue);
-                  prop.setSkillId(skill.filter((comp) => comp.name === newValue.name)[0].id);
+                  prop.setSkillId(prop.skill.filter((comp) => comp.name === newValue.name)[0].id);
                   prop.handleState(newValue.name);
                 }
               }
@@ -101,7 +79,7 @@ export default function ChooseList(prop) {
             clearOnBlur
             handleHomeEndKeys
             id="free-solo-with-text-demo"
-            options={skill}
+            options={prop.skill}
             getOptionLabel={(option) => {
               if (typeof option === "string") {
                 return option;
@@ -147,8 +125,11 @@ export default function ChooseList(prop) {
           sx={{
             margin: "auto",
           }}
-          variant="contained"
-          className="AddButton"
+          color="primary"
+          size="medium"
+          variant="outlined"
+          className="AddCompButton"
+          startIcon={<AddIcon />}
           onClick={() => {
             prop.onPress();
           }}

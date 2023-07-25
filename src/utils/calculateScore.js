@@ -1,5 +1,5 @@
 function calculateScore(rightSoft, rightLang, rightTech) {
-    
+
     let softScoreArray = []
     let softSumString = ``
     let softResult = 0
@@ -17,7 +17,7 @@ function calculateScore(rightSoft, rightLang, rightTech) {
 
     if (rightSoft) {
         rightSoft.questions.forEach((ques, index) => {
-            if (ques.score != "") {
+            if (typeof (ques.score) == "number") {
                 softScoreArray = softScoreArray.concat(parseFloat(ques.score))
             }
         })
@@ -32,34 +32,35 @@ function calculateScore(rightSoft, rightLang, rightTech) {
             if (index < softScoreArray.length - 1) {
                 softSumString = softSumString.concat("+")
             }
-            softMath = `${softResult}` + equal + leftParen + softSumString + divider + num + rightParen
+            softMath = leftParen + softSumString + divider + num + rightParen
         })
     }
     if (rightLang) {
-        rightLang.questions.forEach(ques => {
-            if (ques.score != "") {
-                langScoreArray = langScoreArray.concat(parseFloat(ques.score))
-            }
+        rightLang.languages.forEach(language => {
+            language.questions.forEach(ques => {
+                if (typeof (ques.score) == "number") {
+                    langScoreArray = langScoreArray.concat(parseFloat(ques.score))
+                }
+            })
         })
         langScoreArray.forEach((sco, index) => {
             let rightParen = `}`
             let num = langScoreArray.length.toString()
             let divider = `}{`
             let leftParen = `\\frac{`
-            let equal = `=`
             langResult = (langScoreArray.reduce((a, b) => a + b, 0) / langScoreArray.length).toFixed(2)
 
             langSumString = langSumString.concat(sco.toString())
             if (index < langScoreArray.length - 1) {
                 langSumString = langSumString.concat("+")
             }
-            langMath = `${langResult}` + equal + leftParen + langSumString + divider + num + rightParen
+            langMath = leftParen + langSumString + divider + num + rightParen
         })
     }
     if (rightTech) {
         rightTech.skills.forEach(skill => {
             skill.questions.forEach(ques => {
-                if (ques.score != "") {
+                if (typeof (ques.score) == "number") {
                     techScoreArray = techScoreArray.concat(parseFloat(ques.score))
                 }
             })
@@ -76,12 +77,12 @@ function calculateScore(rightSoft, rightLang, rightTech) {
             if (index < techScoreArray.length - 1) {
                 techSumString = techSumString.concat("+")
             }
-            techMath = `${techResult}` + equal + leftParen + techSumString + divider + num + rightParen
+            techMath = leftParen + techSumString + divider + num + rightParen
         })
     }
 
     let finalResult = (parseFloat(softResult) * 0.2 + parseFloat(langResult) * 0.3 + parseFloat(techResult) * 0.5).toFixed(2)
-    let finalMath = `${finalResult}=0.2\\times${softResult}+0.3\\times${langResult}+0.5\\times${techResult}`
+    let finalMath = `0.2\\times${softResult}+0.3\\times${langResult}+0.5\\times${techResult}`
 
     return {
         softResult: softResult,

@@ -1,94 +1,49 @@
 import { useMemo, useState, useEffect } from "react";
-import {
-  Chip,
-  Button,
-  Menu,
-  MenuItem,
-  Input,
-  Autocomplete,
-  TextField,
-} from "@mui/material";
-import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
-import DoNotDisturbOnIcon from "@mui/icons-material/DoNotDisturbOn";
+import { Button, Autocomplete, TextField } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import QueryStatsIcon from "@mui/icons-material/QueryStats";
-import GetAppIcon from "@mui/icons-material/GetApp";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import FlagIcon from "@mui/icons-material/Flag";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
-import CodeIcon from "@mui/icons-material/Code";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import datasjson from "./Page_Company_Question_Data.json";
 import { useNavigate } from "react-router-dom";
-import { randomNumberBetween } from "@mui/x-data-grid/utils/utils";
-// import { localeVN } from "../../locale/locale";
 import Grid from "@mui/material/Grid";
 import QuestionFormModal from "./QuestionFormModal";
 import QuestionModal from "./QuestionModal";
 import { successAlert } from "../../components/Alert/SuccessAlert";
 import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
+import {
+  NullString,
+  NotStart,
+  Pending,
+  Completed,
+  Technology,
+  SoftSkill,
+  Language,
+} from "../../components/Label/Label";
 import "react-toastify/dist/ReactToastify.css";
 import DeleteAlertModal from "./DeleteModal";
 import QuestionDataGrid from "./QuestionDataGrid";
+import {
+  LanguageRounded,
+  PsychologyRounded,
+  SchoolRounded,
+} from "@mui/icons-material";
+import { useDispatch } from "react-redux";
 
 const listOfSkills = {
   skill: ["React", "Angular", "Java", "Python", "Figma", ".NET", "C", "C++"],
   language: ["English", "Vietnamese", "Japanese", "Chinese", "Korian"],
 };
 
-function NullString() {
-  return <Chip icon={<PriorityHighIcon />} label="Trống" />;
-}
-function NotStart() {
-  return (
-    <Chip
-      label="Chưa bắt đầu"
-      variant="outlined"
-      style={{
-        color: "#E0E0E0",
-        backgroundColor: "white",
-        borderColor: "#E0E0E0",
-      }}
-    />
-  );
-}
-
-function Pending() {
-  return (
-    <Chip
-      label="Đang diễn ra"
-      variant="outlined"
-      style={{
-        color: "#00C853",
-        backgroundColor: "white",
-        borderColor: "#00C853",
-      }}
-    />
-  );
-}
-
-function Completed() {
-  return (
-    <Chip
-      label="Kết thúc"
-      variant="outlined"
-      style={{
-        color: "#D84315",
-        backgroundColor: "white",
-        borderColor: "#D84315",
-      }}
-    />
-  );
-}
-
 export default function Page_Company_Question() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({type: "saga/getAllQuestion"})
+  },[])
 
   const [rows, setRows] = useState(datasjson);
   // const [anchorEl, setAnchorEl] = useState(null);
@@ -113,11 +68,6 @@ export default function Page_Company_Question() {
   const [valueDelete, setValueDelete] = useState(0);
 
   // const [successAlert, setSuccessAlert] = useState(false);
-
-  // useEffect(() => {
-  //   const id = setTimeout(() => {handleCloseSuccessAlert()}, 1500);
-  //   return () => {clearTimeout(id)}
-  // })
 
   // function handleMoreClick(event) {
   //   setAnchorEl(event.currentTarget);
@@ -226,13 +176,15 @@ export default function Page_Company_Question() {
 
   const columns = useMemo(() => [
     {
-      field: "id",
+      field: "QuestionId",
       type: "number",
       headerAlign: "left",
       align: "left",
-      renderHeader: () => <span>Mã</span>,
+      flex: 0.2,
+      minWidth: 30,
+      renderHeader: () => <span>ID</span>,
       renderCell: (params) => {
-        if (params.value === undefined) return NullString();
+        if (params.value === undefined) return <NullString />;
         return (
           <Box
             sx={{
@@ -253,9 +205,10 @@ export default function Page_Company_Question() {
       headerAlign: "left",
       align: "left",
       flex: 1,
-      renderHeader: () => <span>Câu hỏi</span>,
+      minWidth: 250,
+      renderHeader: () => <span>Question</span>,
       renderCell: (params) => {
-        if (params.value === undefined) return NullString();
+        if (params.value === undefined) return <NullString />;
         return (
           <Box
             sx={{
@@ -275,11 +228,14 @@ export default function Page_Company_Question() {
       type: "string",
       headerAlign: "center",
       align: "center",
-      flex: 0.5,
+      flex: 0.4,
       minWidth: 80,
-      renderHeader: () => <span>Loại</span>,
+      renderHeader: () => <span>Category</span>,
       renderCell: (params) => {
-        if (params.value === undefined) return NullString();
+        if (params.value === undefined) return <NullString />;
+        else if (params.value === "Chuyên môn") return <Technology />;
+        else if (params.value === "Ngôn ngữ") return <Language />;
+        else if (params.value === "Kỹ năng mềm") return <SoftSkill />;
       },
     },
     {
@@ -288,9 +244,9 @@ export default function Page_Company_Question() {
       headerAlign: "center",
       align: "center",
       minWidth: 50,
-      renderHeader: () => <span>Kỹ năng</span>,
+      renderHeader: () => <span>Type</span>,
       renderCell: (params) => {
-        if (params.value === undefined) return NullString();
+        if (params.value === undefined) return <NullString />;
       },
     },
     {
@@ -301,7 +257,7 @@ export default function Page_Company_Question() {
       getActions: (params) => [
         <GridActionsCellItem
           icon={<InfoIcon variant="outlined" />}
-          label="Chi tiết"
+          label="Detail"
           onClick={() =>
             handleModalOpen(
               {
@@ -317,7 +273,7 @@ export default function Page_Company_Question() {
         />,
         <GridActionsCellItem
           icon={<EditIcon />}
-          label="Chỉnh sửa"
+          label="Edit question"
           onClick={() =>
             handleModalOpen(
               {
@@ -333,7 +289,7 @@ export default function Page_Company_Question() {
         />,
         <GridActionsCellItem
           icon={<DeleteIcon sx={{ color: "#cc3300" }} />}
-          label="Xoá câu hỏi"
+          label="Delete question"
           onClick={() => handleDeleteModalOpen(params.row.id)}
           showInMenu
           sx={{
@@ -361,7 +317,7 @@ export default function Page_Company_Question() {
               color: "#1565C0",
             }}
           >
-            Danh sách câu hỏi
+            Question
           </Box>
         </Grid>
 
@@ -389,7 +345,7 @@ export default function Page_Company_Question() {
             onClick={handleAddModalOpen}
           >
             <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
-            Tạo câu hỏi
+            Create Question
           </Button>
           {/* <IconButton
             onClick={handleMoreClick}
@@ -440,35 +396,92 @@ export default function Page_Company_Question() {
           <Autocomplete
             disablePortal
             id="filter-type"
-            options={["Chuyên môn", "Ngôn ngữ", "Kỹ năng mềm"]}
+            options={["Technology", "Language", "Soft Skills"]}
             sx={{ width: 200, marginRight: 2 }}
             renderInput={(params) => (
-              <TextField {...params} label="Lọc theo..." />
+              <TextField {...params} label="Category..." />
             )}
+            renderOption={(props, option) => {
+              if (option === "Technology") {
+                return (
+                  <Box
+                    component="li"
+                    {...props}
+                    sx={{
+                      color: "#1565C0",
+                    }}
+                  >
+                    <SchoolRounded
+                      sx={{
+                        color: "#1565C0",
+                        marginRight: 1,
+                      }}
+                    />
+                    {option}
+                  </Box>
+                );
+              } else if (option === "Language") {
+                return (
+                  <Box
+                    component="li"
+                    {...props}
+                    sx={{
+                      color: "#008631",
+                    }}
+                  >
+                    <LanguageRounded
+                      sx={{
+                        color: "#008631",
+                        marginRight: 1,
+                      }}
+                    />
+                    {option}
+                  </Box>
+                );
+              } else if (option === "Soft Skills") {
+                return (
+                  <Box
+                    component="li"
+                    {...props}
+                    sx={{
+                      color: "#AA336A",
+                    }}
+                  >
+                    <PsychologyRounded
+                      sx={{
+                        color: "#AA336A",
+                        marginRight: 1,
+                      }}
+                    />
+                    {option}
+                  </Box>
+                );
+              }
+            }}
             value={valueChoose}
             onChange={(event, value) => handleChooseValue(value)}
           />
-          {valueChoose === "Chuyên môn" && (
+          {valueChoose === "Technology" && (
             <Autocomplete
               disablePortal
               id="filter-type"
               options={listOfSkills.skill}
               sx={{ width: 200 }}
               renderInput={(params) => (
-                <TextField {...params} label="Kỹ năng..." />
+                <TextField {...params} label="Skill..." />
               )}
               value={statusChoose}
               onChange={(event, value) => handleChooseStatus(value)}
             />
           )}
-          {valueChoose === "Ngôn ngữ" && (
+          {valueChoose === "Language" && (
             <Autocomplete
               disablePortal
               id="filter-type"
               options={listOfSkills.language}
               sx={{ width: 200 }}
               renderInput={(params) => (
-                <TextField {...params} label="Ngôn ngữ..." />
+                <TextField {...params} label="Language..." />
               )}
               value={statusChoose}
               onChange={(event, value) => handleChooseStatus(value)}
@@ -497,7 +510,7 @@ export default function Page_Company_Question() {
             }}
           >
             <Input
-              placeholder="Nhập mã, câu hỏi..."
+              placeholder="Nhập ID, câu hỏi..."
               disableUnderline
               value={valueSearch}
               onChange={(e) => setValueSearch(e.target.value)}
@@ -517,10 +530,10 @@ export default function Page_Company_Question() {
         </Grid> */}
       </Grid>
 
-      <QuestionDataGrid 
+      <QuestionDataGrid
         columns={columns}
         rows={rows}
-        handleModalOpen={handleAddModalOpen}
+        handleModalOpen={handleModalOpen}
       />
 
       <QuestionFormModal

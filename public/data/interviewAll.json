@@ -1,0 +1,124 @@
+[
+    {
+      "InterviewId": 1,
+      "InterviewerName": "Nguyễn Văn A",
+      "InterviewerId": 1234,
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 1,
+      "StartTime": "11/07/2023",
+      "Shift": 1,
+      "Room": "1234",
+      "Status": true,
+      "Priority": "Passed"
+    },
+    {
+      "InterviewId": 2,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 12,
+      "StartTime": "11/07/2023",
+      "Shift": 1,
+      "Room": "1234",
+      "Status": false,
+      "Priority": "Passed"
+    },
+    {
+      "InterviewId": 333,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 1345,
+      "StartTime": "11/07/2023",
+      "Shift": 1,
+      "Room": "1234",
+      "Status": true,
+      "Priority": "Pending"
+    },
+    {
+      "InterviewId": 4,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 1,
+      "StartTime": "11/07/2023",
+      "Shift": 1,
+      "Room": "1234",
+      "Status": false,
+      "Priority": "Pending"
+    },
+    {
+      "InterviewId": 5,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 1,
+      "StartTime": "11/07/2023",
+      "Shift": 1,
+      "Room": "1234",
+      "Status": false,
+      "Priority": "Failed"
+    },
+    {
+      "InterviewId": 6666,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 2221,
+      "StartTime": "11/07/2023",
+      "Shift": 1,
+      "Room": "1234",
+      "Status": true,
+      "Priority": "Passed"
+    },
+    {
+      "InterviewId": 13450,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 1,
+      "StartTime": "11/07/2023",
+      "Shift": 1,
+      "Room": "1234",
+      "Status": false,
+      "Priority": "Passed"
+    },
+    {
+      "InterviewId": 7,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 190,
+      "StartTime": "11/07/2023",
+      "Shift": 1,
+      "Room": "1234",
+      "Status": false,
+      "Priority": "Pending"
+    },
+    {
+      "InterviewId": 88,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 1,
+      "StartTime": "11/07/2023",
+      "Shift": 1,
+      "Room": "1234",
+      "Status": true,
+      "Priority": "Failed"
+    },
+    {
+      "InterviewId": 9,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 1,
+      "StartTime": "11/07/2023",
+      "Shift": 1,
+      "Room": "1234",
+      "Status": false,
+      "Priority": "Pending"
+    },
+    {
+      "InterviewId": 10,
+      "InterviewerName": "Nguyễn Văn A",
+      "CandidateName": "Trần Thị B",
+      "CandidateId": 1,
+      "StartTime": "11/07/2023",
+      "Shift": 1,
+      "Room": "1234",
+      "Status": false,
+      "Priority": "Passed"
+    }
+]
