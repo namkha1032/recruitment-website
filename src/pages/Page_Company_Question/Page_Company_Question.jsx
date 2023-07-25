@@ -137,14 +137,14 @@ export default function Page_Company_Question() {
   function handleUpdateQuestion(value) {
     successAlert("Cập nhật câu hỏi");
     const updateRows = rows.map((row) => {
-      if (row.id !== value.id) {
+      if (row.QuestionId !== value.QuestionId) {
         return row;
       } else {
         return {
           ...row,
-          QuestionName: value.question,
-          Category: value.category,
-          Skill: value.skill,
+          QuestionName: value.QuestionName,
+          Category: value.Category,
+          Skill: value.Skill,
         };
       }
     });
@@ -546,7 +546,7 @@ export default function Page_Company_Question() {
       />
 
       <QuestionModal
-        key={valueUpdate.id}
+        key={valueUpdate.QuestionId}
         modalStatus={modalStatus}
         handleModalClose={handleModalClose}
         options={listOfSkills}
