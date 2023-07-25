@@ -23,10 +23,10 @@ root.render(
     {/* <React.StrictMode> */}
     <Provider store={store}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <ThemeProvider theme={theme}>
-          < CssBaseline />
-          <App />
-        </ThemeProvider>
+        {/* <ThemeProvider theme={theme}> */}
+        < CssBaseline />
+        <App />
+        {/* </ThemeProvider> */}
       </LocalizationProvider>
     </Provider>
     {/* </React.StrictMode> */}

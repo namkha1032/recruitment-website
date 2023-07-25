@@ -15,27 +15,27 @@
     background-color: rgb(200, 200, 200);
 }
 
-html,
+/* html,
 body,
 #root,
 .App {
     height: 100%
-}
+} */
 
-.App>.MuiBox-root {
+/* .App>.MuiBox-root {
     height: 100%
-}
+} */
 
 /* .App>.MuiBox-root>main {
     height: 100%
 } */
 /* ------------------------------------------------------------------ */
-.App>.MuiBox-root>main>.MuiContainer-root {
+/* .App>.MuiBox-root>main>.MuiContainer-root {
     min-height: 100%
-}
+} */
 
 /* body {
-    overflow: hidden;
+    overflow: scroll;
 } */
 
 /* ------------------------------------------------------------------ */
