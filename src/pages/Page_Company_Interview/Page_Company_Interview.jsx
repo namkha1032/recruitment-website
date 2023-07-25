@@ -1,5 +1,11 @@
 import { useMemo, useState, useEffect } from "react";
-import { Chip, Autocomplete, TextField, IconButton } from "@mui/material";
+import {
+  Chip,
+  Autocomplete,
+  TextField,
+  IconButton,
+} from "@mui/material";
+import Tooltip from '@mui/material/Tooltip';
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
@@ -39,7 +45,7 @@ export default function Page_Company_Interview() {
     dispatch({ type: "saga/getPositionList" });
     dispatch({ type: "saga/getDepartment" });
     return () => {
-      cleanStore(dispatch)
+      cleanStore(dispatch);
     };
   }, []);
 
@@ -151,7 +157,7 @@ export default function Page_Company_Interview() {
   }
 
   function handleDetailClick(value) {
-    cleanStore(dispatch)
+    cleanStore(dispatch);
     dispatch({ type: "position/cleanUpPosition" });
     navigate(`./${value}`);
   }
@@ -159,7 +165,7 @@ export default function Page_Company_Interview() {
   function handleProfileDetailClick(value) {
     // dispatch({ type: "interviewList/cleanUpInterviewList" });
     // dispatch({ type: "positionList/cleanUpPositionList" });
-    window.open(`../../profile/${value}`)
+    window.open(`../../profile/${value}`);
     // navigate(`../../profile/${value}`);
   }
 
@@ -307,9 +313,11 @@ export default function Page_Company_Interview() {
       headerAlign: "right",
       align: "right",
       getActions: (params) => [
-        <IconButton onClick={() => handleDetailClick(params.row.InterviewId)}>
-          <InfoIcon sx={{ color: "#1565C0" }} />
-        </IconButton>,
+        <Tooltip title="Detail" arrow>
+          <IconButton onClick={() => handleDetailClick(params.row.InterviewId)}>
+            <InfoIcon sx={{ color: "#1565C0" }} />
+          </IconButton>
+        </Tooltip>,
       ],
     },
   ]);
@@ -323,7 +331,7 @@ export default function Page_Company_Interview() {
           marginBottom: 5,
         }}
       >
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12}>
           <Box
             sx={{
               fontSize: 40,
@@ -422,7 +430,8 @@ export default function Page_Company_Interview() {
             <Grid
               item
               xs={12}
-              md={2}
+              sm={12}
+              md={3}
               sx={{
                 display: "flex",
                 justifyContent: "flex-start",
@@ -433,7 +442,7 @@ export default function Page_Company_Interview() {
                 disablePortal
                 id="filter-type"
                 options={departments}
-                sx={{ width: 200 }}
+                sx={{ width: "100%" }}
                 renderInput={(params) => (
                   <TextField {...params} label="Department..." />
                 )}
@@ -454,7 +463,8 @@ export default function Page_Company_Interview() {
               <Grid
                 item
                 xs={12}
-                md={6}
+                sm={12}
+                md={5}
                 sx={{
                   display: "flex",
                   justifyContent: "flex-start",
@@ -463,10 +473,9 @@ export default function Page_Company_Interview() {
               >
                 <Autocomplete
                   disablePortal
-                  fullWidth
                   id="filter-type"
                   options={positions}
-                  // sx={{ width: 400 }}
+                  sx={{ width: "100%" }}
                   renderInput={(params) => (
                     <TextField {...params} label="Position..." />
                   )}
@@ -486,7 +495,8 @@ export default function Page_Company_Interview() {
             )}
             <Grid
               item
-              xs={12}
+              xs={6}
+              sm={6}
               md={2}
               sx={{
                 display: "flex",
@@ -498,7 +508,7 @@ export default function Page_Company_Interview() {
                 disablePortal
                 id="filter-type"
                 options={["Not start", "Finished"]}
-                sx={{ width: 200 }}
+                sx={{ width: {md: 200, sm: "100%", xs: "100%"} }}
                 renderInput={(params) => (
                   <TextField {...params} label="Status..." />
                 )}
@@ -548,7 +558,8 @@ export default function Page_Company_Interview() {
             {statusChoose === "Finished" && (
               <Grid
                 item
-                xs={12}
+                xs={6}
+                sm={6}
                 md={2}
                 sx={{
                   display: "flex",
@@ -560,7 +571,7 @@ export default function Page_Company_Interview() {
                   disablePortal
                   id="filter-type3"
                   options={["Pending", "Passed", "Failed"]}
-                  sx={{ width: 200 }}
+                  sx={{ width: "100%" }}
                   renderInput={(params) => (
                     <TextField {...params} label="Result..." />
                   )}
@@ -722,6 +733,7 @@ export default function Page_Company_Interview() {
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
+          disableRowSelectionOnClick
           pagination
           pageSizeOptions={[5, 10, 25, 50, 100]}
           initialState={{

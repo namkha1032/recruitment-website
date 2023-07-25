@@ -115,7 +115,11 @@ const Page_Company_Interview_Create = () => {
     }, [newError])
 
     function handleSubmit() {
-        dispatch({ type: "saga/createInterview", payload: null })
+        console.log("chosenInterviewer: ", chosenInterviewer)
+        console.log("chosenRoom: ", chosenRoom)
+        console.log("chosenDate: ", chosenDate)
+        console.log("chosenShift: ", chosenShift)
+        // dispatch({ type: "saga/createInterview", payload: null })
         // navigate("/company/interview/1")
     }
     return (

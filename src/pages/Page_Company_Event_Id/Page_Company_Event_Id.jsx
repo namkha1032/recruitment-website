@@ -1,5 +1,5 @@
 // import libraries
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -34,6 +34,7 @@ import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import RecordVoiceOverRoundedIcon from '@mui/icons-material/RecordVoiceOverRounded';
 import PersonSearchRoundedIcon from '@mui/icons-material/PersonSearchRounded';
 import ManageAccountsRoundedIcon from '@mui/icons-material/ManageAccountsRounded';
+import { useDispatch } from 'react-redux';
 
 
 
@@ -41,6 +42,9 @@ const Page_Company_Event_Id = () => {
 
     // useNavigate
     const navigate = useNavigate()
+
+
+    const dispatch = useDispatch();
 
 
     // Test Data
@@ -81,7 +85,7 @@ const Page_Company_Event_Id = () => {
     }
 
 
-    const columns = [
+    const columns = useMemo(() => [
         {
             field: 'id',
             type: 'number',
@@ -175,7 +179,7 @@ const Page_Company_Event_Id = () => {
                     label="Detail"
                     onClick={() => handleDetailClick(params.row.id)} />,]
         }
-    ];
+    ]);
 
 
 
@@ -246,7 +250,7 @@ const Page_Company_Event_Id = () => {
                             </Box>
                         </Box>
                         <GigaCardBody>
-                            <Box sx={{ fontSize: '20px', fontStyle: 'italic', display: 'flex', justifyContent: 'flex-end', marginBottom: 3 }}>
+                            <Box sx={{ fontSize: '18px', fontStyle: 'italic', display: 'flex', justifyContent: 'flex-end', marginBottom: 3 }}>
                                 <TodayRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></TodayRoundedIcon>
                                 <span style={{ color: 'darkgray' }}>20/07/2023 16:40</span>
                             </Box>
@@ -338,10 +342,10 @@ const Page_Company_Event_Id = () => {
                             </Grid>
 
                             <Grid item xs={12} align='right' sx={{ marginTop: 8 }}>
-                                <Button variant='outlined' size='large' className='btnregister' sx={{ mx: 3 }} onClick={handleRegister}>
-                                    {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
+                                {/* <Button variant='outlined' size='large' className='btnregister' sx={{ mx: 3 }} onClick={handleRegister}>
+                                    <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon>
                                     Đăng ký
-                                </Button>
+                                </Button> */}
                                 <Button variant='contained' size='large' color='primary' onClick={handleEdit}>
                                     {/* <EditIcon sx={{ marginRight: 0.5 }}></EditIcon> */}
                                     Chỉnh sửa

@@ -51,7 +51,7 @@ export default function Page_Profile_Id_Event(){
       const time = '12/07/2023 10:00';
       const itemsPerPage = 3;
       return(
-        <EventList events={eventsData} time={time} itemsPerPage={itemsPerPage} />
+        <EventList events={eventsData} time={time} itemsPerPage={itemsPerPage} totalPositions={0} />
       )
       
 }

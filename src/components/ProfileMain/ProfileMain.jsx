@@ -28,11 +28,12 @@ import ProfileChangePW from "./ProfileChangPW";
 import ProfileInfo from "./ProfileInfo";
 import GigaCard from "../GigaCard/GigaCard";
 import './ProfileMain.css'
+import useGetRole from "../../hooks/useGetRole";
 
 
 const ProfileMain = ({ page }) => {
   const navigate = useNavigate();
-
+  const role = useGetRole();
   // const location = useLocation();
   // const dispatch = useDispatch();
   
@@ -44,8 +45,10 @@ const ProfileMain = ({ page }) => {
   const handleClickProfile = () =>{
     if (page !== 'Profile') navigate('/profile/1')
   }
-  
-
+  function getScrollValues(){
+    console.log(document.documentElement.scrollTop)
+  }
+  window.addEventListener("scroll", getScrollValues);
   return (
     user && (
       <Container >
@@ -57,7 +60,7 @@ const ProfileMain = ({ page }) => {
         </Box>
         <Grid container spacing={3}  >
           <Grid item md={3} xs={12} >
-            <Box sx={{ position:'sticky', top:'80px' }}>
+            <Box sx={{ position:'sticky', top:'5px' }}>
                 <Box sx={{width:'100%'}}>  
                 <GigaCard >
               
@@ -91,13 +94,15 @@ const ProfileMain = ({ page }) => {
             <Grid item md={9} xs={12}>     
             {page === 'Profile' && <>
                 <ProfileInfo cvid={user.cvselected} user={user} /> 
-                <Box sx={{ mb: "24px" }} ><GigaCard>
+
+                
+                { role ==='candidate' && <Box sx={{ mb: "24px" }} ><GigaCard>
                 <Box sx={{ padding: "24px" }}>
                 
                     <CV cvid={user.cvselected} user={user} /> 
                     
                 </Box></GigaCard>
-                </Box> 
+                </Box> }
             </> }
             {page === 'ChangePW' && 
             <Box sx={{ mb: "24px" }} ><GigaCard>

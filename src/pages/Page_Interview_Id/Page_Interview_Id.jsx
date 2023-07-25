@@ -20,16 +20,18 @@ import DetailsIcon from '@mui/icons-material/Details';
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader";
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import AssistantIcon from '@mui/icons-material/Assistant';
 // import Page_Profile_Id_Cv_Id from "../Page_Profile_Id_Cv_Id/Page_Profile_Id_Cv"
 import CV from "../../components/CV/CV"
 
 
-const Page_Interview_Id = () => {
+const Page_Interview_Id = ({ cvid }) => {
     const requires = require('../../data/View_recruitment/requires.json');
     const languages = require('../../data/View_recruitment/languages.json');
     let left = 5
     let right = 6
-    let gap = 1
+    let gap = 2
     let gridSx = {
         display: "flex", alignItems: "center", columnGap: gap
     }
@@ -41,7 +43,7 @@ const Page_Interview_Id = () => {
                         Detail of the interview
                     </Typography>
                 </Grid>
-                <Grid item xs={5} sx={{ display: "flex", flexDirection: "column", rowGap: 2 }}>
+                <Grid item xs={12} md={5} sx={{ display: "flex", flexDirection: "column", rowGap: 2 }}>
                     <GigaCard>
                         <GigaCardHeader color={"primary.main"} headerIcon={<ArticleIcon sx={{ fontSize: "inherit" }} />}>
                             General information
@@ -62,7 +64,7 @@ const Page_Interview_Id = () => {
                                     </Typography>
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
-                                    <Typography variant="h6" sx ={{marginLeft: "8px"}}>
+                                    <Typography variant="h6" sx={{ marginLeft: "8px" }}>
                                         14:00 25/07/2023
                                     </Typography>
                                 </Grid>
@@ -82,7 +84,7 @@ const Page_Interview_Id = () => {
                                     </Typography>
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
-                                    <Typography variant="h6" sx ={{marginLeft: "8px"}}>
+                                    <Typography variant="h6" sx={{ marginLeft: "8px" }}>
                                         202B4
                                     </Typography>
                                 </Grid>
@@ -103,7 +105,7 @@ const Page_Interview_Id = () => {
                                     </Typography>
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
-                                    <Typography variant="h6" sx ={{marginLeft: "8px"}} >
+                                    <Typography variant="h6" sx={{ marginLeft: "8px" }} >
                                         Front-end Development
                                     </Typography>
                                 </Grid>
@@ -157,7 +159,7 @@ const Page_Interview_Id = () => {
                         </GigaCardBody>
                     </GigaCard>
                     <GigaCard>
-                        <GigaCardHeader color={"primary.main"} headerIcon={<DetailsIcon sx={{ fontSize: "inherit" }} />}>
+                        <GigaCardHeader color={"primary.main"} headerIcon={<AssignmentIndIcon sx={{ fontSize: "inherit" }} />}>
                             Interviewer
                         </GigaCardHeader>
                         <GigaCardBody>
@@ -176,7 +178,7 @@ const Page_Interview_Id = () => {
                                     </Typography>
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
-                                    <Typography variant="h6" sx ={{marginLeft: "8px"}} >
+                                    <Typography variant="h6" sx={{ marginLeft: "8px" }} >
                                         Cong Pham Quoc Viet
                                     </Typography>
                                 </Grid>
@@ -196,7 +198,7 @@ const Page_Interview_Id = () => {
                                     </Typography>
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
-                                    <Typography variant="h6" sx ={{marginLeft: "8px"}}>
+                                    <Typography variant="h6" sx={{ marginLeft: "8px" }}>
                                         vietcpq@fpt.com
                                     </Typography>
                                 </Grid>
@@ -216,7 +218,7 @@ const Page_Interview_Id = () => {
                                     </Typography>
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
-                                    <Typography variant="h6" sx ={{marginLeft: "8px"}} >
+                                    <Typography variant="h6" sx={{ marginLeft: "8px" }} >
                                         0123456789
                                     </Typography>
                                 </Grid>
@@ -236,18 +238,37 @@ const Page_Interview_Id = () => {
                                     </Typography>
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
-                                    <Typography variant="h6" sx ={{marginLeft: "8px"}} >
+                                    <Typography variant="h6" sx={{ marginLeft: "8px" }} >
                                         ITROOM
                                     </Typography>
                                 </Grid>
                             </Box>
+                            <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Box sx={gridSx}>
+                                        <AssistantIcon />
+                                        <Typography variant="h6">
+                                            Status
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                    <Typography variant="h6">
+                                        :
+                                    </Typography>
+                                </Grid>
+                                <Grid item md={right} sx={gridSx}>
+                                    <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label="Pending" />
+                                </Grid>
+                            </Box>
+
                         </GigaCardBody>
                     </GigaCard>
                 </Grid>
-                <Grid item xs={7}>
+                <Grid item xs={12} md={7}>
                     <GigaCard>
                         <GigaCardBody>
-                            <CV />
+                            <CV cvid={cvid} />
                         </GigaCardBody>
                     </GigaCard>
                 </Grid>

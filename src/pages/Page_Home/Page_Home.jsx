@@ -122,7 +122,7 @@ const Page_Home = () => {
 
         <Box sx={{ padding: '24px', borderTop: '1px solid lightgrey' }}>
           <Grid container spacing={3}>
-            <Grid item md={4}   >
+            <Grid item md={4} onClick={handleNavigateClick} sx={{ cursor: 'pointer' }}   >
 
 
               <Box sx={{ padding: '0px 16px 0px 0px', borderRight: '1px solid lightgrey' }}>
@@ -171,9 +171,13 @@ const Page_Home = () => {
               </Box>
             </Grid>
 
-            <Grid item md={8}>
-              <Grid container>
-                <Grid item md={4} sx={{ padding: '0px 16px 0px 16px', borderRight: '1px solid lightgrey' }}>
+            <Grid item md={8} >
+              <Grid container >
+                <Grid item md={4} 
+                onClick={handleNavigateClick}
+                sx={{ padding: '0px 16px 0px 16px', borderRight: '1px solid lightgrey',cursor: 'pointer'  }}
+
+                >
 
                   <Box sx={{ ...styleFont }}>
                     <img src="https://www.freecodecamp.org/news/content/images/2022/04/derick-mckinney-oARTWhz1ACc-unsplash.jpg"
@@ -228,7 +232,10 @@ const Page_Home = () => {
                   </Box>
 
                 </Grid>
-                <Grid item md={4} sx={{ padding: '0px 16px 0px 16px' }}>
+                <Grid item md={4} 
+                onClick={handleNavigateClick}
+                sx={{ padding: '0px 16px 0px 16px', cursor: 'pointer' }}
+                >
                   <Box sx={{ ...styleFont }}>
                     <img src="https://img.freepik.com/premium-photo/man-hand-lens-with-camera_225446-4203.jpg"
                       alt=""
@@ -260,7 +267,7 @@ const Page_Home = () => {
                       Singing • July 5th 23
                     </Typography>
 
-
+                      Hoà mình vào các giai điệu, kết nối với mọi người qua lời hát !
 
                   </Box>
                   <Box sx={{ ...styleFont }}>
@@ -539,20 +546,7 @@ const Page_Home = () => {
           </Grid>
         </Box>
 
-        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-          <Typography variant="h6" align="center" gutterBottom>
-            Team 4
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            align="center"
-            color="text.secondary"
-            component="p"
-          >
-            Something here to give the footer a purpose!
-          </Typography>
-          <Copyright />
-        </Box> */}
+       
         {/* End footer */}
 
 

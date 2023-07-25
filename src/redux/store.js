@@ -26,6 +26,8 @@ import eventListSlice from './reducer/eventListReducer'
 import questionListSlice from './reducer/questionListReducer'
 
 import applicationSlice from './reducer/applicationReducer'
+import submitcvSlice from './reducer/submitcvReducer'
+import eventSlice from './reducer/eventReducer'
 
 const sagaMiddleware = createSagaMiddleware()
 const store = configureStore({
@@ -49,7 +51,9 @@ const store = configureStore({
         positionList: positionListSlice.reducer,
         eventList: eventListSlice.reducer,
         questionList: questionListSlice.reducer,
-        application: applicationSlice.reducer
+        application: applicationSlice.reducer,
+        submitcv: submitcvSlice.reducer,
+        event: eventSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]

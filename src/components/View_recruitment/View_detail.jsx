@@ -17,25 +17,34 @@ const View_detail = (props) => {
 
     const requires = require('../../data/View_recruitment/requires.json');
     const languages = require('../../data/View_recruitment/languages.json');
+    let gridSx = {
+        display: "flex", alignItems: "center"
+    }
     console.log("hello", props.detailposition);
     return (
         props.detailposition &&
         <>
             <Grid container spacing={1} sx={{ marginTop: "10px" }}>
-                <Grid item xs={12}>
-                    <Typography color="primary" variant='h5' sx={{ fontWeight: "bold" }}>
-                        <DescriptionIcon></DescriptionIcon> Description
-                    </Typography>
+                <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
+                    <Box sx={gridSx}>
+                        <DescriptionIcon color="primary"/>
+                        <Typography  color="primary" variant='h5' sx={{ fontWeight: "bold" }}>
+                        Description
+                        </Typography>
+                    </Box>
                     <Box sx={{ marginLeft: "15px", textAlign: "justify", fontSize: "16px" }}>
                         {props.detailposition.description}
                     </Box>
                 </Grid>
 
                 <div className='line'></div>
-                <Grid item xs={12}>
-                    <Typography color="primary" variant='h5' sx={{ fontWeight: "bold" }}>
-                        <LocationCityIcon></LocationCityIcon> Department
-                    </Typography>
+                <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
+                    <Box sx={gridSx}>
+                        <LocationCityIcon color="primary"/>
+                        <Typography  color="primary" variant='h5' sx={{ fontWeight: "bold" }}>
+                        Description
+                        </Typography>
+                    </Box>
                 </Grid>
 
                 <Grid item xs={6} md={3} sx={{ marginLeft: "15px" }}>
@@ -63,7 +72,7 @@ const View_detail = (props) => {
                     </Typography>
                 </Grid>
 
-                <Grid item xs={6} md={3} sx={{ marginLeft: "15px" }}>
+                <Grid item xs={12} md={3} sx={{ marginLeft: "15px" }}>
                     <Typography align='left' variant='subtitle1' sx={{ display: "flex" }}>
                         <EmailIcon>  </EmailIcon>
                         <Box>
@@ -71,7 +80,7 @@ const View_detail = (props) => {
                         </Box>
                     </Typography>
                 </Grid>
-                <Grid item xs={6} md={3}>
+                <Grid item xs={12} md={3}>
                     <Typography align='left' variant='subtitle1' sx={{ display: "flex" }}>
                         <WebAssetIcon></WebAssetIcon>
                         <Box>
