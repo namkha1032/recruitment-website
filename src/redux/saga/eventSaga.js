@@ -12,12 +12,14 @@ function* getEventList() {
 }
 
 function* getEvent() {
-    
+    const response = yield call(axios.get, 'http://localhost:3000/data/eventid.json')
+    yield put({ type: "event/setEvent", payload: response.data }) 
 }
 
 function* eventSaga() {
     yield all([
-        takeLatest("saga/getEventList", getEventList)
+        takeLatest("saga/getEventList", getEventList),
+        takeEvery("saga/getEvent", getEvent)
     ])
 }
 
