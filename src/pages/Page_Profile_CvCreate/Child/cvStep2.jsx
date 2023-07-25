@@ -7,7 +7,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ChooseSkill from "./skill/ChooseSkill";
 
-function CvStep1(prop) {
+function CvStep2(prop) {
   return (
     <>
       <Box sx={{ width: "80%", margin: "auto", marginTop: "50px" }}>
@@ -66,4 +66,4 @@ function CvStep1(prop) {
   );
 }
 
-export default CvStep1;
+export default CvStep2;

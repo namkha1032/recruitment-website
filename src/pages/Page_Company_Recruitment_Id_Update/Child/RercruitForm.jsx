@@ -43,11 +43,10 @@ function RecruitForm() {
     (comp) => comp.departmentId === departmentChoose
   );
 
-  const [languages, setLanguages] = useState(recruitInfo.language);
+  const [languages, setLanguages] = useState(recruitInfo.languageId);
   // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
   // const [status, setStatus] = useState(recruitInfo.status);
   const [requirement, setRequirement] = useState(recruitInfo.requirement);
-
   // Requirement comps
   const [rId, setRId] = useState(
     requirement.length > 0 ? requirement.length : 0
@@ -58,20 +57,20 @@ function RecruitForm() {
   const [note, setNote] = useState("");
   const [inputValue, setInputValue] = useState("");
   // Language comps
-  const [lId, setLId] = useState(languages.length > 0 ? languages.length : 0);
-  const [languageId, setLanguageId] = useState(null);
   const [languageName, setLanguageName] = useState("");
+  const lvalues = (language.filter((prop)=>prop.languageId===languages));
+  let lvalue= (lvalues[0]?lvalues[0].languageName:"");
   const [lInputValue, setLInputValue] = useState("");
   // Department comps
   let express = departments[0] ? true : false;
   let departmentName = departments[0] ? departments[0].departmentName : "";
   let departmentId = departments[0] ? departments[0].departmentId : null;
   let departmentAddress = departments[0]
-    ? departments[0].departmentAddress
+    ? departments[0].address
     : "";
-  let departmentEmail = departments[0] ? departments[0].departmentEmail : "";
-  let departmentPhone = departments[0] ? departments[0].departmentPhone : "";
-  let departmentWeb = departments[0] ? departments[0].departmentWebsite : "";
+  let departmentEmail = departments[0] ? departments[0].email : "";
+  let departmentPhone = departments[0] ? departments[0].phone : "";
+  let departmentWeb = departments[0] ? departments[0].website : "";
   const navigate = useNavigate();
   //FUNCTION
   function handleSubmit(e) {
@@ -154,21 +153,29 @@ function RecruitForm() {
     console.log(arr);
     if (arr[0] === undefined) {
       alert("wrong language");
-      setLanguageId(null);
+      // setLanguageId(null);
       setLanguageName("");
       setLInputValue("");
     } else {
-      const newLanguage = {
-        id: lId,
-        languageId: languageId,
-        languageName: languageName,
-      };
-      console.log(newLanguage);
-      setLanguages([...languages, newLanguage]);
-      setLanguageId(null);
+      // const newLanguage = {
+      //   languageId: languageId,
+      //   languageName: languageName,
+      // };
+      // console.log(newLanguage);
+      // setLanguages(newLanguage);
+    }
+  }
+  function handleLanguageAdd2() {
+    console.log(lInputValue);
+    let arr = language.filter(
+      (comp) => comp.languageName === lInputValue
+    );
+    console.log(arr);
+    if (arr[0] === undefined) {
+      alert("wrong language");
+      // setLanguageId(null);
       setLanguageName("");
       setLInputValue("");
-      setLId((prev) => (prev += 1));
     }
   }
   function handleLanguageDelete(id) {
@@ -336,10 +343,12 @@ function RecruitForm() {
                       handleLanguageDelete={handleLanguageDelete}
                       lInputValue={lInputValue}
                       setLInputValue={setLInputValue}
+                      setLanguages={setLanguages}
                       setLanguageName={setLanguageName}
                       languageName={languageName}
-                      setLanguageId={setLanguageId}
-                      handleLanguageAdd={handleLanguageAdd}
+                      // setLanguageId={setLanguageId}
+                      lvalue = {lvalue}
+                      handleLanguageAdd={handleLanguageAdd2}
                     />
                   </Grid>
                 </Grid>

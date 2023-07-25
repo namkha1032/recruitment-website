@@ -9,51 +9,51 @@ const filter = createFilterOptions();
 export default function ChooseLanguage(prop) {
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      const inputValue = event.target.value;
-      console.log(prop.value);
-      console.log(inputValue);
-      if (prop.value === null) {
-        if (inputValue.trim() !== "") {
-          prop.setInputValue(null);
-          prop.handleState(inputValue);
-        }
-      } else {
-        prop.setInputValue(null);
-        return prop.onPress();
-      }
+    event.preventDefault()
     }
+  };
+  const handleChange = (event) => {
+    prop.setInputValue(event.target.value);
   };
   return (
     <>
       <Grid container spacing={0} justifyContent="center" alignItems="center">
         <Grid item xs={12}>
           <Autocomplete
-            value={prop.inputValue}
+            onKeyDown={handleKeyDown}
+            value={prop.lvalue}
             onChange={(event, newValue) => {
               if (typeof newValue === "string") {
-                return ()=>prop.setValue({
-                  languageName: newValue,
-                });
+                return () =>
+                  prop.setValue({
+                    languageName: newValue,
+                  });
               } else if (newValue && newValue.inputValue) {
-                
                 prop.setInputValue({
                   languageName: newValue.inputValue,
                 });
-                console.log(newValue.languageName)
+                console.log(newValue.languageName);
                 if (newValue !== null) {
                   console.log(newValue);
                   prop.handleState(newValue);
+                  prop.onPress();
                 }
               } else {
                 prop.setInputValue(newValue);
                 if (newValue !== null) {
                   console.log(newValue);
-                  prop.setSkillId(prop.language.filter((comp) => comp.languageName === newValue.languageName)[0].languageId);
+                  prop.setLanguages(
+                    prop.language.filter(
+                      (comp) => comp.languageName === newValue.languageName
+                    )[0].languageId
+                  );
                   prop.handleState(newValue.languageName);
+                } else {
+                  console.log(newValue);
+                  prop.setLanguages(null);
                 }
               }
             }}
-            onKeyDown={handleKeyDown}
             filterOptions={(options, params) => {
               const filtered = filter(options, params);
               const { inputValue } = params;
@@ -82,7 +82,9 @@ export default function ChooseLanguage(prop) {
               }
               return option.languageName;
             }}
-            renderOption={(props, option) => <li {...props}>{option.languageName}</li>}
+            renderOption={(props, option) => (
+              <li {...props}>{option.languageName}</li>
+            )}
             sx={{
               "& > :not(style)": {
                 m: 1,
@@ -90,29 +92,20 @@ export default function ChooseLanguage(prop) {
                 margin: "0",
                 padding: "0",
                 marginRight: "1%",
+                marginBottom: "16px",
               },
             }}
             freeSolo
             renderInput={(params) => (
-              <TextField {...params} label={prop.state} id={prop.state} />
+              <TextField
+                {...params}
+                label={prop.state}
+                id={prop.state}
+                onChange={(e) => handleChange(e)}
+              />
             )}
           />
         </Grid>
-        <Button
-          sx={{
-            margin: "auto",
-          }}
-          color="primary"
-          size="medium"
-          variant="outlined"
-          className="AddCompButton"
-          startIcon={<AddIcon />}
-          onClick={() => {
-            prop.onPress();
-          }}
-        >
-          Add
-        </Button>
         <Grid item xs={12}></Grid>
       </Grid>
     </>

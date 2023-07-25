@@ -13,7 +13,7 @@ const cvinfo = {
       link: "dadadadadadasd",
     },
   ],
-  skills: [{ id: 0, name: "html", exp:2 }],
+  skills: [{ id: 0, name: "html", skillExperienc:2 }],
   language: [
     { id: 0, languageId: 0, languageName: "English" },
     { id: 1, languageId: 1, languageName: "Japanese" },
