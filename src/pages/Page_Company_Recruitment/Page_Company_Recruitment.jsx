@@ -42,7 +42,33 @@ import cleanStore from "../../utils/cleanStore";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 
-// Test trial
+// JSON -> getPositionListWithFilter
+// {
+//   departmentId: 0, !!!
+//   status: ["Active", "Inactive"],
+// }
+// JSON <- getPositionList
+// {
+//   "PositionId": 0, !!!
+//   "PositionName": "",
+//   "Description": "",
+//   "MaxHiringQty": 0,
+//   "HiredQty": 0,
+//   "StartDate": "11/09/2023",
+//   "EndDate": "11/12/2023",
+//   "Status": [true, false] ~ ["Active", "Inactive"]
+// }
+// JSON <- Department
+// {
+//   "departmentId": 0,
+//   "departmentName": "",
+//   "address": "",
+//   "email": "",
+//   "phone": "",
+//   "website": ""
+// }
+
+
 export default function Page_Company_Recruitment() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -522,13 +548,13 @@ export default function Page_Company_Recruitment() {
                         {...props}
                         sx={{
                           // color: "#E0E0E0",
-                          color: "black",
+                          color: "black.400",
                         }}
                       >
                         <DoNotDisturbOnRoundedIcon
                           sx={{
                             // color: "#E0E0E0",
-                            color: "black",
+                            color: "black.400",
                             marginRight: 1,
                           }}
                         />

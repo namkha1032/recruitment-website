@@ -1,11 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
-import {
-  Chip,
-  Autocomplete,
-  TextField,
-  IconButton,
-} from "@mui/material";
-import Tooltip from '@mui/material/Tooltip';
+import { Chip, Autocomplete, TextField, IconButton } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
@@ -35,6 +30,8 @@ import {
   CloseRounded,
 } from "@mui/icons-material";
 import cleanStore from "../../utils/cleanStore";
+import GigaCard from "../../components/GigaCard/GigaCard";
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 
 export default function Page_Company_Interview() {
   const dispatch = useDispatch();
@@ -278,7 +275,7 @@ export default function Page_Company_Interview() {
     },
     {
       field: "Status",
-      minWidth: 150,
+      minWidth: 140,
       headerAlign: "center",
       align: "center",
       renderHeader: () => <span>Status</span>,
@@ -291,7 +288,7 @@ export default function Page_Company_Interview() {
     },
     {
       field: "Priority",
-      minWidth: 150,
+      minWidth: 140,
       headerAlign: "center",
       align: "center",
       renderHeader: () => <span>Result</span>,
@@ -315,7 +312,7 @@ export default function Page_Company_Interview() {
       getActions: (params) => [
         <Tooltip title="Detail" arrow>
           <IconButton onClick={() => handleDetailClick(params.row.InterviewId)}>
-            <InfoIcon sx={{ color: "#1565C0" }} />
+            <InfoIcon sx={{ color: "black" }} />
           </IconButton>
         </Tooltip>,
       ],
@@ -324,26 +321,29 @@ export default function Page_Company_Interview() {
 
   return (
     <Box>
-      <Grid
-        container
-        spacing={3}
-        sx={{
-          marginBottom: 5,
-        }}
-      >
-        <Grid item xs={12}>
-          <Box
+      <GigaCard>
+        <GigaCardBody>
+          <Grid
+            container
+            spacing={3}
             sx={{
-              fontSize: 40,
-              fontWeight: 600,
-              color: "#1565C0",
+              marginBottom: 5,
             }}
           >
-            Interview
-          </Box>
-        </Grid>
+            <Grid item xs={12}>
+              <Box
+                sx={{
+                  fontSize: 40,
+                  fontWeight: 600,
+                  // color: "#1565C0",
+                  color: "black",
+                }}
+              >
+                Interview
+              </Box>
+            </Grid>
 
-        {/* <Grid
+            {/* <Grid
           item
           xs={12}
           md={4}
@@ -403,7 +403,7 @@ export default function Page_Company_Interview() {
           </Menu>
         </Grid> */}
 
-        {/* <Grid
+            {/* <Grid
           item
           xs={12}
           md={12}
@@ -425,222 +425,223 @@ export default function Page_Company_Interview() {
             onChange={(event, value) => handleChooseValue(value)}
           />
         </Grid> */}
-        <Grid item xs={12} md={12}>
-          <Grid container spacing={2}>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={3}
-              sx={{
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center",
-              }}
-            >
-              <Autocomplete
-                disablePortal
-                id="filter-type"
-                options={departments}
-                sx={{ width: "100%" }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Department..." />
-                )}
-                getOptionLabel={(option) => option.departmentName || ""}
-                renderOption={(props, option) => (
-                  <li {...props} key={option.departmentId}>
-                    {option.departmentName}
-                  </li>
-                )}
-                isOptionEqualToValue={(option, value) => {
-                  return option.departmentId === value.departmentId;
-                }}
-                value={departmentChoose}
-                onChange={(event, value) => handleChooseDepartment(value)}
-              />
-            </Grid>
-            {departmentChoose !== null && (
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={5}
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                }}
-              >
-                <Autocomplete
-                  disablePortal
-                  id="filter-type"
-                  options={positions}
-                  sx={{ width: "100%" }}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Position..." />
-                  )}
-                  getOptionLabel={(option) => option.PositionName || ""}
-                  renderOption={(props, option) => (
-                    <li {...props} key={option.PositionId}>
-                      {option.PositionId + " - " + option.PositionName}
-                    </li>
-                  )}
-                  isOptionEqualToValue={(option, value) => {
-                    return option.PositionId === value.PositionId;
+            <Grid item xs={12} md={12}>
+              <Grid container spacing={2}>
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={3}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
                   }}
-                  value={positionChoose}
-                  onChange={(event, value) => handleChoosePosition(value)}
-                />
-              </Grid>
-            )}
-            <Grid
-              item
-              xs={6}
-              sm={6}
-              md={2}
-              sx={{
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center",
-              }}
-            >
-              <Autocomplete
-                disablePortal
-                id="filter-type"
-                options={["Not start", "Finished"]}
-                sx={{ width: {md: 200, sm: "100%", xs: "100%"} }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Status..." />
+                >
+                  <Autocomplete
+                    disablePortal
+                    id="filter-type"
+                    options={departments}
+                    sx={{ width: "100%" }}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Department..." />
+                    )}
+                    getOptionLabel={(option) => option.departmentName || ""}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.departmentId}>
+                        {option.departmentName}
+                      </li>
+                    )}
+                    isOptionEqualToValue={(option, value) => {
+                      return option.departmentId === value.departmentId;
+                    }}
+                    value={departmentChoose}
+                    onChange={(event, value) => handleChooseDepartment(value)}
+                  />
+                </Grid>
+                {departmentChoose !== null && (
+                  <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    md={5}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Autocomplete
+                      disablePortal
+                      id="filter-type"
+                      options={positions}
+                      sx={{ width: "100%" }}
+                      renderInput={(params) => (
+                        <TextField {...params} label="Position..." />
+                      )}
+                      getOptionLabel={(option) => option.PositionName || ""}
+                      renderOption={(props, option) => (
+                        <li {...props} key={option.PositionId}>
+                          {option.PositionId + " - " + option.PositionName}
+                        </li>
+                      )}
+                      isOptionEqualToValue={(option, value) => {
+                        return option.PositionId === value.PositionId;
+                      }}
+                      value={positionChoose}
+                      onChange={(event, value) => handleChoosePosition(value)}
+                    />
+                  </Grid>
                 )}
-                renderOption={(props, option) => {
-                  if (option === "Not start") {
-                    return (
-                      <Box
-                        component="li"
-                        {...props}
-                        sx={{
-                          color: "#E0E0E0",
-                        }}
-                      >
-                        <EventNoteRounded
-                          sx={{
-                            color: "#E0E0E0",
-                            marginRight: 1,
-                          }}
-                        />
-                        Not start
-                      </Box>
-                    );
-                  } else {
-                    return (
-                      <Box
-                        component="li"
-                        {...props}
-                        sx={{
-                          color: "#1565C0",
-                        }}
-                      >
-                        <SportsScoreRounded
-                          sx={{
-                            color: "#1565C0",
-                            marginRight: 1,
-                          }}
-                        />
-                        Finished
-                      </Box>
-                    );
-                  }
-                }}
-                value={statusChoose}
-                onChange={(event, value) => handleChooseStatus(value)}
-              />
-            </Grid>
-            {statusChoose === "Finished" && (
-              <Grid
-                item
-                xs={6}
-                sm={6}
-                md={2}
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                }}
-              >
-                <Autocomplete
-                  disablePortal
-                  id="filter-type3"
-                  options={["Pending", "Passed", "Failed"]}
-                  sx={{ width: "100%" }}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Result..." />
-                  )}
-                  renderOption={(props, option) => {
-                    if (option === "Pending") {
-                      return (
-                        <Box
-                          component="li"
-                          {...props}
-                          sx={{
-                            color: "#E0E0E0",
-                          }}
-                        >
-                          <MoreHorizRounded
-                            sx={{
-                              color: "#E0E0E0",
-                              marginRight: 1,
-                            }}
-                          />
-                          Pending
-                        </Box>
-                      );
-                    } else if (option === "Passed") {
-                      return (
-                        <Box
-                          component="li"
-                          {...props}
-                          sx={{
-                            color: "#008631",
-                          }}
-                        >
-                          <DoneRounded
-                            sx={{
-                              color: "#008631",
-                              marginRight: 1,
-                            }}
-                          />
-                          Passed
-                        </Box>
-                      );
-                    } else {
-                      return (
-                        <Box
-                          component="li"
-                          {...props}
-                          sx={{
-                            color: "#cc3300",
-                          }}
-                        >
-                          <CloseRounded
-                            sx={{
-                              color: "#cc3300",
-                              marginRight: 1,
-                            }}
-                          />
-                          Failed
-                        </Box>
-                      );
-                    }
+                <Grid
+                  item
+                  xs={6}
+                  sm={6}
+                  md={2}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
                   }}
-                  value={priorityChoose}
-                  onChange={(event, value) => handleChooseResult(value)}
-                />
+                >
+                  <Autocomplete
+                    disablePortal
+                    id="filter-type"
+                    options={["Not start", "Finished"]}
+                    sx={{ width: { md: 200, sm: "100%", xs: "100%" } }}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Status..." />
+                    )}
+                    renderOption={(props, option) => {
+                      if (option === "Not start") {
+                        return (
+                          <Box
+                            component="li"
+                            {...props}
+                            sx={{
+                              // color: "#E0E0E0",
+                              color: "black.400"
+                            }}
+                          >
+                            <EventNoteRounded
+                              sx={{
+                                color: "black.400",
+                                marginRight: 1,
+                              }}
+                            />
+                            Not start
+                          </Box>
+                        );
+                      } else {
+                        return (
+                          <Box
+                            component="li"
+                            {...props}
+                            sx={{
+                              color: "#1565C0",
+                            }}
+                          >
+                            <SportsScoreRounded
+                              sx={{
+                                color: "#1565C0",
+                                marginRight: 1,
+                              }}
+                            />
+                            Finished
+                          </Box>
+                        );
+                      }
+                    }}
+                    value={statusChoose}
+                    onChange={(event, value) => handleChooseStatus(value)}
+                  />
+                </Grid>
+                {statusChoose === "Finished" && (
+                  <Grid
+                    item
+                    xs={6}
+                    sm={6}
+                    md={2}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Autocomplete
+                      disablePortal
+                      id="filter-type3"
+                      options={["Pending", "Passed", "Failed"]}
+                      sx={{ width: "100%" }}
+                      renderInput={(params) => (
+                        <TextField {...params} label="Result..." />
+                      )}
+                      renderOption={(props, option) => {
+                        if (option === "Pending") {
+                          return (
+                            <Box
+                              component="li"
+                              {...props}
+                              sx={{
+                                color: "black.400",
+                              }}
+                            >
+                              <MoreHorizRounded
+                                sx={{
+                                  color: "black.400",
+                                  marginRight: 1,
+                                }}
+                              />
+                              Pending
+                            </Box>
+                          );
+                        } else if (option === "Passed") {
+                          return (
+                            <Box
+                              component="li"
+                              {...props}
+                              sx={{
+                                color: "#008631",
+                              }}
+                            >
+                              <DoneRounded
+                                sx={{
+                                  color: "#008631",
+                                  marginRight: 1,
+                                }}
+                              />
+                              Passed
+                            </Box>
+                          );
+                        } else {
+                          return (
+                            <Box
+                              component="li"
+                              {...props}
+                              sx={{
+                                color: "#cc3300",
+                              }}
+                            >
+                              <CloseRounded
+                                sx={{
+                                  color: "#cc3300",
+                                  marginRight: 1,
+                                }}
+                              />
+                              Failed
+                            </Box>
+                          );
+                        }
+                      }}
+                      value={priorityChoose}
+                      onChange={(event, value) => handleChooseResult(value)}
+                    />
+                  </Grid>
+                )}
               </Grid>
-            )}
-          </Grid>
-        </Grid>
+            </Grid>
 
-        {/* <Grid
+            {/* <Grid
           item
           xs={12}
           md={5}
@@ -675,87 +676,90 @@ export default function Page_Company_Interview() {
             </IconButton>
           </Box>
         </Grid> */}
-      </Grid>
+          </Grid>
 
-      <Box
-        sx={{
-          minHeight: 500,
-        }}
-      >
-        <DataGrid
-          autoHeight
-          columns={columns}
-          rows={rows === null ? [] : rows}
-          loading={loading}
-          sx={{
-            "&.MuiDataGrid-root": {
-              borderRadius: 1,
-            },
-            "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
-              outline: "none",
-            },
-            "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
-              outline: "none",
-            },
-            "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
-              backgroundColor: "#1565C0",
-              color: "white",
-              fontWeight: 700,
-            },
-            "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
-              display: "none",
-            },
-            "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
-              color: "white",
-            },
-          }}
-          slots={{
-            toolbar: GridToolbar,
-            noRowsOverlay: NoRowsOverlay,
-            noResultsOverlay: NoResultsOverlay,
-          }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: {
-                debounceMs: 500,
-                placeholder: "Search...",
-                sx: {
-                  width: 300,
-                  marginBottom: 1,
+          <Box
+            sx={{
+              minHeight: 500,
+            }}
+          >
+            <DataGrid
+              autoHeight
+              columns={columns}
+              rows={rows === null ? [] : rows}
+              loading={loading}
+              sx={{
+                "&.MuiDataGrid-root": {
+                  borderRadius: 1,
                 },
-              },
-              csvOptions: { disableToolbarButton: true },
-              printOptions: { disableToolbarButton: true },
-            },
-          }}
-          disableColumnMenu
-          disableColumnFilter
-          disableColumnSelector
-          disableDensitySelector
-          disableRowSelectionOnClick
-          pagination
-          pageSizeOptions={[5, 10, 25, 50, 100]}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 25,
-              },
-            },
-          }}
-          getRowId={(row) => row.InterviewId}
-          onCellClick={(params, event) => {
-            if (params.field === "InterviewId") {
-              handleDetailClick(params.row.InterviewId);
-            }
-            if (params.field === "CandidateName") {
-              handleProfileDetailClick(params.row.CandidateId);
-            }
-            if (params.field === "InterviewerName")
-              handleProfileDetailClick(params.row.InterviewerId);
-          }}
-        />
-      </Box>
+                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                  outline: "none",
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                  outline: "none",
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
+                  // backgroundColor: "#1565C0",
+                  backgroundColor: "black",
+                  color: "white",
+                  fontWeight: 700,
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                  display: "none",
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+                  color: "white",
+                },
+              }}
+              slots={{
+                toolbar: GridToolbar,
+                noRowsOverlay: NoRowsOverlay,
+                noResultsOverlay: NoResultsOverlay,
+              }}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                  quickFilterProps: {
+                    debounceMs: 500,
+                    placeholder: "Search...",
+                    sx: {
+                      width: 300,
+                      marginBottom: 1,
+                    },
+                  },
+                  csvOptions: { disableToolbarButton: true },
+                  printOptions: { disableToolbarButton: true },
+                },
+              }}
+              disableColumnMenu
+              disableColumnFilter
+              disableColumnSelector
+              disableDensitySelector
+              disableRowSelectionOnClick
+              pagination
+              pageSizeOptions={[5, 10, 25, 50, 100]}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 25,
+                  },
+                },
+              }}
+              getRowId={(row) => row.InterviewId}
+              onCellClick={(params, event) => {
+                if (params.field === "InterviewId") {
+                  handleDetailClick(params.row.InterviewId);
+                }
+                if (params.field === "CandidateName") {
+                  handleProfileDetailClick(params.row.CandidateId);
+                }
+                if (params.field === "InterviewerName")
+                  handleProfileDetailClick(params.row.InterviewerId);
+              }}
+            />
+          </Box>
+        </GigaCardBody>
+      </GigaCard>
     </Box>
   );
 }
