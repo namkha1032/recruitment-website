@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import recruitInfo from "./RecruitData";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -13,22 +13,22 @@ function RecruitForm() {
   const dispatch = useDispatch();
   // fetch Data
   useEffect(() => {
+    dispatch({ type: "saga/getDepartment" });
     dispatch({ type: "saga/getLanguage" });
     dispatch({ type: "saga/getSkill" });
-    dispatch({ type: "saga/getDepartment" });
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });
       dispatch({ type: "language/setLanguage", payload: null });
       dispatch({ type: "department/setDepartment", payload: null });
     };
-  },[dispatch]);
+  }, [dispatch]);
   // CV COMPS
   const skillList = useSelector((state) => state.skill);
   const languageList = useSelector((state) => state.language);
   const departmentList = useSelector((state) => state.department);
-  const skill= skillList?skillList:[]
-  const language= languageList?languageList:[]
-  const department= departmentList?departmentList:[]
+  const skill = skillList ? skillList : [];
+  const language = languageList ? languageList : [];
+  const department = departmentList ? departmentList : [];
   // Recruiment comps
   const [RName, setRName] = useState(recruitInfo.name);
   const [description, setDescription] = useState(recruitInfo.description);
@@ -36,14 +36,17 @@ function RecruitForm() {
   const [maxHire, setMaxHire] = useState(recruitInfo.maxHiring);
   const [startDate, setStartDate] = useState(recruitInfo.startDate);
   const [endDate, setEndDate] = useState(recruitInfo.endDate);
-  const departments = department.filter(
-    (comp) => comp.id === recruitInfo.departmentId
+  const [departmentChoose, setDepartmentChoose] = useState(
+    recruitInfo.departmentId
   );
-  const [languages, setLanguages] = useState(recruitInfo.language);
+  const departments = department.filter(
+    (comp) => comp.departmentId === departmentChoose
+  );
+
+  const [languages, setLanguages] = useState(recruitInfo.languageId);
   // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
   // const [status, setStatus] = useState(recruitInfo.status);
   const [requirement, setRequirement] = useState(recruitInfo.requirement);
-
   // Requirement comps
   const [rId, setRId] = useState(
     requirement.length > 0 ? requirement.length : 0
@@ -54,30 +57,20 @@ function RecruitForm() {
   const [note, setNote] = useState("");
   const [inputValue, setInputValue] = useState("");
   // Language comps
-  const [lId, setLId] = useState(languages.length > 0 ? languages.length : 0);
-  const [languageId, setLanguageId] = useState(null);
   const [languageName, setLanguageName] = useState("");
+  const lvalues = (language.filter((prop)=>prop.languageId===languages));
+  let lvalue= (lvalues[0]?lvalues[0].languageName:"");
   const [lInputValue, setLInputValue] = useState("");
   // Department comps
-  const [express, setExpress] = useState(departments[0] ? true : false);
-  const [departmentName, setDeparmentName] = useState(
-    departments[0] ? departments[0].departmentName : ""
-  );
-  const [departmentId, setDepartmentId] = useState(
-    departments[0] ? departments[0].departmentId : null
-  );
-  const [departmentAddress, setDepartmentAddress] = useState(
-    departments[0] ? departments[0].departmentAddress : ""
-  );
-  const [departmentEmail, setDepartmentEmail] = useState(
-    departments[0] ? departments[0].departmentEmail : ""
-  );
-  const [departmentPhone, setDepartmentPhone] = useState(
-    departments[0] ? departments[0].departmentPhone : ""
-  );
-  const [departmentWeb, setDepartmentWeb] = useState(
-    departments[0] ? departments[0].departmentWebsite : ""
-  );
+  let express = departments[0] ? true : false;
+  let departmentName = departments[0] ? departments[0].departmentName : "";
+  let departmentId = departments[0] ? departments[0].departmentId : null;
+  let departmentAddress = departments[0]
+    ? departments[0].address
+    : "";
+  let departmentEmail = departments[0] ? departments[0].email : "";
+  let departmentPhone = departments[0] ? departments[0].phone : "";
+  let departmentWeb = departments[0] ? departments[0].website : "";
   const navigate = useNavigate();
   //FUNCTION
   function handleSubmit(e) {
@@ -86,36 +79,34 @@ function RecruitForm() {
   }
   const handleChange = (event) => {
     if (event.target.value === "") {
-      setExpress(false);
-      console.log(event.target.value);
-      setDeparmentName(event.target.value);
+      // setExpress(false);
+      setDepartmentChoose(null);
+      // setDeparmentName(event.target.value);
     } else {
-      setExpress(true);
-      console.log(event.target.value);
-      setDeparmentName(event.target.value);
-      let arr = department.filter((comp) => comp.departmentName === event.target.value);
-      setDepartmentId(arr[0].departmentId);
-      setDepartmentAddress(arr[0].departmentAddress);
-      setDepartmentEmail(arr[0].departmentEmail);
-      setDepartmentPhone(arr[0].departmentPhone);
-      setDepartmentWeb(arr[0].departmentWebsite);
+      // setExpress(true);
+      // setDeparmentName(event.target.value);
+      let arr = department.filter(
+        (comp) => comp.departmentName === event.target.value
+      );
+      setDepartmentChoose(arr[0].departmentId);
+      // setDepartmentId(arr[0].departmentId);
+      // setDepartmentAddress(arr[0].departmentAddress);
+      // setDepartmentEmail(arr[0].departmentEmail);
+      // setDepartmentPhone(arr[0].departmentPhone);
+      // setDepartmentWeb(arr[0].departmentWebsite);
     }
   };
   function handleRname(e) {
     setRName(e.target.value);
-    console.log(e.target.value);
   }
   function handleDescription(e) {
     setDescription(e.target.value);
-    console.log(e.target.value);
   }
   function handleSalary(e) {
     setSalary(e.target.value);
-    console.log(e.target.value);
   }
   function handleMaxHire(e) {
     setMaxHire(e.target.value);
-    console.log(e.target.value);
   }
   function handleRequirementAdd() {
     console.log(inputValue);
@@ -157,26 +148,34 @@ function RecruitForm() {
     console.log(lInputValue);
     console.log(languageName);
     let arr = language.filter(
-      (comp) => comp.name === (lInputValue !== null ? lInputValue.name : "")
+      (comp) => comp.languageName === (lInputValue !== null ? lInputValue.languageName : "")
     );
     console.log(arr);
     if (arr[0] === undefined) {
       alert("wrong language");
-      setLanguageId(null);
+      // setLanguageId(null);
       setLanguageName("");
       setLInputValue("");
     } else {
-      const newLanguage = {
-        id: lId,
-        languageId: languageId,
-        languageName: languageName,
-      };
-      console.log(newLanguage);
-      setLanguages([...languages, newLanguage]);
-      setLanguageId(null);
+      // const newLanguage = {
+      //   languageId: languageId,
+      //   languageName: languageName,
+      // };
+      // console.log(newLanguage);
+      // setLanguages(newLanguage);
+    }
+  }
+  function handleLanguageAdd2() {
+    console.log(lInputValue);
+    let arr = language.filter(
+      (comp) => comp.languageName === lInputValue
+    );
+    console.log(arr);
+    if (arr[0] === undefined) {
+      alert("wrong language");
+      // setLanguageId(null);
       setLanguageName("");
       setLInputValue("");
-      setLId((prev) => (prev += 1));
     }
   }
   function handleLanguageDelete(id) {
@@ -194,13 +193,13 @@ function RecruitForm() {
     <>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={0} justifyContent="center" alignItems="center">
-          <Grid item xs={12} sm={6} sx={{marginTop: "8px",}}>
+          <Grid item xs={12} sm={6} sx={{ marginTop: "8px" }}>
             <Box
               className={`RecruiteForm Form InputForm`}
               sx={{
                 borderRadius: 4,
                 boxShadow: 10,
-                width:"90%",
+                width: "90%",
                 backgroundColor: "white",
                 border: (theme) => `1px solid ${theme.palette.divider}`,
                 height: "100%",
@@ -228,13 +227,13 @@ function RecruitForm() {
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} sx={{marginTop: "8px",}}>
+          <Grid item xs={12} sm={6} sx={{ marginTop: "8px" }}>
             <Box
               className={`RecruiteForm Form InputForm`}
               sx={{
                 borderRadius: 4,
                 boxShadow: 10,
-                width:"90%",
+                width: "90%",
                 backgroundColor: "white",
                 border: (theme) => `1px solid ${theme.palette.divider}`,
                 height: "100%",
@@ -250,18 +249,18 @@ function RecruitForm() {
                   alignItems="center"
                 >
                   <Grid item xs={10}>
-                    <Box4/>
+                    <Box4 />
                   </Grid>
                 </Grid>
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={12}  sx={{marginTop: "16px",}}>
+          <Grid item xs={12} sx={{ marginTop: "16px" }}>
             <Box
               className={`RecruiteForm InputForm`}
               sx={{
                 borderRadius: 4,
-                width:"95%",
+                width: "95%",
                 boxShadow: 10,
                 backgroundColor: "white",
                 border: (theme) => `1px solid ${theme.palette.divider}`,
@@ -308,7 +307,7 @@ function RecruitForm() {
               sx={{
                 borderRadius: 4,
                 boxShadow: 10,
-                width:"95%",
+                width: "95%",
                 backgroundColor: "white",
                 border: (theme) => `1px solid ${theme.palette.divider}`,
                 height: "100%",
@@ -344,18 +343,19 @@ function RecruitForm() {
                       handleLanguageDelete={handleLanguageDelete}
                       lInputValue={lInputValue}
                       setLInputValue={setLInputValue}
+                      setLanguages={setLanguages}
                       setLanguageName={setLanguageName}
                       languageName={languageName}
-                      setLanguageId={setLanguageId}
-                      handleLanguageAdd={handleLanguageAdd}
+                      // setLanguageId={setLanguageId}
+                      lvalue = {lvalue}
+                      handleLanguageAdd={handleLanguageAdd2}
                     />
                   </Grid>
                 </Grid>
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={12}>
-          </Grid>
+          <Grid item xs={12}></Grid>
           <img src="./img/logo.png" alt="" />
           <Button variant="contained" className="AddButton" type="submit">
             Submit

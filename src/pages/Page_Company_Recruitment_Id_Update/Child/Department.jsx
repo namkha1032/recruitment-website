@@ -5,6 +5,7 @@ import Select from "@mui/material/Select";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
+
 const Department = (prop) => {
   return (
     <>
@@ -107,7 +108,7 @@ const Department = (prop) => {
                 variant="h6"
                 gutterBottom
               >
-                Website
+                Address
               </Typography>
             </Grid>
             <Grid item xs={5}>

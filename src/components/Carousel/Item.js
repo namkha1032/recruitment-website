@@ -10,13 +10,14 @@ function Item(item) {
                     src={item.item.image}
                     alt={item.item.title}
                     width='100%;' /* Kích thước tối đa của Carousel */
-                    height='500px'
+                    height='600px'
                 />
-                <Box sx={{ position: "relative", bottom: '95px', display: 'flex', justifyContent: 'center', }}>
+                <Box sx={{ position: "relative", bottom: '150px', display: 'flex', justifyContent: 'center', }}>
                     <Typography
+                        
                         color='white'
-                        variant='h4'
-                        sx={{ fontFamily: 'EB garamond' }}>
+                        variant='h2'
+                        sx={{ fontFamily: 'EB garamond',position: "relative", left:'0px' }}>
                         {item.item.title}
                     </Typography>
                 </Box>

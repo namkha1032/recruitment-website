@@ -6,7 +6,7 @@ const UlList = (prop) => {
       {prop.comps.map((comp) => (
         <Chip
           key={comp.id}
-          label={comp.name}
+          label={comp.name +"(" +comp.skillExperienc+")"}
           sx={{
             m: 0.5,
           }}

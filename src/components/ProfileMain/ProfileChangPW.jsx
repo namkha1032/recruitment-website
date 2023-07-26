@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
   TextField,
@@ -14,6 +15,7 @@ import {
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Snackbar, Alert } from "@mui/material";
 
 //import LockIcon from "@mui/icons-material/Lock";
 import Visibility from '@mui/icons-material/Visibility';
@@ -32,6 +34,30 @@ const ProfileChangePW = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [errorSnackbar, setErrorSnackbar] = useState(false);
+  const [errorPasswordSnackbar, setErrorPasswordSnackbar] = useState(false);
+  const [messagePassword, setMessagePassword] = useState("")
+
+  const dispatch = useDispatch();
+
+  const newError = useSelector((state) => state.error);
+
+  useEffect(() => {
+    if (newError.status === "no") {
+      dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+      navigate("/profile/:profileid");
+    }
+    if (newError.status === "yes") {
+      setErrorSnackbar(true)
+      setOldPassword("")
+      setNewPassword("")
+      setConfirmPassword("")
+      setTimeout(() => {
+          setErrorSnackbar(false)
+          dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+      }, 5000)
+    }
+  }, [newError]);
 
   const handleClickShowOldPassword = () => {
     setShowOldPassword(!showOldPassword);
@@ -52,30 +78,31 @@ const ProfileChangePW = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (oldPassword === newPassword) {
-      toast.error("New password cannot be same as old password", {
+      /* toast.error("New password cannot be same as old password", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 1500,
         closeOnClick: true,
-      });
+      }); */
+      setMessagePassword("New password cannot be same as old password")
+      setErrorPasswordSnackbar(true)
       setNewPassword("");
       setConfirmPassword("");
     } else if (newPassword !== confirmPassword) {
-      toast.error("Passwords do not match", {
+      //setErrorSnackbar(true)
+      /* toast.error("Passwords do not match", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 1500,
         closeOnClick: true,
-      });
+      }); */
+      setMessagePassword("Passwords do not match")
+      setErrorPasswordSnackbar(true)
       setNewPassword("");
       setConfirmPassword("");
     } else {
-      toast.success("Password changed successfully", {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 1500,
-        closeOnClick: true,
-      });
-      setTimeout(() => {
-        navigate("/profile/:profileid");
-      }, 2000);
+      dispatch({ 
+        type: "saga/userChangePassword", 
+        payload: { oldPassword, newPassword, confirmPassword}
+      })
     }
   };
 
@@ -90,7 +117,7 @@ const ProfileChangePW = () => {
         <Grid
           container
           sx={{
-            paddingTop: "60px",
+            paddingTop: "10px",
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
@@ -111,7 +138,7 @@ const ProfileChangePW = () => {
                 opacity: "100%",
                 left: "20%",
                 right: "20%",
-                border: "1px solid black",
+                //border: "1px solid black",
               }}
             >
               <Typography 
@@ -226,7 +253,7 @@ const ProfileChangePW = () => {
                       marginTop: "15px",
                     }}
                   >
-                    Reset
+                    change
                   </Button>
                 </Grid>
               </form>
@@ -236,6 +263,34 @@ const ProfileChangePW = () => {
           </Grid>
         </Grid>
       </Container>
+
+      <Snackbar
+        open={errorSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setErrorSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert 
+          severity="error"
+          onClose={() => setErrorSnackbar(false)}
+        >
+          {newError.message}
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={errorPasswordSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setErrorPasswordSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert 
+          severity="error"
+          onClose={() => setErrorPasswordSnackbar(false)}
+        >
+          {messagePassword}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

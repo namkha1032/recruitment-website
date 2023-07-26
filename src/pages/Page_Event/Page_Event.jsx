@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
@@ -19,6 +19,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Menu, MenuItem } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Pagination from '@mui/material/Pagination';
+import { useDispatch, useSelector } from 'react-redux';
+import AppPagination from '../../components/AppPagination/index';
 
 //
 const cards1 = [1, 2, 3, 4, 5, 6];
@@ -43,9 +45,17 @@ const Page_Event = () => {
   //
 
   //
-  const handleNavigateClick1 = () => {
-    navigate('/event/:eventid')
+  const handleNavigateClick1 = (id) => {
+    navigate(`/event/${id}`)
   }
+  //
+  const dispatch = useDispatch();
+  const eventList = useSelector(state => state.eventList)
+  useEffect(()=>{
+    console.log('a')
+    dispatch({type:'saga/getEventList'})
+  },[])
+  console.log(eventList)
   return (
     <>
       <Box sx={{ padding: '24px' }}>
@@ -78,15 +88,15 @@ const Page_Event = () => {
 
 
 
-      <Container sx={{ py: 8 }} maxWidth="md">
+      {eventList&& <Container sx={{ py: 8 }} maxWidth="md">
         {/* End hero unit */
           <Box sx={{ padding: '10px 0px 10px 0px', borderTop: '1px solid lightgrey' }}>
             <Typography variant='h4' align="left" fontFamily='serif'>View Event</Typography>
           </Box>
         }
         <Grid container spacing={4} >
-          {cards1.map((card) => (
-            <Grid item key={card} xs={12} sm={6} md={4}>
+          {eventList.map((card) => (
+            <Grid item key={card.EventId} xs={12} sm={6} md={4}>
               <Card
                 sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
               >
@@ -121,29 +131,29 @@ const Page_Event = () => {
 
                       sx={{ display: 'flex', justifyContent: 'flex-start', padding: '0px 0px 5px 0px' }}
                     >
-                      HCM Campus
+                      {card.EventCampus}
                     </Typography>
                     </Box>
                    
 
                     <Typography>
 
-                      [HCM] WorkShop: Motivation at Work
+                      {card.EventName}
                     </Typography>
                   </Box>
 
                 </CardContent>
                 <CardActions >
-                  <Button onClick={handleNavigateClick1} size="small">View</Button>
+                  <Button onClick={() => handleNavigateClick1(card.EventId)} size="small">View</Button>
                 </CardActions>
               </Card>
             </Grid>
           ))}
         </Grid>
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 3 }}>
-          <Pagination count={10} variant="outlined" color="primary" />
-        </Box>
-      </Container>
+
+        <AppPagination />
+        
+      </Container>}
       {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>

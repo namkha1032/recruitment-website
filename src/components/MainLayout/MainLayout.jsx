@@ -12,14 +12,14 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-
+import { useNavigate } from 'react-router-dom';
+import useGetRole from '../../hooks/useGetRole';
 const drawerWidth = 240;
 
 
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => {
-        const isMd = useMediaQuery(theme.breakpoints.up('md'));
         return {
             flexGrow: 1,
             padding: theme.spacing(3),
@@ -27,13 +27,15 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
             }),
-            marginTop: "68.5px",
+            // marginTop: "68.5px",
             // maxWidth: "100%",
             // height: "100%",
             // maxHeight: "100vh",
-            overflowY: "scroll",
-            marginLeft: isMd ? `-${drawerWidth}px` : "0px",
-            // marginLeft: `-${drawerWidth}px`,
+            // height: "93vh",
+            // overflowY: "scroll",
+            // marginLeft: isMd ? `-${drawerWidth}px` : "0px",
+            // width: "100vw",
+            marginLeft: `-${drawerWidth}px`,
             ...(open && {
                 transition: theme.transitions.create('margin', {
                     easing: theme.transitions.easing.easeOut,
@@ -41,7 +43,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
                 }),
                 marginLeft: 0,
             }),
-            // backgroundColor: "red",
+            // backgroundColor: theme.palette.grey[100],
         }
     },
 );
@@ -49,38 +51,41 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 function MainLayout() {
     const [open, setOpen] = React.useState(false);
     const [params, setParams] = useSearchParams();
-
-    const theme = useTheme();
-    const isMd = useMediaQuery(theme.breakpoints.up('md'));
-
-    let showSidebar = params.get("can") == "true" ? false : true
-    /* let showSidebar = false */
-
     const dispatch = useDispatch()
     useEffect(() => {
-        console.log("MainLayout useEffect")
+        const userLocal = window.localStorage.getItem('user')
+        const userSession = window.sessionStorage.getItem('user')
+        if (userLocal) {
+            const user = JSON.parse(userLocal)
+            dispatch({ type: "user/setUser", payload: user })
+        }
+        else if (userSession) {
+            const user = JSON.parse(userSession)
+            dispatch({ type: "user/setUser", payload: user })
+        }
     }, [])
+    // const navigate = useNavigate()
+    // useEffect(() => {
+    //     navigate("/home")
+    // }, [navigate])
+    const theme = useTheme();
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const role = useGetRole()
 
-    const user = useSelector(state => state.user)
+    let userRole = "hahaha"
+    let showSidebar = role == "admin" || role == "recruiter" || role == "interviewer" ? true : false
 
-    if (!user) {
-        showSidebar = false
-    }
-    else if (user.roleName == "candidate") {
-        showSidebar = true
-        console.log(user.roleName)
-    }
     return (
         <>
             <Box sx={{ display: 'flex' }}>
-                <Navbar open={showSidebar && isMd ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} />
+                <Navbar open={showSidebar ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} />
                 <Sidebar open={showSidebar ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} />
                 <Main open={showSidebar ? open : false}>
-                    {/* <DrawerHeader /> */}
+                    <DrawerHeader />
                     <Container>
                         <Outlet />
                     </Container>
-                    <Footer />
+                    {/* <Footer /> */}
                 </Main>
             </Box>
         </>

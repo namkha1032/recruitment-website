@@ -115,6 +115,10 @@ const Page_Company_Interview_Create = () => {
     }, [newError])
 
     function handleSubmit() {
+        console.log("chosenInterviewer: ", chosenInterviewer)
+        console.log("chosenRoom: ", chosenRoom)
+        console.log("chosenDate: ", chosenDate)
+        console.log("chosenShift: ", chosenShift)
         dispatch({ type: "saga/createInterview", payload: null })
         // navigate("/company/interview/1")
     }
@@ -126,7 +130,7 @@ const Page_Company_Interview_Create = () => {
                 </Grid>
                 <Grid item md={6}>
                     <GigaCard>
-                        <GigaCardHeader color={"primary.main"} headerIcon={<RecordVoiceOverIcon sx={{ fontSize: "inherit" }} />}>
+                        <GigaCardHeader color={"black"} headerIcon={<RecordVoiceOverIcon sx={{ fontSize: "inherit" }} />}>
                             Choose an interviewer
                         </GigaCardHeader>
                         <GigaCardBody>
@@ -142,7 +146,7 @@ const Page_Company_Interview_Create = () => {
                 </Grid>
                 <Grid item md={6}>
                     <GigaCard>
-                        <GigaCardHeader color={"primary.main"} headerIcon={<RoomIcon sx={{ fontSize: "inherit" }} />}>
+                        <GigaCardHeader color={"black"} headerIcon={<RoomIcon sx={{ fontSize: "inherit" }} />}>
                             Choose a room
                         </GigaCardHeader>
                         <GigaCardBody>
@@ -160,7 +164,7 @@ const Page_Company_Interview_Create = () => {
                     <GigaCard>
                         <Grid container>
                             <Grid item md={6} sx={{ display: "flex", flexDirection: "column" }}>
-                                <GigaCardHeader color={"primary.main"} headerIcon={<AccessTimeFilledIcon sx={{ fontSize: "inherit" }} />}>
+                                <GigaCardHeader color={"black"} headerIcon={<AccessTimeFilledIcon sx={{ fontSize: "inherit" }} />}>
                                     Time
                                 </GigaCardHeader>
                                 <GigaCardBody>
@@ -177,7 +181,7 @@ const Page_Company_Interview_Create = () => {
                                 </GigaCardBody>
                             </Grid>
                             <Grid item md={6}>
-                                <GigaCardHeader color={"primary.main"} headerIcon={<FactCheckIcon sx={{ fontSize: "inherit" }} />}>
+                                <GigaCardHeader color={"black"} headerIcon={<FactCheckIcon sx={{ fontSize: "inherit" }} />}>
                                     Result
                                 </GigaCardHeader>
                                 <GigaCardBody>
@@ -201,7 +205,12 @@ const Page_Company_Interview_Create = () => {
                 </Grid>
 
                 <Grid item md={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
-                    <Button variant="contained" onClick={handleSubmit}>Create Interview</Button>
+                    <Button variant="contained" sx={{
+                        backgroundColor: "black",
+                        "&:hover": {
+                            backgroundColor: "black"
+                        }
+                    }} onClick={handleSubmit}>Create Interview</Button>
                 </Grid>
                 <Snackbar
                     // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}

@@ -1,7 +1,7 @@
 import Certificate from "./Certificate/Certificate";
 import Box from "@mui/material/Box";
 
-function CvStep1(prop) {
+function CvStep3(prop) {
   return (
     <>
       <Box sx={{width:"80%", margin:"auto",marginTop:"50px"}}>
@@ -31,4 +31,4 @@ function CvStep1(prop) {
   );
 }
 
-export default CvStep1;
+export default CvStep3;

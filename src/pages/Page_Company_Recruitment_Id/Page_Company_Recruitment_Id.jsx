@@ -22,13 +22,13 @@ const Page_Company_Recruitment_Id = () => {
                 {/* tabs = {tabs} */}
                         <Info_view  tabs = {tabs}/>    
                 </Grid>            
-                <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
+                {/* <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
 
                     <Button sx={{ bgcolor: 'primary.main', color: 'black', border: '2px solid black' }} variant='outlined' onClick={handleEdit}>
                         <EditIcon></EditIcon> Chỉnh sửa
                     </Button>
 
-                </Grid>
+                </Grid> */}
             </Grid>
 
         </div>
