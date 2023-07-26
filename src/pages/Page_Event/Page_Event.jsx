@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
@@ -41,21 +41,23 @@ function Copyright() {
 
 const Page_Event = () => {
   //
+  const dispatch = useDispatch();
   const navigate = useNavigate()
   //
+  const list = useSelector(state => state.eventList)
 
+  useEffect(()=>{
+    console.log('a')
+    dispatch({type:'saga/getEventList'})
+  },[])
   //
   const handleNavigateClick1 = (id) => {
     navigate(`/event/${id}`)
   }
   //
-  const dispatch = useDispatch();
-  const eventList = useSelector(state => state.eventList)
-  useEffect(()=>{
-    console.log('a')
-    dispatch({type:'saga/getEventList'})
-  },[])
-  console.log(eventList)
+  const [eventList,setEventList] = useState(null)
+  console.log()
+
   return (
     <>
       <Box sx={{ padding: '24px' }}>
@@ -90,9 +92,7 @@ const Page_Event = () => {
 
       {eventList&& <Container sx={{ py: 8 }} maxWidth="md">
         {/* End hero unit */
-          <Box sx={{ padding: '10px 0px 10px 0px', borderTop: '1px solid lightgrey' }}>
-            <Typography variant='h4' align="left" fontFamily='serif'>View Event</Typography>
-          </Box>
+         
         }
         <Grid container spacing={4} >
           {eventList.map((card) => (
@@ -143,17 +143,26 @@ const Page_Event = () => {
                   </Box>
 
                 </CardContent>
-                <CardActions >
-                  <Button onClick={() => handleNavigateClick1(card.EventId)} size="small">View</Button>
+                <CardActions sx={{display:'flex',justifyContent:'right'}}>
+                  <Button
+                  
+                  disabled={false}
+                  size="small"
+                  variant="filled"
+                  onClick={() => handleNavigateClick1(card.EventId)} 
+                    
+                  >View</Button>
                 </CardActions>
               </Card>
             </Grid>
           ))}
         </Grid>
 
-        <AppPagination />
+     
         
       </Container>}
+
+        {list &&<AppPagination data={list} pageSize={6} setChangeList={setEventList}/> } 
       {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>

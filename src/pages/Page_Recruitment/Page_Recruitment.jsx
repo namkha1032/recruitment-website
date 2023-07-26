@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
@@ -20,6 +20,7 @@ import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader"
 import GigaCard from "../../components/GigaCard/GigaCard"
 import { Favorite, FavoriteBorder, FavoriteOutlined } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
+import AppPagination from '../../components/AppPagination';
 
 
 const cards1 = [1, 2, 3, 4, 5, 6];
@@ -45,21 +46,22 @@ function Copyright() {
 }
 //
 const Page_Recruitment = () => {
-  const [like, setLike] = React.useState(true)
-  const dispatch = useDispatch();
-  const positionList = useSelector(state => state.positionList)
-  //
-  const navigate = useNavigate()
-  const handleNavigateClick1 = (id) => {
-    navigate(`/recruitment/${id}`)
-  }
-  useEffect(() => {
-    console.log('a')
-    dispatch({ type: 'saga/getPositionList' })
-  }, [])
-  console.log(positionList)
-  return (
-    <ThemeProvider theme={defaultTheme}>
+    const [like,setLike] = React.useState(true)
+    const dispatch = useDispatch();
+    const positionList = useSelector(state => state.positionList)
+    const [pList,setPList] =useState(positionList)
+    //
+    const navigate = useNavigate()  
+    const handleNavigateClick1 = (id) => {
+      navigate(`/recruitment/${id}`)
+    }
+    useEffect(()=>{
+      console.log('a')
+      dispatch({type:'saga/getPositionList'})
+    },[])
+    console.log(positionList)
+    return (
+        <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
 
       <main id='recruitment'>
@@ -112,32 +114,30 @@ const Page_Recruitment = () => {
         
           </Container>
         </Box> */}
-        {positionList && <Container sx={{ py: 4 }} maxWidth="md">
+       {pList  &&  <Container sx={{ py: 4 }} maxWidth="md">
           {/* End hero unit */
-            <Box sx={{ padding: '10px 0px 10px 0px', borderTop: '1px solid lightgrey' }}>
-              <Typography variant='h4' align="left" fontFamily='serif' > View Recruitment</Typography>
-            </Box>
+        
           }
-
-          <Grid container spacing={8} sx={{ padding: '30px 0px 0px 0px' }}>
-            {positionList.map((card) => (
+      
+          <Grid container spacing={8} sx={{padding:'30px 0px 0px 0px'}}>
+            {pList.map((card) => (
               <Grid item key={card.PositionId} xs={12}>
-                <Box sx={{ backgroundColor: '#EEEEEE', borderRadius: '5px', boxShadow: 10 }}>
-                  <Grid container>
-                    <Grid item xs={9}>
-                      <Box sx={{ margin: '15px', display: 'flex' }}>
-                        <Box sx={{}}>
-                          <img
-                            width='100px'
-                            height='100px'
-                            style={{ borderRadius: '4px', backgroundColor: 'white' }}
-                            src='https://cdn-new.topcv.vn/unsafe/150x/filters:format(webp)/https://static.topcv.vn/company_logos/Mw3rRovTtwYXKesnU1JP9cTxh68pnf4t_1645496968____e7c3098c0e3469c9701cae38cdcc3951.png'
-                            alt=''
-                          />
-                        </Box>
-                        <Box sx={{ marginLeft: '15px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                          <Box>
-                            <Typography>{card.PositionName} </Typography>
+                  <Box sx={{backgroundColor:'#FFFFFF', borderRadius:'10px', boxShadow:10 } }>
+                    <Grid container>
+                      <Grid item xs={9}>
+                        <Box sx={{margin:'15px',display:'flex'}}>
+                          <Box sx={{}}>
+                            <img 
+                              width='100px'
+                              height='100px'
+                              style={{borderRadius:'4px',backgroundColor:'white'}}
+                              src='https://cdn-new.topcv.vn/unsafe/150x/filters:format(webp)/https://static.topcv.vn/company_logos/Mw3rRovTtwYXKesnU1JP9cTxh68pnf4t_1645496968____e7c3098c0e3469c9701cae38cdcc3951.png'
+                              alt=''
+                            /> 
+                          </Box>
+                          <Box sx={{marginLeft:'15px',display:'flex',flexDirection:'column',justifyContent:'space-between'}}>
+                            <Box>
+                            <Typography variant='h6' sx={{fontWeight:'bold'}}>{card.PositionName} </Typography>
                             <Typography> {card.Description}</Typography>
                           </Box>
 
@@ -164,13 +164,12 @@ const Page_Recruitment = () => {
               </Grid>
             ))}
           </Grid>
-
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 3 }}>
-            <Pagination count={10} variant="outlined" color="primary" />
-          </Box>
-
-
+        
+          
+          
+         
         </Container>}
+        {positionList&& <AppPagination setChangeList={setPList} data={positionList} pageSize={5}/>}
       </main>
       {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
