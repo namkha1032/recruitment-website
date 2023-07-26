@@ -18,6 +18,8 @@ import Pagination from '@mui/material/Pagination';
 import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader"
 import GigaCard from "../../components/GigaCard/GigaCard"
 import { Favorite, FavoriteBorder, FavoriteOutlined } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
+import AppPagination from '../../components/AppPagination';
 
 
 const cards1 = [1, 2, 3, 4, 5, 6];
@@ -44,7 +46,8 @@ function Copyright() {
 //
 const Page_Recruitment = () => {
     const [like,setLike] = React.useState(true)
-
+    const [pList,setPList] = React.useState(null)
+    const positionList = useSelector(state => state.positionList)
     //
     const navigate = useNavigate()  
     const handleNavigateClick1 = (id) => {
