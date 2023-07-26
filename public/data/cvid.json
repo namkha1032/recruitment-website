@@ -5,7 +5,8 @@
     "cvpdf": "",
     "toeic": 500,
     "education": "Đại học",
-    "experience": "I have gained valuable experience in React.js, HTML, and interfaces and manage state efficiently. HTML provides the structure of web content, while CSS enables me to style and customize layouts. By combining these technologies, I create modern and engaging web experiences.",
+    "introduction": "I have gained valuable experience in React.js, HTML, and interfaces and manage state efficiently. HTML provides the structure of web content, while CSS enables me to style and customize layouts. By combining these technologies, I create modern and engaging web experiences.",
+    "experience":"My journey with React.js has been an enriching experience. I embraced its component-based architecture, which allowed me to create reusable and organized UI components. Understanding state and props empowered me to build dynamic and interactive user interfaces. React's virtual DOM impressed me with its performance optimizations, resulting in faster rendering. Working with React's ecosystem of libraries and tools expanded my capabilities. The supportive React.js community and resources have been invaluable. Overall, I've gained a deep appreciation for React.js and look forward to further growth and innovation with this powerful library.",
     "certificates": [
         {
             "certificateid": 0,

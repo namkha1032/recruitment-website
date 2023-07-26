@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
+import './style.css'
 
 
 const  ModalCertificates = ({certificate}) => {
@@ -14,26 +15,29 @@ const  ModalCertificates = ({certificate}) => {
   return (
     <>
     <Box
+      className='button'
       sx={{
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "row",
         justifyContent: "space-between",
         margin: "10px 16px 0 0",
-        width: "180px",
-        height: "120px",
-        p: "16px",
-        border: "1px solid black",
-        borderRadius: "3px",
+        
+        maxHeight: "80px",
+        p: "8px",
+        backgroundColor:'#c0c0c0c0',
+        borderRadius: "20px",
         textAlign: "center",
       }}
-      type='button'
-      onClick={handleOpen}
+    
+      onMouseEnter={handleOpen}
+      // onMouseLeave={handleClose}
     >
-      <Box>{certificate.name}</Box>
-      <Box>Exp: {certificate.expirationdate}</Box>   
+      <Box>{certificate.expirationdate}</Box>
+      <Box ml='16px'>{certificate.name}</Box>   
     </Box>
     <Dialog
     open={open}
+    // onMouseOut={handleClose}
     onClose={handleClose}
   //   scroll={scroll}
     aria-labelledby="scroll-dialog-title"

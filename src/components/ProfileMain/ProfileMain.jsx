@@ -27,7 +27,6 @@ import CV from "../CV/CV";
 import ProfileChangePW from "./ProfileChangPW";
 import ProfileInfo from "./ProfileInfo";
 import GigaCard from "../GigaCard/GigaCard";
-import './ProfileMain.css'
 import useGetRole from "../../hooks/useGetRole";
 
 
@@ -94,7 +93,7 @@ const ProfileMain = ({ page }) => {
             <Grid item md={9} xs={12}>     
             {page === 'Profile' && <>
                 <ProfileInfo cvid={user.cvselected} user={user} /> 
-
+                
                 
                 { role ==='candidate' && <Box sx={{ mb: "24px" }} ><GigaCard>
                 <Box sx={{ padding: "24px" }}>
