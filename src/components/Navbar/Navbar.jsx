@@ -22,11 +22,11 @@ import Grid from '@mui/material/Grid';
 import BusinessIcon from '@mui/icons-material/Business';
 import Container from '@mui/material/Container';
 import { Divider } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useGetRole from '../../hooks/useGetRole';
-
+import { grey } from '@mui/material/colors';
 let innerDrawerWidth;
 
 
@@ -38,6 +38,7 @@ const NavbarContent = () => {
     const dispatch = useDispatch()
     const role = useGetRole()
     const user = useSelector(state => state.user)
+    const theme = useTheme()
     const navbarNavigate = [
         {
             name: "Home",
@@ -153,7 +154,7 @@ const NavbarContent = () => {
             </Typography>
             <Container sx={{ display: { md: "flex", xs: "none" }, alignItems: "center" }}>
                 {/* Logo */}
-                <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={() => { navigate("/home") }}>
+                <Box sx={{ display: "flex", height: "69px", alignItems: "center", cursor: "pointer", border: "4px solid white" }} onClick={() => { navigate("/home") }}>
                     <FavoriteIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
                         variant="h6"
@@ -176,16 +177,19 @@ const NavbarContent = () => {
                 <Box sx={{ flexGrow: 1, columnGap: 2, display: { xs: 'none', md: 'flex' } }}>
                     {navbarNavigate.map((navbarItem, index) => (
                         <Box
+                            key={index}
                             onClick={() => { navigate(navbarItem.to) }}
                             sx={{
-                                "&:hover": { borderBottom: "5px solid black" },
-                                borderBottom: navbarItem.active ? "5px solid black" : "none",
-                                cursor: "pointer"
+                                "&:hover": { borderBottom: "4px solid black" },
+                                borderBottom: navbarItem.active ? "4px solid black" : "4px solid white",
+                                borderTop: "4px solid white",
+                                height: "69px",
+                                cursor: "pointer",
+                                display: "flex", alignItems: "center"
                             }}>
 
                             <Typography
                                 variant="button"
-                                key={index}
                                 sx={{
                                     my: 2, color: 'black', display: 'block',
                                     // backgroundColor: navbarItem.active ? "primary.light" : "transparent",
@@ -271,7 +275,7 @@ const NavbarContent = () => {
                                 })}
                             </Menu>
                         </>
-                        : <Typography variant="button" sx={{ color: "black", cursor: "pointer" }} onClick={() => { navigate("/login") }}>Log in</Typography>}
+                        : <Button variant="outlined" color="primary" onClick={() => { navigate("/login") }}>Log in</Button>}
                 </Box>
             </Container>
             {/* Dropdown responsive */}
