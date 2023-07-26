@@ -3,12 +3,10 @@ import recruitInfo from "./RecruitData";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
-import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import Box1 from "./Box1";
 import Box2 from "./Box2";
 import Box3 from "./Box3";
-import Box4 from "./box4";
 import GigaCard from "../../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../../components/GigaCardBody/GigaCardBody";
 function RecruitForm() {
@@ -144,29 +142,29 @@ function RecruitForm() {
     setRequirement(requirement.filter((component) => component.id !== id));
   }
 
-  function handleLanguageAdd() {
-    console.log(lInputValue);
-    console.log(languageName);
-    let arr = language.filter(
-      (comp) =>
-        comp.languageName ===
-        (lInputValue !== null ? lInputValue.languageName : "")
-    );
-    console.log(arr);
-    if (arr[0] === undefined) {
-      alert("wrong language");
-      // setLanguageId(null);
-      setLanguageName("");
-      setLInputValue("");
-    } else {
-      // const newLanguage = {
-      //   languageId: languageId,
-      //   languageName: languageName,
-      // };
-      // console.log(newLanguage);
-      // setLanguages(newLanguage);
-    }
-  }
+  // function handleLanguageAdd() {
+  //   console.log(lInputValue);
+  //   console.log(languageName);
+  //   let arr = language.filter(
+  //     (comp) =>
+  //       comp.languageName ===
+  //       (lInputValue !== null ? lInputValue.languageName : "")
+  //   );
+  //   console.log(arr);
+  //   if (arr[0] === undefined) {
+  //     alert("wrong language");
+  //     // setLanguageId(null);
+  //     setLanguageName("");
+  //     setLInputValue("");
+  //   } else {
+  //     // const newLanguage = {
+  //     //   languageId: languageId,
+  //     //   languageName: languageName,
+  //     // };
+  //     // console.log(newLanguage);
+  //     // setLanguages(newLanguage);
+  //   }
+  // }
   function handleLanguageAdd2() {
     console.log(lInputValue);
     let arr = language.filter((comp) => comp.languageName === lInputValue);
@@ -193,7 +191,7 @@ function RecruitForm() {
     <>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} justifyContent="center" alignItems="center">
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <GigaCard>
               <GigaCardBody>
                 <Grid
@@ -210,22 +208,6 @@ function RecruitForm() {
                       handleDescription={handleDescription}
                       description={description}
                     />
-                  </Grid>
-                </Grid>
-              </GigaCardBody>
-            </GigaCard>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <GigaCard>
-              <GigaCardBody>
-                <Grid
-                  container
-                  spacing={0}
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Grid item xs={10}>
-                    <Box4 />
                   </Grid>
                 </Grid>
               </GigaCardBody>
