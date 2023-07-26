@@ -119,7 +119,7 @@ const Page_Company_Interview_Create = () => {
         console.log("chosenRoom: ", chosenRoom)
         console.log("chosenDate: ", chosenDate)
         console.log("chosenShift: ", chosenShift)
-        // dispatch({ type: "saga/createInterview", payload: null })
+        dispatch({ type: "saga/createInterview", payload: null })
         // navigate("/company/interview/1")
     }
     return (
