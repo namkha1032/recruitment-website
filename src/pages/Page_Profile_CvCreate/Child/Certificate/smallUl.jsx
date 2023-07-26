@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import dayjs from "dayjs";
 
 const SmallUlList = (comp) => {
   const [open, setOpen] = React.useState(false);
@@ -34,7 +35,7 @@ const SmallUlList = (comp) => {
     <>
       <Card key={comp.comp.id} sx={{ maxWidth: 200 }}>
         <CardContent>
-          <Typography sx={{ fontSize: 20 }}>{comp.comp.name}</Typography>
+          <Typography sx={{ fontSize: 20 }}>{comp.comp.certificateName}</Typography>
           <Typography sx={{ fontSize: 20 }}>{comp.comp.organize}</Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -45,7 +46,7 @@ const SmallUlList = (comp) => {
             sx={{ marginLeft: "auto" }}
             aria-label="add to favorites"
             onClick={() => {
-              comp.handleDelete(comp.comp.id);
+              comp.handleDelete(comp.comp.certificateId);
             }}
           >
             <DeleteIcon />
@@ -59,22 +60,22 @@ const SmallUlList = (comp) => {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-        <DialogTitle id="scroll-dialog-title">{comp.comp.name}</DialogTitle>
+        <DialogTitle id="scroll-dialog-title">{comp.comp.certificateName}</DialogTitle>
         <DialogContent dividers={scroll === "paper"}>
-          <Typography sx={{ fontSize: 20 }}>{comp.comp.organize}</Typography>
+          <Typography sx={{ fontSize: 20 }}>{comp.comp.organizationName}</Typography>
           <Typography sx={{ fontSize: 16 }}>
-            From: {comp.comp.startDate.format("MMMM D YYYY")}
+            From: {dayjs(comp.comp.dateEarned).format("MMMM D YYYY")}
           </Typography>
-          {comp.comp.endDate !== null ? (
+          {comp.comp.expirationDate !== null ? (
             <Typography sx={{ fontSize: 16 }}>
-              To: {comp.comp.endDate.format("MMMM D YYYY")}
+              To: {dayjs(comp.comp.expirationDate).format("MMMM D YYYY")}
             </Typography>
           ) : (
             ""
           )}
           <Typography>Link: {comp.comp.link}</Typography>
           <Typography sx={{ maxWidth: 500, wordWrap: "break-word" }}>
-            Detail: {comp.comp.detail}
+            Detail: {comp.comp.description}
           </Typography>
         </DialogContent>
       </Dialog>

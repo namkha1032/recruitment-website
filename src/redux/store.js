@@ -28,6 +28,9 @@ import questionListSlice from './reducer/questionListReducer'
 import applicationSlice from './reducer/applicationReducer'
 import submitcvSlice from './reducer/submitcvReducer'
 import eventSlice from './reducer/eventReducer'
+import cvHasSkillSlice from './reducer/cvHasSkillReducer'
+import cvInforSlice from './reducer/cvInforReducer'
+import cvHasCertificateSlice from './reducer/cvHasCertificateReducer'
 
 const sagaMiddleware = createSagaMiddleware()
 const store = configureStore({
@@ -53,7 +56,10 @@ const store = configureStore({
         questionList: questionListSlice.reducer,
         application: applicationSlice.reducer,
         submitcv: submitcvSlice.reducer,
-        event: eventSlice.reducer
+        event: eventSlice.reducer,
+        cvHasSkill: cvHasSkillSlice.reducer,
+        cvInfor: cvInforSlice.reducer,
+        cvHasCertificate: cvHasCertificateSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]

@@ -16,24 +16,24 @@ export default function ChooseSkill(prop) {
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      const inputValue = event.target.value;
-      console.log(prop.lInputValue);
-      console.log(inputValue);
-      if (prop.sInputValue === null) {
-        if (inputValue.trim() !== "") {
-          prop.setSInputValue(null);
-          prop.handleState(inputValue);
-        }
-      } else {
-        prop.setSInputValue(null);
-        return prop.onPress();
-      }
+      // const inputValue = event.target.value;
+      // console.log(prop.lInputValue);
+      // console.log(inputValue);
+      // if (prop.sInputValue === null) {
+      //   if (inputValue.trim() !== "") {
+      //     prop.setSInputValue(null);
+      //     prop.handleState(inputValue);
+      //   }
+      // } else {
+      //   prop.setSInputValue(null);
+      //   return prop.onPress();
+      // }
     }
   };
   return (
     <>
       <Grid container spacing={0} justifyContent="center" alignItems="center">
-        <UlList comps={prop.skills} handleDelete={prop.handleSkilltDelete} />
+        <UlList comps={prop.skills} skillData={prop.skillData} handleDelete={prop.handleSkilltDelete} />
         <Grid item xs={12}></Grid>
         <Grid item xs={9}>
           <Autocomplete
@@ -60,9 +60,8 @@ export default function ChooseSkill(prop) {
                   prop.setSkillId(
                     prop.skillData.filter(
                       (comp) => comp.skillName === newValue.skillName
-                    )[0].id
+                    )[0].skillId
                   );
-                  prop.handleState(newValue.skillName);
                 }
               }
             }}

@@ -24,15 +24,15 @@ function CVForm() {
 
   const skillData = skillList ? skillList : [];
   const languageData = languageList ? languageList : [];
-  const [cvtitle, setTitle] = useState(cvinfo.title);
-  const [intro, setIntro] = useState(cvinfo.intro);
-  const [education, setEducation] = useState(cvinfo.education);
-  const [experience, setExperience] = useState(cvinfo.experience);
-  const [certs, setCerts] = useState(cvinfo.certificates);
-  const [skills, setSkills] = useState(cvinfo.skills);
+  const [cvtitle, setTitle] = useState("");
+  const [intro, setIntro] = useState("");
+  const [education, setEducation] = useState("");
+  const [experience, setExperience] = useState("");
+  const [certs, setCerts] = useState([]);
+  const [skills, setSkills] = useState([]);
   const [languages, setLanguages] = useState(cvinfo.language);
   // CERTIFICATE COMPS
-  const [Cid, setCid] = useState(certs.length > 0 ? certs.length : 0);
+  const [Cid, setCid] = useState(0);
   const [Cname, setCName] = useState("");
   const [organize, setOrganize] = useState("");
   const [startDate, setStartDate] = useState(null);
@@ -43,11 +43,11 @@ function CVForm() {
   //SKILL COMPS
   const [sname, setSName] = useState("");
   const [skillId, setSkillId] = useState(null);
-  const [Sid, setSid] = useState(skills.length > 0 ? skills.length : 0);
+  const [Sid, setSid] = useState(0);
   const [SExp, setSExp] = useState("");
   const [sInputValue, setSInputValue] = useState("");
   // Language comps
-  const [lId, setLId] = useState(languages.length > 0 ? languages.length : 0);
+  const [lId, setLId] = useState(0);
   const [languageId, setLanguageId] = useState(null);
   const [languageName, setLanguageName] = useState("");
   const [lInputValue, setLInputValue] = useState("");

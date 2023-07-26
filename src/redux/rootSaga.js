@@ -16,6 +16,7 @@ import { all } from "redux-saga/effects"
 import positionSaga from "./saga/positionSaga";
 import eventSaga from "./saga/eventSaga";
 import applicationSaga from "./saga/applicationSaga";
+import cvInforSaga from "./saga/cvInforSaga";
 
 function* rootSaga() {
     yield all([
@@ -32,7 +33,8 @@ function* rootSaga() {
         candidateSaga(),
         positionSaga(),
         eventSaga(),
-        applicationSaga()
+        applicationSaga(),
+        cvInforSaga()
     ])
 }
 

@@ -16,24 +16,24 @@ export default function ChooseSkill(prop) {
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      const inputValue = event.target.value;
-      console.log(prop.lInputValue);
-      console.log(inputValue);
-      if (prop.sInputValue === null) {
-        if (inputValue.trim() !== "") {
-          prop.setSInputValue(null);
-          prop.handleState(inputValue);
-        }
-      } else {
-        prop.setSInputValue(null);
-        return prop.onPress();
-      }
+      // const inputValue = event.target.value;
+      // console.log(prop.lInputValue);
+      // console.log(inputValue);
+      // if (prop.sInputValue === null) {
+      //   if (inputValue.trim() !== "") {
+      //     prop.setSInputValue(null);
+      //     prop.handleState(inputValue);
+      //   }
+      // } else {
+      //   prop.setSInputValue(null);
+      //   return prop.onPress();
+      // }
     }
   };
   return (
     <>
       <Grid container spacing={0} justifyContent="center" alignItems="center">
-        <UlList comps={prop.skills} handleDelete={prop.handleSkilltDelete} />
+        <UlList comps={prop.skills} skillData={prop.skillData} handleDelete={prop.handleSkilltDelete} />
         <Grid item xs={12}></Grid>
         <Grid item xs={9}>
           <Autocomplete
@@ -42,13 +42,13 @@ export default function ChooseSkill(prop) {
               if (typeof newValue === "string") {
                 return () =>
                   prop.setValue({
-                    name: newValue,
+                    skillName: newValue,
                   });
               } else if (newValue && newValue.inputValue) {
                 prop.setSInputValue({
-                  name: newValue.inputValue,
+                  skillName: newValue.inputValue,
                 });
-                console.log(newValue.name);
+                console.log(newValue.skillName);
                 if (newValue !== null) {
                   console.log(newValue);
                   prop.handleState(newValue);
@@ -59,10 +59,9 @@ export default function ChooseSkill(prop) {
                   console.log(newValue);
                   prop.setSkillId(
                     prop.skillData.filter(
-                      (comp) => comp.name === newValue.name
-                    )[0].id
+                      (comp) => comp.skillName === newValue.skillName
+                    )[0].skillId
                   );
-                  prop.handleState(newValue.name);
                 }
               }
             }}
@@ -71,12 +70,12 @@ export default function ChooseSkill(prop) {
               const filtered = filter(options, params);
               const { inputValue } = params;
               const isExisting = options.some(
-                (option) => inputValue === option.name
+                (option) => inputValue === option.skillName
               );
               if (inputValue.trim() !== "" && !isExisting) {
                 filtered.push({
                   inputValue,
-                  name: `${inputValue}`,
+                  skillName: `${inputValue}`,
                 });
               }
               return filtered;
@@ -93,9 +92,9 @@ export default function ChooseSkill(prop) {
               if (option.inputValue) {
                 return option.inputValue;
               }
-              return option.name;
+              return option.skillName;
             }}
-            renderOption={(props, option) => <li {...props}>{option.name}</li>}
+            renderOption={(props, option) => <li {...props}>{option.skillName}</li>}
             sx={{
               "& > :not(style)": {
                 m: 1,
