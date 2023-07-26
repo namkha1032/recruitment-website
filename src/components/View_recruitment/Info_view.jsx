@@ -51,7 +51,7 @@ const Info_view = (props) => {
     }, [])
 
     useEffect(() => {
-        dispatch({ type: 'saga/getPosition'})
+        dispatch({ type: 'saga/getPosition', payload: "00000000-0000-0000-0000-000000000001"})
         return () => {
             dispatch({ type: "positon/setPosition", payload: null })
         }
@@ -68,7 +68,7 @@ const Info_view = (props) => {
     // const requires = detail ? detail[recruitmentid].requirement : [];
 
     const requirements = detailposition ? detailposition[0].requirement : [];
-    console.log("require", requirements);
+    // console.log("require", requirements);
     console.log("father", detailposition);
 
     let left = 5
