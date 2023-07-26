@@ -40,12 +40,15 @@
   .AddButton {
     width: 100px;
     margin: 10px;
-    background-color: #1976d2;
+    background-color: rgb(59, 55, 55);
+    
+  }
+  .AddButton:hover{
+    background-color: black;
   }
   .AddCompButton {
     width: 100px;
     margin: 10px;
     border-radius: 5px;
-
   }
 }

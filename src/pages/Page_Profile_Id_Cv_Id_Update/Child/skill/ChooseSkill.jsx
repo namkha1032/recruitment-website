@@ -62,6 +62,7 @@ export default function ChooseSkill(prop) {
                       (comp) => comp.skillName === newValue.skillName
                     )[0].skillId
                   );
+                  prop.handleState(newValue.skillName);
                 }
               }
             }}

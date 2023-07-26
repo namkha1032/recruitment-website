@@ -26,9 +26,24 @@ function RecruitForm() {
   const skillList = useSelector((state) => state.skill);
   const languageList = useSelector((state) => state.language);
   const departmentList = useSelector((state) => state.department);
-  const skill = skillList ? skillList : [];
-  const language = languageList ? languageList : [];
-  const department = departmentList ? departmentList : [];
+  const [skill, setSkill] = useState([]);
+  const [language, setLanguage] = useState([]);
+  const [department, setDepartment] = useState([]);
+  useEffect(() => {
+    if (departmentList) {
+      setDepartment(
+        departmentList ? (departmentList !== [] ? departmentList : []) : []
+      );
+    }
+    if (languageList) {
+      setLanguage(
+        languageList ? (languageList !== [] ? languageList : []) : []
+      );
+    }
+    if (skillList) {
+      setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
+    }
+  }, [departmentList,skillList,languageList]);
   // Recruiment comps
   const [RName, setRName] = useState(recruitInfo.name);
   const [description, setDescription] = useState(recruitInfo.description);
@@ -42,7 +57,7 @@ function RecruitForm() {
   const departments = department.filter(
     (comp) => comp.departmentId === departmentChoose
   );
-
+  
   const [languages, setLanguages] = useState(recruitInfo.languageId);
   // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
   // const [status, setStatus] = useState(recruitInfo.status);
@@ -110,7 +125,7 @@ function RecruitForm() {
     console.log(inputValue);
     console.log(skillName);
     let arr = skill.filter(
-      (comp) => comp.name === (inputValue !== null ? inputValue.name : "")
+      (comp) => comp.skillName === (inputValue !== null ? inputValue.skillName : "")
     );
     console.log(arr);
     if (arr[0] === undefined) {

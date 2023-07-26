@@ -9,6 +9,7 @@ import Box2 from "./Box2";
 import Box3 from "./Box3";
 import GigaCard from "../../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../../components/GigaCardBody/GigaCardBody";
+import dayjs from "dayjs";
 function RecruitForm() {
   const dispatch = useDispatch();
   // fetch Data
@@ -16,37 +17,138 @@ function RecruitForm() {
     dispatch({ type: "saga/getDepartment" });
     dispatch({ type: "saga/getLanguage" });
     dispatch({ type: "saga/getSkill" });
+    dispatch({ type: "saga/getPositioninfor" });
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });
       dispatch({ type: "language/setLanguage", payload: null });
       dispatch({ type: "department/setDepartment", payload: null });
+      dispatch({ type: "positionInfor/setCvInfor", payload: null });
+      dispatch({ type: "positionRequire/setPositionRequire", payload: null });
     };
   }, [dispatch]);
   // CV COMPS
   const skillList = useSelector((state) => state.skill);
   const languageList = useSelector((state) => state.language);
   const departmentList = useSelector((state) => state.department);
-  const skill = skillList ? skillList : [];
-  const language = languageList ? languageList : [];
-  const department = departmentList ? departmentList : [];
+  const positionInfor = useSelector((state) => state.positionInfor);
+  const positionRequire = useSelector((state) => state.positionRequire);
+  // const skill = skillList ? skillList : [];
+  // const language = languageList ? languageList : [];
+  // const department = departmentList ? departmentList : [];
+  console.log(positionRequire);
   // Recruiment comps
-  const [RName, setRName] = useState(recruitInfo.name);
-  const [description, setDescription] = useState(recruitInfo.description);
-  const [salary, setSalary] = useState(recruitInfo.salary);
-  const [maxHire, setMaxHire] = useState(recruitInfo.maxHiring);
-  const [startDate, setStartDate] = useState(recruitInfo.startDate);
-  const [endDate, setEndDate] = useState(recruitInfo.endDate);
+  const [RName, setRName] = useState("");
+  const [description, setDescription] = useState("");
+  const [salary, setSalary] = useState("");
+  const [maxHire, setMaxHire] = useState("");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [departmentChoose, setDepartmentChoose] = useState(
     recruitInfo.departmentId
   );
+  const [languages, setLanguages] = useState("");
+  const [requirement, setRequirement] = useState([]);
+  const [skill, setSkill] = useState([]);
+  const [language, setLanguage] = useState([]);
+  const [department, setDepartment] = useState([]);
+
+  useEffect(() => {
+    if (departmentList) {
+      setDepartment(
+        departmentList ? (departmentList !== [] ? departmentList : []) : []
+      );
+    }
+    if (languageList) {
+      setLanguage(
+        languageList ? (languageList !== [] ? languageList : []) : []
+      );
+    }
+    if (skillList) {
+      setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
+    }
+  }, [departmentList,skillList,languageList]);
+  // useEffect(() => {
+  //   if (skillList) {
+  //     setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
+  //   }
+  // }, [skillList]);
+  // useEffect(() => {
+  //   if (languageList) {
+  //     setLanguage(
+  //       languageList ? (languageList !== [] ? languageList : []) : []
+  //     );
+  //   }
+  // }, [languageList]);
+
+  useEffect(() => {
+    if (positionInfor) {
+      setRName(
+        positionInfor
+          ? positionInfor[0].positionName !== null
+            ? positionInfor[0].positionName
+            : "data still null"
+          : ""
+      );
+      setDescription(
+        positionInfor
+          ? positionInfor[0].description !== null
+            ? positionInfor[0].description
+            : "data still null"
+          : ""
+      );
+      setSalary(
+        positionInfor
+          ? positionInfor[0].salary !== null
+            ? positionInfor[0].salary
+            : ""
+          : ""
+      );
+      setStartDate(
+        positionInfor
+          ? positionInfor[0].startDate !== null
+            ? dayjs(positionInfor[0].startDate)
+            : ""
+          : ""
+      );
+      setEndDate(
+        positionInfor
+          ? positionInfor[0].endDate !== null
+            ? dayjs(positionInfor[0].endDate)
+            : ""
+          : ""
+      );
+      setLanguages(
+        positionInfor
+          ? positionInfor[0].languageId !== null
+            ? positionInfor[0].languageId
+            : ""
+          : ""
+      );
+      setDepartmentChoose(
+        positionInfor
+          ? positionInfor[0].departmentId !== null
+            ? positionInfor[0].departmentId
+            : ""
+          : ""
+      );
+    }
+  }, [positionInfor]);
+
+  useEffect(() => {
+    if (positionRequire) {
+      setRequirement(
+        positionRequire ? (positionRequire !== [] ? positionRequire : []) : []
+      );
+    }
+  }, [positionRequire]);
+
   const departments = department.filter(
     (comp) => comp.departmentId === departmentChoose
   );
 
-  const [languages, setLanguages] = useState(recruitInfo.languageId);
   // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
   // const [status, setStatus] = useState(recruitInfo.status);
-  const [requirement, setRequirement] = useState(recruitInfo.requirement);
+
   // Requirement comps
   const [rId, setRId] = useState(
     requirement.length > 0 ? requirement.length : 0
@@ -77,21 +179,12 @@ function RecruitForm() {
   }
   const handleChange = (event) => {
     if (event.target.value === "") {
-      // setExpress(false);
       setDepartmentChoose(null);
-      // setDeparmentName(event.target.value);
     } else {
-      // setExpress(true);
-      // setDeparmentName(event.target.value);
       let arr = department.filter(
         (comp) => comp.departmentName === event.target.value
       );
       setDepartmentChoose(arr[0].departmentId);
-      // setDepartmentId(arr[0].departmentId);
-      // setDepartmentAddress(arr[0].departmentAddress);
-      // setDepartmentEmail(arr[0].departmentEmail);
-      // setDepartmentPhone(arr[0].departmentPhone);
-      // setDepartmentWeb(arr[0].departmentWebsite);
     }
   };
   function handleRname(e) {
@@ -110,7 +203,7 @@ function RecruitForm() {
     console.log(inputValue);
     console.log(skillName);
     let arr = skill.filter(
-      (comp) => comp.name === (inputValue !== null ? inputValue.name : "")
+      (comp) => comp.skillName === (inputValue !== null ? inputValue.skillName : "")
     );
     console.log(arr);
     if (arr[0] === undefined) {
@@ -122,11 +215,10 @@ function RecruitForm() {
       setNote("");
     } else {
       const newRequire = {
-        id: rId,
+        requirementId: rId,
         skillId: skillId,
-        skillname: skillName,
         experience: experience,
-        note: note,
+        notes: note,
       };
       console.log(newRequire);
       setRequirement([...requirement, newRequire]);
@@ -139,32 +231,10 @@ function RecruitForm() {
     }
   }
   function handleRequirementDelete(id) {
-    setRequirement(requirement.filter((component) => component.id !== id));
+    setRequirement(
+      requirement.filter((component) => component.requirementId !== id)
+    );
   }
-
-  // function handleLanguageAdd() {
-  //   console.log(lInputValue);
-  //   console.log(languageName);
-  //   let arr = language.filter(
-  //     (comp) =>
-  //       comp.languageName ===
-  //       (lInputValue !== null ? lInputValue.languageName : "")
-  //   );
-  //   console.log(arr);
-  //   if (arr[0] === undefined) {
-  //     alert("wrong language");
-  //     // setLanguageId(null);
-  //     setLanguageName("");
-  //     setLInputValue("");
-  //   } else {
-  //     // const newLanguage = {
-  //     //   languageId: languageId,
-  //     //   languageName: languageName,
-  //     // };
-  //     // console.log(newLanguage);
-  //     // setLanguages(newLanguage);
-  //   }
-  // }
   function handleLanguageAdd2() {
     console.log(lInputValue);
     let arr = language.filter((comp) => comp.languageName === lInputValue);

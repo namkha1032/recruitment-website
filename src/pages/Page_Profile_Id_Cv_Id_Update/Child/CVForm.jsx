@@ -30,9 +30,22 @@ function CVForm() {
   const cvCertificate = useSelector((state) => state.cvHasCertificate);
   const cvSkillData = cvSkill ? cvSkill : [];
   const cvData = cv ? cv : [];
-  console.log(cvSkill)
-  const skillData = skillList ? skillList : [];
-  const languageData = languageList ? languageList : [];
+
+  const [skillData, setSkill] = useState([]);
+  const [languageData, setLanguage] = useState([]);
+  useEffect(() => {
+    if (languageList) {
+      setLanguage(
+        languageList ? (languageList !== [] ? languageList : []) : []
+      );
+    }
+    if (skillList) {
+      setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
+    }
+  }, [skillList,languageList]);
+
+
+
   const [cvtitle, setTitle] = useState("");
   const [intro, setIntro] = useState("");
   const [education, setEducation] = useState("");
@@ -40,6 +53,7 @@ function CVForm() {
   const [certs, setCerts] = useState([]);
   const [skills, setSkills] = useState([]);
   const [languages, setLanguages] = useState(cvinfo.language);
+  
   useEffect(() => {
     if (cv) {
       // Data is available, update the local state
@@ -107,10 +121,11 @@ function CVForm() {
   //   }
   // }
   function handleSkillAdd2() {
-    console.log(lInputValue);
+    console.log(sInputValue);
     console.log(languageName);
+    console.log(skillData);
     let arr = skillData.filter(
-      (comp) => comp.name === (sInputValue !== null ? sInputValue.name : "")
+      (comp) => comp.skillName === (sInputValue !== null ? sInputValue.skillName : "")
     );
     console.log(arr);
     if (arr[0] === undefined) {

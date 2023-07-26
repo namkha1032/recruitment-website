@@ -22,6 +22,7 @@ import adminSaga from "./saga/adminSaga";
 import applicationCandidateSaga from "./saga/applicationCandidateSaga";
 import eventCandidateSaga from "./saga/eventCandidateSaga";
 import cvInforSaga from "./saga/cvInforSaga";
+import positionInforSaga from "./saga/positionInforSaga";
 
 function* rootSaga() {
     yield all([
@@ -39,7 +40,12 @@ function* rootSaga() {
         candidateSaga(),
         positionSaga(),
         eventSaga(),
-        applicationSaga()
+        applicationSaga(),
+        cvInforSaga(),
+        interviewCandidateSaga(),
+        applicationCandidateSaga(),
+        eventCandidateSaga(),
+        positionInforSaga(),
     ])
 }
 

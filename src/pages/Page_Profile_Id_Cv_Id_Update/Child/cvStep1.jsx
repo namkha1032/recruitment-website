@@ -25,14 +25,6 @@ function CvStep1(prop) {
               value={prop.intro}
             />
           </Grid>
-          {/* <Grid item xs={12}>
-            <InputText
-              state={"Education"}
-              handleState={prop.handleEdu}
-              width="98%"
-              value={prop.education}
-            />
-          </Grid> */}
           <Grid item xs={12}>
             <ReactQuill
               theme="snow"

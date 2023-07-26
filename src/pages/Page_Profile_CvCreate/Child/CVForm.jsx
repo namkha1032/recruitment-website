@@ -22,8 +22,19 @@ function CVForm() {
   const skillList = useSelector((state) => state.skill);
   const languageList = useSelector((state) => state.language);
 
-  const skillData = skillList ? skillList : [];
-  const languageData = languageList ? languageList : [];
+  const [skillData, setSkill] = useState([]);
+  const [languageData, setLanguage] = useState([]);
+  useEffect(() => {
+    if (languageList) {
+      setLanguage(
+        languageList ? (languageList !== [] ? languageList : []) : []
+      );
+    }
+    if (skillList) {
+      setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
+    }
+  }, [skillList,languageList]);
+
   const [cvtitle, setTitle] = useState("");
   const [intro, setIntro] = useState("");
   const [education, setEducation] = useState("");
@@ -80,7 +91,7 @@ function CVForm() {
     console.log(lInputValue);
     console.log(languageName);
     let arr = skillData.filter(
-      (comp) => comp.name === (sInputValue !== null ? sInputValue.name : "")
+     (comp) => comp.skillName === (sInputValue !== null ? sInputValue.skillName : "")
     );
     console.log(arr);
     if (arr[0] === undefined) {
@@ -91,10 +102,9 @@ function CVForm() {
       setSExp("");
     } else {
       const newSkill = {
-        id: Sid,
+        cvSkillsId: Sid,
         skillId: skillId,
-        name: sname,
-        skillExperienc: SExp,
+        experienceYear: SExp,
       };
       console.log(newSkill);
       setSkills([...skills, newSkill]);

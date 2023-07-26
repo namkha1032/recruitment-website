@@ -7,8 +7,8 @@ const RequireUlList = (prop) => {
     <>
       <Grid container spacing={1} justifyContent="center" alignItems="center">
         {prop.comps.map((comp) => (
-          <Grid key={comp.id} item xs={3}>
-              <SmallUlList comp={comp} handleDelete={prop.handleDelete} />
+          <Grid key={comp.requirementId} item xs={3}>
+            <SmallUlList comp={comp} skillName={prop.skill!==[]?prop.skill.filter((props)=>props.skillId===comp.skillId)[0].skillName:""} handleDelete={prop.handleDelete} />
           </Grid>
         ))}
       </Grid>

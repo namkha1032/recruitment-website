@@ -5,7 +5,7 @@ import axios from 'axios'
 function* getCvinfor(action) {
     const response1 = yield call(axios.get, 'http://leetun2k2-001-site1.gtempurl.com/api/Cv')
     const cv = response1.data.filter((prop)=>prop.cvId==="632d2789-f0dc-4f47-965f-f3a8cffd6f40")
-
+    console.log(cv)
     const response2 = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/CvHasSkill`)
     const cvSkill= response2.data.filter((prop)=>prop.cvid===cv[0].cvId)
 
