@@ -715,7 +715,7 @@ export default function Page_Company_Interview() {
 
           <Box
             sx={{
-              minHeight: 500,
+              minHeight: 350,
             }}
           >
             <DataGrid

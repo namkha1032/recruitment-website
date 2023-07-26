@@ -631,7 +631,9 @@ export default function Page_Company_Recruitment() {
         </Grid> */}
           </Grid>
 
-          <Box>
+          <Box sx={{
+              minHeight: 350,
+            }}>
             <DataGrid
               autoHeight
               columns={columns}

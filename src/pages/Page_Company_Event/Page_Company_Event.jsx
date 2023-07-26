@@ -215,7 +215,7 @@ export default function Page_Company_Event() {
       align: "right",
       getActions: (params) => [
         <Tooltip title="Detail" arrow>
-          <IconButton onClick={() => handleDetailClick(params.row.InterviewId)}>
+          <IconButton onClick={() => handleDetailClick(params.row.EventId)}>
             <InfoIcon sx={{ color: "black" }} />
           </IconButton>
         </Tooltip>,
@@ -419,7 +419,9 @@ export default function Page_Company_Event() {
         </Grid> */}
           </Grid>
 
-          <Box>
+          <Box sx={{
+              minHeight: 350,
+            }}>
             <DataGrid
               autoHeight
               loading={loading}
