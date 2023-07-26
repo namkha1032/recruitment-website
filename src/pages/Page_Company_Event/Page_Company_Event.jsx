@@ -5,6 +5,7 @@ import {
   Autocomplete,
   TextField,
   IconButton,
+  Tooltip,
 } from "@mui/material";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import InfoIcon from "@mui/icons-material/Info";
@@ -25,11 +26,25 @@ import {
 import Box from "@mui/material/Box";
 import EventNoteRounded from "@mui/icons-material/EventNoteRounded";
 import SportsScoreRounded from "@mui/icons-material/SportsScoreRounded";
-import datasjson from "./Page_Company_Event_Data.json";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
 import cleanStore from "../../utils/cleanStore";
+import GigaCard from "../../components/GigaCard/GigaCard";
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+
+// JSON <- Event
+// {
+//   "EventId": 0,
+//   "EventCampus": "",
+//   "EventName": "",
+//   "CreatedById": 0,
+//   "CreatedByName": "",
+//   "NumOfJoined": 0,
+//   "Status": [true, false] ~ ["Upcoming", "Finished"]
+// }
+
+
 export default function Page_Company_Event() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -186,7 +201,7 @@ export default function Page_Company_Event() {
       flex: 0.3,
       renderHeader: () => <span>Status</span>,
       renderCell: (params) => {
-        if (params.value) {
+        if (params.value === false) {
           return <Upcoming />;
         }
         return <Completed />;
@@ -199,68 +214,78 @@ export default function Page_Company_Event() {
       headerAlign: "right",
       align: "right",
       getActions: (params) => [
-        <IconButton onClick={() => handleDetailClick(params.row.InterviewId)}>
-          <InfoIcon sx={{ color: "#1565C0" }} />
-        </IconButton>,
+        <Tooltip title="Detail" arrow>
+          <IconButton onClick={() => handleDetailClick(params.row.InterviewId)}>
+            <InfoIcon sx={{ color: "black" }} />
+          </IconButton>
+        </Tooltip>,
       ],
     },
   ]);
 
   return (
     <Box>
-      <Grid
-        container
-        spacing={3}
-        sx={{
-          marginBottom: 5,
-        }}
-      >
-        <Grid item xs={12} sm={6} md={8}>
-          <Box
+      <GigaCard>
+        <GigaCardBody>
+          <Grid
+            container
+            spacing={3}
             sx={{
-              fontSize: 40,
-              fontWeight: 600,
-              color: "#1565C0",
+              marginBottom: 5,
             }}
           >
-            Event
-          </Box>
-        </Grid>
+            <Grid item xs={12} sm={6} md={8}>
+              <Box
+                sx={{
+                  fontSize: 40,
+                  fontWeight: 600,
+                  // color: "#1565C0",
+                  color: "black",
+                }}
+              >
+                Event
+              </Box>
+            </Grid>
 
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          md={4}
-          sx={{
-            display: "flex",
-            justifyContent: {
-              md: "flex-end",
-              sm: "flex-end",
-              xs: "flex-start",
-            },
-            alignItems: "center",
-          }}
-        >
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#1565C0",
-              textTransform: "none",
-              height: 50,
-              width: {
-                md: 250,
-                sm: 250,
-                xs: "100%"
-              },
-            }}
-            onClick={handleAddClick}
-          >
-            <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
-            Create event
-          </Button>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              sx={{
+                display: "flex",
+                justifyContent: {
+                  md: "flex-end",
+                  sm: "flex-end",
+                  xs: "flex-start",
+                },
+                alignItems: "center",
+              }}
+            >
+              <Button
+                variant="outlined"
+                sx={{
+                  color: "black",
+                  border: "1px solid black",
+                  textTransform: "none",
+                  height: 50,
+                  width: {
+                    md: 250,
+                    sm: 250,
+                    xs: "100%",
+                  },
+                  "&:hover": {
+                    backgroundColor: "black",
+                    color: "white",
+                  },
+                }}
+                onClick={handleAddClick}
+              >
+                <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
+                Create event
+              </Button>
 
-          {/* <IconButton onClick={handleMoreClick} sx={{
+              {/* <IconButton onClick={handleMoreClick} sx={{
             marginLeft: 1,
           }}>
             <MoreVertIcon />
@@ -291,72 +316,73 @@ export default function Page_Company_Event() {
               <FlagIcon sx={{ mr: 1.75 }} /> Báo lỗi
             </MenuItem>
           </Menu> */}
-        </Grid>
+            </Grid>
 
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={12}
-          sx={{
-            display: "flex",
-            justifyContent: "flex-start",
-            alignItems: "center",
-          }}
-        >
-          <Autocomplete
-            disablePortal
-            id="filter-type"
-            options={["Upcoming", "Finished"]}
-            sx={{ width: {md: 200, sm: 200, xs: "100%"} }}
-            renderInput={(params) => (
-              <TextField {...params} label="Status..." />
-            )}
-            renderOption={(props, option) => {
-              if (option === "Upcoming") {
-                return (
-                  <Box
-                    component="li"
-                    {...props}
-                    sx={{
-                      color: "#E0E0E0",
-                    }}
-                  >
-                    <EventNoteRounded
-                      sx={{
-                        color: "#E0E0E0",
-                        marginRight: 1,
-                      }}
-                    />
-                    Upcoming
-                  </Box>
-                );
-              } else {
-                return (
-                  <Box
-                    component="li"
-                    {...props}
-                    sx={{
-                      color: "#1565C0",
-                    }}
-                  >
-                    <SportsScoreRounded
-                      sx={{
-                        color: "#1565C0",
-                        marginRight: 1,
-                      }}
-                    />
-                    Finished
-                  </Box>
-                );
-              }
-            }}
-            value={statusChoose}
-            onChange={(event, value) => handleChooseStatus(value)}
-          />
-        </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={12}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+              }}
+            >
+              <Autocomplete
+                disablePortal
+                id="filter-type"
+                options={["Upcoming", "Finished"]}
+                sx={{ width: { md: 200, sm: 200, xs: "100%" } }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Status..." />
+                )}
+                renderOption={(props, option) => {
+                  if (option === "Upcoming") {
+                    return (
+                      <Box
+                        component="li"
+                        {...props}
+                        sx={{
+                          // color: "#E0E0E0",
+                          color: "black.400",
+                        }}
+                      >
+                        <EventNoteRounded
+                          sx={{
+                            color: "black.400",
+                            marginRight: 1,
+                          }}
+                        />
+                        Upcoming
+                      </Box>
+                    );
+                  } else {
+                    return (
+                      <Box
+                        component="li"
+                        {...props}
+                        sx={{
+                          color: "#1565C0",
+                        }}
+                      >
+                        <SportsScoreRounded
+                          sx={{
+                            color: "#1565C0",
+                            marginRight: 1,
+                          }}
+                        />
+                        Finished
+                      </Box>
+                    );
+                  }
+                }}
+                value={statusChoose}
+                onChange={(event, value) => handleChooseStatus(value)}
+              />
+            </Grid>
 
-        {/* <Grid
+            {/* <Grid
           item
           xs={12}
           md={5}
@@ -391,80 +417,85 @@ export default function Page_Company_Event() {
             </IconButton>
           </Box>
         </Grid> */}
-      </Grid>
+          </Grid>
 
-      <Box>
-        <DataGrid
-          autoHeight
-          loading={loading}
-          columns={columns}
-          rows={rows === null ? [] : rows}
-          sx={{
-            "&.MuiDataGrid-root": {
-              borderRadius: 1,
-            },
-            "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
-              outline: "none",
-            },
-            "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
-              outline: "none",
-            },
-            "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
-              backgroundColor: "#1565C0",
-              color: "white",
-              fontWeight: 700,
-            },
-            "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
-              display: "none",
-            },
-            "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
-              color: "white",
-            },
-          }}
-          slots={{
-            toolbar: GridToolbar,
-            noRowsOverlay: NoRowsOverlay,
-            noResultsOverlay: NoResultsOverlay,
-          }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: {
-                debounceMs: 500,
-                placeholder: "Search...",
-                sx: {
-                  width: 300,
-                  marginBottom: 1,
+          <Box>
+            <DataGrid
+              autoHeight
+              loading={loading}
+              columns={columns}
+              rows={rows === null ? [] : rows}
+              sx={{
+                "&.MuiDataGrid-root": {
+                  borderRadius: 1,
                 },
-              },
-              csvOptions: { disableToolbarButton: true },
-              printOptions: { disableToolbarButton: true },
-            },
-          }}
-          disableColumnMenu
-          disableColumnFilter
-          disableColumnSelector
-          disableDensitySelector
-          pagination
-          pageSizeOptions={[5, 10, 25, 50, 100]}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 25,
-              },
-            },
-          }}
-          getRowId={(row) => row.EventId}
-          onCellClick={(params, event) => {
-            if (params.field === "EventId" || params.field === "EventName") {
-              handleDetailClick(params.row.EventId);
-            }
-            if (params.field === "CreatedByName") {
-              handleAccountDetailClick(params.row.CreatedById);
-            }
-          }}
-        />
-      </Box>
+                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                  outline: "none",
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                  outline: "none",
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
+                  backgroundColor: "black",
+                  color: "white",
+                  fontWeight: 700,
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                  display: "none",
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+                  color: "white",
+                },
+              }}
+              slots={{
+                toolbar: GridToolbar,
+                noRowsOverlay: NoRowsOverlay,
+                noResultsOverlay: NoResultsOverlay,
+              }}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                  quickFilterProps: {
+                    debounceMs: 500,
+                    placeholder: "Search...",
+                    sx: {
+                      width: 300,
+                      marginBottom: 1,
+                    },
+                  },
+                  csvOptions: { disableToolbarButton: true },
+                  printOptions: { disableToolbarButton: true },
+                },
+              }}
+              disableColumnMenu
+              disableColumnFilter
+              disableColumnSelector
+              disableDensitySelector
+              pagination
+              pageSizeOptions={[5, 10, 25, 50, 100]}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 25,
+                  },
+                },
+              }}
+              getRowId={(row) => row.EventId}
+              onCellClick={(params, event) => {
+                if (
+                  params.field === "EventId" ||
+                  params.field === "EventName"
+                ) {
+                  handleDetailClick(params.row.EventId);
+                }
+                if (params.field === "CreatedByName") {
+                  handleAccountDetailClick(params.row.CreatedById);
+                }
+              }}
+            />
+          </Box>
+        </GigaCardBody>
+      </GigaCard>
     </Box>
   );
 }

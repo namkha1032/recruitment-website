@@ -33,6 +33,41 @@ import cleanStore from "../../utils/cleanStore";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 
+// JSON <- InterviewList
+// {
+//   "InterviewId": 0,
+//   "InterviewerName": "",
+//   "InterviewerId": 0,
+//   "CandidateName": "",
+//   "CandidateId": 0,
+//   "StartTime": "11/07/2023",
+//   "Shift": 0,
+//   "Room": "",
+//   "Status": [true, false] ~ ["Finished", "Notstart"], ~ Candidate_Status
+//   "Priority": ["Pending","Passed","Failed"] ~ Company_Status
+// }
+// JSON <- Department
+// {
+//   "departmentId": 0,
+//   "departmentName": "",
+//   "address": "",
+//   "email": "",
+//   "phone": "",
+//   "website": ""
+// }
+// JSON <- getPositionList
+// {
+//   "PositionId": 0, !!!
+//   "PositionName": "",
+//   "Description": "",
+//   "MaxHiringQty": 0,
+//   "HiredQty": 0,
+//   "StartDate": "11/09/2023",
+//   "EndDate": "11/12/2023",
+//   "Status": [true, false] ~ ["Active", "Inactive"]
+// }
+
+
 export default function Page_Company_Interview() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -280,7 +315,7 @@ export default function Page_Company_Interview() {
       align: "center",
       renderHeader: () => <span>Status</span>,
       renderCell: (params) => {
-        if (params.value) {
+        if (params.value === false) {
           return <NotStart />;
         }
         return <Completed />;
