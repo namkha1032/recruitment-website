@@ -59,13 +59,16 @@ const ResetPassword = (props) => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <Container sx={{ display: "flex", justifyContent: "center" }}>
         <Grid
           container
           sx={{
-            paddingTop: "10%",
+            //paddingTop: "10%",
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",

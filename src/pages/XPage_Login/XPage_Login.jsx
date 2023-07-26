@@ -119,6 +119,9 @@ const XPage_Login = () => {
         backgroundRepeat: "no-repeat",
         flexWrap: "wrap",
         width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
 
     >
@@ -126,11 +129,13 @@ const XPage_Login = () => {
         <Grid
           container
           sx={{
-            paddingTop: "10%",
+            /* paddingTop: "0%", */
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
+            alignItems: "center",
             width: "76%",
+            //maxHeight: "50%"
             //minWidth: "350px",
           }}
         >
