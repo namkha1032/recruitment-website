@@ -7,7 +7,7 @@ const ButtonTransfer = (props) => {
         <IconButton
             disabled={currentChosen.length == 0}
             onClick={handleTransfer}
-            sx={{ color: "primary.main" }}>
+            sx={{ color: "black" }}>
             <DoubleArrowIcon sx={{ fontSize: 80 }} />
         </IconButton>
     )

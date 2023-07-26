@@ -8,6 +8,7 @@ import questionSaga from "./saga/questionSaga";
 import departmentSaga from "./saga/departmentSaga"
 import languageSaga from "./saga/languageSaga"
 import skillSaga from "./saga/skillSaga"
+import testSaga from "./saga/testSaga";
 // import recruitmentSaga from "./saga/recruitmentSaga";
 import cvSaga from "./saga/cvSaga";
 import candidateSaga from "./saga/candidateSaga";
@@ -34,6 +35,7 @@ function* rootSaga() {
         eventSaga(),
         applicationSaga(),
         interviewCandidateSaga(),
+        testSaga()
     ])
 }
 

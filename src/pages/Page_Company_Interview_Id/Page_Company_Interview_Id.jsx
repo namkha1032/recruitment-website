@@ -61,18 +61,18 @@ const Page_Company_Interview_Id = () => {
                         <Divider sx={{
                             marginY: 10,
                             "&::before, &::after": {
-                                borderColor: "primary.main",
+                                borderColor: "black",
                                 borderWidth: "1px"
                             },
                         }}>
-                            <Button variant="contained" color="primary" sx={{ fontSize: 25, borderRadius: 100 }}>
+                            <Button variant="contained" sx={{ backgroundColor: "black", color: "white", fontSize: 25, borderRadius: 100 }}>
                                 RESULT OF THE INTERVIEW
                             </Button>
                         </Divider>
                         <Grid container spacing={4}>
                             <Grid item md={6} xs={12}>
                                 <GigaCard>
-                                    <GigaCardHeader color={"primary.main"} headerIcon={<EditNoteIcon sx={{ fontSize: "inherit" }} />}>
+                                    <GigaCardHeader color={"black"} headerIcon={<EditNoteIcon sx={{ fontSize: "inherit" }} />}>
                                         Note
                                     </GigaCardHeader>
                                     <GigaCardBody>
@@ -84,7 +84,7 @@ const Page_Company_Interview_Id = () => {
                             </Grid>
                             <Grid item md={6} xs={12}>
                                 <GigaCard>
-                                    <GigaCardHeader color={"primary.main"} headerIcon={<QuestionMarkIcon sx={{ fontSize: "inherit" }} />}>
+                                    <GigaCardHeader color={"black"} headerIcon={<QuestionMarkIcon sx={{ fontSize: "inherit" }} />}>
                                         Questions
                                     </GigaCardHeader>
                                     <GigaCardBody>
@@ -96,7 +96,7 @@ const Page_Company_Interview_Id = () => {
                                 <GigaCard>
                                     <Grid container>
                                         <Grid item md={6} xs={12} sx={{ display: "flex", flexDirection: "column" }}>
-                                            <GigaCardHeader color={"primary.main"} headerIcon={<TroubleshootIcon sx={{ fontSize: "inherit" }} />}>
+                                            <GigaCardHeader color={"black"} headerIcon={<TroubleshootIcon sx={{ fontSize: "inherit" }} />}>
                                                 Analysis
                                             </GigaCardHeader>
                                             <GigaCardBody>
@@ -106,7 +106,7 @@ const Page_Company_Interview_Id = () => {
                                             </GigaCardBody>
                                         </Grid>
                                         <Grid item md={6} xs={12} sx={{ display: "flex", flexDirection: "column" }}>
-                                            <GigaCardHeader color={"primary.main"} headerIcon={<SportsScoreIcon sx={{ fontSize: "inherit" }} />}>
+                                            <GigaCardHeader color={"black"} headerIcon={<SportsScoreIcon sx={{ fontSize: "inherit" }} />}>
                                                 Final Score
                                             </GigaCardHeader>
                                             <GigaCardBody>
