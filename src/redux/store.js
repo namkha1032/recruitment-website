@@ -8,6 +8,7 @@ import roomSlice from './reducer/roomReducer'
 import shiftSlice from './reducer/shiftReducer'
 import interviewerSlice from './reducer/interviewerReducer'
 import questionSlice from './reducer/questionReducer'
+import adminSlice from "./reducer/adminReducer";
 // import recruitmentSlice from './reducer/recruitmentReducer'
 import departmentSlice from './reducer/departmentReducer'
 import skillSlice from "./reducer/skillReducer"
@@ -32,6 +33,7 @@ import interviewCandidateSlice from './reducer/interviewCandidateReducer'
 const sagaMiddleware = createSagaMiddleware()
 const store = configureStore({
     reducer: {
+        admin:adminSlice.reducer,
         user: userSlice.reducer,
         interview: interviewSlice.reducer,
         room: roomSlice.reducer,
