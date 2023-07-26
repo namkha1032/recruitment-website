@@ -159,6 +159,7 @@ function App() {
             {/* <Route element={<RequireAuth allowedRoles={"candidate"} />}>
               <Route path="/test" element={<PageTest />} />
             </Route> */}
+            
 
           </Route>
 
