@@ -6,6 +6,7 @@ const adminSlice = createSlice({
         candidate:[],
         recruiter:[],
         interviewer:[],
+        blacklist:[],
     },
     reducers: {
         getCandidate(state,action){
@@ -17,8 +18,11 @@ const adminSlice = createSlice({
         getInterviewer(state,action){
             state.interviewer=action.payload;
         },
+        getBlacklist(state,action){
+            state.blacklist=action.payload;
+        },
     }
 });
 
-export const {getCandidate,getInterviewer,getRecruiter} = adminSlice.actions;
+export const {getCandidate,getInterviewer,getRecruiter,getBlacklist} = adminSlice.actions;
 export default adminSlice;

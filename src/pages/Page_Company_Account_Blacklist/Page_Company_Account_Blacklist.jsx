@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     Box,
     Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
@@ -26,6 +26,7 @@ import CardContent from "@mui/material/CardContent";
 import FormControl from "@mui/material/FormControl";
 import { shadows } from '@mui/system';
 import FindInPageIcon from "@mui/icons-material/FindInPage";
+import {useDispatch, useSelector} from "react-redux";
 
 const RenderStatusButton = ({params}) => {
     const [open, setOpen] = React.useState(false);
@@ -49,8 +50,7 @@ const RenderStatusButton = ({params}) => {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Account ID: {params.row.id}<br/>
-                        Account Name: {params.row.accountName}
+                        Blacklist ID: {params.row.blackListId}<br/>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -64,7 +64,12 @@ const RenderStatusButton = ({params}) => {
 }
 const Page_Company_Account = () => {
     const navigate = useNavigate()
-    const [account, setAccount] = useState('');
+    // const [account, setAccount] = useState('');
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch({type: "saga/getBlacklist"});
+    }, [dispatch]);
+    const blacklist = useSelector(state => state.admin.blacklist)
     function QuickSearchToolbar() {
         return (
             <Grid container margin={1}>
@@ -78,17 +83,18 @@ const Page_Company_Account = () => {
         );
     }
     const columns = [
-        { field: "id", headerName: "ID", flex: 0.2 },
-        { field: "registerId", headerName: "Register ID", flex: 0.4},
+        { field: "blackListId", headerName: "Blacklist ID", flex: 0.5 },
+        { field: "candidateId", headerName: "Candidate ID", flex: 0.5},
         {
-            field: "accountName",
-            headerName: "Account Name",
-            flex: 1,
+            field: "reason",
+            headerName: "Reason",
+            flex: 0.3,
             cellClassName: "name-column--cell",
         },
+        { field: "dateTime", headerName: "Blacklist Date", flex: 0.3},
         {
-            field: "status",
-            headerName: "Account Status",
+            field: "info",
+            headerName: "Check Info",
             flex: 0.3,
             renderCell: (params)=>{
                 return(<RenderStatusButton params={params} />)
@@ -160,7 +166,7 @@ const Page_Company_Account = () => {
                 }}>
                 <Grid container>
                 <Grid
-                    // width="100%"
+                    width="80vw"
                     item
                     // m="0px 10px 0px 10px"
                     xs={12}
@@ -196,7 +202,8 @@ const Page_Company_Account = () => {
                     }}
                 >
                     <DataGrid
-                        rows={mockDataContacts}
+                        rows={blacklist}
+                        getRowId={(row) => row.blackListId}
                         columns={columns}
                         slots={{ toolbar: QuickSearchToolbar }}
                     />

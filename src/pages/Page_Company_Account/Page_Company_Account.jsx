@@ -18,54 +18,53 @@ import useGetRole from '../../hooks/useGetRole.js';
 import {getCandidate} from "../../redux/reducer/adminReducer";
 
 
-const RenderAddToBlacklist = ({params}) => {
-    const [open, setOpen] = React.useState(false);
-    return (
-        <strong>
-            <IconButton color="black" aria-label="Add to Blacklist" size="large"
-                        onClick={() => {
-                            setOpen(true)
+
+
+function CandidateTable(props) {
+    const RenderAddToBlacklist = ({params}) => {
+        const [open, setOpen] = React.useState(false);
+        return (
+            <strong>
+                <IconButton color="black" aria-label="Add to Blacklist" size="large"
+                            onClick={() => {
+                                setOpen(true)
+                            }}>
+                    <GridAddIcon></GridAddIcon>
+                </IconButton>
+                <Dialog open={open}
+                        onClose={() => {
+                            setOpen(false)
+                        }}
+                        aria-labelledby="accountinfo"
+                        aria-describedby="accountdetails"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {"Account info "}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Account ID: {params.row.candidateId}<br/>
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => {
+                            setOpen(false)
+                        }}>Go to Account</Button>
+                        <Button onClick={() => {
+                            setOpen(false)
                         }}>
-                <GridAddIcon></GridAddIcon>
-            </IconButton>
-            <Dialog open={open}
-                    onClose={() => {
-                        setOpen(false)
-                    }}
-                    aria-labelledby="accountinfo"
-                    aria-describedby="accountdetails"
-            >
-                <DialogTitle id="alert-dialog-title">
-                    {"Account info "}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        Account ID: {params.row.id}<br/>
-                        Account Name: {params.row.accountName}
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => {
-                        setOpen(false)
-                    }}>Go to Account</Button>
-                    <Button onClick={() => {
-                        setOpen(false)
-                    }}>
-                        Add
-                    </Button>
-                    <Button onClick={() => {
-                        setOpen(false)
-                    }}>
-                        Cancel
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </strong>
-    )
-}
-
-
-function TabPanel(props) {
+                            Add
+                        </Button>
+                        <Button onClick={() => {
+                            setOpen(false)
+                        }}>
+                            Cancel
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </strong>
+        )
+    }
     const {children, value, index, ...other} = props;
     const dispatch = useDispatch()
     useEffect(() => {
@@ -82,78 +81,151 @@ function TabPanel(props) {
             </Grid>
         );
     }
-
-    // function setColumns(props.value) {
-    //     var columns
-    //     if (value===0) {
-    //         columns = [
-    //             {field: "candidateId", headerName: "Candidate ID", flex: 0.5},
-    //             {field: "userId", headerName: "User ID", flex: 0.5},
-    //             {
-    //                 field: "experience",
-    //                 headerName: "Experience",
-    //                 flex: 0.5,
-    //                 cellClassName: "name-column--cell",
-    //             },
-    //             {
-    //                 field: "addtoBlacklist",
-    //                 headerName: "Add to Blacklist",
-    //                 flex: 0.3,
-    //                 renderCell: (params) => {
-    //                     return (<RenderAddToBlacklist params={params}/>)
-    //                 },
-    //             },
-    //         ];
-    //     }
-    //     if (value===1) {
-    //         columns = [
-    //             {field: "candidateId", headerName: "Candidate ID", flex: 0.5},
-    //             {field: "userId", headerName: "User ID", flex: 0.5},
-    //             {
-    //                 field: "experience",
-    //                 headerName: "Experience",
-    //                 flex: 0.5,
-    //                 cellClassName: "name-column--cell",
-    //             },
-    //             {
-    //                 field: "addtoBlacklist",
-    //                 headerName: "Add to Blacklist",
-    //                 flex: 0.3,
-    //                 renderCell: (params) => {
-    //                     return (<RenderAddToBlacklist params={params}/>)
-    //                 },
-    //             },
-    //         ];
-    //     }
-    //     if (value===2) {
-    //         columns = [
-    //             {field: "candidateId", headerName: "Candidate ID", flex: 0.5},
-    //             {field: "userId", headerName: "User ID", flex: 0.5},
-    //             {
-    //                 field: "experience",
-    //                 headerName: "Experience",
-    //                 flex: 0.5,
-    //                 cellClassName: "name-column--cell",
-    //             },
-    //             {
-    //                 field: "addtoBlacklist",
-    //                 headerName: "Add to Blacklist",
-    //                 flex: 0.3,
-    //                 renderCell: (params) => {
-    //                     return (<RenderAddToBlacklist params={params}/>)
-    //                 },
-    //             },
-    //         ];
-    //     }
-    //     return columns;
-    // }
-
     const columns = [
-        {field: "candidateId", headerName: "Candidate ID", flex: 0.5},
+                {field: "candidateId", headerName: "Candidate ID", flex: 0.5},
+                {field: "userId", headerName: "User ID", flex: 0.5},
+                {
+                    field: "experience",
+                    headerName: "Experience",
+                    flex: 0.5,
+                    cellClassName: "name-column--cell",
+                },
+                {
+                    field: "addtoBlacklist",
+                    headerName: "Add to Blacklist",
+                    flex: 0.3,
+                    renderCell: (params) => {
+                        return (<RenderAddToBlacklist params={params}/>)
+                    },
+                },
+            ];
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`full-width-tabpanel-${index}`}
+            aria-labelledby={`full-width-tab-${index}`}
+            {...other}>
+            <Grid container>
+                <Grid
+                    border={0}
+                    width="80vw"
+                    item
+                    m="0px 0px 0px 0px"
+                    xs={12}
+                    display="flex"
+                    sx={{
+                        "& .MuiDataGrid-root": {
+                            border: "none",
+                            backgroundColor: "#ffffff",
+                        },
+                        "& .MuiDataGrid-cell": {
+                            borderBottom: "none"
+                        },
+                        "& .name-column--cell": {
+                            color: grey[900]
+                        },
+                        "& .MuiDataGrid-columnHeaders": {
+                            backgroundColor: grey[100],
+                            // color: "#ffffff",
+                            borderBottom: "5"
+                        },
+                        "& .MuiDataGrid-virtualScroller": {
+                            backgroundColor: grey[100]
+                        },
+                        "& .MuiDataGrid-footerContainer": {
+                            borderTop: "5",
+                            backgroundColor: grey[100]
+                            // color: "#ffffff"
+                        },
+                        "& .MuiCheckbox-root": {
+                            color: `${teal[300]} !important`
+                        },
+                        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                            color: `${grey[700]} !important`
+                        }
+                    }}
+                >
+                    <DataGrid
+                        rows={candidate}
+                        getRowId={(row) => row.candidateId}
+                        columns={columns}
+                        slots={{toolbar: QuickSearchToolbar}}
+                        display="flex"
+                    />
+                </Grid>
+            </Grid>
+        </div>
+    );
+}
+function InterviewerTable(props) {
+    const RenderAddToBlacklist = ({params}) => {
+        const [open, setOpen] = React.useState(false);
+        return (
+            <strong>
+                <IconButton color="black" aria-label="Add to Blacklist" size="large"
+                            onClick={() => {
+                                setOpen(true)
+                            }}>
+                    <GridAddIcon></GridAddIcon>
+                </IconButton>
+                <Dialog open={open}
+                        onClose={() => {
+                            setOpen(false)
+                        }}
+                        aria-labelledby="accountinfo"
+                        aria-describedby="accountdetails"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {"Account info "}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Interviewer ID: {params.row.interviewerId}<br/>
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => {
+                            setOpen(false)
+                        }}>Go to Account</Button>
+                        <Button onClick={() => {
+                            setOpen(false)
+                        }}>
+                            Add
+                        </Button>
+                        <Button onClick={() => {
+                            setOpen(false)
+                        }}>
+                            Cancel
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </strong>
+        )
+    }
+    const {children, value, index, ...other} = props;
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch({type: "saga/getInterviewer"});
+    }, [dispatch]);
+    const interviewer = useSelector(state => state.admin.interviewer)
+
+    function QuickSearchToolbar() {
+        return (
+            <Grid container margin={1}
+            >
+                <GridToolbarQuickFilter/>
+                <GridToolbar></GridToolbar>
+            </Grid>
+        );
+    }
+    const columns = [
+        {field: "interviewerId", headerName: "Interviewer ID", flex: 0.5},
         {field: "userId", headerName: "User ID", flex: 0.5},
         {
-            field: "experience",
-            headerName: "Experience",
+            field: "departmentId",
+            headerName: "Department",
             flex: 0.5,
             cellClassName: "name-column--cell",
         },
@@ -215,8 +287,147 @@ function TabPanel(props) {
                     }}
                 >
                     <DataGrid
-                        rows={candidate==null ? []: candidate}
-                        getRowId={(row) => row.candidateId}
+                        rows={interviewer}
+                        getRowId={(row) => row.interviewerId}
+                        columns={columns}
+                        slots={{toolbar: QuickSearchToolbar}}
+                        display="flex"
+                    />
+                </Grid>
+            </Grid>
+        </div>
+    );
+}
+function RecruiterTable(props) {
+    const RenderAddToBlacklist = ({params}) => {
+        const [open, setOpen] = React.useState(false);
+        return (
+            <strong>
+                <IconButton color="black" aria-label="Add to Blacklist" size="large"
+                            onClick={() => {
+                                setOpen(true)
+                            }}>
+                    <GridAddIcon></GridAddIcon>
+                </IconButton>
+                <Dialog open={open}
+                        onClose={() => {
+                            setOpen(false)
+                        }}
+                        aria-labelledby="accountinfo"
+                        aria-describedby="accountdetails"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {"Account info "}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Recruiter ID: {params.row.recruiterId}<br/>
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => {
+                            setOpen(false)
+                        }}>Go to Account</Button>
+                        <Button onClick={() => {
+                            setOpen(false)
+                        }}>
+                            Add
+                        </Button>
+                        <Button onClick={() => {
+                            setOpen(false)
+                        }}>
+                            Cancel
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </strong>
+        )
+    }
+    const {children, value, index, ...other} = props;
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch({type: "saga/getRecruiter"});
+    }, [dispatch]);
+    const recruiter = useSelector(state => state.admin.recruiter)
+
+    function QuickSearchToolbar() {
+        return (
+            <Grid container margin={1}
+            >
+                <GridToolbarQuickFilter/>
+                <GridToolbar></GridToolbar>
+            </Grid>
+        );
+    }
+    const columns = [
+        {field: "recruiterId", headerName: "Recruiter ID", flex: 0.5},
+        {field: "userId", headerName: "User ID", flex: 0.5},
+        {
+            field: "departmentId",
+            headerName: "Department ID",
+            flex: 0.5,
+            cellClassName: "name-column--cell",
+        },
+        {
+            field: "addtoBlacklist",
+            headerName: "Add to Blacklist",
+            flex: 0.3,
+            renderCell: (params) => {
+                return (<RenderAddToBlacklist params={params}/>)
+            },
+        },
+    ];
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`full-width-tabpanel-${index}`}
+            aria-labelledby={`full-width-tab-${index}`}
+            {...other}>
+            <Grid container>
+                <Grid
+                    border={0}
+                    width="80vw"
+                    item
+                    m="0px 0px 0px 0px"
+                    xs={12}
+                    display="flex"
+                    sx={{
+                        "& .MuiDataGrid-root": {
+                            border: "none",
+                            backgroundColor: "#ffffff",
+                        },
+                        "& .MuiDataGrid-cell": {
+                            borderBottom: "none"
+                        },
+                        "& .name-column--cell": {
+                            color: grey[900]
+                        },
+                        "& .MuiDataGrid-columnHeaders": {
+                            backgroundColor: grey[100],
+                            // color: "#ffffff",
+                            borderBottom: "5"
+                        },
+                        "& .MuiDataGrid-virtualScroller": {
+                            backgroundColor: grey[100]
+                        },
+                        "& .MuiDataGrid-footerContainer": {
+                            borderTop: "5",
+                            backgroundColor: grey[100]
+                            // color: "#ffffff"
+                        },
+                        "& .MuiCheckbox-root": {
+                            color: `${teal[300]} !important`
+                        },
+                        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                            color: `${grey[700]} !important`
+                        }
+                    }}
+                >
+                    <DataGrid
+                        rows={recruiter}
+                        getRowId={(row) => row.recruiterId}
                         columns={columns}
                         slots={{toolbar: QuickSearchToolbar}}
                         display="flex"
@@ -227,11 +438,24 @@ function TabPanel(props) {
     );
 }
 
-TabPanel.propTypes = {
+
+
+CandidateTable.propTypes = {
     children: PropTypes.node,
     index: PropTypes.number.isRequired,
     value: PropTypes.number.isRequired,
 };
+InterviewerTable.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+RecruiterTable.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
 
 function a11yProps(index) {
     return {
@@ -282,12 +506,12 @@ function FullWidthTabs() {
                         <Tab label="Interviewer" {...a11yProps(1)} />
                         <Tab label="Recruiter" {...a11yProps(2)} />
                     </Tabs>
-                    <TabPanel value={value} index={0}>
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                    </TabPanel>
+                    <CandidateTable value={value} index={0}>
+                    </CandidateTable>
+                    <InterviewerTable value={value} index={1}>
+                    </InterviewerTable>
+                    <RecruiterTable value={value} index={2}>
+                    </RecruiterTable>
                 </AppBar>
             </Grid>
         </Card>
