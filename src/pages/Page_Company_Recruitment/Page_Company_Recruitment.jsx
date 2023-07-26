@@ -40,6 +40,7 @@ import {
 } from "../../components/DataRick/DataRick";
 import cleanStore from "../../utils/cleanStore";
 
+// Test trial
 export default function Page_Company_Recruitment() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
