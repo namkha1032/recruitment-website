@@ -31,7 +31,7 @@ export default function Page_Company_Interview_Id_Start() {
     const dispatch = useDispatch()
 
     let allQuestion = useSelector(state => state.question)
-
+    
     let leftSoft = allQuestion ? allQuestion.left[0] : null
     let leftLang = allQuestion ? allQuestion.left[1] : null
     let leftTech = allQuestion ? allQuestion.left[2] : null
