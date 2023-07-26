@@ -13,7 +13,7 @@ import theme from './assets/js/themebackup';
 import "./index.css"
 // import "@fontsource/roboto/300.css";
 // import "@fontsource/montserrat"; // Specify weight
-import "@fontsource/source-sans-pro"; // Defaults to weight 400
+//import "@fontsource/source-sans-pro"; // Defaults to weight 400
 // import store
 import store from './redux/store'
 
