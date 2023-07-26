@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
@@ -20,6 +20,7 @@ import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader"
 import GigaCard from "../../components/GigaCard/GigaCard"
 import { Favorite, FavoriteBorder, FavoriteOutlined } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
+import AppPagination from '../../components/AppPagination';
 
 
 const cards1 = [1, 2, 3, 4, 5, 6];
@@ -48,6 +49,7 @@ const Page_Recruitment = () => {
     const [like,setLike] = React.useState(true)
     const dispatch = useDispatch();
     const positionList = useSelector(state => state.positionList)
+    const [pList,setPList] =useState(positionList)
     //
     const navigate = useNavigate()  
     const handleNavigateClick1 = (id) => {
@@ -112,17 +114,15 @@ const Page_Recruitment = () => {
         
           </Container>
         </Box> */}
-       {positionList  &&  <Container sx={{ py: 4 }} maxWidth="md">
+       {pList  &&  <Container sx={{ py: 4 }} maxWidth="md">
           {/* End hero unit */
-          <Box sx={{ padding: '10px 0px 10px 0px', borderTop: '1px solid lightgrey'  }}>
-          <Typography variant='h4' align="left" fontFamily='serif' > View Recruitment</Typography>
-          </Box>
+        
           }
       
           <Grid container spacing={8} sx={{padding:'30px 0px 0px 0px'}}>
-            {positionList.map((card) => (
+            {pList.map((card) => (
               <Grid item key={card.PositionId} xs={12}>
-                  <Box sx={{backgroundColor:'#EEEEEE', borderRadius:'5px', boxShadow:10 } }>
+                  <Box sx={{backgroundColor:'#FFFFFF', borderRadius:'10px', boxShadow:10 } }>
                     <Grid container>
                       <Grid item xs={9}>
                         <Box sx={{margin:'15px',display:'flex'}}>
@@ -137,7 +137,7 @@ const Page_Recruitment = () => {
                           </Box>
                           <Box sx={{marginLeft:'15px',display:'flex',flexDirection:'column',justifyContent:'space-between'}}>
                             <Box>
-                            <Typography>{card.PositionName} </Typography>
+                            <Typography variant='h6' sx={{fontWeight:'bold'}}>{card.PositionName} </Typography>
                             <Typography> {card.Description}</Typography>
                             </Box>
                             
@@ -165,12 +165,11 @@ const Page_Recruitment = () => {
             ))}
           </Grid>
         
-          <Box sx={{display:'flex', justifyContent:'flex-end', marginTop:3}}> 
-          <Pagination count={10} variant="outlined" color="primary"  />
-          </Box>
+          
           
          
         </Container>}
+        {positionList&& <AppPagination setChangeList={setPList} data={positionList} pageSize={5}/>}
       </main>
        {/* Footer */}
        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
