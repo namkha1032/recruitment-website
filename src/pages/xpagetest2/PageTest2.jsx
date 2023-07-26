@@ -370,31 +370,48 @@ const quesarray = [
 ]
 
 
-
-
-
 const App = () => {
     const [pass, setPass] = useState("")
     const [loading, setLoading] = useState(false)
     async function handleAdd() {
         if (pass == "add") {
             setLoading(true)
-            for (let ques of quesarray) {
-                // const newQues = {
-                //     questionId: "3fa85f64-5717-4562-b3fc-2c963f66afa1",
-                //     questionString: content,
-                //     categoryQuestionId: "b7925743-37b2-44c9-b85d-f3e982edbdd1"
-                // }
-                // await axios.post("http://leetun2k2-001-site1.gtempurl.com/api/Question", newQues)
-                if (ques.categoryQuestionId == "17c03656-3bea-4bd3-a1ba-b409c54f383c") {
-                    try {
-                        await axios.delete(`http://leetun2k2-001-site1.gtempurl.com/api/Question/${ques.questionId}`)
-                    }
-                    catch (error) {
-                        console.log("error: ", error)
-                    }
-                }
+            // for (let ques of quesarray) {
+            //     // const newQues = {
+            //     //     questionId: "3fa85f64-5717-4562-b3fc-2c963f66afa1",
+            //     //     questionString: content,
+            //     //     categoryQuestionId: "b7925743-37b2-44c9-b85d-f3e982edbdd1"
+            //     // }
+            //     // await axios.post("http://leetun2k2-001-site1.gtempurl.com/api/Question", newQues)
+            //     if (ques.categoryQuestionId == "17c03656-3bea-4bd3-a1ba-b409c54f383c") {
+            //         try {
+            //             await axios.delete(`http://leetun2k2-001-site1.gtempurl.com/api/Question/${ques.questionId}`)
+            //         }
+            //         catch (error) {
+            //             console.log("error: ", error)
+            //         }
+            //     }
 
+            // }
+            const newobj = {
+                "positionId": "3fa85f64-5717-4562-b3fc-2c963f66afa7",
+                "positionName": "React Senior Dev",
+                "description": "We are currently seeking a highly skilled and experienced Senior React Developer to join our dynamic and innovative team. As a Senior React Developer, you will play a pivotal role in designing and implementing cutting-edge web applications using React.js and related technologies. Your expertise and leadership will contribute to the growth and success of our projects, making a significant impact on our development process and final product.",
+                "salary": 30000,
+                "maxHiringQty": 20,
+                "startDate": "2023-07-30",
+                "endDate": "2023-08-12",
+                "departmentId": "1a647cc3-41e4-498d-8f82-4ba6aefa8295",
+                "languageId": "fa8280b5-9f3e-4cf0-8e79-3b36ccfd13d3",
+                "recruiterId": "00000000-0000-0000-0000-000000000002",
+                "isDeleted": true
+            }
+            try {
+                console.log("jav")
+                await axios.get("http://leetun2k2-001-site1.gtempurl.com/api/Position", newobj)
+            }
+            catch (error) {
+                console.log("err: ", error)
             }
         }
         setPass("")
