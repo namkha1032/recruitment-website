@@ -89,12 +89,12 @@ function App() {
               {/* admin, recruiter, interviewer */}
               <Route path="/company/interview" element={<Page_Company_Interview />} />
             </Route>
-            
+
             <Route element={<ProtectedRoute allowed={["admin", "recruiter"]} />}>
-            {/* admin, recruiter */}
+              {/* admin, recruiter */}
               <Route path="/company/interview/create" element={<Page_Company_Interview_Create />} />
             </Route>
-            
+
             <Route element={<ProtectedRoute allowed={["admin", "recruiter", "interviewer"]} />}>
               {/* admin, recruiter, interviewer */}
               <Route path="/company/interview/:interviewid" element={<Page_Company_Interview_Id />} />
@@ -105,7 +105,7 @@ function App() {
             <Route element={<ProtectedRoute allowed={["admin", "recruiter"]} />}>
               {/* admin, recruiter */}
               <Route path="/company/interview/:interviewid/update" element={<Page_Company_Interview_Id_Update />} />
-              
+
               {/* admin, recruiter */}
               <Route path="/company/recruitment" element={<Page_Company_Recruitment />} />
               {/* admin, recruiter */}
@@ -120,7 +120,7 @@ function App() {
               <Route path="/company/recruitment/:recruitmentid/report" element={<Page_Company_Recruitment_Id_Report />} />
             </Route>
 
-            <Route element={<ProtectedRoute allowed={["admin", "recruiter"]} />}>
+            <Route element={<ProtectedRoute allowed={["admin", "interviewer"]} />}>
               {/* admin, interviewer */}
               <Route path="/company/interview/:interviewid/start" element={<Page_Company_Interview_Id_Start />} />
             </Route>
@@ -147,17 +147,19 @@ function App() {
               <Route path="/profile/:profileid/interview" element={<Page_Profile_Id_Interview />} />
               <Route path="/profile/:profileid/application" element={<Page_Profile_Id_Application />} />
             </Route>
-            
+
             <Route path="/recruitment" element={<Page_Recruitment />} />
             <Route path="/recruitment/:recruitmentid" element={<Page_Recruitment_Id />} />
 
-            <Route element={<ProtectedRoute allowed={["admin", "recruiter", "interviewer","candidate"]} />}>
+            <Route element={<ProtectedRoute allowed={["admin", "recruiter", "interviewer", "candidate"]} />}>
               <Route path="/recruitment/:recruitmentid/application/:applicationid" element={<Page_Recruitment_Id_Application_Id />} />
             </Route>
 
-            <Route element={<RequireAuth allowedRoles={"candidate"} />}>
+            <Route path="/test" element={<PageTest />} />
+            {/* <Route element={<RequireAuth allowedRoles={"candidate"} />}>
               <Route path="/test" element={<PageTest />} />
-            </Route>
+            </Route> */}
+            
 
           </Route>
 

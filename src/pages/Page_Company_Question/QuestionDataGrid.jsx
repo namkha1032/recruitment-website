@@ -8,7 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function QuestionDataGrid(props) {
   return (
-    <Box>
+    <Box sx={{
+      minHeight: 350,
+    }}>
       <DataGrid
         autoHeight
         columns={props.columns}

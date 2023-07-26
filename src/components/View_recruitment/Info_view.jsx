@@ -26,9 +26,10 @@ import List_application from './List_application';
 import { useDispatch, useSelector } from 'react-redux';
 import cleanStore from '../../utils/cleanStore';
 import EditIcon from '@mui/icons-material/Edit';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 const Info_view = (props) => {
-
+    const { recruitmentid } = useParams();
+    console.log("number", recruitmentid);
     const [tab1, setTab1] = useState('1');
     const [tab2, setTab2] = useState('3');
     const handleTab1 = (event, newValue) => {
@@ -38,7 +39,8 @@ const Info_view = (props) => {
         setTab2(newValue);
     };
     const navigate = useNavigate();
-    
+
+
     const detailposition = useSelector(state => state.position);
     const applications = useSelector(state => state.application);
     const dispatch = useDispatch();
@@ -50,15 +52,26 @@ const Info_view = (props) => {
     }, [])
 
     useEffect(() => {
-        dispatch({ type: 'saga/getPosition' })
+        dispatch({ type: 'saga/getPosition', payload: "00000000-0000-0000-0000-000000000001"})
         return () => {
             dispatch({ type: "positon/setPosition", payload: null })
         }
     }, [])
+    // const detail = useSelector(state => state.detail)
+    // useEffect(() => {
+    //     dispatch({ type: 'saga/getDetailPosition', payload: recruitmentid })
+    //     return () => {
+    //         dispatch({ type: "detail/setDetail", payload: null })
+    //     }
+    // }, [])
+    console.log("number", recruitmentid)
+    // console.log("detail", detail);
+    // const requires = detail ? detail[recruitmentid].requirement : [];
+
     const requirements = detailposition ? detailposition[0].requirement : [];
-    console.log("require", requirements );
+    console.log("require", requirements);
     console.log("father", detailposition);
-    console.log("father2", applications);
+
     let left = 5
     let right = 6
     let gap = 1
@@ -79,9 +92,9 @@ const Info_view = (props) => {
                     </Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <GigaCard>
+                    
                         <img style={{ width: '100%', height: "100%" }} src={detailposition[0].imageUrl} alt="Tuyển dụng" />
-                    </GigaCard>
+                    
                 </Grid>
                 <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column" }}>
                     <GigaCard>
@@ -106,6 +119,7 @@ const Info_view = (props) => {
                                 <Grid item md={right} sx={gridSx}>
                                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
                                         {detailposition[0].positionName}
+                                        {/* {detail[recruitmentid].PositionName} */}
                                     </Typography>
                                 </Grid>
                             </Box>
@@ -126,6 +140,8 @@ const Info_view = (props) => {
                                 <Grid item md={right} sx={gridSx}>
                                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
                                         {`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`}
+                                        {/* {`${detail[recruitmentid].StartDate}${' - '}${detail[recruitmentid].EndDate}`} */}
+
                                     </Typography>
                                     {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`} /> */}
                                 </Grid>
@@ -147,6 +163,7 @@ const Info_view = (props) => {
                                 <Grid item md={right} sx={gridSx}>
                                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
                                         {detailposition[0].hireMax}
+                                        {/* {detail[recruitmentid].MaxHiringQty} */}
                                     </Typography>
                                     {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].hireMax}`} /> */}
                                 </Grid>
@@ -168,9 +185,13 @@ const Info_view = (props) => {
                                 <Grid item md={right} sx={gridSx}>
                                     <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-start", alignItems: "flex-start" }}>
                                         {requirements.map((require) => (
-                                               
+
                                             <Chip key={require.skillId} sx={{ margin: "0px 0px 5px 8px" }} value={require.skillName} label={require.skillName} variant='outlined' size='medium' color="warning" />
                                         ))}
+                                        {/* {requires.map((require) => (
+                                               
+                                               <Chip key={require.skillId} sx={{ margin: "0px 0px 5px 8px" }} value={require.skillName} label={require.skillName} variant='outlined' size='medium' color="warning" />
+                                           ))} */}
                                     </Stack>
                                 </Grid>
                             </Box>
@@ -189,7 +210,8 @@ const Info_view = (props) => {
                                     </Typography>
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
-                                <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].languageName}`} />
+                                    <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].languageName}`} />
+                                    {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detail[recruitmentid].languageName}`} /> */}
                                 </Grid>
                             </Box>
                             <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -209,6 +231,7 @@ const Info_view = (props) => {
                                 <Grid item md={right} sx={gridSx}>
                                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
                                         {detailposition[0].salary}
+                                        {/* {detail[recruitmentid].salary} */}
                                     </Typography>
                                     {/* <Chip sx={{ padding: "0px", marginLeft: "5px" }} label={`${detailposition[0].salary}`} variant="outlined" color='info' size="medium" /> */}
                                 </Grid>
@@ -219,49 +242,57 @@ const Info_view = (props) => {
                 <Grid item xs={12}>
                     <Box sx={{ width: '100%', typography: 'body1' }}>
                         {props.tabs == 2 ? (
-                            <TabContext value={tab1}>
-                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                            <GigaCard>
+                                <GigaCardBody>
+                                    <TabContext value={tab1}>
+                                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
 
-                                    <TabList onChange={handleTab1} aria-label="lab API tabs example">
-                                        <Tab label="General" value="1" />
-                                        <Tab label="List of applications" value="2" />
+                                            <TabList onChange={handleTab1} aria-label="lab API tabs example">
+                                                <Tab label="General" value="1" />
+                                                <Tab label="List of applications" value="2" />
 
-                                    </TabList>
+                                            </TabList>
 
-                                </Box>
-                                <TabPanel value="1" sx={{ display: "flex", flexDirection: "column", padding: "0px" }}>
-                                    <Box>
-                                        <View_detail detailposition={detailposition[0]} />
-                                    </Box>
-                                    <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
-                                        <Button sx={{ bgcolor: 'primary.main', color: 'black', border: '2px solid black' }} variant='outlined' onClick={handleEdit}>
-                                            <EditIcon></EditIcon> Chỉnh sửa
-                                        </Button>
-                                    </Box>
+                                        </Box>
+                                        <TabPanel value="1" sx={{ display: "flex", flexDirection: "column", padding: "0px" }}>
+                                            <Box>
+                                                <View_detail detailposition={detailposition[0]} />
+                                                {/* <View_detail detail={detail[recruitmentid]} /> */}
+                                            </Box>
+                                        </TabPanel>
+                                        <TabPanel value="2">
+                                            <List_application applications={applications} />
+                                        </TabPanel>
 
-                                </TabPanel>
-                                <TabPanel value="2">
-                                    <List_application applications={applications} />
-                                </TabPanel>
+                                    </TabContext>
+                                </GigaCardBody>
+                            </GigaCard>
+                            
 
-                            </TabContext>
                         ) : (
-                            <TabContext value={tab2}>
-                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                    <TabList onChange={handleTab2} aria-label="lab API tabs example">
-                                        <Tab label="General" value="3" />
+                            <GigaCard>
+                                <GigaCardBody>
+                                    <TabContext value={tab2}>
+                                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                            <TabList onChange={handleTab2} aria-label="lab API tabs example">
+                                                <Tab label="General" value="3" />
 
-                                    </TabList>
-                                </Box>
-                                <TabPanel value="3" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
-                                    <View_detail detailposition={detailposition[0]} />
-                                </TabPanel>
-                            </TabContext>
+                                            </TabList>
+                                        </Box>
+                                        <TabPanel value="3" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
+                                            <View_detail detailposition={detailposition[0]} />
+                                            {/* <View_detail detail={detail[recruitmentid]} /> */}
+                                        </TabPanel>
+                                    </TabContext>
+                                </GigaCardBody>
+                            </GigaCard>
+
                         )}
 
                     </Box>
                 </Grid>
             </Grid>
+            
         </>
     )
 }

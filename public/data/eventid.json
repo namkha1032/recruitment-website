@@ -2,10 +2,10 @@
     "eventId": 0,
     "eventName": "Codewar 2023",
     "content": "<p>Codewar 2023 is an interesting event of FPT Software</p>",
-    "quantity": 500,
-    "maxQuantity": 1000,
-    "time": "25/07/2023 09:02",
-    "location": "G Floor - Yale Room",
+    "quantity": 1000,
+    "maxQuantity": 2000,
+    "time": "21/07/2023 14:00",
+    "location": "Tầng T - Khoang Maldives - Ftown 1",
     "image": "https://drive.google.com/file/d/1uyI2RFAKdgy0m9jm7-znSlRWIrHwuV2w/view?usp=sharing",
-    "createdTime": "25/07/2023 10:30"
+    "createdTime": "16/07/2023 10:30"
 }

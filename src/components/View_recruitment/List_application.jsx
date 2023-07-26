@@ -92,120 +92,120 @@ const List_application = (props) => {
         <>
             <Box
                 display="flex"
-                minHeight="130vh"
+               
                 justifyContent="center"
                 alignItems="center"
                 flexDirection="column"
-                sx={{ height: 200, width: '45%', margin: "auto" }}>
-                <Box minHeight="125vh">
-                    <Grid container spacing={2} >
-                        <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                sx={{ height: "100%", width: '45%', margin: "auto" }}>
 
-                            <Button color="primary" sx={{ textDecoration: currentTable == 0 ? 'underline' : 'none' }} variant={currentTable == 0 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(0) }} >
-                                <PendingIcon></PendingIcon> Pending
-                            </Button>
+                <Grid container spacing={2} >
+                    <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
 
-                            <Button color="warning" sx={{ textDecoration: currentTable == 1 ? 'underline' : 'none', marginLeft: "10px" }} variant={currentTable == 1 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(1) }} >
-                                <FmdBadIcon></FmdBadIcon> Reject
-                            </Button>
-                            <Button color="success" sx={{ textDecoration: currentTable == 2 ? 'underline' : 'none', marginLeft: "10px" }} variant={currentTable == 2 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(2) }} >
-                                <GradingIcon></GradingIcon> Pass
-                            </Button>
+                        <Button color="primary" sx={{ textDecoration: currentTable == 0 ? 'underline' : 'none' }} variant={currentTable == 0 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(0) }} >
+                            <PendingIcon></PendingIcon> Pending
+                        </Button>
+
+                        <Button color="warning" sx={{ textDecoration: currentTable == 1 ? 'underline' : 'none', marginLeft: "10px" }} variant={currentTable == 1 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(1) }} >
+                            <FmdBadIcon></FmdBadIcon> Reject
+                        </Button>
+                        <Button color="success" sx={{ textDecoration: currentTable == 2 ? 'underline' : 'none', marginLeft: "10px" }} variant={currentTable == 2 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(2) }} >
+                            <GradingIcon></GradingIcon> Pass
+                        </Button>
 
 
-                        </Grid>
                     </Grid>
+                </Grid>
 
-                    {currentTable == 0 ? (
-                        <DataGrid
-                            sx={{
-                                "& .MuiDataGrid-columnHeaders": {
-                                    backgroundColor: "#1976d2",
-                                    fontSize: 16
+                {currentTable == 0 ? (
+                    <DataGrid
+                        sx={{
+                            "& .MuiDataGrid-columnHeaders": {
+                                backgroundColor: "#1976d2",
+                                fontSize: 16
+                            },
+                        }}
+                        slots={{ toolbar: QuickSearchToolbar }}
+                        rowHeight={72}
+                        rows={pending1}
+                        {...other}
+                        columns={columns}
+                        getRowId={(row) => row.applicationid}
+                        initialState={{
+                            pagination: {
+                                paginationModel: {
+                                    pageSize: 5,
                                 },
-                            }}
-                            slots={{ toolbar: QuickSearchToolbar }}
-                            rowHeight={72}
-                            rows={pending1}
-                            {...other}
-                            columns={columns}
-                            getRowId={(row) => row.applicationid}
-                            initialState={{
-                                pagination: {
-                                    paginationModel: {
-                                        pageSize: 5,
-                                    },
-                                },
-                            }}
-                            pageSizeOptions={[5]}
+                            },
+                        }}
+                        pageSizeOptions={[5]}
 
-                        />
-                    ) : null}
-                    {currentTable == 1 ? (
-                        <DataGrid
-                            sx={{
-                                "& .MuiDataGrid-columnHeaders": {
-                                    backgroundColor: "#ed6c02",
+                    />
+                ) : null}
+                {currentTable == 1 ? (
+                    <DataGrid
+                        sx={{
+                            "& .MuiDataGrid-columnHeaders": {
+                                backgroundColor: "#ed6c02",
 
-                                    fontSize: 16
-                                },
-                                "& .MuiDataGrid-cell": {
-                                    border: 1,
-                                    borderRight: 1,
-                                    borderTop: 1,
-                                    borderBottom: 1
+                                fontSize: 16
+                            },
+                            "& .MuiDataGrid-cell": {
+                                border: 1,
+                                borderRight: 1,
+                                borderTop: 1,
+                                borderBottom: 1
 
+                            },
+                        }}
+                        slots={{ toolbar: QuickSearchToolbar }}
+                        rowHeight={72}
+                        rows={reject1}
+                        {...other}
+                        columns={columns}
+                        getRowId={(row) => row.applicationid}
+                        initialState={{
+                            pagination: {
+                                paginationModel: {
+                                    pageSize: 5,
                                 },
-                            }}
-                            slots={{ toolbar: QuickSearchToolbar }}
-                            rowHeight={72}
-                            rows={reject1}
-                            {...other}
-                            columns={columns}
-                            getRowId={(row) => row.applicationid}
-                            initialState={{
-                                pagination: {
-                                    paginationModel: {
-                                        pageSize: 5,
-                                    },
-                                },
-                            }}
-                            pageSizeOptions={[5]}
-                        />
+                            },
+                        }}
+                        pageSizeOptions={[5]}
+                    />
 
-                    ) : null}
-                    {currentTable == 2 ? (
-                        <DataGrid
-                            sx={{
-                                "& .MuiDataGrid-columnHeaders": {
-                                    backgroundColor: "#1b5e20",
-                                    color: "white",
-                                    fontSize: 16
+                ) : null}
+                {currentTable == 2 ? (
+                    <DataGrid
+                        sx={{
+                            "& .MuiDataGrid-columnHeaders": {
+                                backgroundColor: "#1b5e20",
+                                color: "white",
+                                fontSize: 16
+                            },
+                            "& .MuiDataGrid-cell": {
+                                border: 1,
+                                borderRight: 1,
+                                borderTop: 1,
+                                borderBottom: 1
+                            },
+                        }}
+                        slots={{ toolbar: QuickSearchToolbar }}
+                        rowHeight={72}
+                        rows={pass1}
+                        {...other}
+                        columns={columns}
+                        getRowId={(row) => row.applicationid}
+                        initialState={{
+                            pagination: {
+                                paginationModel: {
+                                    pageSize: 5,
                                 },
-                                "& .MuiDataGrid-cell": {
-                                    border: 1,
-                                    borderRight: 1,
-                                    borderTop: 1,
-                                    borderBottom: 1
-                                },
-                            }}
-                            slots={{ toolbar: QuickSearchToolbar }}
-                            rowHeight={72}
-                            rows={pass1}
-                            {...other}
-                            columns={columns}
-                            getRowId={(row) => row.applicationid}
-                            initialState={{
-                                pagination: {
-                                    paginationModel: {
-                                        pageSize: 5,
-                                    },
-                                },
-                            }}
-                            pageSizeOptions={[5]}
-                        />
-                    ) : null}
-                </Box>
+                            },
+                        }}
+                        pageSizeOptions={[5]}
+                    />
+                ) : null}
+
             </Box>
         </>
 

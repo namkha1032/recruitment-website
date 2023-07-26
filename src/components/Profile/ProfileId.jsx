@@ -5,25 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { NullString, NotStart, Pending, Completed, Postpone } from "../LabelButton/LabelButton";
 import TabInProfile from './TabInProfile/TabInProfile';
 
-export default function HistoryList({ events, time, pathnavigate, NameList, namePage }) {
+export default function HistoryList({ events, pathnavigate, NameList, namePage }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const navigate = useNavigate();
 
-  const [totalPositions, setTotalPositions] = useState(0);
-
-  useEffect(() => {
-    // Calculate the total number of positions
-    const total = events.reduce((sum, event) => {
-      if (event.id && Array.isArray(event.id)) {
-        return sum + event.id.length;
-      }
-      return sum;
-    }, 0);
-    setTotalPositions(total);
-  }, [events]);
-
   const handleDetails = (eventId) => {
-    navigate(pathnavigate);
+   console.log(eventId);
+    navigate(`${pathnavigate}/${eventId}`);
     // Thực hiện hành động khi người dùng nhấn vào nút "Xem chi tiết" cho từng event
     // Bạn có thể triển khai hàm này để hiển thị thông tin chi tiết về event, ví dụ: hiển thị popup, chuyển đến trang mới, ...
   };
@@ -72,12 +60,6 @@ export default function HistoryList({ events, time, pathnavigate, NameList, name
     },
   ].filter(Boolean);
 
-  const rows = events.map((event) => ({
-    id: event.id,
-    name: event.name,
-    time,
-    status: event.status,
-  }));
 
   return (
     <>
@@ -98,11 +80,11 @@ export default function HistoryList({ events, time, pathnavigate, NameList, name
                 {NameList}
               </Typography>
               <Box sx={{ backgroundColor: '#dcdcdc', color: 'black', padding: '5px', borderRadius: '10px', marginLeft: '10px' }}>
-                {totalPositions} {namePage}
+                {'0'} {namePage}
               </Box>
             </Box>
             <DataGrid
-              rows={rows}
+              rows={events === null ? [] : events}
               columns={columns}
               rowStyles={(params) => ({
                 backgroundColor: selectedEvent === params.id ? '#ffdddd' : 'transparent',

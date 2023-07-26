@@ -3,12 +3,12 @@ import { Grid, Typography, Button, Paper, Box } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import TabInProfile from './TabInProfile/TabInProfile';
-export default function EventList({ events, time, status, totalPositions }) {
+export default function EventList({ events, totalPositions }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const navigate = useNavigate();
 
   const handleDetails = (eventId) => {
-    navigate(`/event/1`);
+    navigate(`/event/${eventId}`);
     // Perform action when the "View Details" button is clicked for an event
     // You can implement this function to display detailed information about the event, e.g., show a popup, navigate to a new page, etc.
   };
@@ -24,7 +24,6 @@ export default function EventList({ events, time, status, totalPositions }) {
   const columns = [
     { field: 'name', headerName: 'Event', flex: 2 },
     { field: 'time', headerName: 'Thời gian', flex: 2 },
-    status && { field: 'status', headerName: 'Trạng thái', flex: 1 },
     {
       field: 'view',
       headerName: 'View',
@@ -40,8 +39,7 @@ export default function EventList({ events, time, status, totalPositions }) {
   const rows = events.map((event) => ({
     id: event.id,
     name: event.name,
-    time,
-    status,
+    time:event.time,
   }));
 
   return (

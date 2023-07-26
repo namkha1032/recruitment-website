@@ -31,7 +31,7 @@ export default function Page_Company_Interview_Id_Start() {
     const dispatch = useDispatch()
 
     let allQuestion = useSelector(state => state.question)
-
+    
     let leftSoft = allQuestion ? allQuestion.left[0] : null
     let leftLang = allQuestion ? allQuestion.left[1] : null
     let leftTech = allQuestion ? allQuestion.left[2] : null
@@ -76,7 +76,7 @@ export default function Page_Company_Interview_Id_Start() {
             <>
                 <form autoComplete='off' onSubmit={handleSubmit}>
                     <GigaCard>
-                        <GigaCardHeader color={"primary.main"} headerIcon={<QuestionMarkIcon sx={{ fontSize: "inherit" }} />}>
+                        <GigaCardHeader color={"black"} headerIcon={<QuestionMarkIcon sx={{ fontSize: "inherit" }} />}>
                             Questions
                         </GigaCardHeader>
                         <GigaCardBody>
@@ -98,7 +98,7 @@ export default function Page_Company_Interview_Id_Start() {
                     <Grid container sx={{ marginTop: 4 }} columnSpacing={4}>
                         <Grid item md={6}>
                             <GigaCard>
-                                <GigaCardHeader color={"primary.main"} headerIcon={<EditNoteIcon sx={{ fontSize: "inherit" }} />}>
+                                <GigaCardHeader color={"black"} headerIcon={<EditNoteIcon sx={{ fontSize: "inherit" }} />}>
                                     Note
                                 </GigaCardHeader>
                                 <GigaCardBody>
@@ -109,7 +109,7 @@ export default function Page_Company_Interview_Id_Start() {
                         <Grid item md={6}>
                             {/* <Card variant="outlined" sx={{ border: "1px solid black", borderRadius: 5 }}> */}
                             <GigaCard>
-                                <GigaCardHeader color={"primary.main"} headerIcon={<SportsScoreIcon sx={{ fontSize: "inherit" }} />}>
+                                <GigaCardHeader color={"black"} headerIcon={<SportsScoreIcon sx={{ fontSize: "inherit" }} />}>
                                     Final Score
                                 </GigaCardHeader>
                                 <GigaCardBody>
@@ -120,7 +120,11 @@ export default function Page_Company_Interview_Id_Start() {
                         </Grid>
                     </Grid>
                     <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 4 }}>
-                        <Button variant="contained" type="submit">Save record</Button>
+                        <Button variant="contained" type="submit" sx={{
+                            backgroundColor: "black", "&:hover": {
+                                backgroundColor: "grey"
+                            }
+                        }}>Save record</Button>
                     </Box>
                 </form >
             </>

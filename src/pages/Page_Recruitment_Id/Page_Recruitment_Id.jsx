@@ -15,6 +15,10 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { ToastContainer, toast } from "react-toastify";
+import useGetRole from '../../hooks/useGetRole';
+import GigaCard from "../../components/GigaCard/GigaCard";
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader";
 import 'react-toastify/dist/ReactToastify.css';
 const style = {
     position: 'absolute',
@@ -24,7 +28,8 @@ const style = {
     width: 600,
     height: "60%",
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+    // // border: '2px solid #000',
+    // // borderRadius: 5,
     boxShadow: 24,
     p: 4,
     display: "flex",
@@ -34,6 +39,7 @@ const style = {
 
 
 const Page_Recruitment_Id = () => {
+
     const navigate = useNavigate();
     const [showCV, setShowCV] = useState(false);
     const [open, setOpen] = useState(false);
@@ -58,9 +64,12 @@ const Page_Recruitment_Id = () => {
         }
 
     }, [])
+    let role = useGetRole();
+    console.log("hi", role);
+    console.log("Cvlist", list_CV);
     const submitcv = useSelector(state => state.submitcv);
-    const handleTextClick = () => {
-        window.open(`/profile/:profileid/cv/:cvid`);
+    const handleTextClick = (id) => {
+        window.open(`/profile/:profileid/cv/${id}`);
     };
 
 
@@ -110,82 +119,107 @@ const Page_Recruitment_Id = () => {
                 {/* tabs={tabs} */}
                 <Info_view tabs={tabs} />
             </Grid>
-            <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
-                <Button sx={{ bgcolor: 'primary.main', color: 'black' }} variant='outlined' onClick={handleOpen}>
-                    <InsertDriveFileIcon></InsertDriveFileIcon>  Apply
-                </Button>
-            </Grid>
-            <Modal
-                open={open}
-                onClose={handleSubmit}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2" >
-                        Choose your CV
-                    </Typography>
-                    <form onSubmit={handleSubmit}>
-                        <FormControl sx={{ margin: "auto", display: "flex", flexDirection: "column" }} variant="standard">
-                            <Box sx={{ display: "flex", flexDirection: "row" }}>
-                                <Grid item xs={10}>
-                                    <Box >
-                                        <RadioGroup
-                                            aria-labelledby="demo-error-radios"
-                                            name="choose CV"
-                                            value={CV}
-                                            onChange={handleCVChange}
-                                        >
-                                            {list_CV.map((CV) => (
-                                                <FormControlLabel key={CV.CVid} value={CV.CVname} control={<Radio />} label={CV.CVname} />
-                                            ))}
-                                        </RadioGroup>
+            {role == "candidate" ? (
+                <>
+                    <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
+                        <Button sx={{
+                            bgcolor: 'black', color: 'white',
+                            ":hover": {
+                                backgroundColor: "black"
+                            }
+                        }} variant='outlined' onClick={handleOpen}>
+                            <InsertDriveFileIcon></InsertDriveFileIcon>  Apply
+                        </Button>
+                    </Grid>
+                    <Modal
+                        open={open}
+                        onClose={handleSubmit}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box sx={style}>
+                            <Typography id="modal-modal-title" variant="h6" component="h2" >
+                                Choose your CV
+                            </Typography>
+                            <form onSubmit={handleSubmit}>
+                                <FormControl sx={{ margin: "auto", display: "flex", flexDirection: "column" }} variant="standard">
+                                    <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                        <Grid item xs={10}>
+                                            <Box >
+                                                <RadioGroup
+                                                    aria-labelledby="demo-error-radios"
+                                                    name="choose CV"
+                                                    value={CV}
+                                                    onChange={handleCVChange}
+                                                >
+                                                    {list_CV.map((CV) => (
+                                                        <FormControlLabel key={CV.CVid} value={CV.CVname} control={<Radio />} label={CV.CVname} />
+                                                    ))}
+                                                </RadioGroup>
+                                            </Box>
+                                        </Grid>
+                                        <Grid item xs={2}>
+                                            <Box sx={{ display: "flex", flexDirection: "column" }}>
+                                                {list_CV.map((CV) => (
+                                                    <Button key={CV.CVid} sx={{
+                                                        marginBottom: "5.5px", bgcolor: 'black', color: 'white',
+                                                        ":hover": {
+                                                            backgroundColor: "black"
+                                                        }
+                                                    }} variant="contained" onClick={() => handleTextClick(CV.CVid)}>
+                                                        Detail
+                                                    </Button>
+                                                ))}
+                                            </Box>
+                                        </Grid>
                                     </Box>
-                                </Grid>
-                                <Grid item xs={2}>
-                                    <Box sx={{ display: "flex", flexDirection: "column" }}>
-                                        {list_CV.map((CV) => (
-                                            <Button key={CV.CVid} sx={{ marginBottom: "5.5px" }} variant="contained" onClick={handleTextClick}>
-                                                Detail
-                                            </Button>
-                                        ))}
+                                    <Box>
+                                        <Grid item xs={12}>
+                                            <FormHelperText sx={{ fontSize: "20px", color: "red", fontWeight: "bold" }}>{helperText}</FormHelperText>
+                                        </Grid>
                                     </Box>
-                                </Grid>
-                            </Box>
-                            <Box>
-                                <Grid item xs={12}>
-                                    <FormHelperText sx={{ fontSize: "20px", color: "red", fontWeight: "bold" }}>{helperText}</FormHelperText>
-                                </Grid>
-                            </Box>
-                        </FormControl>
-                        <Box sx={{ display: "flex" }}>
-                            <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-start" }}>
-                                <Button size="large" type="submit" variant="contained" onClick={handleClose}   >
-                                    <CloseIcon></CloseIcon> Close
-                                </Button>
-                            </Grid>
-                            <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
-                                <Button size="large" type="submit" variant="contained" onClick={hanldebutton}   >
-                                    <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit your CV
-                                </Button>
+                                </FormControl>
+                                <Box sx={{ display: "flex" }}>
+                                    <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-start" }}>
+                                        <Button sx={{
+                                            bgcolor: 'black', color: 'white',
+                                            ":hover": {
+                                                backgroundColor: "black"
+                                            }
+                                        }} size="large" type="submit" variant="contained" onClick={handleClose}   >
+                                            <CloseIcon></CloseIcon> Close
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
+                                        <Button sx={{
+                                            bgcolor: 'black', color: 'white',
+                                            ":hover": {
+                                                backgroundColor: "black"
+                                            }
+                                        }} size="large" type="submit" variant="contained" onClick={hanldebutton}   >
+                                            <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit your CV
+                                        </Button>
 
-                            </Grid>
+                                    </Grid>
+                                </Box>
+                            </form>
                         </Box>
-                    </form>
-                </Box>
-            </Modal>
-            <ToastContainer
-                position="top-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover={false}
-                theme="colored"
-            />
+                    </Modal>
+                    <ToastContainer
+                        position="top-center"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover={false}
+                        theme="colored"
+                    />
+                </>
+            ) : null}
+
         </Grid>
     )
 }

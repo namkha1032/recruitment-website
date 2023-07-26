@@ -1,5 +1,5 @@
 // import libraries
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -34,17 +34,28 @@ import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import RecordVoiceOverRoundedIcon from '@mui/icons-material/RecordVoiceOverRounded';
 import PersonSearchRoundedIcon from '@mui/icons-material/PersonSearchRounded';
 import ManageAccountsRoundedIcon from '@mui/icons-material/ManageAccountsRounded';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import cleanStore from '../../utils/cleanStore';
+import useGetRole from '../../hooks/useGetRole';
 
 
 
 const Page_Company_Event_Id = () => {
 
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch({ type: "saga/getEvent" })
+        return () => {
+            cleanStore(dispatch)
+        }
+    }, [])
+
+    const event = useSelector((state) => state.event)
+    const role = useGetRole()
+
+
     // useNavigate
     const navigate = useNavigate()
-
-
-    const dispatch = useDispatch();
 
 
     // Test Data
@@ -213,146 +224,152 @@ const Page_Company_Event_Id = () => {
                 </Box>
 
                 <TabPanel value='1' sx={{ p: 0, mt: 2 }}>
-                    <Box sx={{ mb: 2 }}>
-                        <img src={picture}
-                            alt="..."
-                            style={{
-                                width: '100%',
-                                objectFit: 'cover',
-                                border: '5px solid #555',
-                                borderRadius: '5px'
-                            }} />
-                    </Box>
-                    <GigaCard>
-                        {/* <GigaCardHeader headerIcon={<PsychologyAltRoundedIcon fontSize='large'></PsychologyAltRoundedIcon>}>
+                    <>
+                        {event &&
+                            (<>
+                                <Box sx={{ mb: 2 }}>
+                                    <img src={picture}
+                                        alt="..."
+                                        style={{
+                                            width: '100%',
+                                            objectFit: 'cover',
+                                            border: '5px solid #555',
+                                            borderRadius: '5px'
+                                        }} />
+                                </Box>
+                                <GigaCard>
+                                    {/* <GigaCardHeader headerIcon={<PsychologyAltRoundedIcon fontSize='large'></PsychologyAltRoundedIcon>}>
                             How To Think Critically and Avoid Fallacies
                         </GigaCardHeader>
                         <GigaCardHeader headerIcon={<CelebrationRoundedIcon fontSize='large'></CelebrationRoundedIcon>}>
                             How To Think Critically and Avoid Fallacies
                         </GigaCardHeader> */}
-                        <Box sx={{ paddingLeft: 4, paddingTop: 4 }}>
-                            <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
-                                <Box sx={{ fontSize: 40, display: "flex", alignItems: "center" }}>
-                                    <CelebrationRoundedIcon fontSize='large'></CelebrationRoundedIcon>
-                                </Box>
-                                <Box sx={{
-                                    fontSize: 40,
-                                    fontWeight: 600,
-                                    // color: '#1565C0',
-                                    display: 'flex',
-                                    justifyContent: 'start',
-                                    // justifyContent: 'center'
-                                    display: 'inline-block',
-                                    // marginBottom: 1
-                                }}>
-                                    How To Think Critically and Avoid Fallacies
-                                </Box>
-                            </Box>
-                        </Box>
-                        <GigaCardBody>
-                            <Box sx={{ fontSize: '18px', fontStyle: 'italic', display: 'flex', justifyContent: 'flex-end', marginBottom: 3 }}>
-                                <TodayRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></TodayRoundedIcon>
-                                <span style={{ color: 'darkgray' }}>20/07/2023 16:40</span>
-                            </Box>
-
-                            {/* <div> cannot appear as a descendant of <p> */}
-                            {/* ---------------------------------------------------------------------- */}
-                            <p align='justify'>
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis recusandae sapiente deserunt sequi rerum animi eaque illo excepturi. Iusto saepe cumque ipsa cupiditate ab accusantium dolor soluta veritatis ex hic?<br />
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae modi rerum enim voluptatibus voluptatem! Alias eum velit, animi harum at vitae! Atque, eum. Eos iste soluta vitae quidem itaque saepe?<br />
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus rerum libero cupiditate voluptatem, doloremque quaerat culpa soluta! Soluta assumenda at sint et fugit quo natus id beatae! Et, saepe? Ratione!<br />
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum mollitia asperiores quis quos, ut fugiat harum. Voluptates vero animi alias sapiente odit cumque esse culpa, repudiandae error inventore, autem commodi!<br />
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit eum esse quisquam distinctio animi iure possimus omnis tempore dicta consectetur perspiciatis atque in, cupiditate nostrum numquam accusamus blanditiis velit libero!<br />
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure laborum, ullam necessitatibus harum distinctio similique itaque corrupti qui possimus incidunt quisquam, optio hic molestias et accusantium rem ipsum. Commodi, consequatur.<br />
-                            </p>
-                            {/* ---------------------------------------------------------------------- */}
-
-                            <Grid container sx={{ marginTop: 8 }}>
-                                <Grid item md={3} sm={4} xs={6}>
-                                    <Box sx={{
-                                        display: "flex",
-                                        // alignItems: 'center',
-                                        // marginTop: 6
-                                    }}>
-                                        <PeopleAltRoundedIcon fontSize='large' sx={{ marginRight: 2 }}></PeopleAltRoundedIcon>
-                                        <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                                            <Box sx={{
-                                                fontSize: 22,
-                                                fontWeight: 600,
-                                            }}>
-                                                Số lượng
+                                    <Box sx={{ paddingLeft: 4, paddingTop: 4 }}>
+                                        <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
+                                            <Box sx={{ fontSize: 40, display: "flex", alignItems: "center" }}>
+                                                <CelebrationRoundedIcon fontSize='large'></CelebrationRoundedIcon>
                                             </Box>
                                             <Box sx={{
-                                                fontSize: 16,
+                                                fontSize: 40,
+                                                fontWeight: 600,
+                                                // color: '#1565C0',
+                                                display: 'flex',
+                                                justifyContent: 'start',
+                                                // justifyContent: 'center'
+                                                display: 'inline-block',
+                                                // marginBottom: 1
                                             }}>
-                                                500/1000
+                                                {event.eventName}
                                             </Box>
                                         </Box>
-                                        {/* <p style={{ fontWeight: 600, fontSize: 20 }}>500/1000</p> */}
                                     </Box>
-                                </Grid>
-                                <Grid item md={3} sm={4} xs={6}>
-                                    <Box sx={{
-                                        display: "flex",
-                                        // alignItems: 'center',
-                                        // marginTop: 3
-                                        // justifyContent: 'center'
-                                    }}>
-                                        <AccessTimeRoundedIcon fontSize='large' sx={{ marginRight: 2 }}></AccessTimeRoundedIcon>
-                                        <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                                            <Box sx={{
-                                                fontSize: 22,
-                                                fontWeight: 600,
-                                            }}>
-                                                Thời gian
-                                            </Box>
-                                            <Box sx={{
-                                                fontSize: 16,
-                                            }}>
-                                                21/07/2023 14:00
-                                            </Box>
+                                    <GigaCardBody>
+                                        <Box sx={{ fontSize: '18px', fontStyle: 'italic', display: 'flex', justifyContent: 'flex-end', marginBottom: 3 }}>
+                                            <TodayRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></TodayRoundedIcon>
+                                            <span style={{ color: 'darkgray' }}>{event.createdTime}</span>
                                         </Box>
-                                        {/* <p style={{ fontWeight: 600, fontSize: 20 }}>21/07/2023</p> */}
-                                    </Box>
-                                </Grid>
-                                <Grid item md={6} sm={4} xs={12}>
-                                    <Box sx={{
-                                        display: "flex",
-                                        // alignItems: 'center',
-                                        // marginTop: 3
-                                        // justifyContent: 'flex-end'
-                                    }}>
-                                        <LocationOnRoundedIcon fontSize='large' sx={{ marginRight: 2 }}></LocationOnRoundedIcon>
-                                        <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                                            <Box sx={{
-                                                fontSize: 22,
-                                                fontWeight: 600,
-                                            }}>
-                                                Địa điểm
-                                            </Box>
-                                            <Box sx={{
-                                                fontSize: 16,
-                                            }}>
-                                                268 Lý Thường Kiệt, phường 14, quận 10, Thành phố Hồ Chí Minh
-                                            </Box>
-                                        </Box>
-                                        {/* <p style={{ fontWeight: 600, fontSize: 20 }}>268 Lý Thường Kiệt, phường 14, quận 10</p> */}
-                                    </Box>
-                                </Grid>
-                            </Grid>
 
-                            <Grid item xs={12} align='right' sx={{ marginTop: 8 }}>
-                                {/* <Button variant='outlined' size='large' className='btnregister' sx={{ mx: 3 }} onClick={handleRegister}>
+                                        {/* <div> cannot appear as a descendant of <p> */}
+                                        {/* ---------------------------------------------------------------------- */}
+                                        <p align='justify'>
+                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis recusandae sapiente deserunt sequi rerum animi eaque illo excepturi. Iusto saepe cumque ipsa cupiditate ab accusantium dolor soluta veritatis ex hic?<br />
+                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae modi rerum enim voluptatibus voluptatem! Alias eum velit, animi harum at vitae! Atque, eum. Eos iste soluta vitae quidem itaque saepe?<br />
+                                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus rerum libero cupiditate voluptatem, doloremque quaerat culpa soluta! Soluta assumenda at sint et fugit quo natus id beatae! Et, saepe? Ratione!<br />
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum mollitia asperiores quis quos, ut fugiat harum. Voluptates vero animi alias sapiente odit cumque esse culpa, repudiandae error inventore, autem commodi!<br />
+                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit eum esse quisquam distinctio animi iure possimus omnis tempore dicta consectetur perspiciatis atque in, cupiditate nostrum numquam accusamus blanditiis velit libero!<br />
+                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure laborum, ullam necessitatibus harum distinctio similique itaque corrupti qui possimus incidunt quisquam, optio hic molestias et accusantium rem ipsum. Commodi, consequatur.<br />
+                                        </p>
+                                        {/* {event.content} */}
+                                        {/* ---------------------------------------------------------------------- */}
+
+                                        <Grid container sx={{ marginTop: 8 }}>
+                                            <Grid item md={3} sm={4} xs={6}>
+                                                <Box sx={{
+                                                    display: "flex",
+                                                    // alignItems: 'center',
+                                                    // marginTop: 6
+                                                }}>
+                                                    <PeopleAltRoundedIcon fontSize='large' sx={{ marginRight: 2 }}></PeopleAltRoundedIcon>
+                                                    <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                        <Box sx={{
+                                                            fontSize: 22,
+                                                            fontWeight: 600,
+                                                        }}>
+                                                            Số lượng
+                                                        </Box>
+                                                        <Box sx={{
+                                                            fontSize: 16,
+                                                        }}>
+                                                            {event.quantity} / {event.maxQuantity}
+                                                        </Box>
+                                                    </Box>
+                                                    {/* <p style={{ fontWeight: 600, fontSize: 20 }}>500/1000</p> */}
+                                                </Box>
+                                            </Grid>
+                                            <Grid item md={3} sm={4} xs={6}>
+                                                <Box sx={{
+                                                    display: "flex",
+                                                    // alignItems: 'center',
+                                                    // marginTop: 3
+                                                    // justifyContent: 'center'
+                                                }}>
+                                                    <AccessTimeRoundedIcon fontSize='large' sx={{ marginRight: 2 }}></AccessTimeRoundedIcon>
+                                                    <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                        <Box sx={{
+                                                            fontSize: 22,
+                                                            fontWeight: 600,
+                                                        }}>
+                                                            Thời gian
+                                                        </Box>
+                                                        <Box sx={{
+                                                            fontSize: 16,
+                                                        }}>
+                                                            {event.time}
+                                                        </Box>
+                                                    </Box>
+                                                    {/* <p style={{ fontWeight: 600, fontSize: 20 }}>21/07/2023</p> */}
+                                                </Box>
+                                            </Grid>
+                                            <Grid item md={6} sm={4} xs={12}>
+                                                <Box sx={{
+                                                    display: "flex",
+                                                    // alignItems: 'center',
+                                                    // marginTop: 3
+                                                    // justifyContent: 'flex-end'
+                                                }}>
+                                                    <LocationOnRoundedIcon fontSize='large' sx={{ marginRight: 2 }}></LocationOnRoundedIcon>
+                                                    <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                        <Box sx={{
+                                                            fontSize: 22,
+                                                            fontWeight: 600,
+                                                        }}>
+                                                            Địa điểm
+                                                        </Box>
+                                                        <Box sx={{
+                                                            fontSize: 16,
+                                                        }}>
+                                                            {event.location}
+                                                        </Box>
+                                                    </Box>
+                                                    {/* <p style={{ fontWeight: 600, fontSize: 20 }}>268 Lý Thường Kiệt, phường 14, quận 10</p> */}
+                                                </Box>
+                                            </Grid>
+                                        </Grid>
+
+                                        <Grid item xs={12} align='right' sx={{ marginTop: 8 }}>
+                                            {/* <Button variant='outlined' size='large' className='btnregister' sx={{ mx: 3 }} onClick={handleRegister}>
                                     <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon>
                                     Đăng ký
                                 </Button> */}
-                                <Button variant='contained' size='large' color='primary' onClick={handleEdit}>
-                                    {/* <EditIcon sx={{ marginRight: 0.5 }}></EditIcon> */}
-                                    Chỉnh sửa
-                                </Button>
-                            </Grid>
-                        </GigaCardBody>
-                    </GigaCard>
+                                            <Button variant='contained' size='large' color='primary' onClick={handleEdit}>
+                                                {/* <EditIcon sx={{ marginRight: 0.5 }}></EditIcon> */}
+                                                Chỉnh sửa
+                                            </Button>
+                                        </Grid>
+                                    </GigaCardBody>
+                                </GigaCard>
+                            </>)}
+                    </>
                 </TabPanel>
 
                 <TabPanel value='2' sx={{ p: 0, mt: 2 }}>

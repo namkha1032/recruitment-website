@@ -8,6 +8,7 @@ import roomSlice from './reducer/roomReducer'
 import shiftSlice from './reducer/shiftReducer'
 import interviewerSlice from './reducer/interviewerReducer'
 import questionSlice from './reducer/questionReducer'
+import adminSlice from "./reducer/adminReducer";
 // import recruitmentSlice from './reducer/recruitmentReducer'
 import departmentSlice from './reducer/departmentReducer'
 import skillSlice from "./reducer/skillReducer"
@@ -28,6 +29,9 @@ import questionListSlice from './reducer/questionListReducer'
 import applicationSlice from './reducer/applicationReducer'
 import submitcvSlice from './reducer/submitcvReducer'
 import eventSlice from './reducer/eventReducer'
+import interviewCandidateSlice from './reducer/interviewCandidateReducer'
+import applicationCandidateSlice from './reducer/applicationCandidateReducer'
+import eventCandidateSlice from './reducer/eventCandidateReducer'
 import cvHasSkillSlice from './reducer/cvHasSkillReducer'
 import cvInforSlice from './reducer/cvInforReducer'
 import cvHasCertificateSlice from './reducer/cvHasCertificateReducer'
@@ -35,6 +39,7 @@ import cvHasCertificateSlice from './reducer/cvHasCertificateReducer'
 const sagaMiddleware = createSagaMiddleware()
 const store = configureStore({
     reducer: {
+        admin:adminSlice.reducer,
         user: userSlice.reducer,
         interview: interviewSlice.reducer,
         room: roomSlice.reducer,
@@ -56,10 +61,7 @@ const store = configureStore({
         questionList: questionListSlice.reducer,
         application: applicationSlice.reducer,
         submitcv: submitcvSlice.reducer,
-        event: eventSlice.reducer,
-        cvHasSkill: cvHasSkillSlice.reducer,
-        cvInfor: cvInforSlice.reducer,
-        cvHasCertificate: cvHasCertificateSlice.reducer
+        event: eventSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]

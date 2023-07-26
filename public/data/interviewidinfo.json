@@ -1,0 +1,37 @@
+[
+    {
+    "candidatename":"Ngo Quang Huy",
+    "candidateemail":"abc@gmail.com",
+    "candidatephone":"1234567890",
+    "candidateaddress":"66/86C XVNT",
+    "interviewername":"Cong Pham Quoc Viet",
+    "intervieweremail":"vietcpq@fpt.com",
+    "interviewerphone":"0123456789",
+    "positionName":"Front-end",
+    "requirement": [
+        {
+            "skillId": 4,
+            "skillName": "HTML"
+        },
+        {
+            "skillId": 1,
+            "skillName": "CSS"
+        },
+        {
+            "skillId": 2,
+            "skillName": "JavaScript"
+        },
+        {
+            "skillId": 3,
+            "skillName": "Python"
+        }
+    ],
+    "language":"Japanese",
+    "date":"29/07/2023",
+    "time": "14:00",
+    "candidatestatus":"Pending",
+    "companystatus":"Pending",
+    "room":"202B4",
+    "departmentName": "ITROOM"
+    }
+] 

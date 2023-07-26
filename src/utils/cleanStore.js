@@ -19,6 +19,7 @@ function cleanStore(dispatch) {
     dispatch({ type: "shift/setShift", payload: null })
     dispatch({ type: "skill/setSkill", payload: null })
     dispatch({ type: "event/setEvent", payload: null })
+    dispatch({ type: "interviewListCandidate/setInterviewList", payload: null})
 }
 
 export default cleanStore
