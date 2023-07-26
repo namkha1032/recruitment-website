@@ -190,14 +190,17 @@ export function Inactive() {
       label="Inactive"
       variant="outlined"
       style={{
-        color: "#E0E0E0",
+        // color: "#E0E0E0",
+        color: "black",
         backgroundColor: "white",
-        borderColor: "#E0E0E0",
+        // borderColor: "#E0E0E0",
+        color: "black",
       }}
       icon={
         <DoNotDisturbOnRoundedIcon
           style={{
-            color: "#E0E0E0",
+            // color: "#E0E0E0",
+            color: "black",
           }}
         />
       }
