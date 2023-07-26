@@ -207,7 +207,7 @@ const XPage_Register = () => {
                 color='#1976d2' 
                 gutterBottom
                 fontFamily={'Roboto'}
-                fontSize={'28px'}
+                fontSize={'30px'}
                 lineHeight={'28px'}
                 fontWeight={'700'}
                 padding={"10px"}
