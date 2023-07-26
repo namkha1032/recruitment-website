@@ -30,7 +30,11 @@ function* userLogin(action) {
                 }
             }
         }
+        /* const { username, password, check } = action.payload
+        const response = yield call(axios.post, 'http://leetun2k2-001-site1.gtempurl.com/api/Authentication/Login', { username, password })
+        console.log("response is: ", response) */
         const response = yield call(axios.get, api)
+
         yield put({ type: "user/setUser", payload: response.data })
         if (check) {
             window.localStorage.setItem("user", JSON.stringify(response.data))
