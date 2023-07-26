@@ -15,13 +15,13 @@ export default function Page_Profile_Id_Interview(){
       const rows_draft = useSelector((state) => state.interviewCandidate);
       const rows = rows_draft ? rows_draft : []
       console.log(rows);
-      const time = '12/07/2023 10:00';
+     
       const itemsPerPage = 10;
-      const pathnavigate = '/interview/1';
+      const pathnavigate = '/interview';
       const NameList = 'Interview List';
       const NamePage = 'Interview';
       return(
-        <HistoryList events={rows} time={time}  itemsPerPage={itemsPerPage} pathnavigate={pathnavigate} NameList={NameList} namePage={NamePage}/>
+        <HistoryList events={rows}   itemsPerPage={itemsPerPage} pathnavigate={pathnavigate} NameList={NameList} namePage={NamePage}/>
       )
       
 }

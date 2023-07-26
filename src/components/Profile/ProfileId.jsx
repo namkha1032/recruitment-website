@@ -5,12 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { NullString, NotStart, Pending, Completed, Postpone } from "../LabelButton/LabelButton";
 import TabInProfile from './TabInProfile/TabInProfile';
 
-export default function HistoryList({ events, time, pathnavigate, NameList, namePage }) {
+export default function HistoryList({ events, pathnavigate, NameList, namePage }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const navigate = useNavigate();
 
   const handleDetails = (eventId) => {
-    navigate(pathnavigate);
+   console.log(eventId);
+    navigate(`${pathnavigate}/${eventId}`);
     // Thực hiện hành động khi người dùng nhấn vào nút "Xem chi tiết" cho từng event
     // Bạn có thể triển khai hàm này để hiển thị thông tin chi tiết về event, ví dụ: hiển thị popup, chuyển đến trang mới, ...
   };

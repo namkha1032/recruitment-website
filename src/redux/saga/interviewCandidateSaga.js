@@ -6,7 +6,6 @@ import host from "../host"
 // const fs = require("fs");
 
 function* getAllInterviewCandidate() {
-    console.log("Hello")
     const response = yield call(axios.get, `${host.name}/data/interviewAllOfCandidate.json`)
     yield put({ type: "interviewCandidate/setInterviewList", payload: response.data })
 
