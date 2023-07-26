@@ -22,14 +22,16 @@ export function NotStart() {
       label="Not start"
       variant="outlined"
       style={{
-        color: "#E0E0E0",
+        // color: "#E0E0E0",
+        color: "black.400",
         backgroundColor: "white",
-        borderColor: "#E0E0E0",
+        // borderColor: "#E0E0E0",
+        borderColor: "black.400"
       }}
       icon={
         <EventNoteRoundedIcon
           style={{
-            color: "#E0E0E0",
+            color: "black.400",
           }}
         />
       }
@@ -43,14 +45,15 @@ export function Pending() {
       label="Pending"
       variant="outlined"
       style={{
-        color: "#E0E0E0",
+        // color: "#E0E0E0",
+        color: "black.400",
         backgroundColor: "white",
-        borderColor: "#E0E0E0",
+        borderColor: "black.400",
       }}
       icon={
         <MoreHorizRoundedIcon
           style={{
-            color: "#E0E0E0",
+            color: "black.400",
           }}
         />
       }
@@ -190,14 +193,17 @@ export function Inactive() {
       label="Inactive"
       variant="outlined"
       style={{
-        color: "#E0E0E0",
+        // color: "#E0E0E0",
+        color: "black.400",
         backgroundColor: "white",
-        borderColor: "#E0E0E0",
+        // borderColor: "#E0E0E0",
+        color: "black.400",
       }}
       icon={
         <DoNotDisturbOnRoundedIcon
           style={{
-            color: "#E0E0E0",
+            // color: "#E0E0E0",
+            color: "black.400",
           }}
         />
       }
