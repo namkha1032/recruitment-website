@@ -39,7 +39,7 @@ const theme = createTheme({
 const fullnameRegex = /^[a-zA-Z-' ]{2,}$/;
 const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const passwordRegex = /^.{8,}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/;
 
 const XPage_Register = () => {
   const navigate = useNavigate();
@@ -383,7 +383,7 @@ const XPage_Register = () => {
                           fontSize="12px"
                             lineHeight="20px"
                           >
-                          Your password must be at least 8 characters 
+                          Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number and one special character
                           </Typography>
                         )
                       }

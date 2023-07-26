@@ -70,6 +70,10 @@ function* userRegister(action) {
                 }
             }
         } */
+        
+        /* const { fullname, username, email, password } = action.payload
+        const response = yield call(axios.post, 'http://leetun2k2-001-site1.gtempurl.com/api/Authentication/Register', { username, email, password })
+        console.log("response is: ", response) */
         yield put({ type: "error/setError", payload: { status: "no", message: "" } })
     }
     catch (error) {

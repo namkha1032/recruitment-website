@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import host from "../redux/host";
+//import { useLayoutEffect } from "react";
 // -------------------README !!!---------------------------
 // Hook này có thể trả về 1 trong 5 giá trị:
 // - "admin"
