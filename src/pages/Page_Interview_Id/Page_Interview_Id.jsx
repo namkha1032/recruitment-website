@@ -24,6 +24,7 @@ import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import AssistantIcon from '@mui/icons-material/Assistant';
 // import Page_Profile_Id_Cv_Id from "../Page_Profile_Id_Cv_Id/Page_Profile_Id_Cv"
 import CV from "../../components/CV/CV"
+import { useParams } from "react-router-dom";
 
 
 const Page_Interview_Id = ({ cvid }) => {
@@ -35,6 +36,8 @@ const Page_Interview_Id = ({ cvid }) => {
     let gridSx = {
         display: "flex", alignItems: "center", columnGap: gap
     }
+    let {interviewid} = useParams();
+    console.log("interview", interviewid);
     return (
         <>
             <Grid container spacing={3}>
