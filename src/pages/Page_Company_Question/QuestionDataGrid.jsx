@@ -23,7 +23,7 @@ export default function QuestionDataGrid(props) {
             outline: "none",
           },
           "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
-            backgroundColor: "#1565C0",
+            backgroundColor: "black",
             color: "white",
             fontWeight: 700,
           },

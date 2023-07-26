@@ -60,11 +60,11 @@ export default function Page_Company_Event() {
 
   // const [anchorEl, setAnchorEl] = useState(null);
   // const [valueSearch, setValueSearch] = useState("");
-
-  const loading = useSelector((state) => state.loading);
   // const [valueChoose, setValueChoose] = useState(null);
   // const [departmentChoose, setDepartmentChoose] = useState(null);
-  const [statusChoose, setStatusChoose] = useState(null);
+  
+  const loading = useSelector((state) => state.loading)
+  // const [statusChoose, setStatusChoose] = useState(null);
 
   // function handleMoreClick(event) {
   //   setAnchorEl(event.currentTarget);
@@ -88,15 +88,15 @@ export default function Page_Company_Event() {
   //   setStatusChoose(null);
   // }
 
-  function handleChooseStatus(value) {
-    setStatusChoose(value);
-    dispatch({
-      type: "saga/getEventListWithFilter",
-      payload: {
-        status: value ? value : null,
-      },
-    });
-  }
+  // function handleChooseStatus(value) {
+  //   setStatusChoose(value);
+  //   dispatch({
+  //     type: "saga/getEventListWithFilter",
+  //     payload: {
+  //       status: value ? value : null,
+  //     },
+  //   });
+  // }
 
   function handleDetailClick(value) {
     cleanStore(dispatch);
@@ -192,21 +192,21 @@ export default function Page_Company_Event() {
         if (params.value === undefined) return NullString();
       },
     },
-    {
-      field: "Status",
-      type: "string",
-      headerAlign: "center",
-      align: "center",
-      minWidth: 180,
-      flex: 0.3,
-      renderHeader: () => <span>Status</span>,
-      renderCell: (params) => {
-        if (params.value === false) {
-          return <Upcoming />;
-        }
-        return <Completed />;
-      },
-    },
+    // {
+    //   field: "Status",
+    //   type: "string",
+    //   headerAlign: "center",
+    //   align: "center",
+    //   minWidth: 180,
+    //   flex: 0.3,
+    //   renderHeader: () => <span>Status</span>,
+    //   renderCell: (params) => {
+    //     if (params.value === false) {
+    //       return <Upcoming />;
+    //     }
+    //     return <Completed />;
+    //   },
+    // },
     {
       field: "actions",
       type: "actions",
@@ -318,7 +318,8 @@ export default function Page_Company_Event() {
           </Menu> */}
             </Grid>
 
-            <Grid
+            {/* --- Filter --- */}
+            {/* <Grid
               item
               xs={12}
               sm={12}
@@ -380,7 +381,7 @@ export default function Page_Company_Event() {
                 value={statusChoose}
                 onChange={(event, value) => handleChooseStatus(value)}
               />
-            </Grid>
+            </Grid> */}
 
             {/* <Grid
           item
@@ -418,13 +419,13 @@ export default function Page_Company_Event() {
           </Box>
         </Grid> */}
           </Grid>
-
+          
           <Box sx={{
               minHeight: 350,
             }}>
             <DataGrid
               autoHeight
-              loading={loading}
+              loading={loading || rows === null}
               columns={columns}
               rows={rows === null ? [] : rows}
               sx={{

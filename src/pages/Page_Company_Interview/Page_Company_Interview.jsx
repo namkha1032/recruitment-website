@@ -67,7 +67,6 @@ import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 //   "Status": [true, false] ~ ["Active", "Inactive"]
 // }
 
-
 export default function Page_Company_Interview() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -100,6 +99,10 @@ export default function Page_Company_Interview() {
   const [positionChoose, setPositionChoose] = useState(null);
   const [statusChoose, setStatusChoose] = useState(null);
   const [priorityChoose, setPriorityChoose] = useState(null);
+
+  // useEffect(() => {
+
+  // })
 
   // function handleMoreClick(event) {
   //   setAnchorEl(event.currentTarget);
@@ -141,6 +144,12 @@ export default function Page_Company_Interview() {
         positionId: null,
         status: statusChoose ? statusChoose : null,
         priority: priorityChoose ? priorityChoose : null,
+      },
+    });
+    dispatch({
+      type: "saga/getPositionListWithFilter",
+      payload: {
+        departmentId: value ? value.departmentId : null,
       },
     });
   }
@@ -555,7 +564,7 @@ export default function Page_Company_Interview() {
                             {...props}
                             sx={{
                               // color: "#E0E0E0",
-                              color: "black.400"
+                              color: "black.400",
                             }}
                           >
                             <EventNoteRounded
@@ -722,7 +731,7 @@ export default function Page_Company_Interview() {
               autoHeight
               columns={columns}
               rows={rows === null ? [] : rows}
-              loading={loading}
+              loading={loading || rows === null}
               sx={{
                 "&.MuiDataGrid-root": {
                   borderRadius: 1,

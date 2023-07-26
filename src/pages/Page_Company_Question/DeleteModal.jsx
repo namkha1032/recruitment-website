@@ -37,7 +37,7 @@ export default function DeleteAlertModal(props) {
                 sx={{
                   fontSize: 100,
                 //   color: "#cc3300",
-                  color: "#1565C0",
+                  color: "black",
 
                 }}
               />
@@ -53,7 +53,7 @@ export default function DeleteAlertModal(props) {
                 sx={{
                   fontSize: 30,
                   fontWeight: 600,
-                  color: "#1565C0",
+                  color: "black",
                 }}
               >
                 Xoá câu hỏi
@@ -85,8 +85,15 @@ export default function DeleteAlertModal(props) {
               <Button
                 variant="outlined"
                 sx={{
+                  color: "black",
+                  border: "1px solid black",
                   textTransform: "none",
                   width: 90,
+                  "&:hover": {
+                    border: "1px solid black",
+                    backgroundColor: "white",
+                    fontWeight: 600,
+                  }
                 }}
                 onClick={() => {
                     props.handleDeleteModalClose();
@@ -103,11 +110,18 @@ export default function DeleteAlertModal(props) {
               alignItems="center"
             >
               <Button
-                variant="contained"
+                variant="outline"
                 sx={{
-                backgroundColor: "#1565C0",
+                  backgroundColor: "black",
+                  border: "1px solid black",
+                  color: "white",
                   textTransform: "none",
                   width: 90,
+                  "&:hover": {
+                    backgroundColor: "black",
+                    border: "1px solid black",
+                    fontWeight: 600,
+                  }
                 }}
                 onClick={() => {
                     props.handleDeleteQuestion(props.id);
