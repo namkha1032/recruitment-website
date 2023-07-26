@@ -30,11 +30,11 @@ function* getPosition(action) {
     const reponse = yield call(axios.get, 'http://localhost:3000/data/detailposition.json')
     yield put({ type: 'position/setPosition', payload: reponse.data })
 }
-// function *getDetailPosition(action){
-//     const reponse = yield call(axios.get, 'http://localhost:3001/positions?PositionId=${act}')
+// function* getDetailPosition(action){
+//     const reponse = yield call(axios.get, `http://localhost:3001/positions?PositionId=${action.payload}`)
 //     yield put({ type: 'detail/setDetail', payload: reponse.data})
-
 // }
+
 function* positionSaga() {
     yield all([
         takeEvery('saga/getPosition', getPosition),

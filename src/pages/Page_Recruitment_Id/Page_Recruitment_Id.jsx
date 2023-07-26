@@ -16,6 +16,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { ToastContainer, toast } from "react-toastify";
 import useGetRole from '../../hooks/useGetRole';
+import GigaCard from "../../components/GigaCard/GigaCard";
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader";
 import 'react-toastify/dist/ReactToastify.css';
 const style = {
     position: 'absolute',
@@ -25,8 +28,8 @@ const style = {
     width: 600,
     height: "60%",
     bgcolor: 'background.paper',
-    // border: '2px solid #000',
-    // borderRadius: 5,
+    // // border: '2px solid #000',
+    // // borderRadius: 5,
     boxShadow: 24,
     p: 4,
     display: "flex",
@@ -63,6 +66,7 @@ const Page_Recruitment_Id = () => {
     }, [])
     let role = useGetRole();
     console.log("hi", role);
+    console.log("Cvlist", list_CV);
     const submitcv = useSelector(state => state.submitcv);
     const handleTextClick = (id) => {
         window.open(`/profile/:profileid/cv/${id}`);
@@ -118,7 +122,12 @@ const Page_Recruitment_Id = () => {
             {role == "candidate" ? (
                 <>
                     <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
-                        <Button sx={{ bgcolor: 'primary.main', color: 'black' }} variant='outlined' onClick={handleOpen}>
+                        <Button sx={{
+                            bgcolor: 'black', color: 'white',
+                            ":hover": {
+                                backgroundColor: "black"
+                            }
+                        }} variant='outlined' onClick={handleOpen}>
                             <InsertDriveFileIcon></InsertDriveFileIcon>  Apply
                         </Button>
                     </Grid>
@@ -152,7 +161,12 @@ const Page_Recruitment_Id = () => {
                                         <Grid item xs={2}>
                                             <Box sx={{ display: "flex", flexDirection: "column" }}>
                                                 {list_CV.map((CV) => (
-                                                    <Button key={CV.CVid} sx={{ marginBottom: "5.5px" }} variant="contained" onClick={() => handleTextClick(CV.CVid)}>
+                                                    <Button key={CV.CVid} sx={{
+                                                        marginBottom: "5.5px", bgcolor: 'black', color: 'white',
+                                                        ":hover": {
+                                                            backgroundColor: "black"
+                                                        }
+                                                    }} variant="contained" onClick={() => handleTextClick(CV.CVid)}>
                                                         Detail
                                                     </Button>
                                                 ))}
@@ -167,12 +181,22 @@ const Page_Recruitment_Id = () => {
                                 </FormControl>
                                 <Box sx={{ display: "flex" }}>
                                     <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-start" }}>
-                                        <Button size="large" type="submit" variant="contained" onClick={handleClose}   >
+                                        <Button sx={{
+                                            bgcolor: 'black', color: 'white',
+                                            ":hover": {
+                                                backgroundColor: "black"
+                                            }
+                                        }} size="large" type="submit" variant="contained" onClick={handleClose}   >
                                             <CloseIcon></CloseIcon> Close
                                         </Button>
                                     </Grid>
                                     <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
-                                        <Button size="large" type="submit" variant="contained" onClick={hanldebutton}   >
+                                        <Button sx={{
+                                            bgcolor: 'black', color: 'white',
+                                            ":hover": {
+                                                backgroundColor: "black"
+                                            }
+                                        }} size="large" type="submit" variant="contained" onClick={hanldebutton}   >
                                             <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit your CV
                                         </Button>
 
