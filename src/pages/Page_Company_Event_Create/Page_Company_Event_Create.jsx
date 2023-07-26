@@ -79,7 +79,7 @@ const Page_Company_Event_Create = () => {
         console.log(time);
         console.log(location);
         console.log(image);
-        navigate("/company/event/:eventid");
+
     }
 
     // const [fileName, setFileName] = useState(null)

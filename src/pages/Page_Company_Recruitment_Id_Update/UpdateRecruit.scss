@@ -1,12 +1,13 @@
 .CreateRecruit{
-  .CVForm {
-    width: 80%;
+  .RecruiteForm {
+    // width: 100%;
     margin: auto;
     // background-color: #D9D9D9;
     display: flex;
     // border-radius: 10px;
     // border: 1px solid black;
     .Container {
+
       width: 100%;
       label {
         text-align: right;
@@ -48,6 +49,16 @@
   .AddCompButton {
     width: 100px;
     margin: 10px;
-
+  }
+  .QuillCss {
+    width:98%;
+    margin: auto;
+    height: 255.92px;
+    margin-bottom: 16px;
+  }
+  .ImgDisplay{
+    height:100%;
+    width:100%;
+    border-radius: 10%;
   }
 }

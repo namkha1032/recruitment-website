@@ -1,6 +1,4 @@
 import Grid from "@mui/material/Grid";
-import LanguageUlList from "./language/LanguageUlList";
-import ChooseLanguage from "./language/ChooseLanguage";
 // import FreeSoloCreateOptionDialog from "./skill/ChooseList";
 import Box from "@mui/material/Box";
 import ReactQuill from "react-quill";
@@ -28,30 +26,8 @@ function CvStep2(prop) {
               setSkillId={prop.setSkillId}
             />
           </Grid>
+          
           <Grid item xs={12}>
-            <LanguageUlList
-              comps={prop.languages}
-              handleDelete={prop.handleLanguageDelete}
-            />
-            <ChooseLanguage
-              languageData={prop.languageData}
-              lInputValue={prop.lInputValue}
-              setInputValue={prop.setLInputValue}
-              state={"language"}
-              handleState={prop.setLanguageName}
-              value={prop.languageName}
-              setLanguageId={prop.setLanguageId}
-              onPress={prop.handleLanguageAdd}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            {/* <EmptyTextarea
-              state={"Experience"}
-              setDetail={prop.setExperience}
-              width="98%"
-              marginLeft="1%"
-              value={prop.experience}
-            /> */}
             <ReactQuill
               theme="snow"
               style={{ width: "98%", margin: "auto", height: "200px" }}
