@@ -5,25 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { NullString, NotStart, Pending, Completed, Postpone } from "../LabelButton/LabelButton";
 import TabInProfile from './TabInProfile/TabInProfile';
 
-export default function HistoryList({ events, time, pathnavigate, namePage }) {
+export default function HistoryList({ events, pathnavigate, NameList, namePage }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const navigate = useNavigate();
-  const drawerWidth = 200;
-  const [totalPositions, setTotalPositions] = useState(0);
-
-  useEffect(() => {
-    // Calculate the total number of positions
-    const total = events.reduce((sum, event) => {
-      if (event.id && Array.isArray(event.id)) {
-        return sum + event.id.length;
-      }
-      return sum;
-    }, 0);
-    setTotalPositions(total);
-  }, [events]);
 
   const handleDetails = (eventId) => {
-    navigate(pathnavigate);
+   console.log(eventId);
+    navigate(`${pathnavigate}/${eventId}`);
     // Thực hiện hành động khi người dùng nhấn vào nút "Xem chi tiết" cho từng event
     // Bạn có thể triển khai hàm này để hiển thị thông tin chi tiết về event, ví dụ: hiển thị popup, chuyển đến trang mới, ...
   };
@@ -36,37 +24,23 @@ export default function HistoryList({ events, time, pathnavigate, namePage }) {
     setSelectedEvent(null);
   };
 
-  const renderStatusButton = (status) => {
-    if (status === 'Kết thúc') {
-      return (
-        <Button variant="contained" color="secondary">
-          Kết thúc
-        </Button>
-      );
-    } else if (status === 'Sắp diễn ra') {
-      return (
-        <Button variant="contained" color="primary">
-          Sắp diễn ra
-        </Button>
-      );
-    } else {
-      return null;
-    }
-  };
-
   const columns = [
-    { field: 'name', headerName: namePage, flex: 1 },
-    { field: 'time', headerName: 'Thời gian', flex: 1 },
+    { field: 'name', headerName: namePage, flex: 2 },
+    { field: 'time', headerName: 'Thời gian', flex: 2 },
     {
       field: 'status',
       headerName: 'Trạng thái',
-      flex: 1,
+      flex: 2,
       renderCell: (params) => {
         switch (params.value) {
-          case "Chưa bắt đầu":
+          case "Đang chờ":
             return <NotStart />;
-          case "Đang diễn ra":
-            return <Pending />;
+          case "Đã đậu":
+            return <Completed/>
+          case "Chưa phỏng vấn":
+            return <NotStart/>;
+          case "Đã phỏng vấn":
+            return <Completed/>;
           case "Kết thúc":
             return <Completed />;
           default:
@@ -86,12 +60,6 @@ export default function HistoryList({ events, time, pathnavigate, namePage }) {
     },
   ].filter(Boolean);
 
-  const rows = events.map((event) => ({
-    id: event.id,
-    name: event.name,
-    time,
-    status: event.status,
-  }));
 
   return (
     <>
@@ -109,20 +77,22 @@ export default function HistoryList({ events, time, pathnavigate, namePage }) {
           <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px', width: '100%' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
               <Typography variant="h5" gutterBottom>
-                Application List
+                {NameList}
               </Typography>
               <Box sx={{ backgroundColor: '#dcdcdc', color: 'black', padding: '5px', borderRadius: '10px', marginLeft: '10px' }}>
-                {totalPositions} Application
+                {'0'} {namePage}
               </Box>
             </Box>
             <DataGrid
-              rows={rows}
+              rows={events === null ? [] : events}
               columns={columns}
               rowStyles={(params) => ({
                 backgroundColor: selectedEvent === params.id ? '#ffdddd' : 'transparent',
+                ...(params.row.isSelected && { backgroundColor: '#64b5f6', color: '#ffffff' }),
               })}
               onMouseEnter={(params) => handleEventHover(params.row)}
               onMouseLeave={handleEventLeave}
+              selection={{ backgroundColor: '#1565C0', color: '#ffffff' }}
               sx={{
                 width: '100%',
                 "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {

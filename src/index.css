@@ -22,9 +22,9 @@ body,
     height: 100%
 }
 
-.App>.MuiBox-root {
+/* .App>.MuiBox-root {
     height: 100%
-}
+} */
 
 /* .App>.MuiBox-root>main {
     height: 100%
@@ -34,9 +34,9 @@ body,
     min-height: 100%
 }
 
-body {
-    overflow: hidden;
-}
+/* body {
+    overflow: scroll;
+} */
 
 /* ------------------------------------------------------------------ */
 

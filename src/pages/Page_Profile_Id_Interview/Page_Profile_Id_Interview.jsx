@@ -1,71 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HistoryList from '../../components/Profile/ProfileId';
+import { useDispatch, useSelector } from "react-redux";
+import cleanStore from '../../utils/cleanStore';
 export default function Page_Profile_Id_Interview(){
-    const eventsData = [
-        {
-          id: 1,
-          name: 'Interview 1',
-          status: 'Kết thúc',
-        },
-        {
-          id: 2,
-          name: 'Interview 2',
-          status: 'Kết thúc',
-        },
-        {
-          id: 3,
-          name: 'Interview 3',
-          status: 'Kết thúc',
-        },
-        {
-          id: 4,
-          name: 'Interview 4',
-          status: 'Kết thúc',
-        },
-        {
-          id: 5,
-          name: 'Interview 5',
-          status: 'Kết thúc',
-        },
-        {
-          id: 6,
-          name: 'Interview 6',
-          status: 'Kết thúc',
-        },
-        {
-          id: 7,
-          name: 'Interview 7',
-          status: 'Kết thúc',
-        },
-        {
-          id: 8,
-          name: 'Interview 8',
-          status: 'Kết thúc',
-        },
-        {
-          id: 9,
-          name: 'Interview 9',
-          status: 'Đang diễn ra',
-        },
-        {
-          id: 10,
-          name: 'Interview 10',
-          status: 'Chưa bắt đầu',
-        },
-        {
-          id: 11,
-          name: 'Interview 11',
-          status: 'Chưa bắt đầu',
-        },
-        // Thêm các dữ liệu cho các event khác
-      ];
-      const time = '12/07/2023 10:00';
+      const dispatch = useDispatch();
+      useEffect(() => {
+        dispatch({type:"saga/getAllInterviewCandidate"});
+        return () => {
+          cleanStore(dispatch);
+        };
+
+      }, [])
+      
+      const rows_draft = useSelector((state) => state.interviewCandidate);
+      const rows = rows_draft ? rows_draft : []
+      console.log(rows);
      
       const itemsPerPage = 10;
-      const pathnavigate = '/interview/1';
-      const name = 'Interview Name'
+      const pathnavigate = '/interview';
+      const NameList = 'Interview List';
+      const NamePage = 'Interview';
       return(
-        <HistoryList events={eventsData} time={time}  itemsPerPage={itemsPerPage} pathnavigate={pathnavigate} namePage={name}/>
+        <HistoryList events={rows}   itemsPerPage={itemsPerPage} pathnavigate={pathnavigate} NameList={NameList} namePage={NamePage}/>
       )
       
 }

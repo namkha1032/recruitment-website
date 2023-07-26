@@ -122,7 +122,7 @@ const Page_Home = () => {
 
         <Box sx={{ padding: '24px', borderTop: '1px solid lightgrey' }}>
           <Grid container spacing={3}>
-            <Grid item md={4}   >
+            <Grid item md={4} onClick={handleNavigateClick} sx={{ cursor: 'pointer' }}   >
 
 
               <Box sx={{ padding: '0px 16px 0px 0px', borderRight: '1px solid lightgrey' }}>
@@ -131,7 +131,7 @@ const Page_Home = () => {
                   alt=""
                   style={{ width: '100%' }}
                 />
-                <Box sx={{ marginTop: '16px', ...styleFont }}>
+                <Box sx={{ marginTop: '16px'}}>
                   <Typography
                     variant="subtitle1"
                     align="center"
@@ -155,7 +155,7 @@ const Page_Home = () => {
                   alt=""
                   style={{ width: '100%' }}
                 />
-                <Box sx={{ marginTop: '16px', ...styleFont }}>
+                <Box sx={{ marginTop: '16px' }}>
                   <Typography
                     variant="subtitle1"
                     align="center"
@@ -171,11 +171,15 @@ const Page_Home = () => {
               </Box>
             </Grid>
 
-            <Grid item md={8}>
-              <Grid container>
-                <Grid item md={4} sx={{ padding: '0px 16px 0px 16px', borderRight: '1px solid lightgrey' }}>
+            <Grid item md={8} >
+              <Grid container >
+                <Grid item md={4} 
+                onClick={handleNavigateClick}
+                sx={{ padding: '0px 16px 0px 16px', borderRight: '1px solid lightgrey',cursor: 'pointer'  }}
 
-                  <Box sx={{ ...styleFont }}>
+                >
+
+                  <Box sx={{  }}>
                     <img src="https://www.freecodecamp.org/news/content/images/2022/04/derick-mckinney-oARTWhz1ACc-unsplash.jpg"
                       alt=""
                       style={{ width: '100%' }}
@@ -192,7 +196,7 @@ const Page_Home = () => {
                     Hãy bùng nổ với các trận cầu kinh điển
 
                   </Box>
-                  <Box sx={{ ...styleFont }}>
+                  <Box sx={{}}>
                     <img src="https://media.istockphoto.com/id/1125911085/photo/female-photographer-taking-a-picture.jpg?s=612x612&w=0&k=20&c=3OP9PJU_KgCyv_cNz-1o3NpdbM4k0WEOalAq-6Q2MXs="
                       alt=""
                       style={{ width: '100%' }}
@@ -209,7 +213,7 @@ const Page_Home = () => {
                     Tham gia vào câu lạc bộ ngay nào!
 
                   </Box>
-                  <Box sx={{ ...styleFont }}>
+                  <Box sx={{}}>
                     <img src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80"
                       alt=""
                       style={{ width: '100%' }}
@@ -228,8 +232,11 @@ const Page_Home = () => {
                   </Box>
 
                 </Grid>
-                <Grid item md={4} sx={{ padding: '0px 16px 0px 16px' }}>
-                  <Box sx={{ ...styleFont }}>
+                <Grid item md={4} 
+                onClick={handleNavigateClick}
+                sx={{ padding: '0px 16px 0px 16px', cursor: 'pointer' }}
+                >
+                  <Box sx={{ }}>
                     <img src="https://img.freepik.com/premium-photo/man-hand-lens-with-camera_225446-4203.jpg"
                       alt=""
                       style={{ width: '100%' }}
@@ -245,7 +252,7 @@ const Page_Home = () => {
                     </Typography>
                     So trình với các cao thủ VJP nào
                   </Box>
-                  <Box sx={{ ...styleFont }}>
+                  <Box sx={{  }}>
                     <img src="https://img-19.commentcamarche.net/cI8qqj-finfDcmx6jMK6Vr-krEw=/1500x/smart/b829396acc244fd484c5ddcdcb2b08f3/ccmcms-commentcamarche/20494859.jpg"
                       alt=""
                       style={{ width: '100%' }}
@@ -260,10 +267,10 @@ const Page_Home = () => {
                       Singing • July 5th 23
                     </Typography>
 
-
+                      Hoà mình vào các giai điệu, kết nối với mọi người qua lời hát !
 
                   </Box>
-                  <Box sx={{ ...styleFont }}>
+                  <Box sx={{ }}>
                     <img src="https://cutewallpaper.org/21/image/Image-Dimensions-Monterey-Regional-Airport.jpeg"
                       alt=""
                       style={{ width: '100%' }}
@@ -290,7 +297,7 @@ const Page_Home = () => {
                     <Box
                       component='h3'
                       sx={{
-                        ...styleFont,
+                        
                         // border: '1px solid lightgrey',
                         padding: '20px 10px 20px 10px',
                       }}
@@ -303,7 +310,7 @@ const Page_Home = () => {
 
                     </Box>
                     <Box sx={{
-                      ...styleFontContent,
+                      
                       borderTop: '1px solid lightgrey',
                       // borderRight: '1px solid lightgrey,',
                       padding: '20px 10px 20px 10px'
@@ -321,7 +328,7 @@ const Page_Home = () => {
                       </Typography>
 
                     </Box>
-                    <Box sx={{ ...styleFontContent, borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', margin: 0, }}>
+                    <Box sx={{  borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', margin: 0, }}>
 
                       Game Writer Contest
                       <Typography
@@ -336,7 +343,7 @@ const Page_Home = () => {
 
 
                     </Box>
-                    <Box sx={{ ...styleFontContent, borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', }}>
+                    <Box sx={{  borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', }}>
                       BackEnd Developer
                       <Typography
                         variant="subtitle2"
@@ -350,7 +357,7 @@ const Page_Home = () => {
 
 
                     </Box>
-                    <Box sx={{ ...styleFontContent, borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', }}>
+                    <Box sx={{  borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', }}>
                       BackEnd Developer
 
                       <Typography
@@ -364,7 +371,7 @@ const Page_Home = () => {
                       </Typography>
 
                     </Box>
-                    <Box sx={{ ...styleFontContent, borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', }}>
+                    <Box sx={{  borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', }}>
                       FrontEnd Developer
 
                       <Typography
@@ -378,7 +385,7 @@ const Page_Home = () => {
                       </Typography>
 
                     </Box>
-                    <Box sx={{ ...styleFontContent, borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', }}>
+                    <Box sx={{  borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', }}>
                       BackEnd Developer
 
                       <Typography
@@ -392,7 +399,7 @@ const Page_Home = () => {
                       </Typography>
 
                     </Box>
-                    <Box sx={{ ...styleFontContent, borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', }}>
+                    <Box sx={{  borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', }}>
                       BackEnd Developer
                       <Typography
                         variant="subtitle2"
@@ -539,20 +546,7 @@ const Page_Home = () => {
           </Grid>
         </Box>
 
-        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-          <Typography variant="h6" align="center" gutterBottom>
-            Team 4
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            align="center"
-            color="text.secondary"
-            component="p"
-          >
-            Something here to give the footer a purpose!
-          </Typography>
-          <Copyright />
-        </Box> */}
+       
         {/* End footer */}
 
 

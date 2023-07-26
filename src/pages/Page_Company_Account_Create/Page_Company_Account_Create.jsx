@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
+import {grey} from "@mui/material/colors";
 
 const Page_Company_Account_Create = () => {
     return (
@@ -25,7 +26,7 @@ const Page_Company_Account_Create = () => {
             }}>
         <Grid
             container
-            rowSpacing={5}
+            rowSpacing={3}
         >
             <Grid
                     item
@@ -38,6 +39,34 @@ const Page_Company_Account_Create = () => {
                         m="10px 0 10px 0">
                     Create Advanced Accounts
             </Typography>
+            </Grid>
+            <Grid
+                item
+                xs={12}
+                display="flex"
+                alignItems="center"
+                justifyContent="left"
+            >
+                <TextField
+                    id="accountemail"
+                    label="Username"
+                    variant="outlined"
+                    fullWidth
+                />
+            </Grid>
+            <Grid
+                item
+                xs={12}
+                display="flex"
+                alignItems="center"
+                justifyContent="left"
+            >
+                <TextField
+                    id="accountemail"
+                    label="Fullname"
+                    variant="outlined"
+                    fullWidth
+                />
             </Grid>
             <Grid
                 item
@@ -111,7 +140,8 @@ const Page_Company_Account_Create = () => {
                     onClick={() => {
                     }}
                     sx={{
-                        boxShadow:5
+                        boxShadow:5,
+                        backgroundColor: grey[900],
                     }}
                 >
                     Create

@@ -1,6 +1,7 @@
 [
     {
       "EventId": 1,
+      "EventCampus":"HCM Campus",
       "EventName": "Music on the Soul",
       "CreatedById": 9,
       "CreatedByName": "Nguyễn Văn A",
@@ -9,6 +10,7 @@
     },
     {
       "EventId": 234,
+      "EventCampus":"CanTho Campus",
       "EventName": "Lên lịch học English",
       "CreatedById": 12,
       "CreatedByName": "Nguyễn Văn A",
@@ -17,6 +19,7 @@
     },
     {
       "EventId": 3,
+      "EventCampus":"HaNoi Campus",
       "EventName": "Lên lịch học English",
       "CreatedById": 911,
       "CreatedByName": "Nguyễn Văn A",
@@ -25,6 +28,7 @@
     },
     {
       "EventId": 444,
+      "EventCampus":"HCM Campus",
       "EventName": "Lên lịch học English",
       "CreatedById": 129,
       "CreatedByName": "Nguyễn Văn A",
@@ -33,6 +37,7 @@
     },
     {
       "EventId": 5,
+      "EventCampus":"DaNang Campus",
       "EventName": "Lên lịch học English",
       "CreatedById": 90,
       "CreatedByName": "Nguyễn Văn A",
@@ -41,6 +46,7 @@
     },
     {
       "EventId": 57,
+      "EventCampus":"DongNai Campus",
       "EventName": "Lên lịch học English",
       "CreatedById": 1019,
       "CreatedByName": "Nguyễn Văn A",
@@ -49,6 +55,7 @@
     },
     {
       "EventId": 500,
+      "EventCampus":"HCM Campus",
       "EventName": "Lên lịch học English",
       "CreatedById": 998,
       "CreatedByName": "Nguyễn Văn A",
@@ -57,6 +64,7 @@
     },
     {
       "EventId": 512,
+      "EventCampus":"HCM Campus",
       "EventName": "Lên lịch học English",
       "CreatedById": 1249,
       "CreatedByName": "Nguyễn Văn A",
@@ -65,6 +73,7 @@
     },
     {
       "EventId": 115,
+      "EventCampus":"HCM Campus",
       "EventName": "Lên lịch học English",
       "CreatedById": 92345,
       "CreatedByName": "Nguyễn Văn A",
@@ -73,6 +82,7 @@
     },
     {
       "EventId": 15,
+      "EventCampus":"HCM Campus",
       "EventName": "Lên lịch học English",
       "CreatedById": 934,
       "CreatedByName": "Nguyễn Văn A",

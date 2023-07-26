@@ -31,6 +31,8 @@ import {
   SchoolRounded,
 } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
+import GigaCard from "../../components/GigaCard/GigaCard";
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 
 const listOfSkills = {
   skill: ["React", "Angular", "Java", "Python", "Figma", ".NET", "C", "C++"],
@@ -42,8 +44,8 @@ export default function Page_Company_Question() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({type: "saga/getAllQuestion"})
-  },[])
+    dispatch({ type: "saga/getAllQuestion" });
+  }, []);
 
   const [rows, setRows] = useState(datasjson);
   // const [anchorEl, setAnchorEl] = useState(null);
@@ -57,7 +59,7 @@ export default function Page_Company_Question() {
 
   const [modalStatus, setModalStatus] = useState(false);
   const [valueUpdate, setValueUpdate] = useState({
-    id: -1,
+    QuestionId: -1,
     QuestionName: "",
     Category: "",
     Skill: "",
@@ -116,7 +118,7 @@ export default function Page_Company_Question() {
     setRows([
       ...rows,
       {
-        id: rows.length + 1,
+        QuestionId: rows.length + 1,
         QuestionName: value.question,
         Category: value.category,
         Skill: value.skill,
@@ -137,14 +139,14 @@ export default function Page_Company_Question() {
   function handleUpdateQuestion(value) {
     successAlert("Cập nhật câu hỏi");
     const updateRows = rows.map((row) => {
-      if (row.id !== value.id) {
+      if (row.QuestionId !== value.QuestionId) {
         return row;
       } else {
         return {
           ...row,
-          QuestionName: value.question,
-          Category: value.category,
-          Skill: value.skill,
+          QuestionName: value.QuestionName,
+          Category: value.Category,
+          Skill: value.Skill,
         };
       }
     });
@@ -233,9 +235,9 @@ export default function Page_Company_Question() {
       renderHeader: () => <span>Category</span>,
       renderCell: (params) => {
         if (params.value === undefined) return <NullString />;
-        else if (params.value === "Chuyên môn") return <Technology />;
-        else if (params.value === "Ngôn ngữ") return <Language />;
-        else if (params.value === "Kỹ năng mềm") return <SoftSkill />;
+        else if (params.value === "Technology") return <Technology />;
+        else if (params.value === "Language") return <Language />;
+        else if (params.value === "Soft Skills") return <SoftSkill />;
       },
     },
     {
@@ -261,7 +263,7 @@ export default function Page_Company_Question() {
           onClick={() =>
             handleModalOpen(
               {
-                id: params.row.id,
+                QuestionId: params.row.QuestionId,
                 QuestionName: params.row.QuestionName,
                 Category: params.row.Category,
                 Skill: params.row.Skill,
@@ -277,7 +279,7 @@ export default function Page_Company_Question() {
           onClick={() =>
             handleModalOpen(
               {
-                id: params.row.id,
+                QuestionId: params.row.QuestionId,
                 QuestionName: params.row.QuestionName,
                 Category: params.row.Category,
                 Skill: params.row.Skill,
@@ -302,52 +304,55 @@ export default function Page_Company_Question() {
 
   return (
     <Box>
-      <Grid
-        container
-        spacing={3}
-        sx={{
-          marginBottom: 5,
-        }}
-      >
-        <Grid item xs={12} md={8}>
-          <Box
+      <GigaCard>
+        <GigaCardBody>
+          <Grid
+            container
+            spacing={3}
             sx={{
-              fontSize: 40,
-              fontWeight: 600,
-              color: "#1565C0",
+              marginBottom: 5,
             }}
           >
-            Question
-          </Box>
-        </Grid>
+            <Grid item xs={12} md={8}>
+              <Box
+                sx={{
+                  fontSize: 40,
+                  fontWeight: 600,
+                  // color: "#1565C0",
+                  color: "black"
+                }}
+              >
+                Question
+              </Box>
+            </Grid>
 
-        <Grid
-          item
-          xs={12}
-          md={4}
-          sx={{
-            display: "flex",
-            justifyContent: {
-              md: "flex-end",
-              xs: "flex-start",
-            },
-            alignItems: "center",
-          }}
-        >
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#1565C0",
-              textTransform: "none",
-              height: 50,
-              width: 250,
-            }}
-            onClick={handleAddModalOpen}
-          >
-            <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
-            Create Question
-          </Button>
-          {/* <IconButton
+            <Grid
+              item
+              xs={12}
+              md={4}
+              sx={{
+                display: "flex",
+                justifyContent: {
+                  md: "flex-end",
+                  xs: "flex-start",
+                },
+                alignItems: "center",
+              }}
+            >
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "#1565C0",
+                  textTransform: "none",
+                  height: 50,
+                  width: 250,
+                }}
+                onClick={handleAddModalOpen}
+              >
+                <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
+                Create Question
+              </Button>
+              {/* <IconButton
             onClick={handleMoreClick}
             sx={{
               marginLeft: 1,
@@ -381,115 +386,115 @@ export default function Page_Company_Question() {
               <FlagIcon sx={{ mr: 1.75 }} /> Báo lỗi
             </MenuItem>
           </Menu> */}
-        </Grid>
+            </Grid>
 
-        <Grid
-          item
-          xs={12}
-          md={7}
-          sx={{
-            display: "flex",
-            justifyContent: "flex-start",
-            alignItems: "center",
-          }}
-        >
-          <Autocomplete
-            disablePortal
-            id="filter-type"
-            options={["Technology", "Language", "Soft Skills"]}
-            sx={{ width: 200, marginRight: 2 }}
-            renderInput={(params) => (
-              <TextField {...params} label="Category..." />
-            )}
-            renderOption={(props, option) => {
-              if (option === "Technology") {
-                return (
-                  <Box
-                    component="li"
-                    {...props}
-                    sx={{
-                      color: "#1565C0",
-                    }}
-                  >
-                    <SchoolRounded
-                      sx={{
-                        color: "#1565C0",
-                        marginRight: 1,
-                      }}
-                    />
-                    {option}
-                  </Box>
-                );
-              } else if (option === "Language") {
-                return (
-                  <Box
-                    component="li"
-                    {...props}
-                    sx={{
-                      color: "#008631",
-                    }}
-                  >
-                    <LanguageRounded
-                      sx={{
-                        color: "#008631",
-                        marginRight: 1,
-                      }}
-                    />
-                    {option}
-                  </Box>
-                );
-              } else if (option === "Soft Skills") {
-                return (
-                  <Box
-                    component="li"
-                    {...props}
-                    sx={{
-                      color: "#AA336A",
-                    }}
-                  >
-                    <PsychologyRounded
-                      sx={{
-                        color: "#AA336A",
-                        marginRight: 1,
-                      }}
-                    />
-                    {option}
-                  </Box>
-                );
-              }
-            }}
-            value={valueChoose}
-            onChange={(event, value) => handleChooseValue(value)}
-          />
-          {valueChoose === "Technology" && (
-            <Autocomplete
-              disablePortal
-              id="filter-type"
-              options={listOfSkills.skill}
-              sx={{ width: 200 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Skill..." />
+            <Grid
+              item
+              xs={12}
+              md={7}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+              }}
+            >
+              <Autocomplete
+                disablePortal
+                id="filter-type"
+                options={["Technology", "Language", "Soft Skills"]}
+                sx={{ width: 200, marginRight: 2 }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Category..." />
+                )}
+                renderOption={(props, option) => {
+                  if (option === "Technology") {
+                    return (
+                      <Box
+                        component="li"
+                        {...props}
+                        sx={{
+                          color: "#1565C0",
+                        }}
+                      >
+                        <SchoolRounded
+                          sx={{
+                            color: "#1565C0",
+                            marginRight: 1,
+                          }}
+                        />
+                        {option}
+                      </Box>
+                    );
+                  } else if (option === "Language") {
+                    return (
+                      <Box
+                        component="li"
+                        {...props}
+                        sx={{
+                          color: "#008631",
+                        }}
+                      >
+                        <LanguageRounded
+                          sx={{
+                            color: "#008631",
+                            marginRight: 1,
+                          }}
+                        />
+                        {option}
+                      </Box>
+                    );
+                  } else if (option === "Soft Skills") {
+                    return (
+                      <Box
+                        component="li"
+                        {...props}
+                        sx={{
+                          color: "#AA336A",
+                        }}
+                      >
+                        <PsychologyRounded
+                          sx={{
+                            color: "#AA336A",
+                            marginRight: 1,
+                          }}
+                        />
+                        {option}
+                      </Box>
+                    );
+                  }
+                }}
+                value={valueChoose}
+                onChange={(event, value) => handleChooseValue(value)}
+              />
+              {valueChoose === "Technology" && (
+                <Autocomplete
+                  disablePortal
+                  id="filter-type"
+                  options={listOfSkills.skill}
+                  sx={{ width: 200 }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Skill..." />
+                  )}
+                  value={statusChoose}
+                  onChange={(event, value) => handleChooseStatus(value)}
+                />
               )}
-              value={statusChoose}
-              onChange={(event, value) => handleChooseStatus(value)}
-            />
-          )}
-          {valueChoose === "Language" && (
-            <Autocomplete
-              disablePortal
-              id="filter-type"
-              options={listOfSkills.language}
-              sx={{ width: 200 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Language..." />
+              {valueChoose === "Language" && (
+                <Autocomplete
+                  disablePortal
+                  id="filter-type"
+                  options={listOfSkills.language}
+                  sx={{ width: 200 }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Language..." />
+                  )}
+                  value={statusChoose}
+                  onChange={(event, value) => handleChooseStatus(value)}
+                />
               )}
-              value={statusChoose}
-              onChange={(event, value) => handleChooseStatus(value)}
-            />
-          )}
-        </Grid>
+            </Grid>
 
-        {/* <Grid
+            {/* <Grid
           item
           xs={12}
           md={5}
@@ -528,34 +533,36 @@ export default function Page_Company_Question() {
             </IconButton>
           </Box>
         </Grid> */}
-      </Grid>
+          </Grid>
 
-      <QuestionDataGrid
-        columns={columns}
-        rows={rows}
-        handleModalOpen={handleModalOpen}
-      />
+          <QuestionDataGrid
+            columns={columns}
+            rows={rows}
+            handleModalOpen={handleModalOpen}
+          />
 
-      <QuestionFormModal
-        key={addModalStatus}
-        addModalStatus={addModalStatus}
-        handleAddModalClose={handleAddModalClose}
-        options={listOfSkills}
-        handleSubmitQuestion={handleSubmitQuestion}
-        keepMounted
-      />
+          <QuestionFormModal
+            key={addModalStatus}
+            addModalStatus={addModalStatus}
+            handleAddModalClose={handleAddModalClose}
+            options={listOfSkills}
+            handleSubmitQuestion={handleSubmitQuestion}
+            keepMounted
+          />
 
-      <QuestionModal
-        key={valueUpdate.id}
-        modalStatus={modalStatus}
-        handleModalClose={handleModalClose}
-        options={listOfSkills}
-        handleUpdateQuestion={handleUpdateQuestion}
-        value={valueUpdate}
-        type={typeStatus}
-        setType={setTypeStatus}
-        keepMounted
-      />
+          <QuestionModal
+            key={valueUpdate.QuestionId}
+            modalStatus={modalStatus}
+            handleModalClose={handleModalClose}
+            options={listOfSkills}
+            handleUpdateQuestion={handleUpdateQuestion}
+            value={valueUpdate}
+            type={typeStatus}
+            setType={setTypeStatus}
+            keepMounted
+          />
+        </GigaCardBody>
+      </GigaCard>
 
       <DeleteAlertModal
         key={valueDelete}

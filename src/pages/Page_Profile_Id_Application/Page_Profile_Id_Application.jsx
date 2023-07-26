@@ -1,71 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HistoryList from '../../components/Profile/ProfileId';
+import { useDispatch, useSelector } from "react-redux";
+import cleanStore from '../../utils/cleanStore';
 export default function Page_Profile_Id_Application(){
-    const eventsData = [
-        {
-          id: 1,
-          name: 'Application 1',
-          status: 'Kết thúc',
-        },
-        {
-          id: 2,
-          name: 'Application 2',
-          status: 'Sắp diễn ra',
-        },
-        {
-          id: 3,
-          name: 'Application 3',
-          status: 'Sắp diễn ra',
-        },
-        {
-          id: 4,
-          name: 'Application 4',
-          status: 'Sắp diễn ra',
-        },
-        {
-          id: 5,
-          name: 'Application 5',
-          status: 'Kết thúc',
-        },
-        {
-          id: 6,
-          name: 'Application 6',
-          status: 'Kết thúc',
-        },
-        {
-          id: 7,
-          name: 'Application 7',
-          status: 'Kết thúc',
-        },
-        {
-          id: 8,
-          name: 'Application 8',
-          status: 'Kết thúc',
-        },
-        {
-          id: 9,
-          name: 'Application 9',
-          status: 'Kết thúc',
-        },
-        {
-          id: 10,
-          name: 'Application 10',
-          status: 'Kết thúc',
-        },
-        {
-          id: 11,
-          name: 'Application 11',
-          status: 'Kết thúc',
-        },
-        // Thêm các dữ liệu cho các event khác
-      ];
-      const time = '12/07/2023 10:00';
-      const status = 'Đã đăng ký';
+      const dispatch = useDispatch();
+      useEffect( () => {
+        dispatch({type:"saga/getAllApplicationCandidate"});
+        return () => {
+          cleanStore(dispatch);
+        }
+      }, [])
+      const rows_draft = useSelector((state => state.applicationCandidate));
+      const rows = rows_draft ? rows_draft : [];
+      console.log(rows);
+
       const itemsPerPage = 10;
-      const pathnavigate = '/recruitment/:recruitmentid/application/1';
-      const namePage = 'Position name';
+      const pathnavigate = '/recruitment/:recruitmentid/application';
+      const NameList = 'Application List';
+      const NamePage = 'Application';
       return(
-        <HistoryList events={eventsData} time={time} itemsPerPage={itemsPerPage} pathnavigate={pathnavigate} namePage={namePage} />
+        <HistoryList events={rows}  itemsPerPage={itemsPerPage} pathnavigate={pathnavigate} NameList={NameList} namePage={NamePage} />
       )
       
 }

@@ -16,6 +16,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+/* import { Snackbar, Alert } from "@mui/material"; */
 
 import imageBackground from "../../assets/img/background.jpg";
 
@@ -99,7 +100,7 @@ const ResetPassword = (props) => {
                 color='#1976d2' 
                 gutterBottom
                 fontFamily={'Roboto'}
-                fontSize={'28px'}
+                fontSize={'30px'}
                 lineHeight={'28px'}
                 fontWeight={'700'}
                 padding={"10px"}
@@ -218,6 +219,20 @@ const ResetPassword = (props) => {
           </Grid>
         </Grid>
       </Container>
+
+      {/* <Snackbar
+        open={props.errorSnackbar}
+        autoHideDuration={3000}
+        onClose={() => props.setErrorSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert 
+          severity="error"
+          onClose={() => props.setErrorSnackbar(false)}
+        >
+          {props.message}
+        </Alert>
+      </Snackbar> */}
     </Box>
   );
 };

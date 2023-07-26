@@ -25,7 +25,7 @@ function Box4(prop) {
         >
           <Grid item sx={{ marginTop: "16px" }} xs={12}>
             <Box
-              sx={{ width: "350px", height: "250px", margin: "auto" }}
+              sx={{ width: "80%", height: "250px", margin: "auto" }}
             >
               {image ? (
                 <img

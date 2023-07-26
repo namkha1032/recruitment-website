@@ -22,6 +22,7 @@ export default function QuestionModal(props) {
   const [skill, setSkill] = useState(props.value.Skill);
   const [category, setCategory] = useState(props.value.Category);
 
+  console.log(props.value.QuestionId)
   const [isFillQuestion, setIsFillQuestion] = useState(true);
   const [isFillSkill, setIsFillSkill] = useState(true);
   const [isFillCategory, setIsFillCategory] = useState(true);
@@ -30,7 +31,7 @@ export default function QuestionModal(props) {
     setQuestion("");
     setSkill(null);
     setIsFillQuestion(null);
-    setIsFillCategory("Chuyên môn");
+    setIsFillCategory("Technology");
     setIsFillSkill(null);
   }
 
@@ -60,7 +61,7 @@ export default function QuestionModal(props) {
     if (question === "" || question === "null") {
       setIsFillQuestion(false);
     }
-    if ((skill === null && category !== "Kỹ năng mềm") || skill === undefined) {
+    if ((skill === null && category !== "Soft skills") || skill === undefined) {
       setIsFillSkill(false);
     }
     if (category === null) {
@@ -68,16 +69,17 @@ export default function QuestionModal(props) {
     }
     if (
       question !== "" &&
-      (skill !== null || (skill === null && category === "Kỹ năng mềm")) &&
+      (skill !== null || (skill === null && category === "Soft skills")) &&
       skill !== undefined &&
       category !== null
     ) {
       props.handleUpdateQuestion({
-        id: props.value.id,
-        question: question,
-        category: category,
-        skill: skill,
+        QuestionId: props.value.QuestionId,
+        QuestionName: question,
+        Category: category,
+        Skill: skill,
       });
+      handleResetForm();
       props.handleModalClose();
     }
   }
@@ -128,7 +130,7 @@ export default function QuestionModal(props) {
                   color: "#1565C0",
                 }}
               >
-                {props.type === true ? "Cập nhật câu hỏi" : "Câu hỏi"}
+                {props.type === true ? "Update question" : "Question " + props.value.QuestionId}
               </Box>
             </Grid>
             <Grid
@@ -160,7 +162,7 @@ export default function QuestionModal(props) {
                 marginBottom: 1,
               }}
             >
-              <Box>Câu hỏi</Box>
+              <Box>Question</Box>
             </Grid>
             <Grid
               item
@@ -178,7 +180,7 @@ export default function QuestionModal(props) {
                   <TextField
                     hiddenLabel
                     id="filled-hidden-label-small"
-                    placeholder="Nhập câu hỏi..."
+                    placeholder="Enter the question..."
                     variant="outlined"
                     multiline
                     rows={4}
@@ -200,7 +202,7 @@ export default function QuestionModal(props) {
                         marginTop: 1,
                       }}
                     >
-                      Vui lòng điền nội dung câu hỏi!
+                      Please fill in Question field!
                     </Box>
                   )}
                 </Grid>
@@ -216,7 +218,7 @@ export default function QuestionModal(props) {
                 alignItems: "center",
               }}
             >
-              Phân loại
+              Category
             </Grid>
             <Grid
               item
@@ -239,21 +241,21 @@ export default function QuestionModal(props) {
                   onChange={(event, value) => handleCategoryChange(value)}
                 >
                   <FormControlLabel
-                    value="Chuyên môn"
+                    value="Technology"
                     control={<Radio />}
-                    label="Chuyên môn"
+                    label="Technology"
                     disabled={!props.type}
                   />
                   <FormControlLabel
-                    value="Ngôn ngữ"
+                    value="Language"
                     control={<Radio />}
-                    label="Ngôn ngữ"
+                    label="Language"
                     disabled={!props.type}
                   />
                   <FormControlLabel
-                    value="Kỹ năng mềm"
+                    value="Soft Skills"
                     control={<Radio />}
-                    label="Kỹ năng mềm"
+                    label="Soft Skills"
                     disabled={!props.type}
                   />
                 </RadioGroup>
@@ -267,7 +269,7 @@ export default function QuestionModal(props) {
                   marginTop: 1,
                 }}
               >
-                Vui lòng chọn phân loại!
+                Please select a category!
               </Box>
             )}
             <Grid
@@ -280,8 +282,8 @@ export default function QuestionModal(props) {
                 alignItems: "center",
               }}
             >
-              {category === "Chuyên môn" && "Chuyên môn"}
-              {category === "Ngôn ngữ" && "Ngôn ngữ"}
+              {category === "Technology" && "Technology"}
+              {category === "Language" && "Language"}
             </Grid>
             <Grid
               item
@@ -295,7 +297,7 @@ export default function QuestionModal(props) {
             >
               <Grid container>
                 <Grid item xs={12}>
-                  {category === "Chuyên môn" && (
+                  {category === "Technology" && (
                     <Autocomplete
                       disablePortal
                       id="combo-box-123"
@@ -312,7 +314,7 @@ export default function QuestionModal(props) {
                       disabled={!props.type}
                     />
                   )}
-                  {category === "Ngôn ngữ" && (
+                  {category === "Language" && (
                     <Autocomplete
                       disablePortal
                       id="combo-box-456"
@@ -331,7 +333,7 @@ export default function QuestionModal(props) {
                   )}
                 </Grid>
                 <Grid item xs={12}>
-                  {isFillSkill === false && category !== "Kỹ năng mềm" && (
+                  {isFillSkill === false && category !== "Soft Skills" && (
                     <Box
                       sx={{
                         fontSize: 10,
@@ -339,7 +341,7 @@ export default function QuestionModal(props) {
                         marginTop: 1,
                       }}
                     >
-                      Vui lòng chọn {category}!
+                      Please select {category}!
                     </Box>
                   )}
                 </Grid>
@@ -375,7 +377,7 @@ export default function QuestionModal(props) {
                   }
                 }}
               >
-                {props.type === true ? "Cập nhật câu hỏi" : "Chỉnh sửa câu hỏi"}
+                {props.type === true ? "Update" : "Edit question"}
               </Button>
             </Grid>
           </Grid>

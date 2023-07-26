@@ -13,6 +13,10 @@ import {
   Modal,
   IconButton,
 } from "@mui/material";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import CategoryIcon from "@mui/icons-material/Category";
+import SchoolIcon from "@mui/icons-material/School";
+import LanguageIcon from '@mui/icons-material/Language';
 import { TextareaAutosize } from "@mui/base";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
@@ -20,18 +24,17 @@ import { useState } from "react";
 export default function QuestionFormModal(props) {
   const [question, setQuestion] = useState("");
   const [skill, setSkill] = useState(null);
-  const [category, setCategory] = useState("Chuyên môn");
+  const [category, setCategory] = useState("Technology");
 
   const [isFillQuestion, setIsFillQuestion] = useState(null);
   const [isFillSkill, setIsFillSkill] = useState(null);
   const [isFillCategory, setIsFillCategory] = useState(null);
 
-  
   function handleResetForm() {
     setQuestion("");
     setSkill(null);
     setIsFillQuestion(null);
-    setIsFillCategory("Chuyên môn");
+    setIsFillCategory("Technology");
     setIsFillSkill(null);
   }
 
@@ -61,7 +64,7 @@ export default function QuestionFormModal(props) {
     if (question === "" || question === "null") {
       setIsFillQuestion(false);
     }
-    if ((skill === null && category !== "Kỹ năng mềm") || skill === undefined) {
+    if ((skill === null && category !== "Soft Skills") || skill === undefined) {
       setIsFillSkill(false);
     }
     if (category === null) {
@@ -69,15 +72,15 @@ export default function QuestionFormModal(props) {
     }
     if (
       question !== "" &&
-      (skill !== null || (skill === null && category === "Kỹ năng mềm")) &&
+      (skill !== null || (skill === null && category === "Soft Skills")) &&
       skill !== undefined &&
       category !== null
     ) {
       props.handleSubmitQuestion({
         question: question,
         category: category,
-        skill: skill
-      })
+        skill: skill,
+      });
       handleResetForm();
       props.handleAddModalClose();
     }
@@ -130,7 +133,7 @@ export default function QuestionFormModal(props) {
                   color: "#1565C0",
                 }}
               >
-                Câu hỏi mới
+                Create question
               </Box>
             </Grid>
             <Grid
@@ -155,20 +158,21 @@ export default function QuestionFormModal(props) {
             <Grid
               item
               xs={12}
-              md={2}
+              md={3}
               sx={{
                 display: "flex",
-                justifyContent: "space-between",
+                justifyContent: "flex-start",
                 alignItems: "center",
                 marginBottom: 1,
               }}
             >
-              <Box>Câu hỏi</Box>
+              <QuestionMarkIcon sx={{ marginRight: 1 }} />
+              <Box sx={{ fontWeight: 600 }}>Question</Box>
             </Grid>
             <Grid
               item
               xs={12}
-              md={10}
+              md={9}
               sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -181,7 +185,7 @@ export default function QuestionFormModal(props) {
                   <TextField
                     hiddenLabel
                     id="filled-hidden-label-small"
-                    placeholder="Nhập câu hỏi..."
+                    placeholder="Enter the question..."
                     variant="outlined"
                     multiline
                     rows={4}
@@ -200,7 +204,7 @@ export default function QuestionFormModal(props) {
                         marginTop: 1,
                       }}
                     >
-                      Vui lòng điền nội dung câu hỏi!
+                      Please fill in Question field!
                     </Box>
                   )}
                 </Grid>
@@ -209,19 +213,20 @@ export default function QuestionFormModal(props) {
             <Grid
               item
               xs={12}
-              md={2}
+              md={3}
               sx={{
                 display: "flex",
                 justifyContent: "flex-start",
                 alignItems: "center",
               }}
             >
-              Phân loại
+              <CategoryIcon sx={{ marginRight: 1 }} />
+              <Box sx={{ fontWeight: 600 }}>Category</Box>
             </Grid>
             <Grid
               item
               xs={12}
-              md={10}
+              md={9}
               sx={{
                 display: "flex",
                 justifyContent: "flex-start",
@@ -239,19 +244,19 @@ export default function QuestionFormModal(props) {
                   onChange={(event, value) => handleCategoryChange(value)}
                 >
                   <FormControlLabel
-                    value="Chuyên môn"
+                    value="Technology"
                     control={<Radio />}
-                    label="Chuyên môn"
+                    label="Technology"
                   />
                   <FormControlLabel
-                    value="Ngôn ngữ"
+                    value="Language"
                     control={<Radio />}
-                    label="Ngôn ngữ"
+                    label="Language"
                   />
                   <FormControlLabel
-                    value="Kỹ năng mềm"
+                    value="Soft Skills"
                     control={<Radio />}
-                    label="Kỹ năng mềm"
+                    label="Soft Skills"
                   />
                 </RadioGroup>
               </FormControl>
@@ -264,26 +269,44 @@ export default function QuestionFormModal(props) {
                   marginTop: 1,
                 }}
               >
-                Vui lòng chọn phân loại!
+                Please select a category!
               </Box>
             )}
             <Grid
               item
               xs={12}
-              md={2}
+              md={3}
               sx={{
                 display: "flex",
                 justifyContent: "flex-start",
                 alignItems: "center",
               }}
             >
-              {category === "Chuyên môn" && "Chuyên môn"}
-              {category === "Ngôn ngữ" && "Ngôn ngữ"}
+              {category === "Technology" && (
+                <Box sx={{
+                  display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                }}>
+                  <SchoolIcon sx={{ marginRight: 1 }}></SchoolIcon>
+                  <Box sx={{fontWeight: 600}}>Skill</Box>
+                </Box>
+              )}
+              {category === "Language" && (
+                <Box sx={{
+                  display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                }}>
+                  <LanguageIcon sx={{ marginRight: 1 }}></LanguageIcon>
+                  <Box sx={{fontWeight: 600}}>Language</Box>
+                </Box>
+              )}
             </Grid>
             <Grid
               item
               xs={12}
-              md={10}
+              md={9}
               sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -292,7 +315,7 @@ export default function QuestionFormModal(props) {
             >
               <Grid container>
                 <Grid item xs={12}>
-                  {category === "Chuyên môn" && (
+                  {category === "Technology" && (
                     <Autocomplete
                       disablePortal
                       id="combo-box-123"
@@ -308,10 +331,10 @@ export default function QuestionFormModal(props) {
                       onChange={(event, value) => handleSkillChange(value)}
                     />
                   )}
-                  {category === "Ngôn ngữ" && (
+                  {category === "Language" && (
                     <Autocomplete
                       disablePortal
-                      id="combo-box-456"
+                      id="combo-box-4567"
                       options={props.options.language}
                       fullWidth
                       renderInput={(params) => (
@@ -326,7 +349,7 @@ export default function QuestionFormModal(props) {
                   )}
                 </Grid>
                 <Grid item xs={12}>
-                  {isFillSkill === false && category !== "Kỹ năng mềm" && (
+                  {isFillSkill === false && category !== "Soft Skills" && (
                     <Box
                       sx={{
                         fontSize: 10,
@@ -334,7 +357,7 @@ export default function QuestionFormModal(props) {
                         marginTop: 1,
                       }}
                     >
-                      Vui lòng chọn {category}!
+                      Please select a {category}!
                     </Box>
                   )}
                 </Grid>
@@ -356,7 +379,7 @@ export default function QuestionFormModal(props) {
                 sx={{
                   width: {
                     md: 250,
-                    xs: "100%"
+                    xs: "100%",
                   },
                   textTransform: "none",
                   fontSize: 16,
@@ -364,7 +387,7 @@ export default function QuestionFormModal(props) {
                 }}
                 onClick={handleSubmitClick}
               >
-                Tạo câu hỏi
+                Create
               </Button>
             </Grid>
           </Grid>

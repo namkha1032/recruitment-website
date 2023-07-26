@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     Box,
     Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
@@ -26,12 +26,13 @@ import CardContent from "@mui/material/CardContent";
 import FormControl from "@mui/material/FormControl";
 import { shadows } from '@mui/system';
 import FindInPageIcon from "@mui/icons-material/FindInPage";
+import {useDispatch, useSelector} from "react-redux";
 
 const RenderStatusButton = ({params}) => {
     const [open, setOpen] = React.useState(false);
     return (
         <strong>
-            <IconButton color="primary" aria-label="Show Status" size="large"
+            <IconButton color="#000000" aria-label="Show Status" size="large"
                         onClick={() => {
                             setOpen(true)
                         }}>
@@ -49,8 +50,7 @@ const RenderStatusButton = ({params}) => {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Account ID: {params.row.id}<br/>
-                        Account Name: {params.row.accountName}
+                        Blacklist ID: {params.row.blackListId}<br/>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -64,32 +64,37 @@ const RenderStatusButton = ({params}) => {
 }
 const Page_Company_Account = () => {
     const navigate = useNavigate()
-    const [account, setAccount] = useState('');
+    // const [account, setAccount] = useState('');
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch({type: "saga/getBlacklist"});
+    }, [dispatch]);
+    const blacklist = useSelector(state => state.admin.blacklist)
     function QuickSearchToolbar() {
         return (
-            <Box
-                sx={{
-                    p: 0.5,
-                    pb: 0,
-                }}
-            >
+            <Grid container margin={1}>
+                <Grid item xs={4} display="flex">
                 <GridToolbarQuickFilter />
-                <GridToolbar></GridToolbar>
-            </Box>
+                </Grid>
+                <Grid item xs={8} justifyContent="right" display="flex">
+                <GridToolbar />
+                </Grid>
+            </Grid>
         );
     }
     const columns = [
-        { field: "id", headerName: "ID", flex: 0.2 },
-        { field: "registerId", headerName: "Register ID", flex: 0.4},
+        { field: "blackListId", headerName: "Blacklist ID", flex: 0.5 },
+        { field: "candidateId", headerName: "Candidate ID", flex: 0.5},
         {
-            field: "accountName",
-            headerName: "Account Name",
-            flex: 1,
+            field: "reason",
+            headerName: "Reason",
+            flex: 0.3,
             cellClassName: "name-column--cell",
         },
+        { field: "dateTime", headerName: "Blacklist Date", flex: 0.3},
         {
-            field: "status",
-            headerName: "Account Status",
+            field: "info",
+            headerName: "Check Info",
             flex: 0.3,
             renderCell: (params)=>{
                 return(<RenderStatusButton params={params} />)
@@ -136,7 +141,8 @@ const Page_Company_Account = () => {
                                         navigate("/company/account")
                                     }}
                                     sx={{
-                                        boxShadow:7
+                                        boxShadow:7,
+                                        backgroundColor: grey[900],
                                     }}
                                     style={{minWidth: '100px'}}
                                     startIcon={<ArrowBackIosNewRounded/>}
@@ -155,13 +161,14 @@ const Page_Company_Account = () => {
                     display:'flex',
                     // border: "1px solid black",
                     // borderRadius: 1,
-                    padding:4,
+                    // padding:4,
                     mt:4
                 }}>
+                <Grid container>
                 <Grid
-                    width="77vw"
+                    width="80vw"
                     item
-                    m="0px 10px 0px 10px"
+                    // m="0px 10px 0px 10px"
                     xs={12}
                     display="flex"
                     sx={{
@@ -170,13 +177,13 @@ const Page_Company_Account = () => {
                         },
                         "& .MuiDataGrid-cell": {
                             borderBottom: "none",
-                            backgroundColor: grey[300],
+                            // backgroundColor: grey[300],
                         },
                         "& .name-column--cell": {
-                            color: teal[600],
+                            color: grey[900],
                         },
                         "& .MuiDataGrid-columnHeaders": {
-                            backgroundColor: red[100],
+                            backgroundColor: grey[100],
                             borderBottom: "none",
                         },
                         "& .MuiDataGrid-virtualScroller": {
@@ -184,7 +191,7 @@ const Page_Company_Account = () => {
                         },
                         "& .MuiDataGrid-footerContainer": {
                             borderTop: "none",
-                            backgroundColor: red[100],
+                            backgroundColor:grey[100],
                         },
                         "& .MuiCheckbox-root": {
                             color: `${"green"} !important`,
@@ -195,10 +202,12 @@ const Page_Company_Account = () => {
                     }}
                 >
                     <DataGrid
-                        rows={mockDataContacts}
+                        rows={blacklist}
+                        getRowId={(row) => row.blackListId}
                         columns={columns}
                         slots={{ toolbar: QuickSearchToolbar }}
                     />
+                </Grid>
                 </Grid>
             </Card>
         </Grid>

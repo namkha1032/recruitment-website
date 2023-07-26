@@ -13,18 +13,23 @@ const Page_Company_Recruitment_Id = () => {
     const handleEdit = () => {
         navigate('/company/recruitment/:recruitmentid/update');
     }
-    
+
     const tabs = 2
     return (
         <div className="page_company_recruitment_id">
             <Grid container spacing={1} >
                 <Grid item xs={12}>
-                {/* tabs = {tabs} */}
-                        <Info_view  tabs = {tabs}/>    
-                </Grid>            
-                <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
+                    {/* tabs = {tabs} */}
+                    <Info_view tabs={tabs} />
+                </Grid>
+                <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", marginTop: "16px" }}>
 
-                    <Button sx={{ bgcolor: 'primary.main', color: 'black', border: '2px solid black' }} variant='outlined' onClick={handleEdit}>
+                    <Button sx={{
+                        bgcolor: 'black', color: 'white', 
+                                     ":hover": {
+                            backgroundColor: "b;ack",
+                        }
+                    }} variant='outlined' onClick={handleEdit}>
                         <EditIcon></EditIcon> Chỉnh sửa
                     </Button>
 

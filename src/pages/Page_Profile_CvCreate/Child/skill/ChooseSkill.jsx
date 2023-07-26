@@ -42,13 +42,13 @@ export default function ChooseSkill(prop) {
               if (typeof newValue === "string") {
                 return () =>
                   prop.setValue({
-                    name: newValue,
+                    skillName: newValue,
                   });
               } else if (newValue && newValue.inputValue) {
                 prop.setSInputValue({
-                  name: newValue.inputValue,
+                  skillName: newValue.inputValue,
                 });
-                console.log(newValue.name);
+                console.log(newValue.skillName);
                 if (newValue !== null) {
                   console.log(newValue);
                   prop.handleState(newValue);
@@ -59,10 +59,10 @@ export default function ChooseSkill(prop) {
                   console.log(newValue);
                   prop.setSkillId(
                     prop.skillData.filter(
-                      (comp) => comp.name === newValue.name
+                      (comp) => comp.skillName === newValue.skillName
                     )[0].id
                   );
-                  prop.handleState(newValue.name);
+                  prop.handleState(newValue.skillName);
                 }
               }
             }}
@@ -71,12 +71,12 @@ export default function ChooseSkill(prop) {
               const filtered = filter(options, params);
               const { inputValue } = params;
               const isExisting = options.some(
-                (option) => inputValue === option.name
+                (option) => inputValue === option.skillName
               );
               if (inputValue.trim() !== "" && !isExisting) {
                 filtered.push({
                   inputValue,
-                  name: `${inputValue}`,
+                  skillName: `${inputValue}`,
                 });
               }
               return filtered;
@@ -93,9 +93,9 @@ export default function ChooseSkill(prop) {
               if (option.inputValue) {
                 return option.inputValue;
               }
-              return option.name;
+              return option.skillName;
             }}
-            renderOption={(props, option) => <li {...props}>{option.name}</li>}
+            renderOption={(props, option) => <li {...props}>{option.skillName}</li>}
             sx={{
               "& > :not(style)": {
                 m: 1,

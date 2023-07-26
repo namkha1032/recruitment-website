@@ -6,6 +6,7 @@ import {
   LinearProgress,
   CircularProgress,
 } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import RocketLaunchRoundedIcon from "@mui/icons-material/RocketLaunchRounded";
@@ -37,6 +38,36 @@ import {
   NoRowsOverlay,
   NoResultsOverlay,
 } from "../../components/DataRick/DataRick";
+import cleanStore from "../../utils/cleanStore";
+import GigaCard from "../../components/GigaCard/GigaCard";
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+
+// JSON -> getPositionListWithFilter
+// {
+//   departmentId: 0, !!!
+//   status: ["Active", "Inactive"],
+// }
+// JSON <- getPositionList
+// {
+//   "PositionId": 0, !!!
+//   "PositionName": "",
+//   "Description": "",
+//   "MaxHiringQty": 0,
+//   "HiredQty": 0,
+//   "StartDate": "11/09/2023",
+//   "EndDate": "11/12/2023",
+//   "Status": [true, false] ~ ["Active", "Inactive"]
+// }
+// JSON <- Department
+// {
+//   "departmentId": 0,
+//   "departmentName": "",
+//   "address": "",
+//   "email": "",
+//   "phone": "",
+//   "website": ""
+// }
+
 
 export default function Page_Company_Recruitment() {
   const dispatch = useDispatch();
@@ -47,7 +78,7 @@ export default function Page_Company_Recruitment() {
     dispatch({ type: "saga/getDepartment" });
     // dispatch({ type: "saga/getLanguage" });
     return () => {
-      dispatch({ type: "positionList/cleanUpPosition" });
+      cleanStore(dispatch);
     };
   }, []);
 
@@ -64,7 +95,7 @@ export default function Page_Company_Recruitment() {
   // const [anchorEl, setAnchorEl] = useState(null);
   // const [valueSearch, setValueSearch] = useState("");
 
-  const [valueChoose, setValueChoose] = useState(null);
+  // const [valueChoose, setValueChoose] = useState(null);
 
   const [departmentChoose, setDepartmentChoose] = useState(null);
   const [statusChoose, setStatusChoose] = useState(null);
@@ -93,26 +124,25 @@ export default function Page_Company_Recruitment() {
   // }
 
   // Reset state when change filter option
-  function handleChooseValue(value) {
-    setValueChoose(value);
-    setDepartmentChoose(null);
-    setStatusChoose(null);
-    // setLanguageChoose(null);
-    if (value === null) {
-      dispatch({ type: "saga/getPositionList" });
-    }
-  }
+  // function handleChooseValue(value) {
+  //   setValueChoose(value);
+  //   setDepartmentChoose(null);
+  //   setStatusChoose(null);
+  //   // setLanguageChoose(null);
+  //   if (value === null) {
+  //     dispatch({ type: "saga/getPositionList" });
+  //   }
+  // }
 
   function handleChooseDepartment(value) {
     setDepartmentChoose(value);
-    if (value) {
-      dispatch({
-        type: "saga/getPositionListWithDepartment",
-        payload: { id: value.departmentId },
-      });
-    } else if (value === null) {
-      dispatch({ type: "saga/getPositionList" });
-    }
+    dispatch({
+      type: "saga/getPositionListWithFilter",
+      payload: {
+        departmentId: value ? value.departmentId : null,
+        status: statusChoose,
+      },
+    });
   }
 
   // function handleChooseLanguage(value) {
@@ -129,23 +159,17 @@ export default function Page_Company_Recruitment() {
 
   function handleChooseStatus(value) {
     setStatusChoose(value);
-    if (value === "Active") {
-      dispatch({
-        type: "saga/getPositionListWithStatus",
-        payload: { Status: true },
-      });
-    } else if (value === "Inactive") {
-      dispatch({
-        type: "saga/getPositionListWithStatus",
-        payload: { Status: false },
-      });
-    } else if (value === null) {
-      dispatch({ type: "saga/getPositionList" });
-    }
+    dispatch({
+      type: "saga/getPositionListWithFilter",
+      payload: {
+        departmentId: departmentChoose ? departmentChoose.departmentId : null,
+        status: value ? value : null,
+      },
+    });
   }
 
   function handleDetailClick(value) {
-    console.log(value)
+    console.log(value);
     navigate(`./${value}`);
   }
 
@@ -292,14 +316,24 @@ export default function Page_Company_Recruitment() {
         if (params.row.Status === false) {
           return [
             <GridActionsCellItem
-              icon={<InfoRoundedIcon variant="outlined" />}
+              icon={<InfoRoundedIcon variant="outlined" sx={{
+                color: "black"
+              }}/>}
               label="Detail"
+              sx={{
+                color: "black"
+              }}
               onClick={() => handleDetailClick(params.row.PositionId)}
               showInMenu
             />,
             <GridActionsCellItem
-              icon={<QueryStatsRoundedIcon />}
+              icon={<QueryStatsRoundedIcon sx={{
+                color: "black"
+              }}/>}
               label="Report"
+              sx={{
+                color: "black"
+              }}
               onClick={() => handleReportClick(params.row.PositionId)}
               showInMenu
             />,
@@ -316,14 +350,24 @@ export default function Page_Company_Recruitment() {
         } else {
           return [
             <GridActionsCellItem
-              icon={<InfoRoundedIcon variant="outlined" />}
+              icon={<InfoRoundedIcon variant="outlined" sx={{
+                color: "black"
+              }}/>}
               label="Detail"
+              sx={{
+                color: "black"
+              }}
               onClick={() => handleDetailClick(params.row.PositionId)}
               showInMenu
             />,
             <GridActionsCellItem
-              icon={<QueryStatsRoundedIcon />}
+              icon={<QueryStatsRoundedIcon sx={{
+                color: "black"
+              }}/>}
               label="Report"
+              sx={{
+                color: "black"
+              }}
               onClick={() => handleReportClick(params.row.PositionId)}
               showInMenu
             />,
@@ -344,52 +388,68 @@ export default function Page_Company_Recruitment() {
 
   return (
     <Box>
-      <Grid
-        container
-        spacing={3}
-        sx={{
-          marginBottom: 5,
-        }}
-      >
-        <Grid item xs={12} md={8}>
-          <Box
+      <GigaCard>
+        <GigaCardBody>
+          <Grid
+            container
+            spacing={3}
             sx={{
-              fontSize: 40,
-              fontWeight: 600,
-              color: "#1565C0",
+              marginBottom: 5,
             }}
           >
-            Position
-          </Box>
-        </Grid>
+            <Grid item xs={12} sm={6} md={6}>
+              <Box
+                sx={{
+                  fontSize: 40,
+                  fontWeight: 600,
+                  // color: "#1565C0",
+                  color: "black",
+                }}
+              >
+                Position
+              </Box>
+            </Grid>
 
-        <Grid
-          item
-          xs={12}
-          md={4}
-          sx={{
-            display: "flex",
-            justifyContent: {
-              md: "flex-end",
-              xs: "flex-start",
-            },
-            alignItems: "center",
-          }}
-        >
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#1565C0",
-              textTransform: "none",
-              height: 50,
-              width: 250,
-            }}
-            onClick={handleAddClick}
-          >
-            <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
-            Create position
-          </Button>
-          {/* <IconButton onClick={handleMoreClick} sx={{
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={6}
+              sx={{
+                display: "flex",
+                justifyContent: {
+                  md: "flex-end",
+                  sm: "flex-end",
+                  xs: "flex-start",
+                },
+                alignItems: "center",
+              }}
+            >
+              <Button
+                // variant="contained"
+                variant="outlined"
+                sx={{
+                  // backgroundColor: "#1565C0",
+                  color: "black",
+                  border: "1px solid black",
+                  textTransform: "none",
+                  height: 50,
+                  width: {
+                    md: 250,
+                    sm: 250,
+                    xs: "100%",
+                  },
+                  "&:hover": {
+                    backgroundColor: "black",
+                    color: "white"
+                  }
+                }}
+                onClick={handleAddClick}
+              >
+                <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
+                Create position
+              </Button>
+              {/* <IconButton onClick={handleMoreClick} sx={{
             marginLeft: 1,
           }}>
             <MoreVertIcon />
@@ -420,103 +480,93 @@ export default function Page_Company_Recruitment() {
               <FlagIcon sx={{ mr: 1.75 }} /> Báo lỗi
             </MenuItem>
           </Menu> */}
-        </Grid>
+            </Grid>
 
-        <Grid
-          item
-          xs={12}
-          md={12}
-          sx={{
-            display: "flex",
-            justifyContent: "flex-start",
-            alignItems: "center",
-          }}
-        >
-          <Autocomplete
-            disablePortal
-            id="filter-type"
-            options={["Department", "Status"]}
-            sx={{ width: 200, marginRight: 2 }}
-            renderInput={(params) => (
-              <TextField {...params} label="Filter by..." />
-            )}
-            value={valueChoose}
-            onChange={(event, value) => handleChooseValue(value)}
-          />
-          {valueChoose === "Department" && (
-            <Autocomplete
-              disablePortal
-              id="filter-type"
-              options={departments}
-              sx={{ width: 200 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Department..." />
-              )}
-              getOptionLabel={(option) => option.departmentName || ""}
-              renderOption={(props, option) => (
-                <li {...props} key={option.departmentId}>
-                  {option.departmentName}
-                </li>
-              )}
-              isOptionEqualToValue={(option, value) => {
-                return option.departmentId === value.departmentId;
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={12}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
               }}
-              value={departmentChoose}
-              onChange={(event, value) => handleChooseDepartment(value)}
-            />
-          )}
-          {valueChoose === "Status" && (
-            <Autocomplete
-              disablePortal
-              id="filter-type"
-              options={["Active", "Inactive"]}
-              sx={{ width: 200 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Status..." />
-              )}
-              renderOption={(props, option) => {
-                if (option === "Active")
-                  return (
-                    <Box
-                      component="li"
-                      {...props}
-                      sx={{
-                        color: "#1565C0",
-                      }}
-                    >
-                      <RocketLaunchRoundedIcon
+            >
+              <Autocomplete
+                disablePortal
+                id="filter-type"
+                options={departments}
+                sx={{ width: 200, marginRight: { md: 2, sm: 2, xs: 2 } }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Department..." />
+                )}
+                getOptionLabel={(option) => option.departmentName || ""}
+                renderOption={(props, option) => (
+                  <li {...props} key={option.departmentId}>
+                    {option.departmentName}
+                  </li>
+                )}
+                isOptionEqualToValue={(option, value) => {
+                  return option.departmentId === value.departmentId;
+                }}
+                value={departmentChoose}
+                onChange={(event, value) => handleChooseDepartment(value)}
+              />
+
+              <Autocomplete
+                disablePortal
+                id="filter-type"
+                options={["Active", "Inactive"]}
+                sx={{ width: 200 }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Status..." />
+                )}
+                renderOption={(props, option) => {
+                  if (option === "Active")
+                    return (
+                      <Box
+                        component="li"
+                        {...props}
                         sx={{
                           color: "#1565C0",
-                          marginRight: 1,
                         }}
-                      />
-                      Active
-                    </Box>
-                  );
-                else if (option === "Inactive")
-                  return (
-                    <Box
-                      component="li"
-                      {...props}
-                      sx={{
-                        color: "#E0E0E0",
-                      }}
-                    >
-                      <DoNotDisturbOnRoundedIcon
+                      >
+                        <RocketLaunchRoundedIcon
+                          sx={{
+                            color: "#1565C0",
+                            marginRight: 1,
+                          }}
+                        />
+                        Active
+                      </Box>
+                    );
+                  else if (option === "Inactive")
+                    return (
+                      <Box
+                        component="li"
+                        {...props}
                         sx={{
-                          color: "#E0E0E0",
-                          marginRight: 1,
+                          // color: "#E0E0E0",
+                          color: "black.400",
                         }}
-                      />
-                      Inactive
-                    </Box>
-                  );
-              }}
-              value={statusChoose}
-              onChange={(event, value) => handleChooseStatus(value)}
-            />
-          )}
-          {/* {valueChoose === "Language" && (
+                      >
+                        <DoNotDisturbOnRoundedIcon
+                          sx={{
+                            // color: "#E0E0E0",
+                            color: "black.400",
+                            marginRight: 1,
+                          }}
+                        />
+                        Inactive
+                      </Box>
+                    );
+                }}
+                value={statusChoose}
+                onChange={(event, value) => handleChooseStatus(value)}
+              />
+
+              {/* {valueChoose === "Language" && (
             <Autocomplete
               disablePortal
               id="filter-type"
@@ -538,9 +588,9 @@ export default function Page_Company_Recruitment() {
               onChange={(event, value) => handleChooseLanguage(value)}
             />
           )} */}
-        </Grid>
+            </Grid>
 
-        {/* <Grid
+            {/* <Grid
           item
           xs={12}
           md={5}
@@ -579,90 +629,96 @@ export default function Page_Company_Recruitment() {
             </IconButton>
           </Box>
         </Grid> */}
-      </Grid>
+          </Grid>
 
-      <Grid item xs={12} md={12}>
-        <Box>
-          <DataGrid
-            autoHeight
-            columns={columns}
-            rows={rows === null ? [] : rows}
-            // loading={rows === null}
-            loading={loading}
-            sx={{
-              "&.MuiDataGrid-root": {
-                borderRadius: 1,
-              },
-              "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
-                outline: "none",
-              },
-              "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
-                outline: "none",
-              },
-              "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
-                backgroundColor: "#1565C0",
-                color: "white",
-                fontWeight: 700,
-                fontSize: 14,
-                border: "none",
-              },
-              "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
-                display: "none",
-              },
-              // "&.MuiDataGrid-root .MuiDataGrid-virtualScroller::-webkit-scrollbar":
-              //   {
-              //     display: "none",
-              //   },
-              // "&.MuiDataGrid-root .MuiDataGrid-virtualScrollerContent--overflowed": {
-              //   display: "none",
-              // },
-              "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
-                color: "white",
-              },
-            }}
-            slots={{
-              toolbar: GridToolbar,
-              noRowsOverlay: NoRowsOverlay,
-              noResultsOverlay: NoResultsOverlay,
-            }}
-            slotProps={{
-              toolbar: {
-                showQuickFilter: true,
-                quickFilterProps: {
-                  debounceMs: 500,
-                  placeholder: "Search...",
-                  sx: {
-                    width: 300,
-                    marginBottom: 1,
+          <Box sx={{
+              minHeight: 350,
+            }}>
+            <DataGrid
+              autoHeight
+              columns={columns}
+              rows={rows === null ? [] : rows}
+              // loading={rows === null}
+              loading={loading}
+              sx={{
+                "&.MuiDataGrid-root": {
+                  borderRadius: 1,
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                  outline: "none",
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                  outline: "none",
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
+                  // backgroundColor: "#1565C0",
+                  backgroundColor: "black",
+                  color: "white",
+                  fontWeight: 700,
+                  fontSize: 14,
+                  border: "none",
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                  display: "none",
+                },
+                // "&.MuiDataGrid-root .MuiDataGrid-virtualScroller::-webkit-scrollbar":
+                //   {
+                //     display: "none",
+                //   },
+                // "&.MuiDataGrid-root .MuiDataGrid-virtualScrollerContent--overflowed": {
+                //   display: "none",
+                // },
+                "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+                  color: "white",
+                },
+              }}
+              slots={{
+                toolbar: GridToolbar,
+                noRowsOverlay: NoRowsOverlay,
+                noResultsOverlay: NoResultsOverlay,
+              }}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                  quickFilterProps: {
+                    debounceMs: 500,
+                    placeholder: "Search...",
+                    sx: {
+                      width: 300,
+                      marginBottom: 1,
+                    },
+                  },
+                  csvOptions: { disableToolbarButton: true },
+                  printOptions: { disableToolbarButton: true },
+                },
+              }}
+              disableColumnMenu
+              disableColumnFilter
+              disableColumnSelector
+              disableDensitySelector
+              disableRowSelectionOnClick
+              pagination
+              pageSizeOptions={[5, 10, 15, 25, 50, 100]}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 10,
                   },
                 },
-                csvOptions: { disableToolbarButton: true },
-                printOptions: { disableToolbarButton: true },
-              },
-            }}
-            disableColumnMenu
-            disableColumnFilter
-            disableColumnSelector
-            disableDensitySelector
-            disableSelectionOnClick
-            pagination
-            pageSizeOptions={[5, 10, 15, 25, 50, 100]}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 10,
-                },
-              },
-            }}
-            getRowId={(row) => row.PositionId}
-            onCellClick={(params, event) => {
-              if (params.field === "PositionId" || params.field === "PositionName") {
-                handleDetailClick(params.row.PositionId);
-              }
-            }}
-          />
-        </Box>
-      </Grid>
+              }}
+              getRowId={(row) => row.PositionId}
+              onCellClick={(params, event) => {
+                if (
+                  params.field === "PositionId" ||
+                  params.field === "PositionName"
+                ) {
+                  handleDetailClick(params.row.PositionId);
+                }
+              }}
+            />
+          </Box>
+        </GigaCardBody>
+      </GigaCard>
     </Box>
   );
 }

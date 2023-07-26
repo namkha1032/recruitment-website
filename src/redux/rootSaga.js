@@ -8,6 +8,7 @@ import questionSaga from "./saga/questionSaga";
 import departmentSaga from "./saga/departmentSaga"
 import languageSaga from "./saga/languageSaga"
 import skillSaga from "./saga/skillSaga"
+import testSaga from "./saga/testSaga";
 // import recruitmentSaga from "./saga/recruitmentSaga";
 import cvSaga from "./saga/cvSaga";
 import candidateSaga from "./saga/candidateSaga";
@@ -16,9 +17,13 @@ import { all } from "redux-saga/effects"
 import positionSaga from "./saga/positionSaga";
 import eventSaga from "./saga/eventSaga";
 import applicationSaga from "./saga/applicationSaga";
-
+import interviewCandidateSaga from "./saga/interviewCandidateSaga";
+import adminSaga from "./saga/adminSaga";
+import applicationCandidateSaga from "./saga/applicationCandidateSaga";
+import eventCandidateSaga from "./saga/eventCandidateSaga";
 function* rootSaga() {
     yield all([
+        adminSaga(),
         userSaga(),
         interviewSaga(),
         interviewerSaga(),
@@ -32,7 +37,11 @@ function* rootSaga() {
         candidateSaga(),
         positionSaga(),
         eventSaga(),
-        applicationSaga()
+        applicationSaga(),
+        interviewCandidateSaga(),
+        testSaga(),
+        applicationCandidateSaga(),
+        eventCandidateSaga()
     ])
 }
 

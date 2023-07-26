@@ -5,12 +5,14 @@ import {
 } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { all } from "axios";
+import useGetRole from '../../hooks/useGetRole';
 
 const RequireAuth = ({ allowedRoles }) => {
   const location = useLocation();
   const user = useSelector((state) => state.user);
-  //console.log(user)
-  let roleName = "";
+  console.log(user)
+  
+  let roleName = useGetRole();
   if (user) {
     roleName = user.roleName;
   }
@@ -19,7 +21,7 @@ const RequireAuth = ({ allowedRoles }) => {
     <>
       {
         !user ? (
-          <Navigate to="/login" state={{ from: location }} replace/>
+          <Navigate to="/login" state={{ from: location }} replace/>   
         ) : !allowedRoles.includes(roleName) ? (
           <Navigate to="/unauthorized" state={{ from: location }} replace/>
         ) : (

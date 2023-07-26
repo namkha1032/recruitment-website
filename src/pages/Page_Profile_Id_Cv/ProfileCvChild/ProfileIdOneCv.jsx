@@ -47,9 +47,6 @@ export default function ProfileIdOneCv({ events }) {
 
   return (
     <Grid container justifyContent="center" spacing={2}>
-      <div>
-        <TabInProfile/>
-      </div>
       <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px', width: '100%' }}>
       <Typography variant="h5" gutterBottom>
             CVs List

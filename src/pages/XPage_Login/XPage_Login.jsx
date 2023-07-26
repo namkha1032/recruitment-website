@@ -145,8 +145,9 @@ const XPage_Login = () => {
               md={9}
               sx={{
                 opacity: "100%",
-                left: "20%",
-                right: "20%",
+                left: "10%",
+                right: "10%",
+                //padding: '10px'
               }}
             >
               <GigaCard>
@@ -159,7 +160,7 @@ const XPage_Login = () => {
                 color='#1976d2' 
                 gutterBottom
                 fontFamily={'Roboto'}
-                fontSize={'28px'}
+                fontSize={'30px'}
                 lineHeight={'28px'}
                 fontWeight={'700'}
                 padding={"10px"}
@@ -248,13 +249,14 @@ const XPage_Login = () => {
                 <Grid
                   item
                   md={12}
-                  sx={{ ...style, display: "flex", justifyContent: "center" }}
+                  sx={{ marginBottom: '5px', marginTop: '5px', display: "flex", justifyContent: "center" }}
                 >
                   <Grid
                     item
                     xs={6}
                     md={6} 
                     paddingLeft='5px'
+                    //paddingRight={'5px'}
                   >
                     <FormControlLabel
                       control={
@@ -265,13 +267,24 @@ const XPage_Login = () => {
                           onClick={handleCheck}
                         />
                       }
-                      label="Remember me"
+                      label={
+                        <Typography variant="small" sx={{ textDecoration: 'none', color: 'black', fontSize: '16px' }}>
+                          Remember me
+                        </Typography>
+                      }
                       align="left"
                     />
 
                   </Grid>
 
-                  <Grid item xs={6} md={6} paddingRight='5px' display='flex' justifyContent='right'>
+                  <Grid item 
+                    xs={6} 
+                    md={6}
+                    paddingRight='5px'
+                    //paddingLeft={'5px'}
+                    display='flex' 
+                    justifyContent='right'
+                  >
                     <Typography 
                       component={Link} to="/recovery" 
                       variant="subtitle1" 
@@ -280,6 +293,7 @@ const XPage_Login = () => {
                         color: '#1976d2',
                         paddingTop: '8px',
                         /* fontWeight: '500' */
+                        fontSize: '16px'
                       }}
                     >
                       Forgot password?{" "}

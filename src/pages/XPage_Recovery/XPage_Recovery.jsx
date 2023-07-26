@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+/* import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify"; */
+/* import "react-toastify/dist/ReactToastify.css"; */
+import { Snackbar, Alert } from "@mui/material";
 
 import Recovery from "./Recovery";
 import CheckOTP from "./CheckOTP";
@@ -23,6 +25,62 @@ const XPage_Recovery = () => {
   const [validEmail, setValidEmail] = useState(true);
   const [validNewPassword, setValidNewPassword] = useState(true);
 
+  const [errorSnackbar, setErrorSnackbar] = useState(false)
+  const [errorResetSnackbar, setErrorResetSnackbar] = useState(false)
+  const [message, setMessage] = useState("")
+
+  const dispatch = useDispatch();
+
+  const newError = useSelector((state) => state.error);
+
+  useEffect(() => {
+    if (newError.status === "no") {
+      if (!isEmailValid){
+        dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+        setIsEmailValid(true)
+      }
+      else {
+        if (!isOTPValid){
+          dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+          setIsOTPValid(true)
+        }
+        else {
+          dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+          navigate("/login");
+        }
+      }
+    }
+    if (newError.status === "yes") {
+      if (!isEmailValid) {
+        setErrorSnackbar(true)
+        setEmail("")
+        setTimeout(() => {
+            setErrorSnackbar(false)
+            dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+        }, 5000)
+      }
+      else {
+        if (!isOTPValid){
+          setErrorSnackbar(true)
+          setOTP("")
+          setTimeout(() => {
+              setErrorSnackbar(false)
+              dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+          }, 5000)
+        }
+        else {
+          setErrorSnackbar(true)
+          setNewPassword("")
+          setConfirmPassword("")
+          setTimeout(() => {
+              setErrorSnackbar(false)
+              dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+          }, 5000)
+        }
+      }
+    }
+  }, [newError]);
+
   const handleNewPasswordChange = (event) => {
     let value = event.target.value;
     setNewPassword(value);
@@ -37,7 +95,6 @@ const XPage_Recovery = () => {
     setConfirmPassword(event.target.value);
   }
 
-
   const handleEmailChange = (event) => {
     let value = event.target.value;
     setEmail(value);
@@ -51,7 +108,7 @@ const XPage_Recovery = () => {
   const handleEmailSubmit = (event) => {
     event.preventDefault();
     if (!isEmailValid && validEmail) {
-      setIsEmailValid(true);
+      dispatch({ type: "saga/emailRecovery", payload: { email }})
     }
     else {
       setValidEmail(false);
@@ -62,7 +119,7 @@ const XPage_Recovery = () => {
   const handleOTPSubmit = (event) => {
     event.preventDefault();
     if (!isOTPValid) {
-      setIsOTPValid(true);
+      dispatch({ type: "saga/otpRecovery", payload: { email, otp }})
     }
   };
 
@@ -74,22 +131,15 @@ const XPage_Recovery = () => {
     }
     else{
       if (newPassword !== confirmPassword) {
-        toast.error("Passwords do not match", {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 1500,
-          closeOnClick: true,
-        });
+        setMessage("Passwords do not match")
+        setErrorResetSnackbar(true)
         setNewPassword("");
         setConfirmPassword("");
       } else {
-        toast.success("Password reset successfully", {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 1500,
-          closeOnClick: true,
-        });
-        setTimeout(() => {
-          navigate("/login");
-        }, 2000);
+        setMessage("Password reset successfully")
+        setErrorResetSnackbar(true)
+
+        dispatch({ type: "saga/userResetPassword", payload: { newPassword, confirmPassword }})
       }
     }
   };
@@ -115,13 +165,44 @@ const XPage_Recovery = () => {
           newPassword={newPassword}
           confirmPassword={confirmPassword}
           validNewPassword={validNewPassword}
+          /* errorResetSnackbar={errorResetSnackbar}
+          message={message}
+          setErrorResetSnackbar={setErrorResetSnackbar} */
           handleNewPasswordChange={handleNewPasswordChange}
           handleConfirmPasswordChange={handleConfirmPasswordChange}
           handleSubmit={handlePasswordSubmit}
         />
-        <ToastContainer />
+        {/* <ToastContainer /> */}
         </>
       )}
+
+      <Snackbar
+        open={errorSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setErrorSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert 
+          severity="error"
+          onClose={() => setErrorSnackbar(false)}
+        >
+          {newError.message}
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={errorResetSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setErrorResetSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert 
+          severity="error"
+          onClose={() => setErrorResetSnackbar(false)}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };
