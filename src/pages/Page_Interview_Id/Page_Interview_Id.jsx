@@ -47,7 +47,7 @@ const Page_Interview_Id = ({ cvid }) => {
                     <Grid container spacing={3}>
                         <Grid item md={6}>
                             <GigaCard>
-                                <GigaCardHeader color={"primary.main"} headerIcon={<ArticleIcon sx={{ fontSize: "inherit" }} />}>
+                                <GigaCardHeader color={"black"} headerIcon={<ArticleIcon sx={{ fontSize: "inherit" }} />}>
                                     General information
                                 </GigaCardHeader>
                                 <GigaCardBody >
@@ -163,7 +163,7 @@ const Page_Interview_Id = ({ cvid }) => {
                         </Grid>
                         <Grid item md={6}>
                             <GigaCard>
-                                <GigaCardHeader color={"primary.main"} headerIcon={<AssignmentIndIcon sx={{ fontSize: "inherit" }} />}>
+                                <GigaCardHeader color={"black"} headerIcon={<AssignmentIndIcon sx={{ fontSize: "inherit" }} />}>
                                     Interviewer
                                 </GigaCardHeader>
                                 <GigaCardBody>

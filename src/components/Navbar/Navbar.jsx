@@ -275,7 +275,12 @@ const NavbarContent = () => {
                                 })}
                             </Menu>
                         </>
-                        : <Button variant="outlined" color="primary" onClick={() => { navigate("/login") }}>Log in</Button>}
+                        : <Button variant="outlined" sx={{
+                            borderColor: "black", color: "black",
+                            "&:hover": {
+                                borderColor: "black"
+                            }
+                        }} onClick={() => { navigate("/login") }}>Log in</Button>}
                 </Box>
             </Container>
             {/* Dropdown responsive */}
