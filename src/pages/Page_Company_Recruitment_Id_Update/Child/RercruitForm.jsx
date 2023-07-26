@@ -9,6 +9,8 @@ import Box1 from "./Box1";
 import Box2 from "./Box2";
 import Box3 from "./Box3";
 import Box4 from "./box4";
+import GigaCard from "../../../components/GigaCard/GigaCard";
+import GigaCardBody from "../../../components/GigaCardBody/GigaCardBody";
 function RecruitForm() {
   const dispatch = useDispatch();
   // fetch Data
@@ -58,16 +60,14 @@ function RecruitForm() {
   const [inputValue, setInputValue] = useState("");
   // Language comps
   const [languageName, setLanguageName] = useState("");
-  const lvalues = (language.filter((prop)=>prop.languageId===languages));
-  let lvalue= (lvalues[0]?lvalues[0].languageName:"");
+  const lvalues = language.filter((prop) => prop.languageId === languages);
+  let lvalue = lvalues[0] ? lvalues[0].languageName : "";
   const [lInputValue, setLInputValue] = useState("");
   // Department comps
   let express = departments[0] ? true : false;
   let departmentName = departments[0] ? departments[0].departmentName : "";
   let departmentId = departments[0] ? departments[0].departmentId : null;
-  let departmentAddress = departments[0]
-    ? departments[0].address
-    : "";
+  let departmentAddress = departments[0] ? departments[0].address : "";
   let departmentEmail = departments[0] ? departments[0].email : "";
   let departmentPhone = departments[0] ? departments[0].phone : "";
   let departmentWeb = departments[0] ? departments[0].website : "";
@@ -148,7 +148,9 @@ function RecruitForm() {
     console.log(lInputValue);
     console.log(languageName);
     let arr = language.filter(
-      (comp) => comp.languageName === (lInputValue !== null ? lInputValue.languageName : "")
+      (comp) =>
+        comp.languageName ===
+        (lInputValue !== null ? lInputValue.languageName : "")
     );
     console.log(arr);
     if (arr[0] === undefined) {
@@ -167,9 +169,7 @@ function RecruitForm() {
   }
   function handleLanguageAdd2() {
     console.log(lInputValue);
-    let arr = language.filter(
-      (comp) => comp.languageName === lInputValue
-    );
+    let arr = language.filter((comp) => comp.languageName === lInputValue);
     console.log(arr);
     if (arr[0] === undefined) {
       alert("wrong language");
@@ -192,22 +192,10 @@ function RecruitForm() {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <Grid container spacing={0} justifyContent="center" alignItems="center">
-          <Grid item xs={12} sm={6} sx={{ marginTop: "8px" }}>
-            <Box
-              className={`RecruiteForm Form InputForm`}
-              sx={{
-                borderRadius: 4,
-                boxShadow: 10,
-                width: "90%",
-                backgroundColor: "white",
-                border: (theme) => `1px solid ${theme.palette.divider}`,
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Box className="Container">
+        <Grid container spacing={2} justifyContent="center" alignItems="center">
+          <Grid item xs={12} sm={6}>
+            <GigaCard>
+              <GigaCardBody>
                 <Grid
                   container
                   spacing={0}
@@ -224,24 +212,12 @@ function RecruitForm() {
                     />
                   </Grid>
                 </Grid>
-              </Box>
-            </Box>
+              </GigaCardBody>
+            </GigaCard>
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ marginTop: "8px" }}>
-            <Box
-              className={`RecruiteForm Form InputForm`}
-              sx={{
-                borderRadius: 4,
-                boxShadow: 10,
-                width: "90%",
-                backgroundColor: "white",
-                border: (theme) => `1px solid ${theme.palette.divider}`,
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Box className="Container">
+          <Grid item xs={12} sm={6}>
+            <GigaCard>
+              <GigaCardBody>
                 <Grid
                   container
                   spacing={0}
@@ -252,24 +228,12 @@ function RecruitForm() {
                     <Box4 />
                   </Grid>
                 </Grid>
-              </Box>
-            </Box>
+              </GigaCardBody>
+            </GigaCard>
           </Grid>
-          <Grid item xs={12} sx={{ marginTop: "16px" }}>
-            <Box
-              className={`RecruiteForm InputForm`}
-              sx={{
-                borderRadius: 4,
-                width: "95%",
-                boxShadow: 10,
-                backgroundColor: "white",
-                border: (theme) => `1px solid ${theme.palette.divider}`,
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Box className="Container">
+          <Grid item xs={12}>
+            <GigaCard>
+              <GigaCardBody>
                 <Grid
                   container
                   spacing={0}
@@ -298,30 +262,17 @@ function RecruitForm() {
                     />
                   </Grid>
                 </Grid>
-              </Box>
-            </Box>
+              </GigaCardBody>
+            </GigaCard>
           </Grid>
-          <Grid sx={{ marginTop: "16px" }} item xs={12}>
-            <Box
-              className={`RecruiteForm InputForm`}
-              sx={{
-                borderRadius: 4,
-                boxShadow: 10,
-                width: "95%",
-                backgroundColor: "white",
-                border: (theme) => `1px solid ${theme.palette.divider}`,
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Box className="Container">
+          <Grid item xs={12}>
+            <GigaCard>
+              <GigaCardBody>
                 <Grid
                   container
                   spacing={0}
                   justifyContent="center"
                   alignItems="center"
-                  sx={{ paddingTop: "16px" }}
                 >
                   <Grid item xs={10}>
                     <Box3
@@ -347,13 +298,13 @@ function RecruitForm() {
                       setLanguageName={setLanguageName}
                       languageName={languageName}
                       // setLanguageId={setLanguageId}
-                      lvalue = {lvalue}
+                      lvalue={lvalue}
                       handleLanguageAdd={handleLanguageAdd2}
                     />
                   </Grid>
                 </Grid>
-              </Box>
-            </Box>
+              </GigaCardBody>
+            </GigaCard>
           </Grid>
           <Grid item xs={12}></Grid>
           <img src="./img/logo.png" alt="" />
