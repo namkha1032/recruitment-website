@@ -31,7 +31,7 @@ const RenderStatusButton = ({params}) => {
     const [open, setOpen] = React.useState(false);
     return (
         <strong>
-            <IconButton color="primary" aria-label="Show Status" size="large"
+            <IconButton color="#000000" aria-label="Show Status" size="large"
                         onClick={() => {
                             setOpen(true)
                         }}>
@@ -135,7 +135,8 @@ const Page_Company_Account = () => {
                                         navigate("/company/account")
                                     }}
                                     sx={{
-                                        boxShadow:7
+                                        boxShadow:7,
+                                        backgroundColor: grey[900],
                                     }}
                                     style={{minWidth: '100px'}}
                                     startIcon={<ArrowBackIosNewRounded/>}
@@ -170,13 +171,13 @@ const Page_Company_Account = () => {
                         },
                         "& .MuiDataGrid-cell": {
                             borderBottom: "none",
-                            backgroundColor: grey[300],
+                            // backgroundColor: grey[300],
                         },
                         "& .name-column--cell": {
-                            color: teal[600],
+                            color: grey[900],
                         },
                         "& .MuiDataGrid-columnHeaders": {
-                            backgroundColor: red[100],
+                            backgroundColor: grey[100],
                             borderBottom: "none",
                         },
                         "& .MuiDataGrid-virtualScroller": {
@@ -184,7 +185,7 @@ const Page_Company_Account = () => {
                         },
                         "& .MuiDataGrid-footerContainer": {
                             borderTop: "none",
-                            backgroundColor: red[100],
+                            backgroundColor:grey[100],
                         },
                         "& .MuiCheckbox-root": {
                             color: `${"green"} !important`,

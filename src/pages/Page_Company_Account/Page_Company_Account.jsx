@@ -15,13 +15,14 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import {useDispatch, useSelector} from 'react-redux';
 import useGetRole from '../../hooks/useGetRole.js';
+import {getCandidate} from "../../redux/reducer/adminReducer";
 
 
 const RenderAddToBlacklist = ({params}) => {
     const [open, setOpen] = React.useState(false);
     return (
         <strong>
-            <IconButton color="primary" aria-label="Add to Blacklist" size="large"
+            <IconButton color="black" aria-label="Add to Blacklist" size="large"
                         onClick={() => {
                             setOpen(true)
                         }}>
@@ -63,8 +64,14 @@ const RenderAddToBlacklist = ({params}) => {
     )
 }
 
+
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch({type: "saga/getCandidate"});
+    }, [dispatch]);
+    const candidate = useSelector(state => state.admin.candidate)
 
     function QuickSearchToolbar() {
         return (
@@ -76,13 +83,78 @@ function TabPanel(props) {
         );
     }
 
+    // function setColumns(props.value) {
+    //     var columns
+    //     if (value===0) {
+    //         columns = [
+    //             {field: "candidateId", headerName: "Candidate ID", flex: 0.5},
+    //             {field: "userId", headerName: "User ID", flex: 0.5},
+    //             {
+    //                 field: "experience",
+    //                 headerName: "Experience",
+    //                 flex: 0.5,
+    //                 cellClassName: "name-column--cell",
+    //             },
+    //             {
+    //                 field: "addtoBlacklist",
+    //                 headerName: "Add to Blacklist",
+    //                 flex: 0.3,
+    //                 renderCell: (params) => {
+    //                     return (<RenderAddToBlacklist params={params}/>)
+    //                 },
+    //             },
+    //         ];
+    //     }
+    //     if (value===1) {
+    //         columns = [
+    //             {field: "candidateId", headerName: "Candidate ID", flex: 0.5},
+    //             {field: "userId", headerName: "User ID", flex: 0.5},
+    //             {
+    //                 field: "experience",
+    //                 headerName: "Experience",
+    //                 flex: 0.5,
+    //                 cellClassName: "name-column--cell",
+    //             },
+    //             {
+    //                 field: "addtoBlacklist",
+    //                 headerName: "Add to Blacklist",
+    //                 flex: 0.3,
+    //                 renderCell: (params) => {
+    //                     return (<RenderAddToBlacklist params={params}/>)
+    //                 },
+    //             },
+    //         ];
+    //     }
+    //     if (value===2) {
+    //         columns = [
+    //             {field: "candidateId", headerName: "Candidate ID", flex: 0.5},
+    //             {field: "userId", headerName: "User ID", flex: 0.5},
+    //             {
+    //                 field: "experience",
+    //                 headerName: "Experience",
+    //                 flex: 0.5,
+    //                 cellClassName: "name-column--cell",
+    //             },
+    //             {
+    //                 field: "addtoBlacklist",
+    //                 headerName: "Add to Blacklist",
+    //                 flex: 0.3,
+    //                 renderCell: (params) => {
+    //                     return (<RenderAddToBlacklist params={params}/>)
+    //                 },
+    //             },
+    //         ];
+    //     }
+    //     return columns;
+    // }
+
     const columns = [
-        {field: "id", headerName: "ID", flex: 0.2},
-        {field: "registerId", headerName: "Register ID", flex: 0.4},
+        {field: "candidateId", headerName: "Candidate ID", flex: 0.5},
+        {field: "userId", headerName: "User ID", flex: 0.5},
         {
-            field: "accountName",
-            headerName: "Account Name",
-            flex: 1,
+            field: "experience",
+            headerName: "Experience",
+            flex: 0.5,
             cellClassName: "name-column--cell",
         },
         {
@@ -113,25 +185,26 @@ function TabPanel(props) {
                     sx={{
                         "& .MuiDataGrid-root": {
                             border: "none",
-                            backgroundColor: grey[50],
+                            backgroundColor: "#ffffff",
                         },
                         "& .MuiDataGrid-cell": {
                             borderBottom: "none"
                         },
                         "& .name-column--cell": {
-                            color: lightBlue[800]
+                            color: grey[900]
                         },
                         "& .MuiDataGrid-columnHeaders": {
-                            backgroundColor: lightBlue[700],
-                            color: "#ffffff",
-                            borderBottom: "none"
+                            backgroundColor: grey[100],
+                            // color: "#ffffff",
+                            borderBottom: "5"
                         },
                         "& .MuiDataGrid-virtualScroller": {
                             backgroundColor: grey[100]
                         },
                         "& .MuiDataGrid-footerContainer": {
-                            borderTop: "none",
-                            backgroundColor: lightBlue[700],
+                            borderTop: "5",
+                            backgroundColor: grey[100]
+                            // color: "#ffffff"
                         },
                         "& .MuiCheckbox-root": {
                             color: `${teal[300]} !important`
@@ -142,7 +215,8 @@ function TabPanel(props) {
                     }}
                 >
                     <DataGrid
-                        rows={mockDataContacts}
+                        rows={candidate==null ? []: candidate}
+                        getRowId={(row) => row.candidateId}
                         columns={columns}
                         slots={{toolbar: QuickSearchToolbar}}
                         display="flex"
@@ -201,7 +275,7 @@ function FullWidthTabs() {
                         aria-label="full width tabs example"
                         sx={{
                             backgroundColor: '#ffffff',
-                            color: 'primary'
+                            color: "#000000"
                         }}
                     >
                         <Tab label="Candidate" {...a11yProps(0)} />
@@ -222,7 +296,8 @@ function FullWidthTabs() {
 
 const Page_Company_Account = () => {
     const navigate = useNavigate()
-    const [account, setAccount] = useState('');
+
+
     if (useGetRole()=="admin") {
         return (
             <Grid item xs={12}>
@@ -266,7 +341,8 @@ const Page_Company_Account = () => {
                                         }}
                                         sx={{
                                             boxShadow: 7,
-                                            minWidth: '120px'
+                                            minWidth: '120px',
+                                            backgroundColor: grey[900],
                                         }}
                                         startIcon={<AddCard/>}
                                     >
@@ -289,7 +365,8 @@ const Page_Company_Account = () => {
                                         }}
                                         sx={{
                                             boxShadow: 7,
-                                            minWidth: '120px'
+                                            minWidth: '120px',
+                                            backgroundColor: grey[900],
                                         }}
                                         startIcon={<FileOpen/>}
                                     >

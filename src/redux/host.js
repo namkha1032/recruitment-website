@@ -1,6 +1,6 @@
 const host = {
-    name: "https://intern-team4.vercel.app"
-    // name: "http://localhost:3000"
+    // name: "https://intern-team4.vercel.app"
+    name: "http://localhost:3000"
 }
 
 export default host

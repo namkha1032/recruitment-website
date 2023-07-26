@@ -18,8 +18,10 @@ import positionSaga from "./saga/positionSaga";
 import eventSaga from "./saga/eventSaga";
 import applicationSaga from "./saga/applicationSaga";
 import interviewCandidateSaga from "./saga/interviewCandidateSaga";
+import adminSaga from "./saga/adminSaga";
 function* rootSaga() {
     yield all([
+        adminSaga(),
         userSaga(),
         interviewSaga(),
         interviewerSaga(),
