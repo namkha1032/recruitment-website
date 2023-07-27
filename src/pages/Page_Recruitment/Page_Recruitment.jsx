@@ -18,7 +18,7 @@ import Pagination from '@mui/material/Pagination';
 import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader"
 import GigaCard from "../../components/GigaCard/GigaCard"
 import { Favorite, FavoriteBorder, FavoriteOutlined } from '@mui/icons-material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AppPagination from '../../components/AppPagination';
 import { TextField } from '@mui/material';
 
@@ -47,17 +47,21 @@ function Copyright() {
 //
 const Page_Recruitment = () => {
     const [like,setLike] = useState(true)
-    // const [pList,setPList] = React.useState(null)
+    //const [pList,setPList] = React.useState(null)
     const positionList = useSelector(state => state.positionList)
     const [pList,setPList] =useState(positionList)
     const [search,setSearch] = useState('')
     //
+    const dispatch = useDispatch()
     let newList;
     const navigate = useNavigate()  
     const handleNavigateClick1 = (id) => {
       navigate(`/recruitment/${id}`)
     }
-
+    useEffect(()=>{
+      console.log('a')
+      dispatch({type:'saga/getPositionList'})
+    },[])
     return (
         <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
