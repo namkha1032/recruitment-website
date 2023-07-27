@@ -73,59 +73,36 @@ const Page_Recruitment = () => {
           <Box
             sx=
             {{
-              backgroundImage: 'url(https://haycafe.vn/wp-content/uploads/2022/05/Nen-xanh-duong-pastel.jpg)',
+              backgroundImage: 'url(https://wallpapersmug.com/download/1366x768/16023c/arrows-abstract-4k.jpg)',
               height: '300px',
               borderRadius: '10px',
               boxShadow: 5
             }}>
-            <Box sx={{ padding: '150px 750px 0px 110px' }}>
-              <Typography variant='h3' align='left' color='black' fontFamily='serif' sx={{ borderBottom: '3px solid #0099FF' }}>
+            <Box sx={{ padding: '150px 880px 0px 122px' }}>
+              <Typography variant='h3' align='left' color='white'  sx={{ borderBottom: '3px solid grey' }}>
                 Recruitment
               </Typography>
 
             </Box>
 
-            <Box sx={{ padding: '10px 350px 0px 110px' }}>
-              <Typography variant='h6' align='left' color='#808080' fontFamily='serif' >
-                Các sự kiện sôi động sẽ cập nhật liên tục, hãy theo dõi tin tức sự kiện để có thể đăng kí tham gia.
+            <Box sx={{ padding: '10px 350px 0px 122px' }}>
+              <Typography variant='h6' align='left' color='white' >
+                Hãy đăng ký ứng tuyển vào vị trí phù hợp 
               </Typography>
             </Box>
 
           </Box>
         </Box>
-        {/* <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container maxWidth="sm">
-            
-            <Typography
-              component="h1"
-              variant="h3"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
-              Thông tin tuyển dụng
-              
-            </Typography>
-            
-        
-          </Container>
-        </Box> */}
        {pList  &&  <Container sx={{ py: 4 }} maxWidth="md">
           {/* End hero unit */
         
           }
           
-          <Grid container spacing={8} sx={{padding:'30px 0px 0px 0px'}}>
-            <TextField label='Search' value={search} onChange={(e)=> setSearch(e.target.value)}/> 
+          <Grid container spacing={3} sx={{padding:'30px 0px 0px 0px'}}>
+            {/* <TextField label='Search' value={search} onChange={(e)=> setSearch(e.target.value)}/> 
             
-              { newList = positionList.filter((temp ) => search.includes(temp.PositionName) )}
-            console.log(newList)
+              {  positionList.filter((temp ) => search.includes(temp.PositionName) )} */}
+            
             {pList.map((card) => (
               <Grid item key={card.PositionId} xs={12}>
                   <Box sx={{backgroundColor:'#FFFFFF', borderRadius:'10px', boxShadow:10 } }>
@@ -137,7 +114,7 @@ const Page_Recruitment = () => {
                               width='100px'
                               height='100px'
                               style={{borderRadius:'4px',backgroundColor:'white'}}
-                              src='https://cdn-new.topcv.vn/unsafe/150x/filters:format(webp)/https://static.topcv.vn/company_logos/Mw3rRovTtwYXKesnU1JP9cTxh68pnf4t_1645496968____e7c3098c0e3469c9701cae38cdcc3951.png'
+                              src='https://us.123rf.com/450wm/dxinerz/dxinerz1712/dxinerz171201940/91870601-code-software-programming-icon-vector-image-can-also-be-used-for-data-analytics-suitable-for-web.jpg?ver=6'
                               alt=''
                             /> 
                           </Box>
@@ -148,9 +125,9 @@ const Page_Recruitment = () => {
                           </Box>
 
                           <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                            <Box style={{ marginRight: '10px', marginTop: '10px', backgroundColor: 'cornsilk', borderRadius: '3px', padding: '3px', fontSize: 'small' }}>Đồng Nai</Box>
-                            <Box style={{ marginRight: '10px', marginTop: '10px', backgroundColor: 'cornsilk', borderRadius: '3px', padding: '3px', fontSize: 'small' }}>Còn 24 ngày để ứng tuyển</Box>
-                            <Box style={{ marginRight: '10px', marginTop: '10px', backgroundColor: 'cornsilk', borderRadius: '3px', padding: '3px', fontSize: 'small' }}> Cập nhật 3 phút trước</Box>
+                            <Box style={{ marginRight: '10px', marginTop: '10px', backgroundColor: '#D3D3D3', borderRadius: '3px', padding: '3px', fontSize: 'small' }}>Đồng Nai</Box>
+                            <Box style={{ marginRight: '10px', marginTop: '10px', backgroundColor: '#D3D3D3', borderRadius: '3px', padding: '3px', fontSize: 'small' }}>Còn 24 ngày để ứng tuyển</Box>
+                            <Box style={{ marginRight: '10px', marginTop: '10px', backgroundColor: '#D3D3D3', borderRadius: '3px', padding: '3px', fontSize: 'small' }}> Cập nhật 3 phút trước</Box>
                           </Box>
 
                         </Box>
@@ -161,7 +138,7 @@ const Page_Recruitment = () => {
                         <Typography align='right'></Typography>
                       </Box>
                       <Box sx={{ margin: '15px', display: 'flex', justifyContent: 'end' }}>
-                        <Button onClick={() => handleNavigateClick1(card.PositionId)} variant='contained' size='small'>Chi tiết</Button>
+                        <Button onClick={() => handleNavigateClick1(card.PositionId)} variant='contained' size='small'>View</Button>
 
                       </Box>
                     </Grid>

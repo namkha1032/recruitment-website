@@ -66,21 +66,21 @@ const Page_Event = () => {
         <Box
           sx=
           {{
-            backgroundImage: 'url(https://png.pngtree.com/background/20210710/original/pngtree-blue-geometric-flattened-texture-banner-background-picture-image_1012881.jpg)',
+            backgroundImage: 'url(https://wallpapersmug.com/download/1366x768/559360/3d-cubes-dark-4k.jpg)',
             height: '300px',
             borderRadius: '10px',
             boxShadow: 5
           }}>
-          <Box sx={{ padding: '150px 880px 0px 110px' }}>
-            <Typography variant='h3' align='left' color='black' fontFamily='serif' sx={{ borderBottom: '3px solid #0099FF' }}>
+          <Box sx={{ padding: '150px 880px 0px 122px' }}>
+            <Typography variant='h3' align='left' color='white'  sx={{ borderBottom: '3px solid grey' }}>
               Event
             </Typography>
 
           </Box>
 
-          <Box sx={{ padding: '10px 350px 0px 110px' }}>
-            <Typography variant='h6' align='left' color='#808080' fontFamily='serif' >
-              Các sự kiện sôi động sẽ cập nhật liên tục, hãy theo dõi tin tức sự kiện để có thể đăng kí tham gia.
+          <Box sx={{ padding: '10px 350px 0px 122px' }}>
+            <Typography variant='h6' align='left' color='white'  >
+              Các sự kiện sôi động sẽ cập nhật liên tục
             </Typography>
           </Box>
 
@@ -99,17 +99,20 @@ const Page_Event = () => {
           {eventList.map((card) => (
             <Grid item key={card.EventId} xs={12} sm={6} md={4}>
               <Card
-                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                sx={{ height: '100%', display: 'flex', flexDirection: 'column', boxShadow:10 }}
               >
                 <CardMedia
                   component="div"
                   sx={{
-                    // 16:9
+                    
                     pt: '58.25%',
+                    
+                    
                   }}
-                  image="https://greenwich.edu.vn/wp-content/uploads/2023/07/CF23web-940x400.png"
+                  image="https://greenwich.edu.vn/wp-content/uploads/2022/08/Artboard-16-596x400.png"
                 />
-                <CardContent sx={{ flexGrow: 1 }}>
+              
+                <CardContent sx={{ flexGrow: 1, boxShadow:5, borderRadius:2 }}>
                   <Typography gutterBottom variant="h5" component="h2">
                   {card.EventName}
                   </Typography>
@@ -143,18 +146,19 @@ const Page_Event = () => {
                       {card.EventDescription}
                     </Typography>
                   </Box>
-
-                </CardContent>
-                <CardActions sx={{display:'flex',justifyContent:'right'}}>
+                  <CardActions sx={{display:'flex',justifyContent:'right'}}>
                   <Button
                   
                   disabled={false}
                   size="small"
-                  variant="filled"
+                  variant="conatained"
                   onClick={() => handleNavigateClick1(card.EventId)} 
                     
                   >View</Button>
                 </CardActions>
+
+                </CardContent>
+               
               </Card>
             </Grid>
           ))}
