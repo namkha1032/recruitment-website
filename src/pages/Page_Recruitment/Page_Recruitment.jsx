@@ -46,8 +46,8 @@ function Copyright() {
 }
 //
 const Page_Recruitment = () => {
-    const [like,setLike] = React.useState(true)
-    const [pList,setPList] = React.useState(null)
+    const [like,setLike] = useState(true)
+    // const [pList,setPList] = React.useState(null)
     const positionList = useSelector(state => state.positionList)
     const [pList,setPList] =useState(positionList)
     const [search,setSearch] = useState('')
