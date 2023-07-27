@@ -1,0 +1,56 @@
+[
+    {
+        "userId": 1,
+        "userName": "Ronaldo",
+        "position": "Admin",
+        "registerTime": "22/07/2023 16:00"
+    },
+    {
+        "userId": 2,
+        "userName": "Messi",
+        "position": "Recruiter",
+        "registerTime": "24/07/2023 18:00"
+    },
+    {
+        "userId": 3,
+        "userName": "Mbappe",
+        "position": "Interviewer",
+        "registerTime": "23/07/2023 15:30"
+    },
+    {
+        "userId": 5,
+        "userName": "Haaland",
+        "position": "Interviewer",
+        "registerTime": "26/07/2023 09:15"
+    },
+    {
+        "userId": 4,
+        "userName": "Salah",
+        "position": "Candidate",
+        "registerTime": "25/07/2023 10:30"
+    },
+    {
+        "userId": 7,
+        "userName": "Kroos",
+        "position": "Recruiter",
+        "registerTime": "22/07/2023 16:00"
+    },
+    {
+        "userId": 8,
+        "userName": "Ibrahimovic",
+        "position": "Admin",
+        "registerTime": "24/07/2023 18:00"
+    },
+    {
+        "userId": 9,
+        "userName": "Pogba",
+        "position": "Interviewer",
+        "registerTime": "22/07/2023 16:00"
+    },
+    {
+        "userId": 10,
+        "userName": "Beckham",
+        "position": "Candidate",
+        "registerTime": "24/07/2023 18:30"
+    }
+]

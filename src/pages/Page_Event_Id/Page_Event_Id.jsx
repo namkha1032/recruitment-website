@@ -3,6 +3,7 @@ import { Box, Container, Divider, Grid, Paper, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
 import './Page_Event_Id.scss'
 import { Button } from '@mui/material'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 // import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import CelebrationRoundedIcon from '@mui/icons-material/CelebrationRounded';
 // import DescriptionRoundedIcon from '@mui/icons-material/DescriptionRounded';
@@ -18,12 +19,17 @@ import GigaCardBody from '../../components/GigaCardBody/GigaCardBody';
 import { useDispatch, useSelector } from 'react-redux';
 import cleanStore from '../../utils/cleanStore';
 import useGetRole from '../../hooks/useGetRole';
+import { useParams } from 'react-router-dom';
+
 
 const Page_Event_Id = () => {
 
+    const { eventid } = useParams();
+    console.log(eventid);
+
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch({ type: "saga/getEvent" })
+        dispatch({ type: "saga/getEvent", payload: eventid })
         return () => {
             cleanStore(dispatch)
         }
@@ -43,14 +49,16 @@ const Page_Event_Id = () => {
                 <Box sx={{
                     fontSize: 50,
                     fontWeight: 600,
-                    color: '#1565C0',
+                    // color: '#1565C0',
+                    color: 'black',
                     display: 'flex',
                     justifyContent: 'start',
                     // justifyContent: 'center'
                     display: 'inline-block',
                     marginBottom: 1
                 }}>
-                    Chi tiết sự kiện
+                    {/* Chi tiết sự kiện */}
+                    Event Detail
                 </Box>
 
                 <Divider sx={{ borderColor: 'lightgray' }}></Divider>
@@ -76,12 +84,12 @@ const Page_Event_Id = () => {
                         <Box sx={{ paddingLeft: 4, paddingTop: 4 }}>
                             <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
                                 <Box sx={{ fontSize: 40, display: "flex", alignItems: "center" }}>
-                                    <CelebrationRoundedIcon fontSize='large'></CelebrationRoundedIcon>
+                                    <CelebrationRoundedIcon fontSize='large' sx={{ color: '#1565C0' }}></CelebrationRoundedIcon>
                                 </Box>
                                 <Box sx={{
                                     fontSize: 40,
                                     fontWeight: 600,
-                                    // color: '#1565C0',
+                                    color: '#1565C0',
                                     display: 'flex',
                                     justifyContent: 'start',
                                     // justifyContent: 'center'
@@ -118,13 +126,15 @@ const Page_Event_Id = () => {
                                         // alignItems: 'center',
                                         // marginTop: 6
                                     }}>
-                                        <PeopleAltRoundedIcon fontSize='large' sx={{ marginRight: 2 }}></PeopleAltRoundedIcon>
+                                        <PeopleAltRoundedIcon fontSize='large' sx={{ marginRight: 2, color: '#1565C0' }}></PeopleAltRoundedIcon>
                                         <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                                             <Box sx={{
                                                 fontSize: 22,
                                                 fontWeight: 600,
+                                                color: '#1565C0'
                                             }}>
-                                                Số lượng
+                                                {/* Số lượng */}
+                                                Quantity
                                             </Box>
                                             <Box sx={{
                                                 fontSize: 16,
@@ -143,13 +153,15 @@ const Page_Event_Id = () => {
                                         // marginTop: 3
                                         // justifyContent: 'center'
                                     }}>
-                                        <AccessTimeRoundedIcon fontSize='large' sx={{ marginRight: 2 }}></AccessTimeRoundedIcon>
+                                        <AccessTimeRoundedIcon fontSize='large' sx={{ marginRight: 2, color: '#1565C0' }}></AccessTimeRoundedIcon>
                                         <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                                             <Box sx={{
                                                 fontSize: 22,
                                                 fontWeight: 600,
+                                                color: '#1565C0'
                                             }}>
-                                                Thời gian
+                                                {/* Thời gian */}
+                                                Time
                                             </Box>
                                             <Box sx={{
                                                 fontSize: 16,
@@ -168,13 +180,15 @@ const Page_Event_Id = () => {
                                         // marginTop: 3
                                         // justifyContent: 'flex-end'
                                     }}>
-                                        <LocationOnRoundedIcon fontSize='large' sx={{ marginRight: 2 }}></LocationOnRoundedIcon>
+                                        <LocationOnRoundedIcon fontSize='large' sx={{ marginRight: 2, color: '#1565C0' }}></LocationOnRoundedIcon>
                                         <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                                             <Box sx={{
                                                 fontSize: 22,
                                                 fontWeight: 600,
+                                                color: '#1565C0'
                                             }}>
-                                                Địa điểm
+                                                {/* Địa điểm */}
+                                                Location
                                             </Box>
                                             <Box sx={{
                                                 fontSize: 16,
@@ -188,9 +202,17 @@ const Page_Event_Id = () => {
                             </Grid>
                             {role ?
                                 <Grid item xs={12} align='right' sx={{ marginTop: 8 }}>
-                                    <Button variant='contained' size='large' className='btnregister' sx={{ mx: 3 }} onClick={handleRegister}>
+                                    <Button
+                                        variant='contained'
+                                        size='large'
+                                        className='btnregister'
+                                        // sx={{ mx: 3 }}
+                                        onClick={handleRegister}
+                                    >
                                         {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
-                                        Đăng ký
+                                        {/* Đăng ký */}
+                                        <ArrowForwardIcon sx={{ marginRight: 1 }}></ArrowForwardIcon>
+                                        Register Now
                                     </Button>
                                 </Grid>
                                 : null}
