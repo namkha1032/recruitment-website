@@ -19,7 +19,7 @@ function useGetRole() {
     /* const userlocal = JSON.parse(window.localStorage.getItem("user")) */
     const [role, setRole] = useState(null)
     useEffect(() => {
-        if (userlocal) {
+        if (userlocal.token) {
 
             let token = `Bearer ${userlocal.token}`
             const config = {
