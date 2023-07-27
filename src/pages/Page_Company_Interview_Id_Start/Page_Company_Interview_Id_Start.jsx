@@ -27,6 +27,7 @@ import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import "./Page_Company_Interview_Id_Start.scss"
+import CircularProgress from '@mui/material/CircularProgress';
 export default function Page_Company_Interview_Id_Start() {
     const dispatch = useDispatch()
 
@@ -128,6 +129,9 @@ export default function Page_Company_Interview_Id_Start() {
                     </Box>
                 </form >
             </>
-            : null
+            :
+            <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <CircularProgress color="inherit" />
+            </Box>
     );
 }

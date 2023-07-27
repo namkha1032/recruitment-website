@@ -52,6 +52,9 @@ import XPage_Recovery from './pages/XPage_Recovery/XPage_Recovery';
 
 import PageTest from './pages/xpagetest/PageTest';
 import PageTest2 from './pages/xpagetest2/PageTest2';
+import PageTest3 from './pages/xpagetest3/PageTest3';
+import PageTest4 from './pages/xpagetest4/PageTest4';
+
 import MissingPage from './components/MissingPage/MissingPage';
 import Unauthorized from './components/Unauthorized/Unauthorized';
 import RequireAuth from './components/RequireAuth/RequireAuth';
@@ -159,7 +162,7 @@ function App() {
             {/* <Route element={<RequireAuth allowedRoles={"candidate"} />}>
               <Route path="/test" element={<PageTest />} />
             </Route> */}
-            
+
 
           </Route>
 
@@ -167,6 +170,8 @@ function App() {
           <Route path="/recovery" element={<XPage_Recovery />} />
           <Route path="/register" element={<XPage_Register />} />
           <Route path="/test2" element={<PageTest2 />} />
+          <Route path="/test3" element={<PageTest3 />} />
+          <Route path="/test4" element={<PageTest4 />} />
           <Route path="*" element={<MissingPage />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
 
