@@ -49,6 +49,12 @@
   .AddCompButton {
     width: 100px;
     margin: 10px;
-    border-radius: 5px;
+    border:black solid 1px;
+    color:black;
+  }
+  .AddCompButton:hover{
+    background:rgb(230, 227, 227);
+    border:black solid 1px;
+    color:black;
   }
 }

@@ -67,18 +67,6 @@ function RecruitForm() {
       setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
     }
   }, [departmentList,skillList,languageList]);
-  // useEffect(() => {
-  //   if (skillList) {
-  //     setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
-  //   }
-  // }, [skillList]);
-  // useEffect(() => {
-  //   if (languageList) {
-  //     setLanguage(
-  //       languageList ? (languageList !== [] ? languageList : []) : []
-  //     );
-  //   }
-  // }, [languageList]);
 
   useEffect(() => {
     if (positionInfor) {
