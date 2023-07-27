@@ -189,14 +189,14 @@ export default function Page_Company_Recruitment() {
   function handleActiveClick(value) {
     dispatch({
       type: "saga/updatePositionList",
-      payload: { id: value, Status: true },
+      payload: { id: value, Status: false },
     });
   }
 
   function handleInactiveClick(value) {
     dispatch({
       type: "saga/updatePositionList",
-      payload: { id: value, Status: false },
+      payload: { id: value, Status: true },
     });
   }
 
@@ -304,7 +304,7 @@ export default function Page_Company_Recruitment() {
       align: "center",
       renderHeader: () => <span>Status</span>,
       renderCell: (params) => {
-        if (params.value) {
+        if (params.value === false) {
           return <Active />;
         }
         return <Inactive />;
@@ -317,7 +317,7 @@ export default function Page_Company_Recruitment() {
       headerAlign: "right",
       align: "right",
       getActions: (params) => {
-        if (params.row.Status === false) {
+        if (params.row.Status === true) {
           return [
             <GridActionsCellItem
               icon={

@@ -91,13 +91,13 @@ export default function Page_Company_Question() {
   //   setAnchorEl(null);
   // }
 
-  function handleRowClick(id) {
-    alert("Navigate to position id: " + id);
-  }
+  // function handleRowClick(id) {
+  //   alert("Navigate to position id: " + id);
+  // }
 
-  function handleAddClick() {
-    navigate("./create");
-  }
+  // function handleAddClick() {
+  //   navigate("./create");
+  // }
 
   // function handleSearchClick() {
   //   alert("Value search: " + valueSearch);
@@ -335,7 +335,7 @@ export default function Page_Company_Question() {
       type: "string",
       headerAlign: "center",
       align: "center",
-      minWidth: 50,
+      width: 90,
       renderHeader: () => <span>Type</span>,
       renderCell: (params) => {
         if (params.value === undefined) return <NullString />;

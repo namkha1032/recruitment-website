@@ -23,6 +23,7 @@ export function formatPositionList(input) {
       HiredQty: 0,
       StartDate: formatDate(element.startDate.slice(0, 10)),
       EndDate: formatDate(element.endDate.slice(0, 10)),
+      Status: element.isDeleted
     };
   });
   console.log(output);

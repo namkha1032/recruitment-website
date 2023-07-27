@@ -3,10 +3,11 @@ import axios from 'axios'
 import { delay } from "../../utils/delay"
 import host from "../host"
 import { formatEventList } from "../../utils/formatEventList"
+import { filterEventList } from "../../utils/filterEventList"
 
 function* getEventList() {
     yield put({ type: "loading/onLoading" })
-    yield call(delay, 1500)
+    // yield call(delay, 1500)
     // const response = yield call(axios.get, `${host.name}/data/eventList.json`)
     const response = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/Event")
     // --- Get Recruiter name
@@ -20,9 +21,14 @@ function* getEventList() {
 function* getEventListWithFilter(action) {
     console.log("Filter: ", action.payload)
     yield put({ type: "loading/onLoading" })
-    yield call(delay, 1500)
+    // yield call(delay, 1500)
     const response = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/Event")
-    yield put({ type: "eventList/setEventList", payload: response.data })
+    // --- Get Recruiter name
+    
+    // --- Filter and format
+    const draft = filterEventList(response.data, action.payload)
+    const data = formatEventList(draft)
+    yield put({ type: "eventList/setEventList", payload: data })
     yield put({ type: "loading/offLoading" })
 }
 function* getEvent(action) {

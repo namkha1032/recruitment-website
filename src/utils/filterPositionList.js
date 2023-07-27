@@ -15,18 +15,18 @@ export function filterPositionList(input, filter) {
     }
     else if (filter.departmentId === null) {
         if (filter.status === "Active") {
-            return input.filter(element => element.isDeleted === true)
+            return input.filter(element => element.isDeleted === false)
         }
         else {
-            return input.filter(element => element.isDeleted === false)
+            return input.filter(element => element.isDeleted === true)
         }
     }
     else {
         if (filter.status === "Active") {
-            return input.filter(element => element.isDeleted === true && element.departmentId === filter.departmentId)
+            return input.filter(element => element.isDeleted === false && element.departmentId === filter.departmentId)
         }
         else {
-            return input.filter(element => element.isDeleted === false && element.departmentId === filter.departmentId)
+            return input.filter(element => element.isDeleted === true && element.departmentId === filter.departmentId)
         }
     }
 }
