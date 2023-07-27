@@ -54,7 +54,7 @@ const ViewDialog = (props) => {
     return (
         <>
             <Dialog open={open} onClose={() => setOpen(false)} sx={{ borderRadius: 4 }}>
-                <DialogTitle sx={{ backgroundColor: "primary.light" }}>
+                <DialogTitle sx={{ backgroundColor: "black", color: "white" }}>
                     QUESTION
                 </DialogTitle>
                 <Divider />
