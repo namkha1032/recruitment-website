@@ -18,10 +18,10 @@ function* getEventList() {
 }
 
 function* getEventListWithFilter(action) {
-    console.log(action.payload)
+    console.log("Filter: ", action.payload)
     yield put({ type: "loading/onLoading" })
     yield call(delay, 1500)
-    const response = yield call(axios.get, `${host.name}/data/eventList.json`)
+    const response = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/Event")
     yield put({ type: "eventList/setEventList", payload: response.data })
     yield put({ type: "loading/offLoading" })
 }
