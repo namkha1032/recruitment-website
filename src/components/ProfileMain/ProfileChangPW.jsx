@@ -102,7 +102,7 @@ const ProfileChangePW = () => {
     } else {
       dispatch({ 
         type: "saga/userChangePassword", 
-        payload: { currentPassword, newPassword, confirmPassword}
+        payload: { username, currentPassword, newPassword, confirmPassword}
       })
     }
   };
