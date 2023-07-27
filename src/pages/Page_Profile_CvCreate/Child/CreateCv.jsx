@@ -10,6 +10,8 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import { ColorlibConnector, ColorlibStepIcon } from "./SteperComp";
 import { Typography } from "@mui/material";
+import GigaCard from "../../../components/GigaCard/GigaCard";
+import UploadPdf from "./UploadPdf";
 //////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////
@@ -42,7 +44,7 @@ const CreateCv = (prop) => {
         >
           <Typography
             variant="h3"
-            sx={{ fontWeight: "bold", fontStyle: "italic" }}
+            sx={{ fontWeight: "bold", marginBottom: "16px" }}
           >
             Create CV
           </Typography>
@@ -57,25 +59,13 @@ const CreateCv = (prop) => {
           }}
         >
           <Box className={`CVForm InputForm`}>
-            <Box
-              className="Container"
-              sx={{
-                borderRadius: 4,
-                boxShadow: 10,
-                backgroundColor: "white",
-                border: (theme) => `1px solid ${theme.palette.divider}`,
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-                paddingTop: "16px",
-                paddingBottom: "8px",
-              }}
-            >
+            <GigaCard>
               <Grid
                 container
                 spacing={0}
                 justifyContent="center"
                 alignItems="center"
+                marginTop="16px"
               >
                 <Grid item xs={12}>
                   <Stepper
@@ -206,7 +196,25 @@ const CreateCv = (prop) => {
                   </Box>
                 </Grid>
               </Grid>
-            </Box>
+            </GigaCard>
+          </Box>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop:"16px"
+          }}
+        >
+          <Box className={`CVForm InputForm`}>
+            <Grid item xs={12}>
+              <GigaCard>
+                <UploadPdf />
+              </GigaCard>
+            </Grid>
           </Box>
         </Grid>
       </Grid>
