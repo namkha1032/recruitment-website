@@ -111,9 +111,51 @@ export default function Page_Company_Question() {
       dispatch({
         type: "saga/getQuestionListWithFilter",
         payload: {
+          categoryName: "Soft Skills",
           skillId: null,
+          skillName: null,
           languageId: null,
+          languageName: null,
           softskill: true,
+        },
+      });
+    }
+    else if (value === "Technology") {
+      dispatch({
+        type: "saga/getQuestionListWithFilter",
+        payload: {
+          categoryName: "Technology",
+          skillId: null,
+          skillName: null,
+          languageId: null,
+          languageName: null,
+          softskill: false,
+        },
+      });
+    }
+    else if (value === "Language") {
+      dispatch({
+        type: "saga/getQuestionListWithFilter",
+        payload: {
+          categoryName: "Language",
+          skillId: null,
+          skillName: null,
+          languageId: null,
+          languageName: null,
+          softskill: false,
+        },
+      });
+    }
+    else {
+      dispatch({
+        type: "saga/getQuestionListWithFilter",
+        payload: {
+          categoryName: null,
+          skillId: null,
+          skillName: null,
+          languageId: null,
+          languageName: null,
+          softskill: false,
         },
       });
     }
@@ -132,8 +174,11 @@ export default function Page_Company_Question() {
     dispatch({
       type: "saga/getQuestionListWithFilter",
       payload: {
+        categoryName: "Technology",
         skillId: value ? value.skillId : null,
+        skillName: value ? value.skillName : null,
         languageId: null,
+        languageName: null,
         softskill: false,
       },
     });
@@ -144,8 +189,11 @@ export default function Page_Company_Question() {
     dispatch({
       type: "saga/getQuestionListWithFilter",
       payload: {
+        categoryName: "Language",
         skillId: null,
+        skillName: null,
         languageId: value ? value.languageId : null,
+        languageName: value ? value.languageName : null,
         softskill: false,
       },
     });

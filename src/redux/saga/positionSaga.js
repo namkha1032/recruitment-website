@@ -3,7 +3,7 @@ import axios from 'axios';
 import { delay } from "../../utils/delay"
 import host from "../host";
 import { formatPositionList } from "../../utils/formatPositionList";
-import { filterPositionListWithDepartment } from "../../utils/filterPositionListWithDepartment";
+import { filterPositionList } from "../../utils/filterPositionList";
 
 function* getPositionList() {
     console.log("Get All Position")
@@ -22,7 +22,7 @@ function* getPositionListWithFilter(action) {
     // yield call(delay, 1500)
     // const response = yield call(axios.get, `${host.name}/data/positionListD.json`)
     const response = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/Position")
-    const draft = filterPositionListWithDepartment(response.data, action.payload)
+    const draft = filterPositionList(response.data, action.payload)
     const data = formatPositionList(draft)
     yield put({ type: "positionList/setPositionList", payload: data })
     yield put({ type: "loading/offLoading" })

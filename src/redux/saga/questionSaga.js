@@ -33,7 +33,8 @@ function* getQuestionListWithFilter(action) {
     const skillsQ = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill")
     const skills = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/Skill")
     const draft = yield call(formatQuestionList, response.data, categorys.data, skillsQ.data, skills.data)
-    
+    console.log(draft)
+
     // --- FILTER
     const data = yield call(filterQuestionList, draft, action.payload)
     console.log(data)

@@ -7,10 +7,6 @@
 import { formatLanguage } from "./formatLanguage";
 
 export function formatQuestionList(input, categorys, skillsQ, skills) {
-  console.log(input);
-  console.log(categorys);
-  console.log(skillsQ);
-  console.log(skills);
   for (let i = 0; i < input.length; i++) {
     for (let j = 0; j < categorys.length; j++) {
       if (input[i].categoryQuestionId === categorys[j].categoryQuestionId) {
