@@ -17,23 +17,27 @@ const  ModalCertificates = ({certificate}) => {
     <Box
       className='button'
       sx={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
+       
         margin: "10px 16px 0 0",
         
-        maxHeight: "80px",
+        maxHeight: "180px",
         p: "8px",
         backgroundColor:'#c0c0c0c0',
-        borderRadius: "20px",
-        textAlign: "center",
+        borderRadius: "8px",
+        
       }}
     
       onMouseEnter={handleOpen}
       // onMouseLeave={handleClose}
     >
-      <Box>{certificate.expirationdate}</Box>
-      <Box ml='16px'>{certificate.name}</Box>   
+      <Box>Name: {certificate.name}</Box>  
+      <Box>Decription: {certificate.decription}</Box>  
+      <Box> Expirationdate: {certificate.expirationdate}</Box>
+      <Box>Dateearned: {certificate.dateearned}</Box>
+      
+     
+      <Box>Orgranizationname: {certificate.Orgranizationname}</Box>  
+      <Box>Link: {certificate.link}</Box> 
     </Box>
     <Dialog
     open={open}

@@ -122,7 +122,7 @@ const CV = ({ cvid }) => {
             <Box pl='16px' pb='16px' width='100%'><Divider sx={{ backgroundColor: "black", mt: "16px" }} /></Box>
           </Grid>
 
-          <Grid item md={5} sm={12} sx={{borderRight: "1px solid black"}} >
+          <Grid item md={12} sm={12} >
           
             <Box>
               <Box sx={{ display: "flex", alignItems: "flex-end" }}>
@@ -173,11 +173,12 @@ const CV = ({ cvid }) => {
                     flexWrap: "wrap",
                   }}
                 >
+                  <Grid container spacing={2}>
                   {cv.certificates.map((certificate, index) => (
-                    <Box key={index}>
+                    <Grid item md={6} sm={12} key={index}>
                       <ModalCertificates certificate={certificate} />
-                    </Box>
-                  ))}
+                    </Grid>
+                  ))}</Grid>
                 </Box>
                  
               </Box>
@@ -185,7 +186,8 @@ const CV = ({ cvid }) => {
            
           </Grid>
           
-          <Grid item md={7} sm={12}>
+          <Grid item md={12} sm={12}>
+          <Divider sx={{ backgroundColor: "black", mt: "16px" }} />
             <Box>
               <Box sx={{ display: "flex", alignItems: "flex-end" }}>
                 <AssignmentTurnedIn sx={{ mr: "15px" }} />
@@ -213,11 +215,12 @@ const CV = ({ cvid }) => {
                   Language
                 </Box>
               </Box>
-              <Box sx={{ padding: "10px 0 0 40px" }}>
+              <Stack direction='row' sx={{ display:'flex',flexWrap:'wrap', padding: "10px 0 0 40px" }}>
                 {cv.languages.map((language, index) => (
-                  <Box key={index}>&bull; {language.name}</Box>
+                  <Box key={index} m='16px 16px 0 0'>
+                  <Chip  label={language.name} /></Box>
                 ))}
-              </Box>
+              </Stack>
             </Box>
             
         </Grid>

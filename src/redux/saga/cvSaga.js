@@ -76,25 +76,7 @@ function* getCv(action) {
             "link": "abc.com"
         },
         {
-            "certificateid": 2,
-            "name": "HTML CSS",
-            "decription": "HTML CSS",
-            "Orgranizationname": "HTML CSS",
-            "dateearned": "12-12-2022",
-            "expirationdate": "12-12-2023",
-            "link": "abc.com"
-        },
-        {
-            "certificateid": 2,
-            "name": "HTML CSS",
-            "decription": "HTML CSS",
-            "Orgranizationname": "HTML CSS",
-            "dateearned": "12-12-2022",
-            "expirationdate": "12-12-2023",
-            "link": "abc.com"
-        },
-        {
-            "certificateid": 2,
+            "certificateid": 3,
             "name": "HTML CSS",
             "decription": "HTML CSS",
             "Orgranizationname": "HTML CSS",
@@ -102,7 +84,8 @@ function* getCv(action) {
             "expirationdate": "12-12-2023",
             "link": "abc.com"
         }
-    ],"experience":"My journey with React.js has been an enriching experience. I embraced its component-based architecture, which allowed me to create reusable and organized UI components. Understanding state and props empowered me to build dynamic and interactive user interfaces. React's virtual DOM impressed me with its performance optimizations, resulting in faster rendering. Working with React's ecosystem of libraries and tools expanded my capabilities. The supportive React.js community and resources have been invaluable. Overall, I've gained a deep appreciation for React.js and look forward to further growth and innovation with this powerful library."} })
+        
+    ],"experience":"My journey with React.js has been an enriching experience. I embraced its component-based architecture, which allowed me to create reusable and organized UI components. Understanding state and props empowered me to build dynamic and interactive user interfaces. React's virtual DOM impressed me with its performance optimizations, resulting in faster rendering. Working with React's ecosystem of libraries and tools expanded my capabilities. The supportive React.js community and resources have been invaluable. Overall, I've gained a deep appreciation for React.js and look forward to further growth and innovation with this powerful library.","education": "Đại học",} })
     yield put({ type: "candidate/setCandidate", payload: response2.data })
 }
 
