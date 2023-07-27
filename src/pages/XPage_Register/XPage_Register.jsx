@@ -207,7 +207,7 @@ const XPage_Register = () => {
               <Typography 
                 variant="h2" 
                 align="center" 
-                color='#1976d2' 
+                color='black' 
                 gutterBottom
                 fontFamily={'Roboto'}
                 fontSize={'30px'}
@@ -410,7 +410,7 @@ const XPage_Register = () => {
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "5px",
+                      borderRadius: "8px",
                       marginTop: "15px",
                     }}
                   >
