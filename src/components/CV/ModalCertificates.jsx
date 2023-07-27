@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
+import './style.css'
 
 
 const  ModalCertificates = ({certificate}) => {
@@ -14,26 +15,33 @@ const  ModalCertificates = ({certificate}) => {
   return (
     <>
     <Box
+      className='button'
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
+       
         margin: "10px 16px 0 0",
-        width: "180px",
-        height: "120px",
-        p: "16px",
-        border: "1px solid black",
-        borderRadius: "3px",
-        textAlign: "center",
+        
+        maxHeight: "180px",
+        p: "8px",
+        backgroundColor:'#c0c0c0c0',
+        borderRadius: "8px",
+        
       }}
-      type='button'
-      onClick={handleOpen}
+    
+      onMouseEnter={handleOpen}
+      // onMouseLeave={handleClose}
     >
-      <Box>{certificate.name}</Box>
-      <Box>Exp: {certificate.expirationdate}</Box>   
+      <Box>Name: {certificate.name}</Box>  
+      <Box>Decription: {certificate.decription}</Box>  
+      <Box> Expirationdate: {certificate.expirationdate}</Box>
+      <Box>Dateearned: {certificate.dateearned}</Box>
+      
+     
+      <Box>Orgranizationname: {certificate.Orgranizationname}</Box>  
+      <Box>Link: {certificate.link}</Box> 
     </Box>
     <Dialog
     open={open}
+    // onMouseOut={handleClose}
     onClose={handleClose}
   //   scroll={scroll}
     aria-labelledby="scroll-dialog-title"

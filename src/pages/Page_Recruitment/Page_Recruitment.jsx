@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-
+import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
@@ -19,7 +18,7 @@ import Pagination from '@mui/material/Pagination';
 import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader"
 import GigaCard from "../../components/GigaCard/GigaCard"
 import { Favorite, FavoriteBorder, FavoriteOutlined } from '@mui/icons-material';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import AppPagination from '../../components/AppPagination';
 
 
@@ -47,19 +46,14 @@ function Copyright() {
 //
 const Page_Recruitment = () => {
     const [like,setLike] = React.useState(true)
-    const dispatch = useDispatch();
+    const [pList,setPList] = React.useState(null)
     const positionList = useSelector(state => state.positionList)
-    const [pList,setPList] =useState(positionList)
     //
     const navigate = useNavigate()  
     const handleNavigateClick1 = (id) => {
       navigate(`/recruitment/${id}`)
     }
-    useEffect(()=>{
-      console.log('a')
-      dispatch({type:'saga/getPositionList'})
-    },[])
-    console.log(positionList)
+
     return (
         <ThemeProvider theme={defaultTheme}>
       <CssBaseline />

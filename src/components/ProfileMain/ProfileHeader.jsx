@@ -18,8 +18,7 @@ const ProfileHeader = ({  id, userName }) => {
       });
     }
   };
-  const navigate = useNavigate();
-  const location = useLocation();
+
   return (
     <GigaCard>
       <img

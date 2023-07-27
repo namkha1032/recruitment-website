@@ -38,13 +38,13 @@ const  ProfileInfo = ({ cvid, user }) => {
             }}
           >
             Detail{" "}
-            <a href="#edit">
+           
               <Edit
                 onClick={handleEdit}
                 fontSize="small"
                 sx={{ ml: "5px", color: "black" }}
               />
-            </a>
+          
           </Box>
           <Box sx={{ margin: "24px 0px 0px" }}>
             <Box
