@@ -9,6 +9,8 @@ import Box2 from "./Box2";
 import Box3 from "./Box3";
 import GigaCard from "../../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../../components/GigaCardBody/GigaCardBody";
+import cleanStore from "../../../utils/cleanStore";
+
 function RecruitForm() {
   const dispatch = useDispatch();
   // fetch Data
@@ -88,6 +90,7 @@ function RecruitForm() {
   //FUNCTION
   function handleSubmit(e) {
     e.preventDefault();
+    cleanStore(dispatch)
     navigate("/company/recruitment/:recruitmentid");
   }
   const handleChange = (event) => {

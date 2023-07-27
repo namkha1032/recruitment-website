@@ -4,7 +4,7 @@ import CreateCv from "./CreateCv";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
+import cleanStore from "../../../utils/cleanStore";
 // import ViewCv from "./ViewCv";
 function CVForm() {
   const navigate = useNavigate();
@@ -189,6 +189,7 @@ function CVForm() {
     );
     console.log(arr);
     if (arr[0] === undefined) {
+      cleanStore(dispatch)
       alert("wrong language");
       setLanguageId(null);
       setLanguageName("");

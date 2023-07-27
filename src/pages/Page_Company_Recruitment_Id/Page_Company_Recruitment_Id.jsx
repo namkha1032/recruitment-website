@@ -6,11 +6,15 @@ import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import "./Page_Company_Recruitment_Id.css"
+import cleanStore from "../../utils/cleanStore";
+import { useDispatch } from "react-redux";
 //// update final
 
 const Page_Company_Recruitment_Id = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const handleEdit = () => {
+        cleanStore(dispatch)
         navigate('/company/recruitment/:recruitmentid/update');
     }
 
