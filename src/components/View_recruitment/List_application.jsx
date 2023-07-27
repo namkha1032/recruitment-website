@@ -7,6 +7,7 @@ import FmdBadIcon from '@mui/icons-material/FmdBad';
 import GradingIcon from '@mui/icons-material/Grading';
 import cleanStore from '../../utils/cleanStore';
 import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from "react-router-dom";
 function QuickSearchToolbar() {
     return (
         <Box
@@ -29,6 +30,7 @@ const other = {
 
 const List_application = (props) => {
     const navigate = useNavigate();
+    const { recruitmentid } = useParams();
     let [currentTable, setCurrentTable] = useState(0)
     // const applications = useSelector(state => state.application);
     // const dispatch = useDispatch();
@@ -47,26 +49,30 @@ const List_application = (props) => {
     const reject1 = props.applications ? props.applications.filter(application => {
         return application.company_status === "Đã từ chối"
     }) : [];
+    const pendingmain = props.applications ? props.applications.filter(application => {
+        return application.status === "Pending"
+    }) : [];
     console.log("application", props.applications);
+    console.log("status", pendingmain );
     console.log("chờ", pending1);
     console.log("đậu", pass1);
     console.log("chối", reject1);
     const handleEditClick = (params) => {
-        navigate(`/company/recruitment/:recruitmentid/application/${params.id}`);
+        navigate(`/company/recruitment/${recruitmentid}/application/${params.id}`);
     }
     const columns = [
         {
-            field: "applicationid",
+            field: "applicationId",
             headerName: "ID",
             headerAlign: 'center',
-            width: 100
+            width: 325
         },
 
         {
             field: "candidateName",
             headerName: "Candidate Name",
             headerAlign: 'center',
-            width: 350
+            width: 500
         },
         {
             field: "Detail",
@@ -83,7 +89,7 @@ const List_application = (props) => {
                 );
             },
             headerAlign: 'center',
-            width: 100
+            width: 325
         }
     ];
 
@@ -96,7 +102,7 @@ const List_application = (props) => {
                 justifyContent="center"
                 alignItems="center"
                 flexDirection="column"
-                sx={{ height: "100%", width: '45%', margin: "auto" }}>
+                sx={{ height: "100%", width: '100%' }}>
 
                 <Grid container spacing={2} >
                     <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -126,10 +132,10 @@ const List_application = (props) => {
                         }}
                         slots={{ toolbar: QuickSearchToolbar }}
                         rowHeight={72}
-                        rows={pending1}
+                        rows={pendingmain}
                         {...other}
                         columns={columns}
-                        getRowId={(row) => row.applicationid}
+                        getRowId={(row) => row.applicationId}
                         initialState={{
                             pagination: {
                                 paginationModel: {

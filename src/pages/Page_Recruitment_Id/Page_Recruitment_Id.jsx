@@ -153,7 +153,7 @@ const Page_Recruitment_Id = () => {
                                                     onChange={handleCVChange}
                                                 >
                                                     {list_CV.map((CV) => (
-                                                        <FormControlLabel key={CV.CVid} value={CV.CVname} control={<Radio />} label={CV.CVname} />
+                                                        <FormControlLabel key={CV.cvId} value={CV.CVname} control={<Radio />} label={CV.CVname} />
                                                     ))}
                                                 </RadioGroup>
                                             </Box>
@@ -161,7 +161,7 @@ const Page_Recruitment_Id = () => {
                                         <Grid item xs={2}>
                                             <Box sx={{ display: "flex", flexDirection: "column" }}>
                                                 {list_CV.map((CV) => (
-                                                    <Button key={CV.CVid} sx={{
+                                                    <Button key={CV.cvId} sx={{
                                                         marginBottom: "5.5px", bgcolor: 'black', color: 'white',
                                                         ":hover": {
                                                             backgroundColor: "black"

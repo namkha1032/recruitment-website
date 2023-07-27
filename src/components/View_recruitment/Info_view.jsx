@@ -40,7 +40,7 @@ const Info_view = (props) => {
     };
     const navigate = useNavigate();
 
-
+    const language = useSelector(state => state.language);
     const detailposition = useSelector(state => state.position);
     const applications = useSelector(state => state.application);
     const dispatch = useDispatch();
@@ -50,13 +50,15 @@ const Info_view = (props) => {
             cleanStore(dispatch);
         }
     }, [])
-
+    const skill = useSelector(state => state.skill);
+    console.log("skillinmain", skill); // ['react','c++']
     useEffect(() => {
-        dispatch({ type: 'saga/getPosition', payload: "00000000-0000-0000-0000-000000000001"})
+        dispatch({ type: 'saga/getPosition', payload: recruitmentid})
         return () => {
             dispatch({ type: "positon/setPosition", payload: null })
         }
     }, [])
+    console.log("mainlanguage", language)
     // const detail = useSelector(state => state.detail)
     // useEffect(() => {
     //     dispatch({ type: 'saga/getDetailPosition', payload: recruitmentid })
@@ -68,8 +70,10 @@ const Info_view = (props) => {
     // console.log("detail", detail);
     // const requires = detail ? detail[recruitmentid].requirement : [];
 
-    const requirements = detailposition ? detailposition[0].requirement : [];
-    console.log("require", requirements);
+    // const requirements = detailposition ? detailposition[0].requirement : [];
+    // console.log("require", requirements);
+    const requires = require('../../data/View_recruitment/requires.json');
+    console.log("requires",requires )
     console.log("father", detailposition);
 
     let left = 5
@@ -81,9 +85,12 @@ const Info_view = (props) => {
     const handleEdit = () => {
         navigate('/company/recruitment/:recruitmentid/update');
     }
-
+    const department = useSelector(state => state.department);
+    const startDate = detailposition ? detailposition.startDate.slice(0,10) : [];
+    const endDate = detailposition ? detailposition.endDate.slice(0,10) : [];
+    console.log("date", startDate);
     return (
-        detailposition &&
+        detailposition && language && skill &&
         <>
             <Grid container spacing={2}>
                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -93,7 +100,7 @@ const Info_view = (props) => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                     
-                        <img style={{ width: '100%', height: "100%" }} src={detailposition[0].imageUrl} alt="Tuyển dụng" />
+                        <img style={{ width: '100%', height: "100%" }} src="https://www.pvcfc.com.vn/Data/Sites/1/News/5510/mau-1.jpg" alt="Tuyển dụng" />
                     
                 </Grid>
                 <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column" }}>
@@ -118,7 +125,8 @@ const Info_view = (props) => {
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
                                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-                                        {detailposition[0].positionName}
+                                        {/* {detailposition[0].positionName} */}
+                                        {detailposition.positionName}
                                         {/* {detail[recruitmentid].PositionName} */}
                                     </Typography>
                                 </Grid>
@@ -139,9 +147,10 @@ const Info_view = (props) => {
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
                                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-                                        {`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`}
+                                        {/* {`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`} */}
                                         {/* {`${detail[recruitmentid].StartDate}${' - '}${detail[recruitmentid].EndDate}`} */}
-
+                                        {/* {`${detailposition.startDate}${' - '}${detailposition.endDate}`} */}
+                                        {`${startDate}${' - '}${endDate}`}
                                     </Typography>
                                     {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`} /> */}
                                 </Grid>
@@ -162,8 +171,9 @@ const Info_view = (props) => {
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
                                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-                                        {detailposition[0].hireMax}
+                                        {/* {detailposition[0].hireMax} */}
                                         {/* {detail[recruitmentid].MaxHiringQty} */}
+                                        {detailposition.maxHiringQty}
                                     </Typography>
                                     {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].hireMax}`} /> */}
                                 </Grid>
@@ -184,14 +194,15 @@ const Info_view = (props) => {
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
                                     <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-start", alignItems: "flex-start" }}>
-                                        {requirements.map((require) => (
+                                        {skill.map((require,index) => (
 
-                                            <Chip key={require.skillId} sx={{ margin: "0px 0px 5px 8px" }} value={require.skillName} label={require.skillName} variant='outlined' size='medium' color="warning" />
+                                            <Chip key={index} sx={{ margin: "0px 0px 5px 8px" }}  label={require} variant='outlined' size='medium' color="warning" />
                                         ))}
                                         {/* {requires.map((require) => (
                                                
                                                <Chip key={require.skillId} sx={{ margin: "0px 0px 5px 8px" }} value={require.skillName} label={require.skillName} variant='outlined' size='medium' color="warning" />
                                            ))} */}
+                                          
                                     </Stack>
                                 </Grid>
                             </Box>
@@ -210,7 +221,7 @@ const Info_view = (props) => {
                                     </Typography>
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
-                                    <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].languageName}`} />
+                                    <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${language.languageName}`} />
                                     {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detail[recruitmentid].languageName}`} /> */}
                                 </Grid>
                             </Box>
@@ -230,7 +241,7 @@ const Info_view = (props) => {
                                 </Grid>
                                 <Grid item md={right} sx={gridSx}>
                                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-                                        {detailposition[0].salary}
+                                        {detailposition.salary}
                                         {/* {detail[recruitmentid].salary} */}
                                     </Typography>
                                     {/* <Chip sx={{ padding: "0px", marginLeft: "5px" }} label={`${detailposition[0].salary}`} variant="outlined" color='info' size="medium" /> */}
@@ -256,7 +267,7 @@ const Info_view = (props) => {
                                         </Box>
                                         <TabPanel value="1" sx={{ display: "flex", flexDirection: "column", padding: "0px" }}>
                                             <Box>
-                                                <View_detail detailposition={detailposition[0]} />
+                                                <View_detail department={department} detailposition={detailposition} />
                                                 {/* <View_detail detail={detail[recruitmentid]} /> */}
                                             </Box>
                                         </TabPanel>
@@ -280,7 +291,7 @@ const Info_view = (props) => {
                                             </TabList>
                                         </Box>
                                         <TabPanel value="3" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
-                                            <View_detail detailposition={detailposition[0]} />
+                                            <View_detail department={department} detailposition={detailposition} />
                                             {/* <View_detail detail={detail[recruitmentid]} /> */}
                                         </TabPanel>
                                     </TabContext>

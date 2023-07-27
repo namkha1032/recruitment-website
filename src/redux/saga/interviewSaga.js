@@ -55,9 +55,22 @@ function* createInterview(action) {
     }
 }
 
+function* getInterviewInfo(action){
+    const response = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Itrsinterview/GetItrsinterviewById/${action.payload}`)
+    const response2 = yield call(axios.get, 'http://leetun2k2-001-site1.gtempurl.com/api/Room');
+    const room = response2.data.filter((prop) => prop.roomId === response.data.roomId);
+    const response3 = yield call(axios.get, 'http://leetun2k2-001-site1.gtempurl.com/api/Shift');
+    console.log("room", room);
+    const shift = response3.data.filter((prop) => prop.shiftId === response.data.shiftId);
+    console.log("shift", shift);
+    yield put({type: "shift/setShift", payload: shift})
+    yield put({type: "room/setRoom", payload: room})
+    yield put({ type: "interviewidInfo/setInterviewidInfo", payload: response.data })
+}
 
 function* interviewSaga() {
     yield all([
+        takeEvery("saga/getInterviewInfo", getInterviewInfo),
         takeEvery("saga/getUpcomingInterview", getUpcomingInterview),
         takeEvery("saga/scoreInterview", scoreInterview),
         takeEvery("saga/getInterviewId", getInterviewId),

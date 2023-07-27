@@ -20,9 +20,10 @@ const View_detail = (props) => {
     let gridSx = {
         display: "flex", alignItems: "center"
     }
-    // console.log("hello", props.detailposition);
+    console.log("hello", props.detailposition);
+    console.log("hellode", props.department);
     return (
-        props.detailposition &&
+        props.detailposition && props.department &&
         // props.detail &&
         <>
             <Grid container spacing={1} sx={{ marginTop: "0px" }}>
@@ -54,8 +55,10 @@ const View_detail = (props) => {
                     <Typography align='left' variant='subtitle1' sx={{ display: "flex" }}>
                         <GroupIcon>  </GroupIcon>
                         <Box sx ={{marginLeft: "2px"}}>
-                            {props.detailposition.departmentName}
+                            
                             {/* {props.detail.departmentName} */}
+                            {/* {props.detailposition.departmentName} */}
+                            {props.department[0].departmentName}
                         </Box>
                     </Typography>
                 </Grid>
@@ -63,8 +66,9 @@ const View_detail = (props) => {
                     <Typography align='left' variant='subtitle1' sx={{ display: "flex" }}>
                         <PhoneIcon></PhoneIcon>
                         <Box sx ={{marginLeft: "2px"}}>
-                            {props.detailposition.departmentPhone}
+                            {props.department[0].phone}
                             {/* {props.detail.departmentPhone} */}
+                            {/* {props.detailposition.departmentPhone} */}
                         </Box>
                     </Typography>
                 </Grid>
@@ -73,8 +77,9 @@ const View_detail = (props) => {
                     <Typography align='center' variant='subtitle1' sx={{ display: "flex" }}>
                         <RoomIcon>  </RoomIcon>
                         <Box sx ={{marginLeft: "2px"}}>
-                        {props.detailposition.departmentAddress}
+                        {props.department[0].address}
                         {/* {props.detail.departmentAddress} */}
+                        {/* {props.detailposition.departmentAddress} */}
                         </Box>
 
                     </Typography>
@@ -84,8 +89,9 @@ const View_detail = (props) => {
                     <Typography align='left' variant='subtitle1' sx={{ display: "flex" }}>
                         <EmailIcon>  </EmailIcon>
                         <Box sx ={{marginLeft: "2px"}}>
-                            {props.detailposition.departmentEmail}
+                            {props.department[0].email}
                             {/* {props.detail.departmentEmail} */}
+                            {/* {props.detailposition.departmentEmail} */}
                         </Box>
                     </Typography>
                 </Grid>
@@ -93,8 +99,9 @@ const View_detail = (props) => {
                     <Typography align='left' variant='subtitle1' sx={{ display: "flex" }}>
                         <WebAssetIcon></WebAssetIcon>
                         <Box sx ={{marginLeft: "2px"}}>
-                            <a href={props.detailposition.departmentWebsite} > FPT</a>
+                            <a href={props.department[0].website} > FPT</a>
                             {/* <a href={props.detail.departmentWebsite} > FPT</a> */}
+                            {/* <a href={props.detailposition.departmentWebsite} > FPT</a> */}
                         </Box>
                     </Typography>
                 </Grid>
