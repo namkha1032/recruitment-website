@@ -15,7 +15,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import {useDispatch, useSelector} from 'react-redux';
 import useGetRole from '../../hooks/useGetRole.js';
+import ViewListIcon from '@mui/icons-material/ViewList';
 import {getCandidate} from "../../redux/reducer/adminReducer";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
 
@@ -119,15 +121,18 @@ function CandidateTable(props) {
                         "& .MuiDataGrid-root": {
                             border: "none",
                             backgroundColor: "#ffffff",
+
                         },
                         "& .MuiDataGrid-cell": {
-                            borderBottom: "none"
+                            borderBottom: "none",
+                            backgroundColor: "#ffffff",
+
                         },
                         "& .name-column--cell": {
                             color: grey[900]
                         },
                         "& .MuiDataGrid-columnHeaders": {
-                            backgroundColor: grey[100],
+                            // backgroundColor: grey[100],
                             // color: "#ffffff",
                             borderBottom: "5"
                         },
@@ -136,7 +141,7 @@ function CandidateTable(props) {
                         },
                         "& .MuiDataGrid-footerContainer": {
                             borderTop: "5",
-                            backgroundColor: grey[100]
+                            // backgroundColor: grey[100]
                             // color: "#ffffff"
                         },
                         "& .MuiCheckbox-root": {
@@ -258,15 +263,18 @@ function InterviewerTable(props) {
                         "& .MuiDataGrid-root": {
                             border: "none",
                             backgroundColor: "#ffffff",
+
                         },
                         "& .MuiDataGrid-cell": {
-                            borderBottom: "none"
+                            borderBottom: "none",
+                            backgroundColor: "#ffffff",
+
                         },
                         "& .name-column--cell": {
                             color: grey[900]
                         },
                         "& .MuiDataGrid-columnHeaders": {
-                            backgroundColor: grey[100],
+                            // backgroundColor: grey[100],
                             // color: "#ffffff",
                             borderBottom: "5"
                         },
@@ -275,7 +283,7 @@ function InterviewerTable(props) {
                         },
                         "& .MuiDataGrid-footerContainer": {
                             borderTop: "5",
-                            backgroundColor: grey[100]
+                            // backgroundColor: grey[100]
                             // color: "#ffffff"
                         },
                         "& .MuiCheckbox-root": {
@@ -397,15 +405,18 @@ function RecruiterTable(props) {
                         "& .MuiDataGrid-root": {
                             border: "none",
                             backgroundColor: "#ffffff",
+
                         },
                         "& .MuiDataGrid-cell": {
-                            borderBottom: "none"
+                            borderBottom: "none",
+                            backgroundColor: "#ffffff",
+
                         },
                         "& .name-column--cell": {
                             color: grey[900]
                         },
                         "& .MuiDataGrid-columnHeaders": {
-                            backgroundColor: grey[100],
+                            // backgroundColor: grey[100],
                             // color: "#ffffff",
                             borderBottom: "5"
                         },
@@ -414,7 +425,7 @@ function RecruiterTable(props) {
                         },
                         "& .MuiDataGrid-footerContainer": {
                             borderTop: "5",
-                            backgroundColor: grey[100]
+                            // backgroundColor: grey[100]
                             // color: "#ffffff"
                         },
                         "& .MuiCheckbox-root": {
@@ -430,7 +441,6 @@ function RecruiterTable(props) {
                         getRowId={(row) => row.recruiterId}
                         columns={columns}
                         slots={{toolbar: QuickSearchToolbar}}
-                        display="flex"
                     />
                 </Grid>
             </Grid>
@@ -486,7 +496,7 @@ function FullWidthTabs() {
                 display: 'flex',
                 // border: "1px solid black",
                 // borderRadius: 1,
-                // padding:4,
+                padding:4,
                 mt: 4
             }}>
             <Grid container>
@@ -534,12 +544,17 @@ const Page_Company_Account = () => {
                         padding: 4
                     }}>
                     <Grid container columnSpacing={{xs: 1}}>
-                        <Grid item md={12} xs={7}
+                        <Grid item xs={7} sm={12}>
+                        <Grid container display="flex">
+                        <Grid item md={0.8} xs={12} display="flex">
+                            <ViewListIcon sx={{fontSize: 60}}/>
+                        </Grid>
+                        <Grid item md={11} xs={12}
                               display="flex"
-                              alignItems="center"
+                              // alignItems="center"
                               justifyContent="left">
                             <Typography
-                                m="0px 10px 20px 3px"
+                                m="0px 10px 20px 0px"
                                 variant="h3"
                                 alignItems="center"
                                 // justifyContent="left"
@@ -547,12 +562,14 @@ const Page_Company_Account = () => {
                                 Account List
                             </Typography>
                         </Grid>
+                        </Grid>
+                        </Grid>
                         <Grid item xs={5} sm={12} >
                             <Grid container spacing={{xs: 0, sm: 3}} rowSpacing={{xs: 1, sm: 0}} display="flex">
                                 <Grid
                                     item
                                     xs={12}
-                                    sm={3}
+                                    sm={6}
                                     lg={3}
                                     display="flex"
                                     justifyContent="right">
@@ -568,7 +585,7 @@ const Page_Company_Account = () => {
                                             minWidth: '120px',
                                             backgroundColor: grey[900],
                                         }}
-                                        startIcon={<AddCard/>}
+                                        startIcon={<AccountCircleIcon />}
                                     >
                                         Add Advanced Account
                                     </Button>
@@ -576,7 +593,7 @@ const Page_Company_Account = () => {
                                 <Grid
                                     item
                                     xs={12}
-                                    sm={3}
+                                    sm={6}
                                     lg={3}
                                     display="flex"
                                     justifyContent="right">

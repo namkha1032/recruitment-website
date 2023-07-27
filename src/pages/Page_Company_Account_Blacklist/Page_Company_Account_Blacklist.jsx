@@ -27,6 +27,8 @@ import FormControl from "@mui/material/FormControl";
 import { shadows } from '@mui/system';
 import FindInPageIcon from "@mui/icons-material/FindInPage";
 import {useDispatch, useSelector} from "react-redux";
+import DoDisturbIcon from '@mui/icons-material/DoDisturb';
+
 
 const RenderStatusButton = ({params}) => {
     const [open, setOpen] = React.useState(false);
@@ -83,7 +85,7 @@ const Page_Company_Account = () => {
         );
     }
     const columns = [
-        { field: "blackListId", headerName: "Blacklist ID", flex: 0.5 },
+        { field: "blackListId", headerName: "Blacklist ID", flex: 0.5, headerClassName: "blacklistId-header-column", cellClassName: "blacklistId-cell-column"},
         { field: "candidateId", headerName: "Candidate ID", flex: 0.5},
         {
             field: "reason",
@@ -117,11 +119,12 @@ const Page_Company_Account = () => {
                           display="flex"
                           alignItems="center"
                           justifyContent="left">
-                        <Typography variant="h2"
+                        <DoDisturbIcon sx={{ fontSize: 60 }}></DoDisturbIcon>
+                        <Typography variant="h3"
                                     display="flex"
                                     alignItems="center"
                                     justifyContent="left"
-                                    m="10px 0 10px 0">
+                                    m="10px 0 10px 10px">
                             Blacklist
                         </Typography>
                     </Grid>
@@ -161,7 +164,7 @@ const Page_Company_Account = () => {
                     display:'flex',
                     // border: "1px solid black",
                     // borderRadius: 1,
-                    // padding:4,
+                    padding:4,
                     mt:4
                 }}>
                 <Grid container>
@@ -177,21 +180,27 @@ const Page_Company_Account = () => {
                         },
                         "& .MuiDataGrid-cell": {
                             borderBottom: "none",
-                            // backgroundColor: grey[300],
+                            backgroundColor: "#ffffff",
                         },
                         "& .name-column--cell": {
                             color: grey[900],
                         },
+                        "& .blacklistId-header-column": {
+                            color: red[800],
+                        },
+                        "& .blacklistId-cell-column": {
+                            color: red[800],
+                        },
                         "& .MuiDataGrid-columnHeaders": {
-                            backgroundColor: grey[100],
-                            borderBottom: "none",
+                            // backgroundColor: grey[100],
+                            borderBottom: "5",
                         },
                         "& .MuiDataGrid-virtualScroller": {
                             backgroundColor: grey[100],
                         },
                         "& .MuiDataGrid-footerContainer": {
-                            borderTop: "none",
-                            backgroundColor:grey[100],
+                            borderTop: "5",
+                            // backgroundColor:grey[100],
                         },
                         "& .MuiCheckbox-root": {
                             color: `${"green"} !important`,

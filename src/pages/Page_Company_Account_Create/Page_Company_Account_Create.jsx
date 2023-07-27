@@ -12,6 +12,7 @@ import {
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import {grey} from "@mui/material/colors";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Page_Company_Account_Create = () => {
     return (
@@ -26,17 +27,26 @@ const Page_Company_Account_Create = () => {
             }}>
         <Grid
             container
-            rowSpacing={3}
+            rowSpacing={2.5}
+            alignItems="center"
+
         >
             <Grid
                     item
                     xs={12}
+                    md={1}>
+                <AccountCircleIcon sx={{fontSize: 80}}/>
+            </Grid>
+            <Grid
+                    item
+                    xs={12}
+                    md={11}
                     display="flex">
             <Typography variant="h2"
                         display="flex"
                         alignItems="center"
                         justifyContent="left"
-                        m="10px 0 10px 0">
+                        >
                     Create Advanced Accounts
             </Typography>
             </Grid>
