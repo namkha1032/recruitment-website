@@ -30,7 +30,7 @@ import {
   PsychologyRounded,
   SchoolRounded,
 } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 
@@ -45,15 +45,27 @@ export default function Page_Company_Question() {
 
   useEffect(() => {
     dispatch({ type: "saga/getAllQuestion" });
+    dispatch({ type: "saga/getSkill" });
+    dispatch({ type: "saga/getLanguage" });
   }, []);
 
-  const [rows, setRows] = useState(datasjson);
+  const rows = useSelector((state) => state.questionList);
+  const loading = useSelector((state) => state.loading)
+  // const [rows, setRows] = useState(datasjson);
+
+  const skill_draft = useSelector((state) => state.skill);
+  const language_draft = useSelector((state) => state.language);
+  const skills = skill_draft ? skill_draft : [];
+  const languages = language_draft ? language_draft : [];
+
   // const [anchorEl, setAnchorEl] = useState(null);
   // const [valueSearch, setValueSearch] = useState("");
 
   const [valueChoose, setValueChoose] = useState(null);
-  const [departmentChoose, setDepartmentChoose] = useState(null);
   const [statusChoose, setStatusChoose] = useState(null);
+
+  const [skillChoose, setSkillChoose] = useState(null);
+  const [languageChoose, setLanguageChoose] = useState(null);
 
   const [addModalStatus, setAddModalStatus] = useState(false);
 
@@ -93,16 +105,50 @@ export default function Page_Company_Question() {
 
   function handleChooseValue(value) {
     setValueChoose(value);
-    setDepartmentChoose(null);
-    setStatusChoose(null);
+    setLanguageChoose(null);
+    setSkillChoose(null);
+    if (value === "Soft Skills") {
+      dispatch({
+        type: "saga/getQuestionListWithFilter",
+        payload: {
+          skillId: null,
+          languageId: null,
+          softskill: true,
+        },
+      });
+    }
   }
 
-  function handleChooseDepartment(value) {
-    setDepartmentChoose(value);
+  // function handleChooseDepartment(value) {
+  //   setDepartmentChoose(value);
+  // }
+
+  // function handleChooseStatus(value) {
+  //   setStatusChoose(value);
+  // }
+
+  function handleChooseSkill(value) {
+    setSkillChoose(value);
+    dispatch({
+      type: "saga/getQuestionListWithFilter",
+      payload: {
+        skillId: value ? value.skillId : null,
+        languageId: null,
+        softskill: false,
+      },
+    });
   }
 
-  function handleChooseStatus(value) {
-    setStatusChoose(value);
+  function handleChooseLanguage(value) {
+    setLanguageChoose(value);
+    dispatch({
+      type: "saga/getQuestionListWithFilter",
+      payload: {
+        skillId: null,
+        languageId: value ? value.languageId : null,
+        softskill: false,
+      },
+    });
   }
 
   function handleAddModalOpen() {
@@ -115,15 +161,14 @@ export default function Page_Company_Question() {
 
   function handleSubmitQuestion(value) {
     successAlert("Tạo câu hỏi");
-    setRows([
-      ...rows,
-      {
-        QuestionId: rows.length + 1,
+    dispatch({
+      type: "saga/postQuestion",
+      payload: {
         QuestionName: value.question,
         Category: value.category,
         Skill: value.skill,
       },
-    ]);
+    });
   }
 
   function handleModalOpen(value, type) {
@@ -138,19 +183,15 @@ export default function Page_Company_Question() {
 
   function handleUpdateQuestion(value) {
     successAlert("Cập nhật câu hỏi");
-    const updateRows = rows.map((row) => {
-      if (row.QuestionId !== value.QuestionId) {
-        return row;
-      } else {
-        return {
-          ...row,
-          QuestionName: value.QuestionName,
-          Category: value.Category,
-          Skill: value.Skill,
-        };
-      }
+    dispatch({
+      type: "saga/putQuestion",
+      payload: {
+        QuestionId: value.QuestionId,
+        QuestionName: value.QuestionName,
+        Category: value.Category,
+        Skill: value.Skill,
+      },
     });
-    setRows(updateRows);
   }
 
   function handleDeleteModalOpen(value) {
@@ -164,8 +205,9 @@ export default function Page_Company_Question() {
 
   function handleDeleteQuestion(value) {
     successAlert("Xoá câu hỏi");
-    const updateRows = rows.filter((row) => row.id !== value);
-    setRows(updateRows);
+    dispatch({type: "saga/deleteQuestion", payload: {
+      QuestionId: value
+    }})
   }
 
   // function handleOpenSuccessAlert() {
@@ -207,7 +249,7 @@ export default function Page_Company_Question() {
       headerAlign: "left",
       align: "left",
       flex: 1,
-      minWidth: 250,
+      minWidth: 200,
       renderHeader: () => <span>Question</span>,
       renderCell: (params) => {
         if (params.value === undefined) return <NullString />;
@@ -258,8 +300,9 @@ export default function Page_Company_Question() {
       align: "right",
       getActions: (params) => [
         <GridActionsCellItem
-          icon={<InfoIcon variant="outlined" />}
+          icon={<InfoIcon variant="outlined" sx={{ color: "black" }} />}
           label="Detail"
+          sx={{ color: "black" }}
           onClick={() =>
             handleModalOpen(
               {
@@ -274,7 +317,8 @@ export default function Page_Company_Question() {
           showInMenu
         />,
         <GridActionsCellItem
-          icon={<EditIcon />}
+          icon={<EditIcon sx={{ color: "black" }} />}
+          sx={{ color: "black" }}
           label="Edit question"
           onClick={() =>
             handleModalOpen(
@@ -319,7 +363,7 @@ export default function Page_Company_Question() {
                   fontSize: 40,
                   fontWeight: 600,
                   // color: "#1565C0",
-                  color: "black"
+                  color: "black",
                 }}
               >
                 Question
@@ -340,12 +384,17 @@ export default function Page_Company_Question() {
               }}
             >
               <Button
-                variant="contained"
+                variant="outlined"
                 sx={{
-                  backgroundColor: "#1565C0",
+                  color: "black",
+                  border: "1px solid black",
                   textTransform: "none",
                   height: 50,
                   width: 250,
+                  "&:hover": {
+                    backgroundColor: "black",
+                    color: "white",
+                  },
                 }}
                 onClick={handleAddModalOpen}
               >
@@ -470,26 +519,44 @@ export default function Page_Company_Question() {
                 <Autocomplete
                   disablePortal
                   id="filter-type"
-                  options={listOfSkills.skill}
+                  options={skills}
                   sx={{ width: 200 }}
                   renderInput={(params) => (
                     <TextField {...params} label="Skill..." />
                   )}
-                  value={statusChoose}
-                  onChange={(event, value) => handleChooseStatus(value)}
+                  getOptionLabel={(option) => option.skillName || ""}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.skillId}>
+                      {option.skillName}
+                    </li>
+                  )}
+                  isOptionEqualToValue={(option, value) => {
+                    return option.skillId === value.skillId;
+                  }}
+                  value={skillChoose}
+                  onChange={(event, value) => handleChooseSkill(value)}
                 />
               )}
               {valueChoose === "Language" && (
                 <Autocomplete
                   disablePortal
                   id="filter-type"
-                  options={listOfSkills.language}
+                  options={languages}
                   sx={{ width: 200 }}
                   renderInput={(params) => (
                     <TextField {...params} label="Language..." />
                   )}
-                  value={statusChoose}
-                  onChange={(event, value) => handleChooseStatus(value)}
+                  getOptionLabel={(option) => option.languageName || ""}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.languageId}>
+                      {option.languageName}
+                    </li>
+                  )}
+                  isOptionEqualToValue={(option, value) => {
+                    return option.languageId === value.languageId;
+                  }}
+                  value={languageChoose}
+                  onChange={(event, value) => handleChooseLanguage(value)}
                 />
               )}
             </Grid>
@@ -538,6 +605,7 @@ export default function Page_Company_Question() {
           <QuestionDataGrid
             columns={columns}
             rows={rows}
+            loading={loading}
             handleModalOpen={handleModalOpen}
           />
 

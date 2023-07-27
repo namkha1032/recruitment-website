@@ -16,7 +16,7 @@ import {
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import CategoryIcon from "@mui/icons-material/Category";
 import SchoolIcon from "@mui/icons-material/School";
-import LanguageIcon from '@mui/icons-material/Language';
+import LanguageIcon from "@mui/icons-material/Language";
 import { TextareaAutosize } from "@mui/base";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
@@ -130,7 +130,7 @@ export default function QuestionFormModal(props) {
                 sx={{
                   fontSize: 30,
                   fontWeight: 600,
-                  color: "#1565C0",
+                  color: "black",
                 }}
               >
                 Create question
@@ -245,17 +245,44 @@ export default function QuestionFormModal(props) {
                 >
                   <FormControlLabel
                     value="Technology"
-                    control={<Radio />}
+                    control={
+                      <Radio
+                        sx={{
+                          color: "black",
+                          "&.Mui-checked": {
+                            color: "black",
+                          },
+                        }}
+                      />
+                    }
                     label="Technology"
                   />
                   <FormControlLabel
                     value="Language"
-                    control={<Radio />}
+                    control={
+                      <Radio
+                        sx={{
+                          color: "black",
+                          "&.Mui-checked": {
+                            color: "black",
+                          },
+                        }}
+                      />
+                    }
                     label="Language"
                   />
                   <FormControlLabel
                     value="Soft Skills"
-                    control={<Radio />}
+                    control={
+                      <Radio
+                        sx={{
+                          color: "black",
+                          "&.Mui-checked": {
+                            color: "black",
+                          },
+                        }}
+                      />
+                    }
                     label="Soft Skills"
                   />
                 </RadioGroup>
@@ -283,23 +310,27 @@ export default function QuestionFormModal(props) {
               }}
             >
               {category === "Technology" && (
-                <Box sx={{
-                  display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                  }}
+                >
                   <SchoolIcon sx={{ marginRight: 1 }}></SchoolIcon>
-                  <Box sx={{fontWeight: 600}}>Skill</Box>
+                  <Box sx={{ fontWeight: 600 }}>Skill</Box>
                 </Box>
               )}
               {category === "Language" && (
-                <Box sx={{
-                  display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                  }}
+                >
                   <LanguageIcon sx={{ marginRight: 1 }}></LanguageIcon>
-                  <Box sx={{fontWeight: 600}}>Language</Box>
+                  <Box sx={{ fontWeight: 600 }}>Language</Box>
                 </Box>
               )}
             </Grid>
@@ -371,19 +402,22 @@ export default function QuestionFormModal(props) {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                marginTop: 1,
+                marginTop: 2,
               }}
             >
               <Button
-                variant="contained"
+                variant="outlined"
                 sx={{
-                  width: {
-                    md: 250,
-                    xs: "100%",
-                  },
+                  color: "black",
+                  border: "1px solid black",
                   textTransform: "none",
-                  fontSize: 16,
-                  backgroundColor: "#1565C0",
+                  height: 50,
+                  width: "100%",
+                  textTransform: "none",
+                  "&:hover": {
+                    backgroundColor: "black",
+                    color: "white"
+                  }
                 }}
                 onClick={handleSubmitClick}
               >

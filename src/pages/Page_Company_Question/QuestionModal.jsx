@@ -15,6 +15,10 @@ import {
 } from "@mui/material";
 import { TextareaAutosize } from "@mui/base";
 import CloseIcon from "@mui/icons-material/Close";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import CategoryIcon from "@mui/icons-material/Category";
+import SchoolIcon from "@mui/icons-material/School";
+import LanguageIcon from "@mui/icons-material/Language";
 import { useState } from "react";
 
 export default function QuestionModal(props) {
@@ -22,7 +26,6 @@ export default function QuestionModal(props) {
   const [skill, setSkill] = useState(props.value.Skill);
   const [category, setCategory] = useState(props.value.Category);
 
-  console.log(props.value.QuestionId)
   const [isFillQuestion, setIsFillQuestion] = useState(true);
   const [isFillSkill, setIsFillSkill] = useState(true);
   const [isFillCategory, setIsFillCategory] = useState(true);
@@ -98,7 +101,7 @@ export default function QuestionModal(props) {
       >
         <Box
           sx={{
-            width: "45%",
+            maxWidth: 600,
             backgroundColor: "white",
             borderRadius: 3,
           }}
@@ -127,10 +130,12 @@ export default function QuestionModal(props) {
                 sx={{
                   fontSize: 30,
                   fontWeight: 600,
-                  color: "#1565C0",
+                  color: "black",
                 }}
               >
-                {props.type === true ? "Update question" : "Question " + props.value.QuestionId}
+                {props.type === true
+                  ? "Update question"
+                  : "Question " + props.value.QuestionId}
               </Box>
             </Grid>
             <Grid
@@ -154,20 +159,21 @@ export default function QuestionModal(props) {
             <Grid
               item
               xs={12}
-              md={2}
+              md={3}
               sx={{
                 display: "flex",
-                justifyContent: "space-between",
+                justifyContent: "flex-start",
                 alignItems: "center",
                 marginBottom: 1,
               }}
             >
-              <Box>Question</Box>
+              <QuestionMarkIcon sx={{ marginRight: 1 }} />
+              <Box sx={{ fontWeight: 600 }}>Question</Box>
             </Grid>
             <Grid
               item
               xs={12}
-              md={10}
+              md={9}
               sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -211,19 +217,20 @@ export default function QuestionModal(props) {
             <Grid
               item
               xs={12}
-              md={2}
+              md={3}
               sx={{
                 display: "flex",
                 justifyContent: "flex-start",
                 alignItems: "center",
               }}
             >
-              Category
+              <CategoryIcon sx={{ marginRight: 1 }} />
+              <Box sx={{ fontWeight: 600 }}>Category</Box>
             </Grid>
             <Grid
               item
               xs={12}
-              md={10}
+              md={9}
               sx={{
                 display: "flex",
                 justifyContent: "flex-start",
@@ -242,19 +249,46 @@ export default function QuestionModal(props) {
                 >
                   <FormControlLabel
                     value="Technology"
-                    control={<Radio />}
+                    control={
+                      <Radio
+                        sx={{
+                          color: "black",
+                          "&.Mui-checked": {
+                            color: "black",
+                          },
+                        }}
+                      />
+                    }
                     label="Technology"
                     disabled={!props.type}
                   />
                   <FormControlLabel
                     value="Language"
-                    control={<Radio />}
+                    control={
+                      <Radio
+                        sx={{
+                          color: "black",
+                          "&.Mui-checked": {
+                            color: "black",
+                          },
+                        }}
+                      />
+                    }
                     label="Language"
                     disabled={!props.type}
                   />
                   <FormControlLabel
                     value="Soft Skills"
-                    control={<Radio />}
+                    control={
+                      <Radio
+                        sx={{
+                          color: "black",
+                          "&.Mui-checked": {
+                            color: "black",
+                          },
+                        }}
+                      />
+                    }
                     label="Soft Skills"
                     disabled={!props.type}
                   />
@@ -275,20 +309,42 @@ export default function QuestionModal(props) {
             <Grid
               item
               xs={12}
-              md={2}
+              md={3}
               sx={{
                 display: "flex",
                 justifyContent: "flex-start",
                 alignItems: "center",
               }}
             >
-              {category === "Technology" && "Technology"}
-              {category === "Language" && "Language"}
+              {category === "Technology" && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                  }}
+                >
+                  <SchoolIcon sx={{ marginRight: 1 }}></SchoolIcon>
+                  <Box sx={{ fontWeight: 600 }}>Skill</Box>
+                </Box>
+              )}
+              {category === "Language" && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                  }}
+                >
+                  <LanguageIcon sx={{ marginRight: 1 }}></LanguageIcon>
+                  <Box sx={{ fontWeight: 600 }}>Language</Box>
+                </Box>
+              )}
             </Grid>
             <Grid
               item
               xs={12}
-              md={10}
+              md={9}
               sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -297,7 +353,7 @@ export default function QuestionModal(props) {
             >
               <Grid container>
                 <Grid item xs={12}>
-                  {category === "Technology" && (
+                  {category === "Technology" && props.type === true && (
                     <Autocomplete
                       disablePortal
                       id="combo-box-123"
@@ -311,10 +367,22 @@ export default function QuestionModal(props) {
                       )}
                       value={skill}
                       onChange={(event, value) => handleSkillChange(value)}
-                      disabled={!props.type}
                     />
                   )}
-                  {category === "Language" && (
+                  {category === "Technology" && props.type === false && (
+                    <TextField
+                      hiddenLabel
+                      id="filled-hidden-label-small"
+                      placeholder="Enter the question..."
+                      variant="outlined"
+                      fullWidth
+                      value={skill}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                    />
+                  )}
+                  {category === "Language" && props.type === true && (
                     <Autocomplete
                       disablePortal
                       id="combo-box-456"
@@ -328,7 +396,19 @@ export default function QuestionModal(props) {
                       )}
                       value={skill}
                       onChange={(event, value) => handleSkillChange(value)}
-                      disabled={!props.type}
+                    />
+                  )}
+                  {category === "Language" && props.type === false && (
+                    <TextField
+                      hiddenLabel
+                      id="filled-hidden-label-small"
+                      placeholder="Enter the question..."
+                      variant="outlined"
+                      fullWidth
+                      value={skill}
+                      InputProps={{
+                        readOnly: true,
+                      }}
                     />
                   )}
                 </Grid>
@@ -355,19 +435,22 @@ export default function QuestionModal(props) {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                marginTop: 1,
+                marginTop: 2,
               }}
             >
               <Button
-                variant="contained"
+                variant="outlined"
                 sx={{
-                  width: {
-                    md: 250,
-                    xs: "100%",
-                  },
+                  color: "black",
+                  border: "1px solid black",
                   textTransform: "none",
-                  fontSize: 16,
-                  backgroundColor: "#1565C0",
+                  height: 50,
+                  width: "100%",
+                  textTransform: "none",
+                  "&:hover": {
+                    backgroundColor: "black",
+                    color: "white"
+                  }
                 }}
                 onClick={() => {
                   if (props.type === true) {

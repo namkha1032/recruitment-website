@@ -1,0 +1,34 @@
+[
+    {
+        "QuestionId": 1,
+        "QuestionName": "JSX là gì?",
+        "Category": "Technology",
+        "Skill": "React",
+        "CreatedBy": "Nguyễn Văn A"
+    },
+    {
+        "QuestionId": 2,
+        "QuestionName": "Component (Thành phần) là gì",
+        "Category": "Technology",
+        "Skill": "React",
+        "CreatedBy": "Nguyễn Văn A"
+    },
+    {
+        "QuestionId": 3,
+        "QuestionName": "What is \"Chùa Một Cột\" in English?",
+        "Category": "Language",
+        "Skill": "English"
+    },
+    {
+        "QuestionId": 4,
+        "QuestionName": "Phong thái trong lúc thuyết trình?",
+        "Category": "Soft Skills",
+        "Skill": ""
+    },
+    {
+        "QuestionId": 5,
+        "QuestionName": "Language cơ thể trong lúc thuyết trình?",
+        "Category": "Soft Skills",
+        "Skill": ""
+    }
+  ]
