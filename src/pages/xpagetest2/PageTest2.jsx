@@ -1,90 +1,170 @@
-import { useState, useEffect } from "react"
-import axios from "axios"
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
+import { Xoa } from '../Page_Company_Interview_Id/Page_Company_Interview_Id';
+const pages = ['Products', 'Pricing', 'Blog'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const arr = [
-    {
-        "shiftId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "shiftTimeStart": 8,
-        "shiftTimeEnd": 9
-    },
-    {
-        "shiftId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "shiftTimeStart": 9,
-        "shiftTimeEnd": 10
-    },
-    {
-        "shiftId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "shiftTimeStart": 10,
-        "shiftTimeEnd": 11
-    },
-    {
-        "shiftId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "shiftTimeStart": 11,
-        "shiftTimeEnd": 12
-    },
-    {
-        "shiftId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "shiftTimeStart": 13,
-        "shiftTimeEnd": 14
-    },
-    {
-        "shiftId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "shiftTimeStart": 14,
-        "shiftTimeEnd": 15
-    },
-    {
-        "shiftId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "shiftTimeStart": 15,
-        "shiftTimeEnd": 16
-    },
-    {
-        "shiftId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "shiftTimeStart": 16,
-        "shiftTimeEnd": 17
-    }
-];
+function ResponsiveAppBar() {
+    const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+    const handleOpenNavMenu = (event) => {
+        setAnchorElNav(event.currentTarget);
+    };
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
 
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
+    };
 
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
 
-
-const App = () => {
-    const [pass, setPass] = useState("")
-    const [loading, setLoading] = useState(false)
-    async function handleAdd() {
-        if (pass == "add") {
-            setLoading(true)
-            for (let content of arr) {
-                const newObj = {
-                    roomId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    roomName: content
-                }
-                await axios.post("http://leetun2k2-001-site1.gtempurl.com/api/Shift", content)
-                // const response = await axios.get("http://leetun2k2-001-site1.gtempurl.com/api/Question")
-                // const resarr = await response.data
-                // for (let res in resarr) {
-                //     if (res.questionString == ques) {
-                //         const newQS = {
-                //             questionSkillsId: "00000000-0000-0000-0000-000000000008",
-                //             questionId: res.questionId,
-                //             skillId: "00000000-0000-0000-0000-000000000001"
-                //         }
-                //         await axios.post("http://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill", newQS)
-                //     }
-                // }
-            }
-        }
-        setPass("")
-        setLoading(false)
-    }
     return (
         <>
-            <input type="text" onChange={(e) => { setPass(e.target.value) }} value={pass} />
-            <br />
-            <button onClick={() => { handleAdd() }}>add</button>
-            {loading ? <p>loading...</p> : null}
+            <AppBar position="static">
+                <Container>
+                    <Toolbar disableGutters>
+                        {/* Logo */}
+                        <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="a"
+                            href="/"
+                            sx={{
+                                mr: 2,
+                                display: { xs: 'none', md: 'flex' },
+                                fontFamily: 'monospace',
+                                fontWeight: 700,
+                                letterSpacing: '.3rem',
+                                color: 'inherit',
+                                textDecoration: 'none',
+                            }}
+                        >
+                            LOGO
+                        </Typography>
+                        {/* Navbar content responsive */}
+                        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                            <IconButton
+                                size="large"
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleOpenNavMenu}
+                                color="inherit"
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorElNav}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'left',
+                                }}
+                                open={Boolean(anchorElNav)}
+                                onClose={handleCloseNavMenu}
+                                sx={{
+                                    display: { xs: 'block', md: 'none' },
+                                }}
+                            >
+                                {pages.map((page) => (
+                                    <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                        <Typography textAlign="center">{page}</Typography>
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </Box>
+                        {/* Logo responsive */}
+                        <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                        <Typography
+                            variant="h5"
+                            noWrap
+                            component="a"
+                            href=""
+                            sx={{
+                                mr: 2,
+                                display: { xs: 'flex', md: 'none' },
+                                flexGrow: 1,
+                                fontFamily: 'monospace',
+                                fontWeight: 700,
+                                letterSpacing: '.3rem',
+                                color: 'inherit',
+                                textDecoration: 'none',
+                            }}
+                        >
+                            LOGO
+                        </Typography>
+                        {/* Navbar content */}
+                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                            {pages.map((page) => (
+                                <Button
+                                    key={page}
+                                    onClick={handleCloseNavMenu}
+                                    sx={{ my: 2, color: 'white', display: 'block' }}
+                                >
+                                    {page}
+                                </Button>
+                            ))}
+                        </Box>
+                        {/* Dropdown */}
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Tooltip title="Open settings">
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                                sx={{ mt: '45px' }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                            >
+                                {settings.map((setting) => (
+                                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                                        <Typography textAlign="center">{setting}</Typography>
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </Box>
+                    </Toolbar>
+                </Container>
+            </AppBar>
+            <Container>
+                <Xoa />
+            </Container>
         </>
-    )
+    );
 }
-
-export default App
+export default ResponsiveAppBar;

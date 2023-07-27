@@ -27,6 +27,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useGetRole from '../../hooks/useGetRole';
 import { grey } from '@mui/material/colors';
+import { unstable_createCssVarsTheme } from '@mui/system';
 let innerDrawerWidth;
 
 
@@ -95,66 +96,9 @@ const NavbarContent = () => {
     ]
     return (
         <>
-            {/* Navbar content responsive */}
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={(event) => { setAnchorElNav(event.currentTarget) }}
-                    color="inherit"
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorElNav}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                    }}
-                    open={Boolean(anchorElNav)}
-                    onClose={() => { setAnchorElNav(null) }}
-                    sx={{
-                        display: { xs: 'block', md: 'none' },
-                    }}
-                >
-                    {navbarNavigate.map((navbarItem, index) => (
-                        <MenuItem key={index} onClick={() => { navigate(navbarItem.to) }}>
-                            <Typography textAlign="center">{navbarItem.name}</Typography>
-                        </MenuItem>
-                    ))}
-                </Menu>
-            </Box>
-            {/* Icon responsive */}
-            <FavoriteIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-            <Typography
-                variant="h5"
-                noWrap
-                component="a"
-                href=""
-                sx={{
-                    mr: 2,
-                    display: { xs: 'flex', md: 'none' },
-                    flexGrow: 1,
-                    fontFamily: 'monospace',
-                    fontWeight: 700,
-                    letterSpacing: '.3rem',
-                    color: 'inherit',
-                    textDecoration: 'none',
-                }}
-            >
-                TEAM4
-            </Typography>
-            <Container sx={{ display: { md: "flex", xs: "none" }, alignItems: "center" }}>
+            <Container sx={{ display: "flex", alignItems: "center" }}>
                 {/* Logo */}
-                <Box sx={{ display: "flex", height: "69px", alignItems: "center", cursor: "pointer", border: "4px solid white" }} onClick={() => { navigate("/home") }}>
+                <Box sx={{ display: { xs: 'none', md: 'flex' }, height: "69px", alignItems: "center", cursor: "pointer", border: "4px solid white" }} onClick={() => { navigate("/home") }}>
                     <FavoriteIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
                         variant="h6"
@@ -173,6 +117,63 @@ const NavbarContent = () => {
                         TEAM4
                     </Typography>
                 </Box>
+                {/* Navbar content responsive */}
+                <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    <IconButton
+                        size="large"
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={(event) => { setAnchorElNav(event.currentTarget) }}
+                        color="inherit"
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorElNav}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                        open={Boolean(anchorElNav)}
+                        onClose={() => { setAnchorElNav(null) }}
+                        sx={{
+                            display: { xs: 'block', md: 'none' },
+                        }}
+                    >
+                        {navbarNavigate.map((navbarItem, index) => (
+                            <MenuItem key={index} onClick={() => { navigate(navbarItem.to) }}>
+                                <Typography textAlign="center">{navbarItem.name}</Typography>
+                            </MenuItem>
+                        ))}
+                    </Menu>
+                </Box>
+                {/* Logo responsive */}
+                <FavoriteIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                <Typography
+                    variant="h5"
+                    noWrap
+                    component="a"
+                    href=""
+                    sx={{
+                        mr: 2,
+                        display: { xs: 'flex', md: 'none' },
+                        flexGrow: 1,
+                        fontFamily: 'monospace',
+                        fontWeight: 700,
+                        letterSpacing: '.3rem',
+                        color: 'inherit',
+                        textDecoration: 'none',
+                    }}
+                >
+                    TEAM4
+                </Typography>
                 {/* Navbar content */}
                 <Box sx={{ flexGrow: 1, columnGap: 2, display: { xs: 'none', md: 'flex' } }}>
                     {navbarNavigate.map((navbarItem, index) => (
@@ -204,7 +205,7 @@ const NavbarContent = () => {
                     ))}
                 </Box>
                 {/* Dropdown */}
-                <Box sx={{ flexGrow: 0, display: { xs: "none", md: "block" } }}>
+                <Box sx={{ flexGrow: 0 }}>
                     {role
                         ? <>
                             <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={(event) => { setAnchorElUser(event.currentTarget) }}>
@@ -282,81 +283,8 @@ const NavbarContent = () => {
                             }
                         }} onClick={() => { navigate("/login") }}>Log in</Button>}
                 </Box>
+                {/* Dropdown responsive */}
             </Container>
-            {/* Dropdown responsive */}
-            <Box sx={{ flexGrow: 0, display: { xs: "block", md: "none" } }}>
-                {role
-                    ? <>
-                        <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={(event) => { setAnchorElUser(event.currentTarget) }}>
-                            <Typography variant="subtitle1" sx={{ marginRight: 2 }}>{user ? user.name : ""}</Typography>
-                            <Tooltip title="Open settings">
-                                <IconButton sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" src={user ? user.image : ""} />
-                                </IconButton>
-                            </Tooltip>
-                        </Box>
-                        <Menu
-                            sx={{
-                                mt: '45px'
-                            }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={() => { setAnchorElUser(null) }}
-                        >
-                            {dropdownNavigate.map((dropdown, index) => {
-                                if (role != "candidate" && (index == 1 || index == 2 || index == 3)) {
-                                    return (
-                                        <Box key={index} />
-                                    )
-                                }
-                                else {
-                                    return (
-                                        <Box key={index}>
-                                            {index == 1 || index == dropdownNavigate.length - 1 ? <Divider /> : null}
-                                            <MenuItem onClick={() => {
-                                                if (index == dropdownNavigate.length - 1) {
-                                                    console.log("logout")
-                                                    dispatch({ type: "saga/userLogout" })
-                                                    navigate("/home")
-                                                }
-                                                else {
-                                                    navigate(dropdown.to)
-                                                }
-                                            }}
-                                                sx={{
-                                                    backgroundColor: dropdown.active ? "grey.400" : "transparent",
-                                                    "&:hover": {
-                                                        backgroundColor: "grey.400"
-                                                    }
-                                                }}>
-                                                <Grid container columns={{ md: 12 }}>
-                                                    <Grid item md={3}>
-                                                        {dropdown.icon}
-                                                    </Grid>
-                                                    <Grid item md={9} sx={{ paddingRight: 3 }}>
-                                                        <Typography>{dropdown.name}</Typography>
-                                                        {/* <Typography>hehe hehehheheheheh ehehehehehehehehehehehe</Typography> */}
-                                                    </Grid>
-                                                </Grid>
-                                            </MenuItem>
-                                        </Box>
-                                    )
-                                }
-                            })}
-                        </Menu>
-                    </>
-                    : <Typography variant="button" sx={{ color: "white", cursor: "pointer" }} onClick={() => { navigate("/login") }}>Log in</Typography>}
-            </Box>
         </>
     );
 }
@@ -380,27 +308,50 @@ const CustomAppBar = styled(AppBar, {
     boxShadow: 0
 }));
 const Navbar = (props) => {
+    const open = props.open
+    const theme = useTheme()
     innerDrawerWidth = props.drawerWidth
     return (
-        <CustomAppBar position="fixed" open={props.open} >
-            <Toolbar sx={{ boxShadow: 0 }}>
-                {props.showSidebar ? <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={() => props.setOpen(true)}
-                    edge="start"
-                    sx={{
-                        mr: 1,
-                        position: { xs: "block", lg: "absolute" },
-                        // zIndex: 2,
-                        ...(props.open && { display: 'none' })
-                    }}
-                >
-                    <BusinessIcon />
-                </IconButton> : null}
-                <NavbarContent />
-            </Toolbar>
-        </CustomAppBar>
+        <>
+            {/* <CustomAppBar position="fixed" open={props.open} > */}
+            <AppBar
+                sx={{
+                    transition: theme.transitions.create(['margin', 'width'], {
+                        easing: theme.transitions.easing.sharp,
+                        duration: theme.transitions.duration.leavingScreen,
+                    }),
+                    ...(open && {
+                        width: `calc(100% - ${innerDrawerWidth}px)`,
+                        marginLeft: `${innerDrawerWidth}px`,
+                        transition: theme.transitions.create(['margin', 'width'], {
+                            easing: theme.transitions.easing.easeOut,
+                            duration: theme.transitions.duration.enteringScreen,
+                        }),
+                    }),
+                    backgroundColor: "white",
+                    color: "black",
+                    // boxShadow: 0
+                }}
+            >
+                <Toolbar>
+                    {props.showSidebar ? <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={() => props.setOpen(true)}
+                        edge="start"
+                        sx={{
+                            position: { xs: "block", lg: "absolute" },
+                            // zIndex: 2,
+                            ...(props.open && { display: 'none' })
+                        }}
+                    >
+                        <BusinessIcon />
+                    </IconButton> : null}
+                    <NavbarContent />
+                </Toolbar>
+            </AppBar>
+            {/* </CustomAppBar> */}
+        </>
     )
 }
 export default Navbar;
