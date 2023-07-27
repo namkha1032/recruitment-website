@@ -25,20 +25,39 @@ import AssistantIcon from '@mui/icons-material/Assistant';
 // import Page_Profile_Id_Cv_Id from "../Page_Profile_Id_Cv_Id/Page_Profile_Id_Cv"
 import CV from "../../components/CV/CV"
 import { useParams } from "react-router-dom";
-
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import cleanStore from "../../utils/cleanStore";
 
 const Page_Interview_Id = ({ cvid }) => {
+    let {interviewid} = useParams();
     const requires = require('../../data/View_recruitment/requires.json');
     const languages = require('../../data/View_recruitment/languages.json');
+    const interviewidinfo = useSelector(state => state.interviewidInfo);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch({ type: 'saga/getInterviewInfo', payload: interviewid })
+        return () => {
+            cleanStore(dispatch);
+        }
+    }, [])
+    const shift = useSelector(state => state.shift);
+    console.log("interviewid", interviewidinfo);
     let left = 5
     let right = 6
     let gap = 2
     let gridSx = {
         display: "flex", alignItems: "center", columnGap: gap
     }
-    let {interviewid} = useParams();
+    const room = useSelector(state => state.room);
+    console.log("shiftmain", shift);
+    console.log("roommain", room);
+    // const requirements = interviewidinfo ? interviewidinfo[0].requirement : [];
+    
+    const date = interviewidinfo ? interviewidinfo.dateInterview.slice(0,10) : [];
     console.log("interview", interviewid);
     return (
+        interviewidinfo && room && shift &&
         <>
             <Grid container spacing={3}>
                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -70,7 +89,9 @@ const Page_Interview_Id = ({ cvid }) => {
                                         </Grid>
                                         <Grid item md={right} sx={gridSx}>
                                             <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-                                                14:00 25/07/2023
+                                                {/* 14:00 25/07/2023 */}
+                                                {/* {`${interviewidinfo[0].date}${' '}${interviewidinfo[0].time}`} */}
+                                                {`${date}${' '}${shift[0].shiftTimeStart}${'h'}${' - '}${shift[0].shiftTimeEnd}${'h'}`}
                                             </Typography>
                                         </Grid>
                                     </Box>
@@ -90,7 +111,9 @@ const Page_Interview_Id = ({ cvid }) => {
                                         </Grid>
                                         <Grid item md={right} sx={gridSx}>
                                             <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-                                                202B4
+                                                {/* {interviewidinfo[0].room} */}
+                                                {/* 202B4 */}
+                                                {room[0].roomName}
                                             </Typography>
                                         </Grid>
                                     </Box>
@@ -111,7 +134,8 @@ const Page_Interview_Id = ({ cvid }) => {
                                         </Grid>
                                         <Grid item md={right} sx={gridSx}>
                                             <Typography variant="h6" sx={{ marginLeft: "8px" }} >
-                                                Front-end Development
+                                                {/* Front-end Development {} */}
+                                                {/* {interviewidinfo[0].positionName} */}
                                             </Typography>
                                         </Grid>
                                     </Box>
@@ -131,11 +155,11 @@ const Page_Interview_Id = ({ cvid }) => {
                                         </Grid>
                                         <Grid item md={right} sx={gridSx}>
                                             <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-start", alignItems: "flex-start" }}>
-                                                {requires.map((require) => (
+                                                {/* {requirements.map((require) => (
 
-                                                    <Chip key={require.id} sx={{ margin: "0px 0px 5px 8px" }} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
+                                                    <Chip key={require.skillId} sx={{ margin: "0px 0px 5px 8px" }} value={require.skillName} label={require.skillName} variant='outlined' size='medium' color="warning" />
 
-                                                ))}
+                                                ))} */}
                                             </Stack>
                                         </Grid>
                                     </Box>
@@ -155,9 +179,9 @@ const Page_Interview_Id = ({ cvid }) => {
                                         </Grid>
                                         <Grid item md={right} sx={gridSx}>
                                             <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
-                                                {languages.map((language) => (
-                                                    <Chip key={language.id} sx={{ margin: "0px 0px 5px 8px" }} value={language.name} label={language.name} variant='outlined' size='medium' color="success" />
-                                                ))}
+                                                
+                                                    {/* <Chip sx={{ margin: "0px 0px 5px 8px" }}  label="Japanese" variant='outlined' size='medium' color="success" /> */}
+                                                
                                             </Stack>
                                         </Grid>
                                     </Box>
@@ -186,7 +210,8 @@ const Page_Interview_Id = ({ cvid }) => {
                                         </Grid>
                                         <Grid item md={right} sx={gridSx}>
                                             <Typography variant="h6" sx={{ marginLeft: "8px" }} >
-                                                Cong Pham Quoc Viet
+                                                {/* Cong Pham Quoc Viet */}
+                                                {/* {interviewidinfo[0].interviewername} */}
                                             </Typography>
                                         </Grid>
                                     </Box>
@@ -206,7 +231,8 @@ const Page_Interview_Id = ({ cvid }) => {
                                         </Grid>
                                         <Grid item md={right} sx={gridSx}>
                                             <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-                                                vietcpq@fpt.com
+                                                {/* vietcpq@fpt.com */}
+                                                {/* {interviewidinfo[0].intervieweremail} */}
                                             </Typography>
                                         </Grid>
                                     </Box>
@@ -226,7 +252,7 @@ const Page_Interview_Id = ({ cvid }) => {
                                         </Grid>
                                         <Grid item md={right} sx={gridSx}>
                                             <Typography variant="h6" sx={{ marginLeft: "8px" }} >
-                                                0123456789
+                                                {/* {interviewidinfo[0].interviewerphone} */}
                                             </Typography>
                                         </Grid>
                                     </Box>
@@ -246,7 +272,7 @@ const Page_Interview_Id = ({ cvid }) => {
                                         </Grid>
                                         <Grid item md={right} sx={gridSx}>
                                             <Typography variant="h6" sx={{ marginLeft: "8px" }} >
-                                                ITROOM
+                                            {/* {interviewidinfo[0].departmentName} */}
                                             </Typography>
                                         </Grid>
                                     </Box>

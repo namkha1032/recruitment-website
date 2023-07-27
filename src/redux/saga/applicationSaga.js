@@ -2,7 +2,7 @@ import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
 import axios from 'axios';
 import host from "../host";
 function* getApplication(action) {
-    const reponse = yield call(axios.get, `${host.name}/data/applicationList.json`)
+    const reponse = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Application`)
     yield put({ type: 'application/setApplication', payload: reponse.data })
 
 }

@@ -21,6 +21,7 @@ function cleanStore(dispatch) {
     dispatch({ type: "event/setEvent", payload: null })
     dispatch({ type: "interviewListCandidate/setInterviewList", payload: null})
     dispatch({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: null})
+    dispatch({ type: "interviewidInfo/setInterviewidInfo", payload: null})
 }
 
 export default cleanStore
