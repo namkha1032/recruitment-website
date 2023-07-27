@@ -11,66 +11,17 @@ import host from "../redux/host";
 // - "candidate"
 // - null
 // -------------------README !!!---------------------------
+
+
 function useGetRole() {
-    const user = useSelector(state => state.user)
+    const userlocal = useSelector(state => state.user)
+    console.log("user: ", userlocal)
+    /* const userlocal = JSON.parse(window.localStorage.getItem("user")) */
     const [role, setRole] = useState(null)
     useEffect(() => {
-        if (user) {
-            // -----------------------------------------------------------
-            let api = ""
-            if (user.token == "hentai.jav.admin") {
-                api = `${host.name}/data/roleAdmin.json`
-            }
-            else if (user.token == "hentai.jav.recruiter") {
-                api = `${host.name}/data/roleRecruiter.json`
-            }
-            else if (user.token == "hentai.jav.interviewer") {
-                api = `${host.name}/data/roleInterviewer.json`
-            }
-            else if (user.token == "hentai.jav.candidate") {
-                api = `${host.name}/data/roleCandidate.json`
-            }
-            // -----------------------------------------------------------
-            let token = `Bearer ${user.token}`
-            const config = {
-                headers: { Authorization: token },
-            }
-            axios.get(api, config).then(response => {
-                if (response.data.roleName == "admin") {
-                    setRole("admin")
-                }
-                else if (response.data.roleName == "recruiter") {
-                    setRole("recruiter")
-                }
-                else if (response.data.roleName == "interviewer") {
-                    setRole("interviewer")
-                }
-                else if (response.data.roleName == "candidate") {
-                    setRole("candidate")
-                }
-                else {
-                    setRole(null)
-                }
-            })
-        }
-        else {
-            setRole(null)
-        }
-    }, [user])
-    return role
-}
+        if (userlocal) {
 
-export default useGetRole
-
-
-
-
-/* function useGetRole() {
-    const user = useSelector(state => state.user)
-    const [role, setRole] = useState(null)
-    useEffect(() => {
-        if (user) {
-            let token = `Bearer ${user.token}`
+            let token = `Bearer ${userlocal.token}`
             const config = {
                 headers: { Authorization: token },
             }
@@ -96,8 +47,9 @@ export default useGetRole
         else {
             setRole(null)
         }
-    }, [user])
+        
+    }, [userlocal])
     return role
 }
 
-export default useGetRole */
+export default useGetRole

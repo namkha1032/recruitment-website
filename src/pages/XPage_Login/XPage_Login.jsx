@@ -14,6 +14,8 @@ import {
   FormControlLabel,
   createTheme,
   IconButton,
+  Paper,
+  rgbToHex,
   /* Visibility,
   VisibilityOff, */
 } from "@mui/material";
@@ -26,6 +28,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import imageBackground from "../../assets/img/background.jpg";
+import shadows from "@mui/material/styles/shadows";
 
 //import ErrorIcon from '@mui/icons-material/Error';
 
@@ -97,6 +100,7 @@ const XPage_Login = () => {
 
     if (validUsername) {
       dispatch({ type: "saga/userLogin", payload: { username, password, check } })
+      //dispatch({ type: "saga/getUserId", payload: null})
     }
     else {
       setValidUsername(false);
@@ -143,7 +147,7 @@ const XPage_Login = () => {
           <Grid
             item
             md={7}
-            sx={{ display: "flex", justifyContent: "center" }}
+            sx={{ display: "flex", justifyContent: "center"}}
           >
             <Grid
               item
@@ -152,12 +156,34 @@ const XPage_Login = () => {
                 opacity: "100%",
                 left: "10%",
                 right: "10%",
+                
                 //padding: '10px'
               }}
             >
-              <GigaCard>
-              <GigaCardBody>
+              <Paper
+                sx={{
+                  borderRadius: 3,
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "100%",
+                  borderShadow: "0px 6px 6px -3px #fff, 0px 12px 14px 1px #fff, -2px -4px 16px 15px #fff"
+                }}
+
+                style={{
+                  backgroundColor: rgbToHex("rgb(255, 255, 255, 0.8)"),
+                }}
+              >
                 
+              <Box 
+                sx={{
+                  backgroundColor: "white", 
+                  opacity: "100%",
+                  padding: 4, 
+                  height: "100%", 
+                  borderRadius: 3
+                }}
+              >
 
               <Typography 
                 variant="h2" 
@@ -344,8 +370,8 @@ const XPage_Login = () => {
                 </Typography>
               </Grid>
               
-              </GigaCardBody>
-              </GigaCard>
+              </Box>
+              </Paper>
               
             </Grid>
           </Grid>
