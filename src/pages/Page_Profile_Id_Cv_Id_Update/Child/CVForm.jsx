@@ -11,26 +11,70 @@ function CVForm() {
   const dispatch = useDispatch();
   // fetch Data
   useEffect(() => {
+    dispatch({ type: "saga/getCvinfor"});
     dispatch({ type: "saga/getLanguage" });
     dispatch({ type: "saga/getSkill" });
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });
       dispatch({ type: "language/setLanguage", payload: null });
+      dispatch({ type: "cvHasSkill/setCvHasSkill", payload: null });
+      dispatch({ type: "cvInfor/setCvInfor", payload: null });
+      dispatch({ type: "cvHasCertificate/setCvHasCertificate", payload: null });
     };
   }, [dispatch]);
   // CV COMPS
   const skillList = useSelector((state) => state.skill);
   const languageList = useSelector((state) => state.language);
+  const cv = useSelector((state) => state.cvInfor);
+  const cvSkill = useSelector((state) => state.cvHasSkill);
+  const cvCertificate = useSelector((state) => state.cvHasCertificate);
+  const cvSkillData = cvSkill ? cvSkill : [];
+  const cvData = cv ? cv : [];
 
-  const skillData = skillList ? skillList : [];
-  const languageData = languageList ? languageList : [];
-  const [cvtitle, setTitle] = useState(cvinfo.title);
-  const [intro, setIntro] = useState(cvinfo.intro);
-  const [education, setEducation] = useState(cvinfo.education);
-  const [experience, setExperience] = useState(cvinfo.experience);
-  const [certs, setCerts] = useState(cvinfo.certificates);
-  const [skills, setSkills] = useState(cvinfo.skills);
+  const [skillData, setSkill] = useState([]);
+  const [languageData, setLanguage] = useState([]);
+  useEffect(() => {
+    if (languageList) {
+      setLanguage(
+        languageList ? (languageList !== [] ? languageList : []) : []
+      );
+    }
+    if (skillList) {
+      setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
+    }
+  }, [skillList,languageList]);
+
+
+
+  const [cvtitle, setTitle] = useState("");
+  const [intro, setIntro] = useState("");
+  const [education, setEducation] = useState("");
+  const [experience, setExperience] = useState("");
+  const [certs, setCerts] = useState([]);
+  const [skills, setSkills] = useState([]);
   const [languages, setLanguages] = useState(cvinfo.language);
+  
+  useEffect(() => {
+    if (cv) {
+      // Data is available, update the local state
+      setTitle(cv?(cv[0].cvName!==null?cv[0].experience:"data still null" ):"");
+      setIntro(cv?(cv[0].introduction!==null?cv[0].introduction:"data still null" ):"");
+      setEducation(cv?(cv[0].education!==null?cv[0].education:"data still null" ):"");
+      setExperience(cv?(cv[0].experience!==null?cv[0].experience:"data still null" ):"");
+    }
+  }, [cv]); 
+  useEffect(() => {
+    if (cvCertificate) {
+      setCerts(cvCertificate?(cvCertificate!==[]?cvCertificate:[] ):[]);
+    }
+  }, [cvCertificate]); 
+  useEffect(() => {
+    if (cvSkill) {
+      setSkills(cvSkill?(cvSkill!==[]?cvSkill:[] ):[]);
+    }
+  }, [cvSkill]); 
+  
+  
   // CERTIFICATE COMPS
   const [Cid, setCid] = useState(certs.length > 0 ? certs.length : 0);
   const [Cname, setCName] = useState("");
@@ -77,10 +121,11 @@ function CVForm() {
   //   }
   // }
   function handleSkillAdd2() {
-    console.log(lInputValue);
+    console.log(sInputValue);
     console.log(languageName);
+    console.log(skillData);
     let arr = skillData.filter(
-      (comp) => comp.name === (sInputValue !== null ? sInputValue.name : "")
+      (comp) => comp.skillName === (sInputValue !== null ? sInputValue.skillName : "")
     );
     console.log(arr);
     if (arr[0] === undefined) {
@@ -91,10 +136,9 @@ function CVForm() {
       setSExp("");
     } else {
       const newSkill = {
-        id: Sid,
+        cvSkillsId: Sid,
         skillId: skillId,
-        name: sname,
-        skillExperienc: SExp,
+        experienceYear: SExp,
       };
       console.log(newSkill);
       setSkills([...skills, newSkill]);
@@ -109,14 +153,13 @@ function CVForm() {
     setSkills(skills.filter((component) => component.id !== id));
   }
   function handleCertificateAdd() {
-    console.log(startDate);
     const newCert = {
-      id: Cid,
-      name: Cname,
-      organize: organize,
-      startDate: startDate,
-      endDate: endDate,
-      detail: detail,
+      certificateId: Cid,
+      certificateName: Cname,
+      organizationName: organize,
+      dateEarned: startDate,
+      expirationDate: endDate,
+      description: detail,
       link: link,
     };
     console.log(newCert);
@@ -133,8 +176,9 @@ function CVForm() {
       handleSetOpen();
     }
   }
+  console.log(certs)
   function handleCertDelete(id) {
-    setCerts(certs.filter((component) => component.id !== id));
+    setCerts(certs.filter((component) => component.certificateId !== id));
   }
 
   function handleLanguageAdd() {

@@ -5,6 +5,7 @@ import host from "../host"
 //http://localhost:3000/data/departmentList.json
 function* getDepartment(action) {
     const response = yield call(axios.get, 'http://leetun2k2-001-site1.gtempurl.com/api/Department')
+    console.log(response.data)
     yield put({ type: "department/setDepartment", payload: response.data })
 }
 

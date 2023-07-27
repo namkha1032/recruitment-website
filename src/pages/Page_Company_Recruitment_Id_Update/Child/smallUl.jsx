@@ -32,9 +32,9 @@ const SmallUlList = (comp) => {
   }, [open]);
   return (
     <>
-      <Card key={comp.comp.id} sx={{ maxWidth: 200}}>
+      <Card key={comp.comp.requirementId} sx={{ maxWidth: 200 }}>
         <CardContent>
-          <Typography sx={{ fontSize: 20 }}>{comp.comp.skillname}</Typography>
+          <Typography sx={{ fontSize: 20 }}>{comp.skillName}</Typography>
           <Typography sx={{ fontSize: 20 }}>{comp.comp.experience}</Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -45,7 +45,7 @@ const SmallUlList = (comp) => {
             sx={{ marginLeft: "auto" }}
             aria-label="add to favorites"
             onClick={() => {
-              comp.handleDelete(comp.comp.id);
+              comp.handleDelete(comp.comp.requirementId);
             }}
           >
             <DeleteIcon />
@@ -59,11 +59,13 @@ const SmallUlList = (comp) => {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-        <DialogTitle id="scroll-dialog-title">{comp.comp.skillname}</DialogTitle>
+        <DialogTitle id="scroll-dialog-title">
+          {comp.skillName}
+        </DialogTitle>
         <DialogContent dividers={scroll === "paper"}>
           <Typography sx={{ fontSize: 20 }}>{comp.comp.experience}</Typography>
           <Typography sx={{ maxWidth: 500, wordWrap: "break-word" }}>
-            Note: {comp.comp.note}
+            Note: {comp.comp.notes}
           </Typography>
         </DialogContent>
       </Dialog>

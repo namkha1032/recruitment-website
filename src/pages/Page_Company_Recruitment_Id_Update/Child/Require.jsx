@@ -9,6 +9,7 @@ function Require(prop) {
         <div className="leftFlex"> */}
       <Box sx={{ width: "98%", margin: "auto" }}>
         <RequireUlList
+          skill={prop.skill}
           comps={prop.requirement}
           handleDelete={prop.handleRequirementDelete}
         />

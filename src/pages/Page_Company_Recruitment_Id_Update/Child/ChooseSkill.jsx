@@ -42,7 +42,6 @@ export default function ChooseList(prop) {
                   skillName: newValue,
                 });
               } else if (newValue && newValue.inputValue) {
-                
                 prop.setInputValue({
                   skillName: newValue.inputValue,
                 });

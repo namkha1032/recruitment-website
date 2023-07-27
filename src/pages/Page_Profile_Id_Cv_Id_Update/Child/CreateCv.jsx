@@ -44,7 +44,7 @@ const CreateCv = (prop) => {
             variant="h3"
             sx={{ fontWeight: "bold", fontStyle: "italic" }}
           >
-            Create CV
+            UPDATE CV
           </Typography>
         </Grid>
         <Grid
