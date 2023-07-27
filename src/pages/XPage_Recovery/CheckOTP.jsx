@@ -63,13 +63,16 @@ const CheckOTP = (props) => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <Container sx={{ display: "flex", justifyContent: "center" }}>
         <Grid
           container
           sx={{
-            paddingTop: "10%",
+            //paddingTop: "10%",
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
@@ -100,7 +103,7 @@ const CheckOTP = (props) => {
               <Typography 
                 variant="h2" 
                 align="center" 
-                color='#1976d2' 
+                color='black' 
                 gutterBottom
                 fontFamily={'Roboto'}
                 fontSize={'30px'}
@@ -197,7 +200,7 @@ const CheckOTP = (props) => {
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "5px",
+                      borderRadius: "8px",
                       marginTop: "5px",
                     }}
                   >

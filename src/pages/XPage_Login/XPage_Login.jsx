@@ -119,6 +119,9 @@ const XPage_Login = () => {
         backgroundRepeat: "no-repeat",
         flexWrap: "wrap",
         width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
 
     >
@@ -126,11 +129,13 @@ const XPage_Login = () => {
         <Grid
           container
           sx={{
-            paddingTop: "10%",
+            /* paddingTop: "0%", */
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
+            alignItems: "center",
             width: "76%",
+            //maxHeight: "50%"
             //minWidth: "350px",
           }}
         >
@@ -157,7 +162,8 @@ const XPage_Login = () => {
               <Typography 
                 variant="h2" 
                 align="center" 
-                color='#1976d2' 
+                // color='#1976d2' 
+                color="black"
                 gutterBottom
                 fontFamily={'Roboto'}
                 fontSize={'30px'}
@@ -316,7 +322,7 @@ const XPage_Login = () => {
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "5px",
+                      borderRadius: "8px",
                       marginTop: "5px",
                     }}
                   >

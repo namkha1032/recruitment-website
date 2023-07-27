@@ -28,7 +28,8 @@ const style = {
 
 const ProfileChangePW = () => {
   const navigate = useNavigate();
-  const [oldPassword, setOldPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showOldPassword, setShowOldPassword] = useState(false);
@@ -49,7 +50,7 @@ const ProfileChangePW = () => {
     }
     if (newError.status === "yes") {
       setErrorSnackbar(true)
-      setOldPassword("")
+      setCurrentPassword("")
       setNewPassword("")
       setConfirmPassword("")
       setTimeout(() => {
@@ -77,7 +78,7 @@ const ProfileChangePW = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (oldPassword === newPassword) {
+    if (currentPassword === newPassword) {
       /* toast.error("New password cannot be same as old password", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 1500,
@@ -101,7 +102,7 @@ const ProfileChangePW = () => {
     } else {
       dispatch({ 
         type: "saga/userChangePassword", 
-        payload: { oldPassword, newPassword, confirmPassword}
+        payload: { username, currentPassword, newPassword, confirmPassword}
       })
     }
   };
@@ -144,7 +145,8 @@ const ProfileChangePW = () => {
               <Typography 
                 variant="h2" 
                 align="center" 
-                color='#1976d2' 
+                // color='#1976d2' 
+                color="black"
                 gutterBottom
                 fontFamily={'Roboto'}
                 fontSize={'28px'}
@@ -156,13 +158,29 @@ const ProfileChangePW = () => {
               </Typography>
 
               <form onSubmit={handleSubmit}>
+
+              <Grid item xs={12} md={12} sx={{ ...style }}>
+                <TextField
+                  fullWidth
+                  required
+                  label="Username"
+                  type="text"
+                  value={username}
+                  InputProps={{
+                    style: { borderRadius: "12px" },
+                  }}
+                  onChange={e => setUsername(e.target.value)}
+                  /* error={!validUsername} */
+                />
+              </Grid>
+
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
                     required
-                    label="Old Password"
+                    label="Current Password"
                     type={showOldPassword ? "text" : "password"}
-                    value={oldPassword}
+                    value={currentPassword}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -178,7 +196,7 @@ const ProfileChangePW = () => {
                       style: { borderRadius: "12px" },
                     }}
                     onChange={(e) => {
-                      setOldPassword(e.target.value);
+                      setCurrentPassword(e.target.value);
                     }}
                   />
                 </Grid>
@@ -249,7 +267,7 @@ const ProfileChangePW = () => {
                     sx={{
                       height: "40px",
                       width: "100%",
-                      borderRadius: "5px",
+                      borderRadius: "8px",
                       marginTop: "15px",
                     }}
                   >
