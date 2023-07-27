@@ -41,22 +41,22 @@ export default function TabInProfile() {
         <Tabs value={location.pathname}>
           <Tab
             label="Event List"
-            value="/profile/:profileid/event"
+            value="/profile/1/event"
             component={Link}
-            to="/profile/:profileid/event"
+            to="/profile/1/event"
            
           />
           <Tab
             label="Application List"
-            value="/profile/:profileid/application"
+            value="/profile/1/application"
             component={Link}
-            to="/profile/:profileid/application"
+            to="/profile/1/application"
           />
           <Tab
             label="Interview List"
-            value="/profile/:profileid/interview"
+            value="/profile/1/interview"
             component={Link}
-            to="/profile/:profileid/interview"
+            to="/profile/1/interview"
           />
         </Tabs>
       </Box>

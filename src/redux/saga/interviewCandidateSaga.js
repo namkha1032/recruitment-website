@@ -8,7 +8,6 @@ import host from "../host"
 function* getAllInterviewCandidate() {
     const response = yield call(axios.get, `${host.name}/data/interviewAllOfCandidate.json`)
     yield put({ type: "interviewCandidate/setInterviewList", payload: response.data })
-
 }
 
 function* interviewCandidateSaga() {

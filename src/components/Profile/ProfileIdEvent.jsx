@@ -14,7 +14,7 @@ export default function EventList({ events, totalPositions }) {
   };
 
   const handleEventHover = (event) => {
-    setSelectedEvent(event.id);
+    setSelectedEvent(event.eventId);
   };
 
   const handleEventLeave = () => {
@@ -23,23 +23,23 @@ export default function EventList({ events, totalPositions }) {
 
   const columns = [
     { field: 'name', headerName: 'Event', flex: 2 },
-    { field: 'time', headerName: 'Thời gian', flex: 2 },
+    { field: 'time', headerName: 'Time', flex: 2 },
     {
       field: 'view',
       headerName: 'View',
       flex: 1,
       renderCell: (params) => (
-          <Button variant="contained" color="primary" onClick={() => handleDetails(params.row.id)} style={{ textTransform: "none" }}>
-            Xem chi tiết
+          <Button variant="contained" color="primary" onClick={() => handleDetails(params.row.id)} style={{ textTransform: "none", backgroundColor:"black" }}>
+            View Detail
           </Button>
       ),
     },
   ].filter(Boolean);
 
   const rows = events.map((event) => ({
-    id: event.id,
-    name: event.name,
-    time:event.time,
+    id: event.eventId,
+    name: event.eventName,
+    time:event.datetimeEvent,
   }));
 
   return (
@@ -74,7 +74,7 @@ export default function EventList({ events, totalPositions }) {
               sx={{
                 width: '100%',
                 "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
-                  backgroundColor: "#1565C0",
+                  backgroundColor: "black",
                   color: "white",
                   fontWeight: 700,
                   fontSize: 14,

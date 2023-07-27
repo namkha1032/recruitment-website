@@ -26,10 +26,10 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
 
   const columns = [
     { field: 'name', headerName: namePage, flex: 2 },
-    { field: 'time', headerName: 'Thời gian', flex: 2 },
+    { field: 'time', headerName: 'Time', flex: 2 },
     {
       field: 'status',
-      headerName: 'Trạng thái',
+      headerName: 'Status',
       flex: 2,
       renderCell: (params) => {
         switch (params.value) {
@@ -53,8 +53,8 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
       headerName: 'View',
       flex: 1,
       renderCell: (params) => (
-        <Button variant="contained" color="primary" onClick={() => handleDetails(params.row.id)} style={{ textTransform: "none" }}>
-          Xem chi tiết
+        <Button variant="contained" color="primary" onClick={() => handleDetails(params.row.id)} style={{ textTransform: "none", backgroundColor:"black" }}>
+          View Detail
         </Button>
       ),
     },
@@ -96,7 +96,7 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
               sx={{
                 width: '100%',
                 "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
-                  backgroundColor: "#1565C0",
+                  backgroundColor: "black",
                   color: "white",
                   fontWeight: 700,
                   fontSize: 14,
