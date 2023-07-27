@@ -1,22 +1,37 @@
 import { useState, useMemo } from "react";
-import { Box, Grid, Tabs, Tab, Divider, Table, Chip, IconButton } from "@mui/material";
-import { DataGrid, GridActionsCellItem, GridToolbar} from "@mui/x-data-grid";
-import TableViewIcon from '@mui/icons-material/TableView';
-import EqualizerIcon from '@mui/icons-material/Equalizer';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import {
+  Box,
+  Grid,
+  Tabs,
+  Tab,
+  Divider,
+  Table,
+  Chip,
+  IconButton,
+} from "@mui/material";
+import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
+import TableViewIcon from "@mui/icons-material/TableView";
+import EqualizerIcon from "@mui/icons-material/Equalizer";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
 import datasjson from "./Page_Company_Recruitment_Id_Report_Data.json";
-import { NullString, NotStart, Pending, Completed, Postpone } from "../../components/Label/Label";
+import {
+  NullString,
+  NotStart,
+  Pending,
+  Completed,
+  Postpone,
+} from "../../components/Label/Label";
 import { useLocation, useNavigate } from "react-router-dom";
 import ReportDataGrid from "./ReportDataGrid";
 import ReportGraph from "./ReportGraph";
 import ReportStatistic from "./ReportStatistic";
-
+import GigaCard from "../../components/GigaCard/GigaCard";
+import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 
 export default function Page_Company_Recruitment_Id_Report(props) {
-
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -31,11 +46,11 @@ export default function Page_Company_Recruitment_Id_Report(props) {
   }
 
   function handleDetailClick(value) {
-    navigate(`/company/interview/${value}`)
+    navigate(`/company/interview/${value}`);
   }
 
   function handlePositionIdClick() {
-    navigate(`/company/recruitment/${positionId}`)
+    navigate(`/company/recruitment/${positionId}`);
   }
 
   const columns = useMemo(() => [
@@ -162,7 +177,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       renderHeader: () => <span>Điểm</span>,
       renderCell: (params) => {
         if (params.value !== null && params.value !== undefined) {
-          return params.value
+          return params.value;
         }
       },
       minWidth: 80,
@@ -175,132 +190,148 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       align: "center",
       getActions: (params) => [
         <IconButton onClick={() => handleDetailClick(params.row.InterviewId)}>
-          <InfoIcon sx={{color: "#1565C0"}}/>
-        </IconButton>
+          <InfoIcon sx={{ color: "#1565C0" }} />
+        </IconButton>,
       ],
     },
   ]);
 
   return (
     <Box>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sx={{
-              fontSize: 40,
-              fontWeight: 600,
-              color: "#1565C0",
-            }}>
-          Vị trí <Box sx={{
-            display: "inline-block",
-            cursor: "pointer",
-            "&:hover": {
-              textDecoration: "underline",
-            }
-          }}
-          onClick={handlePositionIdClick}
-          >{positionId}</Box> - Báo cáo
-        </Grid>
-        <Grid item xs={12} sx={{
-          marginBottom: 5,
-        }}>
-        <Tabs
-              value={tabValue}
-              onChange={(event, value) => handleTabChange(value)}
-              // textColor="secondary"
-              // indicatorColor="secondary"
-              // aria-label="secondary tabs example"
+      <GigaCard>
+        <GigaCardBody>
+          <Grid container spacing={2}>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                fontSize: 30,
+                fontWeight: 600,
+                color: "black",
+              }}
             >
-              <Tab
-                value="0"
-                label="Danh sách ứng viên"
-                icon={<TableViewIcon />}
+              Position{" "}
+              <Box
                 sx={{
-                  textTransform: "none",
-                  fontWeight: 500,
-                  width: 180,
-                  color: "rgba(0, 0, 0, 0.85)",
+                  display: "inline-block",
+                  cursor: "pointer",
                   "&:hover": {
-                    color: "rgba(21, 101, 192, 0.8)",
-                    opacity: 1,
-                  },
-                  "&.Mui-selected": {
-                    color: "#1565C0",
-                  },
-                  "&.Mui-focusVisible": {
-                    backgroundColor: "#d1eaff",
+                    textDecoration: "underline",
                   },
                 }}
-              />
-              <Tab
-                value="1"
-                label="Biểu đồ thống kê"
-                icon={<EqualizerIcon />}
+                onClick={handlePositionIdClick}
+              >
+                {positionId}
+              </Box>{" "}
+              - Báo cáo
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                marginBottom: 5,
+              }}
+            >
+              <Tabs
+                value={tabValue}
+                onChange={(event, value) => handleTabChange(value)}
                 sx={{
-                  textTransform: "none",
-                  fontWeight: 500,
-                  width: 150,
-                  color: "rgba(0, 0, 0, 0.85)",
-                  "&:hover": {
-                    color: "rgba(21, 101, 192, 0.8)",
-                    opacity: 1,
-                  },
-                  "&.Mui-selected": {
-                    color: "#1565C0",
-                  },
-                  "&.Mui-focusVisible": {
-                    backgroundColor: "#d1eaff",
-                  },
+                  "&.MuiTabs-indicator": {
+                    backgroundColor: 'black',
+               },
                 }}
-              />
-              <Tab
-                value="2"
-                label="Xuất báo cáo"
-                icon={<FileDownloadIcon />}
-                disabled
+              >
+                <Tab
+                  value="0"
+                  label="Candidate List"
+                  icon={<TableViewIcon />}
+                  sx={{
+                    textTransform: "none",
+                    fontWeight: 500,
+                    width: 150,
+                    color: "rgba(0, 0, 0, 0.85)",
+                    "&:hover": {
+                      color: "black.100",
+                      opacity: 0.8,
+                    },
+                    "&.Mui-selected": {
+                      color: "black",
+                    },
+                    "&.Mui-indicator": {
+                      backgroundColor: "black"
+                    }
+                  }}
+                />
+                <Tab
+                  value="1"
+                  label="Statistic"
+                  icon={<EqualizerIcon />}
+                  sx={{
+                    textTransform: "none",
+                    fontWeight: 500,
+                    width: 150,
+                    color: "rgba(0, 0, 0, 0.85)",
+                    "&:hover": {
+                      color: "black.100",
+                      opacity: 0.8,
+                    },
+                    "&.Mui-selected": {
+                      color: "black",
+                    },
+                  }}
+                 
+                />
+                <Tab
+                  value="2"
+                  label="Export"
+                  icon={<FileDownloadIcon />}
+                  disabled
+                  sx={{
+                    textTransform: "none",
+                    fontWeight: 500,
+                    width: 150,
+                    color: "rgba(0, 0, 0, 0.85)",
+                    "&:hover": {
+                      color: "rgba(21, 101, 192, 0.6)",
+                      opacity: 1,
+                    },
+                    "&.Mui-selected": {
+                      color: "black",
+                    },
+                  }}
+                  
+                />
+              </Tabs>
+              <Divider
                 sx={{
-                  textTransform: "none",
-                  fontWeight: 500,
-                  width: 150,
-                  color: "rgba(0, 0, 0, 0.85)",
-                  "&:hover": {
-                    color: "rgba(21, 101, 192, 0.6)",
-                    opacity: 1,
-                  },
-                  "&.Mui-selected": {
-                    color: "#1565C0",
-                  },
-                  "&.Mui-focusVisible": {
-                    backgroundColor: "#d1eaff",
-                  },
+                  borderColor: "gray.400",
                 }}
-              />
-            </Tabs>
-            <Divider sx={{
-              borderColor: "gray.400"
-            }}>
-            </Divider> 
-        </Grid>
-      </Grid>
-      
-      {tabValue === "0" && <ReportDataGrid 
-        columns={columns}
-        rows={rows}
-        handleDetailClick={handleDetailClick}
-      />}
-
-      {tabValue === "1" && 
-      <Box>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={8}>
-            <ReportGraph />
+              ></Divider>
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <ReportStatistic />
-          </Grid>
-        </Grid>
-      </Box>
-      }
 
-      
+          {tabValue === "0" && (
+            <ReportDataGrid
+              columns={columns}
+              rows={rows}
+              handleDetailClick={handleDetailClick}
+            />
+          )}
+
+          {tabValue === "1" && (
+            <Box>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={8}>
+                  <ReportGraph />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <ReportStatistic />
+                </Grid>
+              </Grid>
+            </Box>
+          )}
+        </GigaCardBody>
+      </GigaCard>
     </Box>
   );
 }

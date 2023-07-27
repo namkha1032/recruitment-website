@@ -208,7 +208,7 @@ export default function Page_Company_Question() {
   }
 
   function handleSubmitQuestion(value) {
-    successAlert("Tạo câu hỏi");
+    successAlert("Create question");
     dispatch({
       type: "saga/postQuestion",
       payload: {
@@ -230,7 +230,7 @@ export default function Page_Company_Question() {
   }
 
   function handleUpdateQuestion(value) {
-    successAlert("Cập nhật câu hỏi");
+    successAlert(`Update question ${value.QuestionId}`);
     dispatch({
       type: "saga/putQuestion",
       payload: {
@@ -405,7 +405,7 @@ export default function Page_Company_Question() {
               marginBottom: 5,
             }}
           >
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} sm={6} md={8}>
               <Box
                 sx={{
                   fontSize: 40,
@@ -421,11 +421,13 @@ export default function Page_Company_Question() {
             <Grid
               item
               xs={12}
+              sm={6}
               md={4}
               sx={{
                 display: "flex",
                 justifyContent: {
                   md: "flex-end",
+                  sm: "flex-end",
                   xs: "flex-start",
                 },
                 alignItems: "center",
@@ -438,7 +440,11 @@ export default function Page_Company_Question() {
                   border: "1px solid black",
                   textTransform: "none",
                   height: 50,
-                  width: 250,
+                  width: {
+                    xs: "100%",
+                    sm: 250,
+                    md: 250
+                  },
                   "&:hover": {
                     backgroundColor: "black",
                     color: "white",
@@ -488,6 +494,7 @@ export default function Page_Company_Question() {
             <Grid
               item
               xs={12}
+              sm={12}
               md={7}
               sx={{
                 display: "flex",
