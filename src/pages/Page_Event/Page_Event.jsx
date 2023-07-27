@@ -21,6 +21,7 @@ import Avatar from '@mui/material/Avatar';
 import Pagination from '@mui/material/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import AppPagination from '../../components/AppPagination/index';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 
 //
 const cards1 = [1, 2, 3, 4, 5, 6];
@@ -110,7 +111,7 @@ const Page_Event = () => {
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography gutterBottom variant="h5" component="h2">
-                    Event
+                  {card.EventName}
                   </Typography>
                   <Box >
                     <Box sx={{padding:'0px 0px 5px 0px'}}>
@@ -121,7 +122,8 @@ const Page_Event = () => {
                       component="p"
                       sx={{ display: 'flex', justifyContent: 'flex-start', padding: '0px 0px 5px 0px' }}
                     >
-                      Sport • July 5th 23
+                      <PermIdentityIcon></PermIdentityIcon>
+                      {card.NumOfJoined}  • July 5th 23
                     </Typography>
                     <Typography
                       variant="subtitle1"
@@ -138,7 +140,7 @@ const Page_Event = () => {
 
                     <Typography>
 
-                      {card.EventName}
+                      {card.EventDescription}
                     </Typography>
                   </Box>
 
