@@ -101,7 +101,7 @@ const Page_Company_Event_Id_Update = () => {
                     <Box sx={{
                         fontSize: 50,
                         fontWeight: 600,
-                        color: '#1565C0',
+                        // color: '#1565C0',
                         display: 'flex',
                         justifyContent: 'flex-start',
                         marginBottom: 5
@@ -332,6 +332,7 @@ const Page_Company_Event_Id_Update = () => {
                             </div>
                             <Grid item xs={12} align='right' sx={{ marginTop: 5 }}>
                                 <Button type="submit" variant="contained" size='large'>
+                                    <TaskAltIcon sx={{ marginRight: 1 }}></TaskAltIcon>
                                     Save
                                 </Button>
                             </Grid>
