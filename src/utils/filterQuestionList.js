@@ -1,3 +1,3 @@
-export function filterQuestionList() {
+export function filterQuestionList(input, object) {
     return []
 }
