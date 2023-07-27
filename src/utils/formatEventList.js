@@ -13,7 +13,8 @@ export function formatEventList(input) {
   const output = input.map((element) => {
     return {
       EventId: element.eventId,
-      EventCampus: "",
+      EventCampus: element.place,
+      EventDescription: element.description,
       EventName: element.eventName,
       CreatedById: element.recruiterId,
       CreatedByName: "Khoa Cao Tran Anh",

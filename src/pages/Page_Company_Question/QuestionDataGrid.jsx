@@ -15,6 +15,7 @@ export default function QuestionDataGrid(props) {
         autoHeight
         columns={props.columns}
         rows={props.rows ? props.rows : []}
+        loading={props.loading || props.rows === null}
         sx={{
           "&.MuiDataGrid-root": {
             borderRadius: 1,

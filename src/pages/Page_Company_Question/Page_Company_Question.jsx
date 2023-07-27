@@ -49,15 +49,15 @@ export default function Page_Company_Question() {
     dispatch({ type: "saga/getLanguage" });
   }, []);
 
-  const [rows, setRows] = useState(datasjson);
-  
-  const skill_draft = useSelector((state) => state.skill)
-  const language_draft = useSelector((state) => state.language)
-  const skills = skill_draft ? skill_draft : []
-  const languages = language_draft ? language_draft : []
+  const rows = useSelector((state) => state.questionList);
+  const loading = useSelector((state) => state.loading)
+  // const [rows, setRows] = useState(datasjson);
 
-  
-  
+  const skill_draft = useSelector((state) => state.skill);
+  const language_draft = useSelector((state) => state.language);
+  const skills = skill_draft ? skill_draft : [];
+  const languages = language_draft ? language_draft : [];
+
   // const [anchorEl, setAnchorEl] = useState(null);
   // const [valueSearch, setValueSearch] = useState("");
 
@@ -65,7 +65,7 @@ export default function Page_Company_Question() {
   const [statusChoose, setStatusChoose] = useState(null);
 
   const [skillChoose, setSkillChoose] = useState(null);
-  const [languageChoose, setLanguageChoose] = useState(null)
+  const [languageChoose, setLanguageChoose] = useState(null);
 
   const [addModalStatus, setAddModalStatus] = useState(false);
 
@@ -140,7 +140,7 @@ export default function Page_Company_Question() {
   }
 
   function handleChooseLanguage(value) {
-    setLanguageChoose(value)
+    setLanguageChoose(value);
     dispatch({
       type: "saga/getQuestionListWithFilter",
       payload: {
@@ -148,7 +148,7 @@ export default function Page_Company_Question() {
         languageId: value ? value.languageId : null,
         softskill: false,
       },
-    })
+    });
   }
 
   function handleAddModalOpen() {
@@ -161,15 +161,14 @@ export default function Page_Company_Question() {
 
   function handleSubmitQuestion(value) {
     successAlert("Tạo câu hỏi");
-    setRows([
-      ...rows,
-      {
-        QuestionId: rows.length + 1,
+    dispatch({
+      type: "saga/postQuestion",
+      payload: {
         QuestionName: value.question,
         Category: value.category,
         Skill: value.skill,
       },
-    ]);
+    });
   }
 
   function handleModalOpen(value, type) {
@@ -184,19 +183,15 @@ export default function Page_Company_Question() {
 
   function handleUpdateQuestion(value) {
     successAlert("Cập nhật câu hỏi");
-    const updateRows = rows.map((row) => {
-      if (row.QuestionId !== value.QuestionId) {
-        return row;
-      } else {
-        return {
-          ...row,
-          QuestionName: value.QuestionName,
-          Category: value.Category,
-          Skill: value.Skill,
-        };
-      }
+    dispatch({
+      type: "saga/putQuestion",
+      payload: {
+        QuestionId: value.QuestionId,
+        QuestionName: value.QuestionName,
+        Category: value.Category,
+        Skill: value.Skill,
+      },
     });
-    setRows(updateRows);
   }
 
   function handleDeleteModalOpen(value) {
@@ -210,8 +205,9 @@ export default function Page_Company_Question() {
 
   function handleDeleteQuestion(value) {
     successAlert("Xoá câu hỏi");
-    const updateRows = rows.filter((row) => row.id !== value);
-    setRows(updateRows);
+    dispatch({type: "saga/deleteQuestion", payload: {
+      QuestionId: value
+    }})
   }
 
   // function handleOpenSuccessAlert() {
@@ -530,13 +526,13 @@ export default function Page_Company_Question() {
                   )}
                   getOptionLabel={(option) => option.skillName || ""}
                   renderOption={(props, option) => (
-                  <li {...props} key={option.skillId}>
-                    {option.skillName}
-                  </li>
-                )}
-                isOptionEqualToValue={(option, value) => {
-                  return option.skillId === value.skillId;
-                }}
+                    <li {...props} key={option.skillId}>
+                      {option.skillName}
+                    </li>
+                  )}
+                  isOptionEqualToValue={(option, value) => {
+                    return option.skillId === value.skillId;
+                  }}
                   value={skillChoose}
                   onChange={(event, value) => handleChooseSkill(value)}
                 />
@@ -552,13 +548,13 @@ export default function Page_Company_Question() {
                   )}
                   getOptionLabel={(option) => option.languageName || ""}
                   renderOption={(props, option) => (
-                  <li {...props} key={option.languageId}>
-                    {option.languageName}
-                  </li>
-                )}
-                isOptionEqualToValue={(option, value) => {
-                  return option.languageId === value.languageId;
-                }}
+                    <li {...props} key={option.languageId}>
+                      {option.languageName}
+                    </li>
+                  )}
+                  isOptionEqualToValue={(option, value) => {
+                    return option.languageId === value.languageId;
+                  }}
                   value={languageChoose}
                   onChange={(event, value) => handleChooseLanguage(value)}
                 />
@@ -609,6 +605,7 @@ export default function Page_Company_Question() {
           <QuestionDataGrid
             columns={columns}
             rows={rows}
+            loading={loading}
             handleModalOpen={handleModalOpen}
           />
 

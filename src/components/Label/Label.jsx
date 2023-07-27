@@ -13,7 +13,8 @@ import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import { CloseRounded, DoneRounded } from "@mui/icons-material";
 
 export function NullString() {
-  return <Chip icon={<PriorityHighIcon />} label="Unavailable" />;
+  // return <Chip icon={<PriorityHighIcon />} label="" />;
+  return <PriorityHighIcon />
 }
 
 export function NotStart() {
