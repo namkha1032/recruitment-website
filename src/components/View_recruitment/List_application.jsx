@@ -23,9 +23,9 @@ function QuickSearchToolbar() {
 }
 
 const other = {
-    autoHeight: true,
-    showCellVerticalBorder: true,
-    showColumnVerticalBorder: true,
+    autoHeight: true
+    // showCellVerticalBorder: true
+    // showColumnVerticalBorder: true,
 };
 
 const List_application = (props) => {
@@ -53,7 +53,7 @@ const List_application = (props) => {
         return application.status === "Pending"
     }) : [];
     console.log("application", props.applications);
-    console.log("status", pendingmain );
+    console.log("status", pendingmain);
     console.log("chờ", pending1);
     console.log("đậu", pass1);
     console.log("chối", reject1);
@@ -65,14 +65,16 @@ const List_application = (props) => {
             field: "applicationId",
             headerName: "ID",
             headerAlign: 'center',
-            width: 325
+            flex: 0.5,
+            minWidth: 200
         },
 
         {
             field: "candidateName",
             headerName: "Candidate Name",
             headerAlign: 'center',
-            width: 500
+            flex: 1,
+            minWidth: 200
         },
         {
             field: "Detail",
@@ -89,20 +91,21 @@ const List_application = (props) => {
                 );
             },
             headerAlign: 'center',
-            width: 325
+            width: 100
         }
     ];
 
     return (
         props.applications &&
         <>
-            <Box
+            {/* <Box
                 display="flex"
-               
+
                 justifyContent="center"
                 alignItems="center"
                 flexDirection="column"
-                sx={{ height: "100%", width: '100%' }}>
+                sx={{ width: "100%" }}> */}
+
 
                 <Grid container spacing={2} >
                     <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -123,29 +126,43 @@ const List_application = (props) => {
                 </Grid>
 
                 {currentTable == 0 ? (
-                    <DataGrid
-                        sx={{
-                            "& .MuiDataGrid-columnHeaders": {
-                                backgroundColor: "#1976d2",
-                                fontSize: 16
-                            },
-                        }}
-                        slots={{ toolbar: QuickSearchToolbar }}
-                        rowHeight={72}
-                        rows={pendingmain}
-                        {...other}
-                        columns={columns}
-                        getRowId={(row) => row.applicationId}
-                        initialState={{
-                            pagination: {
-                                paginationModel: {
-                                    pageSize: 5,
+                        <Box sx ={{padding: "0"}}>
+                        <DataGrid
+                            sx={{
+                                "& .MuiDataGrid-columnHeaders": {
+                                    backgroundColor: "#1976d2",
+                                    fontSize: 16,
+                                    color: "white",
+                                    fontWeight: 600
                                 },
-                            },
-                        }}
-                        pageSizeOptions={[5]}
+                                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                                    outline: "none",
+                                },
+                                "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                                    outline: "none",
+                                },
+                                "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                                    display: "none",
+                                }
+                            }}
+                            slots={{ toolbar: QuickSearchToolbar }}
+                            rowHeight={72}
+                            rows={pendingmain}
+                            {...other}
+                            columns={columns}
+                            getRowId={(row) => row.applicationId}
+                            initialState={{
+                                pagination: {
+                                    paginationModel: {
+                                        pageSize: 5,
+                                    },
+                                },
+                            }}
+                            pageSizeOptions={[5]}
+                            disableColumnMenu
 
-                    />
+                        />
+                    </Box>
                 ) : null}
                 {currentTable == 1 ? (
                     <DataGrid
@@ -153,15 +170,20 @@ const List_application = (props) => {
                             "& .MuiDataGrid-columnHeaders": {
                                 backgroundColor: "#ed6c02",
 
-                                fontSize: 16
-                            },
-                            "& .MuiDataGrid-cell": {
-                                border: 1,
-                                borderRight: 1,
-                                borderTop: 1,
-                                borderBottom: 1
+                                fontSize: 16,
 
+                                color: "white",
+                                fontWeight: 600
                             },
+                            "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                                outline: "none",
+                            },
+                            "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                                outline: "none",
+                            },
+                            "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                                display: "none",
+                            }
                         }}
                         slots={{ toolbar: QuickSearchToolbar }}
                         rowHeight={72}
@@ -177,6 +199,7 @@ const List_application = (props) => {
                             },
                         }}
                         pageSizeOptions={[5]}
+                        disableColumnMenu
                     />
 
                 ) : null}
@@ -186,14 +209,18 @@ const List_application = (props) => {
                             "& .MuiDataGrid-columnHeaders": {
                                 backgroundColor: "#1b5e20",
                                 color: "white",
-                                fontSize: 16
+                                fontSize: 16,
+                                fontWeight: 600
                             },
-                            "& .MuiDataGrid-cell": {
-                                border: 1,
-                                borderRight: 1,
-                                borderTop: 1,
-                                borderBottom: 1
+                            "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                                outline: "none",
                             },
+                            "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                                outline: "none",
+                            },
+                            "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                                display: "none",
+                            }
                         }}
                         slots={{ toolbar: QuickSearchToolbar }}
                         rowHeight={72}
@@ -209,10 +236,11 @@ const List_application = (props) => {
                             },
                         }}
                         pageSizeOptions={[5]}
+                        disableColumnMenu
                     />
                 ) : null}
 
-            </Box>
+            {/* </Box> */}
         </>
 
     );
