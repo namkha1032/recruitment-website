@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
@@ -20,6 +20,7 @@ import GigaCard from "../../components/GigaCard/GigaCard"
 import { Favorite, FavoriteBorder, FavoriteOutlined } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import AppPagination from '../../components/AppPagination';
+import { TextField } from '@mui/material';
 
 
 const cards1 = [1, 2, 3, 4, 5, 6];
@@ -48,7 +49,10 @@ const Page_Recruitment = () => {
     const [like,setLike] = React.useState(true)
     const [pList,setPList] = React.useState(null)
     const positionList = useSelector(state => state.positionList)
+    const [pList,setPList] =useState(positionList)
+    const [search,setSearch] = useState('')
     //
+    let newList;
     const navigate = useNavigate()  
     const handleNavigateClick1 = (id) => {
       navigate(`/recruitment/${id}`)
@@ -112,8 +116,12 @@ const Page_Recruitment = () => {
           {/* End hero unit */
         
           }
-      
+          
           <Grid container spacing={8} sx={{padding:'30px 0px 0px 0px'}}>
+            <TextField label='Search' value={search} onChange={(e)=> setSearch(e.target.value)}/> 
+            
+              { newList = positionList.filter((temp ) => search.includes(temp.PositionName) )}
+            console.log(newList)
             {pList.map((card) => (
               <Grid item key={card.PositionId} xs={12}>
                   <Box sx={{backgroundColor:'#FFFFFF', borderRadius:'10px', boxShadow:10 } }>
