@@ -103,7 +103,7 @@ const Page_Company_Interview_Create = () => {
     useEffect(() => {
         if (newError.status == "no") {
             cleanStore(dispatch)
-            navigate("/company/interview/1")
+            navigate("/company/interview/00000000-0000-0000-0000-000000000001")
         }
         if (newError.status == "yes") {
             setErrorSnackbar(true)
