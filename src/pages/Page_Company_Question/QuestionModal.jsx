@@ -19,6 +19,7 @@ import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import CategoryIcon from "@mui/icons-material/Category";
 import SchoolIcon from "@mui/icons-material/School";
 import LanguageIcon from "@mui/icons-material/Language";
+import SubjectRoundedIcon from '@mui/icons-material/SubjectRounded';
 import { useState } from "react";
 
 export default function QuestionModal(props) {
@@ -133,9 +134,7 @@ export default function QuestionModal(props) {
                   color: "black",
                 }}
               >
-                {props.type === true
-                  ? "Update question"
-                  : "Question " + props.value.QuestionId}
+                {props.type === true ? "Update question" : "Question "}
               </Box>
             </Grid>
             <Grid
@@ -158,7 +157,7 @@ export default function QuestionModal(props) {
             </Grid>
             <Grid
               item
-              xs={12}
+              xs={3}
               md={3}
               sx={{
                 display: "flex",
@@ -168,6 +167,33 @@ export default function QuestionModal(props) {
               }}
             >
               <QuestionMarkIcon sx={{ marginRight: 1 }} />
+              <Box sx={{ fontWeight: 600 }}>ID</Box>
+            </Grid>
+            <Grid
+              item
+              xs={9}
+              md={9}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                marginBottom: 1,
+              }}
+            >
+              {props.value.QuestionId}
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={3}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                marginBottom: 1,
+              }}
+            >
+              <SubjectRoundedIcon sx={{ marginRight: 1 }} />
               <Box sx={{ fontWeight: 600 }}>Question</Box>
             </Grid>
             <Grid
@@ -216,7 +242,7 @@ export default function QuestionModal(props) {
             </Grid>
             <Grid
               item
-              xs={12}
+              xs={3}
               md={3}
               sx={{
                 display: "flex",
@@ -229,7 +255,7 @@ export default function QuestionModal(props) {
             </Grid>
             <Grid
               item
-              xs={12}
+              xs={9}
               md={9}
               sx={{
                 display: "flex",
@@ -449,8 +475,8 @@ export default function QuestionModal(props) {
                   textTransform: "none",
                   "&:hover": {
                     backgroundColor: "black",
-                    color: "white"
-                  }
+                    color: "white",
+                  },
                 }}
                 onClick={() => {
                   if (props.type === true) {

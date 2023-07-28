@@ -32,6 +32,9 @@ import { useDispatch, useSelector } from "react-redux";
 import cleanStore from "../../utils/cleanStore";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+import { errorAlert } from "../../components/Alert/ErrorAlert";
+import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // JSON <- Event
 // {
@@ -63,8 +66,36 @@ export default function Page_Company_Event() {
   // const [valueChoose, setValueChoose] = useState(null);
   // const [departmentChoose, setDepartmentChoose] = useState(null);
   
-  const loading = useSelector((state) => state.loading)
-  // const [statusChoose, setStatusChoose] = useState(null);
+  const loading = useSelector((state) => state.loading);
+  const error = useSelector((state) => state.error);
+
+  useEffect(() => {
+    let timeoutId = null
+    if (error.status === "yes") {
+      errorAlert(error.message);
+      timeoutId = setTimeout(() => {
+        dispatch({
+          type: "error/setError",
+          payload: {
+            status: "idle",
+            message: "",
+          },
+        });
+      }, 2000);
+    } else if (error.status === "no") {
+      dispatch({
+        type: "error/setError",
+        payload: {
+          status: "idle",
+          message: "",
+        },
+      });
+    }
+    return () => clearTimeout(timeoutId);
+  }, [error]);
+
+
+  const [statusChoose, setStatusChoose] = useState(null);
 
   // function handleMoreClick(event) {
   //   setAnchorEl(event.currentTarget);
@@ -88,15 +119,15 @@ export default function Page_Company_Event() {
   //   setStatusChoose(null);
   // }
 
-  // function handleChooseStatus(value) {
-  //   setStatusChoose(value);
-  //   dispatch({
-  //     type: "saga/getEventListWithFilter",
-  //     payload: {
-  //       status: value ? value : null,
-  //     },
-  //   });
-  // }
+  function handleChooseStatus(value) {
+    setStatusChoose(value);
+    dispatch({
+      type: "saga/getEventListWithFilter",
+      payload: {
+        status: value ? value : null,
+      },
+    });
+  }
 
   function handleDetailClick(value) {
     cleanStore(dispatch);
@@ -192,21 +223,21 @@ export default function Page_Company_Event() {
         if (params.value === undefined) return NullString();
       },
     },
-    // {
-    //   field: "Status",
-    //   type: "string",
-    //   headerAlign: "center",
-    //   align: "center",
-    //   minWidth: 180,
-    //   flex: 0.3,
-    //   renderHeader: () => <span>Status</span>,
-    //   renderCell: (params) => {
-    //     if (params.value === false) {
-    //       return <Upcoming />;
-    //     }
-    //     return <Completed />;
-    //   },
-    // },
+    {
+      field: "Status",
+      type: "string",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 180,
+      flex: 0.3,
+      renderHeader: () => <span>Status</span>,
+      renderCell: (params) => {
+        if (params.value === false) {
+          return <Upcoming />;
+        }
+        return <Completed />;
+      },
+    },
     {
       field: "actions",
       type: "actions",
@@ -319,7 +350,7 @@ export default function Page_Company_Event() {
             </Grid>
 
             {/* --- Filter --- */}
-            {/* <Grid
+            <Grid
               item
               xs={12}
               sm={12}
@@ -381,7 +412,7 @@ export default function Page_Company_Event() {
                 value={statusChoose}
                 onChange={(event, value) => handleChooseStatus(value)}
               />
-            </Grid> */}
+            </Grid>
 
             {/* <Grid
           item
@@ -499,6 +530,8 @@ export default function Page_Company_Event() {
           </Box>
         </GigaCardBody>
       </GigaCard>
+
+      <ToastContainer transition={Slide} hideProgressBar={true} />
     </Box>
   );
 }

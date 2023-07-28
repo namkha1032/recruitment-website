@@ -1,0 +1,13 @@
+// filter: { status: [true, false, null] ~ [Finished, Upcoming]}
+
+export function filterEventList(input, filter) {
+    if (filter.status === null) {
+        return input
+    }
+    else if (filter.status === "Finished") {
+        return input.filter(element => element.isDeleted === true)
+    }
+    else {
+        return input.filter(element => element.isDeleted === false)
+    }
+}

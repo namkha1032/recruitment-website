@@ -12,6 +12,7 @@ import Grid from "@mui/material/Grid";
 import QuestionFormModal from "./QuestionFormModal";
 import QuestionModal from "./QuestionModal";
 import { successAlert } from "../../components/Alert/SuccessAlert";
+import { errorAlert } from "../../components/Alert/ErrorAlert";
 import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
 import {
   NullString,
@@ -34,10 +35,10 @@ import { useDispatch, useSelector } from "react-redux";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 
-const listOfSkills = {
-  skill: ["React", "Angular", "Java", "Python", "Figma", ".NET", "C", "C++"],
-  language: ["English", "Vietnamese", "Japanese", "Chinese", "Korian"],
-};
+// const listOfSkills = {
+//   skill: ["React", "Angular", "Java", "Python", "Figma", ".NET", "C", "C++"],
+//   language: ["English", "Vietnamese", "Japanese", "Chinese", "Korian"],
+// };
 
 export default function Page_Company_Question() {
   const navigate = useNavigate();
@@ -50,7 +51,34 @@ export default function Page_Company_Question() {
   }, []);
 
   const rows = useSelector((state) => state.questionList);
-  const loading = useSelector((state) => state.loading)
+  const loading = useSelector((state) => state.loading);
+  const error = useSelector((state) => state.error);
+
+  useEffect(() => {
+    let timeoutId = null
+    if (error.status === "yes") {
+      errorAlert(error.message);
+      timeoutId = setTimeout(() => {
+        dispatch({
+          type: "error/setError",
+          payload: {
+            status: "idle",
+            message: "",
+          },
+        });
+      }, 2000);
+    } else if (error.status === "no") {
+      dispatch({
+        type: "error/setError",
+        payload: {
+          status: "idle",
+          message: "",
+        },
+      });
+    }
+    return () => clearTimeout(timeoutId);
+  }, [error]);
+  
   // const [rows, setRows] = useState(datasjson);
 
   const skill_draft = useSelector((state) => state.skill);
@@ -91,13 +119,13 @@ export default function Page_Company_Question() {
   //   setAnchorEl(null);
   // }
 
-  function handleRowClick(id) {
-    alert("Navigate to position id: " + id);
-  }
+  // function handleRowClick(id) {
+  //   alert("Navigate to position id: " + id);
+  // }
 
-  function handleAddClick() {
-    navigate("./create");
-  }
+  // function handleAddClick() {
+  //   navigate("./create");
+  // }
 
   // function handleSearchClick() {
   //   alert("Value search: " + valueSearch);
@@ -111,9 +139,51 @@ export default function Page_Company_Question() {
       dispatch({
         type: "saga/getQuestionListWithFilter",
         payload: {
+          categoryName: "Soft Skills",
           skillId: null,
+          skillName: null,
           languageId: null,
+          languageName: null,
           softskill: true,
+        },
+      });
+    }
+    else if (value === "Technology") {
+      dispatch({
+        type: "saga/getQuestionListWithFilter",
+        payload: {
+          categoryName: "Technology",
+          skillId: null,
+          skillName: null,
+          languageId: null,
+          languageName: null,
+          softskill: false,
+        },
+      });
+    }
+    else if (value === "Language") {
+      dispatch({
+        type: "saga/getQuestionListWithFilter",
+        payload: {
+          categoryName: "Language",
+          skillId: null,
+          skillName: null,
+          languageId: null,
+          languageName: null,
+          softskill: false,
+        },
+      });
+    }
+    else {
+      dispatch({
+        type: "saga/getQuestionListWithFilter",
+        payload: {
+          categoryName: null,
+          skillId: null,
+          skillName: null,
+          languageId: null,
+          languageName: null,
+          softskill: false,
         },
       });
     }
@@ -132,8 +202,11 @@ export default function Page_Company_Question() {
     dispatch({
       type: "saga/getQuestionListWithFilter",
       payload: {
+        categoryName: "Technology",
         skillId: value ? value.skillId : null,
+        skillName: value ? value.skillName : null,
         languageId: null,
+        languageName: null,
         softskill: false,
       },
     });
@@ -144,8 +217,11 @@ export default function Page_Company_Question() {
     dispatch({
       type: "saga/getQuestionListWithFilter",
       payload: {
+        categoryName: "Language",
         skillId: null,
+        skillName: null,
         languageId: value ? value.languageId : null,
+        languageName: value ? value.languageName : null,
         softskill: false,
       },
     });
@@ -160,7 +236,7 @@ export default function Page_Company_Question() {
   }
 
   function handleSubmitQuestion(value) {
-    successAlert("Tạo câu hỏi");
+    successAlert("Create question");
     dispatch({
       type: "saga/postQuestion",
       payload: {
@@ -182,7 +258,7 @@ export default function Page_Company_Question() {
   }
 
   function handleUpdateQuestion(value) {
-    successAlert("Cập nhật câu hỏi");
+    successAlert(`Update question ${value.QuestionId}`);
     dispatch({
       type: "saga/putQuestion",
       payload: {
@@ -287,7 +363,7 @@ export default function Page_Company_Question() {
       type: "string",
       headerAlign: "center",
       align: "center",
-      minWidth: 50,
+      width: 90,
       renderHeader: () => <span>Type</span>,
       renderCell: (params) => {
         if (params.value === undefined) return <NullString />;
@@ -357,7 +433,7 @@ export default function Page_Company_Question() {
               marginBottom: 5,
             }}
           >
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} sm={6} md={8}>
               <Box
                 sx={{
                   fontSize: 40,
@@ -373,11 +449,13 @@ export default function Page_Company_Question() {
             <Grid
               item
               xs={12}
+              sm={6}
               md={4}
               sx={{
                 display: "flex",
                 justifyContent: {
                   md: "flex-end",
+                  sm: "flex-end",
                   xs: "flex-start",
                 },
                 alignItems: "center",
@@ -390,7 +468,11 @@ export default function Page_Company_Question() {
                   border: "1px solid black",
                   textTransform: "none",
                   height: 50,
-                  width: 250,
+                  width: {
+                    xs: "100%",
+                    sm: 250,
+                    md: 250
+                  },
                   "&:hover": {
                     backgroundColor: "black",
                     color: "white",
@@ -440,6 +522,7 @@ export default function Page_Company_Question() {
             <Grid
               item
               xs={12}
+              sm={12}
               md={7}
               sx={{
                 display: "flex",
@@ -613,7 +696,7 @@ export default function Page_Company_Question() {
             key={addModalStatus}
             addModalStatus={addModalStatus}
             handleAddModalClose={handleAddModalClose}
-            options={listOfSkills}
+            options={{skill: skills, language: languages}}
             handleSubmitQuestion={handleSubmitQuestion}
             keepMounted
           />
@@ -622,7 +705,7 @@ export default function Page_Company_Question() {
             key={valueUpdate.QuestionId}
             modalStatus={modalStatus}
             handleModalClose={handleModalClose}
-            options={listOfSkills}
+            options={{skill: skills, language: languages}}
             handleUpdateQuestion={handleUpdateQuestion}
             value={valueUpdate}
             type={typeStatus}

@@ -28,6 +28,9 @@ export default function QuestionDataGrid(props) {
             color: "white",
             fontWeight: 700,
           },
+          "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+            outline: "none",
+          },
           "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
             display: "none",
           },

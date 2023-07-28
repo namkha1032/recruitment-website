@@ -16,7 +16,7 @@ import DoNotDisturbOnRoundedIcon from "@mui/icons-material/DoNotDisturbOnRounded
 import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineRounded";
 import PauseCircleOutlineRoundedIcon from "@mui/icons-material/PauseCircleOutlineRounded";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
-import { GridApi } from '@mui/x-data-grid';
+import { GridApi } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
@@ -42,6 +42,10 @@ import {
 import cleanStore from "../../utils/cleanStore";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+import { errorAlert } from "../../components/Alert/ErrorAlert";
+import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 // JSON -> getPositionListWithFilter
 // {
@@ -83,6 +87,33 @@ export default function Page_Company_Recruitment() {
   }, []);
 
   const loading = useSelector((state) => state.loading);
+  const error = useSelector((state) => state.error);
+
+  useEffect(() => {
+    let timeoutId = null
+    if (error.status === "yes") {
+      errorAlert(error.message);
+      timeoutId = setTimeout(() => {
+        dispatch({
+          type: "error/setError",
+          payload: {
+            status: "idle",
+            message: "",
+          },
+        });
+      }, 2000);
+    } else if (error.status === "no") {
+      dispatch({
+        type: "error/setError",
+        payload: {
+          status: "idle",
+          message: "",
+        },
+      });
+    }
+    return () => clearTimeout(timeoutId);
+  });
+
   const rows = useSelector((state) => state.positionList);
   const department_draft = useSelector((state) => state.department);
   // const language_draft = useSelector((state) => state.language);
@@ -98,7 +129,9 @@ export default function Page_Company_Recruitment() {
   // const [valueChoose, setValueChoose] = useState(null);
 
   const [departmentChoose, setDepartmentChoose] = useState(null);
-  // const [statusChoose, setStatusChoose] = useState(null); -> Backend không có
+
+  // Dùng isDeleted thay thế cho status
+  const [statusChoose, setStatusChoose] = useState(null);
   // const [languageChoose, setLanguageChoose] = useState(null);
 
   const [valueReport, setValueReport] = useState(0);
@@ -140,6 +173,7 @@ export default function Page_Company_Recruitment() {
       type: "saga/getPositionListWithFilter",
       payload: {
         departmentId: value ? value.departmentId : null,
+        status: statusChoose,
       },
     });
   }
@@ -156,17 +190,17 @@ export default function Page_Company_Recruitment() {
   //   }
   // }
 
-  // -> Backend không có
-  // function handleChooseStatus(value) {
-  //   setStatusChoose(value);
-  //   dispatch({
-  //     type: "saga/getPositionListWithFilter",
-  //     payload: {
-  //       departmentId: departmentChoose ? departmentChoose.departmentId : null,
-  //       status: value ? value : null,
-  //     },
-  //   });
-  // }
+  // Dùng isDeleted thay thế cho status
+  function handleChooseStatus(value) {
+    setStatusChoose(value);
+    dispatch({
+      type: "saga/getPositionListWithFilter",
+      payload: {
+        departmentId: departmentChoose ? departmentChoose.departmentId : null,
+        status: value ? value : null,
+      },
+    });
+  }
 
   function handleDetailClick(value) {
     console.log(value);
@@ -182,20 +216,20 @@ export default function Page_Company_Recruitment() {
     });
   }
 
-  // -> Backend không có
-  // function handleActiveClick(value) {
-  //   dispatch({
-  //     type: "saga/updatePositionList",
-  //     payload: { id: value, Status: true },
-  //   });
-  // }
+  // Dùng isDeleted thay cho Status
+  function handleActiveClick(value) {
+    dispatch({
+      type: "saga/updatePositionList",
+      payload: { id: value, Status: false },
+    });
+  }
 
-  // function handleInactiveClick(value) {
-  //   dispatch({
-  //     type: "saga/updatePositionList",
-  //     payload: { id: value, Status: false },
-  //   });
-  // }
+  function handleInactiveClick(value) {
+    dispatch({
+      type: "saga/updatePositionList",
+      payload: { id: value, Status: true },
+    });
+  }
 
   // function handleEditClick(value) {
   //   navigate(`./${value}/update`)
@@ -293,20 +327,20 @@ export default function Page_Company_Recruitment() {
       minWidth: 100,
       flex: 0.2,
     },
-    // {
-    //   field: "Status",
-    //   minWidth: 180,
-    //   flex: 0.3,
-    //   headerAlign: "center",
-    //   align: "center",
-    //   renderHeader: () => <span>Status</span>,
-    //   renderCell: (params) => {
-    //     if (params.value) {
-    //       return <Active />;
-    //     }
-    //     return <Inactive />;
-    //   },
-    // },
+    {
+      field: "Status",
+      minWidth: 180,
+      flex: 0.3,
+      headerAlign: "center",
+      align: "center",
+      renderHeader: () => <span>Status</span>,
+      renderCell: (params) => {
+        if (params.value === false) {
+          return <Active />;
+        }
+        return <Inactive />;
+      },
+    },
     {
       field: "actions",
       type: "actions",
@@ -314,48 +348,93 @@ export default function Page_Company_Recruitment() {
       headerAlign: "right",
       align: "right",
       getActions: (params) => {
-        return [
-          <GridActionsCellItem
-            icon={
-              <InfoRoundedIcon
-                variant="outlined"
-                sx={{
-                  color: "black",
-                }}
-              />
-            }
-            label="Detail"
-            sx={{
-              color: "black",
-            }}
-            onClick={() => handleDetailClick(params.row.PositionId)}
-            showInMenu
-          />,
-          <GridActionsCellItem
-            icon={
-              <QueryStatsRoundedIcon
-                sx={{
-                  color: "black",
-                }}
-              />
-            }
-            label="Report"
-            sx={{
-              color: "black",
-            }}
-            onClick={() => handleReportClick(params.row.PositionId)}
-            showInMenu
-          />,
-          // <GridActionsCellItem
-          //   icon={<PlayCircleOutlineRoundedIcon sx={{ color: "#1565C0" }} />}
-          //   label="Active position"
-          //   onClick={() => handleActiveClick(params.row.PositionId)}
-          //   showInMenu
-          //   sx={{
-          //     color: "#1565C0",
-          //   }}
-          // />,
-        ];
+        if (params.row.Status === true) {
+          return [
+            <GridActionsCellItem
+              icon={
+                <InfoRoundedIcon
+                  variant="outlined"
+                  sx={{
+                    color: "black",
+                  }}
+                />
+              }
+              label="Detail"
+              sx={{
+                color: "black",
+              }}
+              onClick={() => handleDetailClick(params.row.PositionId)}
+              showInMenu
+            />,
+            <GridActionsCellItem
+              icon={
+                <QueryStatsRoundedIcon
+                  sx={{
+                    color: "black",
+                  }}
+                />
+              }
+              label="Report"
+              sx={{
+                color: "black",
+              }}
+              onClick={() => handleReportClick(params.row.PositionId)}
+              showInMenu
+            />,
+            <GridActionsCellItem
+              icon={<PlayCircleOutlineRoundedIcon sx={{ color: "#1565C0" }} />}
+              label="Active position"
+              onClick={() => handleActiveClick(params.row.PositionId)}
+              showInMenu
+              sx={{
+                color: "#1565C0",
+              }}
+            />,
+          ];
+        } else {
+          return [
+            <GridActionsCellItem
+              icon={
+                <InfoRoundedIcon
+                  variant="outlined"
+                  sx={{
+                    color: "black",
+                  }}
+                />
+              }
+              label="Detail"
+              sx={{
+                color: "black",
+              }}
+              onClick={() => handleDetailClick(params.row.PositionId)}
+              showInMenu
+            />,
+            <GridActionsCellItem
+              icon={
+                <QueryStatsRoundedIcon
+                  sx={{
+                    color: "black",
+                  }}
+                />
+              }
+              label="Report"
+              sx={{
+                color: "black",
+              }}
+              onClick={() => handleReportClick(params.row.PositionId)}
+              showInMenu
+            />,
+            <GridActionsCellItem
+              icon={<PauseCircleOutlineRoundedIcon sx={{ color: "#cc3300" }} />}
+              label="Inactive position"
+              onClick={() => handleInactiveClick(params.row.PositionId)}
+              showInMenu
+              sx={{
+                color: "#cc3300",
+              }}
+            />,
+          ];
+        }
       },
     },
   ]);
@@ -523,7 +602,7 @@ export default function Page_Company_Recruitment() {
                 onChange={(event, value) => handleChooseDepartment(value)}
               />
 
-              {/* <Autocomplete
+              <Autocomplete
                 disablePortal
                 id="filter-type"
                 options={["Active", "Inactive"]}
@@ -573,7 +652,7 @@ export default function Page_Company_Recruitment() {
                 }}
                 value={statusChoose}
                 onChange={(event, value) => handleChooseStatus(value)}
-              /> */}
+              />
 
               {/* {valueChoose === "Language" && (
             <Autocomplete
@@ -730,6 +809,8 @@ export default function Page_Company_Recruitment() {
           </Box>
         </GigaCardBody>
       </GigaCard>
+
+      <ToastContainer transition={Slide} hideProgressBar={true} />
     </Box>
   );
 }

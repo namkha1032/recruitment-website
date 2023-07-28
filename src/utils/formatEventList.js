@@ -19,6 +19,7 @@ export function formatEventList(input) {
       CreatedById: element.recruiterId,
       CreatedByName: "Khoa Cao Tran Anh",
       NumOfJoined: 0,
+      Status: element.isDeleted
     };
   });
   return output

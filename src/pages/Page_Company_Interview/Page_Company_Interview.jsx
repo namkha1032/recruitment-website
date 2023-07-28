@@ -66,6 +66,11 @@ import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 //   "EndDate": "11/12/2023",
 //   "Status": [true, false] ~ ["Active", "Inactive"]
 // }
+// Dispatch getPositionListWithFilter
+// {
+//   "department":""
+//   "status": null
+// }
 
 export default function Page_Company_Interview() {
   const dispatch = useDispatch();
@@ -150,6 +155,7 @@ export default function Page_Company_Interview() {
       type: "saga/getPositionListWithFilter",
       payload: {
         departmentId: value ? value.departmentId : null,
+        status: null
       },
     });
   }
