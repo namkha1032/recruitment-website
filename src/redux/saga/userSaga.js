@@ -261,7 +261,7 @@ function* userLogout() {
     // yield call(window.sessionStorage.removeItem, 'user')
     window.localStorage.removeItem('user')
     window.sessionStorage.removeItem('user')
-    yield put({ type: "user/setUser", payload: null })
+    yield put({ type: "user/userLogout", payload: null })
 }
 
 
