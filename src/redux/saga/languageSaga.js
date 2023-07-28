@@ -3,9 +3,13 @@ import axios from "axios";
 import host from "../host";
 function* getLanguage(action) {
   try {
+    // const response = yield call(
+    //   axios.get,
+    //   "http://leetun2k2-001-site1.gtempurl.com/api/Language"
+    // );
     const response = yield call(
       axios.get,
-      "http://leetun2k2-001-site1.gtempurl.com/api/Language"
+      `${host.name}/data/languageList.json`
     );
     yield put({ type: "language/setLanguage", payload: response.data });
     yield put({

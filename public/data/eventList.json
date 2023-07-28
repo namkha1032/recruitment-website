@@ -1,102 +1,72 @@
 [
-    {
-      "EventId": 1,
-      "EventCampus":"HCM Campus",
-      "EventName": "Music on the Soul",
-      "EventDescription":" Hoà mình vào giai điệu",
-      "CreatedById": 9,
-      "CreatedByName": "Nguyễn Văn A",
-      "NumOfJoined": 150,
-      "Status": true
-    },
-    {
-      "EventId": 234,
-      "EventCampus":"CanTho Campus",
-      "EventName": "Lên lịch học English",
-      "EventDescription":"Nâng trình English nào",
-      "CreatedById": 12,
-      "CreatedByName": "Nguyễn Văn A",
-      "NumOfJoined": 50,
-      "Status": true
-    },
-    {
-      "EventId": 3,
-      "EventCampus":"HaNoi Campus",
-      "EventName": "Code war",
-      "EventDescription":" Solo cùng các cao thủ ",
-      "CreatedById": 911,
-      "CreatedByName": "Nguyễn Văn A",
-      "NumOfJoined": 30,
-      "Status": true
-    },
-    {
-      "EventId": 444,
-      "EventCampus":"HCM Campus",
-      "EventName": "Lên lịch học English",
-      "EventDescription":" Hoà mình vào giai điệu",
-      "CreatedById": 129,
-      "CreatedByName": "Nguyễn Văn A",
-      "NumOfJoined": 20,
-      "Status": true
-    },
-    {
-      "EventId": 5,
-      "EventCampus":"DaNang Campus",
-      "EventName": "Lên lịch học English",
-      "EventDescription":" Hoà mình vào giai điệu",
-      "CreatedById": 90,
-      "CreatedByName": "Nguyễn Văn A",
-      "NumOfJoined": 30,
-      "Status": true
-    },
-    {
-      "EventId": 57,
-      "EventCampus":"DongNai Campus",
-      "EventName": "Lên lịch học English",
-      "EventDescription":" Hoà mình vào giai điệu",
-      "CreatedById": 1019,
-      "CreatedByName": "Nguyễn Văn A",
-      "NumOfJoined": 30,
-      "Status": false
-    },
-    {
-      "EventId": 500,
-      "EventCampus":"HCM Campus",
-      "EventName": "Lên lịch học English",
-      "EventDescription":" Hoà mình vào giai điệu",
-      "CreatedById": 998,
-      "CreatedByName": "Nguyễn Văn A",
-      "NumOfJoined": 15,
-      "Status": true
-    },
-    {
-      "EventId": 512,
-      "EventCampus":"HCM Campus",
-      "EventName": "Lên lịch học English",
-      "EventDescription":" Hoà mình vào giai điệu",
-      "CreatedById": 1249,
-      "CreatedByName": "Nguyễn Văn A",
-      "NumOfJoined": 90,
-      "Status": true
-    },
-    {
-      "EventId": 115,
-      "EventCampus":"HCM Campus",
-      "EventName": "Lên lịch học English",
-      "EventDescription":" Hoà mình vào giai điệu",
-      "CreatedById": 92345,
-      "CreatedByName": "Nguyễn Văn A",
-      "NumOfJoined": 150,
-      "Status": true
-    },
-    {
-      "EventId": 15,
-      "EventCampus":"HCM Campus",
-      "EventName": "Lên lịch học English",
-      "EventDescription":" Hoà mình vào giai điệu",
-      "CreatedById": 934,
-      "CreatedByName": "Nguyễn Văn A",
-      "NumOfJoined": 150,
-      "Status": false
-    }
-  ]
+  {
+    "eventId": "00000000-0000-0000-0000-000000000001",
+    "eventName": "Code war",
+    "recruiterId": "00000000-0000-0000-0000-000000000001",
+    "description": "f1",
+    "place": "f1",
+    "datetimeEvent": "2002-02-02T00:00:00",
+    "maxParticipants": 100,
+    "isDeleted": false
+  },
+  {
+    "eventId": "00000000-0000-0000-0000-000000000002",
+    "eventName": "Hat ho",
+    "recruiterId": "00000000-0000-0000-0000-000000000002",
+    "description": "f2",
+    "place": "f2",
+    "datetimeEvent": "2003-03-03T00:00:00",
+    "maxParticipants": 500,
+    "isDeleted": false
+  },
+  {
+    "eventId": "00000000-0000-0000-0000-000000000004",
+    "eventName": "3",
+    "recruiterId": "00000000-0000-0000-0000-000000000001",
+    "description": "f3",
+    "place": "kaalnsljnlanfasf",
+    "datetimeEvent": "2002-03-04T00:00:00",
+    "maxParticipants": 12,
+    "isDeleted": false
+  },
+  {
+    "eventId": "00000000-0000-0000-0000-000000000006",
+    "eventName": "124124",
+    "recruiterId": "00000000-0000-0000-0000-000000000002",
+    "description": "wewefwwfef",
+    "place": "124124",
+    "datetimeEvent": "2012-05-03T00:00:00",
+    "maxParticipants": 124,
+    "isDeleted": false
+  },
+  {
+    "eventId": "9044ed99-062d-449c-8a05-213e59d9ae41",
+    "eventName": "Soccer Fight",
+    "recruiterId": "00000000-0000-0000-0000-000000000001",
+    "description": "Giao lưu bóng đá ",
+    "place": "HCM",
+    "datetimeEvent": "2023-07-30T07:11:11.448",
+    "maxParticipants": 11,
+    "isDeleted": false
+  },
+  {
+    "eventId": "998d5cea-1fc6-4f11-b553-49a291e29e0d",
+    "eventName": "Giao lưu võ thuật",
+    "recruiterId": "00000000-0000-0000-0000-000000000002",
+    "description": "Hoạt động tay chân",
+    "place": "FTown 3",
+    "datetimeEvent": "2023-07-27T09:27:21.667",
+    "maxParticipants": 10,
+    "isDeleted": false
+  },
+  {
+    "eventId": "0707c1f1-2d9d-424d-886c-e30354916b62",
+    "eventName": "Giao lưu võ thuật",
+    "recruiterId": "00000000-0000-0000-0000-000000000002",
+    "description": "Hoạt động tay chân",
+    "place": "FTown 3",
+    "datetimeEvent": "2023-07-27T09:27:21.667",
+    "maxParticipants": 10,
+    "isDeleted": false
+  }
+]

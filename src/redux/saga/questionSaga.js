@@ -10,36 +10,36 @@ function* getAllQuestion() {
   console.log("Get All Question");
   try {
     yield put({ type: "loading/onLoading" });
-    // yield call(delay, 1500)
-    // const response = yield call(axios.get, `${host.name}/data/questionListR.json`)
+    yield call(delay, 1500)
+    const response = yield call(axios.get, `${host.name}/data/questionListR.json`)
+    yield put({ type: "questionList/setQuestionList", payload: response.data });
+    // const response = yield call(
+    //   axios.get,
+    //   "http://leetun2k2-001-site1.gtempurl.com/api/Question"
+    // );
+    // // --- GET NAME
 
-    const response = yield call(
-      axios.get,
-      "http://leetun2k2-001-site1.gtempurl.com/api/Question"
-    );
-    // --- GET NAME
+    // const categorys = yield call(
+    //   axios.get,
+    //   "http://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion"
+    // );
+    // const skillsQ = yield call(
+    //   axios.get,
+    //   "http://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill"
+    // );
+    // const skills = yield call(
+    //   axios.get,
+    //   "http://leetun2k2-001-site1.gtempurl.com/api/Skill"
+    // );
+    // const data = yield call(
+    //   formatQuestionList,
+    //   response.data,
+    //   categorys.data,
+    //   skillsQ.data,
+    //   skills.data
+    // );
 
-    const categorys = yield call(
-      axios.get,
-      "http://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion"
-    );
-    const skillsQ = yield call(
-      axios.get,
-      "http://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill"
-    );
-    const skills = yield call(
-      axios.get,
-      "http://leetun2k2-001-site1.gtempurl.com/api/Skill"
-    );
-    const data = yield call(
-      formatQuestionList,
-      response.data,
-      categorys.data,
-      skillsQ.data,
-      skills.data
-    );
-
-    yield put({ type: "questionList/setQuestionList", payload: data });
+    // yield put({ type: "questionList/setQuestionList", payload: data });
     yield put({ type: "loading/offLoading" });
     yield put({
       type: "error/setError",
@@ -63,39 +63,40 @@ function* getQuestionListWithFilter(action) {
   console.log("Filter by: ", action.payload);
   try {
     yield put({ type: "loading/onLoading" });
-    // yield call(delay, 1500)
-    // const response = yield call(axios.get, `${host.name}/data/questionlist.json`)
+    yield call(delay, 1500)
+    const response = yield call(axios.get, `${host.name}/data/questionlist.json`)
+    yield put({ type: "questionList/setQuestionList", payload: response.data });
 
-    const response = yield call(
-      axios.get,
-      "http://leetun2k2-001-site1.gtempurl.com/api/Question"
-    );
+    // const response = yield call(
+    //   axios.get,
+    //   "http://leetun2k2-001-site1.gtempurl.com/api/Question"
+    // );
 
-    // --- GET NAME
+    // // --- GET NAME
 
-    const categorys = yield call(
-      axios.get,
-      "http://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion"
-    );
-    const skillsQ = yield call(
-      axios.get,
-      "http://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill"
-    );
-    const skills = yield call(
-      axios.get,
-      "http://leetun2k2-001-site1.gtempurl.com/api/Skill"
-    );
-    const draft = yield call(
-      formatQuestionList,
-      response.data,
-      categorys.data,
-      skillsQ.data,
-      skills.data
-    );
+    // const categorys = yield call(
+    //   axios.get,
+    //   "http://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion"
+    // );
+    // const skillsQ = yield call(
+    //   axios.get,
+    //   "http://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill"
+    // );
+    // const skills = yield call(
+    //   axios.get,
+    //   "http://leetun2k2-001-site1.gtempurl.com/api/Skill"
+    // );
+    // const draft = yield call(
+    //   formatQuestionList,
+    //   response.data,
+    //   categorys.data,
+    //   skillsQ.data,
+    //   skills.data
+    // );
 
-    // --- FILTER
-    const data = yield call(filterQuestionList, draft, action.payload);
-    yield put({ type: "questionList/setQuestionList", payload: data });
+    // // --- FILTER
+    // const data = yield call(filterQuestionList, draft, action.payload);
+    // yield put({ type: "questionList/setQuestionList", payload: data });
     yield put({ type: "loading/offLoading" });
     yield put({
       type: "error/setError",
