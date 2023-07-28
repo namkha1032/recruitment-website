@@ -32,6 +32,9 @@ import { useDispatch, useSelector } from "react-redux";
 import cleanStore from "../../utils/cleanStore";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+import { errorAlert } from "../../components/Alert/ErrorAlert";
+import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // JSON <- Event
 // {
@@ -63,7 +66,35 @@ export default function Page_Company_Event() {
   // const [valueChoose, setValueChoose] = useState(null);
   // const [departmentChoose, setDepartmentChoose] = useState(null);
   
-  const loading = useSelector((state) => state.loading)
+  const loading = useSelector((state) => state.loading);
+  const error = useSelector((state) => state.error);
+
+  useEffect(() => {
+    const timeoutId = null
+    if (error.status === "yes") {
+      errorAlert(error.message);
+      timeoutId = setTimeout(() => {
+        dispatch({
+          type: "error/setError",
+          payload: {
+            status: "idle",
+            message: "",
+          },
+        });
+      }, 2000);
+    } else if (error.status === "no") {
+      dispatch({
+        type: "error/setError",
+        payload: {
+          status: "idle",
+          message: "",
+        },
+      });
+    }
+    return () => clearTimeout(timeoutId);
+  }, [error]);
+
+
   const [statusChoose, setStatusChoose] = useState(null);
 
   // function handleMoreClick(event) {
@@ -499,6 +530,8 @@ export default function Page_Company_Event() {
           </Box>
         </GigaCardBody>
       </GigaCard>
+
+      <ToastContainer transition={Slide} hideProgressBar={true} />
     </Box>
   );
 }

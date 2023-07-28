@@ -12,6 +12,7 @@ import Grid from "@mui/material/Grid";
 import QuestionFormModal from "./QuestionFormModal";
 import QuestionModal from "./QuestionModal";
 import { successAlert } from "../../components/Alert/SuccessAlert";
+import { errorAlert } from "../../components/Alert/ErrorAlert";
 import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
 import {
   NullString,
@@ -50,7 +51,34 @@ export default function Page_Company_Question() {
   }, []);
 
   const rows = useSelector((state) => state.questionList);
-  const loading = useSelector((state) => state.loading)
+  const loading = useSelector((state) => state.loading);
+  const error = useSelector((state) => state.error);
+
+  useEffect(() => {
+    const timeoutId = null
+    if (error.status === "yes") {
+      errorAlert(error.message);
+      timeoutId = setTimeout(() => {
+        dispatch({
+          type: "error/setError",
+          payload: {
+            status: "idle",
+            message: "",
+          },
+        });
+      }, 2000);
+    } else if (error.status === "no") {
+      dispatch({
+        type: "error/setError",
+        payload: {
+          status: "idle",
+          message: "",
+        },
+      });
+    }
+    return () => clearTimeout(timeoutId);
+  }, [error]);
+  
   // const [rows, setRows] = useState(datasjson);
 
   const skill_draft = useSelector((state) => state.skill);

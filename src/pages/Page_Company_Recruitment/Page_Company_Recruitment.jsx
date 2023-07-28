@@ -42,6 +42,10 @@ import {
 import cleanStore from "../../utils/cleanStore";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+import { errorAlert } from "../../components/Alert/ErrorAlert";
+import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 // JSON -> getPositionListWithFilter
 // {
@@ -83,6 +87,33 @@ export default function Page_Company_Recruitment() {
   }, []);
 
   const loading = useSelector((state) => state.loading);
+  const error = useSelector((state) => state.error);
+
+  useEffect(() => {
+    const timeoutId = null
+    if (error.status === "yes") {
+      errorAlert(error.message);
+      timeoutId = setTimeout(() => {
+        dispatch({
+          type: "error/setError",
+          payload: {
+            status: "idle",
+            message: "",
+          },
+        });
+      }, 2000);
+    } else if (error.status === "no") {
+      dispatch({
+        type: "error/setError",
+        payload: {
+          status: "idle",
+          message: "",
+        },
+      });
+    }
+    return () => clearTimeout(timeoutId);
+  }, [error]);
+
   const rows = useSelector((state) => state.positionList);
   const department_draft = useSelector((state) => state.department);
   // const language_draft = useSelector((state) => state.language);
@@ -142,7 +173,7 @@ export default function Page_Company_Recruitment() {
       type: "saga/getPositionListWithFilter",
       payload: {
         departmentId: value ? value.departmentId : null,
-        status: statusChoose
+        status: statusChoose,
       },
     });
   }
@@ -778,6 +809,8 @@ export default function Page_Company_Recruitment() {
           </Box>
         </GigaCardBody>
       </GigaCard>
+
+      <ToastContainer transition={Slide} hideProgressBar={true} />
     </Box>
   );
 }
