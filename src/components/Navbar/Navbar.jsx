@@ -250,6 +250,7 @@ const NavbarContent = () => {
                                                     if (index == dropdownNavigate.length - 1) {
                                                         console.log("logout")
                                                         dispatch({ type: "saga/userLogout" })
+                                                        
                                                         navigate("/home")
                                                     }
                                                     else {
