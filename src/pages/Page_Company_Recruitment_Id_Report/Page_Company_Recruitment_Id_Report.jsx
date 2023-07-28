@@ -8,6 +8,7 @@ import {
   Table,
   Chip,
   IconButton,
+  Tooltip,
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import TableViewIcon from "@mui/icons-material/TableView";
@@ -31,10 +32,32 @@ import ReportStatistic from "./ReportStatistic";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 
+// JSON <- getReportList
+// {
+//   "InterviewId": 2,
+//    "CandidateId": 2,
+//    "CandidateName": "Nguyễn Văn B",
+//    "InterviewerId": 2,
+//    "InterviewerName": "Trần Thị Y",
+//    "ApplyDate": "21/07/2023",
+//    "InterviewDate": "25/07/2023",
+//    "Status": ["Pending", "Finish"], ~ Interview.Company_Status
+//    "Score":...,
+//    "TechScore":....,
+//    "LangScore":....,
+//    "SoftScore":....,
+// }
+
 export default function Page_Company_Recruitment_Id_Report(props) {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // -- Navigate in Company/Recruitment
+  // navigate(`./${value}/report`, {
+  //   state: {
+  //     positionId: value,
+  //   },
+  // });
   const positionId = useMemo(() => location.state.positionId);
 
   const [rows, setRows] = useState(datasjson);
@@ -51,6 +74,14 @@ export default function Page_Company_Recruitment_Id_Report(props) {
 
   function handlePositionIdClick() {
     navigate(`/company/recruitment/${positionId}`);
+  }
+
+  function handleCandidateClick(value) {
+    navigate(`/profile/${value}`)
+  }
+
+  function handleInterviewerClick(value) {
+    navigate(`/profile/${value}`)
   }
 
   const columns = useMemo(() => [
@@ -85,7 +116,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       align: "left",
       minWidth: 100,
       flex: 0.3,
-      renderHeader: () => <span>Tên ứng viên</span>,
+      renderHeader: () => <span>Candidate</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
         return (
@@ -107,7 +138,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       type: "string",
       headerAlign: "left",
       align: "left",
-      renderHeader: () => <span>Ngày ứng tuyển</span>,
+      renderHeader: () => <span>Apply on</span>,
       minWidth: 100,
       flex: 0.3,
       renderCell: (params) => {
@@ -119,7 +150,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       type: "string",
       headerAlign: "left",
       align: "left",
-      renderHeader: () => <span>Người phỏng vấn</span>,
+      renderHeader: () => <span>Interviewer</span>,
       minWidth: 100,
       flex: 0.3,
       renderCell: (params) => {
@@ -143,7 +174,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       type: "string",
       headerAlign: "left",
       align: "left",
-      renderHeader: () => <span>Ngày phỏng vấn</span>,
+      renderHeader: () => <span>Interview on</span>,
       minWidth: 100,
       flex: 0.3,
       renderCell: (params) => {
@@ -155,17 +186,13 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       minWidth: 150,
       headerAlign: "center",
       align: "center",
-      renderHeader: () => <span>Trạng thái</span>,
+      renderHeader: () => <span>Status</span>,
       renderCell: (params) => {
         switch (params.value) {
-          case "Chưa bắt đầu":
-            return <NotStart />;
-          case "Đang diễn ra":
+          case "Pending":
             return <Pending />;
-          case "Kết thúc":
+          case "Finished":
             return <Completed />;
-          default:
-            return <Postpone />;
         }
       },
     },
@@ -174,10 +201,18 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       type: "string",
       headerAlign: "center",
       align: "center",
-      renderHeader: () => <span>Điểm</span>,
+      renderHeader: () => <span>Score</span>,
       renderCell: (params) => {
         if (params.value !== null && params.value !== undefined) {
-          return params.value;
+          if (params.value < 6) {
+            return <Box sx={{color: "#cc3300", fontWeight: 600}}>{params.value}</Box>;
+          }
+          else if (params.value < 8.5) {
+            return <Box sx={{color: "black"}}>{params.value}</Box>;
+          }
+          else {
+            return <Box sx={{color: "#008631", fontWeight: 600}}>{params.value}</Box>;
+          }
         }
       },
       minWidth: 80,
@@ -189,9 +224,11 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       headerAlign: "right",
       align: "center",
       getActions: (params) => [
-        <IconButton onClick={() => handleDetailClick(params.row.InterviewId)}>
-          <InfoIcon sx={{ color: "#1565C0" }} />
-        </IconButton>,
+        <Tooltip title="Detail" arrow>
+          <IconButton onClick={() => handleDetailClick(params.row.InterviewId)}>
+            <InfoIcon sx={{ color: "black" }} />
+          </IconButton>
+        </Tooltip>,
       ],
     },
   ]);
@@ -223,7 +260,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
               >
                 {positionId}
               </Box>{" "}
-              - Báo cáo
+              - Report
             </Grid>
             <Grid
               item
@@ -236,9 +273,9 @@ export default function Page_Company_Recruitment_Id_Report(props) {
                 value={tabValue}
                 onChange={(event, value) => handleTabChange(value)}
                 sx={{
-                  "&.MuiTabs-indicator": {
-                    backgroundColor: 'black',
-               },
+                  "& .MuiTabs-indicator": {
+                    backgroundColor: "black",
+                  },
                 }}
               >
                 <Tab
@@ -251,15 +288,11 @@ export default function Page_Company_Recruitment_Id_Report(props) {
                     width: 150,
                     color: "rgba(0, 0, 0, 0.85)",
                     "&:hover": {
-                      color: "black.100",
-                      opacity: 0.8,
+                      color: "rgba(190, 190, 190, 0.85)",
                     },
                     "&.Mui-selected": {
                       color: "black",
                     },
-                    "&.Mui-indicator": {
-                      backgroundColor: "black"
-                    }
                   }}
                 />
                 <Tab
@@ -272,14 +305,12 @@ export default function Page_Company_Recruitment_Id_Report(props) {
                     width: 150,
                     color: "rgba(0, 0, 0, 0.85)",
                     "&:hover": {
-                      color: "black.100",
-                      opacity: 0.8,
+                      color: "rgba(190, 190, 190, 0.85)",
                     },
                     "&.Mui-selected": {
                       color: "black",
                     },
                   }}
-                 
                 />
                 <Tab
                   value="2"
@@ -292,19 +323,17 @@ export default function Page_Company_Recruitment_Id_Report(props) {
                     width: 150,
                     color: "rgba(0, 0, 0, 0.85)",
                     "&:hover": {
-                      color: "rgba(21, 101, 192, 0.6)",
-                      opacity: 1,
+                      color: "rgba(190, 190, 190, 0.85)",
                     },
                     "&.Mui-selected": {
                       color: "black",
                     },
                   }}
-                  
                 />
               </Tabs>
               <Divider
                 sx={{
-                  borderColor: "gray.400",
+                  borderColor: "gray.100",
                 }}
               ></Divider>
             </Grid>
@@ -315,6 +344,8 @@ export default function Page_Company_Recruitment_Id_Report(props) {
               columns={columns}
               rows={rows}
               handleDetailClick={handleDetailClick}
+              handleCandidateClick={handleCandidateClick}
+              handleInterviewerClick={handleInterviewerClick}
             />
           )}
 

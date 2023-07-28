@@ -53,7 +53,7 @@ function* getAllQuestion() {
       type: "error/setError",
       payload: {
         status: "yes",
-        message: error.response.data,
+        message: "message" in error ? error.message : error.response.data,
       },
     });
   }
@@ -109,7 +109,7 @@ function* getQuestionListWithFilter(action) {
       type: "error/setError",
       payload: {
         status: "yes",
-        message: error.response.data,
+        message: "message" in error ? error.message : error.response.data,
       },
     });
   }
