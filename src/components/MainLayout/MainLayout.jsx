@@ -23,12 +23,13 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
         const isMd = useMediaQuery(theme.breakpoints.up('md'));
         return {
             flexGrow: 1,
-            padding: theme.spacing(3),
+            // padding: isMd ? theme.spacing(3) : 0,
+            paddingBottom: theme.spacing(3),
             transition: theme.transitions.create('margin', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
             }),
-            marginTop: "68.5px",
+            marginTop: "69px",
             // maxWidth: "100%",
             // height: "100%",
             // maxHeight: "100vh",
@@ -83,7 +84,7 @@ function MainLayout() {
                 <Navbar open={showSidebar ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} />
                 <Sidebar open={showSidebar ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} />
                 <Main open={showSidebar ? open : false}>
-                    {/* <DrawerHeader /> */}
+                    <DrawerHeader />
                     <Container>
                         <Outlet />
                     </Container>

@@ -59,7 +59,9 @@ const App = () => {
                     roomId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     roomName: content
                 }
-                await axios.post("http://leetun2k2-001-site1.gtempurl.com/api/Shift", content)
+                // await axios.post("http://leetun2k2-001-site1.gtempurl.com/api/Shift", content)
+                const response = await axios.get("http://leetun2k2-001-site1.gtempurl.com/api/Interview")
+                console.log("res: ", response.data)
                 // const response = await axios.get("http://leetun2k2-001-site1.gtempurl.com/api/Question")
                 // const resarr = await response.data
                 // for (let res in resarr) {
