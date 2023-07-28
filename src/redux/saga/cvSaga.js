@@ -90,9 +90,9 @@ function* getCv(action) {
 }
 
 function* getCvList(action) {
-    // const reponse = yield call(axios.get, 'http://localhost:3000/data/CVList.json')
+    const reponse = yield call(axios.get, 'http://localhost:3000/data/CVList.json')
     // const reponse = yield call(axios.get, `${host.name}/data/CVList.json`)
-    const reponse = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Cv`)
+    // const reponse = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv`)
     yield put({ type: 'cvlist/setCvList', payload: reponse.data })
 }
 

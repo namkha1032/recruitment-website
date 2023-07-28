@@ -12,9 +12,12 @@ function QuickSearchToolbar() {
     return (
         <Box
             sx={{
-                p: 0.5,
-                pb: 0,
-                marginLeft: 50,
+                // p: 0.5,
+                // pb: 0,
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+                
             }}
         >
             <GridToolbarQuickFilter />
@@ -40,6 +43,9 @@ const List_application = (props) => {
     //         cleanStore(dispatch);
     //     }
     // }, [])
+
+    // const detail = useSelector(state => state.position);
+    
     const pending1 = props.applications ? props.applications.filter(application => {
         return application.company_status === "Đang chờ"
     }) : [];
@@ -49,11 +55,11 @@ const List_application = (props) => {
     const reject1 = props.applications ? props.applications.filter(application => {
         return application.company_status === "Đã từ chối"
     }) : [];
-    const pendingmain = props.applications ? props.applications.filter(application => {
-        return application.status === "Pending"
-    }) : [];
+    // const pendingmain = props.applications ? props.applications.filter(application => {
+    //     return application.status === "Pending"
+    // }) : [];
     console.log("application", props.applications);
-    console.log("status", pendingmain);
+    // console.log("status", pendingmain);
     console.log("chờ", pending1);
     console.log("đậu", pass1);
     console.log("chối", reject1);
@@ -64,7 +70,6 @@ const List_application = (props) => {
         {
             field: "applicationId",
             headerName: "ID",
-            headerAlign: 'center',
             flex: 0.5,
             minWidth: 200
         },
@@ -72,7 +77,6 @@ const List_application = (props) => {
         {
             field: "candidateName",
             headerName: "Candidate Name",
-            headerAlign: 'center',
             flex: 1,
             minWidth: 200
         },
@@ -98,27 +102,27 @@ const List_application = (props) => {
     return (
         props.applications &&
         <>
-            {/* <Box
+            {/* <Box sx={{ padding: "0" }}> */}
+            <Box
                 display="flex"
 
-                justifyContent="center"
-                alignItems="center"
+                
                 flexDirection="column"
-                sx={{ width: "100%" }}> */}
+                sx={{ width: "100%" }}>
 
 
                 <Grid container spacing={2} >
                     <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
 
-                        <Button color="primary" sx={{ textDecoration: currentTable == 0 ? 'underline' : 'none' }} variant={currentTable == 0 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(0) }} >
-                            <PendingIcon></PendingIcon> Pending
+                        <Button color="primary" variant={currentTable == 0 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(0) }} >
+                            <PendingIcon sx={{marginRight: "5px"}}></PendingIcon> Pending
                         </Button>
 
-                        <Button color="warning" sx={{ textDecoration: currentTable == 1 ? 'underline' : 'none', marginLeft: "10px" }} variant={currentTable == 1 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(1) }} >
-                            <FmdBadIcon></FmdBadIcon> Reject
+                        <Button color="warning" sx={{  marginLeft: "10px" }} variant={currentTable == 1 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(1) }} >
+                            <FmdBadIcon sx={{marginRight: "5px"}}></FmdBadIcon> Reject
                         </Button>
-                        <Button color="success" sx={{ textDecoration: currentTable == 2 ? 'underline' : 'none', marginLeft: "10px" }} variant={currentTable == 2 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(2) }} >
-                            <GradingIcon></GradingIcon> Pass
+                        <Button color="success" sx={{  marginLeft: "10px" }} variant={currentTable == 2 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(2) }} >
+                            <GradingIcon sx={{marginRight: "5px"}}></GradingIcon> Pass
                         </Button>
 
 
@@ -126,43 +130,43 @@ const List_application = (props) => {
                 </Grid>
 
                 {currentTable == 0 ? (
-                        <Box sx ={{padding: "0"}}>
-                        <DataGrid
-                            sx={{
-                                "& .MuiDataGrid-columnHeaders": {
-                                    backgroundColor: "#1976d2",
-                                    fontSize: 16,
-                                    color: "white",
-                                    fontWeight: 600
-                                },
-                                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
-                                    outline: "none",
-                                },
-                                "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
-                                    outline: "none",
-                                },
-                                "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
-                                    display: "none",
-                                }
-                            }}
-                            slots={{ toolbar: QuickSearchToolbar }}
-                            rowHeight={72}
-                            rows={pendingmain}
-                            {...other}
-                            columns={columns}
-                            getRowId={(row) => row.applicationId}
-                            initialState={{
-                                pagination: {
-                                    paginationModel: {
-                                        pageSize: 5,
-                                    },
-                                },
-                            }}
-                            pageSizeOptions={[5]}
-                            disableColumnMenu
 
-                        />
-                    </Box>
+                    <DataGrid
+                        sx={{
+                            "& .MuiDataGrid-columnHeaders": {
+                                backgroundColor: "#1976d2",
+                                fontSize: 16,
+                                color: "white",
+                                fontWeight: 600
+                            },
+                            "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                                outline: "none",
+                            },
+                            "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                                outline: "none",
+                            },
+                            "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                                display: "none",
+                            }
+                        }}
+                        slots={{ toolbar: QuickSearchToolbar }}
+                        rowHeight={72}
+                        rows={pending1}
+                        {...other}
+                        columns={columns}
+                        getRowId={(row) => row.applicationId}
+                        initialState={{
+                            pagination: {
+                                paginationModel: {
+                                    pageSize: 5,
+                                },
+                            },
+                        }}
+                        pageSizeOptions={[5]}
+                        disableColumnMenu
+
+                    />
+
                 ) : null}
                 {currentTable == 1 ? (
                     <DataGrid
@@ -239,7 +243,7 @@ const List_application = (props) => {
                         disableColumnMenu
                     />
                 ) : null}
-
+            </Box>
             {/* </Box> */}
         </>
 
