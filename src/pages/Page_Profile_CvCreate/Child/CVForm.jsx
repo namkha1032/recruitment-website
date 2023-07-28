@@ -108,12 +108,12 @@ function CVForm() {
   function handleCertificateAdd() {
     console.log(startDate);
     const newCert = {
-      id: Cid,
-      name: Cname,
-      organize: organize,
-      startDate: startDate,
-      endDate: endDate,
-      detail: detail,
+      certificateId: Cid,
+      certificateName: Cname,
+      organizationName: organize,
+      dateEarned: startDate,
+      expirationDate: endDate,
+      description: detail,
       link: link,
     };
     console.log(newCert);

@@ -1,26 +1,65 @@
 [
   {
-    "departmentId": 0,
-    "departmentName": "Recruite",
-    "address": "F Town 1",
-    "email": "recruite@fpt.com",
-    "phone": "0123456789",
-    "website": "https://fpt.recruit.com"
+    "departmentId": "00000000-0000-0000-0000-000000000001",
+    "departmentName": "IT",
+    "address": "f1",
+    "email": "a@a.a",
+    "phone": "00",
+    "website": "a",
+    "isDeleted": false
   },
   {
-    "departmentId": 1,
+    "departmentId": "00000000-0000-0000-0000-000000000002",
+    "departmentName": "FA",
+    "address": "f1",
+    "email": "b@b.b",
+    "phone": "11",
+    "website": "b",
+    "isDeleted": false
+  },
+  {
+    "departmentId": "00000000-0000-0000-0000-000000000003",
+    "departmentName": "SG",
+    "address": "f2",
+    "email": "c@c.c",
+    "phone": "22",
+    "website": "c",
+    "isDeleted": false
+  },
+  {
+    "departmentId": "9212b6b2-daac-4e64-a7c6-55cc837fe353",
     "departmentName": "FrontEnd",
     "address": "F Town 2",
     "email": "frontend@fpt.com",
     "phone": "0123456789",
-    "website": "https://fpt.frontend.com"
+    "website": "https://fpt.frontend.com",
+    "isDeleted": false
   },
   {
-    "departmentId": 2,
+    "departmentId": "0e9d474f-91b0-472a-899c-605af372515d",
+    "departmentName": "Itroom",
+    "address": "1st Floor, F-Town 1 Building, High-tech Park, Tan Phu Ward, District 9, Ho Chi Minh City, Vietnam",
+    "email": "ITroomFSOFT@gmail.com",
+    "phone": "0928123456",
+    "website": "https://fpt.com.vn/en",
+    "isDeleted": false
+  },
+  {
+    "departmentId": "87e615a1-2449-4f91-83de-ba33d6300b40",
+    "departmentName": "Recruite",
+    "address": "F Town 1",
+    "email": "recruite@fpt.com",
+    "phone": "0123456789",
+    "website": "https://fpt.recruit.com",
+    "isDeleted": false
+  },
+  {
+    "departmentId": "e83f8399-426d-4266-8712-c99a366fc3d3",
     "departmentName": "BackEnd",
     "address": "F Town 3",
     "email": "backend@fpt.com",
     "phone": "0123456789",
-    "website": "https://fpt.Backend.com"
+    "website": "https://fpt.Backend.com",
+    "isDeleted": false
   }
 ]

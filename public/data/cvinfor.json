@@ -1,0 +1,23 @@
+[
+{
+  "cvid": "00000000-0000-0000-0000-000000000001",
+  "candidateId": "00000000-0000-0000-0000-000000000001",
+  "cvName": "New Cv",
+  "introduction": "introduction",
+  "certificates": [
+    {
+      "certificateId": "00000000-0000-0000-0000-000000000001",
+      "certificateName": "IELTS",
+      "organizationName": "British Council",
+      "dateEarned": "2023-07-27T00:00:00",
+      "expirationDate": null,
+      "description": "description",
+      "link": "dadadadadadasd"
+    }
+  ],
+  "skills": [{ "cvSkillsId":"00000000-0000-0000-0000-000000000001", "skillId":"00000000-0000-0000-0000-000000000001", "experienceYear": 2 }],
+  "education": "education",
+  "experience": "experience",
+  "isDeleted": true
+}
+]
