@@ -194,7 +194,7 @@ const List_application = (props) => {
                         rows={reject1}
                         {...other}
                         columns={columns}
-                        getRowId={(row) => row.applicationid}
+                        getRowId={(row) => row.applicationId}
                         initialState={{
                             pagination: {
                                 paginationModel: {
@@ -231,7 +231,7 @@ const List_application = (props) => {
                         rows={pass1}
                         {...other}
                         columns={columns}
-                        getRowId={(row) => row.applicationid}
+                        getRowId={(row) => row.applicationId}
                         initialState={{
                             pagination: {
                                 paginationModel: {
