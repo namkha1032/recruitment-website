@@ -4,6 +4,7 @@ import CreateCv from "./CreateCv";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import cleanStore from "../../../utils/cleanStore";
 
 // import ViewCv from "./ViewCv";
 function CVForm() {
@@ -33,7 +34,7 @@ function CVForm() {
     if (skillList) {
       setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
     }
-  }, [skillList,languageList]);
+  }, [skillList, languageList]);
 
   const [cvtitle, setTitle] = useState("");
   const [intro, setIntro] = useState("");
@@ -72,26 +73,12 @@ function CVForm() {
   function handleExp(e) {
     setExperience(e.target.value);
   }
-  // function handleSkillAdd() {
-  //   console.log(sname);
-  //   console.log(SExp);
-  //   const newSkill = {
-  //     id: Sid,
-  //     name: sname,
-  //     skillExperienc: SExp,
-  //   };
-  //   if (sname !== "") {
-  //     setSkills([...skills, newSkill]);
-  //     setSName("");
-  //     setSExp("");
-  //     setSid((prev) => (prev += 1));
-  //   }
-  // }
   function handleSkillAdd2() {
     console.log(lInputValue);
     console.log(languageName);
     let arr = skillData.filter(
-     (comp) => comp.skillName === (sInputValue !== null ? sInputValue.skillName : "")
+      (comp) =>
+        comp.skillName === (sInputValue !== null ? sInputValue.skillName : "")
     );
     console.log(arr);
     if (arr[0] === undefined) {
@@ -121,12 +108,12 @@ function CVForm() {
   function handleCertificateAdd() {
     console.log(startDate);
     const newCert = {
-      id: Cid,
-      name: Cname,
-      organize: organize,
-      startDate: startDate,
-      endDate: endDate,
-      detail: detail,
+      certificateId: Cid,
+      certificateName: Cname,
+      organizationName: organize,
+      dateEarned: startDate,
+      expirationDate: endDate,
+      description: detail,
       link: link,
     };
     console.log(newCert);
@@ -151,7 +138,9 @@ function CVForm() {
     console.log(lInputValue);
     console.log(languageName);
     let arr = languageData.filter(
-      (comp) => comp.languageName === (lInputValue !== null ? lInputValue.languageName : "")
+      (comp) =>
+        comp.languageName ===
+        (lInputValue !== null ? lInputValue.languageName : "")
     );
     console.log(arr);
     if (arr[0] === undefined) {
@@ -187,6 +176,7 @@ function CVForm() {
   };
   function handleSubmit(e) {
     e.preventDefault();
+    cleanStore(dispatch);
     navigate("/profile/:profileid/cv/:cvid");
   }
   //COMPS
@@ -195,7 +185,7 @@ function CVForm() {
       <Grid container spacing={0} justifyContent="center" alignItems="center">
         <Grid item xs={12}>
           <CreateCv
-          //////////Skill////////
+            //////////Skill////////
             setSkillId={setSkillId}
             intro={intro}
             setIntro={setIntro}
@@ -255,6 +245,7 @@ function CVForm() {
           />
         </Grid>
       </Grid>
+      
     </>
   );
 }

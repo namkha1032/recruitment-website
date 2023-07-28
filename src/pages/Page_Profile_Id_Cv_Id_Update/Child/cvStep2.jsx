@@ -6,11 +6,13 @@ import "react-quill/dist/quill.snow.css";
 import ChooseSkill from "./skill/ChooseSkill";
 
 function CvStep2(prop) {
+  console.log(prop.skills)
   return (
     <>
       <Box sx={{ width: "80%", margin: "auto", marginTop: "50px" }}>
         <Grid container spacing={0} justifyContent="center" alignItems="center">
           <Grid item xs={12}>
+            
             <ChooseSkill
               sInputValue={prop.sInputValue}
               setSInputValue={prop.setSInputValue}

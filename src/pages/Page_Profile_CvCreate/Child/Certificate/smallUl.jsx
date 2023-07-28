@@ -36,7 +36,7 @@ const SmallUlList = (comp) => {
       <Card key={comp.comp.id} sx={{ maxWidth: 200 }}>
         <CardContent>
           <Typography sx={{ fontSize: 20 }}>{comp.comp.certificateName}</Typography>
-          <Typography sx={{ fontSize: 20 }}>{comp.comp.organize}</Typography>
+          <Typography sx={{ fontSize: 20 }}>{comp.comp.organizationName}</Typography>
         </CardContent>
         <CardActions disableSpacing>
           <Button onClick={handleClickOpen("paper")} size="small">
