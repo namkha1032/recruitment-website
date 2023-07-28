@@ -6,7 +6,7 @@ const GigaCardHeader = (props) => {
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     return (
-        <Box sx={{ paddingX: isMd ? 4 : 1, paddingY: isMd ? 4 : 4 }}>
+        <Box sx={{ paddingX: isMd ? 4 : 1, paddingTop: isMd ? 4 : 4 }}>
             <Box sx={{ color: props.color, display: "flex", alignItems: "center", columnGap: 2 }}>
                 {/* <Avatar sx={{ backgroundColor: props.color }}> */}
                 <Box sx={{ fontSize: 40, display: "flex", alignItems: "center" }}>

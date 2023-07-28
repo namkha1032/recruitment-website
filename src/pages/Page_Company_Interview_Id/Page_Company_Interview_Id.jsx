@@ -57,7 +57,7 @@ const Page_Company_Interview_Id = () => {
     return (
         <>{interview &&
             <>
-                {/* <Page_Interview_Id /> */}
+                <Page_Interview_Id />
                 <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 4, marginBottom: 4 }}>
                     <Button variant='contained' onClick={handleStart}>Start</Button>
                 </Box>
