@@ -5,6 +5,7 @@ import host from "../host"
 import { formatEventList } from "../../utils/formatEventList"
 
 
+
 function* getEventList() {
     yield put({ type: "loading/onLoading" })
     yield call(delay, 1500)
@@ -19,6 +20,7 @@ function* getEventList() {
 }
 
 
+
 function* getEventListWithFilter(action) {
     console.log(action.payload)
     yield put({ type: "loading/onLoading" })
@@ -29,9 +31,16 @@ function* getEventListWithFilter(action) {
 }
 
 
+
 function* getEvent(action) {
     console.log("eid: ", action.payload)
-    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Event/GetEventById/${action.payload}`)
+    // const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Event/GetEventById/${action.payload}`)
+
+    // ----------------------------------------
+    // FAKE API FOR BACKEND
+    const response = yield call(axios.get, `${host.name}/data/eventid.json`)
+    // ----------------------------------------
+
     console.log("res: ", response.data)
     const res = response.data;
     const newObj = {
@@ -43,9 +52,21 @@ function* getEvent(action) {
         time: res.datetimeEvent,
         location: res.place,
         createdTime: "16/07/2023 10:30"
+
+        // ----------------------------------------
+        // FAKE API FOR BACKEND
+        ,content: res.content,
+        quantity: res.quantity,
+        maxQuantity: res.maxQuantity,
+        time: res.time,
+        location: res.location,
+        createdTime: res.createdTime
+        // ----------------------------------------
     }
     yield put({ type: "event/setEvent", payload: newObj })
 }
+
+
 
 // DO LATER
 function* getAllCandidateOfEvent(action) {
@@ -59,6 +80,7 @@ function* getAllCandidateOfEvent(action) {
     // console.log("candidateOneEvent: ", candidateOneEvent)
     // yield put({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: candidateOneEvent })
 }
+
 
 
 function* eventSaga() {

@@ -130,7 +130,7 @@ const Page_Company_Event_Id = () => {
         {
             field: 'userName',
             type: 'string',
-            width: 300,
+            width: 250,
             headerAlign: 'left',
             align: 'left',
             renderHeader: () => <span>User Name</span>,
@@ -169,6 +169,17 @@ const Page_Company_Event_Id = () => {
         //         }
         //     },
         // },
+        {
+            field: 'email',
+            type: 'string',
+            width: 250,
+            headerAlign: 'left',
+            align: 'left',
+            renderHeader: () => <span>Email</span>,
+            renderCell: (params) => {
+
+            },
+        },
         {
             field: 'registerTime',
             type: 'string',
