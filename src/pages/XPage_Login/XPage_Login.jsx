@@ -387,7 +387,8 @@ const XPage_Login = () => {
           severity="error"
           onClose={() => setErrorSnackbar(false)}
         >
-          {newError.message}
+          {/* {newError.message} */}
+          Username of password is incorrect
         </Alert>
       </Snackbar>
     </Box>
