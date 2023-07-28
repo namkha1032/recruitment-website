@@ -2,55 +2,55 @@
     {
         "userId": 1,
         "userName": "Ronaldo",
-        "position": "Admin",
+        "email": "ronaldo@gmail.com",
         "registerTime": "22/07/2023 16:00"
     },
     {
         "userId": 2,
         "userName": "Messi",
-        "position": "Recruiter",
+        "email": "messi@gmail.com",
         "registerTime": "24/07/2023 18:00"
     },
     {
         "userId": 3,
         "userName": "Mbappe",
-        "position": "Interviewer",
+        "email": "mbappe@gmail.com",
         "registerTime": "23/07/2023 15:30"
     },
     {
         "userId": 5,
         "userName": "Haaland",
-        "position": "Interviewer",
+        "email": "haaland@gmail.com",
         "registerTime": "26/07/2023 09:15"
     },
     {
         "userId": 4,
         "userName": "Salah",
-        "position": "Candidate",
+        "email": "salah@gmail.com",
         "registerTime": "25/07/2023 10:30"
     },
     {
         "userId": 7,
         "userName": "Kroos",
-        "position": "Recruiter",
+        "email": "kroos@gmail.com",
         "registerTime": "22/07/2023 16:00"
     },
     {
         "userId": 8,
         "userName": "Ibrahimovic",
-        "position": "Admin",
+        "email": "ibrahimovic@gmail.com",
         "registerTime": "24/07/2023 18:00"
     },
     {
         "userId": 9,
         "userName": "Pogba",
-        "position": "Interviewer",
+        "email": "pogba@gmail.com",
         "registerTime": "22/07/2023 16:00"
     },
     {
         "userId": 10,
         "userName": "Beckham",
-        "position": "Candidate",
+        "email": "beckham@gmail.com",
         "registerTime": "24/07/2023 18:30"
     }
 ]

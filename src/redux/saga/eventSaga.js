@@ -38,6 +38,8 @@ function* getEventList() {
   }
 }
 
+
+
 function* getEventListWithFilter(action) {
   console.log("Filter: ", action.payload);
   try {
@@ -71,38 +73,60 @@ function* getEventListWithFilter(action) {
     });
   }
 }
+
+
+
 function* getEvent(action) {
-  console.log("eid: ", action.payload);
-  const response = yield call(
-    axios.get,
-    `http://leetun2k2-001-site1.gtempurl.com/api/Event/GetEventById/${action.payload}`
-  );
-  console.log("res: ", response.data);
-  const res = response.data;
-  const newObj = {
-    eventId: res.eventId,
-    eventName: res.eventName,
-    content: res.description,
-    quantity: 50,
-    maxQuantity: res.maxParticipants,
-    time: res.datetimeEvent,
-    location: res.place,
-    createdTime: "16/07/2023 10:30",
-  };
-  yield put({ type: "event/setEvent", payload: newObj });
+    console.log("eid: ", action.payload)
+    // const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Event/GetEventById/${action.payload}`)
+
+    // ----------------------------------------
+    // FAKE API FOR BACKEND
+    const response = yield call(axios.get, `${host.name}/data/eventid.json`)
+    // ----------------------------------------
+
+    console.log("res: ", response.data)
+    const res = response.data;
+    const newObj = {
+        eventId: res.eventId,
+        eventName: res.eventName,
+        content: res.description,
+        quantity: 50,
+        maxQuantity: res.maxParticipants,
+        time: res.datetimeEvent,
+        location: res.place,
+        createdTime: "16/07/2023 10:30"
+
+        // ----------------------------------------
+        // FAKE API FOR BACKEND
+        ,content: res.content,
+        quantity: res.quantity,
+        maxQuantity: res.maxQuantity,
+        time: res.time,
+        location: res.location,
+        createdTime: res.createdTime
+        // ----------------------------------------
+    }
+    yield put({ type: "event/setEvent", payload: newObj })
 }
-function* getAllCandidateOfEvent() {
-  console.log("eid: ");
-  const response = yield call(
-    axios.get,
-    `${host.name}/data/candidateJoinEvent.json`
-  );
-  console.log("res: ", response.data);
-  yield put({
-    type: "candidateJoinEvent/setCandidateJoinEvent",
-    payload: response.data,
-  });
+
+
+
+// DO LATER
+function* getAllCandidateOfEvent(action) {
+    console.log("eid: ", action.payload)
+    const response = yield call(axios.get, `${host.name}/data/candidateJoinEvent.json`)
+    // const candidateManyEvent = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`)
+    // console.log("candidateManyEvent: ", candidateManyEvent.data)
+    console.log("res: ", response.data)
+    yield put({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: response.data })
+    // const candidateOneEvent = candidateManyEvent.data.filter((prop) => prop.eventId == action.payload)
+    // console.log("candidateOneEvent: ", candidateOneEvent)
+    // yield put({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: candidateOneEvent })
 }
+
+
+
 function* eventSaga() {
   yield all([
     takeLatest("saga/getEventList", getEventList),
