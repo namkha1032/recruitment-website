@@ -47,7 +47,7 @@ function* getEvent(action) {
     yield put({ type: "event/setEvent", payload: newObj })
 }
 
-
+// List of candidates of an event 
 function* getAllCandidateOfEvent(action) {
     console.log("eid: ", action.payload)
     const response = yield call(axios.get, `${host.name}/data/candidateJoinEvent.json`)
