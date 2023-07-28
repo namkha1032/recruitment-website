@@ -43,32 +43,34 @@ import { Admin, Candidate, Interviewer, Recruiter } from '../../components/Posit
 
 const Page_Company_Event_Id = () => {
 
+
+    const role = useGetRole()
+
+    // useNavigate
+    const navigate = useNavigate()
+
+
     const { eventid } = useParams();
     console.log(eventid);
 
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch({ type: "saga/getEvent", payload: eventid })
-        dispatch({ type: "saga/getAllCandidateOfEvent" })
+        dispatch({ type: "saga/getAllCandidateOfEvent", payload: eventid })
         return () => {
             cleanStore(dispatch)
         }
     }, [])
 
     const event = useSelector((state) => state.event)
-    const role = useGetRole()
 
-
-    // useNavigate
-    const navigate = useNavigate()
-
-
-    const rows = useSelector((state) => state.candidateJoinEvent)
+    const row_drafts = useSelector((state) => state.candidateJoinEvent)
+    const rows = row_drafts ? row_drafts : []
     // Test Data
     // const rows = [
     //     { id: 1, name: 'Ronaldo', time: '22/07/2023 16:00' }, { id: 2, name: 'Messi', time: '22/07/2023 16:00' }, { id: 3, name: 'Salah', time: '22/07/2023 16:00' },
     //     { id: 4, name: 'Bruno', time: '22/07/2023 16:00' }, { id: 5, name: 'Kevin', time: '22/07/2023 16:00' }, { id: 6, name: 'Pogba', time: '22/07/2023 16:00' },
-    //     { id: 7, name: 'Mbappe', time: '22/07/2023 16:00' }, { id: 8, name: 'Haaland', time: '22/07/2023 16:00' }, { id: 9, name: 'Reus', time: '22/07/2023 16:00' },
+    //     { id: 7, name: 'Mbappe', time: '22/07/2023 16:00' }, { id: 8, name: 'Haaland' time: '22/07/2023 16:00' }, { id: 9, name: 'Reus', time: '22/07/2023 16:00' },
     //     { id: 10, name: 'Vinicious', time: '22/07/2023 16:00' }, { id: 11, name: 'Kaka', time: '22/07/2023 16:00' }, { id: 12, name: 'Beckham', time: '22/07/2023 16:00' },
     //     { id: 13, name: 'Viera', time: '22/07/2023 16:00' }, { id: 14, name: 'Maldini', time: '22/07/2023 16:00' }, { id: 15, name: 'Nesta', time: '22/07/2023 16:00' },
     //     { id: 16, name: 'Gullit', time: '22/07/2023 16:00' }, { id: 17, name: 'Carlos', time: '22/07/2023 16:00' }, { id: 18, name: 'Pirlo', time: '22/07/2023 16:00' },
@@ -147,26 +149,26 @@ const Page_Company_Event_Id = () => {
                 );
             },
         },
-        {
-            field: 'position',
-            type: 'string',
-            width: 200,
-            headerAlign: 'center',
-            align: 'center',
-            renderHeader: () => <span>Position</span>,
-            renderCell: (params) => {
-                switch (params.value) {
-                    case "Candidate":
-                        return <Candidate/>;
-                    case "Interviewer":
-                        return <Interviewer/>;
-                    case "Recruiter":
-                        return <Recruiter/>;
-                    case "Admin":
-                        return <Admin/>;
-                }
-            },
-        },
+        // {
+        //     field: 'position',
+        //     type: 'string',
+        //     width: 200,
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     renderHeader: () => <span>Position</span>,
+        //     renderCell: (params) => {
+        //         switch (params.value) {
+        //             case "Candidate":
+        //                 return <Candidate/>;
+        //             case "Interviewer":
+        //                 return <Interviewer/>;
+        //             case "Recruiter":
+        //                 return <Recruiter/>;
+        //             case "Admin":
+        //                 return <Admin/>;
+        //         }
+        //     },
+        // },
         {
             field: 'registerTime',
             type: 'string',

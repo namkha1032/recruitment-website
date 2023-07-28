@@ -4,6 +4,7 @@ import { delay } from "../../utils/delay"
 import host from "../host"
 import { formatEventList } from "../../utils/formatEventList"
 
+
 function* getEventList() {
     yield put({ type: "loading/onLoading" })
     yield call(delay, 1500)
@@ -17,6 +18,7 @@ function* getEventList() {
     yield put({ type: "loading/offLoading" })
 }
 
+
 function* getEventListWithFilter(action) {
     console.log(action.payload)
     yield put({ type: "loading/onLoading" })
@@ -25,9 +27,11 @@ function* getEventListWithFilter(action) {
     yield put({ type: "eventList/setEventList", payload: response.data })
     yield put({ type: "loading/offLoading" })
 }
+
+
 function* getEvent(action) {
     console.log("eid: ", action.payload)
-    const response = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Event/GetEventById/${action.payload}`)
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Event/GetEventById/${action.payload}`)
     console.log("res: ", response.data)
     const res = response.data;
     const newObj = {
@@ -42,12 +46,21 @@ function* getEvent(action) {
     }
     yield put({ type: "event/setEvent", payload: newObj })
 }
-function* getAllCandidateOfEvent() {
-    console.log("eid: ")
+
+
+function* getAllCandidateOfEvent(action) {
+    console.log("eid: ", action.payload)
     const response = yield call(axios.get, `${host.name}/data/candidateJoinEvent.json`)
+    // const candidateManyEvent = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`)
+    // console.log("candidateManyEvent: ", candidateManyEvent.data)
     console.log("res: ", response.data)
     yield put({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: response.data })
+    // const candidateOneEvent = candidateManyEvent.data.filter((prop) => prop.eventId == action.payload)
+    // console.log("candidateOneEvent: ", candidateOneEvent)
+    // yield put({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: candidateOneEvent })
 }
+
+
 function* eventSaga() {
     yield all([
         takeLatest("saga/getEventList", getEventList),
