@@ -35,10 +35,10 @@ import { useDispatch, useSelector } from "react-redux";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 
-const listOfSkills = {
-  skill: ["React", "Angular", "Java", "Python", "Figma", ".NET", "C", "C++"],
-  language: ["English", "Vietnamese", "Japanese", "Chinese", "Korian"],
-};
+// const listOfSkills = {
+//   skill: ["React", "Angular", "Java", "Python", "Figma", ".NET", "C", "C++"],
+//   language: ["English", "Vietnamese", "Japanese", "Chinese", "Korian"],
+// };
 
 export default function Page_Company_Question() {
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ export default function Page_Company_Question() {
   const error = useSelector((state) => state.error);
 
   useEffect(() => {
-    const timeoutId = null
+    let timeoutId = null
     if (error.status === "yes") {
       errorAlert(error.message);
       timeoutId = setTimeout(() => {
@@ -696,7 +696,7 @@ export default function Page_Company_Question() {
             key={addModalStatus}
             addModalStatus={addModalStatus}
             handleAddModalClose={handleAddModalClose}
-            options={listOfSkills}
+            options={{skill: skills, language: languages}}
             handleSubmitQuestion={handleSubmitQuestion}
             keepMounted
           />
@@ -705,7 +705,7 @@ export default function Page_Company_Question() {
             key={valueUpdate.QuestionId}
             modalStatus={modalStatus}
             handleModalClose={handleModalClose}
-            options={listOfSkills}
+            options={{skill: skills, language: languages}}
             handleUpdateQuestion={handleUpdateQuestion}
             value={valueUpdate}
             type={typeStatus}

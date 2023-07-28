@@ -70,7 +70,7 @@ export default function Page_Company_Event() {
   const error = useSelector((state) => state.error);
 
   useEffect(() => {
-    const timeoutId = null
+    let timeoutId = null
     if (error.status === "yes") {
       errorAlert(error.message);
       timeoutId = setTimeout(() => {

@@ -58,7 +58,10 @@ export default function Page_Company_Recruitment_Id_Report(props) {
   //     positionId: value,
   //   },
   // });
-  const positionId = useMemo(() => location.state.positionId);
+  
+  // TEMPORARY
+  // const positionId = useMemo(() => location.state.positionId);
+  const positionId = "1";
 
   const [rows, setRows] = useState(datasjson);
 

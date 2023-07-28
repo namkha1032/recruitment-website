@@ -32,7 +32,7 @@ function* getEventList() {
       type: "error/setError",
       payload: {
         status: "yes",
-        message: "message" in error ? error.message : error.response.data,
+        message: "message" in error ? "Event - " + error.message : error.response.data,
       },
     });
   }
@@ -66,7 +66,7 @@ function* getEventListWithFilter(action) {
       type: "error/setError",
       payload: {
         status: "yes",
-        message: "message" in error ? error.message : error.response.data,
+        message: "message" in error ? "Event - " + error.message : error.response.data,
       },
     });
   }

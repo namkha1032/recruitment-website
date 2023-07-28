@@ -30,7 +30,7 @@ function* getPositionList() {
       type: "error/setError",
       payload: {
         status: "yes",
-        message: "message" in error ? error.message : error.response.data,
+        message: "message" in error ? "Position - " + error.message : error.response.data,
       },
     });
   }
