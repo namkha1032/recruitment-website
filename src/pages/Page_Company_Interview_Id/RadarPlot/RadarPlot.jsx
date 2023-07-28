@@ -65,12 +65,12 @@ const RadarPlot = (props) => {
                         autoexpand: false,
                         pad: 0,
                         b: 0,
-                        l: isMd ? 20 : 15,
-                        r: isMd ? 70 : 50,
+                        l: 20,
+                        r: 70,
                         t: 0
                     },
-                    width: isMd ? 320 : 250,
-                    height: isMd ? 320 : 250
+                    width: 320,
+                    height: 320
                 }}
                 config={{
                     displayModeBar: false, // this is the line that hides the bar.

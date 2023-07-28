@@ -36,10 +36,15 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
+
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 // import { useNavItem } from '@restart/ui/esm/NavItem';
 const Page_Company_Interview_Id = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const theme = useTheme()
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const role = useGetRole()
     useEffect(() => {
         dispatch({ type: "saga/getInterviewId" })
@@ -52,7 +57,7 @@ const Page_Company_Interview_Id = () => {
     return (
         <>{interview &&
             <>
-                <Page_Interview_Id />
+                {/* <Page_Interview_Id /> */}
                 <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 4, marginBottom: 4 }}>
                     <Button variant='contained' onClick={handleStart}>Start</Button>
                 </Box>
@@ -65,7 +70,7 @@ const Page_Company_Interview_Id = () => {
                                 borderWidth: "1px"
                             },
                         }}>
-                            <Button variant="contained" sx={{ backgroundColor: "black", color: "white", fontSize: 25, borderRadius: 100 }}>
+                            <Button variant="contained" sx={{ backgroundColor: "black", color: "white", fontSize: isMd ? 25 : 15, borderRadius: 100 }}>
                                 RESULT OF THE INTERVIEW
                             </Button>
                         </Divider>
@@ -92,7 +97,7 @@ const Page_Company_Interview_Id = () => {
                                     </GigaCardBody>
                                 </GigaCard>
                             </Grid>
-                            <Grid item md={12}>
+                            <Grid item md={12} sx={{ width: "100%" }}>
                                 <GigaCard>
                                     <Grid container>
                                         <Grid item md={6} xs={12} sx={{ display: "flex", flexDirection: "column" }}>

@@ -8,6 +8,9 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useDispatch } from 'react-redux';
 import 'katex/dist/katex.min.css';
 
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
 import ViewDialog from '../ViewDialog/ViewDialog';
 const RightTable = (props) => {
     // const {
@@ -24,6 +27,8 @@ const RightTable = (props) => {
     const setCurrentSubTab = props.setCurrentSubTab
     const setCurrentQues = props.setCurrentQues
     const dispatch = useDispatch()
+    const theme = useTheme()
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
     let TabComponent
     let superSet
     if (cate == 0) {
@@ -56,10 +61,10 @@ const RightTable = (props) => {
             </Box>
             {superSet.map((sub, index) => {
                 let rightColumns = [
-                    { field: "questionid", headerName: "ID", flex: 1 },
-                    { field: "questionstring", headerName: "String", flex: 3 },
+                    { field: "questionid", headerName: isMd ? "ID" : "#", flex: 2 },
+                    { field: "questionstring", headerName: "String", flex: 5 },
                     {
-                        field: "action", headerName: "View", flex: 1, renderCell: (params) => {
+                        field: "action", headerName: "", flex: 1, renderCell: (params) => {
                             if (cate == 0) {
                                 return (
                                     <ViewDialog params={params} cate={cate} />
@@ -78,7 +83,7 @@ const RightTable = (props) => {
                         }
                     },
                     {
-                        field: "score", headerName: "Score", flex: 1, renderCell: (params) => {
+                        field: "score", headerName: "Score", flex: 3, renderCell: (params) => {
                             return (
                                 <Box sx={{ display: "flex", alignItems: "center" }}>
                                     <TextField required type="number" size="small"
@@ -120,9 +125,11 @@ const RightTable = (props) => {
                                     cursor: 'pointer'
                                 }
                             }}
+                            disableColumnMenu
                             disableColumnFilter
                             disableColumnSelector
                             disableDensitySelector
+                            disableRowSelectionOnClick
                             slots={{ toolbar: GridToolbar }}
                             slotProps={{
                                 toolbar: {

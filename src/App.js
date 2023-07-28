@@ -159,9 +159,6 @@ function App() {
             </Route>
 
             <Route path="/test" element={<PageTest />} />
-            {/* <Route element={<RequireAuth allowedRoles={"candidate"} />}>
-              <Route path="/test" element={<PageTest />} />
-            </Route> */}
 
 
           </Route>

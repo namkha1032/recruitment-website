@@ -34,25 +34,25 @@ const CateTab = (props) => {
     return (
         <Box sx={{ display: "flex", columnGap: 2, marginBottom: 2 }}>
             <Button sx={{ borderRadius: 100 }}
-                size="medium"
+                size={isMd ? "medium" : "small"}
                 color={"secondary"}
-                startIcon={<HandshakeIcon />}
+                startIcon={isMd ? <HandshakeIcon /> : null}
                 variant={currentCateTab == 0 ? "contained" : "outlined"}
                 onClick={() => { setCurrentCateTab(0) }}>
                 Soft Skill
             </Button>
             <Button sx={{ borderRadius: 100 }}
-                size="medium"
+                size={isMd ? "medium" : "small"}
                 color={"success"}
-                startIcon={<LanguageIcon />}
+                startIcon={isMd ? <LanguageIcon /> : null}
                 variant={currentCateTab == 1 ? "contained" : "outlined"}
                 onClick={() => { setCurrentCateTab(1) }}>
                 Language
             </Button>
             <Button sx={{ borderRadius: 100 }}
-                size="medium"
+                size={isMd ? "medium" : "small"}
                 color={"warning"}
-                startIcon={<TungstenIcon />}
+                startIcon={isMd ? <TungstenIcon /> : null}
                 variant={currentCateTab == 2 ? "contained" : "outlined"}
                 onClick={() => { setCurrentCateTab(2) }}>
                 Technology

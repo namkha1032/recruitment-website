@@ -423,7 +423,7 @@ const Page_Home = () => {
         </Box>
         <Box sx={{ padding: '24px', borderTop: '1px solid lightgrey' }} id='AboutUs'>
           <Box sx={{padding:'0px 0px 30px 0px'}}>
-            <Typography sx={{ ...styleFont }} align='center' variant='h3'>About us</Typography>
+            <Typography align='center' variant='h3'>About us</Typography>
 
           </Box>
           <Grid container spacing={1} >

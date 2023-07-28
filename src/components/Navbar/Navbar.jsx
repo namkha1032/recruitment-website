@@ -28,6 +28,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useGetRole from '../../hooks/useGetRole';
 import { grey } from '@mui/material/colors';
 import { unstable_createCssVarsTheme } from '@mui/system';
+import useMediaQuery from '@mui/material/useMediaQuery';
 let innerDrawerWidth;
 
 
@@ -40,6 +41,7 @@ const NavbarContent = () => {
     const role = useGetRole()
     const user = useSelector(state => state.user)
     const theme = useTheme()
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const navbarNavigate = [
         {
             name: "Home",
@@ -98,7 +100,7 @@ const NavbarContent = () => {
         <>
             <Container sx={{ display: "flex", alignItems: "center" }}>
                 {/* Logo */}
-                <Box sx={{ display: { xs: 'none', md: 'flex' }, height: "69px", alignItems: "center", cursor: "pointer", border: "4px solid white" }} onClick={() => { navigate("/home") }}>
+                <Box sx={{ display: { xs: 'none', md: 'flex' }, height: "69px", alignItems: "center", cursor: "pointer", borderTop: "4px solid white", borderBottom: "4px solid white" }} onClick={() => { navigate("/home") }}>
                     <FavoriteIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
                         variant="h6"
@@ -209,7 +211,7 @@ const NavbarContent = () => {
                     {role
                         ? <>
                             <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={(event) => { setAnchorElUser(event.currentTarget) }}>
-                                <Typography variant="subtitle1" sx={{ marginRight: 2 }}>{user ? user.name : ""}</Typography>
+                                {isMd ? <Typography variant="subtitle1" sx={{ marginRight: 2 }}>{user ? user.name : ""}</Typography> : null}
                                 <Tooltip title="Open settings">
                                     <IconButton sx={{ p: 0 }}>
                                         <Avatar alt="Remy Sharp" src={user ? user.image : ""} />
@@ -283,7 +285,6 @@ const NavbarContent = () => {
                             }
                         }} onClick={() => { navigate("/login") }}>Log in</Button>}
                 </Box>
-                {/* Dropdown responsive */}
             </Container>
         </>
     );
@@ -315,6 +316,7 @@ const Navbar = (props) => {
         <>
             {/* <CustomAppBar position="fixed" open={props.open} > */}
             <AppBar
+
                 sx={{
                     transition: theme.transitions.create(['margin', 'width'], {
                         easing: theme.transitions.easing.sharp,
@@ -330,10 +332,11 @@ const Navbar = (props) => {
                     }),
                     backgroundColor: "white",
                     color: "black",
+                    height: "69px"
                     // boxShadow: 0
                 }}
             >
-                <Toolbar>
+                <Toolbar sx={{ height: "100%" }}>
                     {props.showSidebar ? <IconButton
                         color="inherit"
                         aria-label="open drawer"
