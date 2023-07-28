@@ -317,7 +317,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
                 />
                 <Tab
                   value="2"
-                  label="Export"
+                  label="Export (Coming soon)"
                   icon={<FileDownloadIcon />}
                   disabled
                   sx={{
