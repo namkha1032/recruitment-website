@@ -18,6 +18,7 @@ function UploadPdf(prop) {
       setPdfFile(null);
     }
   };
+  console.log(viewPdf)
   function handleChange(e) {
     let selectedFile = e.target.files[0];
     if (selectedFile) {

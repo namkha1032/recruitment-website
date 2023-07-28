@@ -3,14 +3,18 @@ import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects"
 import axios from 'axios'
 
 function* getCvinfor(action) {
-    const response1 = yield call(axios.get, 'http://leetun2k2-001-site1.gtempurl.com/api/Cv')
-    const cv = response1.data.filter((prop)=>prop.cvId==="632d2789-f0dc-4f47-965f-f3a8cffd6f40")
+    const response1 = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Cv')
+    const cv = response1.data.filter((prop)=>prop.cvid==="d1c51600-6272-4c78-9b50-36af9d403a28")
     console.log(cv)
-    const response2 = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/CvHasSkill`)
-    const cvSkill= response2.data.filter((prop)=>prop.cvid===cv[0].cvId)
 
-    const response3 = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Certificate`)
-    const cvCertificate= response3.data.filter((prop)=>prop.cvid===cv[0].cvId)
+    const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CvHasSkill`)
+    const cvSkill= response2.data.filter((prop)=>prop.cvid===cv[0].cvid)
+    // const cvSkill= cv[0].skills
+    // console.log(cvSkill)
+
+    const response3 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Certificate`)
+    const cvCertificate= response3.data.filter((prop)=>prop.cvid===cv[0].cvid)
+    // const cvCertificate= cv[0].certificates
 
 
     yield put({ type: "cvInfor/setCvInfor", payload: cv })
