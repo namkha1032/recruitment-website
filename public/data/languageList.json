@@ -1,8 +1,37 @@
 [
-  { "languageId": 0, "languageName": "English" },
-  { "languageId": 1, "languageName": "Japanese" },
-  { "languageId": 2, "languageName": "Chinese" },
-  { "languageId": 3, "languageName": "Vietnamese" },
-  { "languageId": 4, "languageName": "France" },
-  { "languageId": 5, "languageName": "Korean" }
+  {
+    "languageId": "00000000-0000-0000-0000-000000000001",
+    "languageName": "js",
+    "isDeleted": false
+  },
+  {
+    "languageId": "00000000-0000-0000-0000-000000000002",
+    "languageName": "C#",
+    "isDeleted": false
+  },
+  {
+    "languageId": "00000000-0000-0000-0000-000000000003",
+    "languageName": "ts",
+    "isDeleted": false
+  },
+  {
+    "languageId": "00000000-0000-0000-0000-000000000004",
+    "languageName": "py",
+    "isDeleted": false
+  },
+  {
+    "languageId": "91a43109-7387-4cf3-9f67-1a6a60c0667c",
+    "languageName": "English",
+    "isDeleted": false
+  },
+  {
+    "languageId": "12792a28-89c8-444b-b154-4a0370aef3bb",
+    "languageName": "Japanese",
+    "isDeleted": false
+  },
+  {
+    "languageId": "a9bcd349-2ea8-466d-8bd5-53999abffa0b",
+    "languageName": "French",
+    "isDeleted": false
+  }
 ]

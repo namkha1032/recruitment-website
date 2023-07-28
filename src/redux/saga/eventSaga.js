@@ -8,7 +8,7 @@ import { filterEventList } from "../../utils/filterEventList";
 function* getEventList() {
   try {
     yield put({ type: "loading/onLoading" });
-    // yield call(delay, 1500)
+    yield call(delay, 1500)
     const response = yield call(axios.get, `${host.name}/data/eventList.json`)
     // const response = yield call(
     //   axios.get,
