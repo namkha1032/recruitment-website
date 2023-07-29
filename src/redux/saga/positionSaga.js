@@ -10,7 +10,7 @@ function* getPositionList() {
     yield put({ type: "loading/onLoading" })
     // yield call(delay, 1500)
     // const response = yield call(axios.get, `${host.name}/data/positionList.json`)
-    const response = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/Position")
+    const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Position")
     const data = formatPositionList(response.data)
     yield put({ type: "positionList/setPositionList", payload: data })
     yield put({ type: "loading/offLoading" })
@@ -21,7 +21,7 @@ function* getPositionListWithFilter(action) {
     yield put({ type: "loading/onLoading" })
     // yield call(delay, 1500)
     // const response = yield call(axios.get, `${host.name}/data/positionListD.json`)
-    const response = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/Position")
+    const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Position")
     const draft = filterPositionListWithDepartment(response.data, action.payload)
     const data = formatPositionList(draft)
     yield put({ type: "positionList/setPositionList", payload: data })
@@ -35,19 +35,19 @@ function* updatePositionList(action) {
 
 
 function* getPosition(action) {
-    const response1 = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById/${action.payload}`)
-    const response2 = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Language/GetLanguage/${response1.data.languageId}`)
+    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById/${action.payload}`)
+    const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Language/GetLanguage/${response1.data.languageId}`)
     // const response3 =  yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Requirement`)
     // const requirementid = response3.data.filter((prop) => prop.requirementId === response1.data.requirementId);
     // console.log("requirefull", response3.data);
     // console.log("requiresaga", requirementid);
-    const response3 = yield call(axios.get, 'http://leetun2k2-001-site1.gtempurl.com/api/Department');
+    const response3 = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Department');
     const department = response3.data.filter((prop) => prop.departmentId === response1.data.departmentId);
     console.log("response3", response3.data);
     console.log("department", department);
-    const response4 = yield call(axios.get, 'http://leetun2k2-001-site1.gtempurl.com/api/Requirement');
+    const response4 = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Requirement');
     const requirementid = response4.data.filter((prop) => prop.positionId === response1.data.positionId);
-    const response5 = yield call(axios.get, 'http://leetun2k2-001-site1.gtempurl.com/api/Skill');
+    const response5 = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Skill');
     // const skilllist = requirementid.filter((prop) => prop.skillId === response5.data.skillId);
     let skilllist = [];
     console.log("type", typeof(requirementid[0]));

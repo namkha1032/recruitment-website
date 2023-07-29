@@ -8,7 +8,7 @@ function* getEventList() {
     yield put({ type: "loading/onLoading" })
     yield call(delay, 1500)
     // const response = yield call(axios.get, `${host.name}/data/eventList.json`)
-    const response = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/Event")
+    const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event")
     // --- Get Recruiter name
     
     // --- Format EventList
@@ -27,7 +27,7 @@ function* getEventListWithFilter(action) {
 }
 function* getEvent(action) {
     console.log("eid: ", action.payload)
-    const response = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Event/GetEventById/${action.payload}`)
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Event/GetEventById/${action.payload}`)
     console.log("res: ", response.data)
     const res = response.data;
     const newObj = {

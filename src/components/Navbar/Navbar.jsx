@@ -27,6 +27,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useGetRole from '../../hooks/useGetRole';
 import { grey } from '@mui/material/colors';
+import cleanStore from '../../utils/cleanStore';
 let innerDrawerWidth;
 
 
@@ -246,6 +247,7 @@ const NavbarContent = () => {
                                                 <MenuItem onClick={() => {
                                                     if (index == dropdownNavigate.length - 1) {
                                                         console.log("logout")
+                                                        cleanStore(dispatch)
                                                         dispatch({ type: "saga/userLogout" })
                                                         
                                                         navigate("/home")
@@ -281,7 +283,7 @@ const NavbarContent = () => {
                             "&:hover": {
                                 borderColor: "black"
                             }
-                        }} onClick={() => { navigate("/login") }}>Log in</Button>}
+                        }} onClick={() => {sessionStorage.setItem('previousPage', window.location.pathname); navigate("/login") }}>Log in</Button>}
                 </Box>
             </Container>
             {/* Dropdown responsive */}
@@ -327,6 +329,7 @@ const NavbarContent = () => {
                                             <MenuItem onClick={() => {
                                                 if (index == dropdownNavigate.length - 1) {
                                                     console.log("logout")
+                                                    cleanStore(dispatch)
                                                     dispatch({ type: "saga/userLogout" })
                                                     navigate("/home")
                                                 }
@@ -356,7 +359,7 @@ const NavbarContent = () => {
                             })}
                         </Menu>
                     </>
-                    : <Typography variant="button" sx={{ color: "white", cursor: "pointer" }} onClick={() => { navigate("/login") }}>Log in</Typography>}
+                    : <Typography variant="button" sx={{ color: "white", cursor: "pointer" }} onClick={() => {sessionStorage.setItem('previousPage', window.location.pathname); navigate("/login") }}>Log in</Typography>}
             </Box>
         </>
     );

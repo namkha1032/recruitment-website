@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+// import useHistory from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
@@ -49,6 +50,7 @@ const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
 
 const XPage_Login = () => {
   const navigate = useNavigate();
+  // const history = useHistory();
   const [username, setUsername] = useState("");
   const [validUsername, setValidUsername] = useState(true);
   const [password, setPassword] = useState("");
@@ -63,7 +65,11 @@ const XPage_Login = () => {
   useEffect(() => {
     if (newError.status === "no") {
       dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
-      navigate("/home");
+      const previousPage = sessionStorage.getItem('previousPage') || '/home';
+      sessionStorage.removeItem('previousPage');
+      navigate(previousPage);
+
+      // navigate("/home");
     }
     if (newError.status === "yes") {
       setErrorSnackbar(true)

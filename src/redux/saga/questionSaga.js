@@ -10,11 +10,11 @@ function* getAllQuestion() {
     yield put({ type: "loading/onLoading" })
     yield call(delay, 1500)
     // const response = yield call(axios.get, `${host.name}/data/questionListR.json`)
-    const response = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/Question")
+    const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Question")
     // --- GET NAME
-    const categorys = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion")
-    const skillsQ = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill")
-    const skills = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/Skill")
+    const categorys = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion")
+    const skillsQ = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill")
+    const skills = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Skill")
     const data = yield call(formatQuestionList, response.data, categorys.data, skillsQ.data, skills.data)
     
     yield put({ type: "questionList/setQuestionList", payload: data })
@@ -27,11 +27,11 @@ function* getQuestionListWithFilter(action) {
     yield call(delay, 1500)
     
     // const response = yield call(axios.get, `${host.name}/data/questionlist.json`)
-    const response = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/Question")
+    const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Question")
     // --- GET NAME
-    const categorys = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion")
-    const skillsQ = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill")
-    const skills = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/Skill")
+    const categorys = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion")
+    const skillsQ = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill")
+    const skills = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Skill")
     const draft = yield call(formatQuestionList, response.data, categorys.data, skillsQ.data, skills.data)
     
     // --- FILTER
@@ -43,10 +43,10 @@ function* getQuestionListWithFilter(action) {
 }
 
 function* getInterviewQuestion(action) {
-    const response = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Question`)
-    const response1 = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion`)
-    const response2 = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Skill`)
-    const response3 = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Language`)
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Question`)
+    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion`)
+    const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Skill`)
+    const response3 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Language`)
     const resList = response.data
     const res1List = response1.data
     const res2List = response2.data
