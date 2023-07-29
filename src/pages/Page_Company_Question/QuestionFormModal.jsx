@@ -23,19 +23,28 @@ import { useState } from "react";
 
 export default function QuestionFormModal(props) {
   const [question, setQuestion] = useState("");
-  const [skill, setSkill] = useState(null);
   const [category, setCategory] = useState("Technology");
 
+  const [skillChoose, setSkillChoose] = useState({
+    skillId: "",
+    skillName: "",
+  });
+  const [languageChoose, setLanguageChoose] = useState({
+    languageId: "",
+    languageName: "",
+  });
+
   const [isFillQuestion, setIsFillQuestion] = useState(null);
-  const [isFillSkill, setIsFillSkill] = useState(null);
+  const [isFillType, setIsFillType] = useState(null);
   const [isFillCategory, setIsFillCategory] = useState(null);
 
   function handleResetForm() {
     setQuestion("");
-    setSkill(null);
+    setSkillChoose(null);
+    setLanguageChoose(null);
     setIsFillQuestion(null);
     setIsFillCategory("Technology");
-    setIsFillSkill(null);
+    setIsFillType(null);
   }
 
   function handleQuestionChange(value) {
@@ -47,16 +56,24 @@ export default function QuestionFormModal(props) {
 
   function handleSkillChange(value) {
     if (value !== undefined) {
-      setIsFillSkill(true);
+      setIsFillType(true);
     }
-    setSkill(value);
+    setSkillChoose(value);
+  }
+
+  function handleLanguageChange(value) {
+    if (value !== undefined) {
+      setIsFillType(true);
+    }
+    setLanguageChoose(value);
   }
 
   function handleCategoryChange(value) {
     if (value !== undefined) {
       setIsFillCategory(true);
     }
-    setSkill(null);
+    setSkillChoose(null);
+    setLanguageChoose(null);
     setCategory(value);
   }
 
@@ -64,23 +81,40 @@ export default function QuestionFormModal(props) {
     if (question === "" || question === "null") {
       setIsFillQuestion(false);
     }
-    if ((skill === null && category !== "Soft Skills") || skill === undefined) {
-      setIsFillSkill(false);
-    }
-    if (category === null) {
-      setIsFillCategory(false);
-    }
     if (
-      question !== "" &&
-      (skill !== null || (skill === null && category === "Soft Skills")) &&
-      skill !== undefined &&
-      category !== null
+      category === "Technology" &&
+      (skillChoose === null || skillChoose === undefined || skillChoose.skillName === "")
     ) {
-      props.handleSubmitQuestion({
-        question: question,
-        category: category,
-        skill: skill,
-      });
+      setIsFillType(false);
+    } else if (
+      category === "Language" &&
+      (languageChoose === null || languageChoose === undefined || languageChoose.skillName === "")
+    ) {
+      setIsFillType(false);
+    } else {
+      if (category === "Technology") {
+        props.handleSubmitQuestion({
+          question: question,
+          category: category,
+          typeId: skillChoose.skillId,
+          typeName: skillChoose.skillName,
+        });
+      }
+      else if (category === "Language") {
+        props.handleSubmitQuestion({
+          question: question,
+          category: category,
+          typeId: languageChoose.languageId,
+          typeName: languageChoose.languageName
+        });
+      }
+      else {
+        props.handleSubmitQuestion({
+          question: question,
+          category: category,
+          typeId: null,
+          typeName: null
+      })}
       handleResetForm();
       props.handleAddModalClose();
     }
@@ -90,7 +124,10 @@ export default function QuestionFormModal(props) {
     <Box>
       <Modal
         open={props.addModalStatus}
-        onClose={props.handleAddModalClose}
+        onClose={() => {
+          handleResetForm();
+          props.handleAddModalClose();
+        }}
         // transition={Slide}
         sx={{
           display: "flex",
@@ -354,11 +391,20 @@ export default function QuestionFormModal(props) {
                       fullWidth
                       renderInput={(params) => (
                         <TextField
-                          error={isFillSkill !== true && isFillSkill !== null}
+                          error={isFillType !== true && isFillType !== null}
                           {...params}
                         />
                       )}
-                      value={skill}
+                      getOptionLabel={(option) => option.skillName || ""}
+                      renderOption={(props, option) => (
+                        <li {...props} key={option.skillId}>
+                          {option.skillName}
+                        </li>
+                      )}
+                      isOptionEqualToValue={(option, value) => {
+                        return option.skillId === value.skillId;
+                      }}
+                      value={skillChoose}
                       onChange={(event, value) => handleSkillChange(value)}
                     />
                   )}
@@ -370,17 +416,26 @@ export default function QuestionFormModal(props) {
                       fullWidth
                       renderInput={(params) => (
                         <TextField
-                          error={isFillSkill !== true && isFillSkill !== null}
+                          error={isFillType !== true && isFillType !== null}
                           {...params}
                         />
                       )}
-                      value={skill}
-                      onChange={(event, value) => handleSkillChange(value)}
+                      getOptionLabel={(option) => option.languageName || ""}
+                      renderOption={(props, option) => (
+                        <li {...props} key={option.languageId}>
+                          {option.languageName}
+                        </li>
+                      )}
+                      isOptionEqualToValue={(option, value) => {
+                        return option.languageId === value.languageId;
+                      }}
+                      value={languageChoose}
+                      onChange={(event, value) => handleLanguageChange(value)}
                     />
                   )}
                 </Grid>
                 <Grid item xs={12}>
-                  {isFillSkill === false && category !== "Soft Skills" && (
+                  {isFillType === false && category !== "Soft Skills" && (
                     <Box
                       sx={{
                         fontSize: 10,
@@ -416,8 +471,8 @@ export default function QuestionFormModal(props) {
                   textTransform: "none",
                   "&:hover": {
                     backgroundColor: "black",
-                    color: "white"
-                  }
+                    color: "white",
+                  },
                 }}
                 onClick={handleSubmitClick}
               >

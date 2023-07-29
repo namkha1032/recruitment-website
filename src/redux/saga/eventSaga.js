@@ -12,7 +12,7 @@ function* getEventList() {
     // const response = yield call(axios.get, `${host.name}/data/eventList.json`)
     const response = yield call(
       axios.get,
-      "http://leetun2k2-001-site1.gtempurl.com/api/Event"
+      "https://leetun2k2-001-site1.gtempurl.com/api/Event"
     );
     // --- Get Recruiter name
 
@@ -47,7 +47,7 @@ function* getEventListWithFilter(action) {
     // yield call(delay, 1500)
     const response = yield call(
       axios.get,
-      "http://leetun2k2-001-site1.gtempurl.com/api/Event"
+      "https://leetun2k2-001-site1.gtempurl.com/api/Event"
     );
     // --- Get Recruiter name
 

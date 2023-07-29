@@ -2,11 +2,13 @@
 //  "QuestionId": "",
 //  "QuestionName": "",
 //  "Category": ["Technology, "Language", "Soft Skills"]
-//  "Skill": "", null nếu Category là Soft Skills
+//  "TypeId": "", null nếu Category là Soft Skills
+//  "TypeName": "", null nếu Category là Soft Skills
 // }
 import { formatLanguage } from "./formatLanguage";
+import { getLanguageId } from "./getLanguageId";
 
-export function formatQuestionList(input, categorys, skillsQ, skills) {
+export function formatQuestionList(input, categorys, skillsQ, skills, languages) {
   for (let i = 0; i < input.length; i++) {
     for (let j = 0; j < categorys.length; j++) {
       if (input[i].categoryQuestionId === categorys[j].categoryQuestionId) {
@@ -32,6 +34,7 @@ export function formatQuestionList(input, categorys, skillsQ, skills) {
       if (input[i].skillId === skills[j].skills) {
         input[i] = {
           ...input[i],
+          skillId: skills[j].skillId,
           skillName: skills[j].skillName,
         };
       }
@@ -42,22 +45,28 @@ export function formatQuestionList(input, categorys, skillsQ, skills) {
       return {
         QuestionId: element.questionId,
         QuestionName: element.questionString.slice(5),
-        Category: "Language",
-        Skill: formatLanguage(element.questionString, categorys),
+        CategoryId: element.categoryQuestionId,
+        CategoryName: "Language",
+        TypeId: getLanguageId(formatLanguage(element.questionString, categorys), languages),
+        TypeName: formatLanguage(element.questionString, categorys),
       };
     } else if (element.categoryQuestionName === "Soft Skill") {
       return {
         QuestionId: element.questionId,
         QuestionName: element.questionString,
-        Category: "Soft Skills",
-        Skill: null,
+        CategoryId: element.categoryQuestionId,
+        CategoryName: "Soft Skills",
+        TypeId: null,
+        TypeName: null,
       };
     } else {
       return {
         QuestionId: element.questionId,
         QuestionName: element.questionString,
-        Category: "Technology",
-        Skill: element.skillName,
+        CategoryId: element.categoryQuestionId,
+        CategoryName: "Technology",
+        TypeId: element.skillId,
+        TypeName: element.skillName,
       };
     }
   });

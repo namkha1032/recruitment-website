@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { Button, Autocomplete, TextField } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
@@ -40,6 +40,30 @@ import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 //   language: ["English", "Vietnamese", "Japanese", "Chinese", "Korian"],
 // };
 
+// JSON <- getAllQuestion
+// {
+//  "QuestionId": "",
+//  "QuestionName": "",
+//  "CategoryId": "",
+//  "CategoryName": ["Technology, "Language", "Soft Skills"]
+//  "TypeId": "", null nếu Category là Soft Skills
+//  "TypeName": "", null nếu Category là Soft Skills
+// }
+
+// skills:
+// {
+//   "skillId": "00000000-0000-0000-0000-000000000005",
+//   "skillName": "Nextjs",
+//   "description": "Dùng làm backend cho vui",
+//   "isDeleted": false
+// }
+
+// language: {
+//   "languageId": "a9bcd349-2ea8-466d-8bd5-53999abffa0b",
+//   "languageName": "French",
+//   "isDeleted": false
+// }
+
 export default function Page_Company_Question() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -55,7 +79,7 @@ export default function Page_Company_Question() {
   const error = useSelector((state) => state.error);
 
   useEffect(() => {
-    let timeoutId = null
+    let timeoutId = null;
     if (error.status === "yes") {
       errorAlert(error.message);
       timeoutId = setTimeout(() => {
@@ -78,7 +102,7 @@ export default function Page_Company_Question() {
     }
     return () => clearTimeout(timeoutId);
   }, [error]);
-  
+
   // const [rows, setRows] = useState(datasjson);
 
   const skill_draft = useSelector((state) => state.skill);
@@ -99,12 +123,15 @@ export default function Page_Company_Question() {
 
   const [modalStatus, setModalStatus] = useState(false);
   const [valueUpdate, setValueUpdate] = useState({
-    QuestionId: -1,
+    QuestionId: "-1",
     QuestionName: "",
-    Category: "",
-    Skill: "",
+    CategoryId: "",
+    CategoryName: "",
+    TypeId: "",
+    TypeName: "",
   });
   const [typeStatus, setTypeStatus] = useState(false);
+  const [keyModal, setKeyModal] = useState(0);
 
   const [deleteModalStatus, setDeleteModalStatus] = useState(false);
   const [valueDelete, setValueDelete] = useState(0);
@@ -147,8 +174,7 @@ export default function Page_Company_Question() {
           softskill: true,
         },
       });
-    }
-    else if (value === "Technology") {
+    } else if (value === "Technology") {
       dispatch({
         type: "saga/getQuestionListWithFilter",
         payload: {
@@ -160,8 +186,7 @@ export default function Page_Company_Question() {
           softskill: false,
         },
       });
-    }
-    else if (value === "Language") {
+    } else if (value === "Language") {
       dispatch({
         type: "saga/getQuestionListWithFilter",
         payload: {
@@ -173,8 +198,7 @@ export default function Page_Company_Question() {
           softskill: false,
         },
       });
-    }
-    else {
+    } else {
       dispatch({
         type: "saga/getQuestionListWithFilter",
         payload: {
@@ -235,6 +259,14 @@ export default function Page_Company_Question() {
     setAddModalStatus(false);
   }
 
+  // -> QuestionFormModal
+  // value: {
+  //  question: question,
+  //  category: "Technology",
+  //  typeId: null, nếu category = "Soft Skill"
+  //  typeName: null nếu category = "Soft Skill"
+  // }
+
   function handleSubmitQuestion(value) {
     successAlert("Create question");
     dispatch({
@@ -242,20 +274,32 @@ export default function Page_Company_Question() {
       payload: {
         QuestionName: value.question,
         Category: value.category,
-        Skill: value.skill,
+        TypeId: value.typeId,
+        TypeName: value.typeName,
       },
     });
   }
 
   function handleModalOpen(value, type) {
+    setKeyModal(k => k + 1);
     setValueUpdate(value);
     setTypeStatus(type);
     setModalStatus(true);
   }
 
   function handleModalClose() {
+    setKeyModal(k => k + 1);
     setModalStatus(false);
   }
+
+  // -> QuestionModal
+  // value: {
+  //   QuestionId: "",
+  //   QuestionName: "",
+  //   CategoryName: "",
+  //   TypeId: null,
+  //   TypeName: null nếu category = Soft Skill
+  // }
 
   function handleUpdateQuestion(value) {
     successAlert(`Update question ${value.QuestionId}`);
@@ -264,8 +308,10 @@ export default function Page_Company_Question() {
       payload: {
         QuestionId: value.QuestionId,
         QuestionName: value.QuestionName,
-        Category: value.Category,
-        Skill: value.Skill,
+        CategoryId: null,
+        CategoryName: value.CategoryName,
+        TypeId: value.TypeId,
+        TypeName: value.TypeName,
       },
     });
   }
@@ -281,9 +327,12 @@ export default function Page_Company_Question() {
 
   function handleDeleteQuestion(value) {
     successAlert("Xoá câu hỏi");
-    dispatch({type: "saga/deleteQuestion", payload: {
-      QuestionId: value
-    }})
+    dispatch({
+      type: "saga/deleteQuestion",
+      payload: {
+        QuestionId: value,
+      },
+    });
   }
 
   // function handleOpenSuccessAlert() {
@@ -301,7 +350,7 @@ export default function Page_Company_Question() {
       headerAlign: "left",
       align: "left",
       flex: 0.2,
-      minWidth: 30,
+      minWidth: 70,
       renderHeader: () => <span>ID</span>,
       renderCell: (params) => {
         if (params.value === undefined) return <NullString />;
@@ -344,12 +393,12 @@ export default function Page_Company_Question() {
       },
     },
     {
-      field: "Category",
+      field: "CategoryName",
       type: "string",
       headerAlign: "center",
       align: "center",
       flex: 0.4,
-      minWidth: 80,
+      minWidth: 130,
       renderHeader: () => <span>Category</span>,
       renderCell: (params) => {
         if (params.value === undefined) return <NullString />;
@@ -359,7 +408,7 @@ export default function Page_Company_Question() {
       },
     },
     {
-      field: "Skill",
+      field: "TypeName",
       type: "string",
       headerAlign: "center",
       align: "center",
@@ -374,6 +423,7 @@ export default function Page_Company_Question() {
       type: "actions",
       headerAlign: "right",
       align: "right",
+      width: 30,
       getActions: (params) => [
         <GridActionsCellItem
           icon={<InfoIcon variant="outlined" sx={{ color: "black" }} />}
@@ -384,8 +434,10 @@ export default function Page_Company_Question() {
               {
                 QuestionId: params.row.QuestionId,
                 QuestionName: params.row.QuestionName,
-                Category: params.row.Category,
-                Skill: params.row.Skill,
+                CategoryId: params.row.CategoryId,
+                CategoryName: params.row.CategoryName,
+                TypeId: params.row.TypeId,
+                TypeName: params.row.TypeName,
               },
               false
             )
@@ -401,8 +453,10 @@ export default function Page_Company_Question() {
               {
                 QuestionId: params.row.QuestionId,
                 QuestionName: params.row.QuestionName,
-                Category: params.row.Category,
-                Skill: params.row.Skill,
+                CategoryId: params.row.CategoryId,
+                CategoryName: params.row.CategoryName,
+                TypeId: params.row.TypeId,
+                TypeName: params.row.TypeName,
               },
               true
             )
@@ -412,7 +466,7 @@ export default function Page_Company_Question() {
         <GridActionsCellItem
           icon={<DeleteIcon sx={{ color: "#cc3300" }} />}
           label="Delete question"
-          onClick={() => handleDeleteModalOpen(params.row.id)}
+          onClick={() => handleDeleteModalOpen(params.row.QuestionId)}
           showInMenu
           sx={{
             color: "#cc3300",
@@ -471,7 +525,7 @@ export default function Page_Company_Question() {
                   width: {
                     xs: "100%",
                     sm: 250,
-                    md: 250
+                    md: 250,
                   },
                   "&:hover": {
                     backgroundColor: "black",
@@ -534,7 +588,7 @@ export default function Page_Company_Question() {
                 disablePortal
                 id="filter-type"
                 options={["Technology", "Language", "Soft Skills"]}
-                sx={{ width: 200, marginRight: 2 }}
+                sx={{ width: { md: 200, sm: 200, xs: "100%" }, marginRight: 2 }}
                 renderInput={(params) => (
                   <TextField {...params} label="Category..." />
                 )}
@@ -603,7 +657,7 @@ export default function Page_Company_Question() {
                   disablePortal
                   id="filter-type"
                   options={skills}
-                  sx={{ width: 200 }}
+                  sx={{ width: { md: 200, sm: 200, xs: "100%" } }}
                   renderInput={(params) => (
                     <TextField {...params} label="Skill..." />
                   )}
@@ -625,7 +679,7 @@ export default function Page_Company_Question() {
                   disablePortal
                   id="filter-type"
                   options={languages}
-                  sx={{ width: 200 }}
+                  sx={{ width: { md: 200, sm: "100%", xs: "100%" } }}
                   renderInput={(params) => (
                     <TextField {...params} label="Language..." />
                   )}
@@ -696,16 +750,16 @@ export default function Page_Company_Question() {
             key={addModalStatus}
             addModalStatus={addModalStatus}
             handleAddModalClose={handleAddModalClose}
-            options={{skill: skills, language: languages}}
+            options={{ skill: skills, language: languages }}
             handleSubmitQuestion={handleSubmitQuestion}
             keepMounted
           />
 
           <QuestionModal
-            key={valueUpdate.QuestionId}
+            key={keyModal}
             modalStatus={modalStatus}
             handleModalClose={handleModalClose}
-            options={{skill: skills, language: languages}}
+            options={{ skill: skills, language: languages }}
             handleUpdateQuestion={handleUpdateQuestion}
             value={valueUpdate}
             type={typeStatus}

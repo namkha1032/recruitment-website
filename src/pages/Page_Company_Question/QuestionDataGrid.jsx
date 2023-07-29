@@ -76,8 +76,10 @@ export default function QuestionDataGrid(props) {
               {
                 QuestionId: params.row.QuestionId,
                 QuestionName: params.row.QuestionName,
-                Category: params.row.Category,
-                Skill: params.row.Skill,
+                CategoryId: params.row.CategoryId,
+                CategoryName: params.row.CategoryName,
+                TypeId: params.row.TypeId,
+                TypeName: params.row.TypeName,
               },
               false
             );
