@@ -8,12 +8,12 @@ function* getEventList() {
     yield put({ type: "loading/onLoading" })
     yield call(delay, 1500)
     // const response = yield call(axios.get, `${host.name}/data/eventList.json`)
-    const response = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/Event")
+    const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event")
     // --- Get Recruiter name
     
     // --- Format EventList
-    const data = formatEventList(response.data)
-    yield put({ type: "eventList/setEventList", payload: data })
+    // const data = formatEventList(response.data)
+    yield put({ type: "eventList/setEventList", payload: response.data })
     yield put({ type: "loading/offLoading" })
 }
 

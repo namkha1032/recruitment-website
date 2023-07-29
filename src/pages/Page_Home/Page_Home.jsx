@@ -12,6 +12,8 @@ import { useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Carousel from '../../components/Carousel/Carousel'
+import { useDispatch, useSelector } from 'react-redux';
+import { useRef } from 'react';
 
 //
 // import Swiper core and required modules
@@ -60,126 +62,70 @@ const Page_Home = () => {
   //
 
   //
+
+  const eventList = useSelector(state => state.eventList)
+  const dispatch = useDispatch()
   const navigate = useNavigate()
-  const handleNavigateClick = () => {
-    navigate('/event')
+  const handleNavigateClick = (id) => {
+    navigate(`/event/${id}` )
   }
   const handleNavigateClick1 = () => {
     navigate('/recruitment')
   }
+  React.useEffect(() => {
+    dispatch({type:'saga/getEventList'})
+  },[])
+  console.log(eventList)
   return (
 
     <>
       <main>
         <Box sx={{ padding: '24px' }}>
-
           <Carousel />
-          {/* <Carousel className="Car1">
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src="https://bootstrapmade.com/demo/templates/ZenBlog/assets/img/post-landscape-6.jpg"
-                alt="First slide"
-                style={styleImage}
-              />
-              <Carousel.Caption>
-
-                <h3><a href='#AboutUs' style={{ textDecoration: 'none', color: 'white' }}>About us</a></h3>
-
-                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item >
-              <img
-                className="d-block w-100"
-                src="https://bootstrapmade.com/demo/templates/ZenBlog/assets/img/post-landscape-5.jpg"
-                alt="Second slide"
-                style={{ ...styleImage }}
-              />
-
-              <Carousel.Caption>
-                <h3 onClick={handleNavigateClick1} style={{ cursor: 'pointer' }}>Thông tin tuyển dụng</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src="https://bootstrapmade.com/demo/templates/ZenBlog/assets/img/post-landscape-1.jpg"
-                alt="Third slide"
-                style={styleImage}
-              />
-
-              <Carousel.Caption>
-                <h3 onClick={handleNavigateClick} style={{ cursor: 'pointer' }}>Sự kiện</h3>
-                <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-                </p>
-              </Carousel.Caption>
-            </Carousel.Item>
-          </Carousel> */}
         </Box>
 
-        <Box sx={{ padding: '24px', borderTop: '1px solid lightgrey' }}>
+        {eventList && <Box sx={{ padding: '24px', borderTop: '1px solid lightgrey' }}>
           <Grid container spacing={3}>
-            <Grid item md={4} onClick={handleNavigateClick} sx={{ cursor: 'pointer' }}   >
+            <Grid item md={4}  sx={{ cursor: 'pointer' }}   >
 
 
-              <Box sx={{ padding: '0px 16px 0px 0px', borderRight: '1px solid lightgrey' }}>
-                {/* //<Box component='h3' sx={{ ...styleFont }}> Các sự kiện nổi bật</Box> */}
-                <img src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80"
-                  alt=""
-                  style={{ width: '100%' }}
-                />
-                <Box sx={{ marginTop: '16px'}}>
-                  <Typography
-                    variant="subtitle1"
-                    align="center"
-                    color="text.secondary"
-                    component="p"
-                    sx={{ display: 'flex', justifyContent: 'flex-start' }}
-                  >
-                    CULTURE • JUL 5TH '23
-                  </Typography>
-
-                  "Nơi lạnh nhất trên Trái Đất không phải là Bắc Cực, mà là nơi thiếu đi tình thương con người"
-                </Box>
-
-
-
+           {eventList.slice(0,2).map( (item,index) => (
+              <Box  key={index} onClick={() =>handleNavigateClick(item.eventId) }
+             sx={{ padding: '0px 16px 0px 0px', borderRight: '1px solid lightgrey', cursor: 'pointer' }}>
+             
+              <img src="https://cdn.vietnambiz.vn/2020/1/15/photo-1579090002241-15790900035601213027614.jpg"
+                alt=""
+                style={{ width: '100%' }}
+              />
+              <Box sx={{ marginTop: '16px' }}>
+                <Typography
+                  variant="subtitle1"
+                  align="center"
+                  color="text.secondary"
+                  component="p"
+                  sx={{ display: 'flex', justifyContent: 'flex-start' }}
+                >
+                {item.eventName} • {item.datetimeEvent.slice(0,10)}
+                </Typography>
+                {item.description}
+              
               </Box>
+            </Box>
+            ))} 
 
-              <Box sx={{ padding: '0px 16px 0px 0px', borderRight: '1px solid lightgrey' }}>
-                {/* //<Box component='h3' sx={{ ...styleFont }}> Các sự kiện nổi bật</Box> */}
-                <img src="https://cdn.vietnambiz.vn/2020/1/15/photo-1579090002241-15790900035601213027614.jpg"
-                  alt=""
-                  style={{ width: '100%' }}
-                />
-                <Box sx={{ marginTop: '16px' }}>
-                  <Typography
-                    variant="subtitle1"
-                    align="center"
-                    color="text.secondary"
-                    component="p"
-                    sx={{ display: 'flex', justifyContent: 'flex-start' }}
-                  >
-                    CULTURE • JUL 5TH '22
-                  </Typography>
-
-                  "Hãy kết nối với nhau để cùng tạo ra cái gì đó to lớn hơn"
-                </Box>
-              </Box>
+              
             </Grid>
 
             <Grid item md={8} >
               <Grid container >
                 <Grid item md={4} 
-                onClick={handleNavigateClick}
-                sx={{ padding: '0px 16px 0px 16px', borderRight: '1px solid lightgrey',cursor: 'pointer'  }}
+     
+                sx={{ padding: '0px 16px 0px 0px', borderRight: '1px solid lightgrey'}}
 
                 >
-
-                  <Box sx={{  }}>
+                {eventList.slice(2,5).map( (item,index) => (
+                  <Box key={index} onClick={() =>handleNavigateClick(item.eventId) }
+                  sx={{cursor: 'pointer'  }}>
                     <img src="https://www.freecodecamp.org/news/content/images/2022/04/derick-mckinney-oARTWhz1ACc-unsplash.jpg"
                       alt=""
                       style={{ width: '100%' }}
@@ -191,53 +137,24 @@ const Page_Home = () => {
                       component="p"
                       sx={{ display: 'flex', justifyContent: 'flex-start' }}
                     >
-                      Sport • July 5th 23
+                    {item.eventName} • {item.datetimeEvent.slice(0,10)}
                     </Typography>
-                    Hãy bùng nổ với các trận cầu kinh điển
+                    {item.description}
 
-                  </Box>
-                  <Box sx={{}}>
-                    <img src="https://media.istockphoto.com/id/1125911085/photo/female-photographer-taking-a-picture.jpg?s=612x612&w=0&k=20&c=3OP9PJU_KgCyv_cNz-1o3NpdbM4k0WEOalAq-6Q2MXs="
-                      alt=""
-                      style={{ width: '100%' }}
-                    />
-                    <Typography
-                      variant="subtitle2"
-                      align="center"
-                      color="text.secondary"
-                      component="p"
-                      sx={{ display: 'flex', justifyContent: 'flex-start' }}
-                    >
-                      Soft Skills • July 5th 23
-                    </Typography>
-                    Tham gia vào câu lạc bộ ngay nào!
-
-                  </Box>
-                  <Box sx={{}}>
-                    <img src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80"
-                      alt=""
-                      style={{ width: '100%' }}
-                    />
-                    <Typography
-                      variant="subtitle2"
-                      align="center"
-                      color="text.secondary"
-                      component="p"
-                      sx={{ display: 'flex', justifyContent: 'flex-start' }}
-                    >
-                      Spirit • July 5th 23
-                    </Typography>
-                    Nơi này sẽ làm mới tâm hồn bạn
-
-                  </Box>
+                  </Box>))}
+                  
+                
 
                 </Grid>
                 <Grid item md={4} 
-                onClick={handleNavigateClick}
-                sx={{ padding: '0px 16px 0px 16px', cursor: 'pointer' }}
+                // onClick={handleNavigateClick}
+                sx={{ padding: '0px 16px 0px 16px', borderRight: '1px solid lightgrey',cursor: 'pointer'  }}
+
                 >
-                  <Box sx={{ }}>
-                    <img src="https://img.freepik.com/premium-photo/man-hand-lens-with-camera_225446-4203.jpg"
+                {eventList.slice(5,9).map( (item,index) => (
+                  <Box key={index} onClick={() =>handleNavigateClick(item.eventId) }
+                  sx={{cursor: 'pointer'  }}>
+                    <img src="https://www.freecodecamp.org/news/content/images/2022/04/derick-mckinney-oARTWhz1ACc-unsplash.jpg"
                       alt=""
                       style={{ width: '100%' }}
                     />
@@ -248,46 +165,13 @@ const Page_Home = () => {
                       component="p"
                       sx={{ display: 'flex', justifyContent: 'flex-start' }}
                     >
-                      Code War • July 5th 23
+                    {item.eventName} • {item.datetimeEvent.slice(0,10)}
                     </Typography>
-                    So trình với các cao thủ VJP nào
-                  </Box>
-                  <Box sx={{  }}>
-                    <img src="https://img-19.commentcamarche.net/cI8qqj-finfDcmx6jMK6Vr-krEw=/1500x/smart/b829396acc244fd484c5ddcdcb2b08f3/ccmcms-commentcamarche/20494859.jpg"
-                      alt=""
-                      style={{ width: '100%' }}
-                    />
-                    <Typography
-                      variant="subtitle2"
-                      align="center"
-                      color="text.secondary"
-                      component="p"
-                      sx={{ display: 'flex', justifyContent: 'flex-start' }}
-                    >
-                      Singing • July 5th 23
-                    </Typography>
+                    {item.description}
 
-                      Hoà mình vào các giai điệu, kết nối với mọi người qua lời hát !
-
-                  </Box>
-                  <Box sx={{ }}>
-                    <img src="https://cutewallpaper.org/21/image/Image-Dimensions-Monterey-Regional-Airport.jpeg"
-                      alt=""
-                      style={{ width: '100%' }}
-                    />
-                    <Typography
-                      variant="subtitle2"
-                      align="center"
-                      color="text.secondary"
-                      component="p"
-                      sx={{ display: 'flex', justifyContent: 'flex-start' }}
-                    >
-                      Business • July 5th 23
-                    </Typography>
-                    How to Avoid Distraction and Stay Focused During Video Calls?
-
-
-                  </Box>
+                  </Box>))}
+                  
+                
 
                 </Grid>
                 <Grid item md={4} >
@@ -420,7 +304,7 @@ const Page_Home = () => {
 
             </Grid>
           </Grid>
-        </Box>
+        </Box>}
         <Box sx={{ padding: '24px', borderTop: '1px solid lightgrey' }} id='AboutUs'>
           <Box sx={{padding:'0px 0px 30px 0px'}}>
             <Typography sx={{ ...styleFont }} align='center' variant='h3'>About us</Typography>
@@ -436,7 +320,7 @@ const Page_Home = () => {
                 />
               </Box>
             </Grid>
-            <Grid item md={6}>
+            <Grid item md={6} id='about'>
               <Box sx={{ padding: '24px 0px 0px 30px' }}>
                 <Box sx={{ padding: '0px 0px 0px 30px' }}>
                   <Typography

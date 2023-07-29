@@ -10,9 +10,9 @@ function* getPositionList() {
     yield put({ type: "loading/onLoading" })
     // yield call(delay, 1500)
     // const response = yield call(axios.get, `${host.name}/data/positionList.json`)
-    const response = yield call(axios.get, "http://leetun2k2-001-site1.gtempurl.com/api/Position")
-    const data = formatPositionList(response.data)
-    yield put({ type: "positionList/setPositionList", payload: data })
+    const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Position")
+    // const data = formatPositionList(response.data)
+    yield put({ type: "positionList/setPositionList", payload: response.data })
     yield put({ type: "loading/offLoading" })
 }
 

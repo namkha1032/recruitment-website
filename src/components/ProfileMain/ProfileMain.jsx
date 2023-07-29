@@ -3,6 +3,7 @@ import {
   Button,
   ButtonBase,
   Container,
+  Divider,
   FormControl,
   Grid,
   InputLabel,
@@ -22,28 +23,38 @@ import React, { useEffect, useState } from "react";
 import ProfileHeader from "./ProfileHeader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Key, Person, Send } from "@mui/icons-material";
+import { History, Key, PaidOutlined, Person, ScheduleOutlined, Send } from "@mui/icons-material";
 import CV from "../CV/CV";
 import ProfileChangePW from "./ProfileChangPW";
 import ProfileInfo from "./ProfileInfo";
 import GigaCard from "../GigaCard/GigaCard";
 import useGetRole from "../../hooks/useGetRole";
+import ProfileHistory from "./ProfileHistory/ProfileHistory";
 
 const ProfileMain = ({ page }) => {
   const navigate = useNavigate();
   const role = useGetRole();
-  // const location = useLocation();
-
-
+  const [history ,setHistory] = useState(null)
+  const positionList = useSelector((state) => state.positionList);
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
+  useEffect(() => {
+    // dispatch({ type: "saga/getPositionList" });
+  }, []);
   const handleClickChangePW = () => {
     if (page !== "ChangePW") navigate("/profile/1/changepassword");
   };
   const handleClickProfile = () => {
     if (page !== "Profile") navigate("/profile/1");
   };
-  
+  const handleClickPosition = (id) =>{
+    navigate(`/recruitment/${id}`)
+  }
+  const handleClickHistory = () => {
+    if (page !== "History") navigate("/profile/1/history");
+  }
+
+
   return (
     user && (
       <Container>
@@ -51,8 +62,8 @@ const ProfileMain = ({ page }) => {
           <ProfileHeader id={user.cvselected} userName={user.name} />
         </Box>
         <Grid container spacing={3}>
-          <Grid item md={3} xs={12}>
-            <Box sx={{ position: "sticky", top: "95px" }}>
+          <Grid item md={3} xs={12} position='relative'>
+            <Box sx={{position:"sticky",top:'95px'}}>
               <Box sx={{ width: "100%" }}>
                 <GigaCard>
                   <List
@@ -82,27 +93,38 @@ const ProfileMain = ({ page }) => {
                       </ListItemIcon>
                       <ListItemText primary="Change Password" />
                     </ListItemButton>
+                    {/*<ListItemButton
+                    selected={page === "History"}
+                      onClick={handleClickHistory}
+                    >
+                      <ListItemIcon>
+                      
+                        <History />
+                      </ListItemIcon>
+                      <ListItemText primary="History" />
+                    </ListItemButton>*/}
+                    
                   </List>
                 </GigaCard>
               </Box>{" "}
             </Box>
           </Grid>
           <Grid item md={9} xs={12}>
-            {page === "Profile" && (
+          {page === "Profile" && (
               <>
                 <ProfileInfo cvid={user.cvselected} user={user} />
 
                 {role === "candidate" && (
-                  <Box sx={{ mb: "24px" }}>
+                  <Box>
                     <GigaCard>
                       <Box sx={{ padding: "24px" }}>
-                        <CV cvid={user.cvselected} user={user} />
+                        <CV cvid={user.cvselected} page="Profile"/>
                       </Box>
                     </GigaCard>
                   </Box>
                 )}
               </>
-            )}
+            ) }
             {page === "ChangePW" && (
               <Box sx={{ mb: "24px" }}>
                 <GigaCard>
@@ -112,7 +134,18 @@ const ProfileMain = ({ page }) => {
                 </GigaCard>
               </Box>
             )}
+            {page === "History" && (
+              <Box sx={{ mb: "24px" }}>
+                <GigaCard>
+                  <Box sx={{ padding: "24px" }}>
+                    <ProfileHistory />
+                  </Box>
+                </GigaCard>
+              </Box>
+            )}
+         
           </Grid>
+          
         </Grid>
       </Container>
     )
