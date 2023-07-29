@@ -478,7 +478,7 @@ export default function QuestionModal(props) {
                     <TextField
                       hiddenLabel
                       id="filled-hidden-label-small"
-                      placeholder="Enter the question..."
+                      placeholder="Empty"
                       variant="outlined"
                       fullWidth
                       value={skillChoose ? skillChoose.skillName : null}
@@ -516,7 +516,7 @@ export default function QuestionModal(props) {
                     <TextField
                       hiddenLabel
                       id="filled-hidden-label-small"
-                      placeholder="Enter the question..."
+                      placeholder="Empty"
                       variant="outlined"
                       fullWidth
                       value={languageChoose ? languageChoose.languageName : ""}

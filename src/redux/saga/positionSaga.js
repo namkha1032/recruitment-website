@@ -49,7 +49,7 @@ function* getPositionListWithFilter(action) {
     
     const response = yield call(
       axios.get,
-      "http://leetun2k2-001-site1.gtempurl.com/api/Position"
+      "https://leetun2k2-001-site1.gtempurl.com/api/Position"
     );
     const draft = filterPositionList(response.data, action.payload);
     const data = formatPositionList(draft);

@@ -308,8 +308,7 @@ export default function Page_Company_Question() {
       payload: {
         QuestionId: value.QuestionId,
         QuestionName: value.QuestionName,
-        CategoryId: null,
-        CategoryName: value.CategoryName,
+        Category: value.CategoryName,
         TypeId: value.TypeId,
         TypeName: value.TypeName,
       },

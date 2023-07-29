@@ -6,6 +6,7 @@ import host from "../host";
 import { formatQuestionList } from "../../utils/formatQuestionList";
 import { filterQuestionList } from "../../utils/filterQuestionList";
 import { createQuestionDraft } from "../../utils/createQuestionDraft";
+import { getQuestionSkillId } from "../../utils/getQuestionSkillId";
 
 function* getAllQuestion() {
   console.log("Get All Question");
@@ -19,6 +20,7 @@ function* getAllQuestion() {
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/Question"
     );
+    console.log("0: ", response.data)
     // --- GET NAME
 
     const categorys = yield call(
@@ -151,6 +153,8 @@ function* postQuestion(action) {
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Soft%20Skill"
     );
+    
+
 
     const ques_draft = yield call(
       createQuestionDraft,
@@ -169,7 +173,7 @@ function* postQuestion(action) {
       }
     );
 
-    if (quesId.data.categoryQuestionId === techId) {
+    if (quesId.data.categoryQuestionId === techId.data[0].categoryQuestionId) {
       const ques = yield call(
         axios.post,
         "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill",
@@ -198,6 +202,20 @@ function* postQuestion(action) {
   }
 }
 
+// action.payload: {
+//   QuestionId: value.QuestionId,
+//   QuestionName: value.QuestionName,
+//   Category: value.CategoryName,
+//   TypeId: value.TypeId,
+//   TypeName: value.TypeName,
+// }
+// -> PUT Question:
+//   {
+//     "questionId": "00000000-0000-0000-0000-000000000001",
+//     "questionString": "Java",
+//     "categoryQuestionId": "6a454d2b-2668-444e-b36a-566d3e732b4d"
+//   }
+
 function* putQuestion(action) {
   console.log("PUT: ", action.payload);
   const techId = yield call(
@@ -213,6 +231,7 @@ function* putQuestion(action) {
     "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Soft%20Skill"
   );
 
+  console.log("1")
   const ques_draft = yield call(
     createQuestionDraft,
     action.payload,
@@ -221,29 +240,35 @@ function* putQuestion(action) {
     softId.data
   );
 
+  console.log("2")
+
   const quesId = yield call(
     axios.put,
-    "https://leetun2k2-001-site1.gtempurl.com/api/Question",
+    `https://leetun2k2-001-site1.gtempurl.com/api/Question/${action.payload.QuestionId}`,
     {
       questionId: action.payload.QuestionId,
       questionString: ques_draft.QuestionName,
       categoryQuestionId: ques_draft.CategoryId,
     }
   );
+  console.log("3")
 
   if (quesId.data.categoryQuestionId === techId) {
+    const questionSkills = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill")
+
+    const quesSkilId = yield call(getQuestionSkillId, action.payload.QuestionId, questionSkills.data)
+
     const ques = yield call(
       axios.put,
-      "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill",
+      `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${quesSkilId}`,
       {
-        questionSkillsId: quesId.data.questionId,
+        questionSkillsId: quesSkilId,
         questionId: action.payload.QuestionId,
         skillId: ques_draft.TypeId,
       }
     );
   }
   yield call(getAllQuestion)
-
 
 }
 

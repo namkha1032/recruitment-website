@@ -241,7 +241,7 @@ export default function Page_Company_Recruitment() {
       type: "string",
       headerAlign: "left",
       align: "left",
-      minWidth: 40,
+      minWidth: 70,
       flex: 0.2,
       renderHeader: () => <span>ID</span>,
       renderCell: (params) => {
