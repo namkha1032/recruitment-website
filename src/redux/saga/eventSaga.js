@@ -78,12 +78,12 @@ function* getEventListWithFilter(action) {
 
 function* getEvent(action) {
     console.log("eid: ", action.payload)
-    // const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Event/GetEventById/${action.payload}`)
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Event?id=${action.payload}`)
 
-    // ----------------------------------------
-    // FAKE API FOR BACKEND
-    const response = yield call(axios.get, `${host.name}/data/eventid.json`)
-    // ----------------------------------------
+    // // ----------------------------------------
+    // // FAKE API FOR BACKEND
+    // const response = yield call(axios.get, `${host.name}/data/eventid.json`)
+    // // ----------------------------------------
 
     console.log("res: ", response.data)
     const res = response.data;
@@ -97,15 +97,15 @@ function* getEvent(action) {
         location: res.place,
         createdTime: "16/07/2023 10:30"
 
-        // ----------------------------------------
-        // FAKE API FOR BACKEND
-        ,content: res.content,
-        quantity: res.quantity,
-        maxQuantity: res.maxQuantity,
-        time: res.time,
-        location: res.location,
-        createdTime: res.createdTime
-        // ----------------------------------------
+        // // ----------------------------------------
+        // // FAKE API FOR BACKEND
+        // ,content: res.content,
+        // quantity: res.quantity,
+        // maxQuantity: res.maxQuantity,
+        // time: res.time,
+        // location: res.location,
+        // createdTime: res.createdTime
+        // // ----------------------------------------
     }
     yield put({ type: "event/setEvent", payload: newObj })
 }
