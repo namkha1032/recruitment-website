@@ -5,6 +5,7 @@ import { delay } from "../../utils/delay";
 import host from "../host";
 import { formatQuestionList } from "../../utils/formatQuestionList";
 import { filterQuestionList } from "../../utils/filterQuestionList";
+import { createQuestionDraft } from "../../utils/createQuestionDraft";
 
 function* getAllQuestion() {
   console.log("Get All Question");
@@ -13,7 +14,7 @@ function* getAllQuestion() {
     // yield call(delay, 1500)
     // const response = yield call(axios.get, `${host.name}/data/questionListR.json`)
     // yield put({ type: "questionList/setQuestionList", payload: response.data });
-    
+
     const response = yield call(
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/Question"
@@ -44,7 +45,7 @@ function* getAllQuestion() {
       skills.data,
       languages.data
     );
-      console.log(data)
+    console.log(data);
     yield put({ type: "questionList/setQuestionList", payload: data });
     yield put({ type: "loading/offLoading" });
     yield put({
@@ -107,7 +108,7 @@ function* getQuestionListWithFilter(action) {
 
     // --- FILTER
     const data = yield call(filterQuestionList, draft, action.payload);
-    console.log("OUTPUT: ", data)
+    console.log("OUTPUT: ", data);
     yield put({ type: "questionList/setQuestionList", payload: data });
     yield put({ type: "loading/offLoading" });
     yield put({
@@ -128,14 +129,122 @@ function* getQuestionListWithFilter(action) {
   }
 }
 
+// action.payload: {
+//   QuestionName: value.question,
+//   Category: value.category,
+//   TypeId: value.typeId,
+//   TypeName: value.typeName,
+// }
+
 function* postQuestion(action) {
-  console.log("POST: ", action.payload)
+  try {
+    console.log("POST: ", action.payload)
+    const techId = yield call(
+      axios.get,
+      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Technology"
+    );
+    const langId = yield call(
+      axios.get,
+      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Language"
+    );
+    const softId = yield call(
+      axios.get,
+      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Soft%20Skill"
+    );
+
+    const ques_draft = yield call(
+      createQuestionDraft,
+      action.payload,
+      techId.data,
+      langId.data,
+      softId.data
+    );
+
+    const quesId = yield call(
+      axios.post,
+      "https://leetun2k2-001-site1.gtempurl.com/api/Question",
+      {
+        questionString: ques_draft.QuestionName,
+        categoryQuestionId: ques_draft.CategoryId,
+      }
+    );
+
+    if (quesId.data.categoryQuestionId === techId) {
+      const ques = yield call(
+        axios.post,
+        "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill",
+        {
+          questionId: quesId.data.questionId,
+          skillId: ques_draft.TypeId,
+        }
+      );
+    }
+    yield call(getAllQuestion)
+    yield put({
+      type: "error/setError",
+      payload: {
+        status: "no",
+        message: "",
+      },
+    });
+  } catch (error) {
+    yield put({
+      type: "error/setError",
+      payload: {
+        status: "yes",
+        message: "message" in error ? error.message : error.response.data,
+      },
+    });
+  }
 }
 
 function* putQuestion(action) {
-  console.log("PUT: ", action.payload)
-  yield delay(1500)
-  console.log("Finish")
+  console.log("PUT: ", action.payload);
+  const techId = yield call(
+    axios.get,
+    "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Technology"
+  );
+  const langId = yield call(
+    axios.get,
+    "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Language"
+  );
+  const softId = yield call(
+    axios.get,
+    "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Soft%20Skill"
+  );
+
+  const ques_draft = yield call(
+    createQuestionDraft,
+    action.payload,
+    techId.data,
+    langId.data,
+    softId.data
+  );
+
+  const quesId = yield call(
+    axios.put,
+    "https://leetun2k2-001-site1.gtempurl.com/api/Question",
+    {
+      questionId: action.payload.QuestionId,
+      questionString: ques_draft.QuestionName,
+      categoryQuestionId: ques_draft.CategoryId,
+    }
+  );
+
+  if (quesId.data.categoryQuestionId === techId) {
+    const ques = yield call(
+      axios.put,
+      "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill",
+      {
+        questionSkillsId: quesId.data.questionId,
+        questionId: action.payload.QuestionId,
+        skillId: ques_draft.TypeId,
+      }
+    );
+  }
+  yield call(getAllQuestion)
+
+
 }
 
 function* getInterviewQuestion(action) {
@@ -286,7 +395,10 @@ function* getInterviewQuestion(action) {
     axios.get,
     `${host.name}/data/questionlist.json`
   );
-  yield put({ type: "question/setInterviewQuestion", payload: responsefake.data })
+  yield put({
+    type: "question/setInterviewQuestion",
+    payload: responsefake.data,
+  });
 }
 
 function* getQuestion(action) {
@@ -300,7 +412,7 @@ function* questionSaga() {
     takeEvery("saga/getAllQuestion", getAllQuestion),
     takeLatest("saga/getQuestionListWithFilter", getQuestionListWithFilter),
     takeEvery("saga/putQuestion", putQuestion),
-    takeEvery("saga/postQuestion", postQuestion)
+    takeEvery("saga/postQuestion", postQuestion),
   ]);
 }
 
