@@ -16,7 +16,7 @@ import UploadPdf from "./UploadPdf";
 
 ///////////////////////////////////////////////////////
 const CreateCv = (prop) => {
-  const steps = ["Introduction", "Yout Experience", "Yout Certificate"];
+  const steps = ["Introduction", "Your Experience", "Your Certificate"];
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {

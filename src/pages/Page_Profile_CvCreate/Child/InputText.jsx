@@ -1,5 +1,6 @@
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import CompHeader from "./compHeader";
 
 const InputText = (prop) => {
   return (
@@ -17,12 +18,12 @@ const InputText = (prop) => {
         noValidate
         autoComplete="off"
       >
+        <CompHeader headerIcon={prop.headerIcon}>{prop.state}</CompHeader>
         <TextField
           required
           type={prop.type}
           id="outlined-basic"
           value={prop.value}
-          label={prop.state}
           variant="outlined"
           onChange={prop.handleState}
         />
