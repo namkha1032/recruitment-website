@@ -202,13 +202,15 @@ const Page_Company_Event_Create = () => {
                                                     slotProps={{ textField: { required: true } }}
                                                     value={time}
                                                     onChange={(newValue) => {
-                                                        console.log("main: ", newValue)
-                                                        console.log("sub: ", newValue.$d)
+                                                        // console.log("main: ", newValue)
+                                                        // console.log("sub: ", newValue.$d)
                                                         const newDate = new Date(newValue.$d)
-                                                        console.log("newDate: ", newDate)
-                                                        console.log("type: ", typeof (newValue.$d.toLocaleTimeString()))
+                                                        // console.log("newDate: ", newDate)
+                                                        // console.log("type: ", typeof (newValue.$d.toLocaleTimeString()))
+                                                        console.log("DateTime created: ", newDate.toLocaleString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }))
                                                         setTime(newValue)
                                                     }}
+                                                    format='HH:mm:ss DD/MM/YYYY'
                                                 />
                                             </DemoContainer>
                                         </LocalizationProvider>
