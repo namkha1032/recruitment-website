@@ -325,11 +325,13 @@ export default function Page_Company_Question() {
   }
 
   function handleDeleteQuestion(value) {
-    successAlert("Xoá câu hỏi");
+    successAlert(`Delete question ${value}`);
+    console.log(value);
     dispatch({
       type: "saga/deleteQuestion",
       payload: {
-        QuestionId: value,
+        QuestionId: value.QuestionId,
+        CategoryId: value.CategoryId,
       },
     });
   }
@@ -465,7 +467,10 @@ export default function Page_Company_Question() {
         <GridActionsCellItem
           icon={<DeleteIcon sx={{ color: "#cc3300" }} />}
           label="Delete question"
-          onClick={() => handleDeleteModalOpen(params.row.QuestionId)}
+          onClick={() => handleDeleteModalOpen({
+            QuestionId: params.row.QuestionId,
+            CategoryId: params.row.CategoryId
+          })}
           showInMenu
           sx={{
             color: "#cc3300",
@@ -772,7 +777,7 @@ export default function Page_Company_Question() {
         key={valueDelete}
         deleteModalStatus={deleteModalStatus}
         handleDeleteModalClose={handleDeleteModalClose}
-        id={valueDelete}
+        value={valueDelete}
         handleDeleteQuestion={handleDeleteQuestion}
       />
 
