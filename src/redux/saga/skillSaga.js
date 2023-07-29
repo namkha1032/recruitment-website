@@ -10,9 +10,9 @@ function* getSkill(action) {
     //   "http://leetun2k2-001-site1.gtempurl.com/api/Skill"
     // );
     const response = yield call(
-        axios.get,
-        "http://localhost:3000/data/skillList.json"
-      );
+      axios.get,
+      `${host.name}/data/skillList.json`
+    );
     yield put({ type: "skill/setSkill", payload: response.data });
     yield put({
       type: "error/setError",

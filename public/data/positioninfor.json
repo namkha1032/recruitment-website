@@ -1,0 +1,29 @@
+[
+  {
+    "positionId": "1",
+    "positionName": "sadasd",
+    "description": "description",
+    "salary": "10000",
+    "maxHiringQty": 100,
+    "startDate": "2023-07-28T17:01:17.872Z",
+    "endDate": "2023-07-28T17:01:17.872Z",
+    "departmentId": "00000000-0000-0000-0000-000000000001",
+    "languageId": "12792a28-89c8-444b-b154-4a0370aef3bb",
+    "recruiterId": null,
+    "status": "",
+    "requirement": [
+      {
+        "requirementId": "00000000-0000-0000-0000-000000000001",
+        "skillId": "00000000-0000-0000-0000-000000000001",
+        "experience": 2,
+        "note": "cái gì đó"
+      },
+      {
+        "requirementId": "00000000-0000-0000-0000-000000000002",
+        "skillId": "00000000-0000-0000-0000-000000000002",
+        "experience": 4,
+        "note": "cái gì đó 2"
+      }
+    ]
+  }
+]

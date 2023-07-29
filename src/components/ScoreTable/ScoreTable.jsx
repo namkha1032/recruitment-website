@@ -27,6 +27,9 @@ import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
 import calculateScore from '../../utils/calculateScore';
 
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -51,6 +54,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const ScoreTable = (props) => {
 
+    const theme = useTheme()
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+
     let rightSoft = props.allResult[0]
     let rightLang = props.allResult[1]
     let rightTech = props.allResult[2]
@@ -74,7 +80,7 @@ const ScoreTable = (props) => {
                         <TableRow>
                             <StyledTableCell>Categories</StyledTableCell>
                             <StyledTableCell>Score</StyledTableCell>
-                            <StyledTableCell>Formula</StyledTableCell>
+                            {isMd ? <StyledTableCell>Formula</StyledTableCell> : null}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -83,28 +89,28 @@ const ScoreTable = (props) => {
                                 Soft Skill
                             </StyledTableCell>
                             <StyledTableCell><InlineMath math={softResult.toString()} /></StyledTableCell>
-                            <StyledTableCell><InlineMath math={softMath} /></StyledTableCell>
+                            {isMd ? <StyledTableCell><InlineMath math={softMath} /></StyledTableCell> : null}
                         </TableRow>
                         <TableRow>
                             <StyledTableCell component="th" scope="row">
                                 Language Skill
                             </StyledTableCell>
                             <StyledTableCell><InlineMath math={langResult.toString()} /></StyledTableCell>
-                            <StyledTableCell><InlineMath math={langMath} /></StyledTableCell>
+                            {isMd ? <StyledTableCell><InlineMath math={langMath} /></StyledTableCell> : null}
                         </TableRow>
                         <TableRow>
                             <StyledTableCell component="th" scope="row">
                                 Technology Skill
                             </StyledTableCell>
                             <StyledTableCell><InlineMath math={techResult.toString()} /></StyledTableCell>
-                            <StyledTableCell><InlineMath math={techMath} /></StyledTableCell>
+                            {isMd ? <StyledTableCell><InlineMath math={techMath} /></StyledTableCell> : null}
                         </TableRow>
                         <TableRow sx={{ backgroundColor: "grey.300" }}>
                             <StyledTableCell component="th" scope="row">
                                 Final Score
                             </StyledTableCell>
                             <StyledTableCell><InlineMath math={finalResult.toString()} /></StyledTableCell>
-                            <StyledTableCell><InlineMath math={finalMath} /></StyledTableCell>
+                            {isMd ? <StyledTableCell><InlineMath math={finalMath} /></StyledTableCell> : null}
                         </TableRow>
                     </TableBody>
                 </Table>

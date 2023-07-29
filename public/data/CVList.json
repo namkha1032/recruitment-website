@@ -1,44 +1,44 @@
 [
     {
-        "CVid": 1,
-        "CVname": "Front-end"
+        "cvId": 1,
+        "cvName": "Front-end"
         
     },
     {
-        "CVid": 2,
-        "CVname": "Back-end"
+        "cvId": 2,
+        "cvName": "Back-end"
     },
     {
-        "CVid": 3,
-        "CVname": "Full-stack"
+        "cvId": 3,
+        "cvName": "Full-stack"
     },
     {
-        "CVid": 4,
-        "CVname": "Java"
+        "cvId": 4,
+        "cvName": "Java"
     },
     {
-        "CVid": 5,
-        "CVname": "OJT"
+        "cvId": 5,
+        "cvName": "OJT"
     },
     {
-        "CVid": 6,
-        "CVname": "Database"
+        "cvId": 6,
+        "cvName": "Database"
     },
     {
-        "CVid": 7,
-        "CVname": "Intern"
+        "cvId": 7,
+        "cvName": "Intern"
     },
     {
-        "CVid": 8,
-        "CVname": "Fresher"
+        "cvId": 8,
+        "cvName": "Fresher"
     },
     {
-        "CVid": 9,
-        "CVname": "HTML"
+        "cvId": 9,
+        "cvName": "HTML"
     },
     {
-        "CVid": 10,
-        "CVname": "CSS"
+        "cvId": 10,
+        "cvName": "CSS"
     }
 
 ]

@@ -10,6 +10,7 @@ import Box3 from "./Box3";
 import GigaCard from "../../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../../components/GigaCardBody/GigaCardBody";
 import dayjs from "dayjs";
+import cleanStore from "../../../utils/cleanStore";
 function RecruitForm() {
   const dispatch = useDispatch();
   // fetch Data
@@ -112,10 +113,18 @@ function RecruitForm() {
             : ""
           : ""
       );
+
       setDepartmentChoose(
         positionInfor
           ? positionInfor[0].departmentId !== null
             ? positionInfor[0].departmentId
+            : ""
+          : ""
+      );
+      setMaxHire(
+        positionInfor
+          ? positionInfor[0].maxHiringQty !== null
+            ? positionInfor[0].maxHiringQty
             : ""
           : ""
       );
@@ -163,6 +172,7 @@ function RecruitForm() {
   //FUNCTION
   function handleSubmit(e) {
     e.preventDefault();
+    cleanStore(dispatch)
     navigate("/company/recruitment/:recruitmentid");
   }
   const handleChange = (event) => {

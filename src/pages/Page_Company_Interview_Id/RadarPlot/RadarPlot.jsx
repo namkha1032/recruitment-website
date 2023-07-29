@@ -15,6 +15,8 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Plot from 'react-plotly.js';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 // import components
 
 // import functions
@@ -22,6 +24,8 @@ import calculateScore from '../../../utils/calculateScore';
 // import styles
 const RadarPlot = (props) => {
     const { allResult } = props
+    const theme = useTheme()
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
     let rightSoft = allResult[0]
     let rightLang = allResult[1]
     let rightTech = allResult[2]
