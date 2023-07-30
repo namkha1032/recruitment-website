@@ -13,173 +13,233 @@ import {
 } from "@mui/material";
 
 import imageBackground from "../../assets/img/background.jpg";
-import GigaCard from "../../components/GigaCard/GigaCard";
-import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+import { alpha } from '@mui/material/styles';
+import { MailOutline } from '@mui/icons-material';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 
-const style = {
-  marginTop: "15px",
-  marginBottom: "15px",
-};
+// const style = {
+//   marginTop: "15px",
+//   marginBottom: "15px",
+// };
 
 const theme = createTheme({
   palette: {
-    secondary: {
-      main: '#1976d2'
-    }
+      secondary: {
+          main: '#000000'
+      }
   }
 });
 
 const Recovery = (props) => {
   return (
     <Box
-      sx={{
-        height: "100vh",
-        backgroundImage: `url(${imageBackground})`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Container sx={{ display: "flex", justifyContent: "center" }}>
-        <Grid
-          container
-          sx={{
-            //paddingTop: "10%",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            width: "76%",
-          }}
+            sx={{
+                backgroundImage: `url(${imageBackground})`,
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                width: '100vw',
+                height: '100vh',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
         >
-
-          <Grid
-            item
-            xs={7}
-            sx={{ display: "flex", justifyContent: "center" }}
-          >
-            <Grid
-              item
-              xs={9}
-              sx={{
-                /* borderRadius: "10px",
-                padding: "20px",
-                paddingTop: "10px",
-                paddingBottom: "10px",
-                backgroundColor: "white", */
-                opacity: "100%",
-                left: "20%",
-                right: "20%",
-              }}
+        <Container 
+            component="main" 
+            maxWidth="xs" 
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}
+        >
+            <Box 
+                className="form-box" 
+                //border={`2px solid ${alpha('#FFFFFF', 0.5)}`}
+                sx={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '100%',
+                    background: 'transparent',
+                    border: '2px solid rgba(255, 255, 255, 0.5)',
+                    borderRadius: '20px',
+                    backdropFilter: 'blur(5px)',
+                    backgroundColor: alpha('#FFFFFF', 0.8),
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    boxShadow: '0px 0px 10px 10px rgba(255, 255, 255, 0.25)',
+                }}
             >
-              <GigaCard>
-                <GigaCardBody>
-
-              <Typography 
-                variant="h2" 
-                align="center" 
-                color='black' 
-                gutterBottom
-                fontFamily={'Roboto'}
-                fontSize={'30px'}
-                lineHeight={'28px'}
-                fontWeight={'700'}
-                padding={"10px"}
-              >
-                Recovery
-              </Typography>
-
-              <form
-                onSubmit={
-                  props.handleSubmit
-                } 
-              >
-
-                <Grid item xs={12} md={12} sx={{ ...style }}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Email"
-                    type="email"
-                    value={props.email}
-                    InputProps={{
-
-                      style: { borderRadius: "12px" },
-                    }}
-                    onChange={props.handleEmailChange}
-                    error={!props.validEmail}
-                  />
-                  {!props.validEmail && (
-                    <Box
-                    margin="3px 14px 0px"
-                  >
-                    {
-                      props.email === "" ? (
-                        <Typography 
-                          color="#f44336"
-                          fontSize="12px"
-                          lineHeight="20px"
-                        >
-                        Email is required
-                        </Typography>
-                      ) : (
-                        <Typography color="#f44336"
-                        fontSize="12px"
-                          lineHeight="20px"
-                        >
-                        Must be a valid email
-                        </Typography>
-                      )
-                    }
-                    
-                  </Box>
-                  )}
-                </Grid>
-
-                <Grid
-                  item
-                  xs={12}
-                  sx={{ display: "flex", justifyContent: "center", ...style }}
-                >
-                  <Button
-                    theme={theme}
-                    variant="contained"
-                    type="submit"
-                    color="secondary"
-                  
+                <Box className="from value" 
                     sx={{
-                      height: "40px",
-                      width: "100%",
-                      borderRadius: "8px",
-                      marginTop: "15px",
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        paddingTop: '7.5%',
+                        paddingBottom: '7.5%',
                     }}
-                  >
-                    Recovery
-                  </Button>
-                </Grid>
-              </form>
+                >
+                    <form
+                      onSubmit={props.handleSubmit}
+                    >
+                        <Typography variant="h2"
+                            sx={{
+                                fontSize: '3rem',
+                                color: 'black',
+                                textAlign: 'center',
+                                fontWeight: '450',
+                                marginBottom: '15px',
+                            }}
+                        >
+                            Reset
+                        </Typography>
 
-              <Grid
-                item
-                xs={12}
-                sx={{ ...style, display: "flex", justifyContent: "center", marginBottom: "0px" }}
-              >
-                <Typography component={Link} to="/login" variant="subtitle1" sx={{ textDecoration: 'none', color: '#1976d2' }}>
-                  Back to login{" "}
-                </Typography>
-              </Grid>
-              
-              </GigaCardBody>
-              </GigaCard>
+                        <Grid container spacing={2}
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                paddingTop: '0px'
+                            }}
+                        >
 
-            </Grid>
-          </Grid>
-        </Grid>
-      </Container>
-    </Box>
+                            <Grid item xs={12} 
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginBottom: '0px',
+                                    textAlign: 'center',
+                                    marginLeft: '10px',
+                                    marginRight: '10px',
+                                }}
+                            >
+                                <Typography variant='h5'>
+                                    Enter your email address
+                                </Typography>
+                            </Grid>
+
+                            <Grid item xs={12} 
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginBottom: '20px',
+                                    marginTop: '0px',
+                                    paddingTop: '0px'
+                                }}
+                            >
+                                <TextField 
+                                    variant='standard'
+                                    //required
+                                    fullWidth
+                                    type='email'
+                                    label={<Typography color={"black"}>Email</Typography>}
+                                    autoComplete='new-text'
+                                    value={props.email}
+                                    onChange={props.handleEmailChange}
+                                    error={!props.validEmail}
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        endAdornment: 
+                                        (<MailOutline 
+                                            sx={{
+                                                position: 'absolute',
+                                                right: '8px',
+                                                color: '#000',
+                                                fontSize: '1.2em',
+                                            }}
+                                        />),
+                                        sx: {
+                                            color: '#000',
+                                        }
+                                    }}
+                                    sx={{
+                                        width: '90%',
+                                        height: '50px',
+                                        background: 'transparent',
+                                        outline: 'none',
+                                        fontSize: '1em',
+                                        color: '#000',
+                                        borderBottom: '2px solid black',
+                                        borderBottomWidth: '2px',
+                                    }}
+
+                                    helperText={!props.validEmail &&
+                                        <Typography
+                                            color={"red"}
+                                            sx={{
+                                                display: 'flex',
+                                                justifyContent: 'left',
+                                                alignItems: 'center',
+                                            }}
+                                            variant='small'
+                                            
+                                        >
+                                            <ErrorOutlineOutlinedIcon color='red' 
+                                            sx={{ fontSize: 13, paddingRight: '0px' }}/>
+                                            <Typography variant='small' paddingLeft='3px'>Must be a valid email</Typography>
+                                        </Typography>
+                                    }
+                                />
+                            </Grid>
+
+                            
+
+                            <Grid item xs={12}
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Button 
+                                    type="submit" 
+                                    theme={theme}
+                                    variant="contained" 
+                                    color="secondary"
+                                    sx={{
+                                        height: '40px',
+                                        color: 'white',
+                                        borderRadius: '40px',
+                                        fontSize: '1em',
+                                        fontWeight: 600,
+                                        width: '90%',
+                                    }}
+                                >
+                                    Send
+                                </Button>
+                            </Grid>
+
+                        </Grid>
+
+                        <Grid container justifyContent="center">
+                            <Grid item xs={12}
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    lineHeight: '15px',
+                                    paddingTop: '15px',
+                                    fontSize: '.9em',
+                                }}
+                            >
+                                <Typography variant="small" sx={{color: 'black' }}>
+                                    <Typography component={Link} to="/login" variant="small" sx={{color: 'black'}}>
+                                        Back to sign in
+                                    </Typography>
+                                </Typography>
+                                
+                            </Grid>
+                        </Grid>
+                        
+                    </form>
+                </Box>
+            </Box>
+        </Container>
+        </Box>
   );
 };
 

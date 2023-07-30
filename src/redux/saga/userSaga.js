@@ -37,7 +37,7 @@ function* userLogin(action) {
 
 function* userRegister(action) {
     try {
-        const { fullname, username, email, password } = action.payload
+        const { username, email, password } = action.payload
         const response = yield call(axios.post, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/Register', { username, email, password })
         console.log("response is: ", response)
         yield put({ type: "error/setError", payload: { status: "no", message: "" } })
