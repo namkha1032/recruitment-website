@@ -1,5 +1,5 @@
 // import libraries
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -34,10 +34,11 @@ const Page_Company_Event_Id_Update = () => {
 
     // useState
     const [name, setName] = useState(null);
-    const [content, setContent] = useState(null);
     const [maxQuantity, setMaxQuantity] = useState(null);
-    const [time, setTime] = useState(null);
     const [location, setLocation] = useState(null);
+
+    const [content, setContent] = useState(null);
+    const [time, setTime] = useState(null);
 
     const [image, setImage] = useState(null);
     const [fileName, setFileName] = useState("No selected file");
@@ -49,10 +50,6 @@ const Page_Company_Event_Id_Update = () => {
         setName(e.target.value);
     }
 
-    const handleContent = (e) => {
-        setContent(e.target.value);
-    }
-
     const handleMaxQuantity = (e) => {
         setMaxQuantity(e.target.value);
     }
@@ -61,9 +58,22 @@ const Page_Company_Event_Id_Update = () => {
         setLocation(e.target.value);
     }
 
-    const handleImage = (e) => {
-        setImage(e.target.value);
-    }
+    // const handleContent = (e) => {
+    //     setContent(e.target.value);
+    // }
+    const contentRef = useRef()
+    useEffect(() => {
+        if (contentRef.current) {
+            console.log("contentRef", contentRef)
+            contentRef.current.innerHTML = content
+        }
+    })
+
+
+    // const handleImage = (e) => {
+    //     setImage(e.target.value);
+    // }
+
     // const handleFileChange = (event) => {
     //     if (event.target.files.length > 0) {
     //       setFileSelected(true);
@@ -71,14 +81,18 @@ const Page_Company_Event_Id_Update = () => {
     //     }
     //   };
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(name);
-        console.log(content);
         console.log(maxQuantity);
-        console.log(time);
         console.log(location);
+
+        console.log(content);
+        console.log(time);
+
         console.log(image);
+
         navigate("/company/event/:eventid");
     }
 
@@ -97,7 +111,7 @@ const Page_Company_Event_Id_Update = () => {
     return (
         <form onSubmit={handleSubmit}>
             <GigaCard>
-                <Container sx={{ marginTop: 5 }} className='eventcreate' >
+                <Container sx={{ marginTop: 6 }} className='eventupdate' >
                     <Box sx={{
                         fontSize: 50,
                         fontWeight: 600,
@@ -106,9 +120,9 @@ const Page_Company_Event_Id_Update = () => {
                         justifyContent: 'flex-start',
                         marginBottom: 5
                     }}>
-                        Update Events
+                        Update Event
                     </Box>
-                    <Grid container rowSpacing={5} sx={{ marginBottom: 10 }}>
+                    <Grid container rowSpacing={6} sx={{ marginBottom: 10 }}>
                         <Grid
                             item
                             xs={12}
@@ -160,9 +174,9 @@ const Page_Company_Event_Id_Update = () => {
                             </TextField>
                         </Grid>
 
-                        <Grid container sx={{ marginTop: 4 }}>
+                        <Grid container sx={{ marginTop: 5 }}>
                             <Grid item xs={6} sx={{ paddingRight: 2 }}>
-                                <Grid container rowSpacing={6}>
+                                <Grid container rowSpacing={4.5}>
                                     <Grid
                                         item
                                         xs={12}
@@ -188,13 +202,15 @@ const Page_Company_Event_Id_Update = () => {
                                                     slotProps={{ textField: { required: true } }}
                                                     value={time}
                                                     onChange={(newValue) => {
-                                                        console.log("main: ", newValue)
-                                                        console.log("sub: ", newValue.$d)
+                                                        // console.log("main: ", newValue)
+                                                        // console.log("sub: ", newValue.$d)
                                                         const newDate = new Date(newValue.$d)
-                                                        console.log("newDate: ", newDate)
-                                                        console.log("type: ", typeof (newValue.$d.toLocaleTimeString()))
+                                                        // console.log("newDate: ", newDate)
+                                                        // console.log("type: ", typeof (newValue.$d.toLocaleTimeString()))
+                                                        console.log("DateTime updated: ", newDate.toLocaleString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }))
                                                         setTime(newValue)
                                                     }}
+                                                    format='HH:mm:ss DD/MM/YYYY'
                                                 />
                                             </DemoContainer>
                                         </LocalizationProvider>
@@ -214,12 +230,18 @@ const Page_Company_Event_Id_Update = () => {
                                             onChange={handleLocation}
                                             InputProps={{
                                                 startAdornment: (
-                                                    <InputAdornment sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                                                    <InputAdornment sx={{
+                                                        display: 'flex',
+                                                        alignItems: 'flex-end'
+                                                    }}>
                                                         <Box>
                                                             <LocationOnRoundedIcon></LocationOnRoundedIcon>
                                                         </Box>
                                                     </InputAdornment>
                                                 ),
+                                                inputProps: {
+                                                    style: { marginTop: 10, marginLeft: 5 },
+                                                }
                                             }}
                                         >
                                         </TextField>
@@ -261,6 +283,8 @@ const Page_Company_Event_Id_Update = () => {
                                     <ReactQuill
                                         theme='snow'
                                         placeholder='Typing Event Content here...'
+                                        value={content}
+                                        onChange={setContent}
                                     >
                                     </ReactQuill>
                                 </Grid>
@@ -330,7 +354,7 @@ const Page_Company_Event_Id_Update = () => {
                                         setImage(null)
                                     }}></DeleteRoundedIcon>
                             </div>
-                            <Grid item xs={12} align='right' sx={{ marginTop: 5 }}>
+                            <Grid item xs={12} align='right' sx={{ marginTop: 6 }}>
                                 <Button type="submit" variant="contained" size='large'>
                                     <TaskAltIcon sx={{ marginRight: 1 }}></TaskAltIcon>
                                     Save
