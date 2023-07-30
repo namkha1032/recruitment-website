@@ -239,38 +239,81 @@ function* putQuestion(action) {
       softId.data
     );
 
-    const quesId = yield call(
-      axios.put,
-      `https://leetun2k2-001-site1.gtempurl.com/api/Question/${action.payload.QuestionId}`,
-      {
-        questionId: action.payload.QuestionId,
-        questionString: ques_draft.QuestionName,
-        categoryQuestionId: ques_draft.CategoryId,
-      }
+    const ques_old = yield call(
+      axios.get,
+      `https://leetun2k2-001-site1.gtempurl.com/api/Question?questionId=${action.payload.QuestionId}`
     );
 
-    if (ques_draft.CategoryId === techId.data[0].categoryQuestionId) {
-      const questionSkills = yield call(
-        axios.get,
-        "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill"
-      );
-
-      const quesSkilId = yield call(
-        getQuestionSkillId,
-        action.payload.QuestionId,
-        questionSkills.data
-      );
-
-      const ques = yield call(
+    if (ques_old.data.categoryQuestionId === ques_draft.CategoryId) {
+      const quesId = yield call(
         axios.put,
-        `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${quesSkilId}`,
+        `https://leetun2k2-001-site1.gtempurl.com/api/Question/${action.payload.QuestionId}`,
         {
-          questionSkillsId: quesSkilId,
           questionId: action.payload.QuestionId,
-          skillId: ques_draft.TypeId,
+          questionString: ques_draft.QuestionName,
+          categoryQuestionId: ques_draft.CategoryId,
         }
       );
+      if (ques_draft.CategoryId === techId.data[0].categoryQuestionId) {
+        const questionSkills = yield call(
+          axios.get,
+          "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill"
+        );
+
+        const quesSkilId = yield call(
+          getQuestionSkillId,
+          action.payload.QuestionId,
+          questionSkills.data
+        );
+
+        const ques = yield call(
+          axios.put,
+          `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${quesSkilId}`,
+          {
+            questionSkillsId: quesSkilId,
+            questionId: action.payload.QuestionId,
+            skillId: ques_draft.TypeId,
+          }
+        );
+      }
     }
+    else {
+      const quesId = yield call(
+        axios.put,
+        `https://leetun2k2-001-site1.gtempurl.com/api/Question/${action.payload.QuestionId}`,
+        {
+          questionId: action.payload.QuestionId,
+          questionString: ques_draft.QuestionName,
+          categoryQuestionId: ques_draft.CategoryId,
+        }
+      );
+      if (ques_draft.CategoryId === techId.data[0].categoryQuestionId) {
+        const ques = yield call(
+          axios.post,
+          "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill",
+          {
+            questionId: action.payload.QuestionId,
+            skillId: ques_draft.TypeId,
+          }
+        );
+      }
+      else if (ques_old.data.categoryQuestionId === techId.data[0].categoryQuestionId) {
+        const questionSkills = yield call(
+          axios.get,
+          "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill"
+        );
+        const quesSkilId = yield call(
+          getQuestionSkillId,
+          action.payload.QuestionId,
+          questionSkills.data
+        );
+        yield call(
+          axios.delete,
+          `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${quesSkilId}`
+        );
+      }
+    }
+
     yield call(getAllQuestion);
     yield put({
       type: "error/setError",
@@ -299,10 +342,7 @@ function* deleteQuestion(action) {
   console.log("DELETE: ", action.payload);
 
   try {
-    yield call(
-      axios.delete,
-      `https://leetun2k2-001-site1.gtempurl.com/api/Question/${action.payload.QuestionId}`
-    );
+    // Delete QuestionSkill
     const techId = yield call(
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Technology"
@@ -322,6 +362,13 @@ function* deleteQuestion(action) {
         `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${quesSkilId}`
       );
     }
+
+    // Delete Question
+    yield call(
+      axios.delete,
+      `https://leetun2k2-001-site1.gtempurl.com/api/Question/${action.payload.QuestionId}`
+    );
+
     yield call(getAllQuestion);
     yield put({
       type: "error/setError",
