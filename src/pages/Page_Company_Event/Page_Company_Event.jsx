@@ -69,30 +69,30 @@ export default function Page_Company_Event() {
   const loading = useSelector((state) => state.loading);
   const error = useSelector((state) => state.error);
 
-  useEffect(() => {
-    let timeoutId = null
-    if (error.status === "yes") {
-      errorAlert(error.message);
-      timeoutId = setTimeout(() => {
-        dispatch({
-          type: "error/setError",
-          payload: {
-            status: "idle",
-            message: "",
-          },
-        });
-      }, 2000);
-    } else if (error.status === "no") {
-      dispatch({
-        type: "error/setError",
-        payload: {
-          status: "idle",
-          message: "",
-        },
-      });
-    }
-    return () => clearTimeout(timeoutId);
-  }, [error]);
+  // useEffect(() => {
+  //   let timeoutId = null
+  //   if (error.status === "yes") {
+  //     errorAlert(error.message);
+  //     timeoutId = setTimeout(() => {
+  //       dispatch({
+  //         type: "error/setError",
+  //         payload: {
+  //           status: "idle",
+  //           message: "",
+  //         },
+  //       });
+  //     }, 2000);
+  //   } else if (error.status === "no") {
+  //     dispatch({
+  //       type: "error/setError",
+  //       payload: {
+  //         status: "idle",
+  //         message: "",
+  //       },
+  //     });
+  //   }
+  //   return () => clearTimeout(timeoutId);
+  // }, [error]);
 
 
   const [statusChoose, setStatusChoose] = useState(null);

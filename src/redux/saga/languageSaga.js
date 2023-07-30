@@ -15,21 +15,21 @@ function* getLanguage(action) {
     // );
     const data = filterIsDeleted(response.data);
     yield put({ type: "language/setLanguage", payload: data });
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "no",
-        message: "",
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "no",
+    //     message: "",
+    //   },
+    // });
   } catch (error) {
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "yes",
-        message: "message" in error ? "Language - " + error.message : error.response.data,
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "yes",
+    //     message: "message" in error ? "Language - " + error.message : error.response.data,
+    //   },
+    // });
   }
 }
 

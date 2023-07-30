@@ -12,29 +12,30 @@ function* getPositionList() {
   try {
     yield put({ type: "loading/onLoading" });
     const response = yield call(axios.get, `${host.name}/data/positionList.json`)
-    
+    console.log("res: ", response.data)
     // const response = yield call(
     //   axios.get,
     //   "https://leetun2k2-001-site1.gtempurl.com/api/Position"
     // );
-    const data = formatPositionList(response.data);
-    yield put({ type: "positionList/setPositionList", payload: data });
+    // const data = formatPositionList(response.data);
+    // yield put({ type: "positionList/setPositionList", payload: data });
+    yield put({ type: "positionList/setPositionList", payload: response.data });
     yield put({ type: "loading/offLoading" });
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "no",
-        message: "",
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "no",
+    //     message: "",
+    //   },
+    // });
   } catch (error) {
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "yes",
-        message: "message" in error ? "Position - " + error.message : error.response.data,
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "yes",
+    //     message: "message" in error ? "Position - " + error.message : error.response.data,
+    //   },
+    // });
   }
 }
 
@@ -43,10 +44,10 @@ function* getPositionListWithFilter(action) {
   try {
     yield put({ type: "loading/onLoading" });
     yield call(delay, 1500)
-    
+
     // const response = yield call(axios.get, `${host.name}/data/positionListD.json`)
     // yield put({ type: "positionList/setPositionList", payload: response.data });
-    
+
     const response = yield call(
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/Position"
@@ -55,21 +56,21 @@ function* getPositionListWithFilter(action) {
     const data = formatPositionList(draft);
     yield put({ type: "positionList/setPositionList", payload: data });
     yield put({ type: "loading/offLoading" });
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "no",
-        message: "",
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "no",
+    //     message: "",
+    //   },
+    // });
   } catch (error) {
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "yes",
-        message: "message" in error ? error.message : error.response.data,
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "yes",
+    //     message: "message" in error ? error.message : error.response.data,
+    //   },
+    // });
   }
 }
 
@@ -79,7 +80,7 @@ function* updatePositionList(action) {
 }
 
 function* getPosition(action) {
-  try{
+  try {
     const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload}`)
     const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Language?languageId=${response1.data.languageId}`)
     console.log("response1", response1.data);
@@ -105,17 +106,17 @@ function* getPosition(action) {
     console.log('response5', response5.data);
     console.log("length", requirementid.length);
     for (let i = 0; i < requirementid.length; i++) {
-        for (let j = 0; j < response5.data.length; j++) {
-            if (requirementid[i].skillId === response5.data[j].skillId) {
-                skilllist.push(response5.data[j].skillName);
-            }
+      for (let j = 0; j < response5.data.length; j++) {
+        if (requirementid[i].skillId === response5.data[j].skillId) {
+          skilllist.push(response5.data[j].skillName);
         }
+      }
     }
     const mainskill = skilllist.reduce((acc, curr) => {
-        if (!acc.includes(curr)) {
-            acc.push(curr);
-        }
-        return acc;
+      if (!acc.includes(curr)) {
+        acc.push(curr);
+      }
+      return acc;
     }, [])
 
     console.log("mainskill", mainskill);
@@ -123,24 +124,24 @@ function* getPosition(action) {
     console.log("full", response1.data);
     console.log("language", response2.data);
     yield put({
-        type: 'position/setPosition', payload: {
-            ...response1.data,
-            departmentName: "IT ROOM",
-            departmentAddress: "G Floor, F-Town 1 Building, High-tech Park, Tan Phu Ward, District 9, Ho Chi Minh City, Vietnam",
-            departmentPhone: 123456789,
-            departmentEmail: "ITroomFSOFT@ftp.com",
-            departmentWebsite: "https://fpt.com.vn/en",
-        }
+      type: 'position/setPosition', payload: {
+        ...response1.data,
+        departmentName: "IT ROOM",
+        departmentAddress: "G Floor, F-Town 1 Building, High-tech Park, Tan Phu Ward, District 9, Ho Chi Minh City, Vietnam",
+        departmentPhone: 123456789,
+        departmentEmail: "ITroomFSOFT@ftp.com",
+        departmentWebsite: "https://fpt.com.vn/en",
+      }
     })
     yield put({ type: 'skill/setSkill', payload: mainskill })
     yield put({ type: 'language/setLanguage', payload: response2.data })
     yield put({ type: 'department/setDepartment', payload: department })
     // const response1 = yield call(axios.get, `${host.name}/data/detailposition.json`)
     // yield put({ type: 'position/setPosition', payload: response1.data })
-  }catch (error){
+  } catch (error) {
     console.log(error)
   }
-    
+
 }
 // function* getDetailPosition(action){
 //     const reponse = yield call(axios.get, `http://localhost:3001/positions?PositionId=${action.payload}`)
