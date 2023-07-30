@@ -78,6 +78,7 @@ function* updatePositionList(action) {
 }
 
 function* getPosition(action) {
+  try{
     const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload}`)
     const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Language?languageId=${response1.data.languageId}`)
     console.log("response1", response1.data);
@@ -135,6 +136,10 @@ function* getPosition(action) {
     yield put({ type: 'department/setDepartment', payload: department })
     // const response1 = yield call(axios.get, `${host.name}/data/detailposition.json`)
     // yield put({ type: 'position/setPosition', payload: response1.data })
+  }catch (error){
+    console.log(error)
+  }
+    
 }
 // function* getDetailPosition(action){
 //     const reponse = yield call(axios.get, `http://localhost:3001/positions?PositionId=${action.payload}`)

@@ -13,8 +13,13 @@ function* getApplication(action) {
     // const response2 = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById/${action.payload}`)
     // console.log("res2", response2.data);
     // yield put({ type: 'application/setApplication', payload: application })
-    const reponse = yield call(axios.get, `${host.name}/data/applicationList.json`)
-    yield put({ type: 'application/setApplication', payload: reponse.data })
+    try{
+        const reponse = yield call(axios.get, `${host.name}/data/applicationList.json`)
+        yield put({ type: 'application/setApplication', payload: reponse.data })
+    } catch(error){
+        console.log(error)
+    }
+    
 
 
 }
