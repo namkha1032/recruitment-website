@@ -5,6 +5,9 @@ import Department from "./Department";
 import SelectDate from "./SelectDate";
 import { forwardRef } from "react";
 import { NumericFormat } from "react-number-format";
+import CompHeader from "./compHeader";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 const NumericFormatCustom = forwardRef(function NumericFormatCustom(
   props,
@@ -37,22 +40,21 @@ function Box2(prop) {
       <Box
       // sx={{ height: "343.88px" }}
       >
-        <Grid item container xs={12} sx={{marginTop: "16px",}}>
+        <Grid item container xs={12} sx={{ marginTop: "16px" }}>
           <Grid item xs={8}>
             <Box
               sx={{
                 "& > :not(style)": {
                   m: 1,
                   width: "98%",
-                  marginTop: "8px",
                 },
               }}
               noValidate
               autoComplete="off"
             >
+              <CompHeader headerIcon={<AttachMoneyIcon />}>Salary</CompHeader>
               <TextField
                 required
-                label="Salary"
                 value={prop.salary}
                 onChange={prop.handleSalary}
                 name="numberformat"
@@ -66,6 +68,7 @@ function Box2(prop) {
           </Grid>
           <Grid item xs={4}>
             <InputText
+              headerIcon={<PersonAddIcon />}
               state={"Hire number"}
               handleState={prop.handleMaxHire}
               width="94%"

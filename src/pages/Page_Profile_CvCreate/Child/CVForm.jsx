@@ -42,7 +42,6 @@ function CVForm() {
   const [experience, setExperience] = useState("");
   const [certs, setCerts] = useState([]);
   const [skills, setSkills] = useState([]);
-  const [languages, setLanguages] = useState(cvinfo.language);
   // CERTIFICATE COMPS
   const [Cid, setCid] = useState(0);
   const [Cname, setCName] = useState("");
@@ -111,8 +110,8 @@ function CVForm() {
       certificateId: Cid,
       certificateName: Cname,
       organizationName: organize,
-      dateEarned: startDate,
-      expirationDate: endDate,
+      dateEarned: startDate.toJSON(),
+      expirationDate: endDate!==null?endDate.toJSON():endDate,
       description: detail,
       link: link,
     };
@@ -134,37 +133,37 @@ function CVForm() {
     setCerts(certs.filter((component) => component.id !== id));
   }
 
-  function handleLanguageAdd() {
-    console.log(lInputValue);
-    console.log(languageName);
-    let arr = languageData.filter(
-      (comp) =>
-        comp.languageName ===
-        (lInputValue !== null ? lInputValue.languageName : "")
-    );
-    console.log(arr);
-    if (arr[0] === undefined) {
-      alert("wrong language");
-      setLanguageId(null);
-      setLanguageName("");
-      setLInputValue("");
-    } else {
-      const newLanguage = {
-        id: lId,
-        languageId: languageId,
-        languageName: languageName,
-      };
-      console.log(newLanguage);
-      setLanguages([...languages, newLanguage]);
-      setLanguageId(null);
-      setLanguageName("");
-      setLInputValue("");
-      setLId((prev) => (prev += 1));
-    }
-  }
-  function handleLanguageDelete(id) {
-    setLanguages(languages.filter((component) => component.id !== id));
-  }
+  // function handleLanguageAdd() {
+  //   console.log(lInputValue);
+  //   console.log(languageName);
+  //   let arr = languageData.filter(
+  //     (comp) =>
+  //       comp.languageName ===
+  //       (lInputValue !== null ? lInputValue.languageName : "")
+  //   );
+  //   console.log(arr);
+  //   if (arr[0] === undefined) {
+  //     alert("wrong language");
+  //     setLanguageId(null);
+  //     setLanguageName("");
+  //     setLInputValue("");
+  //   } else {
+  //     const newLanguage = {
+  //       id: lId,
+  //       languageId: languageId,
+  //       languageName: languageName,
+  //     };
+  //     console.log(newLanguage);
+  //     setLanguages([...languages, newLanguage]);
+  //     setLanguageId(null);
+  //     setLanguageName("");
+  //     setLInputValue("");
+  //     setLId((prev) => (prev += 1));
+  //   }
+  // }
+  // function handleLanguageDelete(id) {
+  //   setLanguages(languages.filter((component) => component.id !== id));
+  // }
   const handleSetOpen = () => {
     setOpen(true);
   };
@@ -176,6 +175,17 @@ function CVForm() {
   };
   function handleSubmit(e) {
     e.preventDefault();
+    // dispatch({
+    //   type: "saga/getCreateCv",
+    //   payload:{
+    //     CvName: cvtitle,
+    //     Introduction: intro,
+    //     Education:education,
+    //     Experience: experience,
+    //     Skills:skills,
+    //     Certificates:certs,
+    //   }
+    // })
     cleanStore(dispatch);
     navigate("/profile/:profileid/cv/:cvid");
   }
@@ -230,14 +240,13 @@ function CVForm() {
             handleSetOpen={handleSetOpen}
             handleClose={handleClose}
             handleSubmit={handleSubmit}
-            languages={languages}
-            handleLanguageDelete={handleLanguageDelete}
+            // handleLanguageDelete={handleLanguageDelete}
             lInputValue={lInputValue}
             setLInputValue={setLInputValue}
             setLanguageName={setLanguageName}
             languageName={languageName}
             setLanguageId={setLanguageId}
-            handleLanguageAdd={handleLanguageAdd}
+            // handleLanguageAdd={handleLanguageAdd}
             cvtitle={cvtitle}
             handleTitle={handleTitle}
             skillData={skillData}

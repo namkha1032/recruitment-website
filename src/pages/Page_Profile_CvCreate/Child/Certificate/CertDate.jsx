@@ -5,6 +5,9 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Grid from "@mui/material/Grid";
 import NotRInputText from "../NotRequiredText";
 import Box from "@mui/material/Box";
+import CompHeader from "../compHeader";
+import BusinessIcon from "@mui/icons-material/Business";
+import DateRangeIcon from "@mui/icons-material/DateRange";
 
 const DateComp = (prop) => {
   const handleDateChange = (date) => {
@@ -24,6 +27,7 @@ const DateComp = (prop) => {
       <Grid container spacing={0}>
         <Grid item xs={6}>
           <NotRInputText
+            headerIcon={<BusinessIcon />}
             state={"Organization"}
             width="100%"
             margin="0"
@@ -33,39 +37,45 @@ const DateComp = (prop) => {
         </Grid>
         <Grid item xs={3}>
           <Box style={{ marginLeft: "1%", marginTop: "8px" }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                sx={{
-                  width: "100%",
-                }}
-                label="Start Day"
-                value={prop.startday}
-                onChange={handleDateChange}
-                required
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                InputProps={{
-                  inputProps: {
-                    required: true,
-                  },
-                }}
-              />
-            </LocalizationProvider>
+            <CompHeader headerIcon={<DateRangeIcon />}>Earned Day</CompHeader>
+            <Box style={{ marginTop: "8px" }}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  sx={{
+                    width: "100%",
+                  }}
+                  label="Start Day"
+                  value={prop.startday}
+                  onChange={handleDateChange}
+                  required
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  InputProps={{
+                    inputProps: {
+                      required: true,
+                    },
+                  }}
+                />
+              </LocalizationProvider>
+            </Box>
           </Box>
         </Grid>
         <Grid item xs={3}>
           <Box style={{ marginLeft: "1%", marginTop: "8px" }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                sx={{
-                  width: "100%",
-                }}
-                value={prop.endday}
-                label="End Day"
-                onChange={handleEnd}
-              />
-            </LocalizationProvider>
+            <CompHeader headerIcon={<DateRangeIcon />}>End Day</CompHeader>
+            <Box style={{ marginTop: "8px" }}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  sx={{
+                    width: "100%",
+                  }}
+                  value={prop.endday}
+                  label="End Day"
+                  onChange={handleEnd}
+                />
+              </LocalizationProvider>
+            </Box>
           </Box>
         </Grid>
       </Grid>

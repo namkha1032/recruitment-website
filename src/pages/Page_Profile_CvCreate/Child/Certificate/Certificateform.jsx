@@ -5,6 +5,9 @@ import DateComp from "./CertDate";
 import CertButton from "./CertButton";
 import NotRInputText from "../NotRequiredText";
 import Box from "@mui/material/Box";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import LinkIcon from "@mui/icons-material/Link";
+import DescriptionIcon from "@mui/icons-material/Description";
 
 export default function CertificateForm(prop) {
   function handleLink(e) {
@@ -22,6 +25,7 @@ export default function CertificateForm(prop) {
           <Grid item xs={12}>
             <Box className="AutocompBox">
               <NotRInputText
+                headerIcon={<WorkspacePremiumIcon />}
                 state={"Certificate"}
                 width="100%"
                 margin="0"
@@ -41,6 +45,7 @@ export default function CertificateForm(prop) {
 
           <Grid item xs={12}>
             <NotRInputText
+              headerIcon={<LinkIcon />}
               state={"Link"}
               width="100%"
               margin="0"
@@ -52,6 +57,7 @@ export default function CertificateForm(prop) {
           </Grid>
           <Grid item xs={12}>
             <EmptyTextarea
+              headerIcon={<DescriptionIcon />}
               width="100%"
               state="Detail"
               value={prop.detail}

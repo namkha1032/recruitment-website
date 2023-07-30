@@ -4,7 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { Viewer, Worker } from "@react-pdf-viewer/core";
-import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
+import Typography from "@mui/material/Typography";
 
 function UploadPdf(prop) {
   const [pdfFile, setPdfFile] = useState(null);
@@ -18,7 +18,7 @@ function UploadPdf(prop) {
       setPdfFile(null);
     }
   };
-  console.log(viewPdf)
+  console.log(viewPdf);
   function handleChange(e) {
     let selectedFile = e.target.files[0];
     if (selectedFile) {
@@ -29,11 +29,11 @@ function UploadPdf(prop) {
           setPdfFile(e.target.result);
         };
       } else {
-        setViewPdf(null)
+        setViewPdf(null);
         setPdfFile(null);
       }
     } else {
-      setViewPdf(null)
+      setViewPdf(null);
       console.log("please select");
     }
   }
@@ -47,6 +47,9 @@ function UploadPdf(prop) {
           container
           xs={12}
         >
+          <Typography variant="h6" gutterBottom>
+            CV PDF (optional)
+          </Typography>
           <Grid
             item
             justifyContent="center"
@@ -54,7 +57,7 @@ function UploadPdf(prop) {
             container
             xs={12}
           >
-            <Box sx={{ margin: "auto" ,marginTop:"16px"}}>
+            <Box sx={{ margin: "auto", marginTop: "16px" }}>
               <input type="file" onChange={handleChange} />
             </Box>
           </Grid>
@@ -88,7 +91,7 @@ function UploadPdf(prop) {
                         height: "940px",
                         width: "100%",
                         margin: "auto",
-                        marginBottom:"16px"
+                        marginBottom: "16px",
                       }}
                     >
                       <Viewer fileUrl={viewPdf}></Viewer>

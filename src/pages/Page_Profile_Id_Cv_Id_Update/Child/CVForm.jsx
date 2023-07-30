@@ -152,6 +152,7 @@ function CVForm() {
     setSkills(skills.filter((component) => component.id !== id));
   }
   function handleCertificateAdd() {
+    console.log(startDate)
     const newCert = {
       certificateId: Cid,
       certificateName: Cname,

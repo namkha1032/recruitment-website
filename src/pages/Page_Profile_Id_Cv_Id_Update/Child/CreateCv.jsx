@@ -16,7 +16,7 @@ import UploadPdf from "./UploadPdf";
 
 ///////////////////////////////////////////////////////
 const CreateCv = (prop) => {
-  const steps = ["Introduction", "Yout Experience", "Yout Certificate"];
+  const steps = ["Introduction", "Your Experience", "Your Certificate"];
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -32,7 +32,7 @@ const CreateCv = (prop) => {
   };
   return (
     <form onSubmit={prop.handleSubmit}>
-      <Grid container>
+      <Grid container className="Contains">
         <Grid
           item
           xs={12}

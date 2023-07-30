@@ -16,7 +16,7 @@ import UploadPdf from "./UploadPdf";
 
 ///////////////////////////////////////////////////////
 const CreateCv = (prop) => {
-  const steps = ["Introduction", "Yout Experience", "Yout Certificate"];
+  const steps = ["Introduction", "Your Experience", "Your Certificate"];
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -65,7 +65,8 @@ const CreateCv = (prop) => {
                 spacing={0}
                 justifyContent="center"
                 alignItems="center"
-                marginTop="16px"
+                marginTop="32px"
+                marginBottom="32px"
               >
                 <Grid item xs={12}>
                   <Stepper
