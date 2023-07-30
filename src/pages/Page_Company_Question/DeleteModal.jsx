@@ -1,7 +1,14 @@
 import { Modal, Box, Grid, Button } from "@mui/material";
 import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
+import { LoadingButton } from "@mui/lab";
+import { useEffect } from "react";
 
 export default function DeleteAlertModal(props) {
+  useEffect(() => {
+    if (props.status.status === "success")
+      props.handleDeleteModalClose()
+  }, [props.status])
+
   return (
     <Box>
       <Modal
@@ -99,7 +106,7 @@ export default function DeleteAlertModal(props) {
               justifyContent="center"
               alignItems="center"
             >
-              <Button
+              {props.status.status !== "loading" && <Button
                 variant="outlined"
                 sx={{
                   color: "black",
@@ -121,7 +128,23 @@ export default function DeleteAlertModal(props) {
                 }}
               >
                 Quay về
-              </Button>
+              </Button>}
+              {props.status.status === "loading" && <Button
+                variant="outlined"
+                sx={{
+                  color: "black",
+                  border: "1px solid black",
+                  textTransform: "none",
+                  width: {
+                    xs: "100%",
+                    sm: 90,
+                    md: 90
+                  },
+                }}
+                disabled
+              >
+                Quay về
+              </Button>}
             </Grid>
             <Grid
               item
@@ -132,7 +155,7 @@ export default function DeleteAlertModal(props) {
               justifyContent="center"
               alignItems="center"
             >
-              <Button
+              {props.status.status !== "loading" && <Button
                 variant="outline"
                 sx={{
                   backgroundColor: "black",
@@ -148,15 +171,41 @@ export default function DeleteAlertModal(props) {
                     backgroundColor: "black",
                     border: "1px solid black",
                     fontWeight: 600,
-                  }
+                  },
                 }}
                 onClick={() => {
                     props.handleDeleteQuestion(props.value);
-                    props.handleDeleteModalClose();
+                    // props.handleDeleteModalClose();
                 }}
               >
                 Đồng ý
-              </Button>
+              </Button>}
+              {props.status.status === "loading" && <LoadingButton
+                variant="outline"
+                sx={{
+                  backgroundColor: "black",
+                  border: "1px solid black",
+                  color: "white",
+                  textTransform: "none",
+                  width: {
+                    xs: "100%",
+                    sm: 90,
+                    md: 90
+                  },
+                  "&:hover": {
+                    backgroundColor: "black",
+                    border: "1px solid black",
+                    fontWeight: 600,
+                  },
+                  "& .MuiLoadingButton-loadingIndicator": {
+                    color: "white",
+                  }
+                }}
+                loading
+                loadingPosition="center"
+              >
+                Đồng ý
+              </LoadingButton>}
             </Grid>
           </Grid>
         </Box>

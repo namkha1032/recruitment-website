@@ -40,7 +40,7 @@ import positionRequireSlice from "./reducer/positionRequireReducer";
 
 import candidateJoinEventSlice from './reducer/candidateJoinEventReducer'
 import interviewidInfoSlice from './reducer/interviewidInfoReducer'
-import loadingAddSlice from "./reducer/loadingAddReducer";
+import statusSlice from "./reducer/statusReducer";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
@@ -78,7 +78,7 @@ const store = configureStore({
                 positionRequire: positionRequireSlice.reducer,
                 candidateJoinEvent: candidateJoinEventSlice.reducer,
                 interviewidInfo: interviewidInfoSlice.reducer,
-                loadingAdd: loadingAddSlice.reducer,
+                status: statusSlice.reducer,
         },
         middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
         // middleware: [sagaMiddleware]

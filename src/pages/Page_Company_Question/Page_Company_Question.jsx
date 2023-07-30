@@ -76,6 +76,7 @@ export default function Page_Company_Question() {
 
   const rows = useSelector((state) => state.questionList);
   const loading = useSelector((state) => state.loading);
+  const status = useSelector((state) => state.status);
   const error = useSelector((state) => state.error);
 
   useEffect(() => {
@@ -102,6 +103,20 @@ export default function Page_Company_Question() {
     }
     return () => clearTimeout(timeoutId);
   }, [error]);
+
+  useEffect(() => {
+    if (status.status === "success") {
+      successAlert(status.message);
+      dispatch({
+        type: "status/onReset"
+      })
+    }
+    else if (error.status === "yes") {
+      dispatch({
+        type: "status/onReset"
+      })
+    }
+  },[status, error])
 
   // const [rows, setRows] = useState(datasjson);
 
@@ -268,7 +283,7 @@ export default function Page_Company_Question() {
   // }
 
   function handleSubmitQuestion(value) {
-    successAlert("Create question");
+    // successAlert("Create question");
     dispatch({
       type: "saga/postQuestion",
       payload: {
@@ -302,7 +317,6 @@ export default function Page_Company_Question() {
   // }
 
   function handleUpdateQuestion(value) {
-    successAlert(`Update question ${value.QuestionId}`);
     dispatch({
       type: "saga/putQuestion",
       payload: {
@@ -325,8 +339,6 @@ export default function Page_Company_Question() {
   }
 
   function handleDeleteQuestion(value) {
-    successAlert(`Delete question ${value}`);
-    console.log(value);
     dispatch({
       type: "saga/deleteQuestion",
       payload: {
@@ -756,7 +768,7 @@ export default function Page_Company_Question() {
             handleAddModalClose={handleAddModalClose}
             options={{ skill: skills, language: languages }}
             handleSubmitQuestion={handleSubmitQuestion}
-            keepMounted
+            status={status}
           />
 
           <QuestionModal
@@ -768,7 +780,7 @@ export default function Page_Company_Question() {
             value={valueUpdate}
             type={typeStatus}
             setType={setTypeStatus}
-            keepMounted
+            status={status}
           />
         </GigaCardBody>
       </GigaCard>
@@ -779,6 +791,7 @@ export default function Page_Company_Question() {
         handleDeleteModalClose={handleDeleteModalClose}
         value={valueDelete}
         handleDeleteQuestion={handleDeleteQuestion}
+        status={status}
       />
 
       <ToastContainer transition={Slide} hideProgressBar={true} />

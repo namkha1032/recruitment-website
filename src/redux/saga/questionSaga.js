@@ -142,6 +142,9 @@ function* postQuestion(action) {
   console.log("POST: ", action.payload);
   try {
     console.log("POST: ", action.payload);
+    yield put({
+      type: "status/onLoading"
+    })
     const techId = yield call(
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Technology"
@@ -182,6 +185,10 @@ function* postQuestion(action) {
         }
       );
     }
+    yield put({
+      type: "status/onSuccess",
+      payload: "Create question"
+    })
     yield call(getAllQuestion);
     yield put({
       type: "error/setError",
@@ -218,6 +225,9 @@ function* postQuestion(action) {
 function* putQuestion(action) {
   console.log("PUT: ", action.payload);
   try {
+    yield put({
+      type: "status/onLoading"
+    })
     const techId = yield call(
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Technology"
@@ -313,7 +323,10 @@ function* putQuestion(action) {
         );
       }
     }
-
+    yield put({
+      type: "status/onSuccess",
+      payload: "Update question"
+    })
     yield call(getAllQuestion);
     yield put({
       type: "error/setError",
@@ -343,6 +356,9 @@ function* deleteQuestion(action) {
 
   try {
     // Delete QuestionSkill
+    yield put({
+      type: "status/onLoading"
+    })
     const techId = yield call(
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Technology"
@@ -368,7 +384,10 @@ function* deleteQuestion(action) {
       axios.delete,
       `https://leetun2k2-001-site1.gtempurl.com/api/Question/${action.payload.QuestionId}`
     );
-
+    yield put({
+      type: "status/onSuccess",
+      payload: "Delete question"
+    })
     yield call(getAllQuestion);
     yield put({
       type: "error/setError",

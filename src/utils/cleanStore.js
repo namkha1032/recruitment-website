@@ -23,7 +23,7 @@ function cleanStore(dispatch) {
     dispatch({ type: "interviewidInfo/setInterviewidInfo", payload: null})
 
     dispatch({ type: "loading/offLoading" })
-    dispatch({ type: "loadingAdd/offLoading" })
+    dispatch({ type: "status/onReset" })
 }
 
 export default cleanStore
