@@ -532,7 +532,7 @@ const Page_Company_Account = () => {
     const navigate = useNavigate()
 
 
-    if (useGetRole()=="admin") {
+    // if (useGetRole()=="admin") {
         return (
             <Grid item xs={12}>
                 <Card
@@ -543,7 +543,7 @@ const Page_Company_Account = () => {
                         // borderRadius: 1,
                         padding: 4
                     }}>
-                    <Grid container columnSpacing={{xs: 1}}>
+                    <Grid container columnSpacing={{xs: 0.5}}>
                         <Grid item xs={7} sm={12}>
                         <Grid container display="flex">
                         <Grid item md={0.8} xs={12} display="flex">
@@ -655,7 +655,6 @@ const Page_Company_Account = () => {
             </Grid>
 
         );
-    }
     // else {
     //     return(
     //       <Typography

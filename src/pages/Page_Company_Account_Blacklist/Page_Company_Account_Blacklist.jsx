@@ -58,6 +58,9 @@ const RenderStatusButton = ({params}) => {
                 <DialogActions>
                     <Button onClick={()=>{
                         setOpen(false)
+                    }}>Go To Account</Button>
+                    <Button onClick={()=>{
+                        setOpen(false)
                     }}>Close</Button>
                 </DialogActions>
             </Dialog>

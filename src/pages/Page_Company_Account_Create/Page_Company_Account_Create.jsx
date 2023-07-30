@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {
     Button,
     FormControl,
     FormControlLabel,
-    FormLabel,
+    FormLabel, MenuItem,
     Radio,
     RadioGroup,
     TextField,
@@ -13,8 +13,15 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import {grey} from "@mui/material/colors";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Page_Company_Account_Create = () => {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch({type: "saga/getDepartmentAdmin"});
+    }, [dispatch]);
+    const department = useSelector(state => state.admin.department)
+    const [departmentSelected,setDepartment]=React.useState('')
     return (
         <Card
             raised="true"
@@ -73,20 +80,6 @@ const Page_Company_Account_Create = () => {
             >
                 <TextField
                     id="accountemail"
-                    label="Fullname"
-                    variant="outlined"
-                    fullWidth
-                />
-            </Grid>
-            <Grid
-                item
-                xs={12}
-                display="flex"
-                alignItems="center"
-                justifyContent="left"
-            >
-                <TextField
-                    id="accountemail"
                     label="Email"
                     variant="outlined"
                     fullWidth
@@ -131,11 +124,22 @@ const Page_Company_Account_Create = () => {
                 item
                 xs={12}>
                 <TextField
-                    id="accountdepartment"
+                    id="departmentSelect"
+                    select
                     label="Department"
-                    variant="outlined"
-                    fullWidth
-                />
+                    value={departmentSelected}
+                    onChange={e => setDepartment(e.target.value)}
+                    helperText=""
+                    sx={{
+                        minWidth: '150px'
+                    }}
+                >
+                    {department.map((option) => (
+                        <MenuItem key={option.departmentId} value={option.departmentId}>
+                            {option.departmentName}
+                        </MenuItem>
+                    ))}
+                </TextField>
             </Grid>
             <Grid
                 display="flex"
