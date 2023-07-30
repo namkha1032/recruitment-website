@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Grid, Typography, Button, Paper,Box } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
-import { NullString, NotStart, Pending, Completed, Postpone } from "../LabelButton/LabelButton";
-import TabInProfile from './TabInProfile/TabInProfile';
 
+import TabInProfile from './TabInProfile/TabInProfile';
+import { NotStart,Pending , Completed} from '../Label/LabelStatus';
 export default function HistoryList({ events, pathnavigate, NameList, namePage }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const navigate = useNavigate();
-
+  const [totalPositions, setTotalPositions] = useState(0);
+  useEffect(() => {
+    setTotalPositions(events.length);
+  }, [events]);
   const handleDetails = (eventId) => {
    console.log(eventId);
     navigate(`${pathnavigate}/${eventId}`);
@@ -44,7 +47,7 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
           case "Kết thúc":
             return <Completed />;
           default:
-            return <Postpone />;
+            return <Pending />;
         }
       },
     },
@@ -76,11 +79,11 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
           {/* Tăng chiều rộng của khung */}
           <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px', width: '100%' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h5" gutterBottom sx={{margin:'0'}}>
                 {NameList}
               </Typography>
               <Box sx={{ backgroundColor: '#dcdcdc', color: 'black', padding: '5px', borderRadius: '10px', marginLeft: '10px' }}>
-                {'0'} {namePage}
+                {totalPositions} {namePage}
               </Box>
             </Box>
             <DataGrid
@@ -95,12 +98,27 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
               selection={{ backgroundColor: '#1565C0', color: '#ffffff' }}
               sx={{
                 width: '100%',
+                "&.MuiDataGrid-root": {
+                  borderRadius: 1,
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                  outline: "none",
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                  outline: "none",
+                },
                 "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
                   backgroundColor: "black",
                   color: "white",
                   fontWeight: 700,
                   fontSize: 14,
                   border: "none",
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                  display: "none",
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+                  color: "white",
                 },
               }}
               

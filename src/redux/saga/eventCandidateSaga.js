@@ -7,7 +7,7 @@ import host from "../host"
 
 function* getAllEventCandidate() {
     console.log("Hello")
-    const response = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Event`)
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Event`)
     yield put({ type: "eventCandidate/setEventList", payload: response.data })
 
 }

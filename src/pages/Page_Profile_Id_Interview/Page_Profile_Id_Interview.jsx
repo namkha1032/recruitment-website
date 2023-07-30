@@ -7,7 +7,7 @@ export default function Page_Profile_Id_Interview(){
       const {profileid} = useParams();
       const dispatch = useDispatch();
       useEffect(() => {
-        dispatch({type:"saga/getAllInterviewCandidate",payload:profileid});
+        dispatch({type:"saga/getAllInterviewCandidate",payload :profileid});
         return () => {
           cleanStore(dispatch);
         };
@@ -18,12 +18,11 @@ export default function Page_Profile_Id_Interview(){
       const rows = rows_draft ? rows_draft : []
       console.log(rows);
      
-      const itemsPerPage = 10;
       const pathnavigate = '/interview';
       const NameList = 'Interview List';
       const NamePage = 'Interview';
       return(
-        <HistoryList events={rows}   itemsPerPage={itemsPerPage} pathnavigate={pathnavigate} NameList={NameList} namePage={NamePage}/>
+        <HistoryList events={rows}    pathnavigate={pathnavigate} NameList={NameList} namePage={NamePage}/>
       )
       
 }
