@@ -58,6 +58,10 @@ const Page_Event = () => {
   useEffect(() => {
     dispatch({ type: "saga/getEventList" });
   }, []);
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+  }, []);
   //
   const handleNavigateClick1 = (id) => {
     navigate(`/event/${id}`);

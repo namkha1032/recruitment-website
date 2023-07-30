@@ -111,7 +111,7 @@ const ProfileMain = ({ page }) => {
           </Grid>
           <Grid item md={9} xs={12}>
           {page === "Profile" && (
-              <>
+              <Box>
                 <ProfileInfo cvid={user.cvselected} user={user} />
 
                 {role === "candidate" && (
@@ -123,7 +123,7 @@ const ProfileMain = ({ page }) => {
                     </GigaCard>
                   </Box>
                 )}
-              </>
+              </Box>
             ) }
             {page === "ChangePW" && (
               <Box sx={{ mb: "24px" }}>

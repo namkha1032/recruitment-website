@@ -25,7 +25,7 @@ const  ProfileInfo = ({ cvid, user }) => {
 
   return (
     
-      <Box sx={{ mb: "24px", }} id="detail">
+      <Box id="detail">
       <GigaCard>
         <Box sx={{ padding: "24px" }}>
           <Box

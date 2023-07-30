@@ -78,8 +78,7 @@ const Page_Home = () => {
   console.log(eventList)
   return (
 
-    <>
-      <main>
+      <Box>
         <Box sx={{ padding: '24px' }}>
           <Carousel />
         </Box>
@@ -174,7 +173,7 @@ const Page_Home = () => {
                 
 
                 </Grid>
-                <Grid item md={4} >
+                <Grid item md={4} xs={12} >
                   <Box sx={{
                     border: "1px solid lightgrey"
                   }}>
@@ -428,14 +427,15 @@ const Page_Home = () => {
               </Box>
             </Grid>
           </Grid>
+
         </Box>
 
        
         {/* End footer */}
 
 
-      </main>
-    </>
+      </Box>
+   
 
   )
 }

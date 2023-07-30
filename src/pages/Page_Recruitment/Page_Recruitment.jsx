@@ -74,15 +74,18 @@ const Page_Recruitment = () => {
   useEffect(() => {
     setPositionListSelect(positionList);
   }, [positionList]);
-
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+  }, []);
   const navigate = useNavigate();
   const handleNavigateClick1 = (id) => {
     navigate(`/recruitment/${id}`);
   };
   useEffect(() => {
     dispatch({ type: "saga/getPositionList" });
-    dispatch({ type: "saga/getRequirement" });
-    dispatch({ type: "saga/getSkill" });
+    // dispatch({ type: "saga/getRequirement" });
+    // dispatch({ type: "saga/getSkill" });
   }, []);
   const handleCloseSelect = () => {
     setBlock('none')

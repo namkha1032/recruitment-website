@@ -13,6 +13,7 @@ function* getEventList() {
     
     // --- Format EventList
     // const data = formatEventList(response.data)
+    console.log(response.data)
     yield put({ type: "eventList/setEventList", payload: response.data })
     yield put({ type: "loading/offLoading" })
 }
