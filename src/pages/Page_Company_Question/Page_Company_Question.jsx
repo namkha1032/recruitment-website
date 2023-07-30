@@ -604,7 +604,12 @@ export default function Page_Company_Question() {
                 disablePortal
                 id="filter-type"
                 options={["Technology", "Language", "Soft Skills"]}
-                sx={{ width: { md: 200, sm: 200, xs: "100%" }, marginRight: 2 }}
+                sx={{ width: { md: 200, sm: 200, xs: "100%" }, marginRight: 2,
+                "& .Mui-focused": {
+                  color: "black",
+                  
+                },
+               }}
                 renderInput={(params) => (
                   <TextField {...params} label="Category..." />
                 )}

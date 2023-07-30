@@ -1,6 +1,8 @@
 import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 import host from "../host";
+import { filterIsDeleted } from "../../utils/filterIsDeleted";
+
 function* getLanguage(action) {
   try {
     const response = yield call(
@@ -11,7 +13,8 @@ function* getLanguage(action) {
     //   axios.get,
     //   `${host.name}/data/languageList.json`
     // );
-    yield put({ type: "language/setLanguage", payload: response.data });
+    const data = filterIsDeleted(response.data);
+    yield put({ type: "language/setLanguage", payload: data });
     yield put({
       type: "error/setError",
       payload: {
