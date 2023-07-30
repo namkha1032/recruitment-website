@@ -18,12 +18,11 @@ function* getEventList() {
     // --- Get Recruiter name
 
     // --- Format EventList
-    // const data = formatEventList(response.data)
-    console.log(response.data)
-    yield put({ type: "eventList/setEventList", payload: response.data })
-    yield put({ type: "loading/offLoading" })
-    // const data = formatEventList(response.data);
-    // yield put({ type: "eventList/setEventList", payload: data });
+    // yield put({ type: "eventList/setEventList", payload: response.data })
+    // yield put({ type: "loading/offLoading" })
+
+    const data = formatEventList(response.data);
+    yield put({ type: "eventList/setEventList", payload: data });
     yield put({ type: "loading/offLoading" });
     // yield put({
     //   type: "error/setError",

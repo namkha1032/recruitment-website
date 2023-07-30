@@ -3,9 +3,16 @@
     "positionId": "0",
     "positionName": "ABC",
     "description": "ABC",
+    "requirementId": "00000000-0000-0000-0000-000000000000",
+    "requirement": null,
+    "salary": 1000,
     "maxHiringQty": 123,
-    "startDate": "2023-03-50",
-    "endDate": "2023-03-50",
+    "startDate": "2023-08-10",
+    "endDate": "2023-08-10",
+    "departmentId": "00000000-0000-0000-0000-000000000001",
+    "department": null,
+    "languageId": "00000000-0000-0000-0000-000000000001",
+    "language": null,
     "isDeleted": false
   }
 ]

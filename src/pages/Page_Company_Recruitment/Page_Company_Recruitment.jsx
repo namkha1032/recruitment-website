@@ -45,7 +45,8 @@ import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 import { errorAlert } from "../../components/Alert/ErrorAlert";
 import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 // JSON -> getPositionListWithFilter
 // {
@@ -74,6 +75,11 @@ import "react-toastify/dist/ReactToastify.css";
 // }
 
 export default function Page_Company_Recruitment() {
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up("md"));
+  const isSm = useMediaQuery(theme.breakpoints.down("md"));
+  // const isXs = useMediaQuery(theme.breakpoints.down("xs"));
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -87,7 +93,7 @@ export default function Page_Company_Recruitment() {
   }, []);
 
   const loading = useSelector((state) => state.loading);
-  const error = useSelector((state) => state.error);
+  // const error = useSelector((state) => state.error);
 
   // useEffect(() => {
   //   let timeoutId = null
@@ -475,7 +481,9 @@ export default function Page_Company_Recruitment() {
   // ];
 
   return (
-    <Box>
+    <Box sx={{
+      marginTop: 3,
+    }}>
       <GigaCard>
         <GigaCardBody>
           <Grid
@@ -515,27 +523,41 @@ export default function Page_Company_Recruitment() {
             >
               <Button
                 // variant="contained"
-                variant="outlined"
+                // variant="outlined"
+                // sx={{
+                //   // backgroundColor: "#1565C0",
+                //   color: "black",
+                //   border: "1px solid black",
+                //   textTransform: "none",
+                //   height: 50,
+                //   width: {
+                //     md: 250,
+                //     sm: 250,
+                //     xs: "100%",
+                //   },
+                //   "&:hover": {
+                //     backgroundColor: "black",
+                //     color: "white",
+                //   },
+                // }}
+                variant="contained"
                 sx={{
-                  // backgroundColor: "#1565C0",
-                  color: "black",
-                  border: "1px solid black",
-                  textTransform: "none",
                   height: 50,
                   width: {
                     md: 250,
                     sm: 250,
                     xs: "100%",
                   },
+                  textTransform: "none",
+                  backgroundColor: "black",
                   "&:hover": {
-                    backgroundColor: "black",
-                    color: "white",
+                    backgroundColor: "grey",
                   },
                 }}
                 onClick={handleAddClick}
               >
                 <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
-                Create position
+                Create Position
               </Button>
               {/* <IconButton onClick={handleMoreClick} sx={{
             marginLeft: 1,
@@ -570,91 +592,92 @@ export default function Page_Company_Recruitment() {
           </Menu> */}
             </Grid>
 
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={12}
-              sx={{
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center",
-              }}
-            >
-              <Autocomplete
-                disablePortal
-                id="filter-type"
-                options={departments}
-                sx={{ width: 200, marginRight: { md: 2, sm: 2, xs: 2 } }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Department..." />
-                )}
-                getOptionLabel={(option) => option.departmentName || ""}
-                renderOption={(props, option) => (
-                  <li {...props} key={option.departmentId}>
-                    {option.departmentName}
-                  </li>
-                )}
-                isOptionEqualToValue={(option, value) => {
-                  return option.departmentId === value.departmentId;
+            {isMd && (
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
                 }}
-                value={departmentChoose}
-                onChange={(event, value) => handleChooseDepartment(value)}
-              />
+              >
+                <Autocomplete
+                  disablePortal
+                  id="filter-type"
+                  options={departments}
+                  sx={{ width: 200, marginRight: { md: 2, sm: 2, xs: 2 } }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Department..." />
+                  )}
+                  getOptionLabel={(option) => option.departmentName || ""}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.departmentId}>
+                      {option.departmentName}
+                    </li>
+                  )}
+                  isOptionEqualToValue={(option, value) => {
+                    return option.departmentId === value.departmentId;
+                  }}
+                  value={departmentChoose}
+                  onChange={(event, value) => handleChooseDepartment(value)}
+                />
 
-              <Autocomplete
-                disablePortal
-                id="filter-type"
-                options={["Active", "Inactive"]}
-                sx={{ width: 200 }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Status..." />
-                )}
-                renderOption={(props, option) => {
-                  if (option === "Active")
-                    return (
-                      <Box
-                        component="li"
-                        {...props}
-                        sx={{
-                          color: "#1565C0",
-                        }}
-                      >
-                        <RocketLaunchRoundedIcon
+                <Autocomplete
+                  disablePortal
+                  id="filter-type"
+                  options={["Active", "Inactive"]}
+                  sx={{ width: 200 }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Status..." />
+                  )}
+                  renderOption={(props, option) => {
+                    if (option === "Active")
+                      return (
+                        <Box
+                          component="li"
+                          {...props}
                           sx={{
                             color: "#1565C0",
-                            marginRight: 1,
                           }}
-                        />
-                        Active
-                      </Box>
-                    );
-                  else if (option === "Inactive")
-                    return (
-                      <Box
-                        component="li"
-                        {...props}
-                        sx={{
-                          // color: "#E0E0E0",
-                          color: "black.400",
-                        }}
-                      >
-                        <DoNotDisturbOnRoundedIcon
+                        >
+                          <RocketLaunchRoundedIcon
+                            sx={{
+                              color: "#1565C0",
+                              marginRight: 1,
+                            }}
+                          />
+                          Active
+                        </Box>
+                      );
+                    else if (option === "Inactive")
+                      return (
+                        <Box
+                          component="li"
+                          {...props}
                           sx={{
                             // color: "#E0E0E0",
                             color: "black.400",
-                            marginRight: 1,
                           }}
-                        />
-                        Inactive
-                      </Box>
-                    );
-                }}
-                value={statusChoose}
-                onChange={(event, value) => handleChooseStatus(value)}
-              />
+                        >
+                          <DoNotDisturbOnRoundedIcon
+                            sx={{
+                              // color: "#E0E0E0",
+                              color: "black.400",
+                              marginRight: 1,
+                            }}
+                          />
+                          Inactive
+                        </Box>
+                      );
+                  }}
+                  value={statusChoose}
+                  onChange={(event, value) => handleChooseStatus(value)}
+                />
 
-              {/* {valueChoose === "Language" && (
+                {/* {valueChoose === "Language" && (
             <Autocomplete
               disablePortal
               id="filter-type"
@@ -676,7 +699,132 @@ export default function Page_Company_Recruitment() {
               onChange={(event, value) => handleChooseLanguage(value)}
             />
           )} */}
-            </Grid>
+              </Grid>
+            )}
+
+            {isSm && (
+              <>
+                {" "}
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                  }}
+                >
+                  <Autocomplete
+                    disablePortal
+                    id="filter-type"
+                    options={departments}
+                    sx={{ width: "100%" }}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Department..." />
+                    )}
+                    getOptionLabel={(option) => option.departmentName || ""}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.departmentId}>
+                        {option.departmentName}
+                      </li>
+                    )}
+                    isOptionEqualToValue={(option, value) => {
+                      return option.departmentId === value.departmentId;
+                    }}
+                    value={departmentChoose}
+                    onChange={(event, value) => handleChooseDepartment(value)}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                  }}
+                >
+                  <Autocomplete
+                    disablePortal
+                    id="filter-type"
+                    options={["Active", "Inactive"]}
+                    sx={{ width: "100%" }}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Status..." />
+                    )}
+                    renderOption={(props, option) => {
+                      if (option === "Active")
+                        return (
+                          <Box
+                            component="li"
+                            {...props}
+                            sx={{
+                              color: "#1565C0",
+                            }}
+                          >
+                            <RocketLaunchRoundedIcon
+                              sx={{
+                                color: "#1565C0",
+                                marginRight: 1,
+                              }}
+                            />
+                            Active
+                          </Box>
+                        );
+                      else if (option === "Inactive")
+                        return (
+                          <Box
+                            component="li"
+                            {...props}
+                            sx={{
+                              // color: "#E0E0E0",
+                              color: "black.400",
+                            }}
+                          >
+                            <DoNotDisturbOnRoundedIcon
+                              sx={{
+                                // color: "#E0E0E0",
+                                color: "black.400",
+                                marginRight: 1,
+                              }}
+                            />
+                            Inactive
+                          </Box>
+                        );
+                    }}
+                    value={statusChoose}
+                    onChange={(event, value) => handleChooseStatus(value)}
+                  />
+
+                  {/* {valueChoose === "Language" && (
+            <Autocomplete
+              disablePortal
+              id="filter-type"
+              options={languages}
+              sx={{ width: 200 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Language..." />
+              )}
+              getOptionLabel={(option) => option.languageName || ""}
+              renderOption={(props, option) => (
+                <li {...props} key={option.languageId}>
+                  {option.languageName}
+                </li>
+              )}
+              isOptionEqualToValue={(option, value) => {
+                return option.languageId === value.languageId;
+              }}
+              value={languageChoose}
+              onChange={(event, value) => handleChooseLanguage(value)}
+            />
+          )} */}
+                </Grid>
+              </>
+            )}
 
             {/* <Grid
           item
@@ -760,6 +908,9 @@ export default function Page_Company_Recruitment() {
                 // },
                 "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
                   color: "white",
+                },
+                "&.MuiDataGrid-root .MuiCircularProgress-root": {
+                  color: "black",
                 },
               }}
               slots={{
