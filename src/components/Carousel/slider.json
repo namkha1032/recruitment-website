@@ -2,18 +2,21 @@
     {
         "id": 1,
         "image": "https://img.freepik.com/free-photo/millennial-asia-businessmen-businesswomen-meeting-brainstorming-ideas-about-new-paperwork-project-colleagues-working-together-planning-success-strategy-enjoy-teamwork-small-modern-night-office_7861-2386.jpg?w=2000&t=st=1690250423~exp=1690251023~hmac=2abb719c24442efd1fdadb02d3b728f576f955ecc2b21f938a4bc232c6a80866",
-        "title": "About us"
+        "title": "About us",
+        "navigate":"about"
     },
 
     {
         "id": 2,
         "image": "https://www.teamrecruitment.co.nz/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBaFRzIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--af640b552aecef9c20569535053bdb85f5b51d7f/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9VWTI5dFltbHVaVjl2Y0hScGIyNXpld2c2QzNKbGMybDZaVWtpRGpJd01EQjRPVEF3WGdZNkJrVlVPZ3huY21GMmFYUjVTU0lMUTJWdWRHVnlCanNIVkRvSlkzSnZjRWtpRVRJd01EQjRPVEF3S3pBck1BWTdCMVE9IiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--0fb7870a4f06a87ce586fe2cf3dfb8c5759b4cb0/7c30873d",
-        "title": "Recruitment"
+        "title": "Recruitment",
+        "navigate":"recruitment"
     },
     {
         "id": 3,
         "image": "https://megastudy.edu.vn/upload/tinymce/gr1.jpg",
-        "title": "Event"
+        "title": "Event",
+        "navigate":"event"
     }
     
 ]

@@ -86,10 +86,13 @@ function MainLayout() {
                     {/* <DrawerHeader /> */}
                     <Container>
                         <Outlet />
+                       
                     </Container>
-                    {/* <Footer /> */}
-                </Main>
+                    
+                </Main> 
+                
             </Box>
+            <Footer /> 
         </>
     );
 }

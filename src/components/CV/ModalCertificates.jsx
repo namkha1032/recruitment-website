@@ -26,17 +26,16 @@ const  ModalCertificates = ({certificate}) => {
         borderRadius: "8px",
         
       }}
-    
-      onMouseEnter={handleOpen}
+      onClick={handleOpen}
       // onMouseLeave={handleClose}
     >
-      <Box>Name: {certificate.name}</Box>  
-      <Box>Decription: {certificate.decription}</Box>  
-      <Box> Expirationdate: {certificate.expirationdate}</Box>
-      <Box>Dateearned: {certificate.dateearned}</Box>
+      <Box>Name: {certificate.certificateName}</Box>  
+      <Box>Decription: {certificate.description}</Box>  
+      <Box> Expirationdate: {certificate.expirationDate}</Box>
+      <Box>Dateearned: {certificate.dateEarned}</Box>
       
      
-      <Box>Orgranizationname: {certificate.Orgranizationname}</Box>  
+      <Box>Orgranizationname: {certificate.organizationName}</Box>  
       <Box>Link: {certificate.link}</Box> 
     </Box>
     <Dialog
@@ -47,24 +46,24 @@ const  ModalCertificates = ({certificate}) => {
     aria-labelledby="scroll-dialog-title"
     aria-describedby="scroll-dialog-description"
   >
-    <DialogTitle id="scroll-dialog-title">{certificate.name}</DialogTitle>
+    <DialogTitle id="scroll-dialog-title">{certificate.certificateName}</DialogTitle>
     <DialogContent >
 
     <Typography id="scroll-dialog-description" variant="h6" component="h2">
-    Name: {certificate.name}
+    Name: {certificate.certificateName}
     </Typography>
     
     <Typography id="scroll-dialog-description" variant="h6" component="h2">
-    Decription: {certificate.decription}
+    Decription: {certificate.description}
     </Typography>
     <Typography id="scroll-dialog-description" variant="h6" component="h2">
-    Orgranizationname: {certificate.Orgranizationname}
+    Orgranizationname: {certificate.organizationName}
     </Typography>
     <Typography id="scroll-dialog-description" variant="h6" component="h2">
-    Dateearned: {certificate.dateearned}
+    Dateearned: {certificate.dateEarned}
     </Typography>
     <Typography id="scroll-dialog-description" variant="h6" component="h2">
-    Expirationdate: {certificate.expirationdate}
+    Expirationdate: {certificate.expirationDate}
     </Typography>
     <Typography id="scroll-dialog-description" variant="h6" component="h2">
     Link: {certificate.link}

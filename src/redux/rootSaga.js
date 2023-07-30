@@ -23,6 +23,7 @@ import applicationCandidateSaga from "./saga/applicationCandidateSaga";
 import eventCandidateSaga from "./saga/eventCandidateSaga";
 import cvInforSaga from "./saga/cvInforSaga";
 import positionInforSaga from "./saga/positionInforSaga";
+import requirementSaga from "./saga/requirementSaga";
 import createCvSaga from "./saga/createCvSaga";
 
 function* rootSaga() {
@@ -47,6 +48,7 @@ function* rootSaga() {
         applicationCandidateSaga(),
         eventCandidateSaga(),
         positionInforSaga(),
+        requirementSaga(),
         createCvSaga(),
         testSaga()
     ])
