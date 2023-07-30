@@ -6,6 +6,7 @@ import {
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
+import cleanStore from './utils/cleanStore';
 // import components
 import MainLayout from './components/MainLayout/MainLayout';
 // import pages
@@ -60,6 +61,32 @@ import TestLayout from './components/TestLayout/TestLayout';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function App() {
+  // const dispatch = useDispatch();
+  // const [rememberMe, setRememberMe] = useState(false);
+  // const handleRememberMe = (event) => {
+  //   event.preventDefault();
+  //   setRememberMe(!rememberMe);
+  //   // window.localStorage.setItem("remember", JSON.stringify(!rememberMe))
+  // }
+  // console.log(rememberMe)
+  // useEffect(() => {
+  //   const handleBeforeUnload = (event) => {
+  //     if (!rememberMe /* && !window.localStorage.getItem('remember') */) {
+  //       setRememberMe(false)
+  //       window.localStorage.removeItem('user')
+  //       // window.localStorage.removeItem('remember') 
+  //       cleanStore(dispatch)
+  //       dispatch({ type: "user/setUser", payload: null })
+  //     }
+  //   };
+
+  //   window.addEventListener('beforeunload', handleBeforeUnload);
+
+  //   return () => {
+  //     window.removeEventListener('beforeunload', handleBeforeUnload);
+  //   };
+  // }, [rememberMe]);
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -163,7 +190,7 @@ function App() {
 
           </Route>
 
-          <Route path="/login" element={<XPage_Login />} />
+          <Route path="/login" element={<XPage_Login /* rememberMe={rememberMe} handleRememberMe={handleRememberMe} */ />} />
           <Route path="/recovery" element={<XPage_Recovery />} />
           <Route path="/register" element={<XPage_Register />} />
           <Route path="/test2" element={<PageTest2 />} />

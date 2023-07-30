@@ -45,6 +45,7 @@ const XPage_Recovery = () => {
           setIsOTPValid(true)
         }
         else {
+
           dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
           navigate("/login");
         }
@@ -139,7 +140,7 @@ const XPage_Recovery = () => {
         setMessage("Password reset successfully")
         setErrorResetSnackbar(true)
 
-        dispatch({ type: "saga/userResetPassword", payload: { newPassword, confirmPassword }})
+        dispatch({ type: "saga/userResetPassword", payload: { email, otp, newPassword }})
       }
     }
   };

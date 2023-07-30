@@ -105,7 +105,7 @@ const XPage_Login = () => {
     event.preventDefault();
 
     if (validUsername) {
-      dispatch({ type: "saga/userLogin", payload: { username, password, check } })
+      dispatch({ type: "saga/userLogin", payload: { username, password } })
       //dispatch({ type: "saga/getUserId", payload: null})
     }
     else {

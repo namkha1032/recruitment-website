@@ -4,7 +4,7 @@ import host from "../host"
 
 function* userLogin(action) {
     try {
-        const { username, password, check } = action.payload
+        const { username, password } = action.payload
         const response = yield call(axios.post, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/Login', { username, password })
         console.log("response is: ", response.data)
 
@@ -50,6 +50,10 @@ function* userRegister(action) {
 
 function* emailRecovery(action) {
     try {
+        console.log(action.payload)
+        const { email } = action.payload
+        const response = yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Authentication/SendPasswordResetCode?email=${email}`, { email })
+        console.log("response forgot password is: ", response)
         yield put({ type: "error/setError", payload: { status: "no", message: "" } })
     }
     catch (error) {
@@ -70,6 +74,10 @@ function* otpRecovery(action) {
 
 function* userResetPassword(action) {
     try {
+        console.log(action.payload)
+        const { email, otp, newPassword } = action.payload
+        const response = yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Authentication/ResetPassword?email=${email}&otp=${otp}&newPassword=${newPassword}`, action.payload)
+        console.log("response forgot password is: ", response)
         yield put({ type: "error/setError", payload: { status: "no", message: "" } })
     }
     catch (error) {
