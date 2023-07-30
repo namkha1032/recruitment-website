@@ -18,8 +18,7 @@ import useGetRole from '../../hooks/useGetRole.js';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import {getCandidate} from "../../redux/reducer/adminReducer";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
-
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 function CandidateTable(props) {
@@ -504,12 +503,23 @@ function FullWidthTabs() {
                     <Tabs
                         value={value}
                         onChange={handleChange}
-                        indicatorColor="primary"
                         variant="fullWidth"
-                        aria-label="full width tabs example"
+                        aria-label="selectTableRoles"
+                        TabIndicatorProps={{
+                            style: {
+                                backgroundColor: "#000000",
+                                color: "#000000",
+                            }
+                        }}
                         sx={{
                             backgroundColor: '#ffffff',
-                            color: "#000000"
+                            color: '#000000',
+                            ".Mui-selected": {
+                                color: '#000000'
+                            },
+                            "&. Mui-indicator": {
+                                color: '#000000'
+                            }
                         }}
                     >
                         <Tab label="Candidate" {...a11yProps(0)} />
