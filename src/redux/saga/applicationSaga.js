@@ -3,7 +3,7 @@ import axios from 'axios';
 import host from "../host";
 function* getApplication(action) {
     // const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/${action.payload}`);
-    // const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById/${action.payload}`)
+    // const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload}`)
     // console.log("num", action.payload);
     // console.log("resapp", response.data)
     // console.log('resapp1', response1.data)
@@ -15,20 +15,39 @@ function* getApplication(action) {
     // yield put({ type: 'application/setApplication', payload: application })
     const reponse = yield call(axios.get, `${host.name}/data/applicationList.json`)
     yield put({ type: 'application/setApplication', payload: reponse.data })
-    
+
 
 }
 
 
-// function* postCv(action) {
-//     const reponse = yield call(axios.post, `${host.name}/data/applicationList.json`)
-//     yield put({ type: 'submitcv/setSubmitcv', payload: reponse.data })
+function* submitCv(action) {
+    try {
+        const reponse = yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Application`, action.payload)
+        console.log("submitsaga", reponse.data)
+        yield put({ type: 'submitcv/setSubmitcv', payload: reponse.data })
+        yield put({
+            type: "error/setError",
+            payload: {
+                status: "no",
+                message: "",
+            },
+        });
+    } catch (error) {
+        yield put({
+            type: "error/setError",
+            payload: {
+                status: "yes",
+                message: "message" in error ? error.message : error.response.data,
+            },
+        });
 
-// }
+    }
+
+}
 function* applicationSaga() {
     yield all([
+        takeEvery('saga/submitCv', submitCv),
         takeEvery('saga/getApplication', getApplication),
-        
     ])
 }
 

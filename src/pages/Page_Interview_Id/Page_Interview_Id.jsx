@@ -27,6 +27,7 @@ import CV from "../../components/CV/CV"
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { formatDate } from "../../utils/formatDate";
 import cleanStore from "../../utils/cleanStore";
 
 const Page_Interview_Id = ({ cvid }) => {
@@ -35,29 +36,33 @@ const Page_Interview_Id = ({ cvid }) => {
     const languages = require('../../data/View_recruitment/languages.json');
     const interviewidinfo = useSelector(state => state.interviewidInfo);
     const dispatch = useDispatch();
-    // useEffect(() => {
-    //     dispatch({ type: 'saga/getInterviewInfo', payload: interviewid })
-    //     return () => {
-    //         cleanStore(dispatch);
-    //     }
-    // }, [])
-    // const shift = useSelector(state => state.shift);
-    // console.log("interviewid", interviewidinfo);
+    useEffect(() => {
+        dispatch({ type: 'saga/getInterviewInfo', payload: interviewid })
+        return () => {
+            cleanStore(dispatch);
+        }
+    }, [])
+    const shift = useSelector(state => state.shift);
+    console.log("interviewid", interviewidinfo);
     let left = 5
     let right = 6
     let gap = 2
     let gridSx = {
         display: "flex", alignItems: "center", columnGap: gap
     }
-    // const room = useSelector(state => state.room);
-    // console.log("shiftmain", shift);
-    // console.log("roommain", room);
+    const room = useSelector(state => state.room);
+    const interviewer = useSelector(state => state.interviewer);
+    const department = useSelector(state => state.department);
+    console.log("intermain", interviewer);
+    console.log("shiftmain", shift);
+    console.log("roommain", room);
+    console.log('departmain', department);
     // const requirements = interviewidinfo ? interviewidinfo[0].requirement : [];
 
-    // const date = interviewidinfo ? interviewidinfo.dateInterview.slice(0,10) : [];
-    // console.log("interview", interviewid);
+    const date = interviewidinfo ? formatDate(interviewidinfo.dateInterview.slice(0,10)) : [];
+    console.log("interview", interviewid);
     return (
-        // interviewidinfo && room && shift &&
+        interviewidinfo && room && shift && department &&
         <>
             <Grid container spacing={3}>
                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -67,14 +72,14 @@ const Page_Interview_Id = ({ cvid }) => {
                 </Grid>
                 <Grid item xs={12} md={12} sx={{ display: "flex", flexDirection: "column", rowGap: 2 }}>
                     <Grid container spacing={3}>
-                        <Grid item md={6}>
+                        <Grid item md={6} xs={12}>
                             <GigaCard>
                                 <GigaCardHeader color={"black"} headerIcon={<ArticleIcon sx={{ fontSize: "inherit" }} />}>
                                     General information
                                 </GigaCardHeader>
                                 <GigaCardBody >
                                     <Box sx={{ display: "flex", flexDirection: "row" }}>
-                                        <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                                        <Grid item md={left}  sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
                                             <Box sx={gridSx}>
                                                 <ScheduleIcon />
                                                 <Typography variant="h6">
@@ -89,9 +94,9 @@ const Page_Interview_Id = ({ cvid }) => {
                                         </Grid>
                                         <Grid item md={right} sx={gridSx}>
                                             <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-                                                14:00 25/07/2023
+                                                {/* 14:00 25/07/2023 */}
                                                 {/* {`${interviewidinfo[0].date}${' '}${interviewidinfo[0].time}`} */}
-                                                {/* {`${date}${' '}${shift[0].shiftTimeStart}${'h'}${' - '}${shift[0].shiftTimeEnd}${'h'}`} */}
+                                                {`${date}${' '}${shift[0].shiftTimeStart}${'h'}${' - '}${shift[0].shiftTimeEnd}${'h'}`}
                                             </Typography>
                                         </Grid>
                                     </Box>
@@ -112,8 +117,8 @@ const Page_Interview_Id = ({ cvid }) => {
                                         <Grid item md={right} sx={gridSx}>
                                             <Typography variant="h6" sx={{ marginLeft: "8px" }}>
                                                 {/* {interviewidinfo[0].room} */}
-                                                202B4
-                                                {/* {room[0].roomName} */}
+                                                {/* 202B4 */}
+                                                {room[0].roomName}
                                             </Typography>
                                         </Grid>
                                     </Box>
@@ -134,7 +139,7 @@ const Page_Interview_Id = ({ cvid }) => {
                                         </Grid>
                                         <Grid item md={right} sx={gridSx}>
                                             <Typography variant="h6" sx={{ marginLeft: "8px" }} >
-                                                Front-end Development { }
+                                                Front-end Development 
                                                 {/* {interviewidinfo[0].positionName} */}
                                             </Typography>
                                         </Grid>
@@ -193,7 +198,7 @@ const Page_Interview_Id = ({ cvid }) => {
                                 </GigaCardBody>
                             </GigaCard>
                         </Grid>
-                        <Grid item md={6}>
+                        <Grid item md={6} xs ={12}>
                             <GigaCard>
                                 <GigaCardHeader color={"black"} headerIcon={<AssignmentIndIcon sx={{ fontSize: "inherit" }} />}>
                                     Interviewer
@@ -279,7 +284,8 @@ const Page_Interview_Id = ({ cvid }) => {
                                         <Grid item md={right} sx={gridSx}>
                                             <Typography variant="h6" sx={{ marginLeft: "8px" }} >
                                                 {/* {interviewidinfo[0].departmentName} */}
-                                                ITROOM
+                                                {/* ITROOM */}
+                                                {department[0].departmentName}
                                             </Typography>
                                         </Grid>
                                     </Box>

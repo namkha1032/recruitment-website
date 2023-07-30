@@ -18,9 +18,9 @@ const View_general = (props) => {
         display: "flex", alignItems: "center"
     }
     console.log("hello", props.detailposition);
-    // console.log("hellode", props.department);
+    console.log("hellode", props.department);
     return (
-        props.detailposition  &&
+        props.detailposition  && props.department &&
         // props.detail &&
         <>
             <Grid container spacing={1} sx={{ marginTop: "0px" }}>
@@ -100,7 +100,7 @@ const View_general = (props) => {
                             {/* <a href={props.detail.departmentWebsite} > FPT</a> */}
                             <a href={props.detailposition.departmentWebsite} > FPT</a>
                         </Box>
-                    </Typography>
+                    </Typography>   
                 </Grid>
                 <Grid item md={6} ></Grid>
             </Grid>

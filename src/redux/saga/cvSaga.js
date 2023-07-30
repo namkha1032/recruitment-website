@@ -3,7 +3,7 @@ import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects"
 import axios from 'axios'
 import host from "../host"
 function* getCv(action) {
-    const response1 = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Cv`)
+    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv`)
     // const response2 = yield call(axios.get, `${host.name}/data/candidateid.json?candidateid=${response1.data.userid}`)
     const response2 = yield call(axios.get, `${host.name}/data/candidateid.json?candidateid=${0}`)
 
@@ -91,6 +91,7 @@ function* getCv(action) {
 
 function* getCvList(action) {
     const reponse = yield call(axios.get, `${host.name}/data/CVList.json`)
+    // const reponse1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/GetCandidateCvs`) 
     // const reponse = yield call(axios.get, `${host.name}/data/CVList.json`)
     // const reponse = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv`)
     yield put({ type: 'cvlist/setCvList', payload: reponse.data })
