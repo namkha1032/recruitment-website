@@ -20,8 +20,27 @@ import {getCandidate} from "../../redux/reducer/adminReducer";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import useMediaQuery from "@mui/material/useMediaQuery";
 
+CandidateTable.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+InterviewerTable.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+RecruiterTable.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
 
 function CandidateTable(props) {
+    const theme = useTheme();
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     const RenderAddToBlacklist = ({params}) => {
         const [open, setOpen] = React.useState(false);
         return (
@@ -83,17 +102,17 @@ function CandidateTable(props) {
         );
     }
     const columns = [
-                {field: "candidateId", headerName: "Candidate ID", flex: 0.5},
+                {field: "candidateId", headerName: isSm ? "Candidate ID" : "cID", flex: 0.5},
                 {field: "userId", headerName: "User ID", flex: 0.5},
                 {
                     field: "experience",
                     headerName: "Experience",
-                    flex: 0.5,
+                    flex: 0.4,
                     cellClassName: "name-column--cell",
                 },
                 {
                     field: "addtoBlacklist",
-                    headerName: "Add to Blacklist",
+                    headerName: isSm ? "Add to Blacklist" : "Add",
                     flex: 0.3,
                     renderCell: (params) => {
                         return (<RenderAddToBlacklist params={params}/>)
@@ -111,9 +130,9 @@ function CandidateTable(props) {
             <Grid container>
                 <Grid
                     border={0}
-                    width="78vw"
+                    // width="77vw"
                     item
-                    m="0px 0px 0px 0px"
+                    // m="0px 0px 0px 0px"
                     xs={12}
                     display="flex"
                     sx={{
@@ -156,7 +175,7 @@ function CandidateTable(props) {
                         getRowId={(row) => row.candidateId}
                         columns={columns}
                         slots={{toolbar: QuickSearchToolbar}}
-                        display="flex"
+                        // display="flex"
                     />
                 </Grid>
             </Grid>
@@ -164,6 +183,9 @@ function CandidateTable(props) {
     );
 }
 function InterviewerTable(props) {
+    const theme = useTheme();
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isXs = useMediaQuery(theme.breakpoints.up('xs'));
     const RenderAddToBlacklist = ({params}) => {
         const [open, setOpen] = React.useState(false);
         return (
@@ -190,9 +212,12 @@ function InterviewerTable(props) {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={() => {
+                        <Button
+                            onClick={() => {
                             setOpen(false)
-                        }}>Go to Account</Button>
+                        }}
+                            >
+                            Go to Account</Button>
                         <Button onClick={() => {
                             setOpen(false)
                         }}>
@@ -253,9 +278,9 @@ function InterviewerTable(props) {
             <Grid container>
                 <Grid
                     border={0}
-                    width="78vw"
+                    // width="77vw"
                     item
-                    m="0px 0px 0px 0px"
+                    // m="0px 0px 0px 0px"
                     xs={12}
                     display="flex"
                     sx={{
@@ -306,6 +331,9 @@ function InterviewerTable(props) {
     );
 }
 function RecruiterTable(props) {
+    const theme = useTheme();
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isXs = useMediaQuery(theme.breakpoints.up('xs'));
     const RenderAddToBlacklist = ({params}) => {
         const [open, setOpen] = React.useState(false);
         return (
@@ -395,9 +423,9 @@ function RecruiterTable(props) {
             <Grid container>
                 <Grid
                     border={0}
-                    width="78vw"
+                    // width="77vw"
                     item
-                    m="0px 0px 0px 0px"
+                    // m="0px 0px 0px 0px"
                     xs={12}
                     display="flex"
                     sx={{
@@ -447,25 +475,6 @@ function RecruiterTable(props) {
     );
 }
 
-
-
-CandidateTable.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
-InterviewerTable.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
-RecruiterTable.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
-
-
 function a11yProps(index) {
     return {
         id: `full-width-tab-${index}`,
@@ -474,8 +483,10 @@ function a11yProps(index) {
 }
 
 function FullWidthTabs() {
-    const theme = useTheme();
     const [value, setValue] = React.useState(0);
+    const theme = useTheme();
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -492,15 +503,19 @@ function FullWidthTabs() {
             raised="true"
             sx={{
                 // width:'77vw',
-                display: 'flex',
+                // display: 'flex',
                 // border: "1px solid black",
                 // borderRadius: 1,
                 padding:4,
                 mt: 4
             }}>
             <Grid container>
-                <AppBar position="static">
+                <AppBar position="static"
+                        sx={{
+                            backgroundColor: '#ffffff',
+                        }}>
                     <Tabs
+                        display="flex"
                         value={value}
                         onChange={handleChange}
                         variant="fullWidth"
@@ -508,23 +523,37 @@ function FullWidthTabs() {
                         TabIndicatorProps={{
                             style: {
                                 backgroundColor: "#000000",
-                                color: "#000000",
                             }
                         }}
                         sx={{
                             backgroundColor: '#ffffff',
                             color: '#000000',
-                            ".Mui-selected": {
-                                color: '#000000'
-                            },
-                            "&. Mui-indicator": {
-                                color: '#000000'
-                            }
+                            // "&.Mui-selected": {
+                            //     color: '#000000'
+                            // },
+                            // "&. Mui-indicator": {
+                            //     color: '#000000'
+                            // }
                         }}
                     >
-                        <Tab label="Candidate" {...a11yProps(0)} />
-                        <Tab label="Interviewer" {...a11yProps(1)} />
-                        <Tab label="Recruiter" {...a11yProps(2)} />
+                        <Tab label={isSm ? "Candidate" : "Cndt."} {...a11yProps(0)}
+                            sx={{
+                                "&.Mui-selected": {
+                                    color: '#000000'
+                                },
+                            }}/>
+                        <Tab label={isSm ? "Interviewer" : "Intvwr."} {...a11yProps(1)}
+                             sx={{
+                                 "&.Mui-selected": {
+                                     color: '#000000'
+                                 },
+                             }}/>
+                        <Tab label={isSm ? "Recruiter" : "Rctr."} {...a11yProps(2)}
+                             sx={{
+                                 "&.Mui-selected": {
+                                     color: '#000000'
+                                 },
+                             }}/>
                     </Tabs>
                     <CandidateTable value={value} index={0}>
                     </CandidateTable>
@@ -540,10 +569,14 @@ function FullWidthTabs() {
 
 const Page_Company_Account = () => {
     const navigate = useNavigate()
-
+    const theme = useTheme()
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+    const isXs = useMediaQuery(theme.breakpoints.up('xs'));
 
     // if (useGetRole()=="admin") {
         return (
+            <Grid container>
             <Grid item xs={12}>
                 <Card
                     raised="true"
@@ -551,22 +584,21 @@ const Page_Company_Account = () => {
                         // display:'flex',
                         // border: "1px solid black",
                         // borderRadius: 1,
-                        padding: 4
+                        padding: 4,
+                        mt: '5vh'
                     }}>
-                    <Grid container columnSpacing={{xs: 0.5}}>
+                    <Grid container columnSpacing={{xs: 0.5}}  alignItems="center">
                         <Grid item xs={7} sm={12}>
                         <Grid container display="flex">
                         <Grid item md={0.8} xs={12} display="flex">
-                            <ViewListIcon sx={{fontSize: 60}}/>
+                            <ViewListIcon sx={isMd ? { fontSize: 60 }: {fontSize: 40}}/>
                         </Grid>
                         <Grid item md={11} xs={12}
                               display="flex"
-                              // alignItems="center"
                               justifyContent="left">
                             <Typography
                                 m="0px 10px 20px 0px"
-                                variant="h3"
-                                alignItems="center"
+                                variant={isMd ? "h3" : "h4"}
                                 // justifyContent="left"
                             >
                                 Account List
@@ -661,7 +693,10 @@ const Page_Company_Account = () => {
                         </Grid>
                     </Grid>
                 </Card>
+            </Grid>
+                <Grid item xs={12}>
                 <FullWidthTabs/>
+                </Grid>
             </Grid>
 
         );
