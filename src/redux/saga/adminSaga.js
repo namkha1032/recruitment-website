@@ -3,11 +3,11 @@ import axios from 'axios';
 import host from "../host";
 
 function* doGetCandidate(action){
-    const res = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Candidate`);
+    const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`);
     yield put({type:"admin/getCandidate",payload: res.data})
 }
 function* doGetRecruiter(action){
-    const res = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Recruiter`);
+    const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Recruiter`);
     yield put({type:"admin/getRecruiter",payload: res.data})
 }
 function* doGetInterviewer(action){
@@ -15,7 +15,7 @@ function* doGetInterviewer(action){
     yield put({type:"admin/getInterviewer",payload: res.data})
 }
 function* doGetBlacklist(action){
-    const res = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/BlackList`);
+    const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/BlackList`);
     yield put({type:"admin/getBlacklist",payload: res.data})
 }
 

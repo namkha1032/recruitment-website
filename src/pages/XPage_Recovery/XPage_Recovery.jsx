@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify"; */
 import { Snackbar, Alert } from "@mui/material";
 
 import Recovery from "./Recovery";
-import CheckOTP from "./CheckOTP";
+//import CheckOTP from "./CheckOTP";
 import ResetPassword from "./ResetPassword";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -21,7 +21,6 @@ const XPage_Recovery = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [isEmailValid, setIsEmailValid] = useState(false);
-  const [isOTPValid, setIsOTPValid] = useState(false);
   const [validEmail, setValidEmail] = useState(true);
   const [validNewPassword, setValidNewPassword] = useState(true);
 
@@ -40,14 +39,8 @@ const XPage_Recovery = () => {
         setIsEmailValid(true)
       }
       else {
-        if (!isOTPValid){
-          dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
-          setIsOTPValid(true)
-        }
-        else {
-          dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
-          navigate("/login");
-        }
+        dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+        navigate("/login");
       }
     }
     if (newError.status === "yes") {
@@ -60,26 +53,22 @@ const XPage_Recovery = () => {
         }, 5000)
       }
       else {
-        if (!isOTPValid){
-          setErrorSnackbar(true)
-          setOTP("")
-          setTimeout(() => {
-              setErrorSnackbar(false)
-              dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
-          }, 5000)
-        }
-        else {
-          setErrorSnackbar(true)
-          setNewPassword("")
-          setConfirmPassword("")
-          setTimeout(() => {
-              setErrorSnackbar(false)
-              dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
-          }, 5000)
-        }
+        setErrorSnackbar(true)
+        setOTP("")
+        setNewPassword("")
+        setConfirmPassword("")
+        setTimeout(() => {
+            setErrorSnackbar(false)
+            dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+        }, 5000)
+
       }
     }
   }, [newError]);
+
+  const handleChangeOTP = (event) => {
+    setOTP(event.target.value);
+  }
 
   const handleNewPasswordChange = (event) => {
     let value = event.target.value;
@@ -116,12 +105,6 @@ const XPage_Recovery = () => {
     }
   };
 
-  const handleOTPSubmit = (event) => {
-    event.preventDefault();
-    if (!isOTPValid) {
-      dispatch({ type: "saga/otpRecovery", payload: { email, otp }})
-    }
-  };
 
   const handlePasswordSubmit = (event) => {
     event.preventDefault();
@@ -133,13 +116,13 @@ const XPage_Recovery = () => {
       if (newPassword !== confirmPassword) {
         setMessage("Passwords do not match")
         setErrorResetSnackbar(true)
-        setNewPassword("");
+        //setNewPassword("");
         setConfirmPassword("");
       } else {
-        setMessage("Password reset successfully")
-        setErrorResetSnackbar(true)
+        /* setMessage("Password reset successfully")
+        setErrorResetSnackbar(true) */
 
-        dispatch({ type: "saga/userResetPassword", payload: { newPassword, confirmPassword }})
+        dispatch({ type: "saga/userResetPassword", payload: { email, otp, newPassword }})
       }
     }
   };
@@ -153,32 +136,24 @@ const XPage_Recovery = () => {
           handleSubmit={handleEmailSubmit}
           validEmail={validEmail}
         />
-      ) : !isOTPValid ? (
-        <CheckOTP
-          otp={otp}
-          onChangeOTP={setOTP}
-          handleSubmit={handleOTPSubmit}
-        />
-      ) : (
+      ) :  (
         <>
         <ResetPassword
+          otp={otp}
+          handleChangeOTP={handleChangeOTP}
           newPassword={newPassword}
           confirmPassword={confirmPassword}
           validNewPassword={validNewPassword}
-          /* errorResetSnackbar={errorResetSnackbar}
-          message={message}
-          setErrorResetSnackbar={setErrorResetSnackbar} */
           handleNewPasswordChange={handleNewPasswordChange}
           handleConfirmPasswordChange={handleConfirmPasswordChange}
           handleSubmit={handlePasswordSubmit}
         />
-        {/* <ToastContainer /> */}
         </>
       )}
 
       <Snackbar
         open={errorSnackbar}
-        autoHideDuration={3000}
+        autoHideDuration={5000}
         onClose={() => setErrorSnackbar(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -186,13 +161,13 @@ const XPage_Recovery = () => {
           severity="error"
           onClose={() => setErrorSnackbar(false)}
         >
-          {newError.message}
+          {!isEmailValid ? "Email not found" : "OTP is incorrect"}
         </Alert>
       </Snackbar>
 
       <Snackbar
         open={errorResetSnackbar}
-        autoHideDuration={3000}
+        autoHideDuration={5000}
         onClose={() => setErrorResetSnackbar(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >

@@ -50,6 +50,7 @@ const ProfileChangePW = () => {
     }
     if (newError.status === "yes") {
       setErrorSnackbar(true)
+      setUsername("")
       setCurrentPassword("")
       setNewPassword("")
       setConfirmPassword("")
@@ -79,27 +80,17 @@ const ProfileChangePW = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (currentPassword === newPassword) {
-      /* toast.error("New password cannot be same as old password", {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 1500,
-        closeOnClick: true,
-      }); */
       setMessagePassword("New password cannot be same as old password")
       setErrorPasswordSnackbar(true)
       setNewPassword("");
       setConfirmPassword("");
     } else if (newPassword !== confirmPassword) {
-      //setErrorSnackbar(true)
-      /* toast.error("Passwords do not match", {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 1500,
-        closeOnClick: true,
-      }); */
       setMessagePassword("Passwords do not match")
       setErrorPasswordSnackbar(true)
       setNewPassword("");
       setConfirmPassword("");
     } else {
+      console.log("bao")
       dispatch({ 
         type: "saga/userChangePassword", 
         payload: { username, currentPassword, newPassword, confirmPassword}

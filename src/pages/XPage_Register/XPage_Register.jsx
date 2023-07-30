@@ -14,42 +14,42 @@ import {
   IconButton,
 } from "@mui/material";
 
-import GigaCard from "../../components/GigaCard/GigaCard"
-import GigaCardBody from "../../components/GigaCardBody/GigaCardBody"
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { alpha } from '@mui/material/styles';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import { MailOutline } from '@mui/icons-material';
+
 import imageBackground from "../../assets/img/background.jpg";
 
-const style = {
-  marginTop: "15px",
-  marginBottom: "15px",
-};
+// const style = {
+//   marginTop: "15px",
+//   marginBottom: "15px",
+// };
 
 const theme = createTheme({
   palette: {
-    secondary: {
-      main: '#1976d2'
-    }
+      secondary: {
+          main: '#000000'
+      }
   }
 });
 
-const fullnameRegex = /^[a-zA-Z-' ]{2,}$/;
 const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/;
 
 const XPage_Register = () => {
   const navigate = useNavigate();
-  const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
-  const [validFullName, setValidFullName] = useState(true);
   const [validUsername, setValidUsername] = useState(true);
   const [validEmail, setValidEmail] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
@@ -75,17 +75,6 @@ const XPage_Register = () => {
       }, 5000)
     }
   }, [newError]);
-
-  const handleFullNameChange = (event) => {
-    let value = event.target.value;
-    setFullName(value);
-    if (!fullnameRegex.test(value)) {
-      setValidFullName(false)
-    }
-    else {
-      setValidFullName(true)
-    }
-  }
 
   const handleUsernameChange = (event) => {
     let value = event.target.value;
@@ -130,11 +119,10 @@ const XPage_Register = () => {
 
   const handleRegister = (event) => {
     event.preventDefault();
-    if (validFullName && validUsername && validEmail && validPassword) {
+    if (validUsername && validEmail && validPassword) {
       dispatch({
         type: "saga/userRegister",
         payload: {
-          fullName: fullName,
           username: username,
           email: email,
           password: password,
@@ -142,10 +130,6 @@ const XPage_Register = () => {
       });
     }
     else {
-      if (!validFullName) {
-        setValidFullName(false)
-        setFullName("")
-      }
       if (!validUsername) {
         setValidUsername(false)
         setUsername("")
@@ -163,296 +147,361 @@ const XPage_Register = () => {
 
   return (
     <Box
-      sx={{
-        height: "100vh",
-        backgroundImage: `url(${imageBackground})`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Container sx={{ display: "flex", justifyContent: "center" }}>
-        <Grid
-          container
-          sx={{
-            //paddingTop: "10%",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            width: "76%",
-          }}
+            sx={{
+                backgroundImage: `url(${imageBackground})`,
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                width: '100vw',
+                height: '100vh',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
         >
-
-          <Grid
-            item
-            md={7}
-            sx={{ display: "flex", justifyContent: "center" }}
-          >
-            <Grid
-              item
-              md={9}
-              sx={{
-                opacity: "100%",
-                left: "20%",
-                right: "20%",
-              }}
+        <Container 
+            component="main" 
+            maxWidth="xs" 
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}
+        >
+            <Box 
+                sx={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '100%',
+                    background: 'transparent',
+                    border: '2px solid rgba(255, 255, 255, 0.5)',
+                    borderRadius: '20px',
+                    backdropFilter: 'blur(5px)',
+                    backgroundColor: alpha('#FFFFFF', 0.8),
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    boxShadow: '0px 0px 10px 10px rgba(255, 255, 255, 0.25)',
+                }}
             >
-              <GigaCard>
-                <GigaCardBody>
-                
-              <Typography 
-                variant="h2" 
-                align="center" 
-                color='black' 
-                gutterBottom
-                fontFamily={'Roboto'}
-                fontSize={'30px'}
-                lineHeight={'28px'}
-                fontWeight={'700'}
-                padding={"10px"}
-              >
-                Register
-              </Typography>
-
-              <form
-                onSubmit={
-                  handleRegister
-                } 
-              >
-
-                <Grid item xs={12} md={12} sx={{ ...style }}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Full name"
-                    type="text"
-                    value={fullName}
-                    InputProps={{
-                      style: { borderRadius: "12px" },
-                    }}
-                    onChange={handleFullNameChange}
-                    error={!validFullName}
-                  />
-                  {!validFullName && (
-                    <Box
-                    margin="3px 14px 0px"
-                    >
-                      {
-                        fullName === "" ? (
-                          <Typography 
-                            color="#f44336"
-                            fontSize="12px"
-                            lineHeight="20px"
-                          >
-                            Full name is required
-                          </Typography>
-                        ) : (
-                          <Typography color="#f44336"
-                          fontSize="12px"
-                            lineHeight="20px"
-                          >
-                            Full name must be at least 2 characters long and can only contain letters, spaces and hyphens
-                          </Typography>
-                        )
-                      }
-                    </Box>
-                  )}
-                </Grid>
-
-                <Grid item xs={12} md={12} sx={{ ...style }}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Username"
-                    type="text"
-                    value={username}
-                    InputProps={{
-                      style: { borderRadius: "12px" },
-                    }}
-                    onChange={handleUsernameChange}
-                    error={!validUsername}
-                  />
-                  {!validUsername && (
-                    <Box
-                    margin="3px 14px 0px"
-                    >
-                      {
-                        username === "" ? (
-                          <Typography 
-                            color="#f44336"
-                            fontSize="12px"
-                            lineHeight="20px"
-                          >
-                            Username is required
-                          </Typography>
-                        ) : (
-                          <Typography color="#f44336"
-                          fontSize="12px"
-                            lineHeight="20px"
-                          >
-                            Username must be 3-20 characters long and can only contain letters, numbers and underscores
-                          </Typography>
-                        )
-                      }
-                    </Box>
-                  )}
-                </Grid>
-
-                <Grid item xs={12} md={12} sx={{ ...style }}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Email"
-                    type="email"
-                    value={email}
-                    InputProps={{
-                      style: { borderRadius: "12px" },
-                    }}
-                    onChange={handleEmailChange}
-                    error={!validEmail}
-                  />
-
-                  {!validEmail && (
-                    <Box
-                      margin="3px 14px 0px"
-                    >
-                      {
-                        email === "" ? (
-                          <Typography 
-                            color="#f44336"
-                            fontSize="12px"
-                            lineHeight="20px"
-                          >
-                          Email is required
-                          </Typography>
-                        ) : (
-                          <Typography color="#f44336"
-                          fontSize="12px"
-                            lineHeight="20px"
-                          >
-                          Must be a valid email
-                          </Typography>
-                        )
-                      }
-                    </Box>
-                  )}
-                </Grid>
-
-                <Grid item xs={12} md={12} sx={{ ...style }}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Password"
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    variant="outlined"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            onClick={handleShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                          >
-                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-
-                      style: { borderRadius: "12px" },
-                    }}
-                    onChange={handlePasswordChange}
-                    error={!validPassword}
-                  />
-
-                  {!validPassword && (
-                    <Box
-                      margin="3px 14px 0px"
-                    >
-                      {
-                        password === "" ? (
-                          <Typography 
-                            color="#f44336"
-                            fontSize="12px"
-                            lineHeight="20px"
-                          >
-                          Password is required
-                          </Typography>
-                        ) : (
-                          <Typography color="#f44336"
-                          fontSize="12px"
-                            lineHeight="20px"
-                          >
-                          Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number and one special character
-                          </Typography>
-                        )
-                      }
-                      
-                    </Box>
-
-                  )}
-                </Grid>
-
-                <Grid
-                  item
-                  md={12}
-                  sx={{ display: "flex", justifyContent: "center", ...style }}
-                >
-                  <Button
-                    theme={theme}
-                    variant="contained"
-                    type="submit"
-                    color="secondary"
-                  
+                <Box
                     sx={{
-                      height: "40px",
-                      width: "100%",
-                      borderRadius: "8px",
-                      marginTop: "15px",
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        paddingTop: '7.5%',
+                        paddingBottom: '7.5%',
                     }}
-                  >
-                    Register
-                  </Button>
-                </Grid>
-              </form>
+                >
+                    <form
+                        onSubmit={handleRegister}
+                    >
+                        <Typography variant="h2"
+                            sx={{
+                                fontSize: '3rem',
+                                color: 'black',
+                                textAlign: 'center',
+                                fontWeight: '450',
+                                marginBottom: '15px',
+                            }}
+                        >
+                            Sign Up
+                        </Typography>
 
-              <Grid
-                item
-                md={12}
-                sx={{ ...style, display: "flex", justifyContent: "center", marginBottom: '0px' }}
-              >
-                <Typography variant="subtitle1" sx={{ textDecoration: 'none', color: 'black' }}>
-                  Already have account?{" "}
-                  <Typography component={Link} to="/login" variant="subtitle1" sx={{ textDecoration: 'none', color: '#1976d2'/* , fontWeight: '500' */ }}>
-                    Login here
-                  </Typography>
-                </Typography>
-              </Grid>
+                        <Grid container spacing={2}
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Grid item xs={12} 
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginBottom: '5px',
 
-              </GigaCardBody>
-              </GigaCard>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Container>
+                                    /* borderBottom: '2px solid red',
+                                    borderBottomWidth: '2px', */
+                                }}
+                            >
+                                <TextField 
+                                    variant='standard'
+                                    //required
+                                    fullWidth
+                                    type='text'
+                                    label={<Typography color={"black"}>Username</Typography>}
+                                    autoComplete='new-text'
+                                    value={username}
+                                    onChange={handleUsernameChange}
+                                    error={!validUsername}
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        endAdornment: 
+                                        (<AccountCircleOutlinedIcon
+                                            sx={{
+                                                position: 'absolute',
+                                                right: '8px',
+                                                color: '#000',
+                                                fontSize: '1.2em',
+                                            }}
+                                        />),
+                                        sx: {
+                                            color: '#000',
+                                        }
+                                    }}
+                                    sx={{
+                                        width: '90%',
+                                        height: '50px',
+                                        background: 'transparent',
+                                        outline: 'none',
+                                        fontSize: '1em',
+                                        color: '#000',
+                                        borderBottom: '2px solid black',
+                                        borderBottomWidth: '2px',
+                                    }}
 
-      <Snackbar
-        open={errorSnackbar}
-        autoHideDuration={3000}
-        onClose={() => setErrorSnackbar(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert 
-          severity="error"
+                                    helperText={!validUsername &&
+                                        <Typography
+                                            color={"red"}
+                                            sx={{
+                                                display: 'flex',
+                                                justifyContent: 'left',
+                                                alignItems: 'center',
+                                            }}
+                                            variant='small'
+                                            
+                                        >
+                                            <ErrorOutlineOutlinedIcon color='red' 
+                                            sx={{ fontSize: 13, paddingRight: '0px' }}/>
+                                            <Typography variant='small' paddingLeft='3px'>Username must be 3-20 characters long</Typography>
+                                        </Typography>
+                                    }
+                                />
+                            </Grid>
+
+                            <Grid item xs={12} 
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginBottom: '5px',
+                                }}
+                            >
+                                <TextField 
+                                    variant='standard'
+                                    //required
+                                    fullWidth
+                                    type='email'
+                                    label={<Typography color={"black"}>Email</Typography>}
+                                    autoComplete='new-email'
+                                    value={email}
+                                    onChange={handleEmailChange}
+                                    error={!validEmail}
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        endAdornment: 
+                                        (<MailOutline 
+                                            sx={{
+                                                position: 'absolute',
+                                                right: '8px',
+                                                color: '#000',
+                                                fontSize: '1.2em',
+                                                //top: '20px',
+                                            }}
+                                        />),
+                                        sx: {
+                                            color: '#000',
+                                        }
+                                        //style: { borderRadius: "12px" },
+                                    }}
+                                    sx={{
+                                        width: '90%',
+                                        height: '50px',
+                                        background: 'transparent',
+                                        //border: 'none',
+                                        outline: 'none',
+                                        fontSize: '1em',
+                                        //padding: '0 5px 0 5px',
+                                        color: '#000',
+                                        borderBottom: '2px solid black',
+                                        borderBottomWidth: '2px',
+                                    }}
+
+                                    helperText={!validEmail &&
+                                        <Typography
+                                            color={"red"}
+                                            sx={{
+                                                display: 'flex',
+                                                justifyContent: 'left',
+                                                alignItems: 'center',
+                                            }}
+                                            variant='small'
+                                            
+                                        >
+                                            <ErrorOutlineOutlinedIcon color='red' 
+                                            sx={{ fontSize: 13, paddingRight: '0px' }}/>
+                                            <Typography variant='small' paddingLeft='3px'>Must be a valid email</Typography>
+                                        </Typography>
+                                    }
+                                />
+                            </Grid>
+
+                            <Grid item xs={12}
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <TextField 
+                                    variant='standard'
+                                    //required
+                                    fullWidth
+                                    type={showPassword ? 'text' : 'password'}
+                                    label={<Typography color={"black"}>Password</Typography>}
+                                    autoComplete='new-password'
+                                    value={password}
+                                    onChange={handlePasswordChange}
+                                    error={!validPassword}
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={handleShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                            >
+                                                {showPassword 
+                                                    ? <VisibilityOutlinedIcon 
+                                                        sx={{
+                                                            position: 'absolute',
+                                                            right: '8px',
+                                                            color: '#000',
+                                                            fontSize: '0.9em',
+                                                            //top: '20px',
+                                                        }}
+                                                    /> 
+                                                    : <VisibilityOffOutlinedIcon 
+                                                        sx={{
+                                                            position: 'absolute',
+                                                            right: '8px',
+                                                            color: '#000',
+                                                            fontSize: '0.9em',
+                                                            //top: '20px',
+                                                        }}
+                                                    />
+                                                }
+                                            </IconButton>
+                                        </InputAdornment>
+                                        ),
+                                        sx: {
+                                            color: '#000',
+                                        }
+                                    }}
+                                    sx={{
+                                        width: '90%',
+                                        height: '50px',
+                                        background: 'transparent',
+                                        //border: 'none',
+                                        outline: 'none',
+                                        fontSize: '1em',
+                                        //padding: '0 5px 0 5px',
+                                        color: '#fff',
+                                        borderBottom: '2px solid black',
+                                        borderBottomWidth: '2px',
+                                    }}
+
+                                    helperText={!validPassword &&
+                                      <Typography
+                                          color={"red"}
+                                          sx={{
+                                              display: 'flex',
+                                              justifyContent: 'left',
+                                              alignItems: 'center',
+                                              //marginBottom: '30px'
+                                          }}
+                                          variant='small'
+                                          
+                                      >
+                                          <ErrorOutlineOutlinedIcon color='red' 
+                                          sx={{ fontSize: 13, paddingRight: '0px' }}/>
+                                          <Typography variant='small' paddingLeft='3px'>Password must be at least 8 characters long</Typography>
+                                      </Typography>
+                                    }
+                                />
+                            </Grid>
+                            
+                            <Grid item xs={12}
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Button 
+                                    type="submit" 
+                                    theme={theme}
+                                    variant="contained" 
+                                    color="secondary"
+                                    sx={{
+                                        height: '40px',
+                                        color: 'white',
+                                        borderRadius: '40px',
+                                        fontSize: '1em',
+                                        fontWeight: 600,
+                                        width: '90%',
+                                        marginTop: '20px',
+                                    }}
+                                >
+                                    Sign Up
+                                </Button>
+                            </Grid>
+
+                        </Grid>
+
+                        <Grid container justifyContent="center">
+                            <Grid item xs={12}
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    lineHeight: '15px',
+                                    paddingTop: '15px',
+                                    fontSize: '.9em',
+                                }}
+                            >
+                                <Typography variant="small" sx={{color: 'black' }}>
+                                    Already have account?{" "}
+                                    <Typography component={Link} to="/login" variant="small" sx={{ /* textDecoration: 'none',  */color: 'black'}}>
+                                        Sign in
+                                    </Typography>
+                                </Typography>
+                                
+                            </Grid>
+                        </Grid>
+                        
+                    </form>
+                </Box>
+            </Box>
+        </Container>
+
+        <Snackbar
+          open={errorSnackbar}
+          autoHideDuration={5000}
           onClose={() => setErrorSnackbar(false)}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
-          {newError.message}
-        </Alert>
-      </Snackbar>
-    </Box>
+          <Alert 
+            severity="error"
+            onClose={() => setErrorSnackbar(false)}
+          >
+            {/* {newError.message} */}
+            Username or email already exists
+          </Alert>
+        </Snackbar>
+      </Box>
   );
 };
 

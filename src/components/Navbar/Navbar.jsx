@@ -29,6 +29,7 @@ import useGetRole from '../../hooks/useGetRole';
 import { grey } from '@mui/material/colors';
 import { unstable_createCssVarsTheme } from '@mui/system';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import cleanStore from '../../utils/cleanStore';
 let innerDrawerWidth;
 
 
@@ -249,6 +250,7 @@ const NavbarContent = () => {
                                                 <MenuItem onClick={() => {
                                                     if (index == dropdownNavigate.length - 1) {
                                                         console.log("logout")
+                                                        cleanStore(dispatch)
                                                         dispatch({ type: "saga/userLogout" })
                                                         
                                                         navigate("/home")
@@ -284,7 +286,7 @@ const NavbarContent = () => {
                             "&:hover": {
                                 borderColor: "black"
                             }
-                        }} onClick={() => { navigate("/login") }}>Log in</Button>}
+                        }} onClick={() => {sessionStorage.setItem('previousPage', window.location.pathname); navigate("/login") }}>Log in</Button>}
                 </Box>
             </Container>
         </>
