@@ -85,7 +85,7 @@ const Page_Recruitment = () => {
   useEffect(() => {
     dispatch({ type: "saga/getPositionList" });
     // dispatch({ type: "saga/getRequirement" });
-    // dispatch({ type: "saga/getSkill" });
+    dispatch({ type: "saga/getSkill" });
   }, []);
   const handleCloseSelect = () => {
     setBlock('none')

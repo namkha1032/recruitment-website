@@ -83,7 +83,7 @@ const Footer = () => {
                     mt={2}
                     onClick={() => navigate('/home')}
                 >
-                   {">"}  Home
+                   Home
                 </Typography>
                 <Typography
                     variant="h6"
@@ -94,7 +94,7 @@ const Footer = () => {
                     mt={2}
                     onClick={() => navigate('/recruitment')}
                 >
-                   {">"}  Recruitment
+                   Recruitment
                 </Typography>
                 <Typography
                     variant="h6"
@@ -105,7 +105,7 @@ const Footer = () => {
                     mt={2}
                     onClick={() => navigate('/event')}
                 >
-                    {">"} Event
+                    Event
                 </Typography>
 
                 
