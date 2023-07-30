@@ -36,6 +36,7 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
+import TitleDivider from '../../components/TitleDivider/TitleDivider';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -45,6 +46,7 @@ const Page_Company_Interview_Id = () => {
     const dispatch = useDispatch()
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     const role = useGetRole()
     useEffect(() => {
         dispatch({ type: "saga/getInterviewId" })
@@ -63,17 +65,9 @@ const Page_Company_Interview_Id = () => {
                 </Box>
                 {role == "admin" ?
                     <>
-                        <Divider sx={{
-                            marginY: 10,
-                            "&::before, &::after": {
-                                borderColor: "black",
-                                borderWidth: "1px"
-                            },
-                        }}>
-                            <Button variant="contained" sx={{ backgroundColor: "black", color: "white", fontSize: isMd ? 25 : 15, borderRadius: 100 }}>
-                                RESULT OF THE INTERVIEW
-                            </Button>
-                        </Divider>
+                        <TitleDivider>
+                            RESULT OF THE INTERVIEW
+                        </TitleDivider>
                         <Grid container spacing={4}>
                             <Grid item md={6} xs={12}>
                                 <GigaCard>
@@ -123,11 +117,11 @@ const Page_Company_Interview_Id = () => {
                                     </Grid>
                                 </GigaCard>
                             </Grid>
-                            <Grid item md={12} sx={{ display: "flex", justifyContent: "flex-end", columnGap: 4 }}>
-                                <Button size={"large"} color="error" variant="contained" startIcon={<CloseIcon />}>
+                            <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", columnGap: 4 }}>
+                                <Button size={"large"} sx={isSm ? null : { width: "100%" }} color="error" variant="contained" startIcon={<CloseIcon />}>
                                     Reject
                                 </Button>
-                                <Button size={"large"} color="success" variant="contained" startIcon={<CheckIcon />}>
+                                <Button size={"large"} sx={isSm ? null : { width: "100%" }} color="success" variant="contained" startIcon={<CheckIcon />}>
                                     Accept
                                 </Button>
                             </Grid>

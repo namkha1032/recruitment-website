@@ -290,25 +290,7 @@ const NavbarContent = () => {
         </>
     );
 }
-const CustomAppBar = styled(AppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-    transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-        width: `calc(100% - ${innerDrawerWidth}px)`,
-        marginLeft: `${innerDrawerWidth}px`,
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    }),
-    backgroundColor: "white",
-    color: "black",
-    boxShadow: 0
-}));
+
 const Navbar = (props) => {
     const open = props.open
     const theme = useTheme()

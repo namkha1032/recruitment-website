@@ -26,6 +26,9 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
 
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
 const DateTimePicker = (props) => {
     const {
         chosenDate, setChosenDate,
@@ -33,9 +36,11 @@ const DateTimePicker = (props) => {
         chosenInterviewer, chosenRoom,
         interviewList, shiftList
     } = props
+    const theme = useTheme()
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
     return (
         <Box sx={{ height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-evenly" }} >
-            <Box sx={{ height: 100, display: "flex", alignItems: "center" }}>
+            <Box sx={{ height: 100, display: "flex", alignItems: "center", justifyContent: isMd ? "flex-start" : "center" }}>
                 <DatePicker sx={{
                     width: 300,
                     "&": {
@@ -51,7 +56,7 @@ const DateTimePicker = (props) => {
                     setChosenShift(null)
                 }} />
             </Box>
-            <Box sx={{ height: 100, display: "flex", alignItems: "center" }}>
+            <Box sx={{ height: 100, display: "flex", alignItems: "center", justifyContent: isMd ? "flex-start" : "center" }}>
                 {chosenDate &&
                     <FormControl variant="filled" sx={{ width: 300 }}>
                         <InputLabel id="shiftSelectLabel">Choose a shift</InputLabel>

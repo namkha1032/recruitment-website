@@ -28,6 +28,7 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import "./Page_Company_Interview_Id_Start.scss"
 import CircularProgress from '@mui/material/CircularProgress';
+import TitleDivider from '../../components/TitleDivider/TitleDivider';
 export default function Page_Company_Interview_Id_Start() {
     const dispatch = useDispatch()
 
@@ -75,29 +76,34 @@ export default function Page_Company_Interview_Id_Start() {
     return (
         leftSoft ?
             <>
+                <TitleDivider>
+                    Score Interview
+                </TitleDivider>
                 <form autoComplete='off' onSubmit={handleSubmit}>
-                    <GigaCard>
-                        <GigaCardHeader color={"black"} headerIcon={<QuestionMarkIcon sx={{ fontSize: "inherit" }} />}>
-                            Questions
-                        </GigaCardHeader>
-                        <GigaCardBody>
-                            <CateTab currentCateTab={currentCateTab} setCurrentCateTab={setCurrentCateTab} />
-                            {/* Soft Skill */}
-                            {currentCateTab == 0
-                                ? <QuestionTransfer leftTable={leftSoft} rightTable={rightSoft} cate={0} />
-                                : null}
-                            {/* Language Skill */}
-                            {currentCateTab == 1
-                                ? <QuestionTransfer leftTable={leftLang} rightTable={rightLang} cate={1} />
-                                : null}
-                            {/* Technology Skill */}
-                            {currentCateTab == 2
-                                ? <QuestionTransfer leftTable={leftTech} rightTable={rightTech} cate={2} />
-                                : null}
-                        </GigaCardBody>
-                    </GigaCard>
-                    <Grid container sx={{ marginTop: 4 }} columnSpacing={4}>
-                        <Grid item md={6}>
+                    <Grid container spacing={4}>
+                        <Grid item xs={12}>
+                            <GigaCard>
+                                <GigaCardHeader color={"black"} headerIcon={<QuestionMarkIcon sx={{ fontSize: "inherit" }} />}>
+                                    Questions
+                                </GigaCardHeader>
+                                <GigaCardBody>
+                                    <CateTab currentCateTab={currentCateTab} setCurrentCateTab={setCurrentCateTab} />
+                                    {/* Soft Skill */}
+                                    {currentCateTab == 0
+                                        ? <QuestionTransfer leftTable={leftSoft} rightTable={rightSoft} cate={0} />
+                                        : null}
+                                    {/* Language Skill */}
+                                    {currentCateTab == 1
+                                        ? <QuestionTransfer leftTable={leftLang} rightTable={rightLang} cate={1} />
+                                        : null}
+                                    {/* Technology Skill */}
+                                    {currentCateTab == 2
+                                        ? <QuestionTransfer leftTable={leftTech} rightTable={rightTech} cate={2} />
+                                        : null}
+                                </GigaCardBody>
+                            </GigaCard>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
                             <GigaCard>
                                 <GigaCardHeader color={"black"} headerIcon={<EditNoteIcon sx={{ fontSize: "inherit" }} />}>
                                     Note
@@ -107,7 +113,7 @@ export default function Page_Company_Interview_Id_Start() {
                                 </GigaCardBody>
                             </GigaCard>
                         </Grid>
-                        <Grid item md={6}>
+                        <Grid item xs={12} md={6}>
                             {/* <Card variant="outlined" sx={{ border: "1px solid black", borderRadius: 5 }}> */}
                             <GigaCard>
                                 <GigaCardHeader color={"black"} headerIcon={<SportsScoreIcon sx={{ fontSize: "inherit" }} />}>

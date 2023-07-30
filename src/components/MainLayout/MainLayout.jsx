@@ -53,7 +53,6 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 
 function MainLayout() {
     const [open, setOpen] = React.useState(false);
-    const [params, setParams] = useSearchParams();
     const dispatch = useDispatch()
     useEffect(() => {
         const userLocal = window.localStorage.getItem('user')
@@ -81,10 +80,10 @@ function MainLayout() {
     return (
         <>
             <Box sx={{ display: 'flex' }}>
-                <Navbar open={showSidebar ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} />
+                <Navbar open={showSidebar && isMd ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} />
                 <Sidebar open={showSidebar ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} />
                 <Main open={showSidebar ? open : false}>
-                    <DrawerHeader />
+                    {/* <DrawerHeader /> */}
                     <Container>
                         <Outlet />
                     </Container>

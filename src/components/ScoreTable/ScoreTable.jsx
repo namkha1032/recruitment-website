@@ -56,6 +56,7 @@ const ScoreTable = (props) => {
 
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
 
     let rightSoft = props.allResult[0]
     let rightLang = props.allResult[1]
@@ -80,7 +81,7 @@ const ScoreTable = (props) => {
                         <TableRow>
                             <StyledTableCell>Categories</StyledTableCell>
                             <StyledTableCell>Score</StyledTableCell>
-                            {isMd ? <StyledTableCell>Formula</StyledTableCell> : null}
+                            {isSm ? <StyledTableCell>Formula</StyledTableCell> : null}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -89,28 +90,28 @@ const ScoreTable = (props) => {
                                 Soft Skill
                             </StyledTableCell>
                             <StyledTableCell><InlineMath math={softResult.toString()} /></StyledTableCell>
-                            {isMd ? <StyledTableCell><InlineMath math={softMath} /></StyledTableCell> : null}
+                            {isSm ? <StyledTableCell><InlineMath math={softMath} /></StyledTableCell> : null}
                         </TableRow>
                         <TableRow>
                             <StyledTableCell component="th" scope="row">
                                 Language Skill
                             </StyledTableCell>
                             <StyledTableCell><InlineMath math={langResult.toString()} /></StyledTableCell>
-                            {isMd ? <StyledTableCell><InlineMath math={langMath} /></StyledTableCell> : null}
+                            {isSm ? <StyledTableCell><InlineMath math={langMath} /></StyledTableCell> : null}
                         </TableRow>
                         <TableRow>
                             <StyledTableCell component="th" scope="row">
                                 Technology Skill
                             </StyledTableCell>
                             <StyledTableCell><InlineMath math={techResult.toString()} /></StyledTableCell>
-                            {isMd ? <StyledTableCell><InlineMath math={techMath} /></StyledTableCell> : null}
+                            {isSm ? <StyledTableCell><InlineMath math={techMath} /></StyledTableCell> : null}
                         </TableRow>
                         <TableRow sx={{ backgroundColor: "grey.300" }}>
                             <StyledTableCell component="th" scope="row">
                                 Final Score
                             </StyledTableCell>
                             <StyledTableCell><InlineMath math={finalResult.toString()} /></StyledTableCell>
-                            {isMd ? <StyledTableCell><InlineMath math={finalMath} /></StyledTableCell> : null}
+                            {isSm ? <StyledTableCell><InlineMath math={finalMath} /></StyledTableCell> : null}
                         </TableRow>
                     </TableBody>
                 </Table>

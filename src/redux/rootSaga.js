@@ -46,6 +46,7 @@ function* rootSaga() {
         applicationCandidateSaga(),
         eventCandidateSaga(),
         positionInforSaga(),
+        testSaga()
     ])
 }
 

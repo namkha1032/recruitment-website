@@ -24,8 +24,13 @@ function* getInterviewWithFilter(action) {
 }
 
 function* getUpcomingInterview(action) {
-    const response = yield call(axios.get, `${host.name}/data/interviewlist.json`)
-    yield put({ type: "interview/setInterview", payload: response.data })
+    try {
+        const response = yield call(axios.get, `${host.name}/data/interviewlist.json`)
+        yield put({ type: "interview/setInterview", payload: response.data })
+    }
+    catch (error) {
+        console.log(error)
+    }
 }
 
 function* getInterviewId(action) {
@@ -56,7 +61,7 @@ function* createInterview(action) {
     }
 }
 
-function* getInterviewInfo(action){
+function* getInterviewInfo(action) {
     const response = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Itrsinterview/GetItrsinterviewById/${action.payload}`)
     const response2 = yield call(axios.get, 'http://leetun2k2-001-site1.gtempurl.com/api/Room');
     const room = response2.data.filter((prop) => prop.roomId === response.data.roomId);
@@ -64,8 +69,8 @@ function* getInterviewInfo(action){
     console.log("room", room);
     const shift = response3.data.filter((prop) => prop.shiftId === response.data.shiftId);
     console.log("shift", shift);
-    yield put({type: "shift/setShift", payload: shift})
-    yield put({type: "room/setRoom", payload: room})
+    yield put({ type: "shift/setShift", payload: shift })
+    yield put({ type: "room/setRoom", payload: room })
     yield put({ type: "interviewidInfo/setInterviewidInfo", payload: response.data })
 }
 
