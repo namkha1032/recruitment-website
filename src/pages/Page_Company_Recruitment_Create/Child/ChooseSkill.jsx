@@ -6,10 +6,13 @@ import Grid from "@mui/material/Grid";
 import NotRInputText from "./NotRequiredText";
 import EmptyTextarea from "./AutoText";
 import AddIcon from "@mui/icons-material/Add";
+import CompHeader from "./compHeader";
+import ConstructionIcon from "@mui/icons-material/Construction";
+import Box from "@mui/material/Box";
+import TimerIcon from "@mui/icons-material/Timer";
 
 const filter = createFilterOptions();
 export default function ChooseList(prop) {
-  
   function handleRExp(e) {
     console.log(e.target.value);
     prop.setExperience(e.target.value);
@@ -34,82 +37,92 @@ export default function ChooseList(prop) {
     <>
       <Grid container spacing={0} justifyContent="center" alignItems="center">
         <Grid item xs={9}>
-          <Autocomplete
-            value={prop.inputValue}
-            onChange={(event, newValue) => {
-              if (typeof newValue === "string") {
-                return ()=>prop.setValue({
-                  skillName: newValue,
-                });
-              } else if (newValue && newValue.inputValue) {
-                
-                prop.setInputValue({
-                  skillName: newValue.inputValue,
-                });
-                console.log(newValue.skillName)
-                if (newValue !== null) {
-                  console.log(newValue);
-                  prop.handleState(newValue);
+          <Box sx={{ marginLeft: "1%", marginTop: "8px" }}>
+            <CompHeader headerIcon={<ConstructionIcon />}>Skill</CompHeader>
+            <Autocomplete
+              value={prop.inputValue}
+              onChange={(event, newValue) => {
+                if (typeof newValue === "string") {
+                  return () =>
+                    prop.setValue({
+                      skillName: newValue,
+                    });
+                } else if (newValue && newValue.inputValue) {
+                  prop.setInputValue({
+                    skillName: newValue.inputValue,
+                  });
+                  console.log(newValue.skillName);
+                  if (newValue !== null) {
+                    console.log(newValue);
+                    prop.handleState(newValue);
+                  }
+                } else {
+                  prop.setInputValue(newValue);
+                  if (newValue !== null) {
+                    console.log(newValue);
+                    prop.setSkillId(
+                      prop.skill.filter(
+                        (comp) => comp.skillName === newValue.skillName
+                      )[0].skillId
+                    );
+                    prop.handleState(newValue.skillName);
+                  }
                 }
-              } else {
-                prop.setInputValue(newValue);
-                if (newValue !== null) {
-                  console.log(newValue);
-                  prop.setSkillId(prop.skill.filter((comp) => comp.skillName === newValue.skillName)[0].skillId);
-                  prop.handleState(newValue.skillName);
+              }}
+              onKeyDown={handleKeyDown}
+              filterOptions={(options, params) => {
+                const filtered = filter(options, params);
+                const { inputValue } = params;
+                const isExisting = options.some(
+                  (option) => inputValue === option.skillName
+                );
+                if (inputValue.trim() !== "" && !isExisting) {
+                  filtered.push({
+                    inputValue,
+                    skillName: `${inputValue}`,
+                  });
                 }
-              }
-            }}
-            onKeyDown={handleKeyDown}
-            filterOptions={(options, params) => {
-              const filtered = filter(options, params);
-              const { inputValue } = params;
-              const isExisting = options.some(
-                (option) => inputValue === option.skillName
-              );
-              if (inputValue.trim() !== "" && !isExisting) {
-                filtered.push({
-                  inputValue,
-                  skillName: `${inputValue}`,
-                });
-              }
-              return filtered;
-            }}
-            selectOnFocus
-            clearOnBlur
-            handleHomeEndKeys
-            id="free-solo-with-text-demo"
-            options={prop.skill}
-            getOptionLabel={(option) => {
-              if (typeof option === "string") {
-                return option;
-              }
-              if (option.inputValue) {
-                return option.inputValue;
-              }
-              return option.skillName;
-            }}
-            renderOption={(props, option) => <li {...props}>{option.skillName}</li>}
-            sx={{
-              "& > :not(style)": {
-                m: 1,
-                display: "flex",
-                margin: "0",
-                marginTop: "8px",
-                padding: "0",
-                marginRight: "1%",
-              },
-            }}
-            freeSolo
-            renderInput={(params) => (
-              <TextField {...params} label={prop.state} id={prop.state} />
-            )}
-          />
+                return filtered;
+              }}
+              selectOnFocus
+              clearOnBlur
+              handleHomeEndKeys
+              id="free-solo-with-text-demo"
+              options={prop.skill}
+              getOptionLabel={(option) => {
+                if (typeof option === "string") {
+                  return option;
+                }
+                if (option.inputValue) {
+                  return option.inputValue;
+                }
+                return option.skillName;
+              }}
+              renderOption={(props, option) => (
+                <li {...props}>{option.skillName}</li>
+              )}
+              sx={{
+                "& > :not(style)": {
+                  m: 1,
+                  display: "flex",
+                  margin: "0",
+                  marginTop: "8px",
+                  padding: "0",
+                  marginRight: "1%",
+                },
+              }}
+              freeSolo
+              renderInput={(params) => (
+                <TextField {...params} id={prop.state} />
+              )}
+            />
+          </Box>
         </Grid>
 
         <Grid item xs={3}>
           <NotRInputText
-            state={"Skill Experiece Year"}
+            headerIcon={<TimerIcon />}
+            state={"Experiece(Year)"}
             width="99%"
             type="number"
             value={prop.experience}

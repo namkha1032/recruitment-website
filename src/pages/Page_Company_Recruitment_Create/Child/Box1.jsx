@@ -3,6 +3,9 @@ import Grid from "@mui/material/Grid";
 import InputText from "./InputText";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import CompHeader from "./compHeader";
+import ArticleIcon from "@mui/icons-material/Article";
+import CreateIcon from "@mui/icons-material/Create";
 
 function Box1(prop) {
   return (
@@ -10,6 +13,7 @@ function Box1(prop) {
       <Box>
         <Grid item xs={12}>
           <InputText
+            headerIcon={<CreateIcon />}
             state={"Recuite Name"}
             handleState={prop.handleRname}
             width="98%"
@@ -17,18 +21,22 @@ function Box1(prop) {
           />
         </Grid>
         <Grid item xs={12}>
-          <ReactQuill
-            theme="snow"
-            value={prop.description}
-            onChange={prop.setDescription}
-            className="QuillCss"
-          />
-          {/* <InputText
+          <Box sx={{ width: "98%", margin: "auto" }}>
+            <CompHeader headerIcon={<ArticleIcon />}>Education</CompHeader>
+            <ReactQuill
+              theme="snow"
+              style={{marginTop:"8px" }}
+              value={prop.description}
+              onChange={prop.setDescription}
+              className="QuillCss"
+            />
+            {/* <InputText
             state={"Description"}
             handleState={prop.handleDescription}
             width="98%"
             value={prop.description}
           /> */}
+          </Box>
         </Grid>
       </Box>
     </>

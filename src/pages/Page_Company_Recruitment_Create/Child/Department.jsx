@@ -3,6 +3,9 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Grid from "@mui/material/Grid";
+import CompHeader from "./compHeader";
+import BusinessIcon from "@mui/icons-material/Business";
+import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
 const Department = (prop) => {
@@ -10,13 +13,9 @@ const Department = (prop) => {
     <>
       <Grid container spacing={0} justifyContent="center" alignItems="center">
         <Grid item xs={4}>
-          <Typography
-            sx={{ margin: "0", marginLeft: "8px", minWidth: "10%" }}
-            variant="h6"
-            gutterBottom
-          >
-            Department
-          </Typography>
+          <Box sx={{ marginLeft: "8px", minWidth: "10%" }}>
+            <CompHeader headerIcon={<BusinessIcon />}>Department</CompHeader>
+          </Box>
         </Grid>
         <Grid item xs={8}>
           <FormControl sx={{ m: 1, width: "97%" }}>

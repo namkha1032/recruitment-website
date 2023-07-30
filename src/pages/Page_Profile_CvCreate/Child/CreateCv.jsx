@@ -65,7 +65,8 @@ const CreateCv = (prop) => {
                 spacing={0}
                 justifyContent="center"
                 alignItems="center"
-                marginTop="16px"
+                marginTop="32px"
+                marginBottom="32px"
               >
                 <Grid item xs={12}>
                   <Stepper

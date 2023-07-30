@@ -32,7 +32,7 @@ const CreateCv = (prop) => {
   };
   return (
     <form onSubmit={prop.handleSubmit}>
-      <Grid container>
+      <Grid container className="Contains">
         <Grid
           item
           xs={12}
