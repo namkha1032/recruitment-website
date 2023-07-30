@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {
     Button,
     FormControl,
     FormControlLabel,
-    FormLabel,
+    FormLabel, MenuItem,
     Radio,
     RadioGroup,
     TextField,
@@ -12,9 +12,22 @@ import {
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import {grey} from "@mui/material/colors";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {useDispatch, useSelector} from 'react-redux';
+import {Box} from "@mui/system";
 
 const Page_Company_Account_Create = () => {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch({type: "saga/getDepartmentAdmin"});
+    }, [dispatch]);
+    const department = useSelector(state => state.admin.department)
+    const [departmentSelected,setDepartment]=React.useState('')
     return (
+        <Box
+            component="form"
+            noValidate
+            autoComplete="off">
         <Card
             raised="true"
             sx={{
@@ -26,17 +39,26 @@ const Page_Company_Account_Create = () => {
             }}>
         <Grid
             container
-            rowSpacing={3}
+            rowSpacing={2.5}
+            alignItems="center"
+
         >
             <Grid
                     item
                     xs={12}
+                    md={1}>
+                <AccountCircleIcon sx={{fontSize: 80}}/>
+            </Grid>
+            <Grid
+                    item
+                    xs={12}
+                    md={11}
                     display="flex">
             <Typography variant="h2"
                         display="flex"
                         alignItems="center"
                         justifyContent="left"
-                        m="10px 0 10px 0">
+                        >
                     Create Advanced Accounts
             </Typography>
             </Grid>
@@ -50,20 +72,6 @@ const Page_Company_Account_Create = () => {
                 <TextField
                     id="accountemail"
                     label="Username"
-                    variant="outlined"
-                    fullWidth
-                />
-            </Grid>
-            <Grid
-                item
-                xs={12}
-                display="flex"
-                alignItems="center"
-                justifyContent="left"
-            >
-                <TextField
-                    id="accountemail"
-                    label="Fullname"
                     variant="outlined"
                     fullWidth
                 />
@@ -121,11 +129,22 @@ const Page_Company_Account_Create = () => {
                 item
                 xs={12}>
                 <TextField
-                    id="accountdepartment"
+                    id="departmentSelect"
+                    select
                     label="Department"
-                    variant="outlined"
-                    fullWidth
-                />
+                    value={departmentSelected}
+                    onChange={e => setDepartment(e.target.value)}
+                    helperText=""
+                    sx={{
+                        minWidth: '150px'
+                    }}
+                >
+                    {department.map((option) => (
+                        <MenuItem key={option.departmentId} value={option.departmentId}>
+                            {option.departmentName}
+                        </MenuItem>
+                    ))}
+                </TextField>
             </Grid>
             <Grid
                 display="flex"
@@ -149,6 +168,7 @@ const Page_Company_Account_Create = () => {
             </Grid>
         </Grid>
         </Card>
+        </Box>
     );
 }
 
