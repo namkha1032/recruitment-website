@@ -86,7 +86,7 @@ const Page_Recruitment_Id = () => {
     }
     const submitcv = useSelector(state => state.submitcv);
     // const error = useSelector(state => state.error);
-    
+
     console.log("submit", submitcv);
     console.log("mainid", recruitmentid);
     const handleSubmit = (event) => {
@@ -115,6 +115,7 @@ const Page_Recruitment_Id = () => {
                 //     setNotice(false);
                 // }, 3000)
                 setOpen(false);
+
                 toast.success('You submited successfully.', {
                     position: "top-center",
                     autoClose: 5000,
@@ -125,6 +126,8 @@ const Page_Recruitment_Id = () => {
                     progress: undefined,
                     theme: "colored",
                 });
+
+
             }
         }
         else {
@@ -194,8 +197,8 @@ const Page_Recruitment_Id = () => {
                                                 <Grid item xs={2}>
                                                     <Box sx={{ display: "flex", flexDirection: "column" }}>
                                                         {list_CV.map((CV) => (
-                                                            <Button key={CV.cvId}  sx={{
-                                                                 color: "white",
+                                                            <Button key={CV.cvId} sx={{
+                                                                color: "white",
                                                                 border: "1px solid black",
                                                                 textTransform: "none",
                                                                 backgroundColor: "black",
@@ -248,13 +251,13 @@ const Page_Recruitment_Id = () => {
                                     </form>
                                 </Box>
                             ) : (
-                                <Box sx={{ display: "flex", flexDirection: 'column', p: 4}}>
+                                <Box sx={{ display: "flex", flexDirection: 'column', p: 4 }}>
                                     <Box>
                                         <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                                             You haven't had any CV yet. Do you want to create it?
                                         </Typography>
                                     </Box>
-                                    <Box sx ={{display: "flex", alignItems: "flex-end", justifyContent: "flex-end"}}>
+                                    <Box sx={{ display: "flex", alignItems: "flex-end", justifyContent: "flex-end" }}>
                                         <Button sx={{
                                             color: "black",
                                             border: "1px solid black",
@@ -263,7 +266,7 @@ const Page_Recruitment_Id = () => {
                                                 backgroundColor: "black",
                                                 color: "white"
                                             }
-                                        }} size="large"  variant="outlined" onClick={handlecreate}   >
+                                        }} size="large" variant="outlined" onClick={handlecreate}   >
                                             CREATE CV
                                         </Button>
                                     </Box>
