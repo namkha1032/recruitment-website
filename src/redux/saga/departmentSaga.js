@@ -5,14 +5,14 @@ import host from "../host";
 //http://localhost:3000/data/departmentList.json
 function* getDepartment(action) {
   try {
-    // const response = yield call(
-    //   axios.get,
-    //   "http://leetun2k2-001-site1.gtempurl.com/api/Department"
-    // );
     const response = yield call(
       axios.get,
-      `${host.name}/data/departmentList.json`
+      "https://leetun2k2-001-site1.gtempurl.com/api/Department"
     );
+    // const response = yield call(
+    //   axios.get,
+    //   `${host.name}/data/departmentList.json`
+    // );
     yield put({ type: "department/setDepartment", payload: response.data });
     yield put({
       type: "error/setError",

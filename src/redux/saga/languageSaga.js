@@ -1,17 +1,20 @@
 import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 import host from "../host";
+import { filterIsDeleted } from "../../utils/filterIsDeleted";
+
 function* getLanguage(action) {
   try {
-    // const response = yield call(
-    //   axios.get,
-    //   "http://leetun2k2-001-site1.gtempurl.com/api/Language"
-    // );
     const response = yield call(
       axios.get,
-      `${host.name}/data/languageList.json`
+      "https://leetun2k2-001-site1.gtempurl.com/api/Language"
     );
-    yield put({ type: "language/setLanguage", payload: response.data });
+    // const response = yield call(
+    //   axios.get,
+    //   `${host.name}/data/languageList.json`
+    // );
+    const data = filterIsDeleted(response.data);
+    yield put({ type: "language/setLanguage", payload: data });
     yield put({
       type: "error/setError",
       payload: {

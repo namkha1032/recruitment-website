@@ -15,7 +15,7 @@ function* getPositionList() {
     
     // const response = yield call(
     //   axios.get,
-    //   "http://leetun2k2-001-site1.gtempurl.com/api/Position"
+    //   "https://leetun2k2-001-site1.gtempurl.com/api/Position"
     // );
     const data = formatPositionList(response.data);
     yield put({ type: "positionList/setPositionList", payload: data });
@@ -43,16 +43,17 @@ function* getPositionListWithFilter(action) {
   try {
     yield put({ type: "loading/onLoading" });
     yield call(delay, 1500)
-    const response = yield call(axios.get, `${host.name}/data/positionListD.json`)
-    yield put({ type: "positionList/setPositionList", payload: response.data });
     
-    // const response = yield call(
-    //   axios.get,
-    //   "http://leetun2k2-001-site1.gtempurl.com/api/Position"
-    // );
-    // const draft = filterPositionList(response.data, action.payload);
-    // const data = formatPositionList(draft);
-    // yield put({ type: "positionList/setPositionList", payload: data });
+    // const response = yield call(axios.get, `${host.name}/data/positionListD.json`)
+    // yield put({ type: "positionList/setPositionList", payload: response.data });
+    
+    const response = yield call(
+      axios.get,
+      "https://leetun2k2-001-site1.gtempurl.com/api/Position"
+    );
+    const draft = filterPositionList(response.data, action.payload);
+    const data = formatPositionList(draft);
+    yield put({ type: "positionList/setPositionList", payload: data });
     yield put({ type: "loading/offLoading" });
     yield put({
       type: "error/setError",

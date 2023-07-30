@@ -145,7 +145,7 @@ export default function Page_Company_Event() {
       headerAlign: "left",
       align: "left",
       flex: 0.2,
-      minWidth: 50,
+      minWidth: 70,
       renderHeader: () => <span>ID</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
