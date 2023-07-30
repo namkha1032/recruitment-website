@@ -14,21 +14,9 @@ function* getDepartment(action) {
     //   `${host.name}/data/departmentList.json`
     // );
     yield put({ type: "department/setDepartment", payload: response.data });
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "no",
-        message: "",
-      },
-    });
+    
   } catch (error) {
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "yes",
-        message: "message" in error ? error.message : error.response.data,
-      },
-    });
+    
   }
 }
 

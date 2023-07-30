@@ -252,7 +252,7 @@ const NavbarContent = () => {
                                                         console.log("logout")
                                                         cleanStore(dispatch)
                                                         dispatch({ type: "saga/userLogout" })
-                                                        
+
                                                         navigate("/home")
                                                     }
                                                     else {
@@ -286,7 +286,10 @@ const NavbarContent = () => {
                             "&:hover": {
                                 borderColor: "black"
                             }
-                        }} onClick={() => {sessionStorage.setItem('previousPage', window.location.pathname); navigate("/login") }}>Log in</Button>}
+                        }} onClick={() => {
+                            sessionStorage.setItem('previousPage', window.location.pathname);
+                            navigate("/login")
+                        }}>Log in</Button>}
                 </Box>
             </Container>
         </>

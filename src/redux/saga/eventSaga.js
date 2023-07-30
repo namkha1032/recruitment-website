@@ -22,24 +22,24 @@ function* getEventList() {
     console.log(response.data)
     yield put({ type: "eventList/setEventList", payload: response.data })
     yield put({ type: "loading/offLoading" })
-    const data = formatEventList(response.data);
-    yield put({ type: "eventList/setEventList", payload: data });
+    // const data = formatEventList(response.data);
+    // yield put({ type: "eventList/setEventList", payload: data });
     yield put({ type: "loading/offLoading" });
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "no",
-        message: "",
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "no",
+    //     message: "",
+    //   },
+    // });
   } catch (error) {
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "yes",
-        message: "message" in error ? "Event - " + error.message : error.response.data,
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "yes",
+    //     message: "message" in error ? "Event - " + error.message : error.response.data,
+    //   },
+    // });
   }
 }
 
@@ -61,21 +61,21 @@ function* getEventListWithFilter(action) {
     const data = formatEventList(draft);
     yield put({ type: "eventList/setEventList", payload: data });
     yield put({ type: "loading/offLoading" });
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "no",
-        message: "",
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "no",
+    //     message: "",
+    //   },
+    // });
   } catch (error) {
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "yes",
-        message: "message" in error ? "Event - " + error.message : error.response.data,
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "yes",
+    //     message: "message" in error ? "Event - " + error.message : error.response.data,
+    //   },
+    // });
   }
 }
 

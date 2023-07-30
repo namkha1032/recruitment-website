@@ -50,21 +50,21 @@ function* getAllQuestion() {
     console.log(data);
     yield put({ type: "questionList/setQuestionList", payload: data });
     yield put({ type: "loading/offLoading" });
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "no",
-        message: "",
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "no",
+    //     message: "",
+    //   },
+    // });
   } catch (error) {
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "yes",
-        message: "message" in error ? error.message : error.response.data,
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "yes",
+    //     message: "message" in error ? error.message : error.response.data,
+    //   },
+    // });
   }
 }
 
@@ -113,21 +113,21 @@ function* getQuestionListWithFilter(action) {
 
     yield put({ type: "questionList/setQuestionList", payload: data });
     yield put({ type: "loading/offLoading" });
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "no",
-        message: "",
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "no",
+    //     message: "",
+    //   },
+    // });
   } catch (error) {
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "yes",
-        message: "message" in error ? error.message : error.response.data,
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "yes",
+    //     message: "message" in error ? error.message : error.response.data,
+    //   },
+    // });
   }
 }
 
@@ -190,21 +190,21 @@ function* postQuestion(action) {
       payload: "Create question"
     })
     yield call(getAllQuestion);
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "no",
-        message: "",
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "no",
+    //     message: "",
+    //   },
+    // });
   } catch (error) {
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "yes",
-        message: "message" in error ? error.message : error.response.data,
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "yes",
+    //     message: "message" in error ? error.message : error.response.data,
+    //   },
+    // });
   }
 }
 
@@ -328,21 +328,21 @@ function* putQuestion(action) {
       payload: "Update question"
     })
     yield call(getAllQuestion);
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "no",
-        message: "",
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "no",
+    //     message: "",
+    //   },
+    // });
   } catch (error) {
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "yes",
-        message: "message" in error ? error.message : error.response.data,
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "yes",
+    //     message: "message" in error ? error.message : error.response.data,
+    //   },
+    // });
   }
 }
 
@@ -389,21 +389,21 @@ function* deleteQuestion(action) {
       payload: "Delete question"
     })
     yield call(getAllQuestion);
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "no",
-        message: "",
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "no",
+    //     message: "",
+    //   },
+    // });
   } catch (error) {
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "yes",
-        message: "message" in error ? error.message : error.response.data,
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "yes",
+    //     message: "message" in error ? error.message : error.response.data,
+    //   },
+    // });
   }
 }
 

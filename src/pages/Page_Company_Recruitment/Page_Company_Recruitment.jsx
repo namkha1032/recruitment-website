@@ -89,30 +89,30 @@ export default function Page_Company_Recruitment() {
   const loading = useSelector((state) => state.loading);
   const error = useSelector((state) => state.error);
 
-  useEffect(() => {
-    let timeoutId = null
-    if (error.status === "yes") {
-      errorAlert(error.message);
-      timeoutId = setTimeout(() => {
-        dispatch({
-          type: "error/setError",
-          payload: {
-            status: "idle",
-            message: "",
-          },
-        });
-      }, 2000);
-    } else if (error.status === "no") {
-      dispatch({
-        type: "error/setError",
-        payload: {
-          status: "idle",
-          message: "",
-        },
-      });
-    }
-    return () => clearTimeout(timeoutId);
-  });
+  // useEffect(() => {
+  //   let timeoutId = null
+  //   if (error.status === "yes") {
+  //     errorAlert(error.message);
+  //     timeoutId = setTimeout(() => {
+  //       dispatch({
+  //         type: "error/setError",
+  //         payload: {
+  //           status: "idle",
+  //           message: "",
+  //         },
+  //       });
+  //     }, 2000);
+  //   } else if (error.status === "no") {
+  //     dispatch({
+  //       type: "error/setError",
+  //       payload: {
+  //         status: "idle",
+  //         message: "",
+  //       },
+  //     });
+  //   }
+  //   return () => clearTimeout(timeoutId);
+  // });
 
   const rows = useSelector((state) => state.positionList);
   const department_draft = useSelector((state) => state.department);
