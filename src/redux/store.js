@@ -43,47 +43,49 @@ import interviewidInfoSlice from './reducer/interviewidInfoReducer'
 import requirementSlice from "./reducer/requirementReducer";
 import statusSlice from "./reducer/statusReducer";
 
+import cvCandidateSlice from './reducer/cvCandidateReducer'
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
-        reducer: {
-                admin: adminSlice.reducer,
-                user: userSlice.reducer,
-                interview: interviewSlice.reducer,
-                room: roomSlice.reducer,
-                shift: shiftSlice.reducer,
-                interviewer: interviewerSlice.reducer,
-                question: questionSlice.reducer,
-                department: departmentSlice.reducer,
-                skill: skillSlice.reducer,
-                language: languageSlice.reducer,
-                error: errorSlice.reducer,
-                cvlist: cvListSlice.reducer,
-                candidate: candidateSlice.reducer,
-                cv: cvSlice.reducer,
-                position: positionSlice.reducer,
-                loading: loadingSlice.reducer,
-                interviewList: interviewListSlice.reducer,
-                positionList: positionListSlice.reducer,
-                eventList: eventListSlice.reducer,
-                questionList: questionListSlice.reducer,
-                application: applicationSlice.reducer,
-                submitcv: submitcvSlice.reducer,
-                event: eventSlice.reducer,
-                interviewCandidate: interviewCandidateSlice.reducer,
-                applicationCandidate: applicationCandidateSlice.reducer,
-                eventCandidate: eventCandidateSlice.reducer,
-                cvInfor: cvInforSlice.reducer,
-                cvHasCertificate: cvHasCertificateSlice.reducer,
-                cvHasSkill: cvHasSkillSlice.reducer,
-                positionInfor: positionInforSlice.reducer,
-                positionRequire: positionRequireSlice.reducer,
-                candidateJoinEvent: candidateJoinEventSlice.reducer,
-                interviewidInfo: interviewidInfoSlice.reducer,
-                requirement: requirementSlice.reducer,
-                status: statusSlice.reducer,
-        },
-        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
-        // middleware: [sagaMiddleware]
+    reducer: {
+        admin: adminSlice.reducer,
+        user: userSlice.reducer,
+        interview: interviewSlice.reducer,
+        room: roomSlice.reducer,
+        shift: shiftSlice.reducer,
+        interviewer: interviewerSlice.reducer,
+        question: questionSlice.reducer,
+        department: departmentSlice.reducer,
+        skill: skillSlice.reducer,
+        language: languageSlice.reducer,
+        error: errorSlice.reducer,
+        cvlist: cvListSlice.reducer,
+        candidate: candidateSlice.reducer,
+        cv: cvSlice.reducer,
+        position: positionSlice.reducer,
+        loading: loadingSlice.reducer,
+        interviewList: interviewListSlice.reducer,
+        positionList: positionListSlice.reducer,
+        eventList: eventListSlice.reducer,
+        questionList: questionListSlice.reducer,
+        application: applicationSlice.reducer,
+        submitcv: submitcvSlice.reducer,
+        event: eventSlice.reducer,
+        interviewCandidate: interviewCandidateSlice.reducer,
+        applicationCandidate: applicationCandidateSlice.reducer,
+        eventCandidate: eventCandidateSlice.reducer,
+        cvInfor: cvInforSlice.reducer,
+        cvHasCertificate: cvHasCertificateSlice.reducer,
+        cvHasSkill: cvHasSkillSlice.reducer,
+        positionInfor: positionInforSlice.reducer,
+        positionRequire: positionRequireSlice.reducer,
+        candidateJoinEvent: candidateJoinEventSlice.reducer,
+        interviewidInfo: interviewidInfoSlice.reducer,
+        requirement: requirementSlice.reducer,
+        status: statusSlice.reducer,
+        cvCandidate: cvCandidateSlice.reducer
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
+    // middleware: [sagaMiddleware]
 })
 sagaMiddleware.run(rootSaga)
 export default store

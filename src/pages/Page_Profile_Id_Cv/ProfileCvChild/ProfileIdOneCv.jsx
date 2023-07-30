@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Button, Typography, Grid, Paper, IconButton } from '@mui/material';
 import { FirstPage, LastPage } from '@mui/icons-material';
 import { useNavigate } from 'react-router';
-import TabInProfile from '../../../components/Profile/TabInProfile/TabInProfile';
-export default function ProfileIdOneCv({ events }) {
+import AddIcon from '@mui/icons-material/Add';
+
+export default function ProfileIdOneCv({ events ,img}) {
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const viewCV = useNavigate();
@@ -11,7 +12,7 @@ export default function ProfileIdOneCv({ events }) {
   const handleDetails = (eventId) => {
     // Perform action when the "Xem chi tiết" button is clicked for an event
     // You can implement this function to display detailed information about the event, e.g., show a popup, navigate to a new page, etc.
-    viewCV('/profile/1/cv/1');
+    viewCV(`/profile/1/cv/${eventId}`);
   };
 
   const handleCreateCV = () => {
@@ -46,18 +47,33 @@ export default function ProfileIdOneCv({ events }) {
   }
 
   return (
-    <Grid container justifyContent="center" spacing={2}>
-      <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px', width: '100%' }}>
-      <Typography variant="h5" gutterBottom>
+    <Grid container justifyContent="center" spacing={2} >
+      <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px', width: '100%',marginTop:'20px'}}>
+      <Grid container justifyContent="space-between" alignItems="center" sx={{marginBottom:'20px'}}>
+        <Grid item>
+          <Typography variant="h5" gutterBottom sx={{margin:'0'}}>
             CVs List
           </Typography>
-      <Grid item xs={12} md={12} sx={{ margin: '0 25px' }}>
-        <Grid container justifyContent="flex-start" spacing={2} wrap="wrap">
+        </Grid>
+        <Grid item>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleCreateCV}
+          style={{ textTransform: "none" }}
+          startIcon={<AddIcon />}
+        >
+          Create CV
+        </Button>
+      </Grid>
+    </Grid>
+      <Grid item xs={12} md={12} sx={{ margin: '0 0px',width:'100%'}}>
+        <Grid container  wrap="wrap" sx={{justifyContent:'space-between'}}>
           {displayedEvents.map((event) => (
             <Paper
-              key={event.id}
+              key={event.cvid}
               sx={{
-                backgroundImage: `url('https://i.pinimg.com/originals/0b/cf/fb/0bcffbfe90509070f4f00a4817346751.jpg')`,
+                backgroundImage: `url('${img}')`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 p: 2,
@@ -67,16 +83,17 @@ export default function ProfileIdOneCv({ events }) {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'flex-end',
+                
                 cursor: 'pointer',
               }}
-              onClick={() => handleDetails(event.id)}
+              onClick={() => handleDetails(event.cvid)}
             >
               <Grid item sx={{ margin: '0 auto', marginBlockStart: '0' }}>
                 <Paper variant="outlined" sx={{ p: 2, height: '100px', width: '200px', marginBottom: '10px', padding: '0' }}>
                   <Grid container direction="column" justifyContent="space-between" height="100%">
                     <Grid item>
                       <Typography variant="body1" fontWeight="bold">
-                        {event.name}
+                        {event.cvName}
                       </Typography>
                       
                       <Typography style={{ fontStyle: 'italic', color: '#999999' }}>
@@ -87,7 +104,7 @@ export default function ProfileIdOneCv({ events }) {
                       </Typography>
 
                       <Typography variant="body1" component="div">
-                        Skill: {event.jobTitle}
+                        Skill: {event.skills[0]}
                       </Typography>
                       <Typography variant="body1" component="div">
                         Kinh nghiệm: {event.experience}
@@ -125,11 +142,7 @@ export default function ProfileIdOneCv({ events }) {
               <LastPage />
             </IconButton>
           </Grid>
-          <Grid item>
-            <Button variant="contained" color="primary" onClick={handleCreateCV}>
-              Tạo CV
-            </Button>
-          </Grid>
+          
         </Grid>
       </Grid>
       </Paper>

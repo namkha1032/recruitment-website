@@ -7,14 +7,14 @@ import host from "../host"
 
 function* getAllEventCandidate() {
     console.log("Hello")
-    const response = yield call(axios.get, `${host.name}/data/eventAllOfCandidate.json`)
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Event`)
     yield put({ type: "eventCandidate/setEventList", payload: response.data })
 
 }
 
 function* eventCandidateSaga() {
     yield all([
-        takeLatest("saga/getAllEventCandidate", getAllEventCandidate),
+        takeEvery("saga/getAllEventCandidate", getAllEventCandidate),
     ])
 }
 
