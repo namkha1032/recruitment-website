@@ -284,8 +284,8 @@ const Page_Interview_Id = ({ cvid }) => {
                                         <Grid item md={right} sx={gridSx}>
                                             <Typography variant="h6" sx={{ marginLeft: "8px" }} >
                                                 {/* {interviewidinfo[0].departmentName} */}
-                                                {/* ITROOM */}
-                                                {department[0].departmentName}
+                                                ITROOM
+                                                {/* {department[0].departmentName} */}
                                             </Typography>
                                         </Grid>
                                     </Box>
