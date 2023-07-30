@@ -7,6 +7,8 @@ import FmdBadIcon from '@mui/icons-material/FmdBad';
 import GradingIcon from '@mui/icons-material/Grading';
 import cleanStore from '../../utils/cleanStore';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { useParams } from "react-router-dom";
 function QuickSearchToolbar() {
     return (
@@ -32,6 +34,8 @@ const other = {
 };
 
 const List_application = (props) => {
+    const theme = useTheme()
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const navigate = useNavigate();
     const { recruitmentid } = useParams();
     let [currentTable, setCurrentTable] = useState(0)
@@ -111,17 +115,17 @@ const List_application = (props) => {
                 sx={{ width: "100%" }}>
 
 
-                <Grid container spacing={2} >
+                <Grid container spacing={2} sx ={{marginBottom: 2, marginTop: 1}} >
                     <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
 
-                        <Button color="primary" variant={currentTable == 0 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(0) }} >
+                        <Button size ={isMd ? "medium" : "small"} color="primary" variant={currentTable == 0 ? 'contained' : 'outlined'} sx={{ borderRadius: 100 }} onClick={() => { setCurrentTable(0) }} >
                             <PendingIcon sx={{marginRight: "5px"}}></PendingIcon> Pending
                         </Button>
 
-                        <Button color="warning" sx={{  marginLeft: "10px" }} variant={currentTable == 1 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(1) }} >
+                        <Button size ={isMd ? "medium" : "small"} color="warning" sx={{  marginLeft: "10px", borderRadius: 100 }} variant={currentTable == 1 ? 'contained' : 'outlined'}  onClick={() => { setCurrentTable(1) }} >
                             <FmdBadIcon sx={{marginRight: "5px"}}></FmdBadIcon> Reject
                         </Button>
-                        <Button color="success" sx={{  marginLeft: "10px" }} variant={currentTable == 2 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(2) }} >
+                        <Button size ={isMd ? "medium" : "small"} color="success" sx={{  marginLeft: "10px", borderRadius: 100 }} variant={currentTable == 2 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(2) }} >
                             <GradingIcon sx={{marginRight: "5px"}}></GradingIcon> Pass
                         </Button>
 

@@ -41,7 +41,7 @@ const Info_view = (props) => {
     };
     const navigate = useNavigate();
 
-    // const language = useSelector(state => state.language);
+    const language = useSelector(state => state.language);
     const detailposition = useSelector(state => state.position);
     const applications = useSelector(state => state.application);
     const dispatch = useDispatch();
@@ -51,21 +51,21 @@ const Info_view = (props) => {
             cleanStore(dispatch);
         }
     }, [])
-    // const skill = useSelector(state => state.skill);
-    // console.log("skillinmain", skill); // ['react','c++']
-    // useEffect(() => {
-    //     dispatch({ type: 'saga/getPosition', payload: recruitmentid })
-    //     return () => {
-    //         dispatch({ type: "positon/setPosition", payload: null })
-    //     }
-    // }, [])
+    const skill = useSelector(state => state.skill);
+    console.log("skillinmain", skill); // ['react','c++']
     useEffect(() => {
-        dispatch({ type: 'saga/getPosition' })
+        dispatch({ type: 'saga/getPosition', payload: recruitmentid })
         return () => {
             dispatch({ type: "positon/setPosition", payload: null })
         }
     }, [])
-    // console.log("mainlanguage", language)
+    // useEffect(() => {
+    //     dispatch({ type: 'saga/getPosition' })
+    //     return () => {
+    //         dispatch({ type: "positon/setPosition", payload: null })
+    //     }
+    // }, [])
+    console.log("mainlanguage", language)
     // const detail = useSelector(state => state.detail)
     // useEffect(() => {
     //     dispatch({ type: 'saga/getDetailPosition', payload: recruitmentid })
@@ -92,13 +92,14 @@ const Info_view = (props) => {
     const handleEdit = () => {
         navigate('/company/recruitment/:recruitmentid/update');
     }
-    // const department = useSelector(state => state.department);
-    // const startDate = detailposition ? detailposition.startDate.slice(0, 10) : [];
-    // const endDate = detailposition ? detailposition.endDate.slice(0, 10) : [];
-    // console.log("date", startDate);
+    const department = useSelector(state => state.department);
+    const startDate = detailposition ? detailposition.startDate.slice(0, 10) : [];
+    const endDate = detailposition ? detailposition.endDate.slice(0, 10) : [];
+    console.log("date", startDate);
+    console.log("department", department);
     return (
-        // detailposition && language && skill &&
-        detailposition && applications &&
+        detailposition && language && skill && department &&
+        // detailposition && applications &&
         <>
             <Grid container spacing={2} >
                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -118,8 +119,8 @@ const Info_view = (props) => {
                         </GigaCardHeader>
                         <GigaCardBody >
                             
-                            {/* <View_detail detailposition={detailposition} skill={skill} language={language} /> */}
-                            <View_detail detailposition={detailposition[0]}  />
+                            <View_detail detailposition={detailposition} skill={skill} language={language} />
+                            {/* <View_detail detailposition={detailposition[0]}  /> */}
                         </GigaCardBody>
                     </GigaCard>
                 </Grid>
@@ -141,9 +142,9 @@ const Info_view = (props) => {
                                         
                                             <TabPanel value="1"  sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
                                                 <Box>
-                                                    {/* <View_general department={department} detailposition={detailposition} /> */}
+                                                    <View_general department={department} detailposition={detailposition} />
                                                     {/* <View_detail detail={detail[recruitmentid]} /> */}
-                                                    <View_general detailposition={detailposition[0]} />
+                                                    {/* <View_general detailposition={detailposition[0]} /> */}
                                                 </Box>
                                             </TabPanel>
                                             <TabPanel value="2" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
@@ -166,9 +167,9 @@ const Info_view = (props) => {
                                             </TabList>
                                         </Box>
                                         <TabPanel value="3" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
-                                            {/* <View_general department={department} detailposition={detailposition} /> */}
+                                            <View_general department={department} detailposition={detailposition} />
                                             {/* <View_detail detail={detail[recruitmentid]} /> */}
-                                            <View_general  detailposition={detailposition[0]} />
+                                            {/* <View_general  detailposition={detailposition[0]} /> */}
                                         </TabPanel>
                                     </TabContext>
                                 </GigaCardBody>

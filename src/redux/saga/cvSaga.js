@@ -30,10 +30,16 @@ function* getCv(action) {
 }
 
 function* getCvList(action) {
-    const reponse = yield call(axios.get, `${host.name}/data/CVList.json`)
-    // const reponse = yield call(axios.get, `${host.name}/data/CVList.json`)
-    // const reponse = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv`)
-    yield put({ type: 'cvlist/setCvList', payload: reponse.data })
+    try{
+        const reponse = yield call(axios.get, `${host.name}/data/CVList.json`)
+        // const reponse1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/GetCandidateCvs`) 
+        // const reponse = yield call(axios.get, `${host.name}/data/CVList.json`)
+        // const reponse = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv`)
+        yield put({ type: 'cvlist/setCvList', payload: reponse.data })
+    } catch(error){
+        console.log(error)
+    }
+    
 }
 
 function* cvSaga() {
