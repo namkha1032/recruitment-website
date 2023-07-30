@@ -14,6 +14,7 @@ import Card from "@mui/material/Card";
 import {grey} from "@mui/material/colors";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {useDispatch, useSelector} from 'react-redux';
+import {Box} from "@mui/system";
 
 const Page_Company_Account_Create = () => {
     const dispatch = useDispatch()
@@ -23,6 +24,10 @@ const Page_Company_Account_Create = () => {
     const department = useSelector(state => state.admin.department)
     const [departmentSelected,setDepartment]=React.useState('')
     return (
+        <Box
+            component="form"
+            noValidate
+            autoComplete="off">
         <Card
             raised="true"
             sx={{
@@ -163,6 +168,7 @@ const Page_Company_Account_Create = () => {
             </Grid>
         </Grid>
         </Card>
+        </Box>
     );
 }
 

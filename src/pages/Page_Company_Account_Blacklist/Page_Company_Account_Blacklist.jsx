@@ -172,7 +172,7 @@ const Page_Company_Account = () => {
                 }}>
                 <Grid container>
                 <Grid
-                    width="80vw"
+                    width="78vw"
                     item
                     // m="0px 10px 0px 10px"
                     xs={12}

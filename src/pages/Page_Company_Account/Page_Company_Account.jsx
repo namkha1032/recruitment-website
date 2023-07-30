@@ -112,7 +112,7 @@ function CandidateTable(props) {
             <Grid container>
                 <Grid
                     border={0}
-                    width="80vw"
+                    width="78vw"
                     item
                     m="0px 0px 0px 0px"
                     xs={12}
@@ -254,7 +254,7 @@ function InterviewerTable(props) {
             <Grid container>
                 <Grid
                     border={0}
-                    width="80vw"
+                    width="78vw"
                     item
                     m="0px 0px 0px 0px"
                     xs={12}
@@ -396,7 +396,7 @@ function RecruiterTable(props) {
             <Grid container>
                 <Grid
                     border={0}
-                    width="80vw"
+                    width="78vw"
                     item
                     m="0px 0px 0px 0px"
                     xs={12}
