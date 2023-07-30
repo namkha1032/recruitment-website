@@ -44,7 +44,7 @@ export default function ChooseSkill(prop) {
         />
         <Grid item xs={12}></Grid>
         <Grid item xs={9}>
-          <Box sx={{ marginLeft: "1%", marginTop: "8px" }}>
+          <Box sx={{ marginTop: "8px" }}>
             <CompHeader headerIcon={<ConstructionIcon />}>Skill</CompHeader>
             <Autocomplete
               value={prop.sInputValue}
