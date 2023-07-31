@@ -16,13 +16,11 @@ const Page_Profile_Id_Cv_Id = () => {
   return (
     user && (
       <>
-        <GigaCard>
-          <GigaCardBody>
-            <Box sx={{ padding: 5 }}>
-              <CV user={user} cv={params.cvid} />
-            </Box>
-          </GigaCardBody>
-        </GigaCard>
+        
+        <Box mt={6}>
+          <CV user={user} cv={params.cvid} />
+        </Box>
+     
         <Box sx={{ display: "flex", justifyContent: "flex-end", marginY: 4 }}>
           <Button
             variant="contained"

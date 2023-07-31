@@ -181,7 +181,7 @@ const data = {
 const Page_Company_Recruitment_Id_Application_Id = () => {
   const [user, setUser] = useState(data.user);
     const [CVs, setCVs] = useState(data.cvs);
-    const {recruitmentid} = useParams();
+    const {recruitmentid,applicationid} = useParams();
   return (
     <Container>
     <Application cvid={0}/>
@@ -189,7 +189,7 @@ const Page_Company_Recruitment_Id_Application_Id = () => {
         xs={12}
         sx={{ display: "flex", justifyContent: "flex-end", padding: "15px" }}
       >
-        <Link to={`/company/interview/create?recruitmentid=${recruitmentid}`}>
+        <Link to={`/company/interview/create?recruitmentid=${recruitmentid}&applicationid=${applicationid}`}>
           {" "} 
           <Button variant="contained" sx={{ marginRight: "50px" }}>
             Create Interview{" "}

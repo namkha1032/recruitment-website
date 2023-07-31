@@ -16,13 +16,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 const Application = ({ cvid}) => {
-  const {recruitmentid} = useParams();
+  const {recruitmentid,applicationid} = useParams();
+  console.log(recruitmentid)
   return (
   <>
       <Typography variant="h3" align="center">
         Detail of the Application
       </Typography>
-      <InfoApplication recruitmentid={recruitmentid}/>
+      <InfoApplication applicationid={applicationid} recruitmentid={recruitmentid}/>
       <Grid container  spacing={3}>
       
           

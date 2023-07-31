@@ -24,8 +24,42 @@ function* getCv(action) {
             "cvlanguageid": 2,
             "name": "Chinese",
             "decription": ""
-        }
-    ]} })
+        }],"certificates": [...response1.data[0].certificates,
+        {
+            "certificateId": "8483e625-6146-48ec-9abc-e7b3452a48a7",
+            "certificateName": "Javascript",
+            "description": "Javascript 1 năm",
+            "organizationName": "organize",
+            "dateEarned": "2023-07-01T00:00:00",
+            "expirationDate": null,
+            "link": "link",
+            "cvid": "d1c51600-6272-4c78-9b50-36af9d403a28",
+            "isDeleted": false
+          },
+          {
+            "certificateId": "8483e625-6146-48ec-9abc-e7b3452a48a7",
+            "certificateName": "ReactJS ",
+            "description": "ReactJS quá dễ",
+            "organizationName": "organize",
+            "dateEarned": "2023-07-05T00:00:00",
+            "expirationDate": null,
+            "link": "link",
+            "cvid": "d1c51600-6272-4c78-9b50-36af9d403a28",
+            "isDeleted": false
+          },
+          {
+            "certificateId": "8483e625-6146-48ec-9abc-e7b3452a48a7",
+            "certificateName": "C/C++",
+            "description": "C/C++ .......",
+            "organizationName": "organize",
+            "dateEarned": "2023-07-12T00:00:00",
+            "expirationDate": null,
+            "link": "link",
+            "cvid": "d1c51600-6272-4c78-9b50-36af9d403a28",
+            "isDeleted": false
+          }
+    ]
+    } })
     yield put({ type: "candidate/setCandidate", payload: response2.data })
 }
 

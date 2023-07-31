@@ -14,15 +14,14 @@ import GigaCard from "../GigaCard/GigaCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-const  InfoApplication = (recruitmentid) => {
+const  InfoApplication = ({applicationid,recruitment}) => {
     const detailposition = useSelector((state) => state.position);
     const candidate = useSelector((state) => state.candidate);
-    
     const dispatch = useDispatch();
     useEffect(() => {
-      dispatch({ type: "saga/getPosition", payload: recruitmentid });
+      dispatch({ type: "saga/getApplication", payload: applicationid });
       return () => {
-        dispatch({ type: "position/setPosition", payload: null });
+        dispatch({ type: "application/setApplication", payload: null });
       };
     }, []);
     useEffect(() => {
@@ -31,6 +30,12 @@ const  InfoApplication = (recruitmentid) => {
           dispatch({ type: "candidate/setCandidate", payload: null });
         };
       }, []);
+      useEffect(() => {
+        dispatch({ type: 'saga/getPosition', payload: recruitment })
+        return () => {
+            dispatch({ type: "positon/setPosition", payload: null })
+        }
+    }, [])
     let left = 5
     let right = 6
     let gap = 1
@@ -41,7 +46,8 @@ const  InfoApplication = (recruitmentid) => {
     const language = useSelector(state => state.language);
     const startDate = detailposition ? detailposition.startDate.slice(0, 10) : [];
     const endDate = detailposition ? detailposition.endDate.slice(0, 10) : [];
-  return (
+    console.log(detailposition !== null ,language !== null,skill !== null,candidate !== null)
+    return (
     detailposition && language && skill && candidate && <Grid container spacing={3} marginBottom={3}>
         <Grid item xs={12} md={8}>
           <GigaCard>

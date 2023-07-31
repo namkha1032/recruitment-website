@@ -13,7 +13,6 @@ import {
 import {
   Box,
   Chip,
-  Divider,
   Grid,
   Popover,
   Stack,
@@ -22,49 +21,30 @@ import {
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ModalCertificates from "./ModalCertificates";
+import GigaCard from "../GigaCard/GigaCard";
 
 const CV = ({ cvid,page }) => {
   const dispatch = useDispatch();
   const cv = useSelector((state) => state.cv);
   const candidate = useSelector((state) => state.candidate);
-  const [lengCVPDF , setLengthCVPDF] = useState(0)
   useEffect(() => {
     dispatch({ type: "saga/getCv", payload: cvid });
     return () => {
       dispatch({ type: "cv/setCv", payload: null });
     };
   }, []);
-  useEffect(() => {
-    
-    if(cv !== null){
-      console.log('render')
-      const xhr = new XMLHttpRequest()
-          xhr.open('GET', 'http://localhost:3000/data/2019_MT_KTM.pdf', true);
-          xhr.responseType = 'blob';
-          xhr.onload = (status,response) => {
-            console.log(status)
-        if (status === 200) {
-          
-          const blob = response;
-          const reader = new FileReader();
-          reader.onloadend =  () => {
-            const contentLength = reader.result.length;
-            setLengthCVPDF(contentLength)
-          };
-          reader.readAsBinaryString(blob);
-        }
-      };
-      xhr.send();
-    }
-  },[cv])
-  console.log(lengCVPDF)
-  let style = "1px solid black";
+
+
   return (
     cv &&
     candidate && (
       <>
-      <Box sx={{ border: "1px solid black", p: "16px" }}>
-        <Grid container spacing={2}>
+      <Box>
+        <Grid container spacing={3}>
+        {page !== "Profile" && 
+        <Grid item md={12} xs={12}>
+        <GigaCard> 
+          <Grid container p={3}>
           <Grid
             item
             md={3} sm={3}
@@ -131,25 +111,31 @@ const CV = ({ cvid,page }) => {
             </Box>
           </Grid>
 
-              <Grid item md={12} sm={12}>
-                <Box>
-                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-                    <Public sx={{ mr: "15px" }} />
-                    <Box
-                      component="h2"
-                      sx={{ position: "relative", top: "5.5px", m: 0 }}
-                    >
-                      Introduction
-                    </Box>
-                  </Box>
-                  <Box sx={{ padding: "10px 0 0 40px" }}>{cv.introduction}</Box>
-                </Box>
-                <Box pl='16px' pb='16px' width='100%'><Divider sx={{ backgroundColor: "black", mt: "16px" }} /></Box>
+             
+               </Grid></GigaCard>
               </Grid>
+              }
+
+              <Grid item md={12} sm={12}>
+              <GigaCard>
+              <Box p={3}>
+                <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                  <Public sx={{ mr: "15px" }} />
+                  <Box
+                    component="h2"
+                    sx={{ position: "relative", top: "5.5px", m: 0 }}
+                  >
+                    Introduction
+                  </Box>
+                </Box>
+                <Box sx={{ padding: "10px 0 0 40px" }}>{cv.introduction}</Box>
+              </Box></GigaCard>
+            </Grid>
+
 
           <Grid item md={12} sm={12} >
-          
-            <Box>
+          <GigaCard>
+            <Box p={3}>
               <Box sx={{ display: "flex", alignItems: "flex-end" }}>
                 <IntegrationInstructions sx={{ mr: "15px" }} />
                 <Box
@@ -159,7 +145,7 @@ const CV = ({ cvid,page }) => {
                   Skills
                 </Box>
               </Box>
-              <Box sx={{ padding: "0px 0 0 40px" }}>
+              <Box sx={{ padding: "16px 0 0 40px" }}>
                 {cv.skills.map((skill, index) => (
                   <Box
                     key={index}
@@ -172,15 +158,17 @@ const CV = ({ cvid,page }) => {
                   
                     }}
                   >
-                    <Box m={0} component='h4'>{skill.skillName}</Box>
-                    <Box> 1 năm kinh nghiệm</Box>
+                    <Box m={0} component='h4'>{skill.skillName} • 1 năm kinh nghiệm</Box>
+                    <Box>{skill.description}</Box> 
                   </Box>
                 ))}
               </Box>
             </Box>
-
-            <Divider sx={{ backgroundColor: "black", mt: "16px" }} />
-            <Box>
+          </GigaCard>
+          </Grid>
+          <Grid item md={12} sm={12} >
+          <GigaCard>
+            <Box p={3}>
               <Box sx={{ display: "flex", alignItems: "flex-end" }}>
                 <EmojiEvents sx={{ mr: "15px" }} />
                 <Box
@@ -208,12 +196,12 @@ const CV = ({ cvid,page }) => {
                  
               </Box>
             </Box>
-           
+           </GigaCard>
           </Grid>
           
           <Grid item md={12} sm={12}>
-          <Divider sx={{ backgroundColor: "black", mt: "16px" }} />
-            <Box>
+          <GigaCard>
+            <Box p={3}>
               <Box sx={{ display: "flex", alignItems: "flex-end" }}>
                 <AssignmentTurnedIn sx={{ mr: "15px" }} />
                 <Box
@@ -225,12 +213,12 @@ const CV = ({ cvid,page }) => {
               </Box>
               <Box sx={{ padding: "10px 0 0 40px" }}>{`${cv.experience}`}</Box>
             </Box>
-            
+            </GigaCard>
           </Grid>
-          <Box pl='16px' width='100%'><Divider sx={{ backgroundColor: "black", mt: "16px" }} /></Box>
-          <Grid item md={6} sm={12}>
-        
-            <Box>
+
+          <Grid item md={12} sm={12}>
+          <GigaCard>
+            <Box p={3}>
               <Box sx={{ display: "flex", alignItems: "flex-end" }}>
                 <Language sx={{ mr: "15px" }} />
                 <Box
@@ -247,11 +235,11 @@ const CV = ({ cvid,page }) => {
                 ))}
               </Stack>
             </Box>
-            
+           </GigaCard> 
         </Grid>
-        <Grid item md={6} sm={12}>
-      
-            <Box>
+        <Grid item md={12} sm={12}>
+        <GigaCard>
+            <Box p={3}>
               <Box sx={{ display: "flex", alignItems: "flex-end" }}>
                 <School sx={{ mr: "15px" }} />
                 <Box
@@ -263,14 +251,19 @@ const CV = ({ cvid,page }) => {
               </Box>
               <Box sx={{ padding: "10px 0 0 40px" }}>{cv.education}</Box>
             </Box>
-            
+            </GigaCard>
         </Grid>
-        </Grid>
-      </Box>
-      { page !== 'Profile' && <Box mt={8}>
+        <Grid item md={12} sm={12}>
+        <GigaCard>
+
+        { page !== 'Profile' && <Box p={3}>
         <Box m={0} component='h2' textAlign='center'> CV PDF</Box>
         <iframe style={{width:'100%',height:'800px'}} src="http://localhost:3000/data/2019_MT_KTM.pdf" ></iframe>
       </Box>}
+        </GigaCard>
+        </Grid>
+        </Grid>
+      </Box>
       </>
     )
   );
