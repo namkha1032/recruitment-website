@@ -12,14 +12,14 @@ function* getPositionList() {
   try {
     yield put({ type: "loading/onLoading" });
     const response = yield call(axios.get, `${host.name}/data/positionList.json`)
-    console.log("res: ", response.data)
+    // yield put({ type: "positionList/setPositionList", payload: response.data });
+    
     // const response = yield call(
     //   axios.get,
     //   "https://leetun2k2-001-site1.gtempurl.com/api/Position"
     // );
-    // const data = formatPositionList(response.data);
-    // yield put({ type: "positionList/setPositionList", payload: data });
-    yield put({ type: "positionList/setPositionList", payload: response.data });
+    const data = formatPositionList(response.data);
+    yield put({ type: "positionList/setPositionList", payload: data });
     yield put({ type: "loading/offLoading" });
     // yield put({
     //   type: "error/setError",

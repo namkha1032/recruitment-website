@@ -88,7 +88,7 @@ const Page_Home = () => {
 
 
             {eventList.slice(0, 2).map((item, index) => (
-              <Box key={index} onClick={() => handleNavigateClick(item.eventId)}
+              <Box key={index} onClick={() => handleNavigateClick(item.EventId)}
                 sx={{ padding: '0px 16px 0px 0px', borderRight: '1px solid lightgrey', cursor: 'pointer' }}>
 
                 <img src="https://cdn.vietnambiz.vn/2020/1/15/photo-1579090002241-15790900035601213027614.jpg"
@@ -103,9 +103,9 @@ const Page_Home = () => {
                     component="p"
                     sx={{ display: 'flex', justifyContent: 'flex-start' }}
                   >
-                    {item.eventName} • {item.datetimeEvent.slice(0, 10)}
+                    {item.EventName} • {item.EventDateTime.slice(0, 10)}
                   </Typography>
-                  {item.description}
+                  {item.EventDescription}
 
                 </Box>
               </Box>
@@ -122,7 +122,7 @@ const Page_Home = () => {
 
               >
                 {eventList.slice(2, 5).map((item, index) => (
-                  <Box key={index} onClick={() => handleNavigateClick(item.eventId)}
+                  <Box key={index} onClick={() => handleNavigateClick(item.EventId)}
                     sx={{ cursor: 'pointer' }}>
                     <img src="https://www.freecodecamp.org/news/content/images/2022/04/derick-mckinney-oARTWhz1ACc-unsplash.jpg"
                       alt=""
@@ -135,9 +135,9 @@ const Page_Home = () => {
                       component="p"
                       sx={{ display: 'flex', justifyContent: 'flex-start' }}
                     >
-                      {item.eventName} • {item.datetimeEvent.slice(0, 10)}
+                      {item.EventName} • {item.EventDateTime.slice(0, 10)}
                     </Typography>
-                    {item.description}
+                    {item.EventDescription}
 
                   </Box>))}
 
@@ -150,7 +150,7 @@ const Page_Home = () => {
 
               >
                 {eventList.slice(5, 9).map((item, index) => (
-                  <Box key={index} onClick={() => handleNavigateClick(item.eventId)}
+                  <Box key={index} onClick={() => handleNavigateClick(item.EventId)}
                     sx={{ cursor: 'pointer' }}>
                     <img src="https://www.freecodecamp.org/news/content/images/2022/04/derick-mckinney-oARTWhz1ACc-unsplash.jpg"
                       alt=""
@@ -163,9 +163,9 @@ const Page_Home = () => {
                       component="p"
                       sx={{ display: 'flex', justifyContent: 'flex-start' }}
                     >
-                      {item.eventName} • {item.datetimeEvent.slice(0, 10)}
+                      {item.EventName} • {item.EventDateTime.slice(0, 10)}
                     </Typography>
-                    {item.description}
+                    {item.EventDescription}
 
                   </Box>))}
 

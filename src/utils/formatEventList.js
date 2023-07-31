@@ -18,6 +18,7 @@ export function formatEventList(input) {
       EventName: element.eventName,
       CreatedById: element.recruiterId,
       CreatedByName: "Khoa Cao Tran Anh",
+      EventDateTime: "01/08/2023 10:00 AM",
       NumOfJoined: 0,
       Status: element.isDeleted
     };

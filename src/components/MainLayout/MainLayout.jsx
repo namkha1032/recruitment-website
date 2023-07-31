@@ -1,19 +1,19 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import { useSearchParams } from 'react-router-dom';
-import { Container } from '@mui/material';
-import { Outlet } from 'react-router-dom';
-import { DrawerHeader } from '../../components/Sidebar/Sidebar';
-import { styled, useTheme } from '@mui/material/styles';
-import Sidebar from '../Sidebar/Sidebar';
-import Navbar from '../Navbar/Navbar';
-import Footer from '../Footer/Footer';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useGetRole from '../../hooks/useGetRole';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import { useSearchParams } from "react-router-dom";
+import { Container } from "@mui/material";
+import { Outlet } from "react-router-dom";
+import { DrawerHeader } from "../../components/Sidebar/Sidebar";
+import { styled, useTheme } from "@mui/material/styles";
+import Sidebar from "../Sidebar/Sidebar";
+import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import useGetRole from "../../hooks/useGetRole";
 const drawerWidth = 240;
 
 
@@ -53,30 +53,32 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 function MainLayout() {
-    const [open, setOpen] = React.useState(false);
-    const dispatch = useDispatch()
-    useEffect(() => {
-        const userLocal = window.localStorage.getItem('user')
-        const userSession = window.sessionStorage.getItem('user')
-        if (userLocal) {
-            const user = JSON.parse(userLocal)
-            dispatch({ type: "user/setUser", payload: user })
-        }
-        else if (userSession) {
-            const user = JSON.parse(userSession)
-            dispatch({ type: "user/setUser", payload: user })
-        }
-    }, [])
-    // const navigate = useNavigate()
-    // useEffect(() => {
-    //     navigate("/home")
-    // }, [navigate])
-    const theme = useTheme();
-    const isMd = useMediaQuery(theme.breakpoints.up('md'));
-    const role = useGetRole()
+  const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const userLocal = window.localStorage.getItem("user");
+    const userSession = window.sessionStorage.getItem("user");
+    if (userLocal) {
+      const user = JSON.parse(userLocal);
+      dispatch({ type: "user/setUser", payload: user });
+    } else if (userSession) {
+      const user = JSON.parse(userSession);
+      dispatch({ type: "user/setUser", payload: user });
+    }
+  }, []);
+  // const navigate = useNavigate()
+  // useEffect(() => {
+  //     navigate("/home")
+  // }, [navigate])
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up("md"));
+  const role = useGetRole();
 
-    let userRole = "hahaha"
-    let showSidebar = role == "admin" || role == "recruiter" || role == "interviewer" ? true : false
+  let userRole = "hahaha";
+  let showSidebar =
+    role == "admin" || role == "recruiter" || role == "interviewer"
+      ? true
+      : false;
 
     return (
         <>
@@ -98,4 +100,4 @@ function MainLayout() {
     );
 }
 
-export default MainLayout
+export default MainLayout;
