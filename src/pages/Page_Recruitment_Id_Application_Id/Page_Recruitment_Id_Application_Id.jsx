@@ -22,18 +22,8 @@ const Page_Recruitment_Id_Application_Id = () => {
   return (
     
     user && <Container>
-      <Application cvid={0} user={user}/>
-      <Box
-        xs={12}
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "15px",
-        }}
-      >
-        <Typography variant="h5">Date: 30/06/2023 </Typography>
-        <em>Status</em>
-      </Box>
+      <Application cvid={0} page="normal"/>
+    
     </Container>
   );
 };

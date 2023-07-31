@@ -15,19 +15,19 @@ function Copyright() {
   );
 }
 const Footer = () => {
-  const eventList = useSelector((state) => state.eventList);
+  const eventFooter = useSelector((state) => state.eventFooter);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    dispatch({ type: "saga/getEventList" });
+    dispatch({ type: "saga/getEventFooter" });
   }, []);
   const handleNavigateClick = (id) => {
     navigate(`/event/${id}`);
   };
-  console.log(eventList)
+  console.log(eventFooter)
   return (
-    eventList && <>
+    eventFooter && <>
       <Box sx={{ bgcolor: "#222222", color: "white", p: 6 }}>
         <Container>
           <Grid container spacing={3}>
@@ -139,7 +139,7 @@ const Footer = () => {
                 </Typography>
               </Box>
               <Box p='30px 24px 0 24px'>
-                {eventList.slice(0, 4).map((item, index) => (
+                {eventFooter.slice(0, 4).map((item, index) => (
                   <Box
                     key={index}
                     onClick={() => handleNavigateClick(item.EventId)}

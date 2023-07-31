@@ -74,7 +74,7 @@ const Page_Home = () => {
   }
   React.useEffect(() => {
     dispatch({ type: 'saga/getEventList' })
-  }, [])
+ }, [])
   console.log(eventList)
   return (
     eventList && <Box>

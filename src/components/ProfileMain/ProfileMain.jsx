@@ -30,6 +30,7 @@ import ProfileInfo from "./ProfileInfo";
 import GigaCard from "../GigaCard/GigaCard";
 import useGetRole from "../../hooks/useGetRole";
 import ProfileHistory from "./ProfileHistory/ProfileHistory";
+import CVProfile from "../CV/CVProfile";
 
 const ProfileMain = ({ page }) => {
   const navigate = useNavigate();
@@ -112,12 +113,13 @@ const ProfileMain = ({ page }) => {
           <Grid item md={9} xs={12}>
           {page === "Profile" && (
               <Box>
+                <Box sx={{ mb: "24px" }}>
                 <ProfileInfo cvid={user.cvselected} user={user} />
-
+                </Box>
                 {role === "candidate" && (
                   
-                      <Box sx={{ mt: "24px" }}>
-                        <CV cvid={user.cvselected} page="Profile"/>
+                      <Box >
+                        <CVProfile cvid={user.cvselected} page="Profile"/>
                       
                   </Box>
                 )}

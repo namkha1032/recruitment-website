@@ -32,42 +32,39 @@ function* getApplication(action) {
                     "certificates": []
                 },
 
-                "position": formatPositionList([{
-                    "positionId": "00000000-0000-0000-0000-000000000001",
-                    "positionName": "Junior",
-                    "description": "no",
-                    "requirementId": "00000000-0000-0000-0000-000000000000",
-                    "requirement": null,
-                    "salary": 100,
-                    "maxHiringQty": 10,
-                    "startDate": "2001-01-01T00:00:00",
-                    "endDate": "2009-09-09T00:00:00",
-                    "departmentId": "00000000-0000-0000-0000-000000000001",
-                    "department": null,
-                    "languageId": "00000000-0000-0000-0000-000000000001",
-                    "language": null,
-                    "isDeleted": false
-                }])[0],
-            }
-        })
-        yield put({
-            type: 'position/setPosition', payload: {
-                "positionId": "00000000-0000-0000-0000-000000000001",
-                "positionName": "Junior",
-                "description": "no",
-                "requirementId": "00000000-0000-0000-0000-000000000000",
-                "requirement": null,
-                "salary": 100,
-                "maxHiringQty": 10,
-                "startDate": "2001-01-01T00:00:00",
-                "endDate": "2009-09-09T00:00:00",
-                "departmentId": "00000000-0000-0000-0000-000000000001",
-                "department": null,
-                "languageId": "00000000-0000-0000-0000-000000000001",
-                "language": null,
-                "isDeleted": false
-            }
-        })
+          "position": formatPositionList([{
+            "positionId": "00000000-0000-0000-0000-000000000001",
+            "positionName": "Junior",
+            "description": "no",
+            "requirementId": "00000000-0000-0000-0000-000000000000",
+            "requirement": null,
+            "salary": 100,
+            "maxHiringQty": 10,
+            "startDate": "2001-01-01T00:00:00",
+            "endDate": "2009-09-09T00:00:00",
+            "departmentId": "00000000-0000-0000-0000-000000000001",
+            "department": null,
+            "languageId": "00000000-0000-0000-0000-000000000001",
+            "language": null,
+            "isDeleted": false
+          }])[0] ,
+          company_Status: "Đang xử lý" }})
+          yield put ({type:'position/setPosition',payload:{
+            "positionId": "00000000-0000-0000-0000-000000000001",
+            "positionName": "Junior",
+            "description": "no",
+            "requirementId": "00000000-0000-0000-0000-000000000000",
+            "requirement": null,
+            "salary": 100,
+            "maxHiringQty": 10,
+            "startDate": "2001-01-01T00:00:00",
+            "endDate": "2009-09-09T00:00:00",
+            "departmentId": "00000000-0000-0000-0000-000000000001",
+            "department": null,
+            "languageId": "00000000-0000-0000-0000-000000000001",
+            "language": null,
+            "isDeleted": false
+          } })
     } catch (error) {
         console.log(error)
     }
