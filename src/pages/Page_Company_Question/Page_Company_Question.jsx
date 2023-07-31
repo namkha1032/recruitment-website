@@ -34,6 +34,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 // const listOfSkills = {
 //   skill: ["React", "Angular", "Java", "Python", "Figma", ".NET", "C", "C++"],
@@ -65,6 +67,10 @@ import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 // }
 
 export default function Page_Company_Question() {
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up("md"));
+  const isSm = useMediaQuery(theme.breakpoints.down("md"));
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -104,19 +110,14 @@ export default function Page_Company_Question() {
   //   return () => clearTimeout(timeoutId);
   // }, [error]);
 
-  // useEffect(() => {
-  //   if (status.status === "success") {
-  //     successAlert(status.message);
-  //     dispatch({
-  //       type: "status/onReset"
-  //     })
-  //   }
-  //   else if (error.status === "yes") {
-  //     dispatch({
-  //       type: "status/onReset"
-  //     })
-  //   }
-  // },[status, error])
+  useEffect(() => {
+    if (status.status === "success") {
+      successAlert(status.message);
+      dispatch({
+        type: "status/onReset",
+      });
+    }
+  }, [status]);
 
   // const [rows, setRows] = useState(datasjson);
 
@@ -296,14 +297,14 @@ export default function Page_Company_Question() {
   }
 
   function handleModalOpen(value, type) {
-    setKeyModal(k => k + 1);
+    setKeyModal((k) => k + 1);
     setValueUpdate(value);
     setTypeStatus(type);
     setModalStatus(true);
   }
 
   function handleModalClose() {
-    setKeyModal(k => k + 1);
+    setKeyModal((k) => k + 1);
     setModalStatus(false);
   }
 
@@ -479,10 +480,12 @@ export default function Page_Company_Question() {
         <GridActionsCellItem
           icon={<DeleteIcon sx={{ color: "#cc3300" }} />}
           label="Delete question"
-          onClick={() => handleDeleteModalOpen({
-            QuestionId: params.row.QuestionId,
-            CategoryId: params.row.CategoryId
-          })}
+          onClick={() =>
+            handleDeleteModalOpen({
+              QuestionId: params.row.QuestionId,
+              CategoryId: params.row.CategoryId,
+            })
+          }
           showInMenu
           sx={{
             color: "#cc3300",
@@ -493,7 +496,9 @@ export default function Page_Company_Question() {
   ]);
 
   return (
-    <Box>
+    <Box sx={{
+      marginTop: 3,
+    }}>
       <GigaCard>
         <GigaCardBody>
           <Grid
@@ -532,20 +537,34 @@ export default function Page_Company_Question() {
               }}
             >
               <Button
-                variant="outlined"
+                // variant="outlined"
+                // sx={{
+                //   color: "black",
+                //   border: "1px solid black",
+                //   textTransform: "none",
+                //   height: 50,
+                //   width: {
+                //     xs: "100%",
+                //     sm: 250,
+                //     md: 250,
+                //   },
+                //   "&:hover": {
+                //     backgroundColor: "black",
+                //     color: "white",
+                //   },
+                // }}
+                variant="contained"
                 sx={{
-                  color: "black",
-                  border: "1px solid black",
-                  textTransform: "none",
                   height: 50,
                   width: {
-                    xs: "100%",
-                    sm: 250,
                     md: 250,
+                    sm: 250,
+                    xs: "100%",
                   },
+                  textTransform: "none",
+                  backgroundColor: "black",
                   "&:hover": {
-                    backgroundColor: "black",
-                    color: "white",
+                    backgroundColor: "grey",
                   },
                 }}
                 onClick={handleAddModalOpen}
@@ -589,7 +608,7 @@ export default function Page_Company_Question() {
           </Menu> */}
             </Grid>
 
-            <Grid
+          {isMd && (<Grid
               item
               xs={12}
               sm={12}
@@ -604,12 +623,13 @@ export default function Page_Company_Question() {
                 disablePortal
                 id="filter-type"
                 options={["Technology", "Language", "Soft Skills"]}
-                sx={{ width: { md: 200, sm: 200, xs: "100%" }, marginRight: 2,
-                "& .Mui-focused": {
-                  color: "black",
-                  
-                },
-               }}
+                sx={{
+                  width: { md: 200, sm: 200, xs: "100%" },
+                  marginRight: 2,
+                  "& .MuiAutocomplete-popupIndicator": {
+                    color: "black",
+                  },
+                }}
                 renderInput={(params) => (
                   <TextField {...params} label="Category..." />
                 )}
@@ -717,7 +737,148 @@ export default function Page_Company_Question() {
                   onChange={(event, value) => handleChooseLanguage(value)}
                 />
               )}
+            </Grid>)}
+          
+          {isSm && (<> <Grid
+              item
+              xs={12}
+              sm={12}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+              }}
+            >
+              <Autocomplete
+                disablePortal
+                id="filter-type"
+                options={["Technology", "Language", "Soft Skills"]}
+                sx={{
+                  width: "100%",
+                  "& .MuiAutocomplete-popupIndicator": {
+                    color: "black",
+                  },
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Category..." />
+                )}
+                renderOption={(props, option) => {
+                  if (option === "Technology") {
+                    return (
+                      <Box
+                        component="li"
+                        {...props}
+                        sx={{
+                          color: "#1565C0",
+                        }}
+                      >
+                        <SchoolRounded
+                          sx={{
+                            color: "#1565C0",
+                            marginRight: 1,
+                          }}
+                        />
+                        {option}
+                      </Box>
+                    );
+                  } else if (option === "Language") {
+                    return (
+                      <Box
+                        component="li"
+                        {...props}
+                        sx={{
+                          color: "#008631",
+                        }}
+                      >
+                        <LanguageRounded
+                          sx={{
+                            color: "#008631",
+                            marginRight: 1,
+                          }}
+                        />
+                        {option}
+                      </Box>
+                    );
+                  } else if (option === "Soft Skills") {
+                    return (
+                      <Box
+                        component="li"
+                        {...props}
+                        sx={{
+                          color: "#AA336A",
+                        }}
+                      >
+                        <PsychologyRounded
+                          sx={{
+                            color: "#AA336A",
+                            marginRight: 1,
+                          }}
+                        />
+                        {option}
+                      </Box>
+                    );
+                  }
+                }}
+                value={valueChoose}
+                onChange={(event, value) => handleChooseValue(value)}
+              />
             </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+              }}
+            >
+              {valueChoose === "Technology" && (
+                <Autocomplete
+                  disablePortal
+                  id="filter-type"
+                  options={skills}
+                  sx={{ width: "100%" }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Skill..." />
+                  )}
+                  getOptionLabel={(option) => option.skillName || ""}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.skillId}>
+                      {option.skillName}
+                    </li>
+                  )}
+                  isOptionEqualToValue={(option, value) => {
+                    return option.skillId === value.skillId;
+                  }}
+                  value={skillChoose}
+                  onChange={(event, value) => handleChooseSkill(value)}
+                />
+              )}
+              {valueChoose === "Language" && (
+                <Autocomplete
+                  disablePortal
+                  id="filter-type"
+                  options={languages}
+                  sx={{ width: "100%" }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Language..." />
+                  )}
+                  getOptionLabel={(option) => option.languageName || ""}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.languageId}>
+                      {option.languageName}
+                    </li>
+                  )}
+                  isOptionEqualToValue={(option, value) => {
+                    return option.languageId === value.languageId;
+                  }}
+                  value={languageChoose}
+                  onChange={(event, value) => handleChooseLanguage(value)}
+                />
+              )}
+            </Grid> </>)}
+            
 
             {/* <Grid
           item

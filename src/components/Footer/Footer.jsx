@@ -120,7 +120,7 @@ const Footer = () => {
                 {eventList.slice(0, 4).map((item, index) => (
                   <Box
                     key={index}
-                    onClick={() => handleNavigateClick(item.eventId)}
+                    onClick={() => handleNavigateClick(item.EventId)}
                     sx={{
                       padding: "0px 0px 24px 0px",
                       borderRight: "1px solid lightgrey",
@@ -146,7 +146,7 @@ const Footer = () => {
                           whiteSpace: 'nowrap'
                         }}
                       >
-                        {item.eventName}
+                        {item.EventName}
                       </Typography>
                       <Typography
                         variant="subtitle1"
@@ -155,10 +155,10 @@ const Footer = () => {
                         component="p"
                         sx={{ display: "flex", justifyContent: "flex-start" }}
                       >
-                        {" "}• {item.datetimeEvent.slice(0, 10)}
+                        {" "}• {item.EventDateTime.slice(0, 10)}
                       </Typography>
 
-                      {item.description}
+                      {item.EventDescription}
                     </Box>
                   </Box>
                 ))}</Box>

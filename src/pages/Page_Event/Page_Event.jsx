@@ -225,7 +225,7 @@ const Page_Event = () => {
           />
         )}
         {/* Footer */}
-        <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
+        {/* <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
           <Typography variant="h6" align="center" gutterBottom>
             Team 4
           </Typography>
@@ -238,7 +238,7 @@ const Page_Event = () => {
             Something here to give the footer a purpose!
           </Typography>
           <Copyright />
-        </Box>
+        </Box> */}
         {/* End footer */}
       </>
     )
