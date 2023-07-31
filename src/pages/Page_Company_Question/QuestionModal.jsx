@@ -13,8 +13,8 @@ import {
   Modal,
   IconButton,
 } from "@mui/material";
-import Slide from '@mui/material/Slide';
-import Backdrop from '@mui/material/Backdrop';
+import Slide from "@mui/material/Slide";
+import Backdrop from "@mui/material/Backdrop";
 import { TextareaAutosize } from "@mui/base";
 import CloseIcon from "@mui/icons-material/Close";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
@@ -22,7 +22,7 @@ import CategoryIcon from "@mui/icons-material/Category";
 import SchoolIcon from "@mui/icons-material/School";
 import LanguageIcon from "@mui/icons-material/Language";
 import SubjectRoundedIcon from "@mui/icons-material/SubjectRounded";
-import LoadingButton from '@mui/lab/LoadingButton';
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import { useEffect, useState } from "react";
 
@@ -58,7 +58,7 @@ export default function QuestionModal(props) {
       handleResetForm();
       props.handleModalClose();
     }
-  }, [props.status])
+  }, [props.status]);
 
   function handleResetForm() {
     setQuestion("");
@@ -373,7 +373,9 @@ export default function QuestionModal(props) {
                         />
                       }
                       label="Technology"
-                      disabled={!props.type || props.status.status === "loading"}
+                      disabled={
+                        !props.type || props.status.status === "loading"
+                      }
                     />
                     <FormControlLabel
                       value="Language"
@@ -388,7 +390,9 @@ export default function QuestionModal(props) {
                         />
                       }
                       label="Language"
-                      disabled={!props.type || props.status.status === "loading"}
+                      disabled={
+                        !props.type || props.status.status === "loading"
+                      }
                     />
                     <FormControlLabel
                       value="Soft Skills"
@@ -403,7 +407,9 @@ export default function QuestionModal(props) {
                         />
                       }
                       label="Soft Skills"
-                      disabled={!props.type || props.status.status === "loading"}
+                      disabled={
+                        !props.type || props.status.status === "loading"
+                      }
                     />
                   </RadioGroup>
                 </FormControl>
@@ -576,49 +582,63 @@ export default function QuestionModal(props) {
                   marginTop: 2,
                 }}
               >
-                {props.status.status !== "loading" && <Button
-                  variant="outlined"
-                  sx={{
-                    color: "black",
-                    border: "1px solid black",
-                    textTransform: "none",
-                    height: 50,
-                    width: "100%",
-                    textTransform: "none",
-                    "&:hover": {
+                {props.status.status !== "loading" && (
+                  <Button
+                    // variant="outlined"
+                    // sx={{
+                    //   color: "black",
+                    //   border: "1px solid black",
+                    //   textTransform: "none",
+                    //   height: 50,
+                    //   width: "100%",
+                    //   textTransform: "none",
+                    //   "&:hover": {
+                    //     backgroundColor: "black",
+                    //     color: "white",
+                    //   },
+                    // }}
+                    variant="contained"
+                    sx={{
+                      height: 50,
+                      width: "100%",
+                      textTransform: "none",
                       backgroundColor: "black",
-                      color: "white",
-                    },
-                  }}
-                  onClick={() => {
-                    if (props.type === true) {
-                      handleSubmitClick();
-                    } else {
-                      props.setType(true);
-                    }
-                  }}
-                >
-                  {props.type === true ? "Update" : "Edit question"}
-                </Button>}
-                {props.status.status === "loading" && <LoadingButton
-                  variant="outlined"
-                  sx={{
-                    color: "black",
-                    border: "1px solid black",
-                    textTransform: "none",
-                    height: 50,
-                    width: "100%",
-                    textTransform: "none",
-                    "&:hover": {
-                      backgroundColor: "black",
-                      color: "white",
-                    },
-                  }}
-                  loading
-                  loadingPosition="center"
-                >
-                  Updating
-                </LoadingButton>}
+                      "&:hover": {
+                        backgroundColor: "grey",
+                      },
+                    }}
+                    onClick={() => {
+                      if (props.type === true) {
+                        handleSubmitClick();
+                      } else {
+                        props.setType(true);
+                      }
+                    }}
+                  >
+                    {props.type === true ? "Update" : "Edit question"}
+                  </Button>
+                )}
+                {props.status.status === "loading" && (
+                  <LoadingButton
+                    variant="outlined"
+                    sx={{
+                      color: "black",
+                      border: "1px solid black",
+                      textTransform: "none",
+                      height: 50,
+                      width: "100%",
+                      textTransform: "none",
+                      "&:hover": {
+                        backgroundColor: "black",
+                        color: "white",
+                      },
+                    }}
+                    loading
+                    loadingPosition="center"
+                  >
+                    Updating
+                  </LoadingButton>
+                )}
               </Grid>
             </Grid>
           </Box>

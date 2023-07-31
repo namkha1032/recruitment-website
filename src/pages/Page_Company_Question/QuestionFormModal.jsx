@@ -14,7 +14,7 @@ import {
   IconButton,
   Slide,
 } from "@mui/material";
-import LoadingButton from '@mui/lab/LoadingButton';
+import LoadingButton from "@mui/lab/LoadingButton";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import CategoryIcon from "@mui/icons-material/Category";
 import SchoolIcon from "@mui/icons-material/School";
@@ -41,7 +41,7 @@ export default function QuestionFormModal(props) {
       handleResetForm();
       props.handleAddModalClose();
     }
-  }, [props.status])
+  }, [props.status]);
 
   const [isFillQuestion, setIsFillQuestion] = useState(null);
   const [isFillType, setIsFillType] = useState(null);
@@ -481,44 +481,57 @@ export default function QuestionFormModal(props) {
                   marginTop: 2,
                 }}
               >
-                {props.status.status !== "loading" && <Button
-                  variant="outlined"
-                  sx={{
-                    color: "black",
-                    border: "1px solid black",
-                    textTransform: "none",
-                    height: 50,
-                    width: "100%",
-                    textTransform: "none",
-                    "&:hover": {
+                {props.status.status !== "loading" && (
+                  <Button
+                    // variant="outlined"
+                    // sx={{
+                    //   color: "black",
+                    //   border: "1px solid black",
+                    //   textTransform: "none",
+                    //   height: 50,
+                    //   width: "100%",
+                    //   textTransform: "none",
+                    //   "&:hover": {
+                    //     backgroundColor: "black",
+                    //     color: "white",
+                    //   },
+                    // }}
+                    variant="contained"
+                    sx={{
+                      height: 50,
+                      width: "100%",
+                      textTransform: "none",
                       backgroundColor: "black",
-                      color: "white",
-                    },
-                  }}
-                  loading
-                  onClick={handleSubmitClick}
-                >
-                  Create
-                </Button>}
-                {props.status.status === "loading" && <LoadingButton
-                  variant="outlined"
-                  sx={{
-                    color: "black",
-                    border: "1px solid black",
-                    textTransform: "none",
-                    height: 50,
-                    width: "100%",
-                    textTransform: "none",
-                    "&:hover": {
-                      backgroundColor: "black",
-                      color: "white",
-                    },
-                  }}
-                  loading
-                  loadingPosition="center"
-                >
-                  Create
-                </LoadingButton>}
+                      "&:hover": {
+                        backgroundColor: "grey",
+                      },
+                    }}
+                    onClick={handleSubmitClick}
+                  >
+                    Create
+                  </Button>
+                )}
+                {props.status.status === "loading" && (
+                  <LoadingButton
+                    variant="outlined"
+                    sx={{
+                      color: "black",
+                      border: "1px solid black",
+                      textTransform: "none",
+                      height: 50,
+                      width: "100%",
+                      textTransform: "none",
+                      "&:hover": {
+                        backgroundColor: "black",
+                        color: "white",
+                      },
+                    }}
+                    loading
+                    loadingPosition="center"
+                  >
+                    Create
+                  </LoadingButton>
+                )}
               </Grid>
             </Grid>
           </Box>

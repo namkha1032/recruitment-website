@@ -161,7 +161,7 @@ export default function Page_Company_Interview() {
       type: "saga/getPositionListWithFilter",
       payload: {
         departmentId: value ? value.departmentId : null,
-        status: null
+        status: null,
       },
     });
   }
@@ -351,12 +351,12 @@ export default function Page_Company_Interview() {
       renderHeader: () => <span>Result</span>,
       renderCell: (params) => {
         switch (params.value) {
-          case "Pending":
-            return <Pending />;
           case "Passed":
             return <Pass />;
           case "Failed":
             return <Fail />;
+          default:
+            return <Pending />;
         }
       },
     },
@@ -377,9 +377,11 @@ export default function Page_Company_Interview() {
   ]);
 
   return (
-    <Box sx={{
-      marginTop: 3,
-    }}>
+    <Box
+      sx={{
+        marginTop: 3,
+      }}
+    >
       <GigaCard>
         <GigaCardBody>
           <Grid

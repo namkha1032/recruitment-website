@@ -3,11 +3,14 @@
 //   "EventId": 0,
 //   "EventCampus": "",
 //   "EventName": "",
+//   "EventDatetime: "",
 //   "CreatedById": 0,
 //   "CreatedByName": "",
 //   "NumOfJoined": 0,
 //   "Status": [true, false] ~ ["Upcoming", "Finished"]
 // }
+
+import { formatDatetime } from "./formatDate";
 
 export function formatEventList(input) {
   const output = input.map((element) => {
@@ -17,11 +20,12 @@ export function formatEventList(input) {
       EventDescription: element.description,
       EventName: element.eventName,
       CreatedById: element.recruiterId,
-      CreatedByName: "Khoa Cao Tran Anh",
-      EventDateTime: "01/08/2023 10:00 AM",
+      CreatedByName: element.recruiterId,
+      EventDateTime: formatDatetime(element.datetimeEvent),
       NumOfJoined: 0,
       Status: element.isDeleted
     };
   });
+  console.log(output)
   return output
 }

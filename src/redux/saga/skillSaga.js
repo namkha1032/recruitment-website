@@ -14,21 +14,21 @@ function* getSkill(action) {
     //   `${host.name}/data/skillList.json`
     // );
     yield put({ type: "skill/setSkill", payload: response.data });
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "no",
-        message: "",
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "no",
+    //     message: "",
+    //   },
+    // });
   } catch (error) {
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "yes",
-        message: "message" in error ? "Skill - " + error.message : error.response.data,
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "yes",
+    //     message: "message" in error ? "Skill - " + error.message : error.response.data,
+    //   },
+    // });
   }
 }
 
