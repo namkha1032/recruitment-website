@@ -126,6 +126,7 @@ function* getPosition(action) {
     yield put({
       type: 'position/setPosition', payload: {
         ...response1.data,
+        description1: "<h3>About Soft skill</h3><p>Lorem <strong><em><u>ipsum dolo</u></em></strong>r sit amet consectetur adip<em>isicing elit. D</em>oloremque facere nesciunt iusto dolor <strong>voluptatem</strong> corrupti ullam magni expedita ea, accusantium laboriosa<u>m illum a minus repudiandae </u>similique, sed nulla repellendus at!</p><h3>About Language</h3><ol><li>oloremque facere nesciunt iusto dolor <strong>voluptatem</strong> corrupti ullam magni expedita ea, </li><li>boriosa<u>m illum a minus repudiandae </u>similique, sed nulla repellendus at!</li><li>orem <strong><em><u>ipsum dolo</u></em></strong>r sit amet consectetur a</li></ol><h3>About Technology</h3><ul><li><u> illum a minus repudiandae </u>similique, sed nulla repellendus at!</li><li>ctetur adip<em>isicing elit. D</em>oloremque facere nesciunt iusto dolor <strong>voluptatem</strong> corrupti ullam magni expedita ea, accusantium laboriosa<u>m illum a minus repudiandae </u>si</li><li>Lorem <strong><em><u>ipsum dolo</u></em></strong>r sit amet consectetur adip<em>isicing elit. D</em>oloremque f</li></ul>",
         departmentName: "IT ROOM",
         departmentAddress: "G Floor, F-Town 1 Building, High-tech Park, Tan Phu Ward, District 9, Ho Chi Minh City, Vietnam",
         departmentPhone: 123456789,

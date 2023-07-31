@@ -29,15 +29,11 @@ const Page_Company_Recruitment_Id = () => {
                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", marginTop: "16px" }}>
 
                     <Button sx={{
-                        color: "black",
-                        border: "1px solid black",
-                        textTransform: "none",
-
+                        backgroundColor: "black",
                         ":hover": {
-                            backgroundColor: "black",
-                            color: "white"
+                            backgroundColor: "grey",
                         }
-                    }} variant='outlined' onClick={handleEdit}>
+                    }} variant='contained   ' onClick={handleEdit}>
                         <EditIcon></EditIcon> EDIT
                     </Button>
 

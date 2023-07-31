@@ -7,17 +7,20 @@ import RadarIcon from '@mui/icons-material/Radar';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import RecommendIcon from '@mui/icons-material/Recommend';
 import { formatDate } from '../../utils/formatDate';
-
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 import './Info_view.css'
 const View_detail = (props) => {
     // console.log("hello" , props.detailposition.description);
     // console.log("hi", props.detailposition.departmentName);
-
+    const theme = useTheme()
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     const requires = require('../../data/View_recruitment/requires.json');
     // const languages = require('../../data/View_recruitment/languages.json');
-    let left = 5
-    let right = 6
+    let left = isMd ? 5 : 3 
+    let right = isMd ? 6 : 8 
     let gap = 1
     let gridSx = {
         display: "flex", alignItems: "center"
@@ -26,151 +29,160 @@ const View_detail = (props) => {
     const endDate = props.detailposition ? formatDate(props.detailposition.endDate.slice(0, 10)) : [];
     console.log("hello", props.detailposition);
     // console.log("hellode", props.department);
+    console.log("left", left);
+    console.log("isSm", isSm);
     return (
-        props.detailposition &&  
+        props.detailposition &&
         // props.detail &&
         <>
-            
-                <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
-                    <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
-                        <Box sx={gridSx}>
-                            <RadarIcon />
-                            <Typography variant="h6">
-                                Position
-                            </Typography>
-                        </Box>
-                    </Grid>
-                    <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
-                        <Typography variant="h6">
-                            :
+
+            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+                <Grid item md={left}  sx={{ ...gridSx, columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                    <Box sx={gridSx}>
+                        <RadarIcon />
+                        <Typography variant="h6" sx={{ marginLeft: "5px" }}>
+                            Position
                         </Typography>
-                    </Grid>
-                    <Grid item md={right} sx={gridSx}>
-                        <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-                            {/* {detailposition[0].positionName} */}
-                            {props.detailposition.positionName}
-                            {/* {detail[recruitmentid].PositionName} */}
-                        </Typography>
-                    </Grid>
-                </Box>
-                <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
-                    <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
-                        <Box sx={gridSx}>
-                            <HourglassBottomRoundedIcon />
-                            <Typography variant="h6">
+                    </Box>
+                </Grid>
+                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                    <Typography variant="h6">
+                        :
+                    </Typography>
+                </Grid>
+                <Grid item md={right}   sx={gridSx}>
+                    <Typography variant="h6" sx={{ marginLeft: "8px" }}>
+                        {/* {detailposition[0].positionName} */}
+                        {props.detailposition.positionName}
+                        {/* {detail[recruitmentid].PositionName} */}
+                    </Typography>
+                </Grid>
+            </Box>
+            <Box  sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+                <Grid item md={left}  sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                    <Box sx={gridSx}>
+                        <HourglassBottomRoundedIcon />
+                        {isMd ? (
+                            <Typography variant="h6" sx={{ marginLeft: "5px" }}>
                                 Time for applied
                             </Typography>
-                        </Box>
-                    </Grid>
-                    <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
-                        <Typography variant="h6">
-                            :
-                        </Typography>
-                    </Grid>
-                    <Grid item md={right} sx={gridSx}>
-                        <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-                            {/* {`${props.detailposition.startTime}${' - '}${props.detailposition.endTime}`} */}
-                            {/* {`${detail[recruitmentid].StartDate}${' - '}${detail[recruitmentid].EndDate}`} */}
-                            {/* {`${detailposition.startDate}${' - '}${detailposition.endDate}`} */}
-                            {`${startDate}${' - '}${endDate}`}
-                        </Typography>
-                        {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`} /> */}
-                    </Grid>
-                </Box>
-                <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
-                    <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
-                        <Box sx={gridSx}>
-                            <ZoomInIcon />
-                            <Typography variant="h6">
-                                Max Hiring
+                        ) : (
+                            <Typography variant="h6" sx={{ marginLeft: "5px" }}>
+                                Time
                             </Typography>
-                        </Box>
-                    </Grid>
-                    <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
-                        <Typography variant="h6">
-                            :
+                        )}
+                    </Box>
+                </Grid>
+                <Grid item md={1}  sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                    <Typography variant="h6">
+                        :
+                    </Typography>
+                </Grid>
+                <Grid item  md={right}  sx={gridSx}>
+                    <Typography variant="h6" sx={{ marginLeft: "8px" }}>
+                        {/* {`${props.detailposition.startTime}${' - '}${props.detailposition.endTime}`} */}
+                        {/* {`${detail[recruitmentid].StartDate}${' - '}${detail[recruitmentid].EndDate}`} */}
+                        {/* {`${detailposition.startDate}${' - '}${detailposition.endDate}`} */}
+                        {`${startDate}${' - '}${endDate}`}
+                    </Typography>
+                    {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`} /> */}
+                </Grid>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+                <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                    <Box sx={gridSx}>
+                        <ZoomInIcon />
+                        <Typography variant="h6" sx={{ marginLeft: "5px" }} >
+                            Max Hiring
                         </Typography>
-                    </Grid>
-                    <Grid item md={right} sx={gridSx}>
-                        <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-                            {/* {detailposition[0].hireMax} */}
-                            {/* {detail[recruitmentid].MaxHiringQty} */}
-                            {props.detailposition.maxHiringQty}
-                            {/* {props.detailposition.hireMax} */}
+                    </Box>
+                </Grid>
+                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                    <Typography variant="h6">
+                        :
+                    </Typography>
+                </Grid>
+                <Grid item md={right} sx={gridSx}>
+                    <Typography variant="h6" sx={{ marginLeft: "8px" }}>
+                        {/* {detailposition[0].hireMax} */}
+                        {/* {detail[recruitmentid].MaxHiringQty} */}
+                        {props.detailposition.maxHiringQty}
+                        {/* {props.detailposition.hireMax} */}
+                    </Typography>
+                    {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].hireMax}`} /> */}
+                </Grid>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+                <Grid item md={left} sx={{display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                    <Box sx={gridSx}>
+                        <RecommendIcon />
+                        <Typography variant="h6" sx={{ marginLeft: "5px" }}>
+                            Requirement
                         </Typography>
-                        {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].hireMax}`} /> */}
-                    </Grid>
-                </Box>
-                <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
-                    <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
-                        <Box sx={gridSx}>
-                            <RecommendIcon />
-                            <Typography variant="h6">
-                                Requirement
-                            </Typography>
-                        </Box>
-                    </Grid>
-                    <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
-                        <Typography variant="h6">
-                            :
-                        </Typography>
-                    </Grid>
-                    <Grid item md={right} sx={gridSx}>
-                        <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-start", alignItems: "flex-start" }}>
-                            {props.skill.map((require, index) => (
+                    </Box>
+                </Grid>
+                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                    <Typography variant="h6">
+                        :
+                    </Typography>
+                </Grid>
+                <Grid item md={right} sx={gridSx}>
+                    <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-start", alignItems: "flex-start" }}>
+                    {/* {props.skill.map((require, index) => (
 
                                 <Chip key={index} sx={{ margin: "0px 0px 5px 8px" }} label={require} variant='outlined' size='medium' color="warning" />
-                            ))}
-                            {/* {requires.map((require) => (
-                                               
-                                               <Chip key={require.id} sx={{ margin: "0px 0px 5px 8px" }} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
-                                           ))} */}
+                            ))} */}
 
-                        </Stack>
-                    </Grid>
-                </Box>
-                <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
-                    <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
-                        <Box sx={gridSx}>
-                            <LanguageIcon />
-                            <Typography variant="h6">
-                                Language
-                            </Typography>
-                        </Box>
-                    </Grid>
-                    <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
-                        <Typography variant="h6">
-                            :
+                    {requires.map((require) => (
+
+                        <Chip key={require.id} sx={{ margin: "0px 0px 5px 8px" }} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
+                    ))}
+
+                    </Stack>
+                </Grid>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+                <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                    <Box sx={gridSx}>
+                        <LanguageIcon />
+                        <Typography variant="h6" sx={{ marginLeft: "5px" }} >
+                            Language
                         </Typography>
-                    </Grid>
-                    <Grid item md={right} sx={gridSx}>
-                        <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${props.language.languageName}`} />
-                        {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detail[recruitmentid].languageName}`} /> */}
-                    </Grid>
-                </Box>
-                <Box sx={{ display: "flex", flexDirection: "row" }}>
-                    <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
-                        <Box sx={gridSx}>
-                            <MonetizationOnIcon />
-                            <Typography variant="h6">
-                                Salary
-                            </Typography>
-                        </Box>
-                    </Grid>
-                    <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
-                        <Typography variant="h6">
-                            :
+                    </Box>
+                </Grid>
+                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                    <Typography variant="h6">
+                        :
+                    </Typography>
+                </Grid>
+                <Grid item md={right} sx={gridSx}>
+                    <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${props.language.languageName}`} />
+                    {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detail[recruitmentid].languageName}`} /> */}
+                </Grid>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "row" }}>
+                <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                    <Box sx={gridSx}>
+                        <MonetizationOnIcon />
+                        <Typography variant="h6" sx={{ marginLeft: "5px" }} >
+                            Salary
                         </Typography>
-                    </Grid>
-                    <Grid item md={right} sx={gridSx}>
-                        <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-                            {props.detailposition.salary}
-                            {/* {detail[recruitmentid].salary} */}
-                        </Typography>
-                        {/* <Chip sx={{ padding: "0px", marginLeft: "5px" }} label={`${detailposition[0].salary}`} variant="outlined" color='info' size="medium" /> */}
-                    </Grid>
-                </Box>
-            
+                    </Box>
+                </Grid>
+                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                    <Typography variant="h6">
+                        :
+                    </Typography>
+                </Grid>
+                <Grid item md={right} sx={gridSx}>
+                    <Typography variant="h6" sx={{ marginLeft: "8px" }}>
+                        {props.detailposition.salary}
+                        {/* {detail[recruitmentid].salary} */}
+                    </Typography>
+                    {/* <Chip sx={{ padding: "0px", marginLeft: "5px" }} label={`${detailposition[0].salary}`} variant="outlined" color='info' size="medium" /> */}
+                </Grid>
+            </Box>
+
         </>
     );
 }
