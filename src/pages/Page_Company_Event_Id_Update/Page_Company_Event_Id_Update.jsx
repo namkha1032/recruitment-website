@@ -1,6 +1,6 @@
 // import libraries
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 
 // import MUI components
@@ -27,10 +27,17 @@ import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import GroupAddRoundedIcon from '@mui/icons-material/GroupAddRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
+import { useDispatch } from 'react-redux'
 
 
 
 const Page_Company_Event_Id_Update = () => {
+
+    // useNavigate
+    const navigate = useNavigate()
+
+    const dispatch = useDispatch();
+    
 
     // useState
     const [name, setName] = useState(null);
@@ -103,10 +110,6 @@ const Page_Company_Event_Id_Update = () => {
     // console.log(fileName)
 
 
-    // useNavigate
-    const navigate = useNavigate()
-
-
 
     return (
         <form onSubmit={handleSubmit}>
@@ -147,7 +150,8 @@ const Page_Company_Event_Id_Update = () => {
                             >
                             </TextField>
                         </Grid>
-                        <Grid
+
+                        {/* <Grid
                             item
                             xs={12}
                             display="flex"
@@ -172,11 +176,12 @@ const Page_Company_Event_Id_Update = () => {
                                 }}
                             >
                             </TextField>
-                        </Grid>
+                        </Grid> */}
 
                         <Grid container sx={{ marginTop: 5 }}>
                             <Grid item xs={6} sx={{ paddingRight: 2 }}>
-                                <Grid container rowSpacing={4.5}>
+                                {/* <Grid container rowSpacing={4.5}> */}
+                                <Grid container rowSpacing={6}>
                                     <Grid
                                         item
                                         xs={12}
@@ -204,10 +209,10 @@ const Page_Company_Event_Id_Update = () => {
                                                     onChange={(newValue) => {
                                                         // console.log("main: ", newValue)
                                                         // console.log("sub: ", newValue.$d)
-                                                        const newDate = new Date(newValue.$d)
+                                                        // Step 1: const newDate = new Date(newValue.$d)
                                                         // console.log("newDate: ", newDate)
                                                         // console.log("type: ", typeof (newValue.$d.toLocaleTimeString()))
-                                                        console.log("DateTime updated: ", newDate.toLocaleString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }))
+                                                        // Step 2: console.log("DateTime created: ", newDate.toLocaleString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }))
                                                         setTime(newValue)
                                                     }}
                                                     format='HH:mm:ss DD/MM/YYYY'
@@ -215,6 +220,36 @@ const Page_Company_Event_Id_Update = () => {
                                             </DemoContainer>
                                         </LocalizationProvider>
                                     </Grid>
+
+                                    {/* ------------------------- Maximum number of participants ------------------------- */}
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        display="flex"
+                                        alignItems="center"
+                                        justifyContent="flex-start"
+                                    >
+                                        <TextField
+                                            id="maximumnumber"
+                                            label="Maximum number of participants"
+                                            variant="outlined"
+                                            fullWidth
+                                            required
+                                            type='number'
+                                            inputProps={{ min: '0' }}
+                                            onChange={handleMaxQuantity}
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <GroupAddRoundedIcon></GroupAddRoundedIcon>
+                                                    </InputAdornment>
+                                                ),
+                                            }}
+                                        >
+                                        </TextField>
+                                    </Grid>
+                                    {/* --------------------------------------------------------------------------- */}
+
                                     <Grid
                                         item
                                         xs={12}
@@ -257,7 +292,8 @@ const Page_Company_Event_Id_Update = () => {
                                     // display: 'flex',
                                     // justifyContent: 'center',
                                     // alignItems: 'center'
-                                    marginTop: 1.25
+                                    // marginTop: 1.25
+                                    marginTop: 1.1
                                 }}
                             >
                                 <Grid
@@ -285,6 +321,7 @@ const Page_Company_Event_Id_Update = () => {
                                         placeholder='Typing Event Content here...'
                                         value={content}
                                         onChange={setContent}
+                                        style={{ height: '320px' }}
                                     >
                                     </ReactQuill>
                                 </Grid>
@@ -305,9 +342,22 @@ const Page_Company_Event_Id_Update = () => {
                                     className='input-field'
                                     hidden
                                     onChange={({ target: { files } }) => {
-                                        files[0] && setFileName(files[0].name)
-                                        if (files) {
-                                            setImage(URL.createObjectURL(files[0]))
+                                        // files[0] && setFileName(files[0].name)
+                                        // if (files) {
+                                        //     setImage(URL.createObjectURL(files[0]))
+                                        // }
+                                        if (files && files[0]) {
+                                            setFileName(files[0].name);
+                                            // Check browser support for URL.createObjectURL
+                                            if (typeof URL !== "undefined" && URL.createObjectURL) {
+                                                try {
+                                                    setImage(URL.createObjectURL(files[0]));
+                                                } catch (error) {
+                                                    console.error("Error creating object URL:", error);
+                                                }
+                                            } else {
+                                                console.error("URL.createObjectURL is not supported in this browser.");
+                                            }
                                         }
                                     }}
                                 />

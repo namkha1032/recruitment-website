@@ -1,5 +1,5 @@
 // import libraries
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 
@@ -28,30 +28,30 @@ import GigaCard from '../../components/GigaCard/GigaCard';
 import GigaCardHeader from '../../components/GigaCardHeader/GigaCardHeader';
 import GigaCardBody from '../../components/GigaCardBody/GigaCardBody';
 
-
 // Position
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import RecordVoiceOverRoundedIcon from '@mui/icons-material/RecordVoiceOverRounded';
 import PersonSearchRoundedIcon from '@mui/icons-material/PersonSearchRounded';
 import ManageAccountsRoundedIcon from '@mui/icons-material/ManageAccountsRounded';
+import { Admin, Candidate, Interviewer, Recruiter } from '../../components/Position/Position';
+
 import { useDispatch, useSelector } from 'react-redux';
 import cleanStore from '../../utils/cleanStore';
 import useGetRole from '../../hooks/useGetRole';
-import { Admin, Candidate, Interviewer, Recruiter } from '../../components/Position/Position';
+import { transferDatetimeBack } from '../../utils/transferDatetime';
 
 
 
 const Page_Company_Event_Id = () => {
-
-
-    const role = useGetRole()
+    
 
     // useNavigate
     const navigate = useNavigate()
 
+    const role = useGetRole()
 
     const { eventid } = useParams();
-    console.log('Anh Khoa: ',eventid);
+    console.log('company event id: ', eventid);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -63,6 +63,16 @@ const Page_Company_Event_Id = () => {
     }, [])
 
     const event = useSelector((state) => state.event)
+
+    const note = event ? event.content : ""
+    const contentRef = useRef()
+    useEffect(() => {
+        if (note) {
+            console.log(note)
+            contentRef.current.innerHTML = note
+        }
+    }, [note])
+    console.log("contentRef: ", contentRef);
 
     const row_drafts = useSelector((state) => state.candidateJoinEvent)
     const rows = row_drafts ? row_drafts : []
@@ -90,9 +100,9 @@ const Page_Company_Event_Id = () => {
         setValue(newValue);
     }
 
-    const handleRegister = (e) => {
-        alert("Register successfully!");
-    }
+    // const handleRegister = (e) => {
+    //     alert("Register successfully!");
+    // }
 
     const handleEdit = (e) => {
         navigate("/company/event/:eventid/update");
@@ -325,20 +335,20 @@ const Page_Company_Event_Id = () => {
                                     <GigaCardBody>
                                         <Box sx={{ fontSize: '18px', fontStyle: 'italic', display: 'flex', justifyContent: 'flex-end', marginBottom: 3 }}>
                                             <TodayRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></TodayRoundedIcon>
-                                            <span style={{ color: 'darkgray' }}>{event.createdTime}</span>
+                                            <span style={{ color: 'darkgray', fontSize: '17px' }}>{event.createdTime}</span>
                                         </Box>
 
                                         {/* <div> cannot appear as a descendant of <p> */}
                                         {/* ---------------------------------------------------------------------- */}
-                                        <p align='justify'>
+                                        {/* <p align='justify'>
                                             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis recusandae sapiente deserunt sequi rerum animi eaque illo excepturi. Iusto saepe cumque ipsa cupiditate ab accusantium dolor soluta veritatis ex hic?<br />
                                             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae modi rerum enim voluptatibus voluptatem! Alias eum velit, animi harum at vitae! Atque, eum. Eos iste soluta vitae quidem itaque saepe?<br />
                                             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus rerum libero cupiditate voluptatem, doloremque quaerat culpa soluta! Soluta assumenda at sint et fugit quo natus id beatae! Et, saepe? Ratione!<br />
                                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum mollitia asperiores quis quos, ut fugiat harum. Voluptates vero animi alias sapiente odit cumque esse culpa, repudiandae error inventore, autem commodi!<br />
                                             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit eum esse quisquam distinctio animi iure possimus omnis tempore dicta consectetur perspiciatis atque in, cupiditate nostrum numquam accusamus blanditiis velit libero!<br />
                                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure laborum, ullam necessitatibus harum distinctio similique itaque corrupti qui possimus incidunt quisquam, optio hic molestias et accusantium rem ipsum. Commodi, consequatur.<br />
-                                        </p>
-                                        {/* {event.content} */}
+                                        </p> */}
+                                        <Box ref={contentRef}></Box>
                                         {/* ---------------------------------------------------------------------- */}
 
                                         <Grid container sx={{ marginTop: 8 }}>
@@ -387,7 +397,7 @@ const Page_Company_Event_Id = () => {
                                                         <Box sx={{
                                                             fontSize: 16,
                                                         }}>
-                                                            {event.time}
+                                                            {transferDatetimeBack(event.time)}
                                                         </Box>
                                                     </Box>
                                                     {/* <p style={{ fontWeight: 600, fontSize: 20 }}>21/07/2023</p> */}

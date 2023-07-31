@@ -16,6 +16,7 @@ import picture from '../../assets/img/event.png'
 import GigaCard from '../../components/GigaCard/GigaCard';
 import GigaCardHeader from '../../components/GigaCardHeader/GigaCardHeader';
 import GigaCardBody from '../../components/GigaCardBody/GigaCardBody';
+
 import { useDispatch, useSelector } from 'react-redux';
 import cleanStore from '../../utils/cleanStore';
 import useGetRole from '../../hooks/useGetRole';
@@ -25,8 +26,10 @@ import { transferDatetimeBack } from '../../utils/transferDatetime';
 
 const Page_Event_Id = () => {
 
+    const role = useGetRole()
+
     const { eventid } = useParams();
-    console.log(eventid);
+    console.log('event id: ', eventid);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -37,17 +40,8 @@ const Page_Event_Id = () => {
     }, [])
 
     const event = useSelector((state) => state.event)
+
     const note = event ? event.content : ""
-    const role = useGetRole()
-
-
-    // handle events
-    const handleRegister = (e) => {
-        alert("Register successfully!");
-        // alert(new Date())
-    }
-
-
     const contentRef = useRef()
     useEffect(() => {
         if (note) {
@@ -56,6 +50,13 @@ const Page_Event_Id = () => {
         }
     }, [note])
     console.log("contentRef: ", contentRef);
+
+
+    // handle events
+    const handleRegister = (e) => {
+        alert("Register successfully!");
+        // alert(new Date())
+    }
 
 
 
@@ -119,7 +120,7 @@ const Page_Event_Id = () => {
                         <GigaCardBody>
                             <Box sx={{ fontSize: '18px', fontStyle: 'italic', display: 'flex', justifyContent: 'flex-end', marginBottom: 3 }}>
                                 <TodayRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></TodayRoundedIcon>
-                                <span style={{ color: 'darkgray' }}>{event.createdTime}</span>
+                                <span style={{ color: 'darkgray', fontSize: '17px' }}>{event.createdTime}</span>
                             </Box>
 
                             {/* <div> cannot appear as a descendant of <p> */}
@@ -238,7 +239,6 @@ const Page_Event_Id = () => {
             </Container >
         )}
         </>
-
     )
 }
 

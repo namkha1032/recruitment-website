@@ -84,37 +84,42 @@ function* getEventListWithFilter(action) {
 
 function* getEvent(action) {
   console.log("eid: ", action.payload)
-  const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Event?id=${action.payload}`)
-
-  // // ----------------------------------------
-  // // FAKE API FOR BACKEND
-  // const response = yield call(axios.get, `${host.name}/data/eventid.json`)
-  // // ----------------------------------------
-
-  console.log("res: ", response.data)
-  const res = response.data;
-  const newObj = {
-    eventId: res.eventId,
-    eventName: res.eventName,
-    content: res.description,
-    quantity: 50,
-    maxQuantity: res.maxParticipants,
-    time: res.datetimeEvent,
-    location: res.place,
-    createdTime: "16/07/2023 10:30"
+  try {
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Event?id=${action.payload}`)
 
     // // ----------------------------------------
     // // FAKE API FOR BACKEND
-    // ,content: res.content,
-    // quantity: res.quantity,
-    // maxQuantity: res.maxQuantity,
-    // time: res.time,
-    // location: res.location,
-    // createdTime: res.createdTime
+    // const response = yield call(axios.get, `${host.name}/data/eventid.json`)
     // // ----------------------------------------
+
+    console.log("res: ", response.data)
+    const res = response.data;
+    const newObj = {
+      eventId: res.eventId,
+      eventName: res.eventName,
+      content: res.description,
+      quantity: 50,
+      maxQuantity: res.maxParticipants,
+      time: res.datetimeEvent,
+      location: res.place,
+      createdTime: "10:30:00 16/07/2023"
+
+      // // ----------------------------------------
+      // // FAKE API FOR BACKEND
+      // ,content: res.content,
+      // quantity: res.quantity,
+      // maxQuantity: res.maxQuantity,
+      // time: res.time,
+      // location: res.location,
+      // createdTime: res.createdTime
+      // // ----------------------------------------
+    }
+    console.log('new object: ', newObj)
+    yield put({ type: "event/setEvent", payload: newObj })
   }
-  console.log('Anh Hoang: ', newObj)
-  yield put({ type: "event/setEvent", payload: newObj })
+  catch (error) {
+    console.log(error)
+  }
 }
 
 
@@ -167,21 +172,19 @@ function* postEvent(action) {
     const eventList = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event")
 
     const eventId = eventList.data.filter(item => item.eventName === eventName && item.description === description)[0].eventId
-    console.log('ĐBG:', eventId)
-    yield put({type: "eventNavigate/onSuccess", payload: eventId})
+    console.log('eId: ', eventId)
+    yield put({ type: "eventNavigate/onSuccess", payload: eventId })
   }
   catch (error) {
-
+    console.log(error)
   }
-
-
 }
 
 
 // function* getEventListId(action) {
 //   const eventList = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event")
 //   const eventId = eventList.filter(item => item.eventName === action.payload.name && item.description === action.payload.content)[0].eventId
-//   console.log('ĐBG:', eventId)
+//   console.log('eId: ', eventId)
 //   yield put({ type: "eventList/setEventList", payload: eventId })
 // }
 

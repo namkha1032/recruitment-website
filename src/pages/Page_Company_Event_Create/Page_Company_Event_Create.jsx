@@ -37,7 +37,6 @@ const Page_Company_Event_Create = () => {
     // useNavigate
     const navigate = useNavigate()
 
-
     const dispatch = useDispatch();
 
 
@@ -80,8 +79,6 @@ const Page_Company_Event_Create = () => {
 
     const eventStatus = useSelector((state) => state.eventNavigate)
 
-   
-
 
     // const handleImage = (e) => {
     //     setImage(e.target.value);
@@ -105,10 +102,11 @@ const Page_Company_Event_Create = () => {
         console.log(time);
 
         console.log(image);
+
         // ---------------------------------------
         const output = new Date(time.$d)
         const re = output.toJSON()
-        console.log("HHH: ", re)
+        console.log("JSONformat: ", re)
         console.log(typeof (re))
         // ---------------------------------------
 
@@ -124,7 +122,6 @@ const Page_Company_Event_Create = () => {
                 createdTime: "16/07/2023 10:30"
             }
         });
-
     }
 
     // const [fileName, setFileName] = useState(null)
@@ -141,8 +138,10 @@ const Page_Company_Event_Create = () => {
         }
     }, [eventStatus])
 
+
+
     return (
-        (eventStatus.status === 'idle' || eventStatus.status === 'loading' )  &&    <form onSubmit={handleSubmit}>
+        (eventStatus.status === 'idle' || eventStatus.status === 'loading') && <form onSubmit={handleSubmit}>
             <GigaCard>
                 <Container sx={{ marginTop: 6 }} className='eventcreate' >
                     <Box sx={{
@@ -374,9 +373,22 @@ const Page_Company_Event_Create = () => {
                                     className='input-field'
                                     hidden
                                     onChange={({ target: { files } }) => {
-                                        files[0] && setFileName(files[0].name)
-                                        if (files) {
-                                            setImage(URL.createObjectURL(files[0]))
+                                        // files[0] && setFileName(files[0].name)
+                                        // if (files) {
+                                        //     setImage(URL.createObjectURL(files[0]))
+                                        // }
+                                        if (files && files[0]) {
+                                            setFileName(files[0].name);
+                                            // Check browser support for URL.createObjectURL
+                                            if (typeof URL !== "undefined" && URL.createObjectURL) {
+                                                try {
+                                                    setImage(URL.createObjectURL(files[0]));
+                                                } catch (error) {
+                                                    console.error("Error creating object URL:", error);
+                                                }
+                                            } else {
+                                                console.error("URL.createObjectURL is not supported in this browser.");
+                                            }
                                         }
                                     }}
                                 />
@@ -425,20 +437,14 @@ const Page_Company_Event_Create = () => {
                             </div>
                             <Grid item xs={12} align='right' sx={{ marginTop: 6 }}>
 
-                                {eventStatus.status !== "loading"  && eventStatus.status !== "success" ? <Button type="submit" variant="contained" size='large'>
+                                {eventStatus.status !== "loading" && eventStatus.status !== "success" ? <Button type="submit" variant="contained" size='large'>
                                     <TaskAltIcon sx={{ marginRight: 1 }}></TaskAltIcon>
                                     Save
                                 </Button>
-                                : <LoadingButton
-                                    loading
-                                    loadingPosition='center'>
-                                </LoadingButton>}
-
-
-
-
-
-
+                                    : <LoadingButton
+                                        loading
+                                        loadingPosition='center'>
+                                    </LoadingButton>}
                             </Grid>
                         </Grid>
                     </Grid>
