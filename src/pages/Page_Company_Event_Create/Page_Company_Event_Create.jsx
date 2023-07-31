@@ -27,10 +27,19 @@ import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import GroupAddRoundedIcon from '@mui/icons-material/GroupAddRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
+import { useDispatch, useSelector } from 'react-redux'
+import { LoadingButton } from '@mui/lab'
 
 
 
 const Page_Company_Event_Create = () => {
+
+    // useNavigate
+    const navigate = useNavigate()
+
+
+    const dispatch = useDispatch();
+
 
     // useState
     const [name, setName] = useState(null);
@@ -69,6 +78,10 @@ const Page_Company_Event_Create = () => {
         }
     })
 
+    const eventStatus = useSelector((state) => state.eventNavigate)
+
+   
+
 
     // const handleImage = (e) => {
     //     setImage(e.target.value);
@@ -92,8 +105,26 @@ const Page_Company_Event_Create = () => {
         console.log(time);
 
         console.log(image);
+        // ---------------------------------------
+        const output = new Date(time.$d)
+        const re = output.toJSON()
+        console.log("HHH: ", re)
+        console.log(typeof (re))
+        // ---------------------------------------
 
-        navigate("/company/event/:eventid");
+        dispatch({
+            type: "saga/postEvent",
+            payload: {
+                eventName: name,
+                description: content,
+                quantity: 50,
+                maxParticipants: maxQuantity,
+                datetimeEvent: re,
+                place: location,
+                createdTime: "16/07/2023 10:30"
+            }
+        });
+
     }
 
     // const [fileName, setFileName] = useState(null)
@@ -102,14 +133,16 @@ const Page_Company_Event_Create = () => {
     // }
     // console.log(fileName)
 
-
-    // useNavigate
-    const navigate = useNavigate()
-
-
+    useEffect(() => {
+        if (eventStatus.status === "success") {
+            navigate(`/company/event/${eventStatus.message}`);
+            console.log("===== OK =====")
+            dispatch({ type: "eventNavigate/onReset" })
+        }
+    }, [eventStatus])
 
     return (
-        <form onSubmit={handleSubmit}>
+        (eventStatus.status === 'idle' || eventStatus.status === 'loading' )  &&    <form onSubmit={handleSubmit}>
             <GigaCard>
                 <Container sx={{ marginTop: 6 }} className='eventcreate' >
                     <Box sx={{
@@ -122,7 +155,9 @@ const Page_Company_Event_Create = () => {
                     }}>
                         Create Event
                     </Box>
+
                     <Grid container rowSpacing={6} sx={{ marginBottom: 10 }}>
+
                         <Grid
                             item
                             xs={12}
@@ -147,7 +182,8 @@ const Page_Company_Event_Create = () => {
                             >
                             </TextField>
                         </Grid>
-                        <Grid
+
+                        {/* <Grid
                             item
                             xs={12}
                             display="flex"
@@ -172,11 +208,12 @@ const Page_Company_Event_Create = () => {
                                 }}
                             >
                             </TextField>
-                        </Grid>
+                        </Grid> */}
 
                         <Grid container sx={{ marginTop: 5 }}>
                             <Grid item xs={6} sx={{ paddingRight: 2 }}>
-                                <Grid container rowSpacing={4.5}>
+                                {/* <Grid container rowSpacing={4.5}> */}
+                                <Grid container rowSpacing={6}>
                                     <Grid
                                         item
                                         xs={12}
@@ -204,10 +241,10 @@ const Page_Company_Event_Create = () => {
                                                     onChange={(newValue) => {
                                                         // console.log("main: ", newValue)
                                                         // console.log("sub: ", newValue.$d)
-                                                        const newDate = new Date(newValue.$d)
+                                                        // Step 1: const newDate = new Date(newValue.$d)
                                                         // console.log("newDate: ", newDate)
                                                         // console.log("type: ", typeof (newValue.$d.toLocaleTimeString()))
-                                                        console.log("DateTime created: ", newDate.toLocaleString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }))
+                                                        // Step 2: console.log("DateTime created: ", newDate.toLocaleString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }))
                                                         setTime(newValue)
                                                     }}
                                                     format='HH:mm:ss DD/MM/YYYY'
@@ -215,6 +252,36 @@ const Page_Company_Event_Create = () => {
                                             </DemoContainer>
                                         </LocalizationProvider>
                                     </Grid>
+
+                                    {/* ------------------------- Maximum number of participants ------------------------- */}
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        display="flex"
+                                        alignItems="center"
+                                        justifyContent="flex-start"
+                                    >
+                                        <TextField
+                                            id="maximumnumber"
+                                            label="Maximum number of participants"
+                                            variant="outlined"
+                                            fullWidth
+                                            required
+                                            type='number'
+                                            inputProps={{ min: '0' }}
+                                            onChange={handleMaxQuantity}
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <GroupAddRoundedIcon></GroupAddRoundedIcon>
+                                                    </InputAdornment>
+                                                ),
+                                            }}
+                                        >
+                                        </TextField>
+                                    </Grid>
+                                    {/* --------------------------------------------------------------------------- */}
+
                                     <Grid
                                         item
                                         xs={12}
@@ -257,7 +324,8 @@ const Page_Company_Event_Create = () => {
                                     // display: 'flex',
                                     // justifyContent: 'center',
                                     // alignItems: 'center'
-                                    marginTop: 1.25
+                                    // marginTop: 1.25
+                                    marginTop: 1.1
                                 }}
                             >
                                 <Grid
@@ -285,6 +353,7 @@ const Page_Company_Event_Create = () => {
                                         placeholder='Typing Event Content here...'
                                         value={content}
                                         onChange={setContent}
+                                        style={{ height: '320px' }}
                                     >
                                     </ReactQuill>
                                 </Grid>
@@ -355,10 +424,21 @@ const Page_Company_Event_Create = () => {
                                     }}></DeleteRoundedIcon>
                             </div>
                             <Grid item xs={12} align='right' sx={{ marginTop: 6 }}>
-                                <Button type="submit" variant="contained" size='large'>
+
+                                {eventStatus.status !== "loading"  && eventStatus.status !== "success" ? <Button type="submit" variant="contained" size='large'>
                                     <TaskAltIcon sx={{ marginRight: 1 }}></TaskAltIcon>
                                     Save
                                 </Button>
+                                : <LoadingButton
+                                    loading
+                                    loadingPosition='center'>
+                                </LoadingButton>}
+
+
+
+
+
+
                             </Grid>
                         </Grid>
                     </Grid>

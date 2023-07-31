@@ -24,6 +24,7 @@ function cleanStore(dispatch) {
 
     dispatch({ type: "loading/offLoading" })
     dispatch({ type: "status/onReset" })
+    dispatch({ type: "eventNavigate/onReset" })
 }
 
 export default cleanStore

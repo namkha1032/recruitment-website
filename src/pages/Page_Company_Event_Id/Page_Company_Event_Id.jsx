@@ -51,7 +51,7 @@ const Page_Company_Event_Id = () => {
 
 
     const { eventid } = useParams();
-    console.log(eventid);
+    console.log('Anh Khoa: ',eventid);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -223,7 +223,7 @@ const Page_Company_Event_Id = () => {
                 display: 'inline-block'
             }}>
                 {/* Chi tiết sự kiện */}
-                Event Detail
+                Event Details
             </Box>
             <TabContext value={value}>
                 <Box>
@@ -232,6 +232,11 @@ const Page_Company_Event_Id = () => {
                         onChange={handleChange}
                         textColor="primary"
                         indicatorColor="primary"
+                        sx={{
+                            "& .MuiTabs-indicator": {
+                                backgroundColor: "black",
+                            },
+                        }}
                     // centered
                     >
                         <Tab
@@ -239,9 +244,17 @@ const Page_Company_Event_Id = () => {
                             label='Event Information'
                             value='1'
                             sx={{
-                                textTransform: 'none',
+                                textTransform: "none",
                                 fontSize: 23,
-                                marginRight: 4
+                                marginRight: 4,
+                                fontWeight: 500,
+                                color: "rgba(0, 0, 0, 0.85)",
+                                "&:hover": {
+                                    color: "rgba(190, 190, 190, 0.85)",
+                                },
+                                "&.Mui-selected": {
+                                    color: "black",
+                                },
                             }}
                             icon={<InfoRoundedIcon />}
                             iconPosition='start'
@@ -251,8 +264,17 @@ const Page_Company_Event_Id = () => {
                             label='Enrolment List'
                             value='2'
                             sx={{
-                                textTransform: 'none',
-                                fontSize: 23
+                                textTransform: "none",
+                                fontSize: 23,
+                                marginRight: 4,
+                                fontWeight: 500,
+                                color: "rgba(0, 0, 0, 0.85)",
+                                "&:hover": {
+                                    color: "rgba(190, 190, 190, 0.85)",
+                                },
+                                "&.Mui-selected": {
+                                    color: "black",
+                                },
                             }}
                             icon={<FormatListNumberedRoundedIcon />} iconPosition='start'
                         />

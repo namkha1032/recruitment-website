@@ -1,6 +1,6 @@
 // import MUI components
 import { Box, Container, Divider, Grid, Paper, Typography } from '@mui/material'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import './Page_Event_Id.scss'
 import { Button } from '@mui/material'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import cleanStore from '../../utils/cleanStore';
 import useGetRole from '../../hooks/useGetRole';
 import { useParams } from 'react-router-dom';
+import { transferDatetimeBack } from '../../utils/transferDatetime';
 
 
 const Page_Event_Id = () => {
@@ -36,12 +37,27 @@ const Page_Event_Id = () => {
     }, [])
 
     const event = useSelector((state) => state.event)
+    const note = event ? event.content : ""
     const role = useGetRole()
+
+
     // handle events
     const handleRegister = (e) => {
         alert("Register successfully!");
         // alert(new Date())
     }
+
+
+    const contentRef = useRef()
+    useEffect(() => {
+        if (note) {
+            console.log(note)
+            contentRef.current.innerHTML = note
+        }
+    }, [note])
+    console.log("contentRef: ", contentRef);
+
+
 
     return (
         <> {event && (
@@ -58,7 +74,7 @@ const Page_Event_Id = () => {
                     marginBottom: 1
                 }}>
                     {/* Chi tiết sự kiện */}
-                    Event Detail
+                    Event Details
                 </Box>
 
                 <Divider sx={{ borderColor: 'lightgray' }}></Divider>
@@ -108,15 +124,15 @@ const Page_Event_Id = () => {
 
                             {/* <div> cannot appear as a descendant of <p> */}
                             {/* ---------------------------------------------------------------------- */}
-                            <p align='justify'>
+                            {/* <p align='justify'>
                                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis recusandae sapiente deserunt sequi rerum animi eaque illo excepturi. Iusto saepe cumque ipsa cupiditate ab accusantium dolor soluta veritatis ex hic?<br />
                                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae modi rerum enim voluptatibus voluptatem! Alias eum velit, animi harum at vitae! Atque, eum. Eos iste soluta vitae quidem itaque saepe?<br />
                                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus rerum libero cupiditate voluptatem, doloremque quaerat culpa soluta! Soluta assumenda at sint et fugit quo natus id beatae! Et, saepe? Ratione!<br />
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum mollitia asperiores quis quos, ut fugiat harum. Voluptates vero animi alias sapiente odit cumque esse culpa, repudiandae error inventore, autem commodi!<br />
                                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit eum esse quisquam distinctio animi iure possimus omnis tempore dicta consectetur perspiciatis atque in, cupiditate nostrum numquam accusamus blanditiis velit libero!<br />
                                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure laborum, ullam necessitatibus harum distinctio similique itaque corrupti qui possimus incidunt quisquam, optio hic molestias et accusantium rem ipsum. Commodi, consequatur.<br />
-                            </p>
-                            {/* {event.content} */}
+                            </p> */}
+                            <Box ref={contentRef}></Box>
                             {/* ---------------------------------------------------------------------- */}
 
                             <Grid container sx={{ marginTop: 8 }}>
@@ -166,7 +182,7 @@ const Page_Event_Id = () => {
                                             <Box sx={{
                                                 fontSize: 16,
                                             }}>
-                                                {event.time}
+                                                {transferDatetimeBack(event.time)}
                                             </Box>
                                         </Box>
                                         {/* <p style={{ fontWeight: 600, fontSize: 20 }}>21/07/2023</p> */}
