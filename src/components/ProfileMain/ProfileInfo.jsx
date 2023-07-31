@@ -1,8 +1,8 @@
-import { Box, Paper, TextField } from "@mui/material";
+import { Box, Button, Paper, TextField } from "@mui/material";
 import React, { useState } from "react";
 import CV from "../CV/CV";
 import { Edit, Email, Home, PermContactCalendar, Person, Phone } from "@mui/icons-material";
-import { Button } from "react-bootstrap";
+
 import GigaCard from "../GigaCard/GigaCard";
 
 
@@ -151,7 +151,7 @@ const  ProfileInfo = ({ cvid, user }) => {
             }}
           >
             <Box sx={{ display: "flex", justifyContent: "right" }}>
-              <Button onClick={handleSave} variant="contained">
+              <Button color='primary' onClick={handleSave} variant="contained" style={{ textTransform: "none", backgroundColor:"black" }}>
                 Save
               </Button>
             </Box>

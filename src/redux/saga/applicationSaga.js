@@ -1,6 +1,7 @@
 import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
 import axios from 'axios';
 import host from "../host";
+import { formatPositionList } from "../../utils/formatPositionList";
 function* getApplication(action) {
     // const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/${action.payload}`);
     // const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload}`)
@@ -14,8 +15,53 @@ function* getApplication(action) {
     // console.log("res2", response2.data);
     // yield put({ type: 'application/setApplication', payload: application })
     try {
-        const reponse = yield call(axios.get, `${host.name}/data/applicationList.json`)
-        yield put({ type: 'application/setApplication', payload: reponse.data })
+        // const reponse = yield call(axios.get, `${host.name}/data/applicationList.json`)
+        const reponse = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload}`)
+        yield put({ type: 'application/setApplication', payload: {...reponse.data,"cv": {
+            "cvid": "00000000-0000-0000-0000-000000000001",
+            "candidateId": "00000000-0000-0000-0000-000000000001",
+            "experience": "string",
+            "cvPdf": "string",
+            "cvName": "string",
+            "introduction": "string",
+            "education": "string",
+            "isDeleted": true,
+            "skills": [],
+            "certificates": []
+          },
+
+          "position": formatPositionList([{
+            "positionId": "00000000-0000-0000-0000-000000000001",
+            "positionName": "Junior",
+            "description": "no",
+            "requirementId": "00000000-0000-0000-0000-000000000000",
+            "requirement": null,
+            "salary": 100,
+            "maxHiringQty": 10,
+            "startDate": "2001-01-01T00:00:00",
+            "endDate": "2009-09-09T00:00:00",
+            "departmentId": "00000000-0000-0000-0000-000000000001",
+            "department": null,
+            "languageId": "00000000-0000-0000-0000-000000000001",
+            "language": null,
+            "isDeleted": false
+          }])[0] , }})
+          yield put ({type:'position/setPosition',payload:{
+            "positionId": "00000000-0000-0000-0000-000000000001",
+            "positionName": "Junior",
+            "description": "no",
+            "requirementId": "00000000-0000-0000-0000-000000000000",
+            "requirement": null,
+            "salary": 100,
+            "maxHiringQty": 10,
+            "startDate": "2001-01-01T00:00:00",
+            "endDate": "2009-09-09T00:00:00",
+            "departmentId": "00000000-0000-0000-0000-000000000001",
+            "department": null,
+            "languageId": "00000000-0000-0000-0000-000000000001",
+            "language": null,
+            "isDeleted": false
+          } })
     } catch (error) {
         console.log(error)
     }

@@ -62,7 +62,7 @@ const ProfileMain = ({ page }) => {
           <ProfileHeader id={user.cvselected} userName={user.name} />
         </Box>
         <Grid container spacing={3}>
-          <Grid item md={3} xs={12} position='relative'>
+          <Grid item md={3} xs={12} position='relative' pb={3}>
             <Box sx={{position:"sticky",top:'95px'}}>
               <Box sx={{ width: "100%" }}>
                 <GigaCard>
@@ -115,12 +115,10 @@ const ProfileMain = ({ page }) => {
                 <ProfileInfo cvid={user.cvselected} user={user} />
 
                 {role === "candidate" && (
-                  <Box>
-                    <GigaCard>
-                      <Box sx={{ padding: "24px" }}>
+                  
+                      <Box sx={{ mt: "24px" }}>
                         <CV cvid={user.cvselected} page="Profile"/>
-                      </Box>
-                    </GigaCard>
+                      
                   </Box>
                 )}
               </Box>
