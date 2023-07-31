@@ -24,7 +24,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { DatePicker } from '@mui/x-date-pickers';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 // import components
 import TableInterviewer from "./TableInterviewer/TableInterviewer";
 import TableRoom from "./TableRoom/TableRoom";
@@ -60,6 +60,9 @@ const Page_Company_Interview_Create = () => {
     let [errorSnackbar, setErrorSnackbar] = useState(false)
     let [openAlert, setOpenAlert] = useState(false)
     const navigate = useNavigate()
+    let [searchParams, setSearchParams] = useSearchParams();
+    let applicationid = searchParams.get("applicationid")
+    console.log("appid: ", applicationid)
 
     const dispatch = useDispatch()
     const theme = useTheme()
@@ -68,16 +71,17 @@ const Page_Company_Interview_Create = () => {
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     // fetch Data
     useEffect(() => {
+        dispatch({ type: "saga/getApplicationForCreatingInterview", payload: applicationid })
         dispatch({ type: "saga/getUpcomingInterview" })
         dispatch({ type: "saga/getDepartmentInterviewer" })
         dispatch({ type: "saga/getRoom" })
         dispatch({ type: "saga/getShift" })
-        return () => {
-            dispatch({ type: "interview/setInterview", payload: null })
-            dispatch({ type: "interviewer/setInterviewer", payload: null })
-            dispatch({ type: "room/setRoom", payload: null })
-            dispatch({ type: "shift/setShift", payload: null })
-        }
+        // return () => {
+        //     dispatch({ type: "interview/setInterview", payload: null })
+        //     dispatch({ type: "interviewer/setInterviewer", payload: null })
+        //     dispatch({ type: "room/setRoom", payload: null })
+        //     dispatch({ type: "shift/setShift", payload: null })
+        // }
     }, [])
 
     const interviewList = useSelector(state => state.interview)
