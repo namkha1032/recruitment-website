@@ -146,9 +146,8 @@ function CandidateTable(props) {
     }
     const columns = [
                 {field: "candidateId", headerName: isSm ? "Candidate ID" : "cID", flex: 0.5},
-                {field: "userId", headerName: "User ID", flex: 0.5},
+                // {field: "userId", headerName: "User ID", flex: 0.5},
                 { field: 'name', headerName: 'Username', flex: 0.3, valueGetter: params => getUser(params.row.candidateId)?.name },
-
                 {
                     field: "addtoBlacklist",
                     headerName: isSm ? "Add to Blacklist" : "Add",
@@ -191,7 +190,7 @@ function CandidateTable(props) {
                         "& .MuiDataGrid-columnHeaders": {
                             // backgroundColor: grey[100],
                             // color: "#ffffff",
-                            borderBottom: "5"
+                            // borderBottom: "5"
                         },
                         "& .MuiDataGrid-virtualScroller": {
                             backgroundColor: grey[100]
@@ -279,8 +278,16 @@ function InterviewerTable(props) {
     useEffect(() => {
         dispatch({type: "saga/getInterviewer"});
     }, [dispatch]);
+    useEffect(() => {
+        dispatch({type: "saga/getDepartmentAdmin"});
+    }, [dispatch]);
+    const departments = useSelector(state => state.admin.department)
     const interviewer = useSelector(state => state.admin.interviewer)
-
+    const interviewersWithDepartmentNames = interviewer.map((interviewer) => {
+        const department = departments.find((department) => department.departmentId === interviewer.departmentId);
+        const departmentName = department ? department.departmentName : "";
+        return { ...interviewer, departmentName };
+    });
     function QuickSearchToolbar() {
         return (
             <Grid container margin={1}
@@ -293,14 +300,16 @@ function InterviewerTable(props) {
     function getUser(interviewerId) {
         return inerviewerNames.find(user => user.interviewerId === interviewerId);
     }
+
     const columns = [
         {field: "interviewerId", headerName: "Interviewer ID", flex: 0.5},
         { field: 'name', headerName: 'Username', flex: 0.3, valueGetter: params => getUser(params.row.interviewerId)?.name },
         {
-            field: "departmentId",
+            field: "departmentName",
             headerName: "Department",
-            flex: 0.5,
+            flex: 0.2,
             cellClassName: "name-column--cell",
+
         },
         {
             field: "checkInfo",
@@ -344,7 +353,7 @@ function InterviewerTable(props) {
                         "& .MuiDataGrid-columnHeaders": {
                             // backgroundColor: grey[100],
                             // color: "#ffffff",
-                            borderBottom: "5"
+                            // borderBottom: "5"
                         },
                         "& .MuiDataGrid-virtualScroller": {
                             backgroundColor: grey[100]
@@ -363,7 +372,7 @@ function InterviewerTable(props) {
                     }}
                 >
                     <DataGrid
-                        rows={interviewer}
+                        rows={interviewersWithDepartmentNames}
                         getRowId={(row) => row.interviewerId}
                         columns={columns}
                         slots={{toolbar: QuickSearchToolbar}}
@@ -428,7 +437,16 @@ function RecruiterTable(props) {
     useEffect(() => {
         dispatch({type: "saga/getRecruiter"});
     }, [dispatch]);
+    useEffect(() => {
+        dispatch({type: "saga/getDepartmentAdmin"});
+    }, [dispatch]);
+    const departments = useSelector(state => state.admin.department)
     const recruiter = useSelector(state => state.admin.recruiter)
+    const recruitersWithDepartmentNames = recruiter.map((recruiter) => {
+        const department = departments.find((department) => department.departmentId === recruiter.departmentId);
+        const departmentName = department ? department.departmentName : "";
+        return { ...recruiter, departmentName };
+    });
     function getUser(recruiterId) {
         return recruiterNames.find(user => user.recruiterId === recruiterId);
     }
@@ -445,9 +463,9 @@ function RecruiterTable(props) {
         {field: "recruiterId", headerName: "Recruiter ID", flex: 0.5},
         { field: 'name', headerName: 'Username', flex: 0.3, valueGetter: params => getUser(params.row.recruiterId)?.name },
         {
-            field: "departmentId",
-            headerName: "Department ID",
-            flex: 0.5,
+            field: "departmentName",
+            headerName: "Department",
+            flex: 0.2,
             cellClassName: "name-column--cell",
         },
         {
@@ -492,7 +510,7 @@ function RecruiterTable(props) {
                         "& .MuiDataGrid-columnHeaders": {
                             // backgroundColor: grey[100],
                             // color: "#ffffff",
-                            borderBottom: "5"
+                            // borderBottom: "5"
                         },
                         "& .MuiDataGrid-virtualScroller": {
                             backgroundColor: grey[100]
@@ -511,7 +529,7 @@ function RecruiterTable(props) {
                     }}
                 >
                     <DataGrid
-                        rows={recruiter}
+                        rows={recruitersWithDepartmentNames}
                         getRowId={(row) => row.recruiterId}
                         columns={columns}
                         slots={{toolbar: QuickSearchToolbar}}

@@ -48,6 +48,11 @@ const RenderStatusButton = ({params}) => {
                     }}
                     aria-labelledby="accountinfo"
                     aria-describedby="accountdetails"
+                    sx={{
+                        '& .MuiButton-text': {
+                            color: 'black', // set the button text color to black
+                        },
+                    }}
             >
                 <DialogTitle id="alert-dialog-title">
                     {"Account info "}
