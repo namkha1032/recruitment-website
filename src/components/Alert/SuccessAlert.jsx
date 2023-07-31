@@ -38,7 +38,7 @@ function Success(props) {
         color: "#1565C0",
       }}
     >
-      {props.content} thành công!
+      {props.content} success!
     </Box>
   );
 }

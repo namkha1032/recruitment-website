@@ -2,15 +2,14 @@
 //  "QuestionId": "",
 //  "QuestionName": "",
 //  "Category": ["Technology, "Language", "Soft Skills"]
-//  "Skill": "", null nếu Category là Soft Skills
+//  "TypeId": "", null nếu Category là Soft Skills
+//  "TypeName": "", null nếu Category là Soft Skills
 // }
 import { formatLanguage } from "./formatLanguage";
+import { getLanguageId } from "./getLanguageId";
 
-export function formatQuestionList(input, categorys, skillsQ, skills) {
-  console.log(input);
-  console.log(categorys);
-  console.log(skillsQ);
-  console.log(skills);
+export function formatQuestionList(input, categorys, skillsQ, skills, languages) {
+  console.log("1: ", input)
   for (let i = 0; i < input.length; i++) {
     for (let j = 0; j < categorys.length; j++) {
       if (input[i].categoryQuestionId === categorys[j].categoryQuestionId) {
@@ -21,6 +20,9 @@ export function formatQuestionList(input, categorys, skillsQ, skills) {
       }
     }
   }
+  console.log("2: ", input)
+  console.log("skillsQ: ", skillsQ)
+
   for (let i = 0; i < input.length; i++) {
     for (let j = 0; j < skillsQ.length; j++) {
       if (input[i].questionId === skillsQ[j].questionId) {
@@ -31,37 +33,49 @@ export function formatQuestionList(input, categorys, skillsQ, skills) {
       }
     }
   }
+  console.log("3: ", input)
+  console.log("skills: ", skills)
+
   for (let i = 0; i < input.length; i++) {
     for (let j = 0; j < skills.length; j++) {
-      if (input[i].skillId === skills[j].skills) {
+      if (input[i].skillId === skills[j].skillId) {
         input[i] = {
           ...input[i],
+          // skillId: skills[j].skillId,
           skillName: skills[j].skillName,
         };
       }
     }
   }
+  console.log("4: ", input)
+
   const output = input.map((element) => {
     if (element.categoryQuestionName === "Language") {
       return {
         QuestionId: element.questionId,
         QuestionName: element.questionString.slice(5),
-        Category: "Language",
-        Skill: formatLanguage(element.questionString, categorys),
+        CategoryId: element.categoryQuestionId,
+        CategoryName: "Language",
+        TypeId: getLanguageId(formatLanguage(element.questionString, categorys), languages),
+        TypeName: formatLanguage(element.questionString, categorys),
       };
     } else if (element.categoryQuestionName === "Soft Skill") {
       return {
         QuestionId: element.questionId,
         QuestionName: element.questionString,
-        Category: "Soft Skills",
-        Skill: null,
+        CategoryId: element.categoryQuestionId,
+        CategoryName: "Soft Skills",
+        TypeId: null,
+        TypeName: null,
       };
     } else {
       return {
         QuestionId: element.questionId,
         QuestionName: element.questionString,
-        Category: "Technology",
-        Skill: element.skillName,
+        CategoryId: element.categoryQuestionId,
+        CategoryName: "Technology",
+        TypeId: element.skillId,
+        TypeName: element.skillName,
       };
     }
   });

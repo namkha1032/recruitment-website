@@ -26,9 +26,15 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
 
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
 const TableRoom = (props) => {
     const { roomList, chosenShift, busyRoom,
         chosenRoom, setChosenRoom } = props
+    const theme = useTheme()
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     const roomRows = roomList ? roomList.map(room => (
         {
             roomid: room.roomid,
@@ -48,36 +54,36 @@ const TableRoom = (props) => {
                 if (chosenShift && busyRoom.length > 0) {
                     for (let busyRo of busyRoom) {
                         if (busyRo.roomid == params.row.roomid) {
-                            return (<Chip icon={<CloseIcon />} label="Unavailable" color="error" size="small" />)
+                            return (<Chip icon={<CloseIcon />} label={isSm ? "Unavailable" : ""} color="error" size="small" />)
                         }
                     }
                 }
                 return (
-                    <Chip icon={<CheckIcon />} label="Available" color="success" size="small" />
+                    <Chip icon={<CheckIcon />} label={isSm ? "Available" : ""} color="success" size="small" />
                 )
             }
         },
         {
             field: "action",
-            headerName: "Action",
+            headerName: "",
             flex: 2,
             renderCell: (params) => {
                 if (chosenRoom && params.row.roomid == chosenRoom.roomid) {
                     return (
-                        <Button variant="contained" color="primary">Chosen</Button>
+                        <Button variant="contained" color="primary" size={isMd ? "medium" : "small"}>Chosen</Button>
                     )
                 }
                 else {
                     if (chosenShift && busyRoom.length > 0) {
                         for (let busyRo of busyRoom) {
                             if (busyRo.roomid == params.row.roomid) {
-                                return (<Button disabled variant="outlined">Choose</Button>)
+                                return (<Button disabled variant="outlined" size={isMd ? "medium" : "small"}>Choose</Button>)
                             }
 
                         }
                     }
                     return (
-                        <Button variant="outlined" color="primary" onClick={() => setChosenRoom(params.row)}>Choose</Button>
+                        <Button variant="outlined" color="primary" size={isMd ? "medium" : "small"} onClick={() => setChosenRoom(params.row)}>Choose</Button>
                     )
                 }
             }
@@ -91,9 +97,11 @@ const TableRoom = (props) => {
                 rows={roomRows}
                 columns={roomColumns}
                 getRowId={(row) => row.roomid}
+                disableColumnMenu
                 disableColumnFilter
                 disableColumnSelector
                 disableDensitySelector
+                disableRowSelectionOnClick
                 slots={{ toolbar: GridToolbar }}
                 slotProps={{
                     toolbar: {

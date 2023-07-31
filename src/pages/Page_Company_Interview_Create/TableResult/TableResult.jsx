@@ -41,10 +41,10 @@ const TableResult = (props) => {
     return (
         <>
             <Grid container spacing={2} columns={12}>
-                <Grid item md={4}>
+                <Grid item xs={4}>
                     <Typography variant="h6">Interviewer: </Typography>
                 </Grid>
-                <Grid item md={8}>
+                <Grid item xs={8}>
                     {chosenInterviewer &&
                         <Chip
                             label={chosenInterviewer.interviewername}
@@ -53,13 +53,13 @@ const TableResult = (props) => {
                             onDelete={() => { setChosenInterviewer(null) }}
                         />}
                 </Grid>
-                <Grid item md={12}>
+                <Grid item xs={12}>
                     <Divider />
                 </Grid>
-                <Grid item md={4}>
+                <Grid item xs={4}>
                     <Typography variant="h6">Date: </Typography>
                 </Grid>
-                <Grid item md={8}>
+                <Grid item xs={8}>
                     {chosenDate &&
                         <Chip
                             label={chosenDate}
@@ -73,13 +73,13 @@ const TableResult = (props) => {
                             }}
                         />}
                 </Grid>
-                <Grid item md={12}>
+                <Grid item xs={12}>
                     <Divider />
                 </Grid>
-                <Grid item md={4}>
+                <Grid item xs={4}>
                     <Typography variant="h6">Time: </Typography>
                 </Grid>
-                <Grid item md={8}>
+                <Grid item xs={8}>
                     {chosenShift &&
                         <Chip
                             label={`Shift ${chosenShift.shiftid}: ${chosenShift.shiftstart} to ${chosenShift.shiftend}`}
@@ -92,13 +92,13 @@ const TableResult = (props) => {
                             }}
                         />}
                 </Grid>
-                <Grid item md={12}>
+                <Grid item xs={12}>
                     <Divider />
                 </Grid>
-                <Grid item md={4}>
+                <Grid item xs={4}>
                     <Typography variant="h6">Room: </Typography>
                 </Grid>
-                <Grid item md={8}>
+                <Grid item xs={8}>
                     {chosenRoom &&
                         <Chip
                             label={chosenRoom.roomname}

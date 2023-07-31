@@ -28,12 +28,21 @@ export default function QuestionDataGrid(props) {
             color: "white",
             fontWeight: 700,
           },
+          "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+            outline: "none",
+          },
           "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
             display: "none",
           },
           "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
             color: "white",
           },
+          "&.MuiDataGrid-root .MuiDataGrid-row": {
+            cursor: "pointer",
+          },
+          "&.MuiDataGrid-root .MuiCircularProgress-root": {
+            color: "black"
+          }
         }}
         slots={{ toolbar: GridToolbar, noRowsOverlay: NoRowsOverlay,
           noResultsOverlay: NoResultsOverlay, }}
@@ -67,14 +76,29 @@ export default function QuestionDataGrid(props) {
           },
         }}
         getRowId={(row) => row.QuestionId}
+        onRowClick={(params, event) => {
+          props.handleModalOpen(
+            {
+              QuestionId: params.row.QuestionId,
+              QuestionName: params.row.QuestionName,
+              CategoryId: params.row.CategoryId,
+              CategoryName: params.row.CategoryName,
+              TypeId: params.row.TypeId,
+              TypeName: params.row.TypeName,
+            },
+            false
+          );
+        }}
         onCellClick={(params, event) => {
           if (params.field === "QuestionId" || params.field === "QuestionName") {
             props.handleModalOpen(
               {
                 QuestionId: params.row.QuestionId,
                 QuestionName: params.row.QuestionName,
-                Category: params.row.Category,
-                Skill: params.row.Skill,
+                CategoryId: params.row.CategoryId,
+                CategoryName: params.row.CategoryName,
+                TypeId: params.row.TypeId,
+                TypeName: params.row.TypeName,
               },
               false
             );

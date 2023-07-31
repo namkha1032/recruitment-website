@@ -32,6 +32,8 @@ import {
 import cleanStore from "../../utils/cleanStore";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 // JSON <- InterviewList
 // {
@@ -66,8 +68,17 @@ import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 //   "EndDate": "11/12/2023",
 //   "Status": [true, false] ~ ["Active", "Inactive"]
 // }
+// Dispatch getPositionListWithFilter
+// {
+//   "department":""
+//   "status": null
+// }
 
 export default function Page_Company_Interview() {
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up("md"));
+  const isSm = useMediaQuery(theme.breakpoints.down("md"));
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -150,6 +161,7 @@ export default function Page_Company_Interview() {
       type: "saga/getPositionListWithFilter",
       payload: {
         departmentId: value ? value.departmentId : null,
+        status: null
       },
     });
   }
@@ -217,6 +229,7 @@ export default function Page_Company_Interview() {
       headerAlign: "left",
       align: "left",
       flex: 0.2,
+      minWidth: 70,
       renderHeader: () => <span>ID</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
@@ -364,7 +377,9 @@ export default function Page_Company_Interview() {
   ]);
 
   return (
-    <Box>
+    <Box sx={{
+      marginTop: 3,
+    }}>
       <GigaCard>
         <GigaCardBody>
           <Grid
@@ -753,6 +768,9 @@ export default function Page_Company_Interview() {
                 },
                 "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
                   color: "white",
+                },
+                "&.MuiDataGrid-root .MuiCircularProgress-root": {
+                  color: "black",
                 },
               }}
               slots={{

@@ -7,14 +7,19 @@ import FmdBadIcon from '@mui/icons-material/FmdBad';
 import GradingIcon from '@mui/icons-material/Grading';
 import cleanStore from '../../utils/cleanStore';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { useParams } from "react-router-dom";
 function QuickSearchToolbar() {
     return (
         <Box
             sx={{
-                p: 0.5,
-                pb: 0,
-                marginLeft: 50,
+                // p: 0.5,
+                // pb: 0,
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+                
             }}
         >
             <GridToolbarQuickFilter />
@@ -23,12 +28,14 @@ function QuickSearchToolbar() {
 }
 
 const other = {
-    autoHeight: true,
-    showCellVerticalBorder: true,
-    showColumnVerticalBorder: true,
+    autoHeight: true
+    // showCellVerticalBorder: true
+    // showColumnVerticalBorder: true,
 };
 
 const List_application = (props) => {
+    const theme = useTheme()
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const navigate = useNavigate();
     const { recruitmentid } = useParams();
     let [currentTable, setCurrentTable] = useState(0)
@@ -40,6 +47,9 @@ const List_application = (props) => {
     //         cleanStore(dispatch);
     //     }
     // }, [])
+
+    // const detail = useSelector(state => state.position);
+    
     const pending1 = props.applications ? props.applications.filter(application => {
         return application.company_status === "Đang chờ"
     }) : [];
@@ -49,11 +59,11 @@ const List_application = (props) => {
     const reject1 = props.applications ? props.applications.filter(application => {
         return application.company_status === "Đã từ chối"
     }) : [];
-    const pendingmain = props.applications ? props.applications.filter(application => {
-        return application.status === "Pending"
-    }) : [];
+    // const pendingmain = props.applications ? props.applications.filter(application => {
+    //     return application.status === "Pending"
+    // }) : [];
     console.log("application", props.applications);
-    console.log("status", pendingmain );
+    // console.log("status", pendingmain);
     console.log("chờ", pending1);
     console.log("đậu", pass1);
     console.log("chối", reject1);
@@ -64,15 +74,15 @@ const List_application = (props) => {
         {
             field: "applicationId",
             headerName: "ID",
-            headerAlign: 'center',
-            width: 325
+            flex: 0.5,
+            minWidth: 200
         },
 
         {
             field: "candidateName",
             headerName: "Candidate Name",
-            headerAlign: 'center',
-            width: 500
+            flex: 1,
+            minWidth: 200
         },
         {
             field: "Detail",
@@ -89,33 +99,34 @@ const List_application = (props) => {
                 );
             },
             headerAlign: 'center',
-            width: 325
+            width: 100
         }
     ];
 
     return (
         props.applications &&
         <>
+            {/* <Box sx={{ padding: "0" }}> */}
             <Box
                 display="flex"
-               
-                justifyContent="center"
-                alignItems="center"
-                flexDirection="column"
-                sx={{ height: "100%", width: '100%' }}>
 
-                <Grid container spacing={2} >
+                
+                flexDirection="column"
+                sx={{ width: "100%" }}>
+
+
+                <Grid container spacing={2} sx ={{marginBottom: 2, marginTop: 1}} >
                     <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
 
-                        <Button color="primary" sx={{ textDecoration: currentTable == 0 ? 'underline' : 'none' }} variant={currentTable == 0 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(0) }} >
-                            <PendingIcon></PendingIcon> Pending
+                        <Button size ={isMd ? "medium" : "small"} color="primary" variant={currentTable == 0 ? 'contained' : 'outlined'} sx={{ borderRadius: 100 }} onClick={() => { setCurrentTable(0) }} >
+                            <PendingIcon sx={{marginRight: "5px"}}></PendingIcon> Pending
                         </Button>
 
-                        <Button color="warning" sx={{ textDecoration: currentTable == 1 ? 'underline' : 'none', marginLeft: "10px" }} variant={currentTable == 1 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(1) }} >
-                            <FmdBadIcon></FmdBadIcon> Reject
+                        <Button size ={isMd ? "medium" : "small"} color="warning" sx={{  marginLeft: "10px", borderRadius: 100 }} variant={currentTable == 1 ? 'contained' : 'outlined'}  onClick={() => { setCurrentTable(1) }} >
+                            <FmdBadIcon sx={{marginRight: "5px"}}></FmdBadIcon> Reject
                         </Button>
-                        <Button color="success" sx={{ textDecoration: currentTable == 2 ? 'underline' : 'none', marginLeft: "10px" }} variant={currentTable == 2 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(2) }} >
-                            <GradingIcon></GradingIcon> Pass
+                        <Button size ={isMd ? "medium" : "small"} color="success" sx={{  marginLeft: "10px", borderRadius: 100 }} variant={currentTable == 2 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(2) }} >
+                            <GradingIcon sx={{marginRight: "5px"}}></GradingIcon> Pass
                         </Button>
 
 
@@ -123,16 +134,28 @@ const List_application = (props) => {
                 </Grid>
 
                 {currentTable == 0 ? (
+
                     <DataGrid
                         sx={{
                             "& .MuiDataGrid-columnHeaders": {
                                 backgroundColor: "#1976d2",
-                                fontSize: 16
+                                fontSize: 16,
+                                color: "white",
+                                fontWeight: 600
                             },
+                            "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                                outline: "none",
+                            },
+                            "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                                outline: "none",
+                            },
+                            "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                                display: "none",
+                            }
                         }}
                         slots={{ toolbar: QuickSearchToolbar }}
                         rowHeight={72}
-                        rows={pendingmain}
+                        rows={pending1}
                         {...other}
                         columns={columns}
                         getRowId={(row) => row.applicationId}
@@ -144,8 +167,10 @@ const List_application = (props) => {
                             },
                         }}
                         pageSizeOptions={[5]}
+                        disableColumnMenu
 
                     />
+
                 ) : null}
                 {currentTable == 1 ? (
                     <DataGrid
@@ -153,22 +178,27 @@ const List_application = (props) => {
                             "& .MuiDataGrid-columnHeaders": {
                                 backgroundColor: "#ed6c02",
 
-                                fontSize: 16
-                            },
-                            "& .MuiDataGrid-cell": {
-                                border: 1,
-                                borderRight: 1,
-                                borderTop: 1,
-                                borderBottom: 1
+                                fontSize: 16,
 
+                                color: "white",
+                                fontWeight: 600
                             },
+                            "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                                outline: "none",
+                            },
+                            "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                                outline: "none",
+                            },
+                            "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                                display: "none",
+                            }
                         }}
                         slots={{ toolbar: QuickSearchToolbar }}
                         rowHeight={72}
                         rows={reject1}
                         {...other}
                         columns={columns}
-                        getRowId={(row) => row.applicationid}
+                        getRowId={(row) => row.applicationId}
                         initialState={{
                             pagination: {
                                 paginationModel: {
@@ -177,6 +207,7 @@ const List_application = (props) => {
                             },
                         }}
                         pageSizeOptions={[5]}
+                        disableColumnMenu
                     />
 
                 ) : null}
@@ -186,21 +217,25 @@ const List_application = (props) => {
                             "& .MuiDataGrid-columnHeaders": {
                                 backgroundColor: "#1b5e20",
                                 color: "white",
-                                fontSize: 16
+                                fontSize: 16,
+                                fontWeight: 600
                             },
-                            "& .MuiDataGrid-cell": {
-                                border: 1,
-                                borderRight: 1,
-                                borderTop: 1,
-                                borderBottom: 1
+                            "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                                outline: "none",
                             },
+                            "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                                outline: "none",
+                            },
+                            "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                                display: "none",
+                            }
                         }}
                         slots={{ toolbar: QuickSearchToolbar }}
                         rowHeight={72}
                         rows={pass1}
                         {...other}
                         columns={columns}
-                        getRowId={(row) => row.applicationid}
+                        getRowId={(row) => row.applicationId}
                         initialState={{
                             pagination: {
                                 paginationModel: {
@@ -209,10 +244,11 @@ const List_application = (props) => {
                             },
                         }}
                         pageSizeOptions={[5]}
+                        disableColumnMenu
                     />
                 ) : null}
-
             </Box>
+            {/* </Box> */}
         </>
 
     );

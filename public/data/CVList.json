@@ -1,44 +1,42 @@
 [
     {
-        "CVid": 1,
-        "CVname": "Front-end"
-        
+        "cvId": "00000000-0000-0000-0000-000000000001",
+        "cvName": "Front-end"
     },
     {
-        "CVid": 2,
-        "CVname": "Back-end"
+        "cvId": "00000000-0000-0000-0000-000000000002",
+        "cvName": "Back-end"
     },
     {
-        "CVid": 3,
-        "CVname": "Full-stack"
+        "cvId": "00000000-0000-0000-0000-000000000003",
+        "cvName": "Full-stack"
     },
     {
-        "CVid": 4,
-        "CVname": "Java"
+        "cvId": "00000000-0000-0000-0000-000000000004",
+        "cvName": "Java"
     },
     {
-        "CVid": 5,
-        "CVname": "OJT"
+        "cvId": "00000000-0000-0000-0000-000000000005",
+        "cvName": "OJT"
     },
     {
-        "CVid": 6,
-        "CVname": "Database"
+        "cvId": "00000000-0000-0000-0000-000000000006",
+        "cvName": "Database"
     },
     {
-        "CVid": 7,
-        "CVname": "Intern"
+        "cvId": "00000000-0000-0000-0000-000000000007",
+        "cvName": "Intern"
     },
     {
-        "CVid": 8,
-        "CVname": "Fresher"
+        "cvId": "00000000-0000-0000-0000-000000000008",
+        "cvName": "Fresher"
     },
     {
-        "CVid": 9,
-        "CVname": "HTML"
+        "cvId": "00000000-0000-0000-0000-000000000009",
+        "cvName": "HTML"
     },
     {
-        "CVid": 10,
-        "CVname": "CSS"
+        "cvId": "00000000-0000-0000-0000-000000000010",
+        "cvName": "CSS"
     }
-
 ]

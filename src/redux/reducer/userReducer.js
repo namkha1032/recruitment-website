@@ -6,7 +6,7 @@ const userSlice = createSlice({
     initialState: null,
     reducers: {
         setUser(state, action) {
-            return action.payload
+            return {...state, ...action.payload}
         },
         userLogout(state, action) {
             return action.payload
@@ -15,3 +15,5 @@ const userSlice = createSlice({
 })
 
 export default userSlice
+
+

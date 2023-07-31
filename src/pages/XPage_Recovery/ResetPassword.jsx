@@ -11,25 +11,24 @@ import {
   IconButton,
 } from "@mui/material";
 
-//import LockIcon from "@mui/icons-material/Lock";
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import GigaCard from "../../components/GigaCard/GigaCard";
-import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
-/* import { Snackbar, Alert } from "@mui/material"; */
+import { alpha } from '@mui/material/styles';
+import PasswordOutlinedIcon from '@mui/icons-material/PasswordOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 
 import imageBackground from "../../assets/img/background.jpg";
 
-const style = {
-  marginTop: "15px",
-  marginBottom: "15px",
-};
+// const style = {
+//   marginTop: "15px",
+//   marginBottom: "15px",
+// };
 
 const theme = createTheme({
   palette: {
-    secondary: {
-      main: '#1976d2'
-    }
+      secondary: {
+          main: '#000000'
+      }
   }
 });
 
@@ -52,191 +51,364 @@ const ResetPassword = (props) => {
 
   return (
     <Box
-      sx={{
-        height: "100vh",
-        backgroundImage: `url(${imageBackground})`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Container sx={{ display: "flex", justifyContent: "center" }}>
-        <Grid
-          container
-          sx={{
-            //paddingTop: "10%",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            width: "76%",
-          }}
+            sx={{
+                backgroundImage: `url(${imageBackground})`,
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                width: '100vw',
+                height: '100vh',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
         >
-
-          <Grid
-            item
-            xs={7}
-            sx={{ display: "flex", justifyContent: "center" }}
-          >
-            <Grid
-              item
-              xs={9}
-              sx={{
-                /* borderRadius: "10px",
-                padding: "20px",
-                paddingTop: "10px",
-                paddingBottom: "10px",
-                backgroundColor: "white", */
-                opacity: "100%",
-                left: "20%",
-                right: "20%",
-              }}
+        <Container 
+            component="main" 
+            maxWidth="xs" 
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}
+        >
+            <Box 
+                className="form-box" 
+                //border={`2px solid ${alpha('#FFFFFF', 0.5)}`}
+                sx={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '100%',
+                    background: 'transparent',
+                    border: '2px solid rgba(255, 255, 255, 0.5)',
+                    borderRadius: '20px',
+                    backdropFilter: 'blur(5px)',
+                    backgroundColor: alpha('#FFFFFF', 0.8),
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    boxShadow: '0px 0px 10px 10px rgba(255, 255, 255, 0.25)',
+                }}
             >
-              <GigaCard>
-              <GigaCardBody>
-              <Typography 
-                variant="h2" 
-                align="center" 
-                color='black' 
-                gutterBottom
-                fontFamily={'Roboto'}
-                fontSize={'30px'}
-                lineHeight={'28px'}
-                fontWeight={'700'}
-                padding={"10px"}
-              >
-                Reset password
-              </Typography>
-
-              <form
-                onSubmit={
-                  props.handleSubmit
-                } 
-              >
-
-                <Grid item xs={12} md={12} sx={{ ...style }}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="New Password"
-                    type={showNewPassword ? "text" : "password"}
-                    value={props.newPassword}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            onClick={handleClickShowNewPassword}
-                            onMouseDown={handleMouseDownPassword}
-                          >
-                            {showNewPassword ? <Visibility /> : <VisibilityOff />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-
-                      style: { borderRadius: "12px" },
-                    }}
-                    onChange={props.handleNewPasswordChange}
-                    error={!props.validNewPassword}
-                  />
-                  {!props.validNewPassword && (
-                    <Box
-                    margin="3px 14px 0px"
-                    >
-                      {
-                        props.newPassword === "" ? (
-                          <Typography 
-                            color="#f44336"
-                            fontSize="12px"
-                            lineHeight="20px"
-                          >
-                          Password is required
-                          </Typography>
-                        ) : (
-                          <Typography color="#f44336"
-                          fontSize="12px"
-                            lineHeight="20px"
-                          >
-                          Your password must be at least 8 characters 
-                          </Typography>
-                        )
-                      }
-                      
-                    </Box>
-                  )}
-                </Grid>
-
-                <Grid item xs={12} md={12} sx={{ ...style }}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Confirm Password"
-                    type={showConfirmPassword ? "text" : "password"}
-                    value={props.confirmPassword}
-                    variant="outlined"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            onClick={handleClickShowConfirmPassword}
-                            onMouseDown={handleMouseDownPassword}
-                          >
-                            {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-
-                      style: { borderRadius: "12px" },
-                    }}
-                    onChange={props.handleConfirmPasswordChange}
-                  />
-                </Grid>
-
-                <Grid
-                  item
-                  xs={12}
-                  sx={{ display: "flex", justifyContent: "center", ...style }}
-                >
-                  <Button
-                    theme={theme}
-                    variant="contained"
-                    type="submit"
-                    color="secondary"
-                  
+                <Box className="from value" 
                     sx={{
-                      height: "40px",
-                      width: "100%",
-                      borderRadius: "8px",
-                      marginTop: "5px",
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        paddingTop: '7.5%',
+                        paddingBottom: '7.5%',
                     }}
-                  >
-                    Reset
-                  </Button>
-                </Grid>
-              </form>
-              </GigaCardBody>
-              </GigaCard>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Container>
+                >
+                    <form
+                      onSubmit={
+                        props.handleSubmit
+                      }
+                    >
+                        <Typography variant="h2"
+                            sx={{
+                                fontSize: '3rem',
+                                color: 'black',
+                                textAlign: 'center',
+                                fontWeight: '450',
+                                marginBottom: '15px',
+                            }}
+                        >
+                            Reset
+                        </Typography>
 
-      {/* <Snackbar
-        open={props.errorSnackbar}
-        autoHideDuration={3000}
-        onClose={() => props.setErrorSnackbar(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert 
-          severity="error"
-          onClose={() => props.setErrorSnackbar(false)}
-        >
-          {props.message}
-        </Alert>
-      </Snackbar> */}
-    </Box>
+                        <Grid container spacing={2}
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                paddingTop: '0px'
+                            }}
+                        >
+
+                            <Grid item xs={12} 
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginBottom: '5px',
+                                    marginTop: '0px',
+                                    paddingTop: '0px'
+                                }}
+                            >
+                                <TextField 
+                                    variant='standard'
+                                    //required
+                                    fullWidth
+                                    type='text'
+                                    label={<Typography color={"black"}>OTP Code</Typography>}
+                                    autoComplete='new-otp'
+                                    value={props.otp}
+                                    onChange={props.handleChangeOTP}
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        endAdornment: 
+                                        (<PasswordOutlinedIcon
+                                            sx={{
+                                                position: 'absolute',
+                                                right: '8px',
+                                                color: '#000',
+                                                fontSize: '1.2em',
+                                            }}
+                                        />),
+                                        sx: {
+                                            color: '#000',
+                                        }
+                                    }}
+                                    sx={{
+                                        width: '90%',
+                                        height: '50px',
+                                        background: 'transparent',
+                                        outline: 'none',
+                                        fontSize: '1em',
+                                        color: '#000',
+                                        borderBottom: '2px solid black',
+                                        borderBottomWidth: '2px',
+                                    }}
+
+                                    /* helperText={
+                                        <Typography
+                                            color={"red"}
+                                            sx={{
+                                                display: 'flex',
+                                                justifyContent: 'left',
+                                                alignItems: 'center',
+                                            }}
+                                            variant='small'
+                                            
+                                        >
+                                            <ErrorOutlineOutlinedIcon color='red' 
+                                            sx={{ fontSize: 13, paddingRight: '0px' }}/>
+                                            <Typography variant='small' paddingLeft='3px'>Incorrect entry.</Typography>
+                                        </Typography>
+                                    } */
+                                />
+                            </Grid>
+
+                            <Grid item xs={12}
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginBottom: '5px'
+                                }}
+                            >
+                                <TextField 
+                                    variant='standard'
+                                    //required
+                                    fullWidth
+                                    type={showNewPassword ? 'text' : 'password'}
+                                    label={<Typography color={"black"}>New Password</Typography>}
+                                    autoComplete='new-password'
+                                    value={props.newPassword}
+                                    onChange={props.handleNewPasswordChange}
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={handleClickShowNewPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                            >
+                                                {showNewPassword 
+                                                    ? <VisibilityOutlinedIcon 
+                                                        sx={{
+                                                            position: 'absolute',
+                                                            right: '8px',
+                                                            color: '#000',
+                                                            fontSize: '0.9em',
+                                                            //top: '20px',
+                                                        }}
+                                                    /> 
+                                                    : <VisibilityOffOutlinedIcon 
+                                                        sx={{
+                                                            position: 'absolute',
+                                                            right: '8px',
+                                                            color: '#000',
+                                                            fontSize: '0.9em',
+                                                            //top: '20px',
+                                                        }}
+                                                    />
+                                                }
+                                            </IconButton>
+                                        </InputAdornment>
+                                        ),
+                                        sx: {
+                                            color: '#000',
+                                        }
+                                    }}
+                                    sx={{
+                                        width: '90%',
+                                        height: '50px',
+                                        background: 'transparent',
+                                        //border: 'none',
+                                        outline: 'none',
+                                        fontSize: '1em',
+                                        //padding: '0 5px 0 5px',
+                                        color: '#fff',
+                                        borderBottom: '2px solid black',
+                                        borderBottomWidth: '2px',
+                                    }}
+
+                                    helperText={!props.validNewPassword &&
+                                      <Typography
+                                          color={"red"}
+                                          sx={{
+                                              display: 'flex',
+                                              justifyContent: 'left',
+                                              alignItems: 'center',
+                                          }}
+                                          variant='small'
+                                          
+                                      >
+                                          <ErrorOutlineOutlinedIcon color='red' 
+                                          sx={{ fontSize: 13, paddingRight: '0px' }}/>
+                                          <Typography variant='small' paddingLeft='3px'>Password must be at least 8 characters long</Typography>
+                                      </Typography>
+                                    }
+                                />
+                            </Grid>
+
+                            <Grid item xs={12}
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginBottom: '20px'
+                                }}
+                            >
+                                <TextField 
+                                    variant='standard'
+                                    //required
+                                    fullWidth
+                                    type={showConfirmPassword ? 'text' : 'password'}
+                                    label={<Typography color={"black"}>Confirm Password</Typography>}
+                                    autoComplete='new-password'
+                                    value={props.confirmPassword}
+                                    onChange={props.handleConfirmPasswordChange}
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={handleClickShowConfirmPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                            >
+                                                {showConfirmPassword 
+                                                    ? <VisibilityOutlinedIcon 
+                                                        sx={{
+                                                            position: 'absolute',
+                                                            right: '8px',
+                                                            color: '#000',
+                                                            fontSize: '0.9em',
+                                                            //top: '20px',
+                                                        }}
+                                                    /> 
+                                                    : <VisibilityOffOutlinedIcon 
+                                                        sx={{
+                                                            position: 'absolute',
+                                                            right: '8px',
+                                                            color: '#000',
+                                                            fontSize: '0.9em',
+                                                            //top: '20px',
+                                                        }}
+                                                    />
+                                                }
+                                            </IconButton>
+                                        </InputAdornment>
+                                        ),
+                                        sx: {
+                                            color: '#000',
+                                        }
+                                    }}
+                                    sx={{
+                                        width: '90%',
+                                        height: '50px',
+                                        background: 'transparent',
+                                        //border: 'none',
+                                        outline: 'none',
+                                        fontSize: '1em',
+                                        //padding: '0 5px 0 5px',
+                                        color: '#fff',
+                                        borderBottom: '2px solid black',
+                                        borderBottomWidth: '2px',
+                                    }}
+
+                                    // helperText={
+                                    //   <Typography
+                                    //       color={"red"}
+                                    //       sx={{
+                                    //           display: 'flex',
+                                    //           justifyContent: 'left',
+                                    //           alignItems: 'center',
+                                    //       }}
+                                    //       variant='small'
+                                          
+                                    //   >
+                                    //       <ErrorOutlineOutlinedIcon color='red' 
+                                    //       sx={{ fontSize: 13, paddingRight: '0px' }}/>
+                                    //       <Typography variant='small' paddingLeft='3px'>Incorrect entry.</Typography>
+                                    //   </Typography>
+                                    // }
+                                />
+                            </Grid>
+
+                            <Grid item xs={12}
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Button 
+                                    type="submit" 
+                                    theme={theme}
+                                    variant="contained" 
+                                    color="secondary"
+                                    sx={{
+                                        height: '40px',
+                                        color: 'white',
+                                        borderRadius: '40px',
+                                        fontSize: '1em',
+                                        fontWeight: 600,
+                                        width: '90%',
+                                    }}
+                                >
+                                    Reset
+                                </Button>
+                            </Grid>
+
+                        </Grid>
+
+                        {/* <Grid container justifyContent="center">
+                            <Grid item xs={12}
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    lineHeight: '15px',
+                                    paddingTop: '15px',
+                                    fontSize: '.9em',
+                                }}
+                            >
+                                <Typography variant="small" sx={{color: 'black' }}>
+                                    <Typography component={Link} to="/test" variant="small" sx={{ color: 'black'}}>
+                                        Back to sign in
+                                    </Typography>
+                                </Typography>
+                                
+                            </Grid>
+                        </Grid> */}
+                        
+                    </form>
+                </Box>
+            </Box>
+        </Container>
+        </Box>
   );
 };
 

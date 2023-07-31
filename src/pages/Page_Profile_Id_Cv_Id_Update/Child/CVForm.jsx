@@ -4,7 +4,7 @@ import CreateCv from "./CreateCv";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
+import cleanStore from "../../../utils/cleanStore";
 // import ViewCv from "./ViewCv";
 function CVForm() {
   const navigate = useNavigate();
@@ -28,8 +28,7 @@ function CVForm() {
   const cv = useSelector((state) => state.cvInfor);
   const cvSkill = useSelector((state) => state.cvHasSkill);
   const cvCertificate = useSelector((state) => state.cvHasCertificate);
-  const cvSkillData = cvSkill ? cvSkill : [];
-  const cvData = cv ? cv : [];
+  
 
   const [skillData, setSkill] = useState([]);
   const [languageData, setLanguage] = useState([]);
@@ -57,7 +56,7 @@ function CVForm() {
   useEffect(() => {
     if (cv) {
       // Data is available, update the local state
-      setTitle(cv?(cv[0].cvName!==null?cv[0].experience:"data still null" ):"");
+      setTitle(cv?(cv[0].cvName!==null?cv[0].cvName:"data still null" ):"");
       setIntro(cv?(cv[0].introduction!==null?cv[0].introduction:"data still null" ):"");
       setEducation(cv?(cv[0].education!==null?cv[0].education:"data still null" ):"");
       setExperience(cv?(cv[0].experience!==null?cv[0].experience:"data still null" ):"");
@@ -153,6 +152,7 @@ function CVForm() {
     setSkills(skills.filter((component) => component.id !== id));
   }
   function handleCertificateAdd() {
+    console.log(startDate)
     const newCert = {
       certificateId: Cid,
       certificateName: Cname,
@@ -189,6 +189,7 @@ function CVForm() {
     );
     console.log(arr);
     if (arr[0] === undefined) {
+      cleanStore(dispatch)
       alert("wrong language");
       setLanguageId(null);
       setLanguageName("");

@@ -26,9 +26,15 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
 
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
 const TableInterviewer = (props) => {
     const { interviewerList, chosenShift, busyInterviewer,
         chosenInterviewer, setChosenInterviewer } = props
+    const theme = useTheme()
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     const interviewerRows = interviewerList.map(inter => (
         {
             interviewerid: inter.interviewerid,
@@ -48,37 +54,38 @@ const TableInterviewer = (props) => {
                 if (chosenShift && busyInterviewer.length > 0) {
                     for (let busyIn of busyInterviewer) {
                         if (busyIn.interviewerid == params.row.interviewerid) {
-                            return (<Chip icon={<CloseIcon />} label="Unavailable" color="error" size="small" />)
+                            return (<Chip icon={<CloseIcon />} label={isSm ? "Unavailable" : ""} color="error" size="small" />)
                         }
 
                     }
                 }
                 return (
-                    <Chip icon={<CheckIcon />} label="Available" color="success" size="small" />
+                    <Chip icon={<CheckIcon />} label={isSm ? "Available" : ""} color="success" size="small" />
+                    // <></>
                 )
             }
         },
         {
             field: "action",
-            headerName: "Action",
+            headerName: "",
             flex: 2,
             renderCell: (params) => {
                 if (chosenInterviewer && params.row.interviewerid == chosenInterviewer.interviewerid) {
                     return (
-                        <Button variant="contained" color="primary">Chosen</Button>
+                        <Button variant="contained" color="primary" size={isMd ? "medium" : "small"}>Chosen</Button>
                     )
                 }
                 else {
                     if (chosenShift && busyInterviewer.length > 0) {
                         for (let busyIn of busyInterviewer) {
                             if (busyIn.interviewerid == params.row.interviewerid) {
-                                return (<Button disabled variant="outlined">Choose</Button>)
+                                return (<Button disabled variant="outlined" size={isMd ? "medium" : "small"}>Choose</Button>)
                             }
 
                         }
                     }
                     return (
-                        <Button variant="outlined" color="primary" onClick={() => setChosenInterviewer(params.row)}>Choose</Button>
+                        <Button variant="outlined" color="primary" size={isMd ? "medium" : "small"} onClick={() => setChosenInterviewer(params.row)}>Choose</Button>
                     )
                 }
             }
@@ -92,9 +99,11 @@ const TableInterviewer = (props) => {
                 rows={interviewerRows}
                 columns={interviewerColumns}
                 getRowId={(row) => row.interviewerid}
+                disableColumnMenu
                 disableColumnFilter
                 disableColumnSelector
                 disableDensitySelector
+                disableRowSelectionOnClick
                 slots={{ toolbar: GridToolbar }}
                 slotProps={{
                     toolbar: {

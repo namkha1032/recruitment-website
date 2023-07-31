@@ -14,6 +14,11 @@ function* getStuff(action) {
     //     const response2 = yield call(axios.post, `http://localhost:3001/comments`, newCmt)
     //     console.log("resdata2: ", response2.data)
     // }
+    for (let item of action.payload) {
+        const response = yield call(axios.post, "http://localhost:3001/posts", item)
+        console.log("resdata: ", response.data)
+    }
+    console.log("ahahaha")
 }
 
 function* testSaga() {

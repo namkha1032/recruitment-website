@@ -10,7 +10,6 @@ function cleanStore(dispatch) {
     dispatch({ type: "interviewList/setInterviewList", payload: null })
     dispatch({ type: "interview/setInterview", payload: null })
     dispatch({ type: "language/setLanguage", payload: null })
-    dispatch({ type: "loading/offLoading" })
     dispatch({ type: "positionList/setPositionList", payload: null })
     dispatch({ type: "position/setPosition", payload: null })
     dispatch({ type: "questionList/setQuestionList", payload: null })
@@ -22,6 +21,9 @@ function cleanStore(dispatch) {
     dispatch({ type: "interviewListCandidate/setInterviewList", payload: null})
     dispatch({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: null})
     dispatch({ type: "interviewidInfo/setInterviewidInfo", payload: null})
+
+    dispatch({ type: "loading/offLoading" })
+    dispatch({ type: "status/onReset" })
 }
 
 export default cleanStore

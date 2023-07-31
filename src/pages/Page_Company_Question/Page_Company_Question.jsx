@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { Button, Autocomplete, TextField } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
@@ -12,6 +12,7 @@ import Grid from "@mui/material/Grid";
 import QuestionFormModal from "./QuestionFormModal";
 import QuestionModal from "./QuestionModal";
 import { successAlert } from "../../components/Alert/SuccessAlert";
+import { errorAlert } from "../../components/Alert/ErrorAlert";
 import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
 import {
   NullString,
@@ -33,13 +34,43 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
-const listOfSkills = {
-  skill: ["React", "Angular", "Java", "Python", "Figma", ".NET", "C", "C++"],
-  language: ["English", "Vietnamese", "Japanese", "Chinese", "Korian"],
-};
+// const listOfSkills = {
+//   skill: ["React", "Angular", "Java", "Python", "Figma", ".NET", "C", "C++"],
+//   language: ["English", "Vietnamese", "Japanese", "Chinese", "Korian"],
+// };
+
+// JSON <- getAllQuestion
+// {
+//  "QuestionId": "",
+//  "QuestionName": "",
+//  "CategoryId": "",
+//  "CategoryName": ["Technology, "Language", "Soft Skills"]
+//  "TypeId": "", null nếu Category là Soft Skills
+//  "TypeName": "", null nếu Category là Soft Skills
+// }
+
+// skills:
+// {
+//   "skillId": "00000000-0000-0000-0000-000000000005",
+//   "skillName": "Nextjs",
+//   "description": "Dùng làm backend cho vui",
+//   "isDeleted": false
+// }
+
+// language: {
+//   "languageId": "a9bcd349-2ea8-466d-8bd5-53999abffa0b",
+//   "languageName": "French",
+//   "isDeleted": false
+// }
 
 export default function Page_Company_Question() {
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up("md"));
+  const isSm = useMediaQuery(theme.breakpoints.down("md"));
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -50,7 +81,44 @@ export default function Page_Company_Question() {
   }, []);
 
   const rows = useSelector((state) => state.questionList);
-  const loading = useSelector((state) => state.loading)
+  const loading = useSelector((state) => state.loading);
+  const status = useSelector((state) => state.status);
+  const error = useSelector((state) => state.error);
+
+  // useEffect(() => {
+  //   let timeoutId = null;
+  //   if (error.status === "yes") {
+  //     errorAlert(error.message);
+  //     timeoutId = setTimeout(() => {
+  //       dispatch({
+  //         type: "error/setError",
+  //         payload: {
+  //           status: "idle",
+  //           message: "",
+  //         },
+  //       });
+  //     }, 2000);
+  //   } else if (error.status === "no") {
+  //     dispatch({
+  //       type: "error/setError",
+  //       payload: {
+  //         status: "idle",
+  //         message: "",
+  //       },
+  //     });
+  //   }
+  //   return () => clearTimeout(timeoutId);
+  // }, [error]);
+
+  useEffect(() => {
+    if (status.status === "success") {
+      successAlert(status.message);
+      dispatch({
+        type: "status/onReset",
+      });
+    }
+  }, [status]);
+
   // const [rows, setRows] = useState(datasjson);
 
   const skill_draft = useSelector((state) => state.skill);
@@ -71,12 +139,15 @@ export default function Page_Company_Question() {
 
   const [modalStatus, setModalStatus] = useState(false);
   const [valueUpdate, setValueUpdate] = useState({
-    QuestionId: -1,
+    QuestionId: "-1",
     QuestionName: "",
-    Category: "",
-    Skill: "",
+    CategoryId: "",
+    CategoryName: "",
+    TypeId: "",
+    TypeName: "",
   });
   const [typeStatus, setTypeStatus] = useState(false);
+  const [keyModal, setKeyModal] = useState(0);
 
   const [deleteModalStatus, setDeleteModalStatus] = useState(false);
   const [valueDelete, setValueDelete] = useState(0);
@@ -91,13 +162,13 @@ export default function Page_Company_Question() {
   //   setAnchorEl(null);
   // }
 
-  function handleRowClick(id) {
-    alert("Navigate to position id: " + id);
-  }
+  // function handleRowClick(id) {
+  //   alert("Navigate to position id: " + id);
+  // }
 
-  function handleAddClick() {
-    navigate("./create");
-  }
+  // function handleAddClick() {
+  //   navigate("./create");
+  // }
 
   // function handleSearchClick() {
   //   alert("Value search: " + valueSearch);
@@ -111,9 +182,48 @@ export default function Page_Company_Question() {
       dispatch({
         type: "saga/getQuestionListWithFilter",
         payload: {
+          categoryName: "Soft Skills",
           skillId: null,
+          skillName: null,
           languageId: null,
+          languageName: null,
           softskill: true,
+        },
+      });
+    } else if (value === "Technology") {
+      dispatch({
+        type: "saga/getQuestionListWithFilter",
+        payload: {
+          categoryName: "Technology",
+          skillId: null,
+          skillName: null,
+          languageId: null,
+          languageName: null,
+          softskill: false,
+        },
+      });
+    } else if (value === "Language") {
+      dispatch({
+        type: "saga/getQuestionListWithFilter",
+        payload: {
+          categoryName: "Language",
+          skillId: null,
+          skillName: null,
+          languageId: null,
+          languageName: null,
+          softskill: false,
+        },
+      });
+    } else {
+      dispatch({
+        type: "saga/getQuestionListWithFilter",
+        payload: {
+          categoryName: null,
+          skillId: null,
+          skillName: null,
+          languageId: null,
+          languageName: null,
+          softskill: false,
         },
       });
     }
@@ -132,8 +242,11 @@ export default function Page_Company_Question() {
     dispatch({
       type: "saga/getQuestionListWithFilter",
       payload: {
+        categoryName: "Technology",
         skillId: value ? value.skillId : null,
+        skillName: value ? value.skillName : null,
         languageId: null,
+        languageName: null,
         softskill: false,
       },
     });
@@ -144,8 +257,11 @@ export default function Page_Company_Question() {
     dispatch({
       type: "saga/getQuestionListWithFilter",
       payload: {
+        categoryName: "Language",
         skillId: null,
+        skillName: null,
         languageId: value ? value.languageId : null,
+        languageName: value ? value.languageName : null,
         softskill: false,
       },
     });
@@ -159,37 +275,57 @@ export default function Page_Company_Question() {
     setAddModalStatus(false);
   }
 
+  // -> QuestionFormModal
+  // value: {
+  //  question: question,
+  //  category: "Technology",
+  //  typeId: null, nếu category = "Soft Skill"
+  //  typeName: null nếu category = "Soft Skill"
+  // }
+
   function handleSubmitQuestion(value) {
-    successAlert("Tạo câu hỏi");
+    // successAlert("Create question");
     dispatch({
       type: "saga/postQuestion",
       payload: {
         QuestionName: value.question,
         Category: value.category,
-        Skill: value.skill,
+        TypeId: value.typeId,
+        TypeName: value.typeName,
       },
     });
   }
 
   function handleModalOpen(value, type) {
+    setKeyModal((k) => k + 1);
     setValueUpdate(value);
     setTypeStatus(type);
     setModalStatus(true);
   }
 
   function handleModalClose() {
+    setKeyModal((k) => k + 1);
     setModalStatus(false);
   }
 
+  // -> QuestionModal
+  // value: {
+  //   QuestionId: "",
+  //   QuestionName: "",
+  //   CategoryName: "",
+  //   TypeId: null,
+  //   TypeName: null nếu category = Soft Skill
+  // }
+
   function handleUpdateQuestion(value) {
-    successAlert("Cập nhật câu hỏi");
     dispatch({
       type: "saga/putQuestion",
       payload: {
         QuestionId: value.QuestionId,
         QuestionName: value.QuestionName,
-        Category: value.Category,
-        Skill: value.Skill,
+        Category: value.CategoryName,
+        TypeId: value.TypeId,
+        TypeName: value.TypeName,
       },
     });
   }
@@ -204,10 +340,13 @@ export default function Page_Company_Question() {
   }
 
   function handleDeleteQuestion(value) {
-    successAlert("Xoá câu hỏi");
-    dispatch({type: "saga/deleteQuestion", payload: {
-      QuestionId: value
-    }})
+    dispatch({
+      type: "saga/deleteQuestion",
+      payload: {
+        QuestionId: value.QuestionId,
+        CategoryId: value.CategoryId,
+      },
+    });
   }
 
   // function handleOpenSuccessAlert() {
@@ -225,7 +364,7 @@ export default function Page_Company_Question() {
       headerAlign: "left",
       align: "left",
       flex: 0.2,
-      minWidth: 30,
+      minWidth: 70,
       renderHeader: () => <span>ID</span>,
       renderCell: (params) => {
         if (params.value === undefined) return <NullString />;
@@ -268,12 +407,12 @@ export default function Page_Company_Question() {
       },
     },
     {
-      field: "Category",
+      field: "CategoryName",
       type: "string",
       headerAlign: "center",
       align: "center",
       flex: 0.4,
-      minWidth: 80,
+      minWidth: 130,
       renderHeader: () => <span>Category</span>,
       renderCell: (params) => {
         if (params.value === undefined) return <NullString />;
@@ -283,11 +422,11 @@ export default function Page_Company_Question() {
       },
     },
     {
-      field: "Skill",
+      field: "TypeName",
       type: "string",
       headerAlign: "center",
       align: "center",
-      minWidth: 50,
+      width: 90,
       renderHeader: () => <span>Type</span>,
       renderCell: (params) => {
         if (params.value === undefined) return <NullString />;
@@ -298,6 +437,7 @@ export default function Page_Company_Question() {
       type: "actions",
       headerAlign: "right",
       align: "right",
+      width: 30,
       getActions: (params) => [
         <GridActionsCellItem
           icon={<InfoIcon variant="outlined" sx={{ color: "black" }} />}
@@ -308,8 +448,10 @@ export default function Page_Company_Question() {
               {
                 QuestionId: params.row.QuestionId,
                 QuestionName: params.row.QuestionName,
-                Category: params.row.Category,
-                Skill: params.row.Skill,
+                CategoryId: params.row.CategoryId,
+                CategoryName: params.row.CategoryName,
+                TypeId: params.row.TypeId,
+                TypeName: params.row.TypeName,
               },
               false
             )
@@ -325,8 +467,10 @@ export default function Page_Company_Question() {
               {
                 QuestionId: params.row.QuestionId,
                 QuestionName: params.row.QuestionName,
-                Category: params.row.Category,
-                Skill: params.row.Skill,
+                CategoryId: params.row.CategoryId,
+                CategoryName: params.row.CategoryName,
+                TypeId: params.row.TypeId,
+                TypeName: params.row.TypeName,
               },
               true
             )
@@ -336,7 +480,12 @@ export default function Page_Company_Question() {
         <GridActionsCellItem
           icon={<DeleteIcon sx={{ color: "#cc3300" }} />}
           label="Delete question"
-          onClick={() => handleDeleteModalOpen(params.row.id)}
+          onClick={() =>
+            handleDeleteModalOpen({
+              QuestionId: params.row.QuestionId,
+              CategoryId: params.row.CategoryId,
+            })
+          }
           showInMenu
           sx={{
             color: "#cc3300",
@@ -347,7 +496,9 @@ export default function Page_Company_Question() {
   ]);
 
   return (
-    <Box>
+    <Box sx={{
+      marginTop: 3,
+    }}>
       <GigaCard>
         <GigaCardBody>
           <Grid
@@ -357,7 +508,7 @@ export default function Page_Company_Question() {
               marginBottom: 5,
             }}
           >
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} sm={6} md={8}>
               <Box
                 sx={{
                   fontSize: 40,
@@ -373,27 +524,47 @@ export default function Page_Company_Question() {
             <Grid
               item
               xs={12}
+              sm={6}
               md={4}
               sx={{
                 display: "flex",
                 justifyContent: {
                   md: "flex-end",
+                  sm: "flex-end",
                   xs: "flex-start",
                 },
                 alignItems: "center",
               }}
             >
               <Button
-                variant="outlined"
+                // variant="outlined"
+                // sx={{
+                //   color: "black",
+                //   border: "1px solid black",
+                //   textTransform: "none",
+                //   height: 50,
+                //   width: {
+                //     xs: "100%",
+                //     sm: 250,
+                //     md: 250,
+                //   },
+                //   "&:hover": {
+                //     backgroundColor: "black",
+                //     color: "white",
+                //   },
+                // }}
+                variant="contained"
                 sx={{
-                  color: "black",
-                  border: "1px solid black",
-                  textTransform: "none",
                   height: 50,
-                  width: 250,
+                  width: {
+                    md: 250,
+                    sm: 250,
+                    xs: "100%",
+                  },
+                  textTransform: "none",
+                  backgroundColor: "black",
                   "&:hover": {
-                    backgroundColor: "black",
-                    color: "white",
+                    backgroundColor: "grey",
                   },
                 }}
                 onClick={handleAddModalOpen}
@@ -437,9 +608,10 @@ export default function Page_Company_Question() {
           </Menu> */}
             </Grid>
 
-            <Grid
+          {isMd && (<Grid
               item
               xs={12}
+              sm={12}
               md={7}
               sx={{
                 display: "flex",
@@ -451,7 +623,13 @@ export default function Page_Company_Question() {
                 disablePortal
                 id="filter-type"
                 options={["Technology", "Language", "Soft Skills"]}
-                sx={{ width: 200, marginRight: 2 }}
+                sx={{
+                  width: { md: 200, sm: 200, xs: "100%" },
+                  marginRight: 2,
+                  "& .MuiAutocomplete-popupIndicator": {
+                    color: "black",
+                  },
+                }}
                 renderInput={(params) => (
                   <TextField {...params} label="Category..." />
                 )}
@@ -520,7 +698,7 @@ export default function Page_Company_Question() {
                   disablePortal
                   id="filter-type"
                   options={skills}
-                  sx={{ width: 200 }}
+                  sx={{ width: { md: 200, sm: 200, xs: "100%" } }}
                   renderInput={(params) => (
                     <TextField {...params} label="Skill..." />
                   )}
@@ -542,7 +720,7 @@ export default function Page_Company_Question() {
                   disablePortal
                   id="filter-type"
                   options={languages}
-                  sx={{ width: 200 }}
+                  sx={{ width: { md: 200, sm: "100%", xs: "100%" } }}
                   renderInput={(params) => (
                     <TextField {...params} label="Language..." />
                   )}
@@ -559,7 +737,148 @@ export default function Page_Company_Question() {
                   onChange={(event, value) => handleChooseLanguage(value)}
                 />
               )}
+            </Grid>)}
+          
+          {isSm && (<> <Grid
+              item
+              xs={12}
+              sm={12}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+              }}
+            >
+              <Autocomplete
+                disablePortal
+                id="filter-type"
+                options={["Technology", "Language", "Soft Skills"]}
+                sx={{
+                  width: "100%",
+                  "& .MuiAutocomplete-popupIndicator": {
+                    color: "black",
+                  },
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Category..." />
+                )}
+                renderOption={(props, option) => {
+                  if (option === "Technology") {
+                    return (
+                      <Box
+                        component="li"
+                        {...props}
+                        sx={{
+                          color: "#1565C0",
+                        }}
+                      >
+                        <SchoolRounded
+                          sx={{
+                            color: "#1565C0",
+                            marginRight: 1,
+                          }}
+                        />
+                        {option}
+                      </Box>
+                    );
+                  } else if (option === "Language") {
+                    return (
+                      <Box
+                        component="li"
+                        {...props}
+                        sx={{
+                          color: "#008631",
+                        }}
+                      >
+                        <LanguageRounded
+                          sx={{
+                            color: "#008631",
+                            marginRight: 1,
+                          }}
+                        />
+                        {option}
+                      </Box>
+                    );
+                  } else if (option === "Soft Skills") {
+                    return (
+                      <Box
+                        component="li"
+                        {...props}
+                        sx={{
+                          color: "#AA336A",
+                        }}
+                      >
+                        <PsychologyRounded
+                          sx={{
+                            color: "#AA336A",
+                            marginRight: 1,
+                          }}
+                        />
+                        {option}
+                      </Box>
+                    );
+                  }
+                }}
+                value={valueChoose}
+                onChange={(event, value) => handleChooseValue(value)}
+              />
             </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+              }}
+            >
+              {valueChoose === "Technology" && (
+                <Autocomplete
+                  disablePortal
+                  id="filter-type"
+                  options={skills}
+                  sx={{ width: "100%" }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Skill..." />
+                  )}
+                  getOptionLabel={(option) => option.skillName || ""}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.skillId}>
+                      {option.skillName}
+                    </li>
+                  )}
+                  isOptionEqualToValue={(option, value) => {
+                    return option.skillId === value.skillId;
+                  }}
+                  value={skillChoose}
+                  onChange={(event, value) => handleChooseSkill(value)}
+                />
+              )}
+              {valueChoose === "Language" && (
+                <Autocomplete
+                  disablePortal
+                  id="filter-type"
+                  options={languages}
+                  sx={{ width: "100%" }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Language..." />
+                  )}
+                  getOptionLabel={(option) => option.languageName || ""}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.languageId}>
+                      {option.languageName}
+                    </li>
+                  )}
+                  isOptionEqualToValue={(option, value) => {
+                    return option.languageId === value.languageId;
+                  }}
+                  value={languageChoose}
+                  onChange={(event, value) => handleChooseLanguage(value)}
+                />
+              )}
+            </Grid> </>)}
+            
 
             {/* <Grid
           item
@@ -613,21 +932,21 @@ export default function Page_Company_Question() {
             key={addModalStatus}
             addModalStatus={addModalStatus}
             handleAddModalClose={handleAddModalClose}
-            options={listOfSkills}
+            options={{ skill: skills, language: languages }}
             handleSubmitQuestion={handleSubmitQuestion}
-            keepMounted
+            status={status}
           />
 
           <QuestionModal
-            key={valueUpdate.QuestionId}
+            key={keyModal}
             modalStatus={modalStatus}
             handleModalClose={handleModalClose}
-            options={listOfSkills}
+            options={{ skill: skills, language: languages }}
             handleUpdateQuestion={handleUpdateQuestion}
             value={valueUpdate}
             type={typeStatus}
             setType={setTypeStatus}
-            keepMounted
+            status={status}
           />
         </GigaCardBody>
       </GigaCard>
@@ -636,8 +955,9 @@ export default function Page_Company_Question() {
         key={valueDelete}
         deleteModalStatus={deleteModalStatus}
         handleDeleteModalClose={handleDeleteModalClose}
-        id={valueDelete}
+        value={valueDelete}
         handleDeleteQuestion={handleDeleteQuestion}
+        status={status}
       />
 
       <ToastContainer transition={Slide} hideProgressBar={true} />

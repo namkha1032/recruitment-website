@@ -1,7 +1,32 @@
 [
-  { "id": 0, "name": "html" },
-  { "id": 1, "name": "css" },
-  { "id": 2, "name": "reactjs" },
-  { "id": 3, "name": "mongodb" },
-  { "id": 4, "name": "mySql" }
+  {
+    "skillId": "00000000-0000-0000-0000-000000000001",
+    "skillName": "React",
+    "description": "Reactjs",
+    "isDeleted": false
+  },
+  {
+    "skillId": "00000000-0000-0000-0000-000000000002",
+    "skillName": "C#",
+    "description": "aspnet",
+    "isDeleted": false
+  },
+  {
+    "skillId": "00000000-0000-0000-0000-000000000003",
+    "skillName": "Java",
+    "description": "Mobile",
+    "isDeleted": false
+  },
+  {
+    "skillId": "00000000-0000-0000-0000-000000000004",
+    "skillName": "Kotlin",
+    "description": "Android",
+    "isDeleted": false
+  },
+  {
+    "skillId": "00000000-0000-0000-0000-000000000005",
+    "skillName": "Nextjs",
+    "description": "Dùng làm backend cho vui",
+    "isDeleted": false
+  }
 ]

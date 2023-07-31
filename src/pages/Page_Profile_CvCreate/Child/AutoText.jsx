@@ -2,6 +2,7 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import "./AutoText.scss";
+import CompHeader from "./compHeader";
 
 export default function EmptyTextarea(prop) {
   function handleDetail(e) {
@@ -23,11 +24,11 @@ export default function EmptyTextarea(prop) {
           noValidate
           autoComplete="off"
         >
+          <CompHeader headerIcon={prop.headerIcon}>{prop.state}</CompHeader>
           <TextField
             value={prop.value}
             onChange={handleDetail}
             id="outlined-basic"
-            label={prop.state}
             variant="outlined"
             multiline
           />

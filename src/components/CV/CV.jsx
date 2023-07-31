@@ -23,21 +23,46 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ModalCertificates from "./ModalCertificates";
 
-const CV = ({ cvid }) => {
+const CV = ({ cvid,page }) => {
   const dispatch = useDispatch();
   const cv = useSelector((state) => state.cv);
   const candidate = useSelector((state) => state.candidate);
-
+  const [lengCVPDF , setLengthCVPDF] = useState(0)
   useEffect(() => {
     dispatch({ type: "saga/getCv", payload: cvid });
     return () => {
       dispatch({ type: "cv/setCv", payload: null });
     };
   }, []);
+  useEffect(() => {
+    
+    if(cv !== null){
+      console.log('render')
+      const xhr = new XMLHttpRequest()
+          xhr.open('GET', 'http://localhost:3000/data/2019_MT_KTM.pdf', true);
+          xhr.responseType = 'blob';
+          xhr.onload = (status,response) => {
+            console.log(status)
+        if (status === 200) {
+          
+          const blob = response;
+          const reader = new FileReader();
+          reader.onloadend =  () => {
+            const contentLength = reader.result.length;
+            setLengthCVPDF(contentLength)
+          };
+          reader.readAsBinaryString(blob);
+        }
+      };
+      xhr.send();
+    }
+  },[cv])
+  console.log(lengCVPDF)
   let style = "1px solid black";
   return (
     cv &&
     candidate && (
+      <>
       <Box sx={{ border: "1px solid black", p: "16px" }}>
         <Grid container spacing={2}>
           <Grid
@@ -106,21 +131,21 @@ const CV = ({ cvid }) => {
             </Box>
           </Grid>
 
-          <Grid item md={12} sm={12}>
-            <Box>
-              <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-                <Public sx={{ mr: "15px" }} />
-                <Box
-                  component="h2"
-                  sx={{ position: "relative", top: "5.5px", m: 0 }}
-                >
-                  Introduction
+              <Grid item md={12} sm={12}>
+                <Box>
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                    <Public sx={{ mr: "15px" }} />
+                    <Box
+                      component="h2"
+                      sx={{ position: "relative", top: "5.5px", m: 0 }}
+                    >
+                      Introduction
+                    </Box>
+                  </Box>
+                  <Box sx={{ padding: "10px 0 0 40px" }}>{cv.introduction}</Box>
                 </Box>
-              </Box>
-              <Box sx={{ padding: "10px 0 0 40px" }}>{cv.introduction}</Box>
-            </Box>
-            <Box pl='16px' pb='16px' width='100%'><Divider sx={{ backgroundColor: "black", mt: "16px" }} /></Box>
-          </Grid>
+                <Box pl='16px' pb='16px' width='100%'><Divider sx={{ backgroundColor: "black", mt: "16px" }} /></Box>
+              </Grid>
 
           <Grid item md={12} sm={12} >
           
@@ -147,7 +172,7 @@ const CV = ({ cvid }) => {
                   
                     }}
                   >
-                    <Box m={0} component='h4'>{skill.skillname}</Box>
+                    <Box m={0} component='h4'>{skill.skillName}</Box>
                     <Box> 1 năm kinh nghiệm</Box>
                   </Box>
                 ))}
@@ -241,8 +266,12 @@ const CV = ({ cvid }) => {
             
         </Grid>
         </Grid>
-        
       </Box>
+      { page !== 'Profile' && <Box mt={8}>
+        <Box m={0} component='h2' textAlign='center'> CV PDF</Box>
+        <iframe style={{width:'100%',height:'800px'}} src="http://localhost:3000/data/2019_MT_KTM.pdf" ></iframe>
+      </Box>}
+      </>
     )
   );
 };

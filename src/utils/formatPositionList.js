@@ -19,10 +19,12 @@ export function formatPositionList(input) {
       PositionId: element.positionId,
       PositionName: element.positionName,
       Description: element.description,
+      Salary: element.salary,
       MaxHiringQty: element.maxHiringQty,
       HiredQty: 0,
       StartDate: formatDate(element.startDate.slice(0, 10)),
       EndDate: formatDate(element.endDate.slice(0, 10)),
+      Status: element.isDeleted
     };
   });
   console.log(output);

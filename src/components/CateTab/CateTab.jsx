@@ -25,6 +25,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 const CateTab = (props) => {
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     const { currentCateTab, setCurrentCateTab } = props
     const [value, setValue] = useState(0);
 
@@ -34,28 +35,28 @@ const CateTab = (props) => {
     return (
         <Box sx={{ display: "flex", columnGap: 2, marginBottom: 2 }}>
             <Button sx={{ borderRadius: 100 }}
-                size="medium"
+                size={isMd ? "medium" : "small"}
                 color={"secondary"}
                 startIcon={<HandshakeIcon />}
                 variant={currentCateTab == 0 ? "contained" : "outlined"}
                 onClick={() => { setCurrentCateTab(0) }}>
-                Soft Skill
+                {isSm ? "Soft Skill" : "Soft"}
             </Button>
             <Button sx={{ borderRadius: 100 }}
-                size="medium"
+                size={isMd ? "medium" : "small"}
                 color={"success"}
                 startIcon={<LanguageIcon />}
                 variant={currentCateTab == 1 ? "contained" : "outlined"}
                 onClick={() => { setCurrentCateTab(1) }}>
-                Language
+                {isSm ? "Language" : "Lang"}
             </Button>
             <Button sx={{ borderRadius: 100 }}
-                size="medium"
+                size={isMd ? "medium" : "small"}
                 color={"warning"}
                 startIcon={<TungstenIcon />}
                 variant={currentCateTab == 2 ? "contained" : "outlined"}
                 onClick={() => { setCurrentCateTab(2) }}>
-                Technology
+                {isSm ? "Technology" : "Tech"}
             </Button>
         </Box>
     )

@@ -6,6 +6,7 @@ import {
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
+import cleanStore from './utils/cleanStore';
 // import components
 import MainLayout from './components/MainLayout/MainLayout';
 // import pages
@@ -52,14 +53,44 @@ import XPage_Recovery from './pages/XPage_Recovery/XPage_Recovery';
 
 import PageTest from './pages/xpagetest/PageTest';
 import PageTest2 from './pages/xpagetest2/PageTest2';
+import PageTest3 from './pages/xpagetest3/PageTest3';
+import PageTest4 from './pages/xpagetest4/PageTest4';
+
 import MissingPage from './components/MissingPage/MissingPage';
 import Unauthorized from './components/Unauthorized/Unauthorized';
 import RequireAuth from './components/RequireAuth/RequireAuth';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import TestLayout from './components/TestLayout/TestLayout';
+import Page_Profile_Id_History from './pages/Page_Profile_Id_History/Page_Profile_Id_History';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function App() {
+  // const dispatch = useDispatch();
+  // const [rememberMe, setRememberMe] = useState(false);
+  // const handleRememberMe = (event) => {
+  //   event.preventDefault();
+  //   setRememberMe(!rememberMe);
+  //   // window.localStorage.setItem("remember", JSON.stringify(!rememberMe))
+  // }
+  // console.log(rememberMe)
+  // useEffect(() => {
+  //   const handleBeforeUnload = (event) => {
+  //     if (!rememberMe /* && !window.localStorage.getItem('remember') */) {
+  //       setRememberMe(false)
+  //       window.localStorage.removeItem('user')
+  //       // window.localStorage.removeItem('remember') 
+  //       cleanStore(dispatch)
+  //       dispatch({ type: "user/setUser", payload: null })
+  //     }
+  //   };
+
+  //   window.addEventListener('beforeunload', handleBeforeUnload);
+
+  //   return () => {
+  //     window.removeEventListener('beforeunload', handleBeforeUnload);
+  //   };
+  // }, [rememberMe]);
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -143,6 +174,7 @@ function App() {
             <Route element={<ProtectedRoute allowed={["admin", "recruiter", "interviewer", "candidate"]} />}>
               <Route path="/profile/:profileid" element={<Page_Profile_Id />} />
               <Route path="/profile/:profileid/changepassword" element={<Page_Profile_Id_ChangePassword />} />
+              // <Route path="/profile/:profileid/history" element={<Page_Profile_Id_History/>} />
               <Route path="/profile/:profileid/event" element={<Page_Profile_Id_Event />} />
               <Route path="/profile/:profileid/interview" element={<Page_Profile_Id_Interview />} />
               <Route path="/profile/:profileid/application" element={<Page_Profile_Id_Application />} />
@@ -156,17 +188,16 @@ function App() {
             </Route>
 
             <Route path="/test" element={<PageTest />} />
-            {/* <Route element={<RequireAuth allowedRoles={"candidate"} />}>
-              <Route path="/test" element={<PageTest />} />
-            </Route> */}
-            
+
 
           </Route>
 
-          <Route path="/login" element={<XPage_Login />} />
+          <Route path="/login" element={<XPage_Login /* rememberMe={rememberMe} handleRememberMe={handleRememberMe} */ />} />
           <Route path="/recovery" element={<XPage_Recovery />} />
           <Route path="/register" element={<XPage_Register />} />
           <Route path="/test2" element={<PageTest2 />} />
+          <Route path="/test3" element={<PageTest3 />} />
+          <Route path="/test4" element={<PageTest4 />} />
           <Route path="*" element={<MissingPage />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
 

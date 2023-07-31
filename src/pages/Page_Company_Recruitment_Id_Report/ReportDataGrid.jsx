@@ -15,11 +15,13 @@ export default function ReportDataGrid(props) {
     return (
         <Box>
             <DataGrid
+            autoHeight
             columns={props.columns}
-            rows={props.rows}
+            rows={props.rows ? props.rows : []}
             sx={{
               "&.MuiDataGrid-root": {
                 borderRadius: 1,
+                borderColor: "gray.100"
               },
               "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
                 outline: "none",
@@ -28,7 +30,8 @@ export default function ReportDataGrid(props) {
                 outline: "none",
               },
               "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
-                backgroundColor: "#1565C0",
+                // backgroundColor: "#1565C0",
+                backgroundColor: "black",
                 color: "white",
                 fontWeight: 700,
                 fontSize: 14,
@@ -47,14 +50,14 @@ export default function ReportDataGrid(props) {
             }}
             slots={{ toolbar: GridToolbar }}
             slotProps={{
-              pagination: {
-                labelRowsPerPage: "Số lượng hiển thị",
-                labelDisplayedRows: ({ from, to, count }) =>
-                  `${from}–${to} của ${count !== -1 ? count : `hơn ${to}`}`,
-              },
+              // pagination: {
+              //   labelRowsPerPage: "Số lượng hiển thị",
+              //   labelDisplayedRows: ({ from, to, count }) =>
+              //     `${from}–${to} của ${count !== -1 ? count : `hơn ${to}`}`,
+              // },
               toolbar: {
                 showQuickFilter: true,
-                quickFilterProps: { debounceMs: 500, placeholder: "Tìm kiếm...", sx: {
+                quickFilterProps: { debounceMs: 500, placeholder: "Search...", sx: {
                   width: 300,
                   marginBottom: 1,
                 }},
@@ -66,6 +69,7 @@ export default function ReportDataGrid(props) {
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
+            disableRowSelectionOnClick
             pagination
             pageSizeOptions={[5, 10, 25, 50, 100]}
             initialState={{
@@ -79,6 +83,12 @@ export default function ReportDataGrid(props) {
             onCellClick={(params, event) => {
               if (params.field === "InterviewId") {
                 props.handleDetailClick(params.row.InterviewId)
+              }
+              else if (params.field === "InterviewerName") {
+                props.handleInterviewerClick(params.row.InterviewerId)
+              }
+              else if (params.field === "CandidateName") {
+                props.handleCandidateClick(params.row.CandidateId)
               }
             }}
             />

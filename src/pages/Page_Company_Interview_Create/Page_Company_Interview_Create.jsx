@@ -41,6 +41,10 @@ import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import RoomIcon from '@mui/icons-material/Room';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
+
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import TitleDivider from "../../components/TitleDivider/TitleDivider";
 // import utilities
 import cleanStore from "../../utils/cleanStore";
 const Page_Company_Interview_Create = () => {
@@ -56,6 +60,10 @@ const Page_Company_Interview_Create = () => {
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
+    const theme = useTheme()
+
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     // fetch Data
     useEffect(() => {
         dispatch({ type: "saga/getUpcomingInterview" })
@@ -125,10 +133,12 @@ const Page_Company_Interview_Create = () => {
     return (
         <>{interviewerList &&
             <Grid container spacing={4}>
-                <Grid item md={12}>
-                    <Typography variant="h2" sx={{ textAlign: "center" }}>Create an interview</Typography>
+                <Grid item xs={12}>
+                    <TitleDivider>
+                        Create Interview
+                    </TitleDivider>
                 </Grid>
-                <Grid item md={6}>
+                <Grid item xs={12} md={6}>
                     <GigaCard>
                         <GigaCardHeader color={"black"} headerIcon={<RecordVoiceOverIcon sx={{ fontSize: "inherit" }} />}>
                             Choose an interviewer
@@ -144,7 +154,7 @@ const Page_Company_Interview_Create = () => {
                         </GigaCardBody>
                     </GigaCard>
                 </Grid>
-                <Grid item md={6}>
+                <Grid item xs={12} md={6}>
                     <GigaCard>
                         <GigaCardHeader color={"black"} headerIcon={<RoomIcon sx={{ fontSize: "inherit" }} />}>
                             Choose a room
@@ -163,7 +173,7 @@ const Page_Company_Interview_Create = () => {
                 <Grid item md={12}>
                     <GigaCard>
                         <Grid container>
-                            <Grid item md={6} sx={{ display: "flex", flexDirection: "column" }}>
+                            <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column" }}>
                                 <GigaCardHeader color={"black"} headerIcon={<AccessTimeFilledIcon sx={{ fontSize: "inherit" }} />}>
                                     Time
                                 </GigaCardHeader>
@@ -180,7 +190,7 @@ const Page_Company_Interview_Create = () => {
                                     />
                                 </GigaCardBody>
                             </Grid>
-                            <Grid item md={6}>
+                            <Grid item xs={12} md={6}>
                                 <GigaCardHeader color={"black"} headerIcon={<FactCheckIcon sx={{ fontSize: "inherit" }} />}>
                                     Result
                                 </GigaCardHeader>
@@ -204,7 +214,7 @@ const Page_Company_Interview_Create = () => {
 
                 </Grid>
 
-                <Grid item md={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
+                <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
                     <Button variant="contained" sx={{
                         backgroundColor: "black",
                         "&:hover": {

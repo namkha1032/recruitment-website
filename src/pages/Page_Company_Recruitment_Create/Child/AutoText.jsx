@@ -2,6 +2,8 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import "./AutoText.scss";
+import CompHeader from "./compHeader";
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 export default function EmptyTextarea(prop) {
   function handleDetail(e) {
@@ -19,6 +21,7 @@ export default function EmptyTextarea(prop) {
           noValidate
           autoComplete="off"
         >
+          <CompHeader headerIcon={<EditNoteIcon/>}>Note</CompHeader>
           <TextField
             value={prop.value}
             onChange={handleDetail}

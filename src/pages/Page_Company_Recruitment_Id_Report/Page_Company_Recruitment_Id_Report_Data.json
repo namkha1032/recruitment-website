@@ -7,7 +7,7 @@
         "InterviewerName": "Nguyễn Văn X",
         "ApplyDate": "20/07/2023",
         "InterviewDate": "23/07/2023",
-        "Status": "Kết thúc",
+        "Status": "Finished",
         "Score": 8.5
     },
     {
@@ -18,7 +18,7 @@
         "InterviewerName": "Trần Thị Y",
         "ApplyDate": "21/07/2023",
         "InterviewDate": "25/07/2023",
-        "Status": "Đang diễn ra",
+        "Status": "Pending",
         "Score": null
     },
     {
@@ -29,7 +29,7 @@
         "InterviewerName": "Nguyễn Văn Z",
         "ApplyDate": "23/07/2023",
         "InterviewDate": "29/07/2023",
-        "Status": "Chưa bắt đầu",
+        "Status": "Pending",
         "Score": null
     },
     {
@@ -40,7 +40,40 @@
         "InterviewerName": "Nguyễn Văn T",
         "ApplyDate": "20/07/2023",
         "InterviewDate": "23/07/2023",
-        "Status": "Kết thúc",
+        "Status": "Finished",
         "Score": 9
+    },
+    {
+        "InterviewId": 9,
+        "CandidateId": 4,
+        "CandidateName": "Nguyễn Văn D",
+        "InterviewerId": 4,
+        "InterviewerName": "Nguyễn Văn T",
+        "ApplyDate": "20/07/2023",
+        "InterviewDate": "23/07/2023",
+        "Status": "Finished",
+        "Score": 5
+    },
+    {
+        "InterviewId": 5,
+        "CandidateId": 4,
+        "CandidateName": "Nguyễn Văn D",
+        "InterviewerId": 4,
+        "InterviewerName": "Nguyễn Văn T",
+        "ApplyDate": "20/07/2023",
+        "InterviewDate": "23/07/2023",
+        "Status": "Finished",
+        "Score": 7.8
+    },
+    {
+        "InterviewId": 6,
+        "CandidateId": 4,
+        "CandidateName": "Nguyễn Văn D",
+        "InterviewerId": 4,
+        "InterviewerName": "Nguyễn Văn T",
+        "ApplyDate": "20/07/2023",
+        "InterviewDate": "23/07/2023",
+        "Status": "Finished",
+        "Score": 8.2
     }
 ]

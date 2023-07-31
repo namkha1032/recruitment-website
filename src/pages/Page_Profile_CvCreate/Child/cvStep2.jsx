@@ -4,6 +4,8 @@ import Box from "@mui/material/Box";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ChooseSkill from "./skill/ChooseSkill";
+import CompHeader from "./compHeader";
+import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 
 function CvStep2(prop) {
   return (
@@ -26,15 +28,20 @@ function CvStep2(prop) {
               setSkillId={prop.setSkillId}
             />
           </Grid>
-          
+
           <Grid item xs={12}>
-            <ReactQuill
-              theme="snow"
-              style={{ width: "98%", margin: "auto", height: "200px" }}
-              value={prop.experience}
-              onChange={prop.setExperience}
-              className="QuillCss"
-            />
+            <Box sx={{ width: "98%", margin: "auto" }}>
+              <CompHeader headerIcon={<WorkHistoryIcon />}>
+                Work Experience
+              </CompHeader>
+              <ReactQuill
+                theme="snow"
+                style={{ height: "200px", marginTop: "8px" }}
+                value={prop.experience}
+                onChange={prop.setExperience}
+                className="QuillCss"
+              />
+            </Box>
           </Grid>
         </Grid>
       </Box>

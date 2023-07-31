@@ -16,6 +16,8 @@ import Divider from "@mui/material/Divider";
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import PublicIcon from '@mui/icons-material/Public';
 import { Global } from "@emotion/react";
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import LanguageIcon from '@mui/icons-material/Language';
 import TungstenIcon from '@mui/icons-material/Tungsten';
@@ -26,8 +28,11 @@ const ViewDialog = (props) => {
     const cate = props.cate
     const skillname = props.skillname
     const languagename = props.languagename
-    let left = 3
-    let right = 8
+    const theme = useTheme()
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+    let left = isSm ? 3 : 5
+    let right = isSm ? 8 : 6
     let gap = 1
     let gridSx = {
         display: "flex", alignItems: "center", columnGap: gap
@@ -60,23 +65,23 @@ const ViewDialog = (props) => {
                 <Divider />
                 <DialogContent>
                     <Grid container rowSpacing={2}>
-                        <Grid item md={left} sx={gridSx}>
+                        <Grid item xs={left} sx={gridSx}>
                             <Grid3x3Icon />
                             <Typography variant="h6">
                                 ID
                             </Typography>
                         </Grid>
-                        <Grid item md={1}>
+                        <Grid item xs={1}>
                             <Typography variant="h6">
                                 :
                             </Typography>
                         </Grid>
-                        <Grid item md={right} sx={gridSx}>
+                        <Grid item xs={right} sx={gridSx}>
                             <Typography variant="body1">
                                 {params.row.questionid}
                             </Typography>
                         </Grid>
-                        <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                        <Grid item xs={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
                             <Box sx={gridSx}>
                                 <SourceIcon />
                                 <Typography variant="h6">
@@ -84,12 +89,12 @@ const ViewDialog = (props) => {
                                 </Typography>
                             </Box>
                         </Grid>
-                        <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                        <Grid item xs={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
                             <Typography variant="h6">
                                 :
                             </Typography>
                         </Grid>
-                        <Grid item md={right} sx={gridSx}>
+                        <Grid item xs={isMd ? right : 12} sx={gridSx}>
                             <TextField
                                 multiline
                                 rows={4}
@@ -101,34 +106,34 @@ const ViewDialog = (props) => {
                                 sx={{ fontSize: 50 }}
                             />
                         </Grid>
-                        <Grid item md={left} sx={gridSx}>
+                        <Grid item xs={left} sx={gridSx}>
                             <CategoryIcon />
                             <Typography variant="h6">
                                 Category
                             </Typography>
                         </Grid>
-                        <Grid item md={1}>
+                        <Grid item xs={1}>
                             <Typography variant="h6">
                                 :
                             </Typography>
                         </Grid>
-                        <Grid item md={right} sx={gridSx}>
+                        <Grid item xs={right} sx={gridSx}>
                             <Chip icon={categoryIcon} color={chipColor} label={categoryName} />
                         </Grid>
                         {skillname &&
                             <>
-                                <Grid item md={left} sx={gridSx}>
+                                <Grid item xs={left} sx={gridSx}>
                                     <PsychologyIcon />
                                     <Typography variant="h6">
                                         Skill
                                     </Typography>
                                 </Grid>
-                                <Grid item md={1}>
+                                <Grid item xs={1}>
                                     <Typography variant="h6">
                                         :
                                     </Typography>
                                 </Grid>
-                                <Grid item md={right} sx={gridSx}>
+                                <Grid item xs={right} sx={gridSx}>
                                     <Typography variant="body1">
                                         {skillname}
                                     </Typography>
@@ -136,18 +141,18 @@ const ViewDialog = (props) => {
                             </>}
                         {languagename &&
                             <>
-                                <Grid item md={left} sx={gridSx}>
+                                <Grid item xs={left} sx={gridSx}>
                                     <PublicIcon />
                                     <Typography variant="h6">
                                         Language
                                     </Typography>
                                 </Grid>
-                                <Grid item md={1}>
+                                <Grid item xs={1}>
                                     <Typography variant="h6">
                                         :
                                     </Typography>
                                 </Grid>
-                                <Grid item md={right} sx={gridSx}>
+                                <Grid item xs={right} sx={gridSx}>
                                     <Typography variant="body1">
                                         {languagename}
                                     </Typography>

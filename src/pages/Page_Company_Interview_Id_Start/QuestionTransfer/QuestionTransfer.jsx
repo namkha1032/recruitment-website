@@ -3,6 +3,8 @@ import { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { useDispatch } from 'react-redux';
 
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 // import components
 import LeftTable from '../LeftTable/LeftTable';
 import RightTable from '../../../components/RightTable/RightTable';
@@ -12,6 +14,9 @@ const QuestionTransfer = (props) => {
     const dispatch = useDispatch()
     let [currentSubTab, setCurrentSubTab] = useState(0);
     let [currentQues, setCurrentQues] = useState([])
+    const theme = useTheme()
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     function handleTransfer() {
         let newQues = {
             categoryOrder: cate,
@@ -22,7 +27,7 @@ const QuestionTransfer = (props) => {
     }
     return (
         <Grid container>
-            <Grid item md={5}>
+            <Grid item xs={12} md={5}>
                 <LeftTable
                     leftTable={leftTable}
                     cate={cate}
@@ -31,10 +36,10 @@ const QuestionTransfer = (props) => {
                     currentSubTab={currentSubTab}
                     setCurrentSubTab={setCurrentSubTab} />
             </Grid>
-            <Grid item md={2} sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+            <Grid item xs={12} md={2} sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                 <ButtonTransfer currentChosen={currentQues} handleTransfer={handleTransfer} />
             </Grid>
-            <Grid item md={5}>
+            <Grid item xs={12} md={5}>
                 <RightTable
                     rightTable={rightTable}
                     cate={cate}
