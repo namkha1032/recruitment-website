@@ -22,6 +22,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import useGetRole from '../../hooks/useGetRole';
+import { useDispatch } from 'react-redux';
+import cleanStore from '../../utils/cleanStore';
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
@@ -33,6 +35,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const Sidebar = (props) => {
     const navigate = useNavigate()
     const location = useLocation()
+    const url = location.pathname
+    const dispatch = useDispatch()
     const role = useGetRole()
     const sidebarList = [
         {
@@ -107,7 +111,12 @@ const Sidebar = (props) => {
                     }
                     else {
                         return (
-                            <ListItem key={index} disablePadding onClick={() => { navigate(sidebarItem.to) }}
+                            <ListItem key={index} disablePadding onClick={() => {
+                                if (url != sidebarItem.to) {
+                                    cleanStore(dispatch)
+                                }
+                                navigate(sidebarItem.to)
+                            }}
                                 sx={{
                                     backgroundColor: sidebarItem.active ? "grey.600" : "transparent",
                                     borderRadius: 4,

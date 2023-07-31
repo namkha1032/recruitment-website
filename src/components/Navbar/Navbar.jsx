@@ -18,6 +18,10 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import VideoChatIcon from '@mui/icons-material/VideoChat';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import LogoutIcon from '@mui/icons-material/Logout';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
 import Grid from '@mui/material/Grid';
 import BusinessIcon from '@mui/icons-material/Business';
 import Container from '@mui/material/Container';
@@ -30,19 +34,26 @@ import { grey } from '@mui/material/colors';
 import { unstable_createCssVarsTheme } from '@mui/system';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import cleanStore from '../../utils/cleanStore';
+import HomeIcon from '@mui/icons-material/Home';
+import WorkIcon from '@mui/icons-material/Work';
+import CelebrationIcon from '@mui/icons-material/Celebration';
 let innerDrawerWidth;
 
 
 const NavbarContent = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const open = Boolean(anchorElUser);
     const navigate = useNavigate()
     const location = useLocation()
     const dispatch = useDispatch()
     const role = useGetRole()
     const user = useSelector(state => state.user)
     const theme = useTheme()
+    let url = useLocation()
+    url = url.pathname
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     const navbarNavigate = [
         {
             name: "Home",
@@ -58,43 +69,6 @@ const NavbarContent = () => {
             name: "Event",
             to: "/event",
             active: location.pathname.slice(0, 6) == "/event" ? true : false
-        }
-    ]
-    const dropdownNavigate = [
-        {
-            name: "Profile",
-            to: "/profile/1",
-            active: location.pathname.includes("/profile") && location.pathname.split("/").length - 1 == 2,
-            icon: <AccountCircleIcon />
-        },
-        {
-            name: "My CVs",
-            to: "/profile/1/cv",
-            active: location.pathname.includes("/profile") && location.pathname.includes("/cv"),
-            icon: <NewspaperIcon />
-        },
-        {
-            name: "My Applications",
-            to: "/profile/1/application",
-            active: location.pathname.includes("/profile") && location.pathname.includes("/application"),
-            icon: <PictureAsPdfIcon />
-        },
-        {
-            name: "My Interviews",
-            to: "/profile/1/interview",
-            active: location.pathname.includes("/profile") && location.pathname.includes("/interview"),
-            icon: <VideoChatIcon />
-        },
-        {
-            name: "My Events",
-            to: "/profile/1/event",
-            active: location.pathname.includes("/profile") && location.pathname.includes("/event"),
-            icon: <EmojiEventsIcon />
-        },
-        {
-            name: "Logout",
-            to: "/home",
-            icon: <LogoutIcon />
         }
     ]
     return (
@@ -150,11 +124,42 @@ const NavbarContent = () => {
                             display: { xs: 'block', md: 'none' },
                         }}
                     >
-                        {navbarNavigate.map((navbarItem, index) => (
-                            <MenuItem key={index} onClick={() => { navigate(navbarItem.to) }}>
-                                <Typography textAlign="center">{navbarItem.name}</Typography>
-                            </MenuItem>
-                        ))}
+                        <MenuItem onClick={() => {
+                            setAnchorElNav(null)
+                            if (url != "/home") {
+                                cleanStore(dispatch)
+                            }
+                            navigate(`/home`)
+                        }}>
+                            <ListItemIcon>
+                                <HomeIcon fontSize="small" sx={{ color: "black" }} />
+                            </ListItemIcon>
+                            Home
+                        </MenuItem>
+                        <MenuItem onClick={() => {
+                            setAnchorElNav(null)
+                            if (url != "/recruitment") {
+                                cleanStore(dispatch)
+                            }
+                            navigate(`/recruitment`)
+                        }}>
+                            <ListItemIcon>
+                                <WorkIcon fontSize="small" sx={{ color: "black" }} />
+                            </ListItemIcon>
+                            Recruitment
+                        </MenuItem>
+                        <MenuItem onClick={() => {
+                            setAnchorElNav(null)
+                            if (url != "/event") {
+                                cleanStore(dispatch)
+                            }
+                            navigate(`/event`)
+                        }}>
+                            <ListItemIcon>
+                                <CelebrationIcon fontSize="small" sx={{ color: "black" }} />
+                            </ListItemIcon>
+                            Event
+                        </MenuItem>
                     </Menu>
                 </Box>
                 {/* Logo responsive */}
@@ -182,7 +187,12 @@ const NavbarContent = () => {
                     {navbarNavigate.map((navbarItem, index) => (
                         <Box
                             key={index}
-                            onClick={() => { navigate(navbarItem.to) }}
+                            onClick={() => {
+                                if (url != navbarItem.to) {
+                                    cleanStore(dispatch)
+                                }
+                                navigate(navbarItem.to)
+                            }}
                             sx={{
                                 "&:hover": { borderBottom: "4px solid black" },
                                 borderBottom: navbarItem.active ? "4px solid black" : "4px solid white",
@@ -211,74 +221,137 @@ const NavbarContent = () => {
                 <Box sx={{ flexGrow: 0 }}>
                     {role
                         ? <>
-                            <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={(event) => { setAnchorElUser(event.currentTarget) }}>
-                                {isMd ? <Typography variant="subtitle1" sx={{ marginRight: 2 }}>{user ? user.name : ""}</Typography> : null}
-                                <Tooltip title="Open settings">
-                                    <IconButton sx={{ p: 0 }}>
-                                        <Avatar alt="Remy Sharp" src={user ? user.image : ""} />
+                            <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+                                {isSm ? <Typography variant="body1">{user ? user.name : ""}</Typography> : null}
+                                <Tooltip>
+                                    <IconButton
+                                        onClick={(event) => setAnchorElUser(event.currentTarget)}
+                                        size="small"
+                                        sx={{ ml: 2, padding: 0 }}
+                                    >
+                                        <Avatar src={user ? user.image : ""}>M</Avatar>
                                     </IconButton>
                                 </Tooltip>
                             </Box>
                             <Menu
-                                sx={{
-                                    mt: '45px'
-                                }}
-                                id="menu-appbar"
                                 anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
+                                id="account-menu"
+                                open={open}
+                                onClose={() => setAnchorElUser(null)}
+                                onClick={() => setAnchorElUser(null)}
+                                PaperProps={{
+                                    elevation: 0,
+                                    sx: {
+                                        overflow: 'visible',
+                                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                                        mt: 1.5,
+                                        '& .MuiAvatar-root': {
+                                            width: 32,
+                                            height: 32,
+                                            ml: -0.5,
+                                            mr: 1,
+                                        },
+                                        '&:before': {
+                                            content: '""',
+                                            display: 'block',
+                                            position: 'absolute',
+                                            top: 0,
+                                            right: 14,
+                                            width: 10,
+                                            height: 10,
+                                            bgcolor: 'background.paper',
+                                            transform: 'translateY(-50%) rotate(45deg)',
+                                            zIndex: 0,
+                                        },
+                                    },
                                 }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElUser)}
-                                onClose={() => { setAnchorElUser(null) }}
+                                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                             >
-                                {dropdownNavigate.map((dropdown, index) => {
-                                    if (role != "candidate" && (index == 1 || index == 2 || index == 3)) {
-                                        return (
-                                            <Box key={index} />
-                                        )
+                                <MenuItem onClick={() => {
+                                    setAnchorElUser(null)
+                                    const sameNavigate = url.includes("/profile") && url.split("/").length == 3
+                                    if (!sameNavigate) {
+                                        cleanStore(dispatch)
                                     }
-                                    else {
-                                        return (
-                                            <Box key={index}>
-                                                {index == 1 || index == dropdownNavigate.length - 1 ? <Divider /> : null}
-                                                <MenuItem onClick={() => {
-                                                    if (index == dropdownNavigate.length - 1) {
-                                                        console.log("logout")
-                                                        cleanStore(dispatch)
-                                                        dispatch({ type: "saga/userLogout" })
-
-                                                        navigate("/home")
-                                                    }
-                                                    else {
-                                                        navigate(dropdown.to)
-                                                    }
-                                                }}
-                                                    sx={{
-                                                        backgroundColor: dropdown.active ? "grey.400" : "transparent",
-                                                        "&:hover": {
-                                                            backgroundColor: "grey.400"
-                                                        }
-                                                    }}>
-                                                    <Grid container columns={{ md: 12 }}>
-                                                        <Grid item md={3}>
-                                                            {dropdown.icon}
-                                                        </Grid>
-                                                        <Grid item md={9} sx={{ paddingRight: 3 }}>
-                                                            <Typography>{dropdown.name}</Typography>
-                                                            {/* <Typography>hehe hehehheheheheh ehehehehehehehehehehehe</Typography> */}
-                                                        </Grid>
-                                                    </Grid>
-                                                </MenuItem>
-                                            </Box>
-                                        )
-                                    }
-                                })}
+                                    navigate(`/profile/${user.userid}`)
+                                }}>
+                                    <Avatar sx={{ backgroundColor: "black" }} /> {isSm ? "Profile" : (user ? user.name : "")}
+                                </MenuItem>
+                                <Divider />
+                                {role == "candidate" &&
+                                    <MenuItem onClick={() => {
+                                        setAnchorElUser(null)
+                                        const sameNavigate = url.includes("/profile") && url.includes("/cv") && url.split("/").length == 4
+                                        if (!sameNavigate) {
+                                            cleanStore(dispatch)
+                                        }
+                                        navigate(`/profile/${user.userid}/cv`)
+                                    }}>
+                                        <ListItemIcon>
+                                            <PictureAsPdfIcon fontSize="small" sx={{ color: "black" }} />
+                                        </ListItemIcon>
+                                        My CVs
+                                    </MenuItem>
+                                }
+                                {role == "candidate" &&
+                                    <MenuItem onClick={() => {
+                                        setAnchorElUser(null)
+                                        const sameNavigate = url.includes("/profile") && url.includes("/application") && url.split("/").length == 4
+                                        if (!sameNavigate) {
+                                            cleanStore(dispatch)
+                                        }
+                                        navigate(`/profile/${user.userid}/application`)
+                                    }}>
+                                        <ListItemIcon>
+                                            <NewspaperIcon fontSize="small" sx={{ color: "black" }} />
+                                        </ListItemIcon>
+                                        My Applications
+                                    </MenuItem>
+                                }
+                                {role == "candidate" &&
+                                    <MenuItem onClick={() => {
+                                        setAnchorElUser(null)
+                                        const sameNavigate = url.includes("/profile") && url.includes("/interview") && url.split("/").length == 4
+                                        if (!sameNavigate) {
+                                            cleanStore(dispatch)
+                                        }
+                                        navigate(`/profile/${user.userid}/interview`)
+                                    }}>
+                                        <ListItemIcon>
+                                            <VideoChatIcon fontSize="small" sx={{ color: "black" }} />
+                                        </ListItemIcon>
+                                        My Interviews
+                                    </MenuItem>
+                                }
+                                {role == "candidate" &&
+                                    <MenuItem onClick={() => {
+                                        setAnchorElUser(null)
+                                        const sameNavigate = url.includes("/profile") && url.includes("/event") && url.split("/").length == 4
+                                        if (!sameNavigate) {
+                                            cleanStore(dispatch)
+                                        }
+                                        navigate(`/profile/${user.userid}/event`)
+                                    }}>
+                                        <ListItemIcon>
+                                            <EmojiEventsIcon fontSize="small" sx={{ color: "black" }} />
+                                        </ListItemIcon>
+                                        My Events
+                                    </MenuItem>
+                                }
+                                {role == "candidate" &&
+                                    <Divider />}
+                                <MenuItem onClick={() => {
+                                    setAnchorElUser(null)
+                                    cleanStore(dispatch)
+                                    dispatch({ type: "saga/userLogout" })
+                                    navigate("/login")
+                                }}>
+                                    <ListItemIcon>
+                                        <Logout fontSize="small" sx={{ color: "black" }} />
+                                    </ListItemIcon>
+                                    Logout
+                                </MenuItem>
                             </Menu>
                         </>
                         : <Button variant="outlined" sx={{

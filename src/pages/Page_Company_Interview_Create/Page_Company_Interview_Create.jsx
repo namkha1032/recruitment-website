@@ -45,6 +45,7 @@ import FactCheckIcon from '@mui/icons-material/FactCheck';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import TitleDivider from "../../components/TitleDivider/TitleDivider";
+import AlertDialog from "../../components/AlertDialog/AlertDialog";
 // import utilities
 import cleanStore from "../../utils/cleanStore";
 const Page_Company_Interview_Create = () => {
@@ -57,6 +58,7 @@ const Page_Company_Interview_Create = () => {
     let [busyInterviewer, setBusyInterviewer] = useState([])
     let [busyRoom, setBusyRoom] = useState([])
     let [errorSnackbar, setErrorSnackbar] = useState(false)
+    let [openAlert, setOpenAlert] = useState(false)
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
@@ -123,12 +125,39 @@ const Page_Company_Interview_Create = () => {
     }, [newError])
 
     function handleSubmit() {
-        console.log("chosenInterviewer: ", chosenInterviewer)
-        console.log("chosenRoom: ", chosenRoom)
-        console.log("chosenDate: ", chosenDate)
-        console.log("chosenShift: ", chosenShift)
         dispatch({ type: "saga/createInterview", payload: null })
         // navigate("/company/interview/1")
+    }
+    function preProcessing() {
+        const messArr = []
+        if (chosenInterviewer == null) {
+            messArr.push("an interviewer")
+        }
+        if (chosenRoom == null) {
+            messArr.push("a room")
+        }
+        if (chosenDate == null) {
+            messArr.push("a date")
+        }
+        if (chosenShift == null) {
+            messArr.push("a shift")
+        }
+        let messString = ""
+        if (messArr.length > 0) {
+            messArr.forEach((x, index) => {
+                messString = messString + x
+                if (index < messArr.length - 1) {
+                    messString = messString + ", "
+                }
+                else {
+                    messString = messString + "."
+                }
+            })
+            dispatch({ type: "error/setError", payload: { status: "yes", message: `please choose ${messString}` } })
+        }
+        else {
+            setOpenAlert(true)
+        }
     }
     return (
         <>{interviewerList &&
@@ -220,7 +249,9 @@ const Page_Company_Interview_Create = () => {
                         "&:hover": {
                             backgroundColor: "black"
                         }
-                    }} onClick={handleSubmit}>Create Interview</Button>
+                    }}
+                        onClick={preProcessing} >Create Interview
+                    </Button>
                 </Grid>
                 <Snackbar
                     // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
@@ -234,6 +265,7 @@ const Page_Company_Interview_Create = () => {
                         {newError.message}
                     </Alert>
                 </Snackbar>
+                <AlertDialog openAlert={openAlert} setOpenAlert={setOpenAlert} message={"Are you sure you want to create this interview?"} handleSubmit={handleSubmit} />
             </Grid>
         }
         </>

@@ -149,7 +149,7 @@ function* userChangePassword(action) {
 
 function* userLogout() {
     window.localStorage.removeItem('user')
-    //window.sessionStorage.removeItem('user')
+    window.sessionStorage.removeItem('user')
     yield put({ type: "user/userLogout", payload: null})
 }
 

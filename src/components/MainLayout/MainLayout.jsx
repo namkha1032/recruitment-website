@@ -25,6 +25,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
             flexGrow: 1,
             // padding: isMd ? theme.spacing(3) : 0,
             paddingBottom: theme.spacing(3),
+            paddingTop: theme.spacing(3),
             transition: theme.transitions.create('margin', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
@@ -86,13 +87,13 @@ function MainLayout() {
                     {/* <DrawerHeader /> */}
                     <Container>
                         <Outlet />
-                       
+
                     </Container>
-                    
-                </Main> 
-                
+
+                </Main>
+
             </Box>
-            <Footer /> 
+            <Footer />
         </>
     );
 }

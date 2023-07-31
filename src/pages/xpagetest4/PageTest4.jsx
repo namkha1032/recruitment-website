@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
@@ -13,38 +14,36 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 
 export default function AccountMenu() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const [anchorElUser, setAnchorElUser] = useState(null);
+    const open = Boolean(anchorElUser);
     return (
         <React.Fragment>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-                <Typography sx={{ minWidth: 100 }}>Contact</Typography>
-                <Typography sx={{ minWidth: 100 }}>Profile</Typography>
+                <Typography variant="body1">hehehe</Typography>
+                <Typography variant="body1">hehehe</Typography>
+                <Typography variant="body1">hehehe</Typography>
+                <Typography variant="body1">hehehe</Typography>
+                <Typography variant="body1">hehehe</Typography>
+                <Typography variant="body1">hehehe</Typography>
+                <Typography variant="body1">hehehe</Typography>
+                <Typography variant="body1">hehehe</Typography>
+                <Typography variant="body1">hehehe</Typography>
                 <Tooltip title="Account settings">
                     <IconButton
-                        onClick={handleClick}
+                        onClick={(event) => setAnchorElUser(event.currentTarget)}
                         size="small"
                         sx={{ ml: 2 }}
-                        aria-controls={open ? 'account-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
                     >
                         <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
                     </IconButton>
                 </Tooltip>
             </Box>
             <Menu
-                anchorEl={anchorEl}
+                anchorEl={anchorElUser}
                 id="account-menu"
                 open={open}
-                onClose={handleClose}
-                onClick={handleClose}
+                onClose={() => setAnchorElUser(null)}
+                onClick={() => setAnchorElUser(null)}
                 PaperProps={{
                     elevation: 0,
                     sx: {
@@ -74,26 +73,26 @@ export default function AccountMenu() {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={() => setAnchorElUser(null)}>
                     <Avatar /> Profile
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={() => setAnchorElUser(null)}>
                     <Avatar /> My account
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={() => setAnchorElUser(null)}>
                     <ListItemIcon>
                         <PersonAdd fontSize="small" />
                     </ListItemIcon>
                     Add another account
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={() => setAnchorElUser(null)}>
                     <ListItemIcon>
                         <Settings fontSize="small" />
                     </ListItemIcon>
                     Settings
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={() => setAnchorElUser(null)}>
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>
