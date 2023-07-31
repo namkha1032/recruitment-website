@@ -83,133 +83,166 @@ const Page_Event = () => {
   };
 
   return (
-    <>
-      <Box sx={{ padding: '24px' }}>
-
-        <Box
-          sx=
-          {{
-            backgroundImage: 'url(https://png.pngtree.com/background/20210710/original/pngtree-blue-geometric-flattened-texture-banner-background-picture-image_1012881.jpg)',
-            height: '300px',
-            borderRadius: '10px',
-            boxShadow: 5
-          }}>
-          <Box sx={{ padding: '150px 880px 0px 110px' }}>
-            <Typography variant='h3' align='left' color='black' fontFamily='serif' sx={{ borderBottom: '3px solid #0099FF' }}>
-              Event
-            </Typography>
-
-          </Box>
-
-          <Box sx={{ padding: '10px 350px 0px 110px' }}>
-            <Typography variant='h6' align='left' color='#808080' fontFamily='serif' >
-              Các sự kiện sôi động sẽ cập nhật liên tục, hãy theo dõi tin tức sự kiện để có thể đăng kí tham gia.
-            </Typography>
-          </Box>
-
-        </Box>
-      </Box>
-
-
-
-
-
-      {eventList&& <Container sx={{ py: 8 }} maxWidth="md">
-        {/* End hero unit */
-         
-        }
-        <Grid container spacing={4} >
-          {eventList.map((card) => (
-            <Grid item key={card.EventId} xs={12} sm={6} md={4}>
-              <Card
-                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+    eventListSearch && (
+      <>
+        <Box sx={{ padding: "24px" }}>
+          <Box
+            sx={{
+              backgroundImage:
+                "url(https://png.pngtree.com/background/20210710/original/pngtree-blue-geometric-flattened-texture-banner-background-picture-image_1012881.jpg)",
+              height: "300px",
+              borderRadius: "10px",
+              boxShadow: 5,
+            }}
+          >
+            <Box sx={{ padding: "150px 880px 0px 110px" }}>
+              <Typography
+                variant="h3"
+                align="left"
+                color="black"
+                fontFamily="serif"
+                sx={{ borderBottom: "3px solid #0099FF" }}
               >
-                <CardMedia
-                  component="div"
-                  sx={{
-                    // 16:9
-                    pt: '58.25%',
-                  }}
-                  image="https://greenwich.edu.vn/wp-content/uploads/2023/07/CF23web-940x400.png"
-                />
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                  {card.EventName}
-                  </Typography>
-                  <Box >
-                    <Box sx={{padding:'0px 0px 5px 0px'}}>
-                    <Typography
-                      variant="subtitle2"
-                      align="center"
-                      color="text.secondary"
-                      component="p"
-                      sx={{ display: 'flex', justifyContent: 'flex-start', padding: '0px 0px 5px 0px' }}
-                    >
-                      <PermIdentityIcon></PermIdentityIcon>
-                      {card.NumOfJoined}  • July 5th 23
-                    </Typography>
-                    <Typography
-                      variant="subtitle1"
-                      align="center"
-                      color="#A0522D"
+                Event
+              </Typography>
+            </Box>
 
-
-                      sx={{ display: 'flex', justifyContent: 'flex-start', padding: '0px 0px 5px 0px' }}
-                    >
-                      {card.EventCampus}
-                    </Typography>
-                    </Box>
-                   
-
-                    <Typography>
-
-                      {card.EventDescription}
-                    </Typography>
+            <Box sx={{ padding: "10px 350px 0px 110px" }}>
+              <Typography
+                variant="h6"
+                align="left"
+                color="#808080"
+                fontFamily="serif"
+              >
+                Các sự kiện sôi động sẽ cập nhật liên tục, hãy theo dõi tin tức
+                sự kiện để có thể đăng kí tham gia.
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+        {eventList && (
+          <Box p="24px">
+            <Paper p="16px">
+              <Box sx={{ p: "24px 48px 24px 48px" }}>
+                {
+                  /* End hero unit */
+                  <Box pb="16px" display="flex" justifyContent="right">
+                    <TextField
+                      label="Search"
+                      onChange={(e) => handleSearch(e.target.value)}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <Search />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
                   </Box>
+                }
+                <Divider />
+                <Grid container spacing={4} mt="auto">
+                  {eventList.map((card,index) => (
+                    <Grid item key={index} xs={12} sm={6} md={4}>
+                      <Card
+                        sx={{
+                          height: "100%",
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <CardMedia
+                          component="div"
+                          sx={{
+                            // 16:9
+                            pt: "58.25%",
+                          }}
+                          image="https://greenwich.edu.vn/wp-content/uploads/2023/07/CF23web-940x400.png"
+                        />
+                        <CardContent sx={{ flexGrow: 1 }}>
+                          <Typography gutterBottom variant="h5" component="h2">
+                            {card.EventName}
+                          </Typography>
+                          <Box>
+                            <Box sx={{ padding: "0px 0px 5px 0px" }}>
+                              <Typography
+                                variant="subtitle2"
+                                align="center"
+                                color="text.secondary"
+                                component="p"
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "flex-start",
+                                  padding: "0px 0px 5px 0px",
+                                }}
+                              >
+                                <PermIdentityIcon></PermIdentityIcon>
+                                {card.NumOfJoined} • July 5th 23
+                              </Typography>
+                              <Typography
+                                variant="subtitle1"
+                                align="center"
+                                color="#A0522D"
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "flex-start",
+                                  padding: "0px 0px 5px 0px",
+                                }}
+                              >
+                                {card.EventCampus}
+                              </Typography>
+                            </Box>
 
-                </CardContent>
-                <CardActions sx={{display:'flex',justifyContent:'right'}}>
-                  <Button
-                  
-                  disabled={false}
-                  size="small"
-                  variant="filled"
-                  onClick={() => handleNavigateClick1(card.EventId)} 
-                    
-                  >View</Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+                            <Typography>{card.EventDescription}</Typography>
+                          </Box>
+                        </CardContent>
+                        <CardActions
+                          sx={{ display: "flex", justifyContent: "right" }}
+                        >
+                          <Button
+                            disabled={false}
+                            size="small"
+                            variant="filled"
+                            onClick={() => handleNavigateClick1(card.EventId)}
+                          >
+                            View
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Box>
+            </Paper>
+          </Box>
+        )}
 
-     
-        
-      </Container>}
-
-        {list &&<AppPagination data={list} pageSize={6} setChangeList={setEventList}/> } 
-      {/* Footer */}
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Team 4
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography>
-        <Copyright />
-      </Box>
-      {/* End footer */}
-
-    </>
-
-
-
-  )
-}
+        {list && (
+          <AppPagination
+            data={eventListSearch}
+            pageSize={pageSize}
+            setChangeList={setEventList}
+          />
+        )}
+        {/* Footer */}
+        {/* <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
+          <Typography variant="h6" align="center" gutterBottom>
+            Team 4
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            align="center"
+            color="text.secondary"
+            component="p"
+          >
+            Something here to give the footer a purpose!
+          </Typography>
+          <Copyright />
+        </Box> */}
+        {/* End footer */}
+      </>
+    )
+  );
+};
 
 export default Page_Event;
