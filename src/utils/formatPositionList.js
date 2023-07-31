@@ -19,6 +19,7 @@ export function formatPositionList(input) {
       PositionId: element.positionId,
       PositionName: element.positionName,
       Description: element.description,
+      Salary: element.salary,
       MaxHiringQty: element.maxHiringQty,
       HiredQty: 0,
       StartDate: formatDate(element.startDate.slice(0, 10)),

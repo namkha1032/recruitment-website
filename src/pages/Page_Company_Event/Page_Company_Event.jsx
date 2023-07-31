@@ -35,6 +35,8 @@ import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 import { errorAlert } from "../../components/Alert/ErrorAlert";
 import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 // JSON <- Event
 // {
@@ -47,8 +49,11 @@ import "react-toastify/dist/ReactToastify.css";
 //   "Status": [true, false] ~ ["Upcoming", "Finished"]
 // }
 
-
 export default function Page_Company_Event() {
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up("md"));
+  const isSm = useMediaQuery(theme.breakpoints.down("md"));
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -65,7 +70,7 @@ export default function Page_Company_Event() {
   // const [valueSearch, setValueSearch] = useState("");
   // const [valueChoose, setValueChoose] = useState(null);
   // const [departmentChoose, setDepartmentChoose] = useState(null);
-  
+
   const loading = useSelector((state) => state.loading);
   const error = useSelector((state) => state.error);
 
@@ -93,7 +98,6 @@ export default function Page_Company_Event() {
   //   }
   //   return () => clearTimeout(timeoutId);
   // }, [error]);
-
 
   const [statusChoose, setStatusChoose] = useState(null);
 
@@ -255,7 +259,9 @@ export default function Page_Company_Event() {
   ]);
 
   return (
-    <Box>
+    <Box sx={{
+      marginTop: 3,
+    }}>
       <GigaCard>
         <GigaCardBody>
           <Grid
@@ -294,26 +300,40 @@ export default function Page_Company_Event() {
               }}
             >
               <Button
-                variant="outlined"
+                // variant="outlined"
+                // sx={{
+                //   color: "black",
+                //   border: "1px solid black",
+                //   textTransform: "none",
+                //   height: 50,
+                //   width: {
+                //     md: 250,
+                //     sm: 250,
+                //     xs: "100%",
+                //   },
+                //   "&:hover": {
+                //     backgroundColor: "black",
+                //     color: "white",
+                //   },
+                // }}
+                variant="contained"
                 sx={{
-                  color: "black",
-                  border: "1px solid black",
-                  textTransform: "none",
                   height: 50,
                   width: {
                     md: 250,
                     sm: 250,
                     xs: "100%",
                   },
+                  textTransform: "none",
+                  backgroundColor: "black",
                   "&:hover": {
-                    backgroundColor: "black",
-                    color: "white",
+                    backgroundColor: "grey",
                   },
                 }}
                 onClick={handleAddClick}
               >
                 <AddCircleOutlineIcon sx={{ marginRight: 1 }} />
-                Create event
+                Create Event
               </Button>
 
               {/* <IconButton onClick={handleMoreClick} sx={{
@@ -365,7 +385,7 @@ export default function Page_Company_Event() {
                 disablePortal
                 id="filter-type"
                 options={["Upcoming", "Finished"]}
-                sx={{ width: { md: 200, sm: 200, xs: "100%" } }}
+                sx={{ width: { md: 200, sm: "100%", xs: "100%" } }}
                 renderInput={(params) => (
                   <TextField {...params} label="Status..." />
                 )}
@@ -450,10 +470,12 @@ export default function Page_Company_Event() {
           </Box>
         </Grid> */}
           </Grid>
-          
-          <Box sx={{
+
+          <Box
+            sx={{
               minHeight: 350,
-            }}>
+            }}
+          >
             <DataGrid
               autoHeight
               loading={loading || rows === null}
@@ -480,6 +502,9 @@ export default function Page_Company_Event() {
                 "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
                   color: "white",
                 },
+                "&.MuiDataGrid-root .MuiCircularProgress-root": {
+                  color: "black"
+                }
               }}
               slots={{
                 toolbar: GridToolbar,

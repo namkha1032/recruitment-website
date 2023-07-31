@@ -254,7 +254,7 @@ const Page_Recruitment = () => {
                                 variant="h6"
                                 sx={{ fontWeight: "bold" }}
                               >
-                                {card.positionName}{" "}
+                                {card.PositionName}{" "}
                               </Typography>
                               
                             </Box>
@@ -270,7 +270,7 @@ const Page_Recruitment = () => {
                                   fontSize: "small",
                                 }}
                               >
-                               Salary:  {card.salary}
+                               Salary:  {card.Salary}
                               </Box>
                               <Box
                                 style={{
@@ -282,7 +282,7 @@ const Page_Recruitment = () => {
                                   fontSize: "small",
                                 }}
                               >
-                               Size {card.maxHiringQty}
+                               Size {card.MaxHiringQty}
                               </Box>
                               <Box
                                 style={{
@@ -295,7 +295,7 @@ const Page_Recruitment = () => {
                                 }}
                               >
                                 {" "}
-                                Date: {card.endDate.slice(0,10)}
+                                Date: {card.EndDate.slice(0,10)}
                               </Box>
                             </Box>
                           </Box>
@@ -322,7 +322,7 @@ const Page_Recruitment = () => {
                         >
                           <Button
                             onClick={() =>
-                              handleNavigateClick1(card.positionId)
+                              handleNavigateClick1(card.PositionId)
                             }
                             variant="contained"
                             size="small"

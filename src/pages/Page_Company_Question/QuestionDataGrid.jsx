@@ -40,6 +40,9 @@ export default function QuestionDataGrid(props) {
           "&.MuiDataGrid-root .MuiDataGrid-row": {
             cursor: "pointer",
           },
+          "&.MuiDataGrid-root .MuiCircularProgress-root": {
+            color: "black"
+          }
         }}
         slots={{ toolbar: GridToolbar, noRowsOverlay: NoRowsOverlay,
           noResultsOverlay: NoResultsOverlay, }}
