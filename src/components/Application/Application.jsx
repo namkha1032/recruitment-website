@@ -15,26 +15,27 @@ import InfoApplication from '../InfoApplication/InfoApplication'
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-const Application = ({ cvid}) => {
+const Application = ({ cvid,page}) => {
   const {recruitmentid,applicationid} = useParams();
   console.log(recruitmentid)
   return (
   <>
-      <Typography variant="h3" align="center">
+      <Typography variant="h3" align="center" m={3}>
         Detail of the Application
       </Typography>
-      <InfoApplication applicationid={applicationid} recruitmentid={recruitmentid}/>
+      <InfoApplication applicationid={applicationid} recruitmentid={recruitmentid} page={page}/>
       <Grid container  spacing={3}>
       
           
         <Grid item xs={12}>
-          <GigaCard>
-            <Box sx={{ p: "24px" }}>
+        
+            
               <CV cvid={cvid} />
-            </Box>
-          </GigaCard>
+
+       
         </Grid>
       </Grid>
+     
     </>
   );
 };

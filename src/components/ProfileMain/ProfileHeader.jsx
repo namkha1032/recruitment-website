@@ -95,7 +95,7 @@ const ProfileHeader = ({  id, userName }) => {
             </IconButton>
           </Box>
 
-          <Box sx={{ margin: "24px 0px 0px  24px" }}>{userName}</Box>
+          <Box component='h2' sx={{ margin: "24px 0px 0px  24px" }}>{userName}</Box>
         </Box>
 
         

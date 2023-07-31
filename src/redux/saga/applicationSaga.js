@@ -45,7 +45,8 @@ function* getApplication(action) {
             "languageId": "00000000-0000-0000-0000-000000000001",
             "language": null,
             "isDeleted": false
-          }])[0] , }})
+          }])[0] ,
+          company_Status: "Đang xử lý" }})
           yield put ({type:'position/setPosition',payload:{
             "positionId": "00000000-0000-0000-0000-000000000001",
             "positionName": "Junior",

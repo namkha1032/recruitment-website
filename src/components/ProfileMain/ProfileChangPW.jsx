@@ -105,7 +105,22 @@ const ProfileChangePW = () => {
         width: "100%",
       }}
     >
-      <Container sx={{ display: "flex", justifyContent: "center" }}>
+      <Container sx={{ display: "flex", flexWrap:"wrap", justifyContent: "center" }}>
+      <Box>
+      <Typography 
+                variant="h3" 
+                align="center" 
+                // color='#1976d2' 
+                color="black"
+                gutterBottom
+           
+                lineHeight={'28px'}
+                fontWeight={'700'}
+                padding={"20px"}
+                m={0}
+              >
+                Change password
+              </Typography></Box>
         <Grid
           container
           sx={{
@@ -133,20 +148,7 @@ const ProfileChangePW = () => {
                 //border: "1px solid black",
               }}
             >
-              <Typography 
-                variant="h2" 
-                align="center" 
-                // color='#1976d2' 
-                color="black"
-                gutterBottom
-                fontFamily={'Roboto'}
-                fontSize={'28px'}
-                lineHeight={'28px'}
-                fontWeight={'700'}
-                padding={"20px"}
-              >
-                Change password
-              </Typography>
+              
 
               <form onSubmit={handleSubmit}>
 

@@ -13,6 +13,7 @@ import {
 import {
   Box,
   Chip,
+  Divider,
   Grid,
   Popover,
   Stack,
@@ -33,18 +34,20 @@ const CV = ({ cvid,page }) => {
       dispatch({ type: "cv/setCv", payload: null });
     };
   }, []);
-
+  
 
   return (
     cv &&
     candidate && (
       <>
-      <Box>
-        <Grid container spacing={3}>
-        {page !== "Profile" && 
-        <Grid item md={12} xs={12}>
-        <GigaCard> 
-          <Grid container p={3}>
+      <Box mb={3}>
+      <GigaCard>
+        <Grid container spacing={3} >
+        {page !== "Profile" && <>
+   
+         <Grid item md={12} xs={12}>
+          <Box p='24px 24px 0 24px'>
+          <Grid container >
           <Grid
             item
             md={3} sm={3}
@@ -71,13 +74,7 @@ const CV = ({ cvid,page }) => {
             <Box component="h1" sx={{ margin: "24px 0px 0px  0px" }}>
               {candidate.name}
             </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "flex-start",
-              }}
-            >
+            <Box>
               <Box
                 sx={{
                   padding: "10px 24px 0 0",
@@ -109,16 +106,25 @@ const CV = ({ cvid,page }) => {
                 <Box sx={{ pl: "10px" }}>{candidate.address}</Box>
               </Box>
             </Box>
+            
+            
           </Grid>
+         
+          </Grid>
+          <Box><Divider orientation="horizontal" flexItem sx={{mt:3,height:'0.5px'}} /></Box>
 
+
+        </Box>
+    </Grid>
+</>
              
-               </Grid></GigaCard>
-              </Grid>
+               
+           
               }
 
-              <Grid item md={12} sm={12}>
-              <GigaCard>
-              <Box p={3}>
+              <Grid item md={12} xs={12}>
+       
+              <Box px={3}>
                 <Box sx={{ display: "flex", alignItems: "flex-end" }}>
                   <Public sx={{ mr: "15px" }} />
                   <Box
@@ -129,13 +135,14 @@ const CV = ({ cvid,page }) => {
                   </Box>
                 </Box>
                 <Box sx={{ padding: "10px 0 0 40px" }}>{cv.introduction}</Box>
-              </Box></GigaCard>
+                <Box><Divider orientation="horizontal" flexItem sx={{mt:3,height:'0.5px' }} /></Box>
+              </Box>
             </Grid>
 
 
-          <Grid item md={12} sm={12} >
-          <GigaCard>
-            <Box p={3}>
+          <Grid item md={12} xs={12} >
+     
+            <Box px={3}>
               <Box sx={{ display: "flex", alignItems: "flex-end" }}>
                 <IntegrationInstructions sx={{ mr: "15px" }} />
                 <Box
@@ -163,12 +170,13 @@ const CV = ({ cvid,page }) => {
                   </Box>
                 ))}
               </Box>
+              <Box><Divider orientation="horizontal" flexItem sx={{mt:3,height:'0.5px' }} /></Box>
             </Box>
-          </GigaCard>
+  
           </Grid>
-          <Grid item md={12} sm={12} >
-          <GigaCard>
-            <Box p={3}>
+          <Grid item md={12} xs={12} >
+
+            <Box px={3}>
               <Box sx={{ display: "flex", alignItems: "flex-end" }}>
                 <EmojiEvents sx={{ mr: "15px" }} />
                 <Box
@@ -178,30 +186,32 @@ const CV = ({ cvid,page }) => {
                   Certificates
                 </Box>
               </Box>
-              <Box sx={{ padding: "0px 0 0 40px" }}>
+              <Box sx={{ padding: "0px 0 0 40px",mt:"16px" }}>
                 <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    flexWrap: "wrap",
-                  }}
+              
                 >
-                  <Grid container spacing={2}>
+                  
+                  
                   {cv.certificates.map((certificate, index) => (
-                    <Grid item md={6} sm={12} key={index}>
-                      <ModalCertificates certificate={certificate} />
-                    </Grid>
-                  ))}</Grid>
+                  
+                    <Box key={index} sx={{display:'flex'}}>
+                      
+                      <ModalCertificates  certificate={certificate} />
+                    </Box>
+              
+                  ))}
                 </Box>
                  
               </Box>
+              <Box><Divider orientation="horizontal" flexItem sx={{mt:3,height:'0.5px' }} /></Box>
             </Box>
-           </GigaCard>
+     
           </Grid>
           
-          <Grid item md={12} sm={12}>
-          <GigaCard>
-            <Box p={3}>
+          <Grid item md={12} xs={12}>
+
+            <Box px={3}>
+
               <Box sx={{ display: "flex", alignItems: "flex-end" }}>
                 <AssignmentTurnedIn sx={{ mr: "15px" }} />
                 <Box
@@ -212,13 +222,14 @@ const CV = ({ cvid,page }) => {
                 </Box>
               </Box>
               <Box sx={{ padding: "10px 0 0 40px" }}>{`${cv.experience}`}</Box>
+              <Box><Divider orientation="horizontal" flexItem sx={{mt:3,height:'0.5px' }} /></Box>
             </Box>
-            </GigaCard>
+
           </Grid>
 
-          <Grid item md={12} sm={12}>
-          <GigaCard>
-            <Box p={3}>
+          <Grid item md={12} xs={12}>
+
+            <Box px={3}>
               <Box sx={{ display: "flex", alignItems: "flex-end" }}>
                 <Language sx={{ mr: "15px" }} />
                 <Box
@@ -234,12 +245,13 @@ const CV = ({ cvid,page }) => {
                   <Chip  label={language.name} /></Box>
                 ))}
               </Stack>
+              <Box><Divider orientation="horizontal" flexItem sx={{mt:3,height:'0.5px' }} /></Box>
             </Box>
-           </GigaCard> 
+
         </Grid>
-        <Grid item md={12} sm={12}>
-        <GigaCard>
-            <Box p={3}>
+        <Grid item md={12} xs={12}>
+ 
+            <Box p='0 24px 24px 24px'>
               <Box sx={{ display: "flex", alignItems: "flex-end" }}>
                 <School sx={{ mr: "15px" }} />
                 <Box
@@ -250,10 +262,14 @@ const CV = ({ cvid,page }) => {
                 </Box>
               </Box>
               <Box sx={{ padding: "10px 0 0 40px" }}>{cv.education}</Box>
+            
             </Box>
-            </GigaCard>
+    
         </Grid>
-        <Grid item md={12} sm={12}>
+        
+        </Grid>
+        </GigaCard>
+        <Box mt={3}>
         <GigaCard>
 
         { page !== 'Profile' && <Box p={3}>
@@ -261,8 +277,8 @@ const CV = ({ cvid,page }) => {
         <iframe style={{width:'100%',height:'800px'}} src="http://localhost:3000/data/2019_MT_KTM.pdf" ></iframe>
       </Box>}
         </GigaCard>
-        </Grid>
-        </Grid>
+    </Box>
+        
       </Box>
       </>
     )
