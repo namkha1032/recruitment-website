@@ -196,7 +196,7 @@ function CandidateTable(props) {
                             backgroundColor: grey[100]
                         },
                         "& .MuiDataGrid-footerContainer": {
-                            borderTop: "5",
+                            // borderTop: "5",
                             // backgroundColor: grey[100]
                             // color: "#ffffff"
                         },
@@ -359,7 +359,7 @@ function InterviewerTable(props) {
                             backgroundColor: grey[100]
                         },
                         "& .MuiDataGrid-footerContainer": {
-                            borderTop: "5",
+                            // borderTop: "5",
                             // backgroundColor: grey[100]
                             // color: "#ffffff"
                         },
@@ -516,7 +516,7 @@ function RecruiterTable(props) {
                             backgroundColor: grey[100]
                         },
                         "& .MuiDataGrid-footerContainer": {
-                            borderTop: "5",
+                            // borderTop: "5",
                             // backgroundColor: grey[100]
                             // color: "#ffffff"
                         },
