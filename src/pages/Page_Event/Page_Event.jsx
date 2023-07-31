@@ -33,7 +33,7 @@ import { AccountCircle, Search } from "@mui/icons-material";
 
 //
 const cards1 = [1, 2, 3, 4, 5, 6];
-const pageSize = 2;
+const pageSize = 6;
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
@@ -89,7 +89,7 @@ const Page_Event = () => {
           <Box
             sx={{
               backgroundImage:
-                "url(https://png.pngtree.com/background/20210710/original/pngtree-blue-geometric-flattened-texture-banner-background-picture-image_1012881.jpg)",
+                "url(ree-blue-geometric-flattened-texture-banner-background-picture-image_1012881.jpg)",
               height: "300px",
               borderRadius: "10px",
               boxShadow: 5,
