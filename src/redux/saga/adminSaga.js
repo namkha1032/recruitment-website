@@ -3,24 +3,84 @@ import axios from 'axios';
 import host from "../host";
 
 function* doGetCandidate(action){
-    const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`);
-    yield put({type:"admin/getCandidate",payload: res.data})
+    try{
+        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`);
+        yield put({type:"admin/getCandidate",payload: res.data})
+    }
+    catch (error) {
+        // yield put({
+        //     type: "error/setError",
+        //     payload: {
+        //         status: "yes",
+        //         message: "message" in error ? error.message : error.response.data,
+        //     },
+        // });
+        console.log("error")
+    }
 }
 function* doGetRecruiter(action){
-    const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Recruiter`);
-    yield put({type:"admin/getRecruiter",payload: res.data})
+    try{
+        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Recruiter`);
+        yield put({type:"admin/getRecruiter",payload: res.data})
+    }
+    catch (error) {
+        // yield put({
+        //     type: "error/setError",
+        //     payload: {
+        //         status: "yes",
+        //         message: "message" in error ? error.message : error.response.data,
+        //     },
+        // });
+        console.log("error")
+    }
 }
 function* doGetInterviewer(action){
-    const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interviewer`);
-    yield put({type:"admin/getInterviewer",payload: res.data})
+    try{
+        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interviewer`);
+        yield put({type:"admin/getInterviewer",payload: res.data})
+    }
+    catch (error) {
+        // yield put({
+        //     type: "error/setError",
+        //     payload: {
+        //         status: "yes",
+        //         message: "message" in error ? error.message : error.response.data,
+        //     },
+        // });
+        console.log("error")
+    }
 }
 function* doGetBlacklist(action){
-    const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/BlackList`);
-    yield put({type:"admin/getBlacklist",payload: res.data})
+    try{
+        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/BlackList`);
+        yield put({type:"admin/getBlacklist",payload: res.data})
+    }
+    catch (error) {
+        // yield put({
+        //     type: "error/setError",
+        //     payload: {
+        //         status: "yes",
+        //         message: "message" in error ? error.message : error.response.data,
+        //     },
+        // });
+        console.log("error")
+    }
 }
 function* doGetDepartment(action){
-    const res = yield call(axios.get, `${host.name}/data/departmentList.json`);
-    yield put({type:"admin/getDepartments",payload: res.data})
+    try{
+        const res = yield call(axios.get, `${host.name}/data/departmentList.json`);
+        yield put({type:"admin/getDepartments",payload: res.data})
+    }
+    catch (error) {
+        // yield put({
+        //     type: "error/setError",
+        //     payload: {
+        //         status: "yes",
+        //         message: "message" in error ? error.message : error.response.data,
+        //     },
+        // });
+        console.log("error")
+    }
 }
 
 function* adminSaga(){

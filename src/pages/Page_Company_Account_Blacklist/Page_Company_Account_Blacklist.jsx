@@ -28,6 +28,8 @@ import { shadows } from '@mui/system';
 import FindInPageIcon from "@mui/icons-material/FindInPage";
 import {useDispatch, useSelector} from "react-redux";
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
+import {useTheme} from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 const RenderStatusButton = ({params}) => {
@@ -67,7 +69,10 @@ const RenderStatusButton = ({params}) => {
         </strong>
     )
 }
-const Page_Company_Account = () => {
+const Page_Company_Account_Blacklist = () => {
+    const theme = useTheme();
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     const navigate = useNavigate()
     // const [account, setAccount] = useState('');
     const dispatch = useDispatch()
@@ -77,13 +82,10 @@ const Page_Company_Account = () => {
     const blacklist = useSelector(state => state.admin.blacklist)
     function QuickSearchToolbar() {
         return (
-            <Grid container margin={1}>
-                <Grid item xs={4} display="flex">
-                <GridToolbarQuickFilter />
-                </Grid>
-                <Grid item xs={8} justifyContent="right" display="flex">
-                <GridToolbar />
-                </Grid>
+            <Grid container margin={1}
+            >
+                <GridToolbarQuickFilter/>
+                <GridToolbar></GridToolbar>
             </Grid>
         );
     }
@@ -115,21 +117,30 @@ const Page_Company_Account = () => {
                     // display:'flex',
                     // border: "1px solid black",
                     // borderRadius: 1,
+                    mt: '5vh',
                     padding:4
                 }}>
                 <Grid container>
-                    <Grid item xs={10}
+                    <Grid item xs={10} display="flex">
+                    <Grid container>
+                        <Grid item xs={12} md={1}
+                              display="flex"
+                              alignItems="center"
+                              justifyContent="left">
+                            <DoDisturbIcon sx={isMd ? { fontSize: 60 }: {fontSize: 40}}></DoDisturbIcon>
+                        </Grid>
+                    <Grid item md={11} xs={12}
                           display="flex"
                           alignItems="center"
                           justifyContent="left">
-                        <DoDisturbIcon sx={{ fontSize: 60 }}></DoDisturbIcon>
-                        <Typography variant="h3"
+                        <Typography variant={isMd ? "h3" : "h4"}
                                     display="flex"
                                     alignItems="center"
-                                    justifyContent="left"
-                                    m="10px 0 10px 10px">
+                                    justifyContent="left">
                             Blacklist
                         </Typography>
+                    </Grid>
+                    </Grid>
                     </Grid>
                     <Grid item xs={2} display="flex">
                         <Grid container  spacing={{ xs: 0, sm: 3 }} rowSpacing={{ xs: 1, sm: 0 }} display="flex">
@@ -172,7 +183,7 @@ const Page_Company_Account = () => {
                 }}>
                 <Grid container>
                 <Grid
-                    width="78vw"
+                    // width="78vw"
                     item
                     // m="0px 10px 0px 10px"
                     xs={12}
@@ -227,4 +238,4 @@ const Page_Company_Account = () => {
     );
 }
 
-export default Page_Company_Account
+export default Page_Company_Account_Blacklist
