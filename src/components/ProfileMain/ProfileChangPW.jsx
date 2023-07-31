@@ -10,21 +10,31 @@ import {
   Container,
   InputAdornment,
   IconButton,
+  createTheme,
 } from "@mui/material";
 
-import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { toast } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import { Snackbar, Alert } from "@mui/material";
 
-//import LockIcon from "@mui/icons-material/Lock";
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+//import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 
 const style = {
   marginTop: "15px",
   marginBottom: "15px",
 };
+
+const theme = createTheme({
+  palette: {
+      secondary: {
+          main: '#000000'
+      }
+  }
+});
 
 const ProfileChangePW = () => {
   const navigate = useNavigate();
@@ -117,7 +127,7 @@ const ProfileChangePW = () => {
           }}
         >
 
-          <Grid item md={7} sx={{ display: "flex", justifyContent: "center" }}>
+          <Grid item md={8} sx={{ display: "flex", justifyContent: "center" }}>
             <Grid
               item
               md={9}
@@ -133,7 +143,7 @@ const ProfileChangePW = () => {
                 //border: "1px solid black",
               }}
             >
-              <Typography 
+              {/* <Typography 
                 variant="h2" 
                 align="center" 
                 // color='#1976d2' 
@@ -146,19 +156,46 @@ const ProfileChangePW = () => {
                 padding={"20px"}
               >
                 Change password
-              </Typography>
+              </Typography> */}
 
               <form onSubmit={handleSubmit}>
 
               <Grid item xs={12} md={12} sx={{ ...style }}>
                 <TextField
                   fullWidth
-                  required
-                  label="Username"
+                  //required
+                  variant="standard"
+                  label={<Typography color={"black"}>Username</Typography>}
                   type="text"
                   value={username}
+                  autoComplete='new-usename'
                   InputProps={{
-                    style: { borderRadius: "12px" },
+                    disableUnderline: true,
+                    endAdornment: 
+                    (<AccountCircleOutlinedIcon
+                        sx={{
+                            position: 'absolute',
+                            right: '8px',
+                            color: '#000',
+                            fontSize: '1.2em',
+                            //top: '20px',
+                        }}
+                    />),
+                    sx: {
+                        color: '#000',
+                    }
+                  }}
+                  sx={{
+                    width: '100%',
+                    height: '50px',
+                    background: 'transparent',
+                    //border: 'none',
+                    outline: 'none',
+                    fontSize: '1em',
+                    //padding: '0 5px 0 5px',
+                    color: '#000',
+                    borderBottom: '2px solid black',
+                    borderBottomWidth: '2px',
                   }}
                   onChange={e => setUsername(e.target.value)}
                   /* error={!validUsername} */
@@ -168,23 +205,59 @@ const ProfileChangePW = () => {
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
-                    required
-                    label="Current Password"
+                    //required
+                    variant="standard"
+                    label={<Typography color={"black"}>Current Password</Typography>}
                     type={showOldPassword ? "text" : "password"}
                     value={currentPassword}
+                    autoComplete='new-currentpassword'
                     InputProps={{
+                      disableUnderline: true,
                       endAdornment: (
-                        <InputAdornment position="end">
+                      <InputAdornment position="end">
                           <IconButton
-                            onClick={handleClickShowOldPassword}
-                            onMouseDown={handleMouseDownPassword}
+                              onClick={handleClickShowOldPassword}
+                              onMouseDown={handleMouseDownPassword}
                           >
-                            {showOldPassword ? <Visibility /> : <VisibilityOff />}
+                              {showOldPassword 
+                                  ? <VisibilityOutlinedIcon 
+                                      sx={{
+                                          position: 'absolute',
+                                          right: '8px',
+                                          color: '#000',
+                                          fontSize: '0.9em',
+                                          //top: '20px',
+                                      }}
+                                  /> 
+                                  : <VisibilityOffOutlinedIcon 
+                                      sx={{
+                                          position: 'absolute',
+                                          right: '8px',
+                                          color: '#000',
+                                          fontSize: '0.9em',
+                                          //top: '20px',
+                                      }}
+                                  />
+                              }
                           </IconButton>
-                        </InputAdornment>
+                      </InputAdornment>
                       ),
+                      sx: {
+                          color: '#000',
+                      }
+                    }}
 
-                      style: { borderRadius: "12px" },
+                    sx={{
+                      width: '100%',
+                      height: '50px',
+                      background: 'transparent',
+                      //border: 'none',
+                      outline: 'none',
+                      fontSize: '1em',
+                      //padding: '0 5px 0 5px',
+                      color: '#fff',
+                      borderBottom: '2px solid black',
+                      borderBottomWidth: '2px',
                     }}
                     onChange={(e) => {
                       setCurrentPassword(e.target.value);
@@ -195,23 +268,59 @@ const ProfileChangePW = () => {
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
-                    required
-                    label="New Password"
+                    //required
+                    variant="standard"
+                    label={<Typography color={"black"}>New Password</Typography>}
                     type={showNewPassword ? "text" : "password"}
                     value={newPassword}
+                    autoComplete='new-newpassword'
                     InputProps={{
+                      disableUnderline: true,
                       endAdornment: (
-                        <InputAdornment position="end">
+                      <InputAdornment position="end">
                           <IconButton
-                            onClick={handleClickShowNewPassword}
-                            onMouseDown={handleMouseDownPassword}
+                              onClick={handleClickShowNewPassword}
+                              onMouseDown={handleMouseDownPassword}
                           >
-                            {showNewPassword ? <Visibility /> : <VisibilityOff />}
+                              {showNewPassword 
+                                  ? <VisibilityOutlinedIcon 
+                                      sx={{
+                                          position: 'absolute',
+                                          right: '8px',
+                                          color: '#000',
+                                          fontSize: '0.9em',
+                                          //top: '20px',
+                                      }}
+                                  /> 
+                                  : <VisibilityOffOutlinedIcon 
+                                      sx={{
+                                          position: 'absolute',
+                                          right: '8px',
+                                          color: '#000',
+                                          fontSize: '0.9em',
+                                          //top: '20px',
+                                      }}
+                                  />
+                              }
                           </IconButton>
-                        </InputAdornment>
+                      </InputAdornment>
                       ),
+                      sx: {
+                          color: '#000',
+                      }
+                    }}
 
-                      style: { borderRadius: "12px" },
+                    sx={{
+                      width: '100%',
+                      height: '50px',
+                      background: 'transparent',
+                      //border: 'none',
+                      outline: 'none',
+                      fontSize: '1em',
+                      //padding: '0 5px 0 5px',
+                      color: '#fff',
+                      borderBottom: '2px solid black',
+                      borderBottomWidth: '2px',
                     }}
                     onChange={(e) => {
                       setNewPassword(e.target.value);
@@ -222,24 +331,59 @@ const ProfileChangePW = () => {
                 <Grid item xs={12} md={12} sx={{ ...style }}>
                   <TextField
                     fullWidth
-                    required
-                    label="Confirm Password"
+                    //required
+                    variant="standard"
+                    label={<Typography color={"black"}>Confirm Password</Typography>}
                     type={showConfirmPassword ? "text" : "password"}
                     value={confirmPassword}
-                    variant="outlined"
+                    autoComplete='new-confirmpassword'
                     InputProps={{
+                      disableUnderline: true,
                       endAdornment: (
-                        <InputAdornment position="end">
+                      <InputAdornment position="end">
                           <IconButton
-                            onClick={handleClickShowConfirmPassword}
-                            onMouseDown={handleMouseDownPassword}
+                              onClick={handleClickShowConfirmPassword}
+                              onMouseDown={handleMouseDownPassword}
                           >
-                            {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                              {showConfirmPassword 
+                                  ? <VisibilityOutlinedIcon 
+                                      sx={{
+                                          position: 'absolute',
+                                          right: '8px',
+                                          color: '#000',
+                                          fontSize: '0.9em',
+                                          //top: '20px',
+                                      }}
+                                  /> 
+                                  : <VisibilityOffOutlinedIcon 
+                                      sx={{
+                                          position: 'absolute',
+                                          right: '8px',
+                                          color: '#000',
+                                          fontSize: '0.9em',
+                                          //top: '20px',
+                                      }}
+                                  />
+                              }
                           </IconButton>
-                        </InputAdornment>
+                      </InputAdornment>
                       ),
+                      sx: {
+                          color: '#000',
+                      }
+                    }}
 
-                      style: { borderRadius: "12px" },
+                    sx={{
+                      width: '100%',
+                      height: '50px',
+                      background: 'transparent',
+                      //border: 'none',
+                      outline: 'none',
+                      fontSize: '1em',
+                      //padding: '0 5px 0 5px',
+                      color: '#fff',
+                      borderBottom: '2px solid black',
+                      borderBottomWidth: '2px',
                     }}
                     onChange={(e) => {
                       setConfirmPassword(e.target.value);
@@ -250,16 +394,22 @@ const ProfileChangePW = () => {
                 <Grid
                   item
                   xs={12}
-                  sx={{ display: "flex", justifyContent: "center", ...style }}
+                  sx={{ display: "flex", justifyContent: "center", marginBottom: '15px', marginTop: '25px' }}
                 >
                   <Button
-                    variant="contained"
-                    type="submit"
+                    type="submit" 
+                    theme={theme}
+                    variant="contained" 
+                    color="secondary"
                     sx={{
-                      height: "40px",
-                      width: "100%",
-                      borderRadius: "8px",
-                      marginTop: "15px",
+                        height: '40px',
+                        color: 'white',
+                        borderRadius: '40px',
+                        fontSize: '1em',
+                        fontWeight: 600,
+                        width: '100%',
+
+                        //textTransform: "none"
                     }}
                   >
                     change
@@ -267,7 +417,7 @@ const ProfileChangePW = () => {
                 </Grid>
               </form>
 
-              <ToastContainer />
+              {/* <ToastContainer /> */}
             </Grid>
           </Grid>
         </Grid>
@@ -283,7 +433,8 @@ const ProfileChangePW = () => {
           severity="error"
           onClose={() => setErrorSnackbar(false)}
         >
-          {newError.message}
+          {/* {newError.message} */}
+          Username or Password is incorrect
         </Alert>
       </Snackbar>
 
