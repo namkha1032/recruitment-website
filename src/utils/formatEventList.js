@@ -11,9 +11,11 @@
 // }
 
 import { formatDatetime } from "./formatDate";
+import { getEventStatus } from "./getEventStatus";
+import { getNumOfCandidateEvent } from "./getNumOfCandidateEvent";
 
-export function formatEventList(input) {
-  const output = input.map((element) => {
+export function formatEventList(input, candidatesEvent) {
+  const output_draft = input.map((element) => {
     return {
       EventId: element.eventId,
       EventCampus: element.place,
@@ -21,11 +23,16 @@ export function formatEventList(input) {
       EventName: element.eventName,
       CreatedById: element.recruiterId,
       CreatedByName: element.recruiterId,
-      EventDateTime: formatDatetime(element.datetimeEvent),
-      NumOfJoined: 0,
-      Status: element.isDeleted
+      EventDateTime: element.datetimeEvent,
+      Status: getEventStatus(element.datetimeEvent),
     };
   });
-  console.log(output)
+  let output = []
+  for (let i = 0; i < output_draft.length; i++) {
+    output.push({
+      ...output_draft[i],
+      NumOfJoined: getNumOfCandidateEvent(output_draft[i].EventId, candidatesEvent),
+    })
+  }
   return output
 }

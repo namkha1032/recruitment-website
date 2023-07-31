@@ -37,6 +37,7 @@ import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { formatDatetime } from "../../utils/formatDate";
 
 // JSON <- Event
 // {
@@ -225,7 +226,7 @@ export default function Page_Company_Event() {
       renderHeader: () => <span>Date</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
-        return params.value
+        return formatDatetime(params.value)
       },
     },
     {
@@ -543,6 +544,7 @@ export default function Page_Company_Event() {
               disableColumnFilter
               disableColumnSelector
               disableDensitySelector
+              disableRowSelectionOnClick
               pagination
               pageSizeOptions={[5, 10, 25, 50, 100]}
               initialState={{

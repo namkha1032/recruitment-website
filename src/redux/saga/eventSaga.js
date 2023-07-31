@@ -20,8 +20,8 @@ function* getEventList() {
     // --- Format EventList
     // yield put({ type: "eventList/setEventList", payload: response.data })
     // yield put({ type: "loading/offLoading" })
-
-    const data = formatEventList(response.data);
+    const candidatesEvent = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent")
+    const data = formatEventList(response.data, candidatesEvent.data);
     yield put({ type: "eventList/setEventList", payload: data });
     yield put({ type: "loading/offLoading" });
     // yield put({
@@ -56,8 +56,9 @@ function* getEventListWithFilter(action) {
     // --- Get Recruiter name
 
     // --- Filter and format
-    const draft = filterEventList(response.data, action.payload);
-    const data = formatEventList(draft);
+    const candidatesEvent = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent")
+    const draft = formatEventList(response.data, candidatesEvent.data);
+    const data = filterEventList(draft, action.payload);
     yield put({ type: "eventList/setEventList", payload: data });
     yield put({ type: "loading/offLoading" });
     // yield put({
