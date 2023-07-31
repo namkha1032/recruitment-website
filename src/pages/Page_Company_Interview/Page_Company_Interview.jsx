@@ -332,7 +332,7 @@ export default function Page_Company_Interview() {
     },
     {
       field: "Status",
-      minWidth: 140,
+      minWidth: 130,
       headerAlign: "center",
       align: "center",
       renderHeader: () => <span>Status</span>,
@@ -345,7 +345,7 @@ export default function Page_Company_Interview() {
     },
     {
       field: "Priority",
-      minWidth: 140,
+      minWidth: 130,
       headerAlign: "center",
       align: "center",
       renderHeader: () => <span>Result</span>,

@@ -14,13 +14,27 @@ import { CloseRounded, DoneRounded } from "@mui/icons-material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 
-
 export function NullString() {
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+
   // return <Chip icon={<PriorityHighIcon />} label="" />;
-  return <PriorityHighIcon />
+  return <PriorityHighIcon />;
 }
 
 export function NotStart() {
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+
+  if (isXs) {
+    return (
+      <EventNoteRoundedIcon
+        style={{
+          color: "black.400",
+        }}
+      />
+    );
+  }
   return (
     <Chip
       label="Not start"
@@ -30,7 +44,7 @@ export function NotStart() {
         color: "black.400",
         backgroundColor: "white",
         // borderColor: "#E0E0E0",
-        borderColor: "black.400"
+        borderColor: "black.400",
       }}
       icon={
         <EventNoteRoundedIcon
@@ -44,6 +58,18 @@ export function NotStart() {
 }
 
 export function Pending() {
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+
+  if (isXs) {
+    return (
+      <MoreHorizRoundedIcon
+        style={{
+          color: "black.400",
+        }}
+      />
+    );
+  }
   return (
     <Chip
       label="Pending"
@@ -66,6 +92,18 @@ export function Pending() {
 }
 
 export function Completed() {
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+
+  if (isXs) {
+    return (
+      <SportsScoreRoundedIcon
+        style={{
+          color: "#1565C0",
+        }}
+      />
+    );
+  }
   return (
     <Chip
       label="Finished"
@@ -87,6 +125,17 @@ export function Completed() {
 }
 
 export function Postpone() {
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  if (isXs) {
+    return (
+      <DoNotDisturbOnRoundedIcon
+        style={{
+          color: "#cc3300",
+        }}
+      />
+    );
+  }
   return (
     <Chip
       label="Postponed"
@@ -108,6 +157,17 @@ export function Postpone() {
 }
 
 export function Technology() {
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  if (isXs) {
+    return (
+      <SchoolRoundedIcon
+        style={{
+          color: "#1565C0",
+        }}
+      />
+    );
+  }
   return (
     <Chip
       label="Technology"
@@ -129,6 +189,17 @@ export function Technology() {
 }
 
 export function Language() {
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  if (isXs) {
+    return (
+      <LanguageRoundedIcon
+        style={{
+          color: "#008631",
+        }}
+      />
+    );
+  }
   return (
     <Chip
       label="Language"
@@ -150,6 +221,17 @@ export function Language() {
 }
 
 export function SoftSkill() {
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  if (isXs) {
+    return (
+      <PsychologyRoundedIcon
+        style={{
+          color: "#AA336A",
+        }}
+      />
+    );
+  }
   return (
     <Chip
       label="Soft Skills"
@@ -171,6 +253,17 @@ export function SoftSkill() {
 }
 
 export function Active() {
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  if (isXs) {
+    return (
+      <RocketLaunchRoundedIcon
+        style={{
+          color: "#1565C0",
+        }}
+      />
+    );
+  }
   return (
     <Chip
       label="Active"
@@ -192,6 +285,18 @@ export function Active() {
 }
 
 export function Inactive() {
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  if (isXs) {
+    return (
+      <DoNotDisturbOnRoundedIcon
+        style={{
+          // color: "#E0E0E0",
+          color: "black.400",
+        }}
+      />
+    );
+  }
   return (
     <Chip
       label="Inactive"
@@ -216,6 +321,17 @@ export function Inactive() {
 }
 
 export function Pass() {
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  if (isXs) {
+    return (
+      <DoneRounded
+        style={{
+          color: "#008631",
+        }}
+      />
+    );
+  }
   return (
     <Chip
       label="Passed"
@@ -237,6 +353,17 @@ export function Pass() {
 }
 
 export function Fail() {
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  if (isXs) {
+    return (
+      <CloseRounded
+        style={{
+          color: "#cc3300",
+        }}
+      />
+    );
+  }
   return (
     <Chip
       label="Failed"
@@ -258,6 +385,17 @@ export function Fail() {
 }
 
 export function Upcoming() {
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  if (isXs) {
+    return (
+      <EventNoteRoundedIcon
+        style={{
+          color: "#E0E0E0",
+        }}
+      />
+    );
+  }
   return (
     <Chip
       label="Upcoming"
