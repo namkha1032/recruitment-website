@@ -11,6 +11,9 @@ import GigaCard from "../../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../../components/GigaCardBody/GigaCardBody";
 import dayjs from "dayjs";
 import cleanStore from "../../../utils/cleanStore";
+import TitleDivider from "../../../components/TitleDivider/TitleDivider";
+import { Typography } from "@mui/material";
+
 function RecruitForm() {
   const dispatch = useDispatch();
   // fetch Data
@@ -260,6 +263,22 @@ function RecruitForm() {
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} justifyContent="center" alignItems="center">
           <Grid item xs={12}>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                variant="h3"
+                sx={{ fontWeight: "bold", marginBottom: "16px" }}
+              >
+                Update Position
+              </Typography>
+            </Grid>
             <GigaCard>
               <GigaCardBody>
                 <Grid
@@ -280,6 +299,9 @@ function RecruitForm() {
                 </Grid>
               </GigaCardBody>
             </GigaCard>
+          </Grid>
+          <Grid item xs={12}>
+          <TitleDivider>Detail</TitleDivider>
           </Grid>
           <Grid item xs={12}>
             <GigaCard>
@@ -314,6 +336,9 @@ function RecruitForm() {
                 </Grid>
               </GigaCardBody>
             </GigaCard>
+          </Grid>
+          <Grid item xs={12}>
+          <TitleDivider>Requirement</TitleDivider>
           </Grid>
           <Grid item xs={12}>
             <GigaCard>

@@ -10,6 +10,8 @@ import Box3 from "./Box3";
 import GigaCard from "../../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../../components/GigaCardBody/GigaCardBody";
 import cleanStore from "../../../utils/cleanStore";
+import TitleDivider from "../../../components/TitleDivider/TitleDivider";
+import { Typography } from "@mui/material";
 
 function RecruitForm() {
   const dispatch = useDispatch();
@@ -45,7 +47,7 @@ function RecruitForm() {
     if (skillList) {
       setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
     }
-  }, [departmentList,skillList,languageList]);
+  }, [departmentList, skillList, languageList]);
   // Recruiment comps
   const [RName, setRName] = useState(recruitInfo.name);
   const [description, setDescription] = useState(recruitInfo.description);
@@ -59,7 +61,7 @@ function RecruitForm() {
   const departments = department.filter(
     (comp) => comp.departmentId === departmentChoose
   );
-  
+
   const [languages, setLanguages] = useState(recruitInfo.languageId);
   // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
   // const [status, setStatus] = useState(recruitInfo.status);
@@ -90,7 +92,7 @@ function RecruitForm() {
   //FUNCTION
   function handleSubmit(e) {
     e.preventDefault();
-    cleanStore(dispatch)
+    cleanStore(dispatch);
     navigate("/company/recruitment/:recruitmentid");
   }
   const handleChange = (event) => {
@@ -128,7 +130,8 @@ function RecruitForm() {
     console.log(inputValue);
     console.log(skillName);
     let arr = skill.filter(
-      (comp) => comp.skillName === (inputValue !== null ? inputValue.skillName : "")
+      (comp) =>
+        comp.skillName === (inputValue !== null ? inputValue.skillName : "")
     );
     console.log(arr);
     if (arr[0] === undefined) {
@@ -210,6 +213,22 @@ function RecruitForm() {
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} justifyContent="center" alignItems="center">
           <Grid item xs={12}>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                variant="h3"
+                sx={{ fontWeight: "bold", marginBottom: "16px" }}
+              >
+                Create Position
+              </Typography>
+            </Grid>
             <GigaCard>
               <GigaCardBody>
                 <Grid
@@ -230,6 +249,9 @@ function RecruitForm() {
                 </Grid>
               </GigaCardBody>
             </GigaCard>
+          </Grid>
+          <Grid item xs={12}>
+          <TitleDivider>Detail</TitleDivider>
           </Grid>
           <Grid item xs={12}>
             <GigaCard>
@@ -264,6 +286,9 @@ function RecruitForm() {
                 </Grid>
               </GigaCardBody>
             </GigaCard>
+          </Grid>
+          <Grid item xs={12}>
+          <TitleDivider>Requirement</TitleDivider>
           </Grid>
           <Grid item xs={12}>
             <GigaCard>

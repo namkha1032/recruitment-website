@@ -26,6 +26,7 @@ import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import imageBackground from "../../assets/img/background.jpg";
+// import videoBg from "./nightwall.webm"
 
 //import ErrorIcon from '@mui/icons-material/Error';
 
@@ -129,6 +130,12 @@ const XPage_Login = () => {
                 alignItems: 'center',
             }}
         >
+            {/* <video src={videoBg} autoPlay loop muted style={{
+                position: "absolute",
+                width: '100vw',
+                height: '100vh',
+                objectFit:"cover"
+            }}></video> */}
         <Container 
             component="main" 
             maxWidth="xs" 

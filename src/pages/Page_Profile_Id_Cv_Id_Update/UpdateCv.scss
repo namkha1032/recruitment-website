@@ -1,7 +1,64 @@
 
 .UpdateCV {
   
+  .pdfdelete{
+    display: none;
+  }
+  .pdflabel{
+    color:white;
+    height: 60px;
+    width:250px;
+    background-color: #f5af09;
+    margin-left: 2px;
+    margin-right: 2px;
+    font-size: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+  }
+  .pdflabel:hover{
+    background-color: #d39609;
+  }
+  .pdfdel:hover{
+    background-color: #d39609;
+  }
+  .pdfdel{
+    color:white;
+    height: 60px;
+    width:50px;
+    background-color: #f5af09;
+    margin-left: 2px;
+    margin-right: 2px;
+    font-size: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+  }
   
+  .customfile{
+    display: none;
+    width:40%;
+    // border: 5px solid black;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    background: white;
+    box-shadow: 5px 5px 10px black;
+    border-radius: 10px;
+    font-size: 15px;
+    outline:none;
+  }
+  .customfile::-webkit-file-upload-button{
+    background: #206a5d;
+    color: #fff;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+  }
+
   .CVForm {
     width: 100%;
     margin: auto;

@@ -25,6 +25,7 @@ import cvInforSaga from "./saga/cvInforSaga";
 import positionInforSaga from "./saga/positionInforSaga";
 import requirementSaga from "./saga/requirementSaga";
 import createCvSaga from "./saga/createCvSaga";
+import updateCvSaga from "./saga/updateCvSaga";
 
 import cvCandidateSaga from "./saga/cvCandidateSaga";
 function* rootSaga() {
@@ -52,7 +53,8 @@ function* rootSaga() {
         requirementSaga(),
         createCvSaga(),
         testSaga(),
-        cvCandidateSaga()
+        cvCandidateSaga(),
+        updateCvSaga()
     ])
 }
 

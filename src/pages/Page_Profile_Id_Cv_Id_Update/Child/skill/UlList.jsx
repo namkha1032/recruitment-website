@@ -12,7 +12,7 @@ const UlList = (prop) => {
           }}
           variant="outlined"
           onDelete={() => {
-            prop.handleDelete(comp.id);
+            prop.handleDelete(comp.cvSkillsId);
           }}
         />
       ))}
