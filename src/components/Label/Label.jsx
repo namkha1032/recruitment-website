@@ -11,6 +11,9 @@ import LanguageRoundedIcon from "@mui/icons-material/LanguageRounded";
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import { CloseRounded, DoneRounded } from "@mui/icons-material";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+
 
 export function NullString() {
   // return <Chip icon={<PriorityHighIcon />} label="" />;
