@@ -8,13 +8,6 @@ function* doGetCandidate(action){
         yield put({type:"admin/getCandidate",payload: res.data})
     }
     catch (error) {
-        // yield put({
-        //     type: "error/setError",
-        //     payload: {
-        //         status: "yes",
-        //         message: "message" in error ? error.message : error.response.data,
-        //     },
-        // });
         console.log("error")
     }
 }
@@ -83,12 +76,36 @@ function* doGetDepartment(action){
     }
 }
 
+function* doAddToBlacklist(action){
+    try {
+        const {
+            candidateId,
+            reason,
+        } = action.payload;
+        const now = new Date();
+        const dateTime = now.toISOString();
+        const data = {
+            candidateId,
+            reason,
+            dateTime,
+            status: 0,
+            isDeleted: true
+        };
+        const res = yield call(axios.post, 'https://leetun2k2-001-site1.gtempurl.com/api/BlackList', data, {
+            headers: {'Content-Type': 'application/json'}
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 function* adminSaga(){
     yield takeEvery('saga/getCandidate',doGetCandidate);
     yield takeEvery('saga/getInterviewer',doGetInterviewer);
     yield takeEvery('saga/getRecruiter',doGetRecruiter);
     yield takeEvery('saga/getBlacklist',doGetBlacklist);
     yield takeEvery('saga/getDepartmentAdmin',doGetDepartment);
+    yield takeEvery('saga/addToBlacklist',doAddToBlacklist);
 
 
 }

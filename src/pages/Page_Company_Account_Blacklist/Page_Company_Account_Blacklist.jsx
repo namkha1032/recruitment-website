@@ -9,7 +9,6 @@ import {
 } from "@mui/material"
 import {DataGrid, GridAddIcon, GridSearchIcon, GridToolbar, GridToolbarQuickFilter} from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
-import {mockDataContacts} from "../Page_Company_Account/mockData";
 import {grey, lightBlue, red, teal} from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
@@ -30,6 +29,7 @@ import {useDispatch, useSelector} from "react-redux";
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import candidateNames from '../Page_Company_Account/candidateNames.json'
 
 
 const RenderStatusButton = ({params}) => {
@@ -89,20 +89,24 @@ const Page_Company_Account_Blacklist = () => {
             </Grid>
         );
     }
+    function getUser(candidateId) {
+        return candidateNames.find(user => user.candidateId === candidateId);
+    }
     const columns = [
-        { field: "blackListId", headerName: "Blacklist ID", flex: 0.5, headerClassName: "blacklistId-header-column", cellClassName: "blacklistId-cell-column"},
-        { field: "candidateId", headerName: "Candidate ID", flex: 0.5},
+        // { field: "blackListId", headerName: "Blacklist ID", flex: 0.5, headerClassName: "blacklistId-header-column", cellClassName: "blacklistId-cell-column"},
+        // { field: "candidateId", headerName: "Candidate ID", flex: 0.5},
+        { field: 'name', headerName: 'Username', flex: 0.3, valueGetter: params => getUser(params.row.candidateId)?.name },
         {
             field: "reason",
             headerName: "Reason",
-            flex: 0.3,
+            flex: 0.4,
             cellClassName: "name-column--cell",
         },
         { field: "dateTime", headerName: "Blacklist Date", flex: 0.3},
         {
             field: "info",
             headerName: "Check Info",
-            flex: 0.3,
+            flex: 0.2,
             renderCell: (params)=>{
                 return(<RenderStatusButton params={params} />)
             },
@@ -110,7 +114,7 @@ const Page_Company_Account_Blacklist = () => {
     ];
 
     return (
-        <Grid item xs={12}>
+        <Grid item xs={12} mb="10vh">
             <Card
                 raised="true"
                 sx={{
@@ -160,6 +164,10 @@ const Page_Company_Account_Blacklist = () => {
                                     sx={{
                                         boxShadow:7,
                                         backgroundColor: grey[900],
+                                        '&:hover': {
+                                            color: grey[900],
+                                            backgroundColor: grey[300], // set the hover color to light grey
+                                        },
                                     }}
                                     style={{minWidth: '100px'}}
                                     startIcon={<ArrowBackIosNewRounded/>}

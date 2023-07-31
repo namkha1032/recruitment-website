@@ -37,7 +37,8 @@ const Page_Company_Account_Create = () => {
                 // borderRadius: 1,
                 padding:5,
                 boxShadow:5,
-                mt: '5vh'
+                mt: '5vh',
+                mb: '10vh'
             }}>
         <Grid
             container
@@ -163,6 +164,10 @@ const Page_Company_Account_Create = () => {
                     sx={{
                         boxShadow:5,
                         backgroundColor: grey[900],
+                        '&:hover': {
+                            color: grey[900],
+                            backgroundColor: grey[300], // set the hover color to light grey
+                        },
                     }}
                 >
                     Create
