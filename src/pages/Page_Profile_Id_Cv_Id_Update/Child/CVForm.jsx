@@ -322,8 +322,8 @@ function CVForm() {
     } catch (error) {
       console.log(error);
     }
-    // cleanStore(dispatch);
-    // navigate("/profile/:profileid/cv/:cvid");
+    cleanStore(dispatch);
+    navigate("/profile/:profileid/cv/:cvid");
   }
   //COMPS
   return (
