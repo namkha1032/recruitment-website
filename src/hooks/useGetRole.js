@@ -15,7 +15,7 @@ import host from "../redux/host";
 
 function useGetRole() {
     const userlocal = useSelector(state => state.user)
-    console.log("user: ", userlocal)
+    console.log("userLocal: ", userlocal)
     // const userlocal = JSON.parse(window.localStorage.getItem("user"))
     const [role, setRole] = useState(null)
     useEffect(() => {
@@ -40,14 +40,16 @@ function useGetRole() {
                     setRole("candidate")
                 }
                 else {
+                    console.log("set null 1")
                     setRole(null)
                 }
             })
         }
         else {
+            console.log("set null 2")
             setRole(null)
         }
-        
+
     }, [userlocal])
     return role
 }

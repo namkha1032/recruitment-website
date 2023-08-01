@@ -5,20 +5,25 @@ import host from "../host"
 function* userLogin(action) {
     try {
         const { username, password, check } = action.payload
+        console.log("username: ", username, "password: ", password, "check: ", check)
         const response = yield call(axios.post, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/Login', { username, password })
         console.log("response is: ", response.data)
 
         yield put({ type: "user/setUser", payload: response.data })
-        window.localStorage.setItem("user", JSON.stringify(response.data))
+        if (check) {
+            window.localStorage.setItem("user", JSON.stringify(response.data))
+        }
+        else {
+            window.sessionStorage.setItem("user", JSON.stringify(response.data))
+        }
 
-        let userlocal = JSON.parse(window.localStorage.getItem("user"))
-        let token = `Bearer ${userlocal.token}`
+        let token = `Bearer ${response.data.token}`
         console.log(token)
         const config = {
             headers: { Authorization: token },
         }
         const userId = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/CurrentUser', config)
-        console.log("userId is", userId.data)
+        // console.log("userId is", userId.data)
         yield put({ type: "user/setUser", payload: userId.data })
         yield put({ type: "error/setError", payload: { status: "no", message: "" } })
 
@@ -146,7 +151,7 @@ function* userChangePassword(action) {
 function* userLogout() {
     window.localStorage.removeItem('user')
     window.sessionStorage.removeItem('user')
-    yield put({ type: "user/userLogout", payload: null})
+    yield put({ type: "user/userLogout", payload: null })
 }
 
 
