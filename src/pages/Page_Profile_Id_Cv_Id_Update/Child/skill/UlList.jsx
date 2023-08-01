@@ -9,10 +9,11 @@ const UlList = (prop) => {
           label={prop.skillData.filter((compp)=>compp.skillId===comp.skillId)[0].skillName +"(" +comp.experienceYear+")"}
           sx={{
             m: 0.5,
+            height:"40px"
           }}
           variant="outlined"
           onDelete={() => {
-            prop.handleDelete(comp.id);
+            prop.handleDelete(comp.cvSkillsId);
           }}
         />
       ))}

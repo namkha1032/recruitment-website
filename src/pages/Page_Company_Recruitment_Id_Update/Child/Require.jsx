@@ -14,7 +14,7 @@ function Require(prop) {
           handleDelete={prop.handleRequirementDelete}
         />
         <ChooseList
-          skill={prop.skill}
+          skill={prop.SkillOption}
           inputValue={prop.inputValue}
           setInputValue={prop.setInputValue}
           experience={prop.experience}

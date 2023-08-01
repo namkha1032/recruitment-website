@@ -10,6 +10,7 @@ function Box3(prop) {
         <Grid item xs={12}>
           <Require
             skill={prop.skill}
+            SkillOption={prop.SkillOption}
             requirement={prop.requirement}
             handleRequirementDelete={prop.handleRequirementDelete}
             inputValue={prop.inputValue}

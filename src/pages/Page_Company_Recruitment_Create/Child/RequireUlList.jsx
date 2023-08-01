@@ -7,7 +7,7 @@ const RequireUlList = (prop) => {
     <>
       <Grid container spacing={1} justifyContent="center" alignItems="center">
         {prop.comps.map((comp) => (
-          <Grid key={comp.id} item xs={3}>
+          <Grid key={comp.requirementId} item xs={3}>
               <SmallUlList comp={comp} handleDelete={prop.handleDelete} />
           </Grid>
         ))}

@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import cvinfo from "./CvData";
+// import cvinfo from "./CvData";
 import CreateCv from "./CreateCv";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import cleanStore from "../../../utils/cleanStore";
+// import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
+// import axios from "axios";
 
 // import ViewCv from "./ViewCv";
 function CVForm() {
@@ -23,7 +25,8 @@ function CVForm() {
   const skillList = useSelector((state) => state.skill);
   const languageList = useSelector((state) => state.language);
 
-  const [skillData, setSkill] = useState([]);
+  const [skillData, setSkillData] = useState([]);
+  const [skillOption, setSkillOption] = useState([]);
   const [languageData, setLanguage] = useState([]);
   useEffect(() => {
     if (languageList) {
@@ -32,10 +35,11 @@ function CVForm() {
       );
     }
     if (skillList) {
-      setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
+      setSkillData(skillList ? (skillList !== [] ? skillList : []) : []);
+      setSkillOption(skillList ? (skillList !== [] ? skillList : []) : []);
     }
   }, [skillList, languageList]);
-
+  const [loading, setLoading] = useState(false);
   const [cvtitle, setTitle] = useState("");
   const [intro, setIntro] = useState("");
   const [education, setEducation] = useState("");
@@ -58,10 +62,15 @@ function CVForm() {
   const [SExp, setSExp] = useState("");
   const [sInputValue, setSInputValue] = useState("");
   // Language comps
-  const [lId, setLId] = useState(0);
-  const [languageId, setLanguageId] = useState(null);
-  const [languageName, setLanguageName] = useState("");
-  const [lInputValue, setLInputValue] = useState("");
+  // const [lId, setLId] = useState(0);
+  // const [languageId, setLanguageId] = useState(null);
+  // const [languageName, setLanguageName] = useState("");
+  // const [lInputValue, setLInputValue] = useState("");
+  // PDF
+  const [pdfFile, setPdfFile] = useState(null);
+  const [viewPdf, setViewPdf] = useState(null);
+  const [pdf, setPdf] = useState(null);
+  console.log(pdf);
   //FUNCTION
   function handleTitle(e) {
     setTitle(e.target.value);
@@ -73,8 +82,8 @@ function CVForm() {
     setExperience(e.target.value);
   }
   function handleSkillAdd2() {
-    console.log(lInputValue);
-    console.log(languageName);
+    // console.log(lInputValue);
+    // console.log(languageName);
     let arr = skillData.filter(
       (comp) =>
         comp.skillName === (sInputValue !== null ? sInputValue.skillName : "")
@@ -94,6 +103,7 @@ function CVForm() {
       };
       console.log(newSkill);
       setSkills([...skills, newSkill]);
+      setSkillOption(skillOption.filter((prop)=>prop.skillId!==skillId))
       setSkillId(null);
       setSName("");
       setSInputValue("");
@@ -102,7 +112,10 @@ function CVForm() {
     }
   }
   function handleSkilltDelete(id) {
-    setSkills(skills.filter((component) => component.id !== id));
+    let delReq = skills.filter((component) => component.cvSkillsId === id)
+    let newSkill = skillData.filter((prop)=>prop.skillId===delReq[0].skillId)
+    setSkills(skills.filter((component) => component.cvSkillsId !== id));
+    setSkillOption([...skillOption, newSkill[0]])
   }
   function handleCertificateAdd() {
     console.log(startDate);
@@ -111,9 +124,10 @@ function CVForm() {
       certificateName: Cname,
       organizationName: organize,
       dateEarned: startDate.toJSON(),
-      expirationDate: endDate!==null?endDate.toJSON():endDate,
+      expirationDate: endDate !== null ? endDate.toJSON() : endDate,
       description: detail,
       link: link,
+      isDeleted:false
     };
     console.log(newCert);
     if (Cname !== "" && organize !== "" && startDate !== null && link !== "") {
@@ -130,7 +144,7 @@ function CVForm() {
     }
   }
   function handleCertDelete(id) {
-    setCerts(certs.filter((component) => component.id !== id));
+    setCerts(certs.filter((component) => component.certificateId !== id));
   }
 
   // function handleLanguageAdd() {
@@ -173,19 +187,52 @@ function CVForm() {
     }
     setOpen(false);
   };
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    // dispatch({
-    //   type: "saga/getCreateCv",
-    //   payload:{
-    //     CvName: cvtitle,
-    //     Introduction: intro,
-    //     Education:education,
-    //     Experience: experience,
-    //     Skills:skills,
-    //     Certificates:certs,
-    //   }
-    // })
+    try {
+      setLoading(true);
+      dispatch({
+        type: "saga/getCreateCv",
+        payload:{
+          CvName: cvtitle,
+          Introduction: intro,
+          Education:education,
+          Experience: experience,
+          Skills:skills,
+          Certificates:certs,
+        }
+      })
+      // const formData = new FormData();
+      // formData.append("CvName", cvtitle);
+      // formData.append("Introduction", intro);
+      // formData.append("Education", education);
+      // formData.append("Experience", experience);
+      // formData.append("CvFile", pdf); // Make sure to provide the actual file here
+      // formData.append("CvPdf", null);
+      // formData.append("IsDeleted", false);
+      // formData.append("CandidateId", "daa3769b-5dd9-47f7-97de-f97e4e705971");
+      // formData.append("Cvid", "1f357759-6d1e-47e7-a04b-01a92e73c115");
+      // const response = await axios.post(
+      //   `https://leetun2k2-001-site1.gtempurl.com/api/Cv`,
+      //   formData
+      // );
+      // console.log("FINISHED!!!!!!!!!!!!");
+      // console.log(response);
+      // dispatch({
+      //   type: "saga/getCreateCv",
+      //   payload: {
+      //     CvName: cvtitle,
+      //     Introduction: intro,
+      //     Education: education,
+      //     Experience: experience,
+      //     Skills: skills,
+      //     Certificates: certs,
+      //   },
+      // });
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
     cleanStore(dispatch);
     navigate("/profile/:profileid/cv/:cvid");
   }
@@ -196,6 +243,7 @@ function CVForm() {
         <Grid item xs={12}>
           <CreateCv
             //////////Skill////////
+            skillOption={skillOption}
             setSkillId={setSkillId}
             intro={intro}
             setIntro={setIntro}
@@ -241,20 +289,26 @@ function CVForm() {
             handleClose={handleClose}
             handleSubmit={handleSubmit}
             // handleLanguageDelete={handleLanguageDelete}
-            lInputValue={lInputValue}
-            setLInputValue={setLInputValue}
-            setLanguageName={setLanguageName}
-            languageName={languageName}
-            setLanguageId={setLanguageId}
+            // lInputValue={lInputValue}
+            // setLInputValue={setLInputValue}
+            // setLanguageName={setLanguageName}
+            // languageName={languageName}
+            // setLanguageId={setLanguageId}
             // handleLanguageAdd={handleLanguageAdd}
             cvtitle={cvtitle}
             handleTitle={handleTitle}
             skillData={skillData}
             languageData={languageData}
+            // cvpfd
+            pdfFile={pdfFile}
+            setPdfFile={setPdfFile}
+            viewPdf={viewPdf}
+            setViewPdf={setViewPdf}
+            setPdf={setPdf}
           />
         </Grid>
       </Grid>
-      
+      {loading && <p>Loading...</p>}
     </>
   );
 }
