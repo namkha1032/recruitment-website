@@ -145,11 +145,25 @@ function* getDataForInterview(action) {
         }
         return newRoomObj
     })
+    // Get shift
+    const responseShiftList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Shift`)
+    let shiftList = responseShiftList.data.map((item) => {
+        let newShiftObj = {
+            shiftid: item.shiftId,
+            shiftstart: item.shiftTimeStart,
+            shiftend: item.shiftTimeEnd
+        }
+        return newShiftObj
+    })
+    shiftList.sort((a, b) => {
+        return a.shiftstart - b.shiftstart;
+    });
     // ---------------------------------
     yield put({ type: "application/setApplication", payload: appItem })
     yield put({ type: "interview/setInterview", payload: interviewList })
     yield put({ type: "interviewer/setInterviewer", payload: interviewerList })
     yield put({ type: "room/setRoom", payload: roomList })
+    yield put({ type: "shift/setShift", payload: shiftList })
 }
 function* applicationSaga() {
     yield all([

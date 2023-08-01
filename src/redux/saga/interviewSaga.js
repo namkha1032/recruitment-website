@@ -45,6 +45,8 @@ function* scoreInterview(action) {
 
 function* createInterview(action) {
     try {
+        const response1 = yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Interview/${action.payload.interview.applicationId}`, action.payload)
+        console.log("result: ", action.payload)
         // const response = yield call(axios.post, "http://localhost:3001/api/interview/error", action.payload)
         // throw {
         //     response: {
