@@ -11,7 +11,7 @@ export function filterPositionList(input, filter) {
         return input
     }
     else if (filter.status === null) {
-        return input.filter(element => element.departmentId === filter.departmentId)
+        return input.filter(element => element.department.departmentId === filter.departmentId)
     }
     else if (filter.departmentId === null) {
         if (filter.status === "Active") {
@@ -23,10 +23,10 @@ export function filterPositionList(input, filter) {
     }
     else {
         if (filter.status === "Active") {
-            return input.filter(element => element.isDeleted === false && element.departmentId === filter.departmentId)
+            return input.filter(element => element.isDeleted === false && element.department.departmentId === filter.departmentId)
         }
         else {
-            return input.filter(element => element.isDeleted === true && element.departmentId === filter.departmentId)
+            return input.filter(element => element.isDeleted === true && element.department.departmentId === filter.departmentId)
         }
     }
 }
