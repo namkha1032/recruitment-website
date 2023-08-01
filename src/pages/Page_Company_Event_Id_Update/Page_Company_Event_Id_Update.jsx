@@ -40,19 +40,25 @@ const Page_Company_Event_Id_Update = () => {
     const { eventid } = useParams();
     console.log('company event id for update: ', eventid);
 
-    // const dispatch = useDispatch();
-    // useEffect(() => {
-    //     dispatch({ type: "saga/getEvent", payload: eventid })
-    //     return () => {
-    //         cleanStore(dispatch)
-    //     }
-    // }, [])
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch({ type: "saga/getEvent", payload: eventid })
+        return () => {
+            cleanStore(dispatch)
+        }
+    }, [])
 
-    // const event = useSelector((state) => state.event)
+    const event = useSelector((state) => state.event)
+    console.log("XXXXX: ", event)
+
+    useEffect(() => {
+        setName(event ? event.eventName : "XYZT")
+        // setMaxQuantity()
+    }, [event])
 
 
     // useState
-    const [name, setName] = useState("");
+    const [name, setName] = useState("ABCD");
     const [maxQuantity, setMaxQuantity] = useState(null);
     const [location, setLocation] = useState(null);
 
@@ -75,6 +81,7 @@ const Page_Company_Event_Id_Update = () => {
 
     // handle events
     const handleName = (e) => {
+        console.log("XXXXX: ", e.target.value)
         setName(e.target.value);
     }
 
@@ -115,16 +122,11 @@ const Page_Company_Event_Id_Update = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(name);
-        console.log(maxQuantity);
-        console.log(location);
+        console.log("Output: ", name);
+    
 
-        console.log(content);
-        console.log(time);
-
-        console.log(image);
-
-        navigate("/company/event/:eventid");
+        
+        // navigate("/company/event/:eventid");
     }
 
     // const [fileName, setFileName] = useState(null)
@@ -173,7 +175,7 @@ const Page_Company_Event_Id_Update = () => {
                                         </InputAdornment>
                                     ),
                                 }}
-                                // value={name} 
+                                value={name} 
                             >
                             </TextField>
                         </Grid>
