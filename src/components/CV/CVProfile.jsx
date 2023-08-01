@@ -13,6 +13,7 @@ import {
   import {
     Box,
     Chip,
+    CircularProgress,
     Divider,
     Grid,
     Popover,
@@ -38,7 +39,7 @@ import {
   
     return (
       cv &&
-      candidate && (
+      candidate ? (
         <>
         <Box>
           <Grid container spacing={3}>
@@ -266,7 +267,7 @@ import {
           </Grid>
         </Box>
         </>
-      )
+      ): <Box sx={{display:'flex',justifyContent:'center'}}><CircularProgress color="secondary" /> </Box>  
     );
   };
   

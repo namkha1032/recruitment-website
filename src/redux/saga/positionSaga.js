@@ -12,6 +12,7 @@ function* getPositionList() {
   try {
     yield put({ type: "loading/onLoading" });
     // const response = yield call(axios.get, `${host.name}/data/positionList.json`)
+    // const response = yield call(axios.get, `${host.name}/data/positionList.json`)
     // yield put({ type: "positionList/setPositionList", payload: response.data });
     
     const response = yield call(

@@ -84,7 +84,7 @@ const Page_Recruitment = () => {
   };
   useEffect(() => {
     dispatch({ type: "saga/getPositionList" });
-    // dispatch({ type: "saga/getRequirement" });
+    dispatch({ type: "saga/getRequirement" });
     dispatch({ type: "saga/getSkill" });
   }, []);
   const handleCloseSelect = () => {
@@ -94,16 +94,18 @@ const Page_Recruitment = () => {
       positionList
     )
   }
-  console.log(positionList)
+  console.log(skill)
   const handleChangeSelect = (index) => {
     setSkillSelect(index)
     if (index !== -1) {
       setBlock('block')
+      console.log(positionList)
       const positionSkill = requirement.filter(
         (item) => item.skillId === skill[index].skillId
       );
+      console.log(positionSkill)
       const positionRequirement = positionList.filter((item) =>
-        positionSkill.filter((item1) => item1.positionId === item.positionId)
+        positionSkill.filter((item1) => item1.positionId === item.PositionId)
           .length === 0
           ? false
           : true
