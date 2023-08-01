@@ -11,14 +11,19 @@ function* getPositionList() {
   // const response = yield call(axios.get, `${host.name}/data/positionList.json`)
   try {
     yield put({ type: "loading/onLoading" });
-    const response = yield call(axios.get, `${host.name}/data/positionList.json`)
+    // const response = yield call(axios.get, `${host.name}/data/positionList.json`)
     // yield put({ type: "positionList/setPositionList", payload: response.data });
     
-    // const response = yield call(
-    //   axios.get,
-    //   "https://leetun2k2-001-site1.gtempurl.com/api/Position"
-    // );
-    const data = formatPositionList(response.data);
+    const response = yield call(
+      axios.get,
+      "https://leetun2k2-001-site1.gtempurl.com/api/Position"
+    );
+
+    const candidatesPosition = yield call(
+      axios.get,
+      "https://leetun2k2-001-site1.gtempurl.com/api/Application"
+    )
+    const data = formatPositionList(response.data, candidatesPosition.data);
     yield put({ type: "positionList/setPositionList", payload: data });
     yield put({ type: "loading/offLoading" });
     // yield put({
@@ -52,8 +57,12 @@ function* getPositionListWithFilter(action) {
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/Position"
     );
+    const candidatesPosition = yield call(
+      axios.get,
+      "https://leetun2k2-001-site1.gtempurl.com/api/Application"
+    )
     const draft = filterPositionList(response.data, action.payload);
-    const data = formatPositionList(draft);
+    const data = formatPositionList(draft, candidatesPosition.data);
     yield put({ type: "positionList/setPositionList", payload: data });
     yield put({ type: "loading/offLoading" });
     // yield put({
@@ -75,8 +84,15 @@ function* getPositionListWithFilter(action) {
 }
 
 function* updatePositionList(action) {
-  const response = yield call(axios.put, "", action.payload);
-  yield put({ type: "positionList/setPositionList", payload: response.data });
+  try {
+    const response = yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Position/${action.payload.id}`, action.payload.value);
+    yield call(getPositionList)
+  }
+  catch (error) {
+
+  }
+  
+  // yield put({ type: "positionList/setPositionList", payload: response.data });
 }
 
 function* getPosition(action) {

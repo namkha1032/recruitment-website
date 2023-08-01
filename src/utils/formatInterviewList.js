@@ -60,10 +60,51 @@
 //     "roomId": "00000000-0000-0000-0000-000000000001",
 //     "roomName": "F1-Yale"
 //   },
-
+// {
+//     "recruiterId": "13b849af-bea9-49a4-a9e4-316d13b3a08a",
+//     "userId": "f95c92e2-20b3-43e2-80f1-91e1c8e2090a",
+//     "departmentId": "00000000-0000-0000-0000-000000000001",
+//     "user": {
+//       "id": "f95c92e2-20b3-43e2-80f1-91e1c8e2090a",
+//       "fullName": "team_FE",
+//       "dateOfBirth": "0001-01-01T00:00:00",
+//       "imageURL": null,
+//       "userName": "recruiter1",
+//       "email": "recruiter1@example.com"
+//     },
+//     "isDeleted": false
+//   }
+// interviewers: {
+//     "interviewerId": "24cbb8bd-9194-46c0-a15a-520d7ba84046",
+//     "userId": "3c6159f6-35b2-47e1-a758-d0dccd1796b7",
+//     "departmentId": "00000000-0000-0000-0000-000000000001",
+//     "user": {
+//       "id": "3c6159f6-35b2-47e1-a758-d0dccd1796b7",
+//       "fullName": "team4",
+//       "dateOfBirth": "0001-01-01T00:00:00",
+//       "imageURL": null,
+//       "userName": "interviewer1",
+//       "email": "interviewer1@example.com"
+//     },
+//     "isDeleted": false
+//   }
+// candidates: {
+//     "candidateId": "e7a70c01-ece1-43fe-883f-2018e75fc2a0",
+//     "userId": "e669407a-193c-4d36-8790-def94fb5660a",
+//     "experience": "",
+//     "isDeleted": false,
+//     "user": {
+//       "id": "e669407a-193c-4d36-8790-def94fb5660a",
+//       "fullName": "Chad Giga",
+//       "dateOfBirth": "0001-01-01T00:00:00",
+//       "imageURL": null,
+//       "userName": "gigachad1",
+//       "email": "gigachad@example.com"
+//     }
+//   },
 import { formatDate } from "./formatDate"
 
-export function formatInterviewList(input, applications, itrsinterviews, rooms, shifts) {
+export function formatInterviewList(input, applications, itrsinterviews, rooms, shifts, recruiters, interviewers, candidates) {
     for (let i = 0; i < input.length; i++) {
         for (let j = 0; j < applications.length; j++) {
             if (input[i].applicationId === applications[j].applicationId) {
@@ -108,15 +149,45 @@ export function formatInterviewList(input, applications, itrsinterviews, rooms, 
             }
         }
     }
+    // for (let i = 0; i < input.length; i++) {
+    //     for (let j = 0; j < recruiters.length; j++) {
+    //         if (input[i].recruiterId === recruiters[j].recruiterId) {
+    //             input[i] = {
+    //                 ...input[i],
+    //                 recruiterName: recruiters[j].user.fullName,
+    //             }
+    //         }
+    //     }
+    // }
     // console.log(input)
+    for (let i = 0; i < input.length; i++) {
+        for (let j = 0; j < interviewers.length; j++) {
+            if (input[i].interviewerId === interviewers[j].interviewerId) {
+                input[i] = {
+                    ...input[i],
+                    interviewerName: interviewers[j].user.fullName,
+                }
+            }
+        }
+    }
+    for (let i = 0; i < input.length; i++) {
+        for (let j = 0; j < candidates.length; j++) {
+            if (input[i].candidateId === candidates[j].candidateId) {
+                input[i] = {
+                    ...input[i],
+                    candidateName: candidates[j].user.fullName,
+                }
+            }
+        }
+    }
     const output = input.map((element) => {
         return {
             InterviewId: element.interviewId,
-            InterviewerName: "CONG PHAM QUOC VIET",
+            InterviewerName: element.interviewerName,
             InterviewerId: element.interviewerId,
-            CandidateName: "CAO TRAN ANH KHOA",
+            CandidateName: element.candidateName,
             CandidateId: element.candidateId,
-            StartTime: formatDate(element.dateInterview),
+            StartTime: element.dateInterview,
             Shift: element.shiftTimeStart,
             Room: element.roomName,
             Status: element.candidate_Status,

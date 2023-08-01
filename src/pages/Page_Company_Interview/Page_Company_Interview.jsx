@@ -34,6 +34,7 @@ import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { formatDate } from "../../utils/formatDate";
 
 // JSON <- InterviewList
 // {
@@ -306,6 +307,7 @@ export default function Page_Company_Interview() {
       flex: 0.4,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
+        return formatDate(params.value)
       },
     },
     {

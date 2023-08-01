@@ -1,7 +1,7 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, List, ListItem } from "@mui/material";
 import TroubleshootRoundedIcon from '@mui/icons-material/TroubleshootRounded';
 
-export default function ReportStatistic() {
+export default function ReportStatistic(props) {
     return (
         <Box sx={{
             border: "1px solid gray",
@@ -24,6 +24,37 @@ export default function ReportStatistic() {
                     }}>Statistic</Box>
                     
                 </Grid>
+                <List>
+                    <ListItem>
+                        <Box>Applied Total:</Box>
+                        <Box sx={{
+                            marginLeft: 1,
+                            fontWeight: 600
+                        }}>{props.data.AppliedTotal}</Box>
+                    </ListItem>
+                    <ListItem>
+                        <Box>Average:</Box>
+                        <Box sx={{
+                            marginLeft: 1,
+                            fontWeight: 600
+                        }}>{props.data.Average}</Box>
+                    </ListItem>
+                    <ListItem>
+                        <Box>Median:</Box>
+                        <Box sx={{
+                            marginLeft: 1,
+                            fontWeight: 600
+                        }}>{props.data.Median}</Box>
+                    </ListItem>
+                    <ListItem>
+                        <Box>Mode:</Box>
+                        <Box sx={{
+                            marginLeft: 1,
+                            fontWeight: 600
+                        }}>{props.data.Mode}</Box>
+                    </ListItem>
+                    
+                </List>
 
             </Grid>
             

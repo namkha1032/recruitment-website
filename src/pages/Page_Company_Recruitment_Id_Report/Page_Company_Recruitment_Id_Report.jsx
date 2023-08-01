@@ -48,6 +48,13 @@ import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 //    "SoftScore":....,
 // }
 
+const data = {
+  AppliedTotal: 835,
+  Average: 8.89,
+  Median: 6.5,
+  Mode: 8,
+}
+
 export default function Page_Company_Recruitment_Id_Report(props) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -359,7 +366,9 @@ export default function Page_Company_Recruitment_Id_Report(props) {
                   <ReportGraph />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <ReportStatistic />
+                  <ReportStatistic 
+                    data={data}
+                  />
                 </Grid>
               </Grid>
             </Box>
