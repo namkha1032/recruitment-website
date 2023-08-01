@@ -48,11 +48,11 @@ const DateTimePicker = (props) => {
                     }
                 }} label="Choose a date" value={chosenDate} onChange={(newValue) => {
                     let newDate = new Date(newValue.$d)
-                    const year = newDate.toLocaleString('default', { year: 'numeric' });
-                    const month = newDate.toLocaleString('default', { month: '2-digit' });
-                    const day = newDate.toLocaleString('default', { day: '2-digit' });
-                    newDate = year + "-" + month + "-" + day
-                    setChosenDate(newDate)
+                    // const year = newDate.toLocaleString('default', { year: 'numeric' });
+                    // const month = newDate.toLocaleString('default', { month: '2-digit' });
+                    // const day = newDate.toLocaleString('default', { day: '2-digit' });
+                    // newDate = year + "-" + month + "-" + day
+                    setChosenDate(newDate.toJSON())
                     setChosenShift(null)
                 }} />
             </Box>

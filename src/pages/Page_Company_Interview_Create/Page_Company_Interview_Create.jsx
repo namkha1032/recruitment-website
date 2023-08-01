@@ -71,10 +71,7 @@ const Page_Company_Interview_Create = () => {
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     // fetch Data
     useEffect(() => {
-        dispatch({ type: "saga/getApplicationForCreatingInterview", payload: applicationid })
-        dispatch({ type: "saga/getUpcomingInterview" })
-        dispatch({ type: "saga/getDepartmentInterviewer" })
-        dispatch({ type: "saga/getRoom" })
+        dispatch({ type: "saga/getDataForInterview", payload: applicationid })
         dispatch({ type: "saga/getShift" })
         // return () => {
         //     dispatch({ type: "interview/setInterview", payload: null })
