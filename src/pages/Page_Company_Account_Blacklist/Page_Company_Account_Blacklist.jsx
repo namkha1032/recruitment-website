@@ -5,7 +5,8 @@ import {
     InputAdornment, InputLabel,
     MenuItem,
     Select, TextField,
-    Typography
+    Typography,
+    CircularProgress
 } from "@mui/material"
 import {DataGrid, GridAddIcon, GridSearchIcon, GridToolbar, GridToolbarQuickFilter} from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -31,9 +32,17 @@ import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import candidateNames from '../Page_Company_Account/candidateNames.json'
 
-
-const RenderStatusButton = ({params}) => {
+const RenderCheckAccount = ({params}) => {
     const [open, setOpen] = React.useState(false);
+    const handleGoToAccount = () => {
+        const candidateId = params.row.candidateId;
+        window.location.href = `/profile/${candidateId}`;
+        console.log(candidateId)
+        setOpen(false);
+    };
+
+// rest of the component code
+
     return (
         <strong>
             <IconButton color="#000000" aria-label="Show Status" size="large"
@@ -60,12 +69,12 @@ const RenderStatusButton = ({params}) => {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         Blacklist ID: {params.row.blackListId}<br/>
+                        Candidate ID: {params.row.candidateId}<br/>
+                        User ID: {params.row.userId}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={()=>{
-                        setOpen(false)
-                    }}>Go To Account</Button>
+                    <Button onClick={handleGoToAccount}>Go To Account</Button>
                     <Button onClick={()=>{
                         setOpen(false)
                     }}>Close</Button>
@@ -119,7 +128,7 @@ const Page_Company_Account_Blacklist = () => {
             headerName: "Check Info",
             flex: 0.2,
             renderCell: (params)=>{
-                return(<RenderStatusButton params={params} />)
+                return(<RenderCheckAccount params={params} />)
             },
         },
     ];
