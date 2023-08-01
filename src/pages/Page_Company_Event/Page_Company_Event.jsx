@@ -37,6 +37,7 @@ import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { formatDatetime } from "../../utils/formatDate";
 
 // JSON <- Event
 // {
@@ -191,28 +192,41 @@ export default function Page_Company_Event() {
         );
       },
     },
+    // {
+    //   field: "CreatedByName",
+    //   type: "string",
+    //   headerAlign: "center",
+    //   align: "center",
+    //   flex: 0.5,
+    //   minWidth: 180,
+    //   renderHeader: () => <span>Created by</span>,
+    //   renderCell: (params) => {
+    //     if (params.value === undefined) return NullString();
+    //     return (
+    //       <Box
+    //         sx={{
+    //           "&:hover": {
+    //             cursor: "pointer",
+    //             textDecoration: "underline",
+    //           },
+    //         }}
+    //       >
+    //         {params.value}
+    //       </Box>
+    //     );
+    //   },
+    // },
     {
-      field: "CreatedByName",
+      field: "EventDateTime",
       type: "string",
       headerAlign: "center",
       align: "center",
       flex: 0.5,
       minWidth: 180,
-      renderHeader: () => <span>Created by</span>,
+      renderHeader: () => <span>Date</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
-        return (
-          <Box
-            sx={{
-              "&:hover": {
-                cursor: "pointer",
-                textDecoration: "underline",
-              },
-            }}
-          >
-            {params.value}
-          </Box>
-        );
+        return formatDatetime(params.value)
       },
     },
     {
@@ -530,6 +544,7 @@ export default function Page_Company_Event() {
               disableColumnFilter
               disableColumnSelector
               disableDensitySelector
+              disableRowSelectionOnClick
               pagination
               pageSizeOptions={[5, 10, 25, 50, 100]}
               initialState={{

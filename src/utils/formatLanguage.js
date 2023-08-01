@@ -26,5 +26,11 @@ export function formatLanguage(input, categorys) {
     else if (input.slice(0,5) === "$ger$") {
         return "German"
     }
+    else if (input.slice(0,5) === "$por$") {
+        return "Portuguese"
+    }
+    else if (input.slice(0,5) === "$ita$") {
+        return "Italian"
+    }
     return "xxx"
 }

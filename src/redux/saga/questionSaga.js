@@ -297,6 +297,7 @@ function* putQuestion(action) {
           categoryQuestionId: ques_draft.CategoryId,
         }
       );
+      
       if (ques_draft.CategoryId === techId.data[0].categoryQuestionId) {
         const ques = yield call(
           axios.post,
@@ -307,7 +308,7 @@ function* putQuestion(action) {
           }
         );
       }
-      else if (ques_old.data.categoryQuestionId === techId.data[0].categoryQuestionId) {
+      else if (ques_old.data[0].categoryQuestionId === techId.data[0].categoryQuestionId) {
         const questionSkills = yield call(
           axios.get,
           "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill"

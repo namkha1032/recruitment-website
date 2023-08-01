@@ -5,9 +5,9 @@ export function filterEventList(input, filter) {
         return input
     }
     else if (filter.status === "Finished") {
-        return input.filter(element => element.isDeleted === true)
+        return input.filter(element => element.Status === true)
     }
     else {
-        return input.filter(element => element.isDeleted === false)
+        return input.filter(element => element.Status === false)
     }
 }

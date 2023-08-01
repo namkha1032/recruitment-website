@@ -31,16 +31,19 @@ import GigaCard from "../GigaCard/GigaCard";
 import useGetRole from "../../hooks/useGetRole";
 import ProfileHistory from "./ProfileHistory/ProfileHistory";
 import CVProfile from "../CV/CVProfile";
+import { useParams } from "react-router-dom/dist";
 
 const ProfileMain = ({ page }) => {
   const navigate = useNavigate();
   const role = useGetRole();
-  const [history ,setHistory] = useState(null)
+  const {profileid} = useParams()
   const positionList = useSelector((state) => state.positionList);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const profile = useSelector(state => state.profile)
+  const userId = useSelector(state => state.user.userid)
   useEffect(() => {
-    // dispatch({ type: "saga/getPositionList" });
+    dispatch({ type: "saga/getPositionList" });
+    dispatch({ type: "saga/getProfile" });
   }, []);
   const handleClickChangePW = () => {
     if (page !== "ChangePW") navigate("/profile/1/changepassword");
@@ -57,10 +60,10 @@ const ProfileMain = ({ page }) => {
 
 
   return (
-    user && (
+    profile && (
       <Container>
         <Box sx={{ paddingTop: "40px", paddingBottom: "20px" }}>
-          <ProfileHeader id={user.cvselected} userName={user.name} />
+          <ProfileHeader profile={profile} />
         </Box>
         <Grid container spacing={3}>
           <Grid item md={3} xs={12} position='relative' pb={3}>
@@ -85,7 +88,9 @@ const ProfileMain = ({ page }) => {
                       </ListItemIcon>
                       <ListItemText primary="Profile" />
                     </ListItemButton>
-                    <ListItemButton
+                    
+                    
+                   {profileid === userId && <ListItemButton
                       selected={page === "ChangePW"}
                       onClick={handleClickChangePW}
                     >
@@ -93,7 +98,7 @@ const ProfileMain = ({ page }) => {
                         <Key />
                       </ListItemIcon>
                       <ListItemText primary="Change Password" />
-                    </ListItemButton>
+                    </ListItemButton>}
                     {/*<ListItemButton
                     selected={page === "History"}
                       onClick={handleClickHistory}
@@ -114,12 +119,12 @@ const ProfileMain = ({ page }) => {
           {page === "Profile" && (
               <Box>
                 <Box sx={{ mb: "24px" }}>
-                <ProfileInfo cvid={user.cvselected} user={user} />
+                <ProfileInfo profile={profile} />
                 </Box>
                 {role === "candidate" && (
                   
                       <Box >
-                        <CVProfile cvid={user.cvselected} page="Profile"/>
+                        <CVProfile cvid={profile.cvselected} page="Profile"/>
                       
                   </Box>
                 )}

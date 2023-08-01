@@ -70,6 +70,7 @@ export default function Page_Company_Question() {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
   const isSm = useMediaQuery(theme.breakpoints.down("md"));
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
