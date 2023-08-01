@@ -289,45 +289,45 @@ function CVForm() {
   };
   async function handleSubmit(e) {
     e.preventDefault();
-    try {
-      // setLoading(true);
-      // const formData = new FormData();
-      // formData.append("Cvid", "d1c51600-6272-4c78-9b50-36af9d403a28");
-      // formData.append("CandidateId", "00000000-0000-0000-0000-000000000001");
-      // formData.append("Experience", experience);
-      // formData.append("CvPdf", null);
-      // formData.append("CvFile", pdf);
-      // formData.append("CvName", cvtitle);
-      // formData.append("Introduction", intro);
-      // formData.append("Education", education);
-      // formData.append("IsDeleted", false);
+    // try {
+    //   // setLoading(true);
+    //   // const formData = new FormData();
+    //   // formData.append("Cvid", "d1c51600-6272-4c78-9b50-36af9d403a28");
+    //   // formData.append("CandidateId", "00000000-0000-0000-0000-000000000001");
+    //   // formData.append("Experience", experience);
+    //   // formData.append("CvPdf", null);
+    //   // formData.append("CvFile", pdf);
+    //   // formData.append("CvName", cvtitle);
+    //   // formData.append("Introduction", intro);
+    //   // formData.append("Education", education);
+    //   // formData.append("IsDeleted", false);
 
-      // const response = await axios.put(
-      //   `https://leetun2k2-001-site1.gtempurl.com/api/Cv/d1c51600-6272-4c78-9b50-36af9d403a28`,
-      //   formData
-      // );
-      // console.log("FINISHED!!!!!!!!!!!!");
-      // console.log(response);
-      dispatch({
-        type: "saga/getUpdateCv",
-        payload: {
-          Cvid: "d1c51600-6272-4c78-9b50-36af9d403a28",
-          CvName: cvtitle,
-          Introduction: intro,
-          Education:education,
-          Experience: experience,
-          Skills: skills,
-          delSkills: delSkills,
-          addSkills: addSkills,
-          Certificates: certs,
-          delCerts: delCerts,
-          addCerts: addCerts,
-        },
-      });
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
+    //   // const response = await axios.put(
+    //   //   `https://leetun2k2-001-site1.gtempurl.com/api/Cv/d1c51600-6272-4c78-9b50-36af9d403a28`,
+    //   //   formData
+    //   // );
+    //   // console.log("FINISHED!!!!!!!!!!!!");
+    //   // console.log(response);
+    //   dispatch({
+    //     type: "saga/getUpdateCv",
+    //     payload: {
+    //       Cvid: "d1c51600-6272-4c78-9b50-36af9d403a28",
+    //       CvName: cvtitle,
+    //       Introduction: intro,
+    //       Education:education,
+    //       Experience: experience,
+    //       Skills: skills,
+    //       delSkills: delSkills,
+    //       addSkills: addSkills,
+    //       Certificates: certs,
+    //       delCerts: delCerts,
+    //       addCerts: addCerts,
+    //     },
+    //   });
+    //   setLoading(false);
+    // } catch (error) {
+    //   console.log(error);
+    // }
     cleanStore(dispatch);
     navigate("/profile/:profileid/cv/:cvid");
   }
