@@ -73,7 +73,7 @@ function* doGetBlacklist(action){
         const config = {
             headers: { Authorization: token },
         }
-        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Admin/AccountBlacklist`,config);
+        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Blacklist`,config);
         yield put({type:"admin/getBlacklist",payload: res.data})
     }
     catch (error) {
