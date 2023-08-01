@@ -52,6 +52,8 @@ function RecruitForm() {
   );
   const [languages, setLanguages] = useState("");
   const [skill, setSkill] = useState([]);
+  const [skillData, setSkillData] = useState([]);
+
   const [language, setLanguage] = useState([]);
   const [department, setDepartment] = useState([]);
   const [requirement, setRequirement] = useState([]);
@@ -72,9 +74,10 @@ function RecruitForm() {
     }
     if (skillList) {
       setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
+      setSkillData(skillList ? (skillList !== [] ? skillList : []) : []);
     }
   }, [departmentList, skillList, languageList]);
-
+  
   useEffect(() => {
     if (positionInfor) {
       setRName(
@@ -142,16 +145,19 @@ function RecruitForm() {
       setRequirement(
         positionRequire ? (positionRequire !== [] ? positionRequire : []) : []
       );
+      setSkill(skillData.filter(
+        (item1) => !positionRequire.some((item2) => item1.skillId === item2.skillId)
+      ))
       setBaseRequire(
         positionRequire ? (positionRequire !== [] ? positionRequire : []) : []
       );
     }
-  }, [positionRequire]);
-
+  }, [positionRequire,skillData]);
+  console.log(requirement);
   const departments = department.filter(
     (comp) => comp.departmentId === departmentChoose
   );
-
+  console.log(skill)
   // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
   // const [status, setStatus] = useState(recruitInfo.status);
 
@@ -229,6 +235,7 @@ function RecruitForm() {
       console.log(newRequire);
       setRequirement([...requirement, newRequire]);
       setAddRequire([...addRequire, newRequire]);
+      setSkill(skill.filter((prop)=>prop.skillId!==skillId))
       setSkillName("");
       setSkillId(null);
       setRId((prev) => (prev += 1));
@@ -237,14 +244,19 @@ function RecruitForm() {
       setInputValue("");
     }
   }
-  console.log(requirement)
-  console.log(delRequire)
-  console.log(addRequire)
+  console.log(requirement);
+  console.log(delRequire);
+  console.log(addRequire);
   function handleRequirementDelete(id) {
+    let delReq = requirement.filter((component) => component.requirementId === id)
+    let newSkill = skillData.filter((prop)=>prop.skillId===delReq[0].skillId)
+    setSkill([...skill, newSkill[0]])
     setRequirement(
       requirement.filter((component) => component.requirementId !== id)
     );
-    let delRequirement = baseRequire.filter((prop) => prop.requirementId === id);
+    let delRequirement = baseRequire.filter(
+      (prop) => prop.requirementId === id
+    );
     console.log(delRequirement);
     if (delRequirement[0]) {
       console.log("add delete");
@@ -294,8 +306,8 @@ function RecruitForm() {
           languageId: languages,
           recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
           requirement: requirement,
-          delRequire:delRequire,
-          addRequire:addRequire,
+          delRequire: delRequire,
+          addRequire: addRequire,
         },
       });
     } catch (error) {
@@ -406,7 +418,8 @@ function RecruitForm() {
                       setExperience={setExperience}
                       note={note}
                       setNote={setNote}
-                      skill={skill}
+                      skill={skillData}
+                      SkillOption={skill}
                       setSkillName={setSkillName}
                       skillName={skillName}
                       setSkillId={setSkillId}

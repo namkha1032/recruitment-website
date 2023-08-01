@@ -30,7 +30,10 @@ function RecruitForm() {
   const skillList = useSelector((state) => state.skill);
   const languageList = useSelector((state) => state.language);
   const departmentList = useSelector((state) => state.department);
+  // Skill data
   const [skill, setSkill] = useState([]);
+  const [skillData, setSkillData]= useState([]);
+
   const [language, setLanguage] = useState([]);
   const [department, setDepartment] = useState([]);
   useEffect(() => {
@@ -46,6 +49,7 @@ function RecruitForm() {
     }
     if (skillList) {
       setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
+      setSkillData(skillList ? (skillList !== [] ? skillList : []) : []);
     }
   }, [departmentList, skillList, languageList]);
   // Recruiment comps
@@ -109,6 +113,8 @@ function RecruitForm() {
       // setDepartmentWeb(arr[0].departmentWebsite);
     }
   };
+  console.log(skill)
+  console.log(skillData)
   function handleRname(e) {
     setRName(e.target.value);
   }
@@ -148,6 +154,7 @@ function RecruitForm() {
       };
       console.log(newRequire);
       setRequirement([...requirement, newRequire]);
+      setSkill(skill.filter((prop)=>prop.skillId!==skillId))
       setSkillName("");
       setSkillId(null);
       setRId((prev) => (prev += 1));
@@ -157,7 +164,11 @@ function RecruitForm() {
     }
   }
   function handleRequirementDelete(id) {
+    let delReq = requirement.filter((component) => component.requirementId === id)
+    let newSkill = skillData.filter((prop)=>prop.skillId===delReq[0].skillId)
     setRequirement(requirement.filter((component) => component.requirementId !== id));
+    
+    setSkill([...skill, newSkill[0]])
   }
 
   // function handleLanguageAdd() {

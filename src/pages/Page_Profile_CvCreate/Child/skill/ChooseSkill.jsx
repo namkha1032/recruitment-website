@@ -95,7 +95,7 @@ export default function ChooseSkill(prop) {
               clearOnBlur
               handleHomeEndKeys
               id="free-solo-with-text-demo"
-              options={prop.skillData}
+              options={prop.skillOption}
               getOptionLabel={(option) => {
                 if (typeof option === "string") {
                   return option;

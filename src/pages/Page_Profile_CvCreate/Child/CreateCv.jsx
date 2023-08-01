@@ -106,6 +106,7 @@ const CreateCv = (prop) => {
                     ) : activeStep === 1 ? (
                       <Grid item xs={12}>
                         <CvStep2
+                          skillOption={prop.skillOption}
                           sInputValue={prop.sInputValue}
                           setSInputValue={prop.setSInputValue}
                           setSkillId={prop.setSkillId}
@@ -216,13 +217,13 @@ const CreateCv = (prop) => {
         <Box className={`CVForm InputForm`}>
           <Grid item xs={12}>
             {/* <GigaCard> */}
-              <UploadPdf
-                pdfFile={prop.pdfFile}
-                setPdfFile={prop.setPdfFile}
-                viewPdf={prop.viewPdf}
-                setViewPdf={prop.setViewPdf}
-                setPdf={prop.setPdf}
-              />
+            <UploadPdf
+              pdfFile={prop.pdfFile}
+              setPdfFile={prop.setPdfFile}
+              viewPdf={prop.viewPdf}
+              setViewPdf={prop.setViewPdf}
+              setPdf={prop.setPdf}
+            />
             {/* </GigaCard> */}
           </Grid>
         </Box>

@@ -33,7 +33,7 @@ const SmallUlList = (comp) => {
   }, [open]);
   return (
     <>
-      <Card key={comp.comp.id} sx={{ maxWidth: 200 }}>
+      <Card key={comp.comp.id} sx={{minWidth:120, maxWidth: 200 }}>
         <CardContent>
           <Typography sx={{ fontSize: 20 }}>{comp.comp.certificateName}</Typography>
           <Typography sx={{ fontSize: 20 }}>{comp.comp.organizationName}</Typography>

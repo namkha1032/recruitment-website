@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import cvinfo from "./CvData";
+// import cvinfo from "./CvData";
 import CreateCv from "./CreateCv";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import cleanStore from "../../../utils/cleanStore";
-import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
-import axios from "axios";
+// import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
+// import axios from "axios";
 
 // import ViewCv from "./ViewCv";
 function CVForm() {
@@ -25,7 +25,8 @@ function CVForm() {
   const skillList = useSelector((state) => state.skill);
   const languageList = useSelector((state) => state.language);
 
-  const [skillData, setSkill] = useState([]);
+  const [skillData, setSkillData] = useState([]);
+  const [skillOption, setSkillOption] = useState([]);
   const [languageData, setLanguage] = useState([]);
   useEffect(() => {
     if (languageList) {
@@ -34,7 +35,8 @@ function CVForm() {
       );
     }
     if (skillList) {
-      setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
+      setSkillData(skillList ? (skillList !== [] ? skillList : []) : []);
+      setSkillOption(skillList ? (skillList !== [] ? skillList : []) : []);
     }
   }, [skillList, languageList]);
   const [loading, setLoading] = useState(false);
@@ -60,10 +62,10 @@ function CVForm() {
   const [SExp, setSExp] = useState("");
   const [sInputValue, setSInputValue] = useState("");
   // Language comps
-  const [lId, setLId] = useState(0);
-  const [languageId, setLanguageId] = useState(null);
-  const [languageName, setLanguageName] = useState("");
-  const [lInputValue, setLInputValue] = useState("");
+  // const [lId, setLId] = useState(0);
+  // const [languageId, setLanguageId] = useState(null);
+  // const [languageName, setLanguageName] = useState("");
+  // const [lInputValue, setLInputValue] = useState("");
   // PDF
   const [pdfFile, setPdfFile] = useState(null);
   const [viewPdf, setViewPdf] = useState(null);
@@ -80,8 +82,8 @@ function CVForm() {
     setExperience(e.target.value);
   }
   function handleSkillAdd2() {
-    console.log(lInputValue);
-    console.log(languageName);
+    // console.log(lInputValue);
+    // console.log(languageName);
     let arr = skillData.filter(
       (comp) =>
         comp.skillName === (sInputValue !== null ? sInputValue.skillName : "")
@@ -101,6 +103,7 @@ function CVForm() {
       };
       console.log(newSkill);
       setSkills([...skills, newSkill]);
+      setSkillOption(skillOption.filter((prop)=>prop.skillId!==skillId))
       setSkillId(null);
       setSName("");
       setSInputValue("");
@@ -109,7 +112,10 @@ function CVForm() {
     }
   }
   function handleSkilltDelete(id) {
+    let delReq = skills.filter((component) => component.cvSkillsId === id)
+    let newSkill = skillData.filter((prop)=>prop.skillId===delReq[0].skillId)
     setSkills(skills.filter((component) => component.cvSkillsId !== id));
+    setSkillOption([...skillOption, newSkill[0]])
   }
   function handleCertificateAdd() {
     console.log(startDate);
@@ -228,7 +234,7 @@ function CVForm() {
       console.log(error);
     }
     cleanStore(dispatch);
-    // navigate("/profile/:profileid/cv/:cvid");
+    navigate("/profile/:profileid/cv/:cvid");
   }
   //COMPS
   return (
@@ -237,6 +243,7 @@ function CVForm() {
         <Grid item xs={12}>
           <CreateCv
             //////////Skill////////
+            skillOption={skillOption}
             setSkillId={setSkillId}
             intro={intro}
             setIntro={setIntro}
@@ -282,11 +289,11 @@ function CVForm() {
             handleClose={handleClose}
             handleSubmit={handleSubmit}
             // handleLanguageDelete={handleLanguageDelete}
-            lInputValue={lInputValue}
-            setLInputValue={setLInputValue}
-            setLanguageName={setLanguageName}
-            languageName={languageName}
-            setLanguageId={setLanguageId}
+            // lInputValue={lInputValue}
+            // setLInputValue={setLInputValue}
+            // setLanguageName={setLanguageName}
+            // languageName={languageName}
+            // setLanguageId={setLanguageId}
             // handleLanguageAdd={handleLanguageAdd}
             cvtitle={cvtitle}
             handleTitle={handleTitle}

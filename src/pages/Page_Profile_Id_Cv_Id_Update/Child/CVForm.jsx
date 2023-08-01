@@ -31,7 +31,8 @@ function CVForm() {
   const cvSkill = useSelector((state) => state.cvHasSkill);
   const cvCertificate = useSelector((state) => state.cvHasCertificate);
 
-  const [skillData, setSkill] = useState([]);
+  const [skillData, setSkillData] = useState([]);
+  const [skillOption, setSkillOption] = useState([]);
   const [languageData, setLanguage] = useState([]);
   useEffect(() => {
     if (languageList) {
@@ -40,7 +41,7 @@ function CVForm() {
       );
     }
     if (skillList) {
-      setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
+      setSkillData(skillList ? (skillList !== [] ? skillList : []) : []);
     }
   }, [skillList, languageList]);
   const [loading, setLoading] = useState(false);
@@ -104,8 +105,11 @@ function CVForm() {
     if (cvSkill) {
       setSkills(cvSkill ? (cvSkill !== [] ? cvSkill : []) : []);
       setBaseSkills(cvSkill ? (cvSkill !== [] ? cvSkill : []) : []);
+      setSkillOption(skillData.filter(
+        (item1) => !cvSkill.some((item2) => item1.skillId === item2.skillId)
+      ))
     }
-  }, [cvSkill]);
+  }, [cvSkill,skillData]);
 
   // CERTIFICATE COMPS
   const [Cid, setCid] = useState(certs.length > 0 ? certs.length : 0);
@@ -180,6 +184,7 @@ function CVForm() {
       console.log(newSkill);
       setSkills([...skills, newSkill]);
       setAddSkills([...addSkills, newSkill]);
+      setSkillOption(skillOption.filter((prop)=>prop.skillId!==skillId))
       setSkillId(null);
       setSName("");
       setSInputValue("");
@@ -188,6 +193,9 @@ function CVForm() {
     }
   }
   function handleSkilltDelete(id) {
+    let delReq = skills.filter((component) => component.cvSkillsId === id)
+    let newSkill = skillData.filter((prop)=>prop.skillId===delReq[0].skillId)
+    setSkillOption([...skillOption, newSkill[0]])
     setSkills(skills.filter((component) => component.cvSkillsId !== id));
     let delskill = baseSkills.filter((prop) => prop.cvSkillsId === id);
     console.log(delskill);
@@ -204,6 +212,7 @@ function CVForm() {
   console.log(delSkills);
   function handleCertificateAdd() {
     console.log(startDate);
+    if (Cname !== "" && organize !== "" && startDate !== null && link !== "") {
     const newCert = {
       certificateId: Cid,
       certificateName: Cname,
@@ -216,7 +225,7 @@ function CVForm() {
       isDeleted:false,
     };
     console.log(newCert);
-    if (Cname !== "" && organize !== "" && startDate !== null && link !== "") {
+    
       setCerts([...certs, newCert]);
       setAddCerts([...addCerts, newCert]);
       setCName("");
@@ -338,6 +347,7 @@ function CVForm() {
         <Grid item xs={12}>
           <CreateCv
             //////////Skill////////
+            skillOption={skillOption}
             setSkillId={setSkillId}
             intro={intro}
             setIntro={setIntro}

@@ -5,7 +5,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ChooseSkill from "./skill/ChooseSkill";
 import CompHeader from "./compHeader";
-import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
+import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 
 function CvStep2(prop) {
   console.log(prop.skills);
@@ -15,6 +15,7 @@ function CvStep2(prop) {
         <Grid container spacing={0} justifyContent="center" alignItems="center">
           <Grid item xs={12}>
             <ChooseSkill
+              skillOption={prop.skillOption}
               sInputValue={prop.sInputValue}
               setSInputValue={prop.setSInputValue}
               skillData={prop.skillData}
@@ -31,11 +32,13 @@ function CvStep2(prop) {
           </Grid>
 
           <Grid item xs={12}>
-            <Box sx={{width: "98%", margin: "auto",}}>
-              <CompHeader headerIcon={<WorkHistoryIcon/>}>Work Experience</CompHeader>
+            <Box sx={{ width: "98%", margin: "auto" }}>
+              <CompHeader headerIcon={<WorkHistoryIcon />}>
+                Work Experience
+              </CompHeader>
               <ReactQuill
                 theme="snow"
-                style={{ height: "200px", marginTop:"8px"}}
+                style={{ height: "200px", marginTop: "8px" }}
                 value={prop.experience}
                 onChange={prop.setExperience}
                 className="QuillCss"
