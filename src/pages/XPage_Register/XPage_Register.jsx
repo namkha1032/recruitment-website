@@ -47,6 +47,7 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/;
 
 const XPage_Register = () => {
   const navigate = useNavigate();
+  const [fullName, setFullName] = useState("Bao");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -128,6 +129,7 @@ const XPage_Register = () => {
       dispatch({
         type: "saga/userRegister",
         payload: {
+          fullNam: fullName,
           username: username,
           email: email,
           password: password,
@@ -249,9 +251,6 @@ const XPage_Register = () => {
                       justifyContent: "center",
                       alignItems: "center",
                       marginBottom: "5px",
-
-                      /* borderBottom: '2px solid red',
-                                    borderBottomWidth: '2px', */
                     }}
                   >
                     <TextField
