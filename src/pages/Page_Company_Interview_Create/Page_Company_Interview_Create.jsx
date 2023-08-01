@@ -47,6 +47,7 @@ import { useTheme } from '@mui/material/styles';
 import TitleDivider from "../../components/TitleDivider/TitleDivider";
 import AlertDialog from "../../components/AlertDialog/AlertDialog";
 
+import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 // import utilities
 import cleanStore from "../../utils/cleanStore";
@@ -285,9 +286,12 @@ const Page_Company_Interview_Create = () => {
                 <AlertDialog openAlert={openAlert} setOpenAlert={setOpenAlert} message={"Are you sure you want to create this interview?"} handleSubmit={handleSubmit} />
             </Grid>
             :
-            <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <Backdrop
+                sx={{ backgroundColor: theme.palette.grey[200] }}
+                open={true}
+            >
                 <CircularProgress color="inherit" />
-            </Box>
+            </Backdrop>
         }
         </>
     )

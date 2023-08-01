@@ -3,7 +3,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { Container, Box } from '@mui/material';
 
-export default function Variants() {
+export default function SkeletonDemo() {
     let color = "grey.400"
     return (
         // <Stack spacing={1}>
