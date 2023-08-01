@@ -121,6 +121,7 @@ function CVForm() {
       expirationDate: endDate !== null ? endDate.toJSON() : endDate,
       description: detail,
       link: link,
+      isDeleted:false
     };
     console.log(newCert);
     if (Cname !== "" && organize !== "" && startDate !== null && link !== "") {
@@ -184,51 +185,50 @@ function CVForm() {
     e.preventDefault();
     try {
       setLoading(true);
-      // dispatch({
-      //   type: "saga/getCreateCv",
-      //   payload:{
-      //     CvName: cvtitle,
-      //     Introduction: intro,
-      //     Education:education,
-      //     Experience: experience,
-      //     Skills:skills,
-      //     Certificates:certs,
-      //     CvFile:pdf,
-      //   }
-      // })
-      const formData = new FormData();
-      formData.append("CvName", cvtitle);
-      formData.append("Introduction", intro);
-      formData.append("Education", education);
-      formData.append("Experience", experience);
-      formData.append("CvFile", pdf); // Make sure to provide the actual file here
-      formData.append("CvPdf", null);
-      formData.append("IsDeleted", false);
-      formData.append("CandidateId", "daa3769b-5dd9-47f7-97de-f97e4e705971");
-      formData.append("Cvid", "1f357759-6d1e-47e7-a04b-01a92e73c115");
-      const response = await axios.post(
-        `https://leetun2k2-001-site1.gtempurl.com/api/Cv`,
-        formData
-      );
-      console.log("FINISHED!!!!!!!!!!!!");
-      console.log(response);
       dispatch({
         type: "saga/getCreateCv",
-        payload: {
+        payload:{
           CvName: cvtitle,
           Introduction: intro,
-          Education: education,
+          Education:education,
           Experience: experience,
-          Skills: skills,
-          Certificates: certs,
-        },
-      });
+          Skills:skills,
+          Certificates:certs,
+        }
+      })
+      // const formData = new FormData();
+      // formData.append("CvName", cvtitle);
+      // formData.append("Introduction", intro);
+      // formData.append("Education", education);
+      // formData.append("Experience", experience);
+      // formData.append("CvFile", pdf); // Make sure to provide the actual file here
+      // formData.append("CvPdf", null);
+      // formData.append("IsDeleted", false);
+      // formData.append("CandidateId", "daa3769b-5dd9-47f7-97de-f97e4e705971");
+      // formData.append("Cvid", "1f357759-6d1e-47e7-a04b-01a92e73c115");
+      // const response = await axios.post(
+      //   `https://leetun2k2-001-site1.gtempurl.com/api/Cv`,
+      //   formData
+      // );
+      // console.log("FINISHED!!!!!!!!!!!!");
+      // console.log(response);
+      // dispatch({
+      //   type: "saga/getCreateCv",
+      //   payload: {
+      //     CvName: cvtitle,
+      //     Introduction: intro,
+      //     Education: education,
+      //     Experience: experience,
+      //     Skills: skills,
+      //     Certificates: certs,
+      //   },
+      // });
       setLoading(false);
     } catch (error) {
       console.log(error);
     }
     cleanStore(dispatch);
-    navigate("/profile/:profileid/cv/:cvid");
+    // navigate("/profile/:profileid/cv/:cvid");
   }
   //COMPS
   return (

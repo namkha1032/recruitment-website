@@ -212,6 +212,8 @@ function CVForm() {
       expirationDate: endDate !== null ? endDate.toJSON() : endDate,
       description: detail,
       link: link,
+      cvid: "1f357759-6d1e-47e7-a04b-01a92e73c115",
+      isDeleted:false
     };
     console.log(newCert);
     if (Cname !== "" && organize !== "" && startDate !== null && link !== "") {
@@ -288,28 +290,32 @@ function CVForm() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      setLoading(true);
-      const formData = new FormData();
-      formData.append("Cvid", "d1c51600-6272-4c78-9b50-36af9d403a28");
-      formData.append("CandidateId", "00000000-0000-0000-0000-000000000001");
-      formData.append("Experience", experience);
-      formData.append("CvPdf", null);
-      formData.append("CvFile", pdf);
-      formData.append("CvName", cvtitle);
-      formData.append("Introduction", intro);
-      formData.append("Education", education);
-      formData.append("IsDeleted", false);
+      // setLoading(true);
+      // const formData = new FormData();
+      // formData.append("Cvid", "d1c51600-6272-4c78-9b50-36af9d403a28");
+      // formData.append("CandidateId", "00000000-0000-0000-0000-000000000001");
+      // formData.append("Experience", experience);
+      // formData.append("CvPdf", null);
+      // formData.append("CvFile", pdf);
+      // formData.append("CvName", cvtitle);
+      // formData.append("Introduction", intro);
+      // formData.append("Education", education);
+      // formData.append("IsDeleted", false);
 
-      const response = await axios.put(
-        `https://leetun2k2-001-site1.gtempurl.com/api/Cv/d1c51600-6272-4c78-9b50-36af9d403a28`,
-        formData
-      );
-      console.log("FINISHED!!!!!!!!!!!!");
-      console.log(response);
+      // const response = await axios.put(
+      //   `https://leetun2k2-001-site1.gtempurl.com/api/Cv/d1c51600-6272-4c78-9b50-36af9d403a28`,
+      //   formData
+      // );
+      // console.log("FINISHED!!!!!!!!!!!!");
+      // console.log(response);
       dispatch({
         type: "saga/getUpdateCv",
         payload: {
           Cvid: "d1c51600-6272-4c78-9b50-36af9d403a28",
+          CvName: cvtitle,
+          Introduction: intro,
+          Education:education,
+          Experience: experience,
           Skills: skills,
           delSkills: delSkills,
           addSkills: addSkills,
