@@ -89,34 +89,35 @@ const Page_Event = () => {
           <Box
             sx={{
               backgroundImage:
-                "url(ree-blue-geometric-flattened-texture-banner-background-picture-image_1012881.jpg)",
+                "url(https://wallpapersmug.com/download/1366x768/2a8ac7/huawei-abstract-stock-orange-silver-metallic-shine.jpg)",
               height: "300px",
               borderRadius: "10px",
               boxShadow: 5,
             }}
           >
-            <Box sx={{ padding: "150px 880px 0px 110px" }}>
+            <Box sx={{position:'relative',top:'150px', left:'30px'}}>
+            <Box>
               <Typography
                 variant="h3"
                 align="left"
-                color="black"
-                fontFamily="serif"
-                sx={{ borderBottom: "3px solid #0099FF" }}
+                color="#FFFFFF"
+                fontFamily="Arial"
+                sx={{ }}
               >
                 Event
               </Typography>
             </Box>
 
-            <Box sx={{ padding: "10px 350px 0px 110px" }}>
+            <Box >
               <Typography
                 variant="h6"
                 align="left"
-                color="#808080"
-                fontFamily="serif"
+                color="#EEEEEE"
+                fontFamily="Arial"
               >
-                Các sự kiện sôi động sẽ cập nhật liên tục, hãy theo dõi tin tức
-                sự kiện để có thể đăng kí tham gia.
+                Các sự kiện sôi động sẽ cập nhật liên tục
               </Typography>
+            </Box>
             </Box>
           </Box>
         </Box>

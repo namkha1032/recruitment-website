@@ -8,7 +8,7 @@ const  Item = (item) => {
             navigate(`/${id}`)
     }
     return (
-        <Paper>
+        <Paper sx={{height:'600px'}}>
             { item.item.navigate !=='about' ?
             <Box  >
                 <img
@@ -25,7 +25,7 @@ const  Item = (item) => {
                         color='white'
                         variant='h2'
                        
-                        sx={{ fontFamily: 'EB garamond',position: "relative", left:'0px', }}>
+                        sx={{position: "relative", left:'0px', fontWeight:'bold' }}>
                         {item.item.title}
                     </Typography>
                 </Box>
@@ -40,12 +40,13 @@ const  Item = (item) => {
                     style={{cursor:'pointer'}}
                 />
                 </a><a href='#about' style={{textDecoration:'none'}}>
-                <Box sx={{ position: "relative", bottom: '150px', display: 'flex', justifyContent: 'center', }}>
+                <Box 
+                sx={{ position: "relative", bottom: '150px', display: 'flex', justifyContent: 'center' }}>
                 <Typography
                         
                         color='white'
                         variant='h2'
-                        sx={{ fontFamily: 'EB garamond',position: "relative", left:'0px',cursor:'pointer' }}>
+                        sx={{ position: "relative", left:'0px',cursor:'pointer', fontWeight:'bold' }}>
                         {item.item.title}
                     </Typography>
                 </Box></a>
