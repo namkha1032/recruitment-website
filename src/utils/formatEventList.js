@@ -3,25 +3,36 @@
 //   "EventId": 0,
 //   "EventCampus": "",
 //   "EventName": "",
+//   "EventDatetime: "",
 //   "CreatedById": 0,
 //   "CreatedByName": "",
 //   "NumOfJoined": 0,
 //   "Status": [true, false] ~ ["Upcoming", "Finished"]
 // }
 
-export function formatEventList(input) {
-  const output = input.map((element) => {
+import { formatDatetime } from "./formatDate";
+import { getEventStatus } from "./getEventStatus";
+import { getNumOfCandidateEvent } from "./getNumOfCandidateEvent";
+
+export function formatEventList(input, candidatesEvent) {
+  const output_draft = input.map((element) => {
     return {
       EventId: element.eventId,
       EventCampus: element.place,
       EventDescription: element.description,
       EventName: element.eventName,
       CreatedById: element.recruiterId,
-      CreatedByName: "Khoa Cao Tran Anh",
-      EventDateTime: "01/08/2023 10:00 AM",
-      NumOfJoined: 0,
-      Status: element.isDeleted
+      CreatedByName: element.recruiterId,
+      EventDateTime: element.datetimeEvent,
+      Status: getEventStatus(element.datetimeEvent),
     };
   });
+  let output = []
+  for (let i = 0; i < output_draft.length; i++) {
+    output.push({
+      ...output_draft[i],
+      NumOfJoined: getNumOfCandidateEvent(output_draft[i].EventId, candidatesEvent),
+    })
+  }
   return output
 }

@@ -8,8 +8,14 @@
 import { formatLanguage } from "./formatLanguage";
 import { getLanguageId } from "./getLanguageId";
 
-export function formatQuestionList(input, categorys, skillsQ, skills, languages) {
-  console.log("1: ", input)
+export function formatQuestionList(
+  input,
+  categorys,
+  skillsQ,
+  skills,
+  languages
+) {
+  // console.log("1: ", input)
   for (let i = 0; i < input.length; i++) {
     for (let j = 0; j < categorys.length; j++) {
       if (input[i].categoryQuestionId === categorys[j].categoryQuestionId) {
@@ -20,8 +26,8 @@ export function formatQuestionList(input, categorys, skillsQ, skills, languages)
       }
     }
   }
-  console.log("2: ", input)
-  console.log("skillsQ: ", skillsQ)
+  // console.log("2: ", input)
+  // console.log("skillsQ: ", skillsQ)
 
   for (let i = 0; i < input.length; i++) {
     for (let j = 0; j < skillsQ.length; j++) {
@@ -33,8 +39,8 @@ export function formatQuestionList(input, categorys, skillsQ, skills, languages)
       }
     }
   }
-  console.log("3: ", input)
-  console.log("skills: ", skills)
+  // console.log("3: ", input)
+  // console.log("skills: ", skills)
 
   for (let i = 0; i < input.length; i++) {
     for (let j = 0; j < skills.length; j++) {
@@ -47,16 +53,19 @@ export function formatQuestionList(input, categorys, skillsQ, skills, languages)
       }
     }
   }
-  console.log("4: ", input)
+  // console.log("4: ", input)
 
-  const output = input.map((element) => {
+  const output_draft = input.map((element) => {
     if (element.categoryQuestionName === "Language") {
       return {
         QuestionId: element.questionId,
         QuestionName: element.questionString.slice(5),
         CategoryId: element.categoryQuestionId,
         CategoryName: "Language",
-        TypeId: getLanguageId(formatLanguage(element.questionString, categorys), languages),
+        TypeId: getLanguageId(
+          formatLanguage(element.questionString, categorys),
+          languages
+        ),
         TypeName: formatLanguage(element.questionString, categorys),
       };
     } else if (element.categoryQuestionName === "Soft Skill") {
@@ -79,5 +88,12 @@ export function formatQuestionList(input, categorys, skillsQ, skills, languages)
       };
     }
   });
-  return output
+
+  const output = output_draft.filter(
+    (element) =>
+      element.QuestionId !== "00000000-0000-0000-0000-000000000001" &&
+      element.QuestionId !== "00000000-0000-0000-0000-000000000002" &&
+      element.QuestionId !== "00000000-0000-0000-0000-000000000003"
+  );
+  return output;
 }
