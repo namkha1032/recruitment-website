@@ -12,36 +12,49 @@ import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import { CloseRounded, DoneRounded } from "@mui/icons-material";
 
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
 export function NullString() {
   return <Chip icon={<PriorityHighIcon />} label="Unavailable" />;
 }
 
 export function NotStart() {
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+
   return (
-    <Chip
-      label="Not start"
-      variant="outlined"
-      style={{
-        color: "#1565C0",
-        backgroundColor: "white",
-        borderColor: "#1565C0",
-      }}
-      
-      icon={
+    <>
+      {isSm ? (
+        <Chip
+        label="Not start"
+        variant="outlined"
+        sx={{
+          color: '#1565C0',
+          backgroundColor: 'white',
+          borderColor: '#1565C0',
+        }}
+        icon={
+          <EventNoteRoundedIcon
+          style = {{ color: '#1565C0'}}
+          />
+        }
+      />
+      ) : (
         <EventNoteRoundedIcon
-          style={{
-            color: "#1565C0",
-            
-          }}
+          style = {{ color: '#1565C0'}}
         />
-      }
-    />
+      )}
+    </>
   );
 }
-
 export function Pending() {
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
   return (
-    <Chip
+    <>
+    { isSm ? (
+      <Chip
       label="Pending"
       variant="outlined"
       style={{
@@ -58,52 +71,91 @@ export function Pending() {
         />
       }
     />
-  );
-}
-
-export function Completed() {
-  return (
-    <Chip
-      label="Finished"
-      variant="outlined"
-      style={{
-        // color: "#E0E0E0",
-        color: "black.400",
-        backgroundColor: "white",
-        // borderColor: "#E0E0E0",
-        borderColor: "black.400"
-      }}
-      icon={
-        <SportsScoreRoundedIcon
+    ) : (
+        <MoreHorizRoundedIcon
           style={{
             color: "black.400",
           }}
         />
-      }
-    />
+    )
+  }
+    </>
+    
   );
 }
 
-
-
-
-export function Upcoming() {
+export function Completed() {
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
   return (
-    <Chip
-      label="Upcoming"
-      variant="outlined"
-      style={{
-        color: "#E0E0E0",
-        backgroundColor: "white",
-        borderColor: "#E0E0E0",
-      }}
-      icon={
-        <EventNoteRoundedIcon
-          style={{
-            color: "#E0E0E0",
-          }}
-        />
-      }
-    />
+    <>{
+      isSm ? (
+        <Chip
+        label="Finished"
+        variant="outlined"
+        style={{
+          // color: "#E0E0E0",
+          color: "black.400",
+          backgroundColor: "white",
+          // borderColor: "#E0E0E0",
+          borderColor: "black.400"
+        }}
+        icon={
+          <SportsScoreRoundedIcon
+            style={{
+              color: "black.400",
+            }}
+          />
+        }
+      />
+      ) :
+      (
+        <SportsScoreRoundedIcon
+            style={{
+              color: "black.400",
+            }}
+          />
+      )
+    }
+    </>
+    
   );
 }
+
+
+export function Pass() {
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+  return (
+    <>{
+      isSm ? (
+        <Chip
+        label="Passed"
+        variant="outlined"
+        style={{
+          color: "#008631",
+          backgroundColor: "white",
+          borderColor: "#008631",
+        }}
+        icon={
+          <DoneRounded
+            style={{
+              color: "#008631",
+            }}
+          />
+        }
+      />
+      ) :
+      (
+        <DoneRounded
+            style={{
+              color: "#008631",
+            }}
+          />
+      )
+    }
+    </>
+    
+  );
+}
+
