@@ -62,6 +62,8 @@ const Page_Recruitment_Id = () => {
     const handleCloseCV = () => setShowCV(true);
     const list_CV_draft = useSelector(state => state.cvlist);
     const list_CV = list_CV_draft ? list_CV_draft : []
+    const user = useSelector(state => state.user);
+    console.log("user", user);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch({ type: 'saga/getCvList' })

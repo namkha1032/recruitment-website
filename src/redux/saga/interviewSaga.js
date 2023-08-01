@@ -90,54 +90,48 @@ function* createInterview(action) {
 
 function* getInterviewInfo(action) {
   try {
-    const response = yield call(
-      axios.get,
-      `https://leetun2k2-001-site1.gtempurl.com/api/Itrsinterview/?id=${action.payload}`
-    );
-    const response2 = yield call(
-      axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Room"
-    );
-    const room = response2.data.filter(
-      (prop) => prop.roomId === response.data.roomId
-    );
-    const response3 = yield call(
-      axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Shift"
-    );
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview?id=${action.payload}`)
+    const response1 = yield call(axios.get,`https://leetun2k2-001-site1.gtempurl.com/api/Itrsinterview/?id=${response.data.itrsinterviewId}`);
+    const response2 = yield call(axios.get,"https://leetun2k2-001-site1.gtempurl.com/api/Room");
+    const room = response2.data.filter((prop) => prop.roomId === response1.data.roomId);
+    const response3 = yield call(axios.get,"https://leetun2k2-001-site1.gtempurl.com/api/Shift");
     console.log("room", room);
-    const shift = response3.data.filter(
-      (prop) => prop.shiftId === response.data.shiftId
-    );
+    const shift = response3.data.filter((prop) => prop.shiftId === response1.data.shiftId);
     console.log("shift", shift);
-    const response4 = yield call(
-      axios.get,
-      `https://leetun2k2-001-site1.gtempurl.com/api/Interview`
-    );
-    const interviewer = response4.data.filter(
-      (prop) => prop.itrsinterviewId === response.data.itrsinterviewId
-    );
-    const response5 = yield call(
-      axios.get,
-      ` https://leetun2k2-001-site1.gtempurl.com/api/Interviewer?id=${interviewer[0].interviewerId}`
-    );
-    const response6 = yield call(
-      axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Department"
-    );
-    const department = response6.data.filter(
-      (props) => props.departmentId === response5.data.departmentId
-    );
-    console.log("interviwer", interviewer);
+    const response4 = yield call(axios.get,`https://leetun2k2-001-site1.gtempurl.com/api/Interview`);
+    const interviewer = response4.data.filter((prop) => prop.itrsinterviewId === response1.data.itrsinterviewId);
+    const response5 = yield call(axios.get,` https://leetun2k2-001-site1.gtempurl.com/api/Interviewer?id=${interviewer[0].interviewerId}`);
+    const response6 = yield call(axios.get,"https://leetun2k2-001-site1.gtempurl.com/api/Department");
+    const department = response6.data.filter((props) => props.departmentId === response5.data.departmentId);
+    // console.log("interviwer", interviewer);
     console.log("departsaga", department);
+    const response7 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`);
+    const application = response7.data.filter((prop) => prop.applicationId === response.data.applicationId);
+    const response8 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${application[0].position.positionId}`)
+    console.log("appinsaga", application);
+    let skilllist = []
+    console.log("reponse8", response8.data);
+    const response9 = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Skill');
+    console.log('response8', response8.data);
+    console.log('reponse9', response9.data)
+    console.log('skillid', response8.data.requirements)
+    for (let i = 0; i < response8.data.requirements.length; i++) {
+      for (let j = 0; j < response9.data.length; j++) {
+        if (response8.data.requirements[i].skillId === response9.data[j].skillId) {
+          skilllist.push(response9.data[j]);
+        }
+      }
+    }
+
+    console.log('skillinsaga', skilllist);
+    console.log("appinsaga", application);
     yield put({ type: "department/setDepartment", payload: department });
-    yield put({ type: "interviewer/setInterviewer", payload: interviewer });
+    yield put({ type: "interviewer/setInterviewer", payload: response5.data });
     yield put({ type: "shift/setShift", payload: shift });
     yield put({ type: "room/setRoom", payload: room });
-    yield put({
-      type: "interviewidInfo/setInterviewidInfo",
-      payload: response.data,
-    });
+    yield put({type: "interviewidInfo/setInterviewidInfo",payload: response1.data});
+    yield put({type: "position/setPosition", payload: response8.data});
+    yield put({type: 'skill/setSkill', payload: skilllist})
   } catch (error) {
     console.log(error);
   }

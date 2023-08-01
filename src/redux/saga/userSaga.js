@@ -23,7 +23,7 @@ function* userLogin(action) {
             headers: { Authorization: token },
         }
         const userId = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/CurrentUser', config)
-        // console.log("userId is", userId.data)
+        console.log("userId is", userId.data)
         yield put({ type: "user/setUser", payload: userId.data })
         yield put({ type: "error/setError", payload: { status: "no", message: "" } })
 
