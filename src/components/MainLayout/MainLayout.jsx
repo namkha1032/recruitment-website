@@ -53,32 +53,32 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 function MainLayout() {
-  const [open, setOpen] = React.useState(false);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const userLocal = window.localStorage.getItem("user");
-    const userSession = window.sessionStorage.getItem("user");
-    if (userLocal) {
-      const user = JSON.parse(userLocal);
-      dispatch({ type: "user/setUser", payload: user });
-    } else if (userSession) {
-      const user = JSON.parse(userSession);
-      dispatch({ type: "user/setUser", payload: user });
-    }
-  }, []);
-  // const navigate = useNavigate()
-  // useEffect(() => {
-  //     navigate("/home")
-  // }, [navigate])
-  const theme = useTheme();
-  const isMd = useMediaQuery(theme.breakpoints.up("md"));
-  const role = useGetRole();
+    const [open, setOpen] = React.useState(false);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        const userLocal = window.localStorage.getItem("user");
+        const userSession = window.sessionStorage.getItem("user");
+        if (userLocal) {
+            const user = JSON.parse(userLocal);
+            dispatch({ type: "user/setUser", payload: user });
+        } else if (userSession) {
+            const user = JSON.parse(userSession);
+            dispatch({ type: "user/setUser", payload: user });
+        }
+    }, []);
+    // const navigate = useNavigate()
+    // useEffect(() => {
+    //     navigate("/home")
+    // }, [navigate])
+    const theme = useTheme();
+    const isMd = useMediaQuery(theme.breakpoints.up("md"));
+    const role = useGetRole();
 
-  let userRole = "hahaha";
-  let showSidebar =
-    role == "admin" || role == "recruiter" || role == "interviewer"
-      ? true
-      : false;
+    let userRole = "hahaha";
+    let showSidebar =
+        role == "admin" || role == "recruiter" || role == "interviewer"
+            ? true
+            : false;
 
     return (
         <>
@@ -87,15 +87,14 @@ function MainLayout() {
                 <Sidebar open={showSidebar ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} />
                 <Main open={showSidebar ? open : false}>
                     {/* <DrawerHeader /> */}
-                    <Container>
+                    <Container sx={{ paddingBottom: 4 }}>
                         <Outlet />
 
                     </Container>
-
+                    <Footer />
                 </Main>
 
             </Box>
-            <Footer />
         </>
     );
 }

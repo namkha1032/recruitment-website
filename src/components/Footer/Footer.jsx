@@ -68,8 +68,8 @@ const Footer = () => {
                   style={{ border: 0 }}
                   // allowfullscreen=""
                   loading="lazy"
-                  // referrerpolicy="no-referrer-when-downgrade"
-                  >
+                // referrerpolicy="no-referrer-when-downgrade"
+                >
 
                 </iframe>
               </Box>
@@ -180,14 +180,14 @@ const Footer = () => {
                         {" "} {item.EventDateTime.slice(0, 10)}
                       </Typography>
                       <Typography
-                      variant="subtitle1"
-                      align="center"
-                      color="#C0C0C0"
-                      component="p"
-                      sx={{ display: "flex", justifyContent: "flex-start" }}
+                        variant="subtitle1"
+                        align="center"
+                        color="#C0C0C0"
+                        component="p"
+                        sx={{ display: "flex", justifyContent: "flex-start" }}
                       >{item.EventDescription}
                       </Typography>
-                      
+
                     </Box>
                   </Box>
                 ))}</Box>
@@ -196,8 +196,8 @@ const Footer = () => {
 
         </Container>
       </Box>
-      <Box 
-      sx={{ bgcolor: "black", color: "white", p: 6 }} component="footer"  >
+      <Box
+        sx={{ bgcolor: "black", color: "white", p: 6 }} component="footer"  >
         <Typography variant="h6" align="center" >
           Team 4
         </Typography>

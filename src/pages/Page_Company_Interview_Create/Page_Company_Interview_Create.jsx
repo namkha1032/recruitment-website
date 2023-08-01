@@ -46,6 +46,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import TitleDivider from "../../components/TitleDivider/TitleDivider";
 import AlertDialog from "../../components/AlertDialog/AlertDialog";
+
+import CircularProgress from "@mui/material/CircularProgress";
 // import utilities
 import cleanStore from "../../utils/cleanStore";
 const Page_Company_Interview_Create = () => {
@@ -71,11 +73,7 @@ const Page_Company_Interview_Create = () => {
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     // fetch Data
     useEffect(() => {
-        dispatch({ type: "saga/getApplicationForCreatingInterview", payload: applicationid })
-        dispatch({ type: "saga/getUpcomingInterview" })
-        dispatch({ type: "saga/getDepartmentInterviewer" })
-        dispatch({ type: "saga/getRoom" })
-        dispatch({ type: "saga/getShift" })
+        dispatch({ type: "saga/getDataForInterview", payload: applicationid })
         // return () => {
         //     dispatch({ type: "interview/setInterview", payload: null })
         //     dispatch({ type: "interviewer/setInterviewer", payload: null })
@@ -129,7 +127,22 @@ const Page_Company_Interview_Create = () => {
     }, [newError])
 
     function handleSubmit() {
-        dispatch({ type: "saga/createInterview", payload: null })
+        const newInterviewObj = {
+            interview: {
+                interviewerId: chosenInterviewer.interviewerid,
+                recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
+                applicationId: applicationid,
+                itrsinterviewId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                notes: "",
+                resultId: "00000000-0000-0000-0000-000000000001",
+            },
+            itrs: {
+                dateInterview: chosenDate,
+                shiftId: chosenShift.shiftid,
+                roomId: chosenRoom.roomid
+            }
+        }
+        dispatch({ type: "saga/createInterview", payload: newInterviewObj })
         // navigate("/company/interview/1")
     }
     function preProcessing() {
@@ -164,7 +177,7 @@ const Page_Company_Interview_Create = () => {
         }
     }
     return (
-        <>{interviewerList &&
+        <>{interviewerList && interviewList && roomList && shiftList ?
             <Grid container spacing={4}>
                 <Grid item xs={12}>
                     <TitleDivider>
@@ -271,6 +284,10 @@ const Page_Company_Interview_Create = () => {
                 </Snackbar>
                 <AlertDialog openAlert={openAlert} setOpenAlert={setOpenAlert} message={"Are you sure you want to create this interview?"} handleSubmit={handleSubmit} />
             </Grid>
+            :
+            <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <CircularProgress color="inherit" />
+            </Box>
         }
         </>
     )
