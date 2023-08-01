@@ -41,17 +41,19 @@ const theme = createTheme({
   },
 });
 
+const fullnameRegex = /^[a-zA-Z-' ]{2,}$/;
 const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/;
 
 const XPage_Register = () => {
   const navigate = useNavigate();
-  const [fullName, setFullName] = useState("Bao");
+  const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [validFullName, setValidFullName] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [validUsername, setValidUsername] = useState(true);
   const [validEmail, setValidEmail] = useState(true);
@@ -84,6 +86,18 @@ const XPage_Register = () => {
       }, 5000);
     }
   }, [newError]);
+
+  const handleFullNameChange = (event) => {
+    let value = event.target.value;
+    setFullName(value);
+    if (!fullnameRegex.test(value)) {
+      setValidFullName(false)
+    }
+    else {
+      setValidFullName(true)
+    }
+  }
+
 
   const handleUsernameChange = (event) => {
     let value = event.target.value;
@@ -125,7 +139,7 @@ const XPage_Register = () => {
 
   const handleRegister = (event) => {
     event.preventDefault();
-    if (validUsername && validEmail && validPassword) {
+    if (validFullName && validUsername && validEmail && validPassword) {
       dispatch({
         type: "saga/userRegister",
         payload: {
@@ -136,6 +150,10 @@ const XPage_Register = () => {
         },
       });
     } else {
+      if (!validFullName) {
+        setValidFullName(false)
+        setFullName("")
+      }
       if (!validUsername) {
         setValidUsername(false);
         setUsername("");
@@ -243,6 +261,77 @@ const XPage_Register = () => {
                     alignItems: "center",
                   }}
                 >
+
+<Grid
+                    item
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: "5px",
+                    }}
+                  >
+                    <TextField
+                      variant="standard"
+                      //required
+                      fullWidth
+                      type="text"
+                      label={<Typography color={"black"}>Fullname</Typography>}
+                      autoComplete="new-text"
+                      value={fullName}
+                      onChange={handleFullNameChange}
+                      error={!validFullName}
+                      InputProps={{
+                        disableUnderline: true,
+                        endAdornment: (
+                          <AccountCircleOutlinedIcon
+                            sx={{
+                              position: "absolute",
+                              right: "8px",
+                              color: "#000",
+                              fontSize: "1.2em",
+                            }}
+                          />
+                        ),
+                        sx: {
+                          color: "#000",
+                        },
+                      }}
+                      sx={{
+                        width: "90%",
+                        height: "50px",
+                        background: "transparent",
+                        outline: "none",
+                        fontSize: "1em",
+                        color: "#000",
+                        borderBottom: "2px solid black",
+                        borderBottomWidth: "2px",
+                      }}
+                      helperText={
+                        !validFullName && (
+                          <Typography
+                            color={"red"}
+                            sx={{
+                              display: "flex",
+                              justifyContent: "left",
+                              alignItems: "center",
+                            }}
+                            variant="small"
+                          >
+                            <ErrorOutlineOutlinedIcon
+                              color="red"
+                              sx={{ fontSize: 13, paddingRight: "0px" }}
+                            />
+                            <Typography variant="small" paddingLeft="3px">
+                            Full name must be at least 2 characters long
+                            </Typography>
+                          </Typography>
+                        )
+                      }
+                    />
+                  </Grid>
+
                   <Grid
                     item
                     xs={12}

@@ -52,6 +52,8 @@ const ProfileChangePW = () => {
   const dispatch = useDispatch();
 
   const newError = useSelector((state) => state.error);
+  /* const user = useSelector((state) => state.user);
+  console.log("user = ", user.userId) */
 
   useEffect(() => {
     if (newError.status === "no") {
