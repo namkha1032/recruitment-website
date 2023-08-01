@@ -10,8 +10,27 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import dayjs from "dayjs";
+import { Box } from "@mui/material";
+// const useStyles = makeStyles({
+//   card: {
+//     maxWidth: 345,
+//     top: '50%',
+//     left: '50%',
+//     borderRadius: 10,
+//     position: 'absolute',
+//     transform: 'translate(-50%, -50%)',
+//     backgroundSize: '200%',
+//     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+//     transition: '0.6s',
+//     backgroundImage: 'linear-gradient(45deg, #FFC312, #EE5A24, #00a8ff)',
+//     '&:hover': {
+//       backgroundPosition: 'right'
+//     }
+//   }
+// });
 
 const SmallUlList = (comp) => {
+  // const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState("paper");
 
@@ -33,17 +52,27 @@ const SmallUlList = (comp) => {
   }, [open]);
   return (
     <>
-      <Card key={comp.comp.id} sx={{minWidth:120, maxWidth: 200 }}>
+      <Card
+        key={comp.comp.id}
+        sx={{ minWidth: 120, maxWidth: 200, boxShadow: 10, borderRadius: 3 }}
+      >
         <CardContent>
-          <Typography sx={{ fontSize: 20 }}>{comp.comp.certificateName}</Typography>
-          <Typography sx={{ fontSize: 20 }}>{comp.comp.organizationName}</Typography>
+          <Typography sx={{ fontSize: 20 }}>
+            {comp.comp.certificateName}
+          </Typography>
+          <Typography sx={{ fontSize: 20 }}>
+            {comp.comp.organizationName}
+          </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <Button onClick={handleClickOpen("paper")} size="small">
+          <Button
+            onClick={handleClickOpen("paper")}
+            size="small"
+          >
             More Detail
           </Button>
           <IconButton
-            sx={{ marginLeft: "auto" }}
+            sx={{ marginLeft: "auto"}}
             aria-label="add to favorites"
             onClick={() => {
               comp.handleDelete(comp.comp.certificateId);
@@ -60,9 +89,13 @@ const SmallUlList = (comp) => {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-        <DialogTitle id="scroll-dialog-title">{comp.comp.certificateName}</DialogTitle>
+        <DialogTitle id="scroll-dialog-title">
+          {comp.comp.certificateName}
+        </DialogTitle>
         <DialogContent dividers={scroll === "paper"}>
-          <Typography sx={{ fontSize: 20 }}>{comp.comp.organizationName}</Typography>
+          <Typography sx={{ fontSize: 20 }}>
+            {comp.comp.organizationName}
+          </Typography>
           <Typography sx={{ fontSize: 16 }}>
             From: {dayjs(comp.comp.dateEarned).format("MMMM D YYYY")}
           </Typography>

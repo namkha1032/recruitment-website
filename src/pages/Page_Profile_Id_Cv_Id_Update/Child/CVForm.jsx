@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import cleanStore from "../../../utils/cleanStore";
 import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
 import axios from "axios";
+import { Box } from "@mui/material";
 // import ViewCv from "./ViewCv";
 function CVForm() {
   const navigate = useNavigate();
@@ -343,6 +344,7 @@ function CVForm() {
   //COMPS
   return (
     <>
+    <Box >
       <Grid container spacing={0} justifyContent="center" alignItems="center">
         <Grid item xs={12}>
           <CreateCv
@@ -414,6 +416,7 @@ function CVForm() {
         </Grid>
       </Grid>
       {loading && <p>Loading...</p>}
+      </Box>
     </>
   );
 }
