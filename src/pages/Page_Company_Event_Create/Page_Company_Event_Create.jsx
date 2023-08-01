@@ -437,7 +437,7 @@ const Page_Company_Event_Create = () => {
                             </div>
                             <Grid item xs={12} align='right' sx={{ marginTop: 6 }}>
 
-                                {eventStatus.status !== "loading" && eventStatus.status !== "success" ? <Button type="submit" variant="contained" size='large'>
+                                {eventStatus.status !== "loading" && eventStatus.status !== "success" ? <Button type="submit" variant="contained" size='large' sx={{ backgroundColor: 'black' }}>
                                     <TaskAltIcon sx={{ marginRight: 1 }}></TaskAltIcon>
                                     Save
                                 </Button>

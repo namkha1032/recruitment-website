@@ -225,6 +225,7 @@ const Page_Event_Id = () => {
                                         className='btnregister'
                                         // sx={{ mx: 3 }}
                                         onClick={handleRegister}
+                                        sx={{ backgroundColor: 'black' }}
                                     >
                                         {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
                                         {/* Đăng ký */}

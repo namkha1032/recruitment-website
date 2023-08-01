@@ -189,6 +189,17 @@ function* postEvent(action) {
 // }
 
 
+function* putEvent(action) {
+  console.log("put event: ", action.payload)
+  try {
+    
+  }
+  catch (error) {
+    console.log(error)
+  }
+}
+
+
 function* eventSaga() {
   yield all([
     takeLatest("saga/getEventList", getEventList),

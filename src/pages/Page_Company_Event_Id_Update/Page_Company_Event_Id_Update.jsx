@@ -27,7 +27,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import GroupAddRoundedIcon from '@mui/icons-material/GroupAddRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import cleanStore from '../../utils/cleanStore'
 
 
 
@@ -36,11 +37,22 @@ const Page_Company_Event_Id_Update = () => {
     // useNavigate
     const navigate = useNavigate()
 
-    const dispatch = useDispatch();
-    
+    const { eventid } = useParams();
+    console.log('company event id for update: ', eventid);
+
+    // const dispatch = useDispatch();
+    // useEffect(() => {
+    //     dispatch({ type: "saga/getEvent", payload: eventid })
+    //     return () => {
+    //         cleanStore(dispatch)
+    //     }
+    // }, [])
+
+    // const event = useSelector((state) => state.event)
+
 
     // useState
-    const [name, setName] = useState(null);
+    const [name, setName] = useState("");
     const [maxQuantity, setMaxQuantity] = useState(null);
     const [location, setLocation] = useState(null);
 
@@ -50,6 +62,15 @@ const Page_Company_Event_Id_Update = () => {
     const [image, setImage] = useState(null);
     const [fileName, setFileName] = useState("No selected file");
     // const [fileSelected, setFileSelected] = useState(false);
+
+
+    // useEffect(() => {
+    //     if (event) {
+    //         setName(
+    //             event ? event.eventName : ""
+    //         )
+    //     }
+    // }, [event.eventName])
 
 
     // handle events
@@ -75,6 +96,9 @@ const Page_Company_Event_Id_Update = () => {
             contentRef.current.innerHTML = content
         }
     })
+
+    // console.log("KEO: ", event.eventName)
+    // console.log("KEOname: ", name)
 
 
     // const handleImage = (e) => {
@@ -112,6 +136,8 @@ const Page_Company_Event_Id_Update = () => {
 
 
     return (
+        // event &&
+        // <>
         <form onSubmit={handleSubmit}>
             <GigaCard>
                 <Container sx={{ marginTop: 6 }} className='eventupdate' >
@@ -147,6 +173,7 @@ const Page_Company_Event_Id_Update = () => {
                                         </InputAdornment>
                                     ),
                                 }}
+                                // value={name} 
                             >
                             </TextField>
                         </Grid>
@@ -405,7 +432,7 @@ const Page_Company_Event_Id_Update = () => {
                                     }}></DeleteRoundedIcon>
                             </div>
                             <Grid item xs={12} align='right' sx={{ marginTop: 6 }}>
-                                <Button type="submit" variant="contained" size='large'>
+                                <Button type="submit" variant="contained" size='large' sx={{ backgroundColor: 'black' }}>
                                     <TaskAltIcon sx={{ marginRight: 1 }}></TaskAltIcon>
                                     Save
                                 </Button>
@@ -415,6 +442,7 @@ const Page_Company_Event_Id_Update = () => {
                 </Container>
             </GigaCard>
         </form>
+        // </>
     )
 }
 

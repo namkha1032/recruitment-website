@@ -105,7 +105,7 @@ const Page_Company_Event_Id = () => {
     // }
 
     const handleEdit = (e) => {
-        navigate("/company/event/:eventid/update");
+        navigate(`/company/event/${eventid}/update`);
     }
 
     const handleDetailClick = (value) => {
@@ -436,7 +436,7 @@ const Page_Company_Event_Id = () => {
                                     <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon>
                                     Đăng ký
                                 </Button> */}
-                                            <Button variant='contained' size='large' color='primary' onClick={handleEdit}>
+                                            <Button variant='contained' size='large' color='primary' onClick={handleEdit} sx={{ backgroundColor: 'black' }}>
                                                 {/* Chỉnh sửa */}
                                                 <EditIcon sx={{ marginRight: 1 }}></EditIcon>
                                                 Edit
