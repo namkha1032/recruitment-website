@@ -138,7 +138,7 @@ function* userChangePassword(action) {
         const config = {
             headers: { Authorization: token },
         }
-        const response = yield call(axios.post, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/ChangePassword', action.payload, config)
+        const response = yield call(axios.put, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/ChangePassword', action.payload, config)
         console.log("response password is: ", response)
         yield put({ type: "error/setError", payload: { status: "no", message: "" } })
     }
