@@ -16,9 +16,19 @@ function* getApplication(action) {
     // yield put({ type: 'application/setApplication', payload: application })
     try {
         // const reponse = yield call(axios.get, `${host.name}/data/applicationList.json`)
-        const reponse = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/${action.payload}`)
-        console.log(reponse.data);
-        yield put({ type: 'application/setApplication', payload: reponse.data })
+        const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload}`)
+        const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`)
+        let mergeobject = {}
+        let candidatelist = []
+        let application = response2.data.filter((prop) => prop.position.positionId === response1.data.positionId);
+        console.log("applyinsaga", application);
+        for (let i = 0; i < application.length; i++ ){
+            candidatelist.push({ ...application[i],...(yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate/${application[i].cv.candidateId}`)).data})
+        }
+        // candidatelist.push(mergeobject);
+        console.log("listinsaga", candidatelist);
+
+        yield put({ type: 'application/setApplication', payload: candidatelist })
     } catch (error) {
         console.log(error)
     }

@@ -57,17 +57,20 @@ const List_application = (props) => {
     const pass1 = props.applications ? props.applications.filter(application => {
         return application.company_status === "Đã duyệt"
     }) : [];
-    const reject1 = props.applications ? props.applications.filter(application => {
-        return application.company_status === "Đã từ chối"
-    }) : [];
+    // const reject1 = props.applications ? props.applications.filter(application => {
+    //     return application.company_Status === "Đã từ chối"
+    // }) : [];
     const pendingmain = props.applications ? props.applications.filter(application => {
         return application.company_Status === "afafs"
+    }) : [];
+    const rejectmain = props.applications ? props.applications.filter(application => {
+        return application.company_Status === "Rejected"
     }) : [];
     console.log("application", props.applications);
     // console.log("status", pendingmain);
     // console.log("chờ", pending1);
     console.log("đậu", pass1);
-    console.log("chối", reject1);
+    // console.log("chối", reject1);
     const handleEditClick = (params) => {
         navigate(`/company/recruitment/${recruitmentid}/application/${params.id}`);
     }
@@ -80,7 +83,7 @@ const List_application = (props) => {
         },
 
         {
-            field: "candidateName",
+            field: "fullName",
             headerName: "Candidate Name",
             flex: 1,
             minWidth: 200
@@ -205,7 +208,7 @@ const List_application = (props) => {
                         }}
                         slots={{ toolbar: QuickSearchToolbar }}
                         rowHeight={72}
-                        rows={reject1}
+                        rows={rejectmain}
                         {...other}
                         columns={columns}
                         getRowId={(row) => row.applicationId}

@@ -19,8 +19,8 @@ const View_detail = (props) => {
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     const requires = require('../../data/View_recruitment/requires.json');
     // const languages = require('../../data/View_recruitment/languages.json');
-    let left = isMd ? 5 : 3 
-    let right = isMd ? 6 : 8 
+    let left = 5
+    let right = 6
     let gap = 1
     let gridSx = {
         display: "flex", alignItems: "center"
@@ -38,20 +38,27 @@ const View_detail = (props) => {
         <>
 
             <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
-                <Grid item md={left}  sx={{ ...gridSx, columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                <Grid item xs={4} md={left} sx={{ ...gridSx, columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <RadarIcon />
-                        <Typography variant="h6" sx={{ marginLeft: "5px" }}>
-                            Position
-                        </Typography>
+                        {isMd ? (
+                            <Typography variant="h6" sx={{ marginLeft: "5px" }}>
+                                Position
+                            </Typography>
+                        ) : (
+                            <Typography variant="h6" sx={{ marginLeft: "5px" }}>
+                                Pos
+                            </Typography>
+                        )}
+
                     </Box>
                 </Grid>
-                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                <Grid item xs={1} md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
                     <Typography variant="h6">
                         :
                     </Typography>
                 </Grid>
-                <Grid item md={right}   sx={gridSx}>
+                <Grid item xs={7} md={right} sx={gridSx}>
                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
                         {/* {detailposition[0].positionName} */}
                         {props.detailposition.positionName}
@@ -59,8 +66,8 @@ const View_detail = (props) => {
                     </Typography>
                 </Grid>
             </Box>
-            <Box  sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
-                <Grid item md={left}  sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+                <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <HourglassBottomRoundedIcon />
                         {isMd ? (
@@ -74,12 +81,12 @@ const View_detail = (props) => {
                         )}
                     </Box>
                 </Grid>
-                <Grid item md={1}  sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                <Grid item xs={1} md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
                     <Typography variant="h6">
                         :
                     </Typography>
                 </Grid>
-                <Grid item  md={right}  sx={gridSx}>
+                <Grid item xs={7} md={right} sx={gridSx}>
                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
                         {/* {`${props.detailposition.startTime}${' - '}${props.detailposition.endTime}`} */}
                         {/* {`${detail[recruitmentid].StartDate}${' - '}${detail[recruitmentid].EndDate}`} */}
@@ -90,20 +97,27 @@ const View_detail = (props) => {
                 </Grid>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
-                <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <ZoomInIcon />
-                        <Typography variant="h6" sx={{ marginLeft: "5px" }} >
-                            Max Hiring
-                        </Typography>
+                        {isMd ? (
+                            <Typography variant="h6" sx={{ marginLeft: "5px" }} >
+                                Max Hiring
+                            </Typography>
+                        ) : (
+                            <Typography variant="h6" sx={{ marginLeft: "5px" }} >
+                                Max
+                            </Typography>
+                        )}
+
                     </Box>
                 </Grid>
-                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                <Grid item xs={1} md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
                     <Typography variant="h6">
                         :
                     </Typography>
                 </Grid>
-                <Grid item md={right} sx={gridSx}>
+                <Grid item xs={7} md={right} sx={gridSx}>
                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
                         {/* {detailposition[0].hireMax} */}
                         {/* {detail[recruitmentid].MaxHiringQty} */}
@@ -114,27 +128,34 @@ const View_detail = (props) => {
                 </Grid>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
-                <Grid item md={left} sx={{display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <RecommendIcon />
-                        <Typography variant="h6" sx={{ marginLeft: "5px" }}>
-                            Requirement
-                        </Typography>
+                        {isMd ? (
+                            <Typography variant="h6" sx={{ marginLeft: "5px" }}>
+                                Requirement
+                            </Typography>
+                        ) : (
+                            <Typography variant="h6" sx={{ marginLeft: "5px" }}>
+                                Req
+                            </Typography>
+                        )}
+
                     </Box>
                 </Grid>
-                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                <Grid item xs={1} md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
                     <Typography variant="h6">
                         :
                     </Typography>
                 </Grid>
-                <Grid item md={right} sx={gridSx}>
+                <Grid item xs={7} md={right} sx={gridSx}>
                     <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-start", alignItems: "flex-start" }}>
-                    {props.skill.map((require) => (
+                        {props.skill.map((require) => (
 
-                                <Chip key={require.skillId} sx={{ margin: "0px 0px 5px 8px" }} label={require.skillName} variant='outlined' size='medium' color="warning" />
-                    ))}
+                            <Chip key={require.skillId} sx={{ margin: "0px 0px 5px 8px" }} label={require.skillName} variant='outlined' size='medium' color="warning" />
+                        ))}
 
-                    {/* {requires.map((require) => (
+                        {/* {requires.map((require) => (
 
                         <Chip key={require.id} sx={{ margin: "0px 0px 5px 8px" }} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
                     ))} */}
@@ -143,26 +164,33 @@ const View_detail = (props) => {
                 </Grid>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
-                <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                <Grid item xs ={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <LanguageIcon />
-                        <Typography variant="h6" sx={{ marginLeft: "5px" }} >
-                            Language
-                        </Typography>
+                        {isMd ? (
+                            <Typography variant="h6" sx={{ marginLeft: "5px" }} >
+                                Language
+                            </Typography>
+                        ) : (
+                            <Typography variant="h6" sx={{ marginLeft: "5px" }} >
+                                Lang
+                            </Typography>
+                        )}
+
                     </Box>
                 </Grid>
-                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                <Grid item xs ={1} md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
                     <Typography variant="h6">
                         :
                     </Typography>
                 </Grid>
-                <Grid item md={right} sx={gridSx}>
+                <Grid item xs={7} md={right} sx={gridSx}>
                     <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${props.detailposition.language.languageName}`} />
                     {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detail[recruitmentid].languageName}`} /> */}
                 </Grid>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row" }}>
-                <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <MonetizationOnIcon />
                         <Typography variant="h6" sx={{ marginLeft: "5px" }} >
@@ -170,12 +198,12 @@ const View_detail = (props) => {
                         </Typography>
                     </Box>
                 </Grid>
-                <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+                <Grid item xs={1} md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
                     <Typography variant="h6">
                         :
                     </Typography>
                 </Grid>
-                <Grid item md={right} sx={gridSx}>
+                <Grid item xs={7} md={right} sx={gridSx}>
                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
                         {props.detailposition.salary}
                         {/* {detail[recruitmentid].salary} */}
