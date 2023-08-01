@@ -60,8 +60,8 @@ function CandidateTable(props) {
         const [open, setOpen] = React.useState(false);
         const [reason, setReason] = React.useState('');
         const handleAddClick = () => {
-            dispatch({type: "saga/addToBlacklist", payload: {reason: reason, candidateId: params.row.candidateId}});
-            console.log(reason,params.row.candidateId);
+            dispatch({type: "saga/addToBlacklist", payload: {reason: reason, candidateId: params.row.id}});
+            console.log(reason,params.row.id);
             setOpen(false);
         };
         return (
@@ -90,7 +90,7 @@ function CandidateTable(props) {
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            Candidate ID: {params.row.candidateId}<br/>
+                            Candidate ID: {params.row.id}<br/>
                         </DialogContentText>
                         <TextField
                             autoFocus
@@ -141,13 +141,10 @@ function CandidateTable(props) {
             </Grid>
         );
     }
-    function getUser(candidateId) {
-        return candidateNames.find(user => user.candidateId === candidateId);
-    }
     const columns = [
-                {field: "candidateId", headerName: isSm ? "Candidate ID" : "cID", flex: 0.5},
-                // {field: "userId", headerName: "User ID", flex: 0.5},
-                { field: 'name', headerName: 'Username', flex: 0.3, valueGetter: params => getUser(params.row.candidateId)?.name },
+                {field: "id", headerName: isSm ? "Candidate ID" : "cID", flex: 0.5},
+                {field: "userName", headerName: "Username", flex: 0.3},
+                { field: 'fullName', headerName: 'Full Name', flex: 0.4},
                 {
                     field: "addtoBlacklist",
                     headerName: isSm ? "Add to Blacklist" : "Add",
@@ -210,7 +207,7 @@ function CandidateTable(props) {
                 >
                     <DataGrid
                         rows={candidate}
-                        getRowId={(row) => row.candidateId}
+                        getRowId={(row) => row.id}
                         columns={columns}
                         slots={{toolbar: QuickSearchToolbar}}
                         // display="flex"
@@ -253,7 +250,7 @@ function InterviewerTable(props) {
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            Interviewer ID: {params.row.interviewerId}<br/>
+                            Interviewer ID: {params.row.id}<br/>
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
@@ -278,16 +275,16 @@ function InterviewerTable(props) {
     useEffect(() => {
         dispatch({type: "saga/getInterviewer"});
     }, [dispatch]);
-    useEffect(() => {
-        dispatch({type: "saga/getDepartmentAdmin"});
-    }, [dispatch]);
-    const departments = useSelector(state => state.admin.department)
+    // useEffect(() => {
+    //     dispatch({type: "saga/getDepartmentAdmin"});
+    // }, [dispatch]);
+    // const departments = useSelector(state => state.admin.department)
     const interviewer = useSelector(state => state.admin.interviewer)
-    const interviewersWithDepartmentNames = interviewer.map((interviewer) => {
-        const department = departments.find((department) => department.departmentId === interviewer.departmentId);
-        const departmentName = department ? department.departmentName : "";
-        return { ...interviewer, departmentName };
-    });
+    // const interviewersWithDepartmentNames = interviewer.map((interviewer) => {
+    //     const department = departments.find((department) => department.departmentId === interviewer.departmentId);
+    //     const departmentName = department ? department.departmentName : "";
+    //     return { ...interviewer, departmentName };
+    // });
     function QuickSearchToolbar() {
         return (
             <Grid container margin={1}
@@ -297,20 +294,19 @@ function InterviewerTable(props) {
             </Grid>
         );
     }
-    function getUser(interviewerId) {
-        return inerviewerNames.find(user => user.interviewerId === interviewerId);
-    }
+    // function getUser(interviewerId) {
+    //     return inerviewerNames.find(user => user.interviewerId === interviewerId);
+    // }
 
     const columns = [
-        {field: "interviewerId", headerName: "Interviewer ID", flex: 0.5},
-        { field: 'name', headerName: 'Username', flex: 0.3, valueGetter: params => getUser(params.row.interviewerId)?.name },
-        {
-            field: "departmentName",
-            headerName: "Department",
-            flex: 0.2,
-            cellClassName: "name-column--cell",
-
-        },
+        {field: "id", headerName: "Interviewer ID", flex: 0.5},
+        { field: 'fullName', headerName: 'Full Name', flex: 0.3},
+        { field: 'userName', headerName: 'Username', flex: 0.3, cellClassName: "name-column--cell"},
+        // {
+        //     field: "departmentName",
+        //     headerName: "Department",
+        //     flex: 0.2,
+        // },
         {
             field: "checkInfo",
             headerName: isSm ? "Check Info" : "More",
@@ -372,8 +368,8 @@ function InterviewerTable(props) {
                     }}
                 >
                     <DataGrid
-                        rows={interviewersWithDepartmentNames}
-                        getRowId={(row) => row.interviewerId}
+                        rows={interviewer}
+                        getRowId={(row) => row.id}
                         columns={columns}
                         slots={{toolbar: QuickSearchToolbar}}
                         display="flex"
@@ -415,7 +411,7 @@ function RecruiterTable(props) {
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            Recruiter ID: {params.row.recruiterId}<br/>
+                            Recruiter ID: {params.row.id}<br/>
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
@@ -437,19 +433,19 @@ function RecruiterTable(props) {
     useEffect(() => {
         dispatch({type: "saga/getRecruiter"});
     }, [dispatch]);
-    useEffect(() => {
-        dispatch({type: "saga/getDepartmentAdmin"});
-    }, [dispatch]);
-    const departments = useSelector(state => state.admin.department)
+    // useEffect(() => {
+    //     dispatch({type: "saga/getDepartmentAdmin"});
+    // }, [dispatch]);
+    // const departments = useSelector(state => state.admin.department)
     const recruiter = useSelector(state => state.admin.recruiter)
-    const recruitersWithDepartmentNames = recruiter.map((recruiter) => {
-        const department = departments.find((department) => department.departmentId === recruiter.departmentId);
-        const departmentName = department ? department.departmentName : "";
-        return { ...recruiter, departmentName };
-    });
-    function getUser(recruiterId) {
-        return recruiterNames.find(user => user.recruiterId === recruiterId);
-    }
+    // const recruitersWithDepartmentNames = recruiter.map((recruiter) => {
+    //     const department = departments.find((department) => department.departmentId === recruiter.departmentId);
+    //     const departmentName = department ? department.departmentName : "";
+    //     return { ...recruiter, departmentName };
+    // });
+    // function getUser(recruiterId) {
+    //     return recruiterNames.find(user => user.recruiterId === recruiterId);
+    // }
     function QuickSearchToolbar() {
         return (
             <Grid container margin={1}
@@ -460,11 +456,11 @@ function RecruiterTable(props) {
         );
     }
     const columns = [
-        {field: "recruiterId", headerName: "Recruiter ID", flex: 0.5},
-        { field: 'name', headerName: 'Username', flex: 0.3, valueGetter: params => getUser(params.row.recruiterId)?.name },
+        {field: "id", headerName: "Recruiter ID", flex: 0.5},
+        { field: 'fullName', headerName: 'Full Name', flex: 0.3},
         {
-            field: "departmentName",
-            headerName: "Department",
+            field: "userName",
+            headerName: "Username",
             flex: 0.2,
             cellClassName: "name-column--cell",
         },
@@ -529,8 +525,8 @@ function RecruiterTable(props) {
                     }}
                 >
                     <DataGrid
-                        rows={recruitersWithDepartmentNames}
-                        getRowId={(row) => row.recruiterId}
+                        rows={recruiter}
+                        getRowId={(row) => row.id}
                         columns={columns}
                         slots={{toolbar: QuickSearchToolbar}}
                     />
