@@ -32,39 +32,36 @@ export default function Unauthorized() {
     >
       <Typography variant='h1'
         sx={{
-          fontSize: "72px",
+          fontSize: "40px",
           margin: "0px",
           color: "black",
-          textShadow: "0px 0px 5px black"          
         }}
       >
-        Opps!
+        Opps! Forbidden
       </Typography>
 
       <Box
         sx={{
-          margin: "50px auto",
+          margin: "30px auto",
           border: "5px solid black",
           fontSize: "126px",
           lineHeight: "126px",
           borderRadius: "30px",
-          textShadow: "6px 6px 5px black"
         }}
       >
         403
       </Box>
 
-      <Typography variant="p" 
+      <Typography variant="h5" 
         sx={{ 
           marginTop: '10px',
-          
+          fontSize: "25px",
+          textAlign: 'center',
+          width: '40%'
         }}
       >
         You do not have permission to access this page.
       </Typography>
-      {/* <Button variant="contained" color="primary" onClick={handleBack} style={{ marginTop: '20px' }}>
-        Back to Home
-      </Button> */}
     </Box>
   )
 }
