@@ -14,6 +14,7 @@ function Copyright() {
     </Typography>
   );
 }
+// jhhahahaha
 const Footer = () => {
   const eventFooter = useSelector((state) => state.eventFooter);
   const dispatch = useDispatch();

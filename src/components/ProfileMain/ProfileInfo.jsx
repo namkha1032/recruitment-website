@@ -6,14 +6,14 @@ import { Edit, Email, Home, PermContactCalendar, Person, Phone } from "@mui/icon
 import GigaCard from "../GigaCard/GigaCard";
 
 
-const  ProfileInfo = ({ cvid, user }) => {
-  const [selectedImage, setSelectedImage] = useState(user.image);
+const  ProfileInfo = ({ profile }) => {
+  const [selectedImage, setSelectedImage] = useState(profile.image);
   const [block, setBlock] = useState(true);
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
-  const [birth, setBirth] = useState(user.birth);
-  const [phone, setPhone] = useState(user.phone);
-  const [address, setAddress] = useState(user.address);
+  const [name, setName] = useState(profile.name);
+  const [email, setEmail] = useState(profile.email);
+  const [birth, setBirth] = useState(profile.birth);
+  const [phone, setPhone] = useState(profile.phone);
+  const [address, setAddress] = useState(profile.address);
  
 
   const handleSave = () => {
