@@ -24,7 +24,6 @@ function* getPositionList() {
       "https://leetun2k2-001-site1.gtempurl.com/api/Application"
     )
     const data = formatPositionList(response.data, candidatesPosition.data);
-    console.log(data)
     yield put({ type: "positionList/setPositionList", payload: data });
     yield put({ type: "loading/offLoading" });
     // yield put({
@@ -58,8 +57,12 @@ function* getPositionListWithFilter(action) {
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/Position"
     );
+    const candidatesPosition = yield call(
+      axios.get,
+      "https://leetun2k2-001-site1.gtempurl.com/api/Application"
+    )
     const draft = filterPositionList(response.data, action.payload);
-    const data = formatPositionList(draft);
+    const data = formatPositionList(draft, candidatesPosition.data);
     yield put({ type: "positionList/setPositionList", payload: data });
     yield put({ type: "loading/offLoading" });
     // yield put({

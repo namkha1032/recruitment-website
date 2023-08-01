@@ -28,8 +28,11 @@ function* getAllInterview() {
     const itrsinterviews = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Itrsinterview");
     const rooms = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Room");
     const shifts = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Shift");
+    const recruiters = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Recruiter");
+    const interviewers = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Interviewer");
+    const candidates = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Candidate");
 
-    const data = yield call(formatInterviewList, response.data, applications.data, itrsinterviews.data, rooms.data, shifts.data);
+    const data = yield call(formatInterviewList, response.data, applications.data, itrsinterviews.data, rooms.data, shifts.data, recruiters.data, interviewers.data, candidates.data);
     
     yield put({
       type: "interviewList/setInterviewList",
