@@ -11,7 +11,7 @@ function* doGetCandidate(action){
         const config = {
             headers: { Authorization: token },
         }
-        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Admin/GetAllCandidate`,config);
+        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`,config);
         yield put({type:"admin/getCandidate",payload: res.data})
     }
     catch (error) {
@@ -27,7 +27,7 @@ function* doGetRecruiter(action){
         const config = {
             headers: { Authorization: token },
         }
-        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Admin/GetAllRecruiter`,config);
+        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Recruiter`,config);
         yield put({type:"admin/getRecruiter",payload: res.data})
     }
     catch (error) {
@@ -50,7 +50,7 @@ function* doGetInterviewer(action){
         const config = {
             headers: { Authorization: token },
         }
-        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Admin/GetAllInterviewer`,config);
+        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interviewer`,config);
         yield put({type:"admin/getInterviewer",payload: res.data})
     }
     catch (error) {
@@ -139,6 +139,41 @@ function* doAddToBlacklist(action){
     }
 }
 
+function* doAddAccount(action){
+    try {
+        let userlocal = JSON.parse(window.localStorage.getItem("user"))
+        console.log(userlocal)
+        let token = `Bearer ${userlocal.token}`
+        console.log(token)
+        const config = {
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        };
+        const {
+            fullname,
+            username,
+            email,
+            password,
+            departmentId,
+            role
+        } = action.payload;
+        const data = {
+            fullName: fullname,
+            username: username,
+            email: email,
+            password: password,
+            departmentId: departmentId,
+        };
+        const res = yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Admin/Create?role=${role}`, data, config);
+        console.log(res,data,`https://leetun2k2-001-site1.gtempurl.com/api/Admin/Create?role=${role}`)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 function* adminSaga(){
     yield takeEvery('saga/getCandidate',doGetCandidate);
     yield takeEvery('saga/getInterviewer',doGetInterviewer);
@@ -146,7 +181,7 @@ function* adminSaga(){
     yield takeEvery('saga/getBlacklist',doGetBlacklist);
     yield takeEvery('saga/getDepartmentAdmin',doGetDepartment);
     yield takeEvery('saga/addToBlacklist',doAddToBlacklist);
-
+    yield takeEvery('saga/addAdvancedAccount',doAddAccount);
 
 }
 export default adminSaga
