@@ -27,6 +27,7 @@ import requirementSaga from "./saga/requirementSaga";
 import createCvSaga from "./saga/createCvSaga";
 
 import cvCandidateSaga from "./saga/cvCandidateSaga";
+import profileSaga from "./saga/profileSaga";
 function* rootSaga() {
     yield all([
         adminSaga(),
@@ -52,7 +53,8 @@ function* rootSaga() {
         requirementSaga(),
         createCvSaga(),
         testSaga(),
-        cvCandidateSaga()
+        cvCandidateSaga(),
+        profileSaga()
     ])
 }
 
