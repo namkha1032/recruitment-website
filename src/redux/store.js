@@ -46,6 +46,7 @@ import statusSlice from "./reducer/statusReducer";
 import cvCandidateSlice from './reducer/cvCandidateReducer'
 import eventFooterSlice from "./reducer/eventFooterReducer";
 import profileSlice from "./reducer/profileReducer";
+import eventNavigateSlice from "./reducer/eventNavigateReducer";
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
     reducer: {
@@ -86,7 +87,8 @@ const store = configureStore({
         status: statusSlice.reducer,
         cvCandidate: cvCandidateSlice.reducer,
         eventFooter: eventFooterSlice.reducer,
-        profile: profileSlice.reducer
+        profile: profileSlice.reducer,
+        eventNavigate: eventNavigateSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]

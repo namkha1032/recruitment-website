@@ -1,6 +1,6 @@
 // import libraries
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 
 // import MUI components
@@ -27,13 +27,32 @@ import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import GroupAddRoundedIcon from '@mui/icons-material/GroupAddRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
+import { useDispatch, useSelector } from 'react-redux'
+import cleanStore from '../../utils/cleanStore'
 
 
 
 const Page_Company_Event_Id_Update = () => {
 
+    // useNavigate
+    const navigate = useNavigate()
+
+    const { eventid } = useParams();
+    console.log('company event id for update: ', eventid);
+
+    // const dispatch = useDispatch();
+    // useEffect(() => {
+    //     dispatch({ type: "saga/getEvent", payload: eventid })
+    //     return () => {
+    //         cleanStore(dispatch)
+    //     }
+    // }, [])
+
+    // const event = useSelector((state) => state.event)
+
+
     // useState
-    const [name, setName] = useState(null);
+    const [name, setName] = useState("");
     const [maxQuantity, setMaxQuantity] = useState(null);
     const [location, setLocation] = useState(null);
 
@@ -43,6 +62,15 @@ const Page_Company_Event_Id_Update = () => {
     const [image, setImage] = useState(null);
     const [fileName, setFileName] = useState("No selected file");
     // const [fileSelected, setFileSelected] = useState(false);
+
+
+    // useEffect(() => {
+    //     if (event) {
+    //         setName(
+    //             event ? event.eventName : ""
+    //         )
+    //     }
+    // }, [event.eventName])
 
 
     // handle events
@@ -68,6 +96,9 @@ const Page_Company_Event_Id_Update = () => {
             contentRef.current.innerHTML = content
         }
     })
+
+    // console.log("KEO: ", event.eventName)
+    // console.log("KEOname: ", name)
 
 
     // const handleImage = (e) => {
@@ -103,12 +134,10 @@ const Page_Company_Event_Id_Update = () => {
     // console.log(fileName)
 
 
-    // useNavigate
-    const navigate = useNavigate()
-
-
 
     return (
+        // event &&
+        // <>
         <form onSubmit={handleSubmit}>
             <GigaCard>
                 <Container sx={{ marginTop: 6 }} className='eventupdate' >
@@ -144,10 +173,12 @@ const Page_Company_Event_Id_Update = () => {
                                         </InputAdornment>
                                     ),
                                 }}
+                                // value={name} 
                             >
                             </TextField>
                         </Grid>
-                        <Grid
+
+                        {/* <Grid
                             item
                             xs={12}
                             display="flex"
@@ -172,11 +203,12 @@ const Page_Company_Event_Id_Update = () => {
                                 }}
                             >
                             </TextField>
-                        </Grid>
+                        </Grid> */}
 
                         <Grid container sx={{ marginTop: 5 }}>
                             <Grid item xs={6} sx={{ paddingRight: 2 }}>
-                                <Grid container rowSpacing={4.5}>
+                                {/* <Grid container rowSpacing={4.5}> */}
+                                <Grid container rowSpacing={6}>
                                     <Grid
                                         item
                                         xs={12}
@@ -204,10 +236,10 @@ const Page_Company_Event_Id_Update = () => {
                                                     onChange={(newValue) => {
                                                         // console.log("main: ", newValue)
                                                         // console.log("sub: ", newValue.$d)
-                                                        const newDate = new Date(newValue.$d)
+                                                        // Step 1: const newDate = new Date(newValue.$d)
                                                         // console.log("newDate: ", newDate)
                                                         // console.log("type: ", typeof (newValue.$d.toLocaleTimeString()))
-                                                        console.log("DateTime updated: ", newDate.toLocaleString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }))
+                                                        // Step 2: console.log("DateTime created: ", newDate.toLocaleString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }))
                                                         setTime(newValue)
                                                     }}
                                                     format='HH:mm:ss DD/MM/YYYY'
@@ -215,6 +247,36 @@ const Page_Company_Event_Id_Update = () => {
                                             </DemoContainer>
                                         </LocalizationProvider>
                                     </Grid>
+
+                                    {/* ------------------------- Maximum number of participants ------------------------- */}
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        display="flex"
+                                        alignItems="center"
+                                        justifyContent="flex-start"
+                                    >
+                                        <TextField
+                                            id="maximumnumber"
+                                            label="Maximum number of participants"
+                                            variant="outlined"
+                                            fullWidth
+                                            required
+                                            type='number'
+                                            inputProps={{ min: '0' }}
+                                            onChange={handleMaxQuantity}
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <GroupAddRoundedIcon></GroupAddRoundedIcon>
+                                                    </InputAdornment>
+                                                ),
+                                            }}
+                                        >
+                                        </TextField>
+                                    </Grid>
+                                    {/* --------------------------------------------------------------------------- */}
+
                                     <Grid
                                         item
                                         xs={12}
@@ -257,7 +319,8 @@ const Page_Company_Event_Id_Update = () => {
                                     // display: 'flex',
                                     // justifyContent: 'center',
                                     // alignItems: 'center'
-                                    marginTop: 1.25
+                                    // marginTop: 1.25
+                                    marginTop: 1.1
                                 }}
                             >
                                 <Grid
@@ -285,6 +348,7 @@ const Page_Company_Event_Id_Update = () => {
                                         placeholder='Typing Event Content here...'
                                         value={content}
                                         onChange={setContent}
+                                        style={{ height: '320px' }}
                                     >
                                     </ReactQuill>
                                 </Grid>
@@ -305,9 +369,22 @@ const Page_Company_Event_Id_Update = () => {
                                     className='input-field'
                                     hidden
                                     onChange={({ target: { files } }) => {
-                                        files[0] && setFileName(files[0].name)
-                                        if (files) {
-                                            setImage(URL.createObjectURL(files[0]))
+                                        // files[0] && setFileName(files[0].name)
+                                        // if (files) {
+                                        //     setImage(URL.createObjectURL(files[0]))
+                                        // }
+                                        if (files && files[0]) {
+                                            setFileName(files[0].name);
+                                            // Check browser support for URL.createObjectURL
+                                            if (typeof URL !== "undefined" && URL.createObjectURL) {
+                                                try {
+                                                    setImage(URL.createObjectURL(files[0]));
+                                                } catch (error) {
+                                                    console.error("Error creating object URL:", error);
+                                                }
+                                            } else {
+                                                console.error("URL.createObjectURL is not supported in this browser.");
+                                            }
                                         }
                                     }}
                                 />
@@ -355,7 +432,7 @@ const Page_Company_Event_Id_Update = () => {
                                     }}></DeleteRoundedIcon>
                             </div>
                             <Grid item xs={12} align='right' sx={{ marginTop: 6 }}>
-                                <Button type="submit" variant="contained" size='large'>
+                                <Button type="submit" variant="contained" size='large' sx={{ backgroundColor: 'black' }}>
                                     <TaskAltIcon sx={{ marginRight: 1 }}></TaskAltIcon>
                                     Save
                                 </Button>
@@ -365,6 +442,7 @@ const Page_Company_Event_Id_Update = () => {
                 </Container>
             </GigaCard>
         </form>
+        // </>
     )
 }
 
