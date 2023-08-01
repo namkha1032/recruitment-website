@@ -15,8 +15,13 @@ import {grey} from "@mui/material/colors";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {useDispatch, useSelector} from 'react-redux';
 import {Box} from "@mui/system";
+import {useTheme} from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const Page_Company_Account_Create = () => {
+    const theme = useTheme();
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch({type: "saga/getDepartmentAdmin"});
@@ -24,10 +29,6 @@ const Page_Company_Account_Create = () => {
     const department = useSelector(state => state.admin.department)
     const [departmentSelected,setDepartment]=React.useState('')
     return (
-        <Box
-            component="form"
-            noValidate
-            autoComplete="off">
         <Card
             raised="true"
             sx={{
@@ -35,7 +36,9 @@ const Page_Company_Account_Create = () => {
                 // border: "1px solid black",
                 // borderRadius: 1,
                 padding:5,
-                boxShadow:5
+                boxShadow:5,
+                mt: '5vh',
+                mb: '10vh'
             }}>
         <Grid
             container
@@ -47,14 +50,14 @@ const Page_Company_Account_Create = () => {
                     item
                     xs={12}
                     md={1}>
-                <AccountCircleIcon sx={{fontSize: 80}}/>
+                <AccountCircleIcon sx={isSm ? {fontSize: 80} : {fontSize: 60}}/>
             </Grid>
             <Grid
                     item
                     xs={12}
                     md={11}
                     display="flex">
-            <Typography variant="h2"
+            <Typography variant={isSm ? "h2" : "h4"}
                         display="flex"
                         alignItems="center"
                         justifyContent="left"
@@ -161,6 +164,10 @@ const Page_Company_Account_Create = () => {
                     sx={{
                         boxShadow:5,
                         backgroundColor: grey[900],
+                        '&:hover': {
+                            color: grey[900],
+                            backgroundColor: grey[300], // set the hover color to light grey
+                        },
                     }}
                 >
                     Create
@@ -168,8 +175,7 @@ const Page_Company_Account_Create = () => {
             </Grid>
         </Grid>
         </Card>
-        </Box>
-    );
+        );
 }
 
 export default Page_Company_Account_Create
