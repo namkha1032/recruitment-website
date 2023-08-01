@@ -3,42 +3,50 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, Divider, useMediaQuery, useTheme } from "@mui/material";
 import './style.css'
 
 
 const  ModalCertificates = ({certificate}) => {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClick = () => setOpen(!open);
+  const theme = useTheme()
+  // const isXs = useMediaQuery(theme.breakpoints.down("xs"))
+  const isMd = useMediaQuery(theme.breakpoints.down("md"))
+
   const [scroll, setScroll] = React.useState("paper");
   return (
     <>
+    
+    <Box width='8px' sx={{display:'flex',flexWrap:'wrap'}} mb={2}> 
+      <Box sx={{width:'8px',height:'8px',borderRadius:'50%',border:"2px solid black",backgroundColor: open ? 'white' : 'black',mt:"16px",cursor:'pointer'}} onClick={handleClick} ></Box>
+      <Divider orientation="vertical" flexItem sx={{m:'3.5px',height:'90%',width:'1px',backgroundColor:'black'}} />
+
+    </Box>
+    <Box width='100%' sx={{display:'flex',justifyContent:'space-between'}}>
     <Box
       className='button'
       sx={{
        
-        margin: "10px 16px 0 0",
-        
+        fontSize: isMd ? '14px' :'16px',
         maxHeight: "180px",
-        p: "8px",
-        backgroundColor:'#c0c0c0c0',
-        borderRadius: "8px",
+        m:'8px 0 0 16px',
         
+        cursor:'pointer'
       }}
-      onClick={handleOpen}
       // onMouseLeave={handleClose}
     >
+      <Box> {certificate.expirationDate}</Box>
       <Box>Name: {certificate.certificateName}</Box>  
       <Box>Decription: {certificate.description}</Box>  
-      <Box> Expirationdate: {certificate.expirationDate}</Box>
-      <Box>Dateearned: {certificate.dateEarned}</Box>
-      
-     
-      <Box>Orgranizationname: {certificate.organizationName}</Box>  
-      <Box>Link: {certificate.link}</Box> 
+      <Box display={open ? 'block' : 'none'}>Orgranizationname: {certificate.organizationName}</Box>
+      <Box display={open ? 'block' : 'none'}>Dateearned: {certificate.dateEarned}</Box>
+      <Box display={open ? 'block' : 'none'}>Link: {certificate.link}</Box>
     </Box>
-    <Dialog
+    {console.log(isMd)}
+    <Box display='flex' flexDirection='column' justifyContent='flex-end'><Box sx={{display: isMd ? 'none' : 'block', cursor:'pointer'}} onClick={handleClick}> { open ?'See less' : 'See more...'}</Box></Box>
+    </Box>
+   {/* <Dialog
     open={open}
     // onMouseOut={handleClose}
     onClose={handleClose}
@@ -70,7 +78,7 @@ const  ModalCertificates = ({certificate}) => {
     </Typography>
 
     </DialogContent>
-  </Dialog>
+   </Dialog>*/}
   </>
   );
 }

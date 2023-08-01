@@ -41,7 +41,19 @@ function* getEventList() {
     // });
   }
 }
+function* getEventFooter() {
+  try {
+    yield put({ type: "loading/onLoading" });
+    // const response = yield call(axios.get, `${host.name}/data/eventList.json`)
+    const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event")
 
+    const data = formatEventList(response.data);
+    yield put({ type: "eventFooter/setEventFooter", payload: data });
+    yield put({ type: "loading/offLoading" });
+  } catch (error) {
+
+  }
+}
 
 
 function* getEventListWithFilter(action) {
@@ -137,6 +149,7 @@ function* eventSaga() {
     takeLatest("saga/getEventListWithFilter", getEventListWithFilter),
     takeEvery("saga/getEvent", getEvent),
     takeEvery("saga/getAllCandidateOfEvent", getAllCandidateOfEvent),
+    takeEvery("saga/getEventFooter", getEventFooter),
   ]);
 }
 

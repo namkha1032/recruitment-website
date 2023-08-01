@@ -15,20 +15,20 @@ function Copyright() {
   );
 }
 const Footer = () => {
-  const eventList = useSelector((state) => state.eventList);
+  const eventFooter = useSelector((state) => state.eventFooter);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    dispatch({ type: "saga/getEventList" });
+    dispatch({ type: "saga/getEventFooter" });
   }, []);
   const handleNavigateClick = (id) => {
     navigate(`/event/${id}`);
   };
-  console.log(eventList)
+  console.log(eventFooter)
   return (
-    eventList && <>
-      <Box sx={{ bgcolor: "#c0c0c0c0", color: "white", p: 6 }}>
+    eventFooter && <>
+      <Box sx={{ bgcolor: "#222222", color: "white", p: 6 }}>
         <Container>
           <Grid container spacing={3}>
             <Grid item md={5} xs={12} >
@@ -36,31 +36,42 @@ const Footer = () => {
                 <Typography
                   variant="h4"
                   align="center"
-                  color="text.secondary"
+                  color="#FFFFFF"
                   component="p"
                   sx={{ display: "flex", justifyContent: "flex-start" }}
                 >
                   About us
                 </Typography>
               </Box>
-              <Box sx={{ padding: "0px 0px 0px 30px" }}>
-                <Typography variant="h5" component="header">
-                  My team
-                </Typography>
-              </Box>
+
               <Box sx={{ padding: "15px 0px 0px 30px" }}>
                 <Typography
                   variant="body1"
-                  color="black"
+                  color="#C0C0C0"
                   component="p"
                   sx={{ display: "flex", justifyContent: "flex-start" }}
                 >
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                   Facilis, perspiciatis repellat maxime, adipisci non ipsam at
-                  itaque rerum vitae, necessitatibus nulla animi expedita cumque
-                  provident inventore? Voluptatum in tempora earum deleniti, culpa
-                  odit veniam, ea reiciendis sunt ullam temporibus aut!
+                  adipisci non ipsam at
+                  adipisci non ipsam at
+
                 </Typography>
+              </Box>
+              <Box sx={{ padding: "15px 0px 0px 30px" }}>
+                <Link color="#FFFFF" sx={{ cursor: 'pointer' }}>Read more</Link>
+              </Box>
+              <Box sx={{ padding: "15px 0px 0px 30px" }}>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d489.9388456390998!2d106.65759870694123!3d10.772137569304396!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ec3c161a3fb%3A0xef77cd47a1cc691e!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBCw6FjaCBraG9hIC0gxJDhuqFpIGjhu41jIFF14buRYyBnaWEgVFAuSENN!5e0!3m2!1svi!2s!4v1690777122848!5m2!1svi!2s"
+                  width="430"
+                  height="350"
+                  style={{ border: 0 }}
+                  // allowfullscreen=""
+                  loading="lazy"
+                  // referrerpolicy="no-referrer-when-downgrade"
+                  >
+
+                </iframe>
               </Box>
             </Grid>
             <Grid item md={3} xs={12} >
@@ -68,7 +79,7 @@ const Footer = () => {
                 <Typography
                   variant="h4"
                   align="center"
-                  color="text.secondary"
+                  color="#FFFFFF"
                   component="p"
                   sx={{ display: "flex", justifyContent: "flex-start" }}
                 >
@@ -77,35 +88,35 @@ const Footer = () => {
                 <Typography
                   variant="h6"
                   align="center"
-                  color="text.secondary"
+                  color="#C0C0C0"
                   component="p"
                   sx={{ display: "flex", justifyContent: "flex-start", cursor: 'pointer' }}
                   mt={2}
                   onClick={() => navigate('/home')}
                 >
-                  Home
+                  • Home
                 </Typography>
                 <Typography
                   variant="h6"
                   align="center"
-                  color="text.secondary"
+                  color="#C0C0C0"
                   component="p"
                   sx={{ display: "flex", justifyContent: "flex-start", cursor: 'pointer' }}
                   mt={2}
                   onClick={() => navigate('/recruitment')}
                 >
-                  Recruitment
+                  • Recruitment
                 </Typography>
                 <Typography
                   variant="h6"
                   align="center"
-                  color="text.secondary"
+                  color="#C0C0C0"
                   component="p"
                   sx={{ display: "flex", justifyContent: "flex-start", cursor: 'pointer' }}
                   mt={2}
                   onClick={() => navigate('/event')}
                 >
-                  Event
+                  • Event
                 </Typography>
 
 
@@ -116,14 +127,25 @@ const Footer = () => {
               </Box>
             </Grid>
             <Grid item md={4} xs={12} sx={{ cursor: "pointer" }}>
+              <Box sx={{ padding: "24px 0px 0px 30px" }}>
+                <Typography
+                  variant="h4"
+                  align="center"
+                  color="#FFFFFF"
+                  component="p"
+                  sx={{ display: "flex", justifyContent: "flex-start" }}
+                >
+                  Recent Events
+                </Typography>
+              </Box>
               <Box p='30px 24px 0 24px'>
-                {eventList.slice(0, 4).map((item, index) => (
+                {eventFooter.slice(0, 4).map((item, index) => (
                   <Box
                     key={index}
                     onClick={() => handleNavigateClick(item.EventId)}
                     sx={{
                       padding: "0px 0px 24px 0px",
-                      borderRight: "1px solid lightgrey",
+
                       cursor: "pointer",
                       display: 'flex'
                     }}
@@ -131,14 +153,14 @@ const Footer = () => {
                     <img
                       src="https://cdn.vietnambiz.vn/2020/1/15/photo-1579090002241-15790900035601213027614.jpg"
                       alt=""
-                      style={{ width: "100px", height: '100px' }}
+                      style={{ width: "50px", height: '50px' }}
                     />
                     <Box sx={{ marginLeft: "16px" }}>
 
                       <Typography
                         variant="subtitle1"
                         align="center"
-                        color="text.secondary"
+                        color="#FFFFFF"
                         component="p"
                         sx={{
                           display: "flex", justifyContent: "flex-start", overFlow: 'hidden',
@@ -151,14 +173,21 @@ const Footer = () => {
                       <Typography
                         variant="subtitle1"
                         align="center"
-                        color="text.secondary"
+                        color="#C0C0C0"
                         component="p"
                         sx={{ display: "flex", justifyContent: "flex-start" }}
                       >
-                        {" "}• {item.EventDateTime.slice(0, 10)}
+                        {" "} {item.EventDateTime.slice(0, 10)}
                       </Typography>
-
-                      {item.EventDescription}
+                      <Typography
+                      variant="subtitle1"
+                      align="center"
+                      color="#C0C0C0"
+                      component="p"
+                      sx={{ display: "flex", justifyContent: "flex-start" }}
+                      >{item.EventDescription}
+                      </Typography>
+                      
                     </Box>
                   </Box>
                 ))}</Box>
@@ -167,8 +196,9 @@ const Footer = () => {
 
         </Container>
       </Box>
-      <Box sx={{ bgcolor: "black", color: "white", p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
+      <Box 
+      sx={{ bgcolor: "black", color: "white", p: 6 }} component="footer"  >
+        <Typography variant="h6" align="center" >
           Team 4
         </Typography>
         <Typography

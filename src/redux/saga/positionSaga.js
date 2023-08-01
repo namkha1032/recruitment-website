@@ -81,6 +81,7 @@ function* updatePositionList(action) {
 
 function* getPosition(action) {
   try {
+    console.log(action.payload)
     const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload}`)
     const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Language?languageId=${response1.data.languageId}`)
     console.log("response1", response1.data);

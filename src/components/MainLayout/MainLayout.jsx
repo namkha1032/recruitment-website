@@ -16,37 +16,40 @@ import { useNavigate } from "react-router-dom";
 import useGetRole from "../../hooks/useGetRole";
 const drawerWidth = 240;
 
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme, open }) => {
-    const isMd = useMediaQuery(theme.breakpoints.up("md"));
-    return {
-      flexGrow: 1,
-      // padding: isMd ? theme.spacing(3) : 0,
-      paddingBottom: theme.spacing(3),
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      marginTop: "69px",
-      // maxWidth: "100%",
-      // height: "100%",
-      // maxHeight: "100vh",
-      // height: "93vh",
-      overflowY: "scroll",
-      marginLeft: isMd ? `-${drawerWidth}px` : "0px",
-      // width: "100vw",
-      // marginLeft: `-${drawerWidth}px`,
-      ...(open && {
-        transition: theme.transitions.create("margin", {
-          easing: theme.transitions.easing.easeOut,
-          duration: theme.transitions.duration.enteringScreen,
-        }),
-        marginLeft: 0,
-      }),
-      backgroundColor: theme.palette.grey[200],
-      // backgroundColor: "red"
-    };
-  }
+
+
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+    ({ theme, open }) => {
+        const isMd = useMediaQuery(theme.breakpoints.up('md'));
+        return {
+            flexGrow: 1,
+            // padding: isMd ? theme.spacing(3) : 0,
+            paddingBottom: theme.spacing(3),
+            paddingTop: theme.spacing(3),
+            transition: theme.transitions.create('margin', {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.leavingScreen,
+            }),
+            marginTop: "69px",
+            // maxWidth: "100%",
+            // height: "100%",
+            // maxHeight: "100vh",
+            // height: "93vh",
+            overflowY: "scroll",
+            marginLeft: isMd ? `-${drawerWidth}px` : "0px",
+            // width: "100vw",
+            // marginLeft: `-${drawerWidth}px`,
+            ...(open && {
+                transition: theme.transitions.create('margin', {
+                    easing: theme.transitions.easing.easeOut,
+                    duration: theme.transitions.duration.enteringScreen,
+                }),
+                marginLeft: 0,
+            }),
+            backgroundColor: theme.palette.grey[200],
+            // backgroundColor: "red"
+        }
+    },
 );
 
 function MainLayout() {
@@ -77,31 +80,24 @@ function MainLayout() {
       ? true
       : false;
 
-  return (
-    <>
-      <Box sx={{ display: "flex" }}>
-        <Navbar
-          open={showSidebar && isMd ? open : false}
-          setOpen={setOpen}
-          drawerWidth={drawerWidth}
-          showSidebar={showSidebar}
-        />
-        <Sidebar
-          open={showSidebar ? open : false}
-          setOpen={setOpen}
-          drawerWidth={drawerWidth}
-          showSidebar={showSidebar}
-        />
-        <Main open={showSidebar ? open : false}>
-          {/* <DrawerHeader /> */}
-          <Container>
-            <Outlet />
-          </Container>
-          <Footer />
-        </Main>
-      </Box>
-    </>
-  );
+    return (
+        <>
+            <Box sx={{ display: 'flex' }}>
+                <Navbar open={showSidebar && isMd ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} />
+                <Sidebar open={showSidebar ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} />
+                <Main open={showSidebar ? open : false}>
+                    {/* <DrawerHeader /> */}
+                    <Container>
+                        <Outlet />
+
+                    </Container>
+
+                </Main>
+
+            </Box>
+            <Footer />
+        </>
+    );
 }
 
 export default MainLayout;

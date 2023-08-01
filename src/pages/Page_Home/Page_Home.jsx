@@ -45,18 +45,18 @@ const defaultTheme = createTheme();
 
 
 //footer 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Team 4
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+// function Copyright() {
+//   return (
+//     <Typography variant="body2" color="text.secondary" align="center">
+//       {'Copyright © '}
+//       <Link color="inherit" href="https://mui.com/">
+//         Team 4
+//       </Link>{' '}
+//       {new Date().getFullYear()}
+//       {'.'}
+//     </Typography>
+//   );
+// }
 
 const Page_Home = () => {
   //
@@ -74,7 +74,7 @@ const Page_Home = () => {
   }
   React.useEffect(() => {
     dispatch({ type: 'saga/getEventList' })
-  }, [])
+ }, [])
   console.log(eventList)
   return (
     eventList && <Box>
