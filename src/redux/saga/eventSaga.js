@@ -207,9 +207,39 @@ function* postEvent(action) {
 
 
 function* putEvent(action) {
-  console.log("put event: ", action.payload)
+  console.log("EventDataforPut: ", action.payload)
   try {
+    yield put({ type: "eventNavigate/onLoading" })
+    const {
+      eventId,
+      eventName,
+      description,
+      quantity,
+      maxParticipants,
+      datetimeEvent,
+      place,
+      createdTime
+    } = action.payload;
+    console.log(action.payload)
+    const request = {
+      eventName: eventName,
+      recruiterId: "00000000-0000-0000-0000-000000000001",
+      description: description,
+      place: place,
+      isDeleted: false,
+      datetimeEvent: datetimeEvent,
+      maxParticipants: maxParticipants,
+    }
+    const response = yield call(
+      axios.put,
+      `https://leetun2k2-001-site1.gtempurl.com/api/Event/${eventId}`, request
+    );
 
+    const eventList = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event")
+
+    const EventId = eventList.data.filter(item => item.eventName === eventName && item.description === description)[0].eventId
+    console.log('eId: ', EventId)
+    yield put({ type: "eventNavigate/onSuccess", payload: EventId })
   }
   catch (error) {
     console.log(error)
@@ -268,6 +298,7 @@ function* eventSaga() {
     takeEvery("saga/getAllCandidateOfEvent", getAllCandidateOfEvent),
     takeEvery("saga/getEventFooter", getEventFooter),
     takeEvery("saga/postEvent", postEvent),
+    takeEvery("saga/putEvent", putEvent),
     takeEvery("saga/getCandidateId", getCandidateId),
     takeEvery("saga/postCandidateJoinEvent", postCandidateJoinEvent)
     // takeEvery("saga/getEventListId", getEventListId),

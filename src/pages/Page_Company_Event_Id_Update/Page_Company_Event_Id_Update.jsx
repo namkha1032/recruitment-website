@@ -49,16 +49,23 @@ const Page_Company_Event_Id_Update = () => {
     }, [])
 
     const event = useSelector((state) => state.event)
-    console.log("XXXXX: ", event)
+    console.log("MNPQ: ", event)
+    console.log("VLP: ", new Date("2023-08-18T17:00:00"))
 
     useEffect(() => {
-        setName(event ? event.eventName : "XYZT")
-        // setMaxQuantity()
+        // setName(event ? event.eventName : "XYZT")
+        // setMaxQuantity(event ? event.maxQuantity : 282023)
+        // setLocation(event ? event.location : "FPT Software Hồ Chí Minh")
+        // setContent(event ? event.content : "This is one of the most memorable events")
+        setName(event ? event.eventName : "")
+        setMaxQuantity(event ? event.maxQuantity : 0)
+        setLocation(event ? event.location : "")
+        setContent(event ? event.content : "")
     }, [event])
 
 
     // useState
-    const [name, setName] = useState("ABCD");
+    const [name, setName] = useState(null);
     const [maxQuantity, setMaxQuantity] = useState(null);
     const [location, setLocation] = useState(null);
 
@@ -81,7 +88,7 @@ const Page_Company_Event_Id_Update = () => {
 
     // handle events
     const handleName = (e) => {
-        console.log("XXXXX: ", e.target.value)
+        console.log("MNPQ: ", e.target.value)
         setName(e.target.value);
     }
 
@@ -104,6 +111,9 @@ const Page_Company_Event_Id_Update = () => {
         }
     })
 
+    const eventStatus = useSelector((state) => state.eventNavigate)
+
+
     // console.log("KEO: ", event.eventName)
     // console.log("KEOname: ", name)
 
@@ -122,11 +132,35 @@ const Page_Company_Event_Id_Update = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Output: ", name);
-    
+        console.log(name);
+        console.log(maxQuantity);
+        console.log(location);
 
-        
-        // navigate("/company/event/:eventid");
+        console.log(content);
+        console.log(time);
+
+        console.log(image);
+
+        // ---------------------------------------
+        const output = new Date(time.$d)
+        const re = output.toJSON()
+        console.log("JSONformat: ", re)
+        console.log(typeof (re))
+        // ---------------------------------------
+
+        dispatch({
+            type: "saga/putEvent",
+            payload: {
+                eventId: eventid,
+                eventName: name,
+                description: content,
+                quantity: 50,
+                maxParticipants: maxQuantity,
+                datetimeEvent: re,
+                place: location,
+                createdTime: "16/07/2023 10:30"
+            }
+        });
     }
 
     // const [fileName, setFileName] = useState(null)
@@ -135,12 +169,20 @@ const Page_Company_Event_Id_Update = () => {
     // }
     // console.log(fileName)
 
+    useEffect(() => {
+        if (eventStatus.status === "success") {
+            navigate(`/company/event/${eventStatus.message}`);
+            console.log("===== OK =====")
+            dispatch({ type: "eventNavigate/onReset" })
+        }
+    }, [eventStatus])
+
 
 
     return (
         // event &&
         // <>
-        <form onSubmit={handleSubmit}>
+        (eventStatus.status === 'idle' || eventStatus.status === 'loading') && <form onSubmit={handleSubmit}>
             <GigaCard>
                 <Container sx={{ marginTop: 6 }} className='eventupdate' >
                     <Box sx={{
@@ -175,7 +217,7 @@ const Page_Company_Event_Id_Update = () => {
                                         </InputAdornment>
                                     ),
                                 }}
-                                value={name} 
+                                value={name}
                             >
                             </TextField>
                         </Grid>
@@ -274,6 +316,7 @@ const Page_Company_Event_Id_Update = () => {
                                                     </InputAdornment>
                                                 ),
                                             }}
+                                            value={maxQuantity}
                                         >
                                         </TextField>
                                     </Grid>
@@ -307,6 +350,7 @@ const Page_Company_Event_Id_Update = () => {
                                                     style: { marginTop: 10, marginLeft: 5 },
                                                 }
                                             }}
+                                            value={location}
                                         >
                                         </TextField>
                                     </Grid>
