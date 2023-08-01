@@ -21,13 +21,16 @@ import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader";
 import { useParams } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 600,
-    // height: "60%",
+    // width: 600,
+    width: "50%",
     maxHeight: "60%",
     bgcolor: 'background.paper',
     // // border: '2px solid #000',
@@ -136,10 +139,13 @@ const Page_Recruitment_Id = () => {
         }
     };
     const tabs = 1
+    const theme = useTheme()
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     return (
 
         <Grid container spacing={2} >
-            <Grid item xs={12}>
+            <Grid item xs={12} md={12} sm={12}>
                 {/* tabs={tabs} */}
                 <Info_view tabs={tabs} />
             </Grid>
@@ -147,15 +153,11 @@ const Page_Recruitment_Id = () => {
                 <>
                     <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
                         <Button sx={{
-                            color: "black",
-                            border: "1px solid black",
-                            textTransform: "none",
-
+                            backgroundColor: "black",
                             ":hover": {
-                                backgroundColor: "black",
-                                color: "white"
+                                backgroundColor: "grey",
                             }
-                        }} variant='outlined' onClick={handleOpen}>
+                        }} variant='contained' onClick={handleOpen}>
                             <InsertDriveFileIcon></InsertDriveFileIcon>  Apply
                         </Button>
                     </Grid>
@@ -165,22 +167,22 @@ const Page_Recruitment_Id = () => {
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                     >
-                        <Box sx={style}>
+                        <Box sx={{ ...style, width: isMd ? "50%" : "90%" }}>
                             {/* <Typography id="modal-modal-title" variant="h6" component="h2" sx ={{marginBottom: "10px"}} >
                                 Choose your CV
                             </Typography> */}
-                            <Box sx={{ display: "flex", flexDirection: "flex-start", p: 4, paddingBottom: 0 }}>
-                                <Typography id="modal-modal-title" variant="h5" component="h2" sx={{ marginBottom: "10px", fontWeight: "bold" }}>
+                            <Box sx={{ display: "flex", flexDirection: "flex-start", p: 4, paddingBottom: 0, backgroundColor: "black"}}>
+                                <Typography id="modal-modal-title" variant="h5" component="h2" sx={{ marginBottom: "10px", fontWeight: "bold", color: "white" }}>
                                     Choose your CV
                                 </Typography>
                             </Box>
-                            <div className='line'></div>
+                            <Divider sx={{ marginY: 0 }} />
                             {list_CV.length > 0 ? (
                                 <Box sx={{ overflowY: "auto", paddingLeft: 4, paddingBottom: 4, paddingTop: 0 }}>
                                     <form onSubmit={handleSubmit}>
                                         <FormControl sx={{ display: "flex", flexDirection: "column", width: "100%" }} variant="standard">
                                             <Box sx={{ display: "flex", flexDirection: "row" }}>
-                                                <Grid item xs={9}>
+                                                <Grid item xs={9} md={9} sm={6}>
                                                     <Box >
                                                         <RadioGroup
                                                             aria-labelledby="demo-error-radios"
@@ -194,16 +196,17 @@ const Page_Recruitment_Id = () => {
                                                         </RadioGroup>
                                                     </Box>
                                                 </Grid>
-                                                <Grid item xs={2}>
+                                                <Grid item xs={2} md={2} sm={2}>
                                                     <Box sx={{ display: "flex", flexDirection: "column" }}>
                                                         {list_CV.map((CV) => (
                                                             <Button key={CV.cvId} sx={{
-                                                                color: "white",
-                                                                border: "1px solid black",
-                                                                textTransform: "none",
+
                                                                 backgroundColor: "black",
                                                                 // top right bottom left
-                                                                margin: "0px 0px 4px 8px"
+                                                                margin: "0px 0px 6px 8px",
+                                                                ":hover": {
+                                                                    backgroundColor: "grey",
+                                                                }
 
                                                             }} variant="contained" onClick={() => handleTextClick(CV.CVid)}>
                                                                 Detail
@@ -219,31 +222,36 @@ const Page_Recruitment_Id = () => {
                                             </Box>
                                         </FormControl>
                                         <Box sx={{ display: "flex" }}>
-                                            <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-start" }}>
+                                            <Grid item xs={6} md={6} sx={{ display: "flex", justifyContent: "flex-start" }}>
                                                 <Button sx={{
-                                                    color: "black",
-                                                    border: "1px solid black",
-                                                    textTransform: "none",
 
+                                                    backgroundColor: "black",
                                                     ":hover": {
-                                                        backgroundColor: "black",
-                                                        color: "white"
+                                                        backgroundColor: "grey",
                                                     }
-                                                }} size="large" type="submit" variant="outlined" onClick={handleClose}   >
+                                                }} size="medium" type="submit" variant="contained" onClick={handleClose}   >
+
                                                     <CloseIcon></CloseIcon> Close
                                                 </Button>
                                             </Grid>
-                                            <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-end", marginRight: 2 }}>
+                                            <Grid item xs={6} md={6} sx={{ display: "flex", justifyContent: "flex-end", marginRight: isMd ? 2 : 0 }}>
                                                 <Button sx={{
-                                                    color: "black",
-                                                    border: "1px solid black",
-                                                    textTransform: "none",
+
+                                                    backgroundColor: "black",
                                                     ":hover": {
-                                                        backgroundColor: "black",
-                                                        color: "white"
+                                                        backgroundColor: "grey",
                                                     }
-                                                }} size="large" type="submit" variant="outlined" onClick={hanldebutton}   >
-                                                    <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit your CV
+                                                }} size="medium" type="submit" variant="contained" onClick={hanldebutton}   >
+                                                    {isMd ? (
+                                                        <>
+                                                            <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit your CV
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit
+                                                        </>
+                                                    )}
+
                                                 </Button>
 
                                             </Grid>
@@ -259,14 +267,11 @@ const Page_Recruitment_Id = () => {
                                     </Box>
                                     <Box sx={{ display: "flex", alignItems: "flex-end", justifyContent: "flex-end" }}>
                                         <Button sx={{
-                                            color: "black",
-                                            border: "1px solid black",
-                                            textTransform: "none",
+                                            backgroundColor: "black",
                                             ":hover": {
-                                                backgroundColor: "black",
-                                                color: "white"
+                                                backgroundColor: "grey",
                                             }
-                                        }} size="large" variant="outlined" onClick={handlecreate}   >
+                                        }} size="large" variant="contained" onClick={handlecreate}   >
                                             CREATE CV
                                         </Button>
                                     </Box>
