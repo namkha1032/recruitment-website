@@ -2,9 +2,10 @@ import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 import { delay } from "../../utils/delay";
 import host from "../host";
-import { formatEventList } from "../../utils/formatEventList";
+import {  formatEventList } from "../../utils/formatEventList";
 import { filterEventList } from "../../utils/filterEventList";
 import { transferDatetime } from "../../utils/transferDatetime";
+import { formatEventFooter } from "../../utils/formatEventFooter";
 
 function* getEventList() {
   try {
@@ -43,12 +44,16 @@ function* getEventList() {
   }
 }
 function* getEventFooter() {
+ 
   try {
     yield put({ type: "loading/onLoading" });
     // const response = yield call(axios.get, `${host.name}/data/eventList.json`)
     const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event")
-
-    const data = formatEventList(response.data);
+ console.log('-------------------------------------------')
+ console.log(response.data)
+    const data = formatEventFooter(response.data);
+    console.log(data)
+    console.log('-------------------------------------------')
     yield put({ type: "eventFooter/setEventFooter", payload: data });
     yield put({ type: "loading/offLoading" });
   } catch (error) {

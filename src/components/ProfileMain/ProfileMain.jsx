@@ -40,7 +40,7 @@ const ProfileMain = ({ page }) => {
   const positionList = useSelector((state) => state.positionList);
   const dispatch = useDispatch();
   const profile = useSelector(state => state.profile)
-  const userId = useSelector(state => state.user.userid)
+  const userId = useSelector(state => state.user.userId)
   useEffect(() => {
     dispatch({ type: "saga/getPositionList" });
     dispatch({ type: "saga/getProfile" });
