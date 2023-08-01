@@ -49,20 +49,20 @@ function RecruitForm() {
     }
   }, [departmentList, skillList, languageList]);
   // Recruiment comps
-  const [RName, setRName] = useState(recruitInfo.name);
-  const [description, setDescription] = useState(recruitInfo.description);
-  const [salary, setSalary] = useState(recruitInfo.salary);
-  const [maxHire, setMaxHire] = useState(recruitInfo.maxHiring);
-  const [startDate, setStartDate] = useState(recruitInfo.startDate);
-  const [endDate, setEndDate] = useState(recruitInfo.endDate);
+  const [RName, setRName] = useState("");
+  const [description, setDescription] = useState("");
+  const [salary, setSalary] = useState(0);
+  const [maxHire, setMaxHire] = useState(0);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [departmentChoose, setDepartmentChoose] = useState(
-    recruitInfo.departmentId
+    null
   );
   const departments = department.filter(
     (comp) => comp.departmentId === departmentChoose
   );
 
-  const [languages, setLanguages] = useState(recruitInfo.languageId);
+  const [languages, setLanguages] = useState(null);
   // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
   // const [status, setStatus] = useState(recruitInfo.status);
   const [requirement, setRequirement] = useState(recruitInfo.requirement);
@@ -90,11 +90,6 @@ function RecruitForm() {
   let departmentWeb = departments[0] ? departments[0].website : "";
   const navigate = useNavigate();
   //FUNCTION
-  function handleSubmit(e) {
-    e.preventDefault();
-    cleanStore(dispatch);
-    navigate("/company/recruitment/:recruitmentid");
-  }
   const handleChange = (event) => {
     if (event.target.value === "") {
       // setExpress(false);
@@ -143,11 +138,13 @@ function RecruitForm() {
       setNote("");
     } else {
       const newRequire = {
-        id: rId,
+        requirementId: rId,
+        positionId: "00000000-0000-0000-0000-000000000001",
         skillId: skillId,
         skillname: skillName,
         experience: experience,
-        note: note,
+        notes: note,
+        isDeleted:false
       };
       console.log(newRequire);
       setRequirement([...requirement, newRequire]);
@@ -160,7 +157,7 @@ function RecruitForm() {
     }
   }
   function handleRequirementDelete(id) {
-    setRequirement(requirement.filter((component) => component.id !== id));
+    setRequirement(requirement.filter((component) => component.requirementId !== id));
   }
 
   // function handleLanguageAdd() {
@@ -207,6 +204,30 @@ function RecruitForm() {
   function handleEnd(date) {
     setEndDate(date);
     console.log(date);
+  }
+  function handleSubmit(e) {
+    try {
+      dispatch({
+        type: "saga/getCreatePosition",
+        payload:{
+          positionName:RName,
+          description:description,
+          salary:salary,
+          maxHiringQty:maxHire,
+          startDate:startDate.toJSON(),
+          endDate:endDate !== null ? endDate.toJSON() : endDate,
+          departmentId:departmentChoose,
+          languageId:languages,
+          recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
+          requirement:requirement
+        }
+      })
+    } catch (error) {
+      console.log(error);
+    }
+    e.preventDefault();
+    cleanStore(dispatch);
+    navigate("/company/recruitment/:recruitmentid");
   }
   return (
     <>

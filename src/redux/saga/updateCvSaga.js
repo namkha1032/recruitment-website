@@ -36,9 +36,15 @@ function* updateCv(action) {
         ({ [fieldToRemove]: removedField, ...rest }) => rest
       );
     };
+    const changeFieldForCertificates = (certificatesArray, fieldToChange, newValue) => {
+      return certificatesArray.map((certificate) => ({
+        ...certificate,
+        [fieldToChange]: newValue,
+      }));
+    };
     const updatedSkills = removeFieldFromCertificates(Skills, 'cvSkillsId');
     const updatedSkills2 = removeFieldFromCertificates(updatedSkills, 'cvid');
-    const updatedCertificates = removeFieldFromCertificates(Certificates, 'certificateId');
+    const updatedCertificates = changeFieldForCertificates(Certificates, 'certificateId', 'adcb4535-c141-4afa-97d0-f24560889d85');
     
     console.log(" new Certificates: ", updatedCertificates);
     console.log(" new Skills: ", updatedSkills2);
@@ -55,7 +61,7 @@ function* updateCv(action) {
         education:Education,
         isDeleted:false,
         skills:updatedSkills2,
-        certificates:Certificates
+        certificates:updatedCertificates 
       }
     );
     console.log(response)

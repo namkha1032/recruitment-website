@@ -207,13 +207,13 @@ function CVForm() {
     const newCert = {
       certificateId: Cid,
       certificateName: Cname,
+      description: detail,
       organizationName: organize,
       dateEarned: startDate.toJSON(),
       expirationDate: endDate !== null ? endDate.toJSON() : endDate,
-      description: detail,
       link: link,
-      cvid: "1f357759-6d1e-47e7-a04b-01a92e73c115",
-      isDeleted:false
+      cvid: "d1c51600-6272-4c78-9b50-36af9d403a28",
+      isDeleted:false,
     };
     console.log(newCert);
     if (Cname !== "" && organize !== "" && startDate !== null && link !== "") {
@@ -289,7 +289,7 @@ function CVForm() {
   };
   async function handleSubmit(e) {
     e.preventDefault();
-    // try {
+    try {
     //   // setLoading(true);
     //   // const formData = new FormData();
     //   // formData.append("Cvid", "d1c51600-6272-4c78-9b50-36af9d403a28");
@@ -308,26 +308,26 @@ function CVForm() {
     //   // );
     //   // console.log("FINISHED!!!!!!!!!!!!");
     //   // console.log(response);
-    //   dispatch({
-    //     type: "saga/getUpdateCv",
-    //     payload: {
-    //       Cvid: "d1c51600-6272-4c78-9b50-36af9d403a28",
-    //       CvName: cvtitle,
-    //       Introduction: intro,
-    //       Education:education,
-    //       Experience: experience,
-    //       Skills: skills,
-    //       delSkills: delSkills,
-    //       addSkills: addSkills,
-    //       Certificates: certs,
-    //       delCerts: delCerts,
-    //       addCerts: addCerts,
-    //     },
-    //   });
-    //   setLoading(false);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+      dispatch({
+        type: "saga/getUpdateCv",
+        payload: {
+          Cvid: "d1c51600-6272-4c78-9b50-36af9d403a28",
+          CvName: cvtitle,
+          Introduction: intro,
+          Education:education,
+          Experience: experience,
+          Skills: skills,
+          delSkills: delSkills,
+          addSkills: addSkills,
+          Certificates: certs,
+          delCerts: delCerts,
+          addCerts: addCerts,
+        },
+      });
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
     cleanStore(dispatch);
     navigate("/profile/:profileid/cv/:cvid");
   }

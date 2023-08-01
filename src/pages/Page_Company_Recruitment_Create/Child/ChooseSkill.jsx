@@ -37,7 +37,7 @@ export default function ChooseList(prop) {
     <>
       <Grid container spacing={0} justifyContent="center" alignItems="center">
         <Grid item xs={9}>
-          <Box sx={{ marginLeft: "1%", marginTop: "8px" }}>
+          <Box sx={{marginTop: "8px" }}>
             <CompHeader headerIcon={<ConstructionIcon />}>Skill</CompHeader>
             <Autocomplete
               value={prop.inputValue}
