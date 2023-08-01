@@ -23,20 +23,20 @@ function* getAllInterview() {
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/Interview"
     );
-    
+
     const applications = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Application");
     const itrsinterviews = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Itrsinterview");
     const rooms = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Room");
     const shifts = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Shift");
 
     const data = yield call(formatInterviewList, response.data, applications.data, itrsinterviews.data, rooms.data, shifts.data);
-    
+
     yield put({
       type: "interviewList/setInterviewList",
       payload: data,
     });
     yield put({ type: "loading/offLoading" });
-  } catch (error) {}
+  } catch (error) { }
 }
 
 function* getInterviewWithFilter(action) {
@@ -71,21 +71,21 @@ function* scoreInterview(action) {
 }
 
 function* createInterview(action) {
-    try {
-        const response = yield call(axios.post, "http://localhost:3001/api/interview/error", action.payload)
-        // throw {
-        //     response: {
-        //         data: {
-        //             error: "trung lich roi lam lai di"
-        //         }
-        //     }
-        // }
-        yield put({ type: "error/setError", payload: { status: "no", message: "" } })
-    }
-    catch (err) {
-        yield put({ type: "error/setError", payload: { status: "yes", message: err.response.data.error } })
-        console.log("err: ", err)
-    }
+  try {
+    const response = yield call(axios.post, "http://localhost:3001/api/interview/error", action.payload)
+    // throw {
+    //     response: {
+    //         data: {
+    //             error: "trung lich roi lam lai di"
+    //         }
+    //     }
+    // }
+    yield put({ type: "error/setError", payload: { status: "no", message: "" } })
+  }
+  catch (err) {
+    yield put({ type: "error/setError", payload: { status: "yes", message: err.response.data.error } })
+    console.log("err: ", err)
+  }
 }
 
 function* getInterviewInfo(action) {

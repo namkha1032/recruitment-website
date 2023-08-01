@@ -2,6 +2,8 @@ import { Typography, Box, Link, Container, Grid } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 function Copyright() {
   return (
     <Typography variant="body2" color="white" align="center">
@@ -16,6 +18,8 @@ function Copyright() {
 }
 // jhhahahaha
 const Footer = () => {
+  const theme = useTheme()
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
   const eventFooter = useSelector((state) => state.eventFooter);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -63,16 +67,17 @@ const Footer = () => {
                 <Link color="#FFFFF" sx={{ cursor: 'pointer' }}>Read more</Link>
               </Box>
               <Box sx={{ padding: "15px 0px 0px 30px" }}>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d489.9388456390998!2d106.65759870694123!3d10.772137569304396!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ec3c161a3fb%3A0xef77cd47a1cc691e!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBCw6FjaCBraG9hIC0gxJDhuqFpIGjhu41jIFF14buRYyBnaWEgVFAuSENN!5e0!3m2!1svi!2s!4v1690777122848!5m2!1svi!2s"
-                  width="430"
-                  height="350"
-                  style={{ border: 0 }}
-                  // allowfullscreen=""
-                  loading="lazy"
-                // referrerpolicy="no-referrer-when-downgrade"
-                >
+                {isSm ?
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d489.9388456390998!2d106.65759870694123!3d10.772137569304396!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ec3c161a3fb%3A0xef77cd47a1cc691e!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBCw6FjaCBraG9hIC0gxJDhuqFpIGjhu41jIFF14buRYyBnaWEgVFAuSENN!5e0!3m2!1svi!2s!4v1690777122848!5m2!1svi!2s"
+                    width="430"
+                    height="350"
+                    style={{ border: 0 }}
+                    // allowfullscreen=""
+                    loading="lazy"
+                  // referrerpolicy="no-referrer-when-downgrade"
+                  >
 
-                </iframe>
+                  </iframe> : null}
               </Box>
             </Grid>
             <Grid item md={3} xs={12} >
