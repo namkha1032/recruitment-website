@@ -20,17 +20,18 @@ const View_general = (props) => {
     let gridSx = {
         display: "flex", alignItems: "center"
     }
-    const description = props.detailposition ? props.detailposition.description1 : '';
+    const description = props.detailposition ? props.detailposition.description : '';
     const desRef = useRef();
     
     useEffect(() => {
         desRef.current.innerHTML =  description
     }, [description])
     console.log("hello", props.detailposition);
-    console.log("hellode", props.department);
+    // console.log("hellode", props.department);
     return (
-        props.detailposition && props.department &&
+        // props.detailposition && props.department &&
         // props.detail &&
+        props.detailposition && 
         <>
             <Grid container spacing={1} sx={{ marginTop: "0px", display: "flex", flexDirection: "column" }}>
                 <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
@@ -66,7 +67,7 @@ const View_general = (props) => {
                         <Box sx ={{marginLeft: "5px"}}>
 
                             {/* {props.detail.departmentName} */}
-                            {props.detailposition.departmentName}
+                            {props.detailposition.department.departmentName}
                             {/* {props.department[0].departmentName} */}
                         </Box>
                     </Typography>
@@ -75,9 +76,9 @@ const View_general = (props) => {
                     <Typography align='left' variant='subtitle1' sx={{ display: "flex" }}>
                         <PhoneIcon></PhoneIcon>
                         <Box sx ={{marginLeft: "5px"}}>
-                            {/* {props.department[0].phone} */}
+                            {props.detailposition.department.phone}
                             {/* {props.detail.departmentPhone} */}
-                            {props.detailposition.departmentPhone}
+                            {/* {props.detailposition.departmentPhone} */}
                         </Box>
                     </Typography>
                 </Grid>
@@ -88,7 +89,7 @@ const View_general = (props) => {
                         <Box sx ={{marginLeft: "5px"}}>
                             {/* {props.department[0].address} */}
                             {/* {props.detail.departmentAddress} */}
-                            {props.detailposition.departmentAddress}
+                            {props.detailposition.department.address}
                         </Box>
 
                     </Typography>
@@ -100,7 +101,7 @@ const View_general = (props) => {
                         <Box sx ={{marginLeft: "5px"}}>
                             {/* {props.department[0].email} */}
                             {/* {props.detail.departmentEmail} */}
-                            {props.detailposition.departmentEmail}
+                            {props.detailposition.department.email}
                         </Box>
                     </Typography>
                 </Grid>
@@ -110,7 +111,7 @@ const View_general = (props) => {
                         <Box sx ={{marginLeft: "5px"}}>
                             {/* <a href={props.department[0].website} > FPT</a> */}
                             {/* <a href={props.detail.departmentWebsite} > FPT</a> */}
-                            <a href={props.detailposition.departmentWebsite} > FPT</a>
+                            <a href={props.detailposition.department.website} > FPT</a>
                         </Box>
                     </Typography>
                 </Grid>

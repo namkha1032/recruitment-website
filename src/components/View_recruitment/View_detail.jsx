@@ -30,6 +30,7 @@ const View_detail = (props) => {
     console.log("hello", props.detailposition);
     // console.log("hellode", props.department);
     console.log("left", left);
+    console.log("skill", props.skill);
     console.log("isSm", isSm);
     return (
         props.detailposition &&
@@ -128,15 +129,15 @@ const View_detail = (props) => {
                 </Grid>
                 <Grid item md={right} sx={gridSx}>
                     <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-start", alignItems: "flex-start" }}>
-                    {/* {props.skill.map((require, index) => (
+                    {props.skill.map((require) => (
 
-                                <Chip key={index} sx={{ margin: "0px 0px 5px 8px" }} label={require} variant='outlined' size='medium' color="warning" />
-                            ))} */}
+                                <Chip key={require.skillId} sx={{ margin: "0px 0px 5px 8px" }} label={require.skillName} variant='outlined' size='medium' color="warning" />
+                    ))}
 
-                    {requires.map((require) => (
+                    {/* {requires.map((require) => (
 
                         <Chip key={require.id} sx={{ margin: "0px 0px 5px 8px" }} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
-                    ))}
+                    ))} */}
 
                     </Stack>
                 </Grid>
@@ -156,7 +157,7 @@ const View_detail = (props) => {
                     </Typography>
                 </Grid>
                 <Grid item md={right} sx={gridSx}>
-                    <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${props.language.languageName}`} />
+                    <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${props.detailposition.language.languageName}`} />
                     {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detail[recruitmentid].languageName}`} /> */}
                 </Grid>
             </Box>

@@ -16,6 +16,7 @@ function* getApplication(action) {
     try {
         // const reponse = yield call(axios.get, `${host.name}/data/applicationList.json`)
         const reponse = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/${action.payload}`)
+        console.log(reponse.data);
         yield put({ type: 'application/setApplication', payload: reponse.data })
     } catch (error) {
         console.log(error)
