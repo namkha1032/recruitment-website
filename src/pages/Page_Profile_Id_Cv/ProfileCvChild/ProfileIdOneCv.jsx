@@ -3,12 +3,14 @@ import { Button, Typography, Grid, Paper, IconButton } from '@mui/material';
 import { FirstPage, LastPage } from '@mui/icons-material';
 import { useNavigate } from 'react-router';
 import AddIcon from '@mui/icons-material/Add';
-
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 export default function ProfileIdOneCv({ events ,img}) {
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const viewCV = useNavigate();
-
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
   const handleDetails = (eventId) => {
     // Perform action when the "Xem chi tiết" button is clicked for an event
     // You can implement this function to display detailed information about the event, e.g., show a popup, navigate to a new page, etc.
@@ -68,7 +70,7 @@ export default function ProfileIdOneCv({ events ,img}) {
       </Grid>
     </Grid>
       <Grid item xs={12} md={12} sx={{ margin: '0 0px',width:'100%'}}>
-        <Grid container  wrap="wrap" sx={{justifyContent:'space-between'}}>
+        <Grid container  wrap="wrap" sx={{justifyContent: isSm ? 'space-between': 'center'}}>
           {displayedEvents.map((event) => (
             <Paper
               key={event.cvid}
@@ -121,9 +123,15 @@ export default function ProfileIdOneCv({ events ,img}) {
             <IconButton onClick={() => handlePageChange(null, 1)} disabled={currentPage === 1} color="primary">
               <FirstPage />
             </IconButton>
-            <IconButton onClick={() => handlePageChange(null, currentPage - 1)} disabled={currentPage === 1}>
+            {
+              isSm ? (
+                <IconButton onClick={() => handlePageChange(null, currentPage - 1)} disabled={currentPage === 1}>
               Prev
             </IconButton>
+              ) : null
+            }
+          </Grid>
+          <Grid item >
             {visiblePages.map((page) => (
               <Button
                 key={page}
@@ -135,9 +143,13 @@ export default function ProfileIdOneCv({ events ,img}) {
                 {page}
               </Button>
             ))}
-            <IconButton onClick={() => handlePageChange(null, currentPage + 1)} disabled={currentPage === totalPages}>
-              Next
-            </IconButton>
+          </Grid>
+          <Grid item>
+            {isSm ? (
+              <IconButton onClick={() => handlePageChange(null, currentPage + 1)} disabled={currentPage === totalPages}>
+                Next
+              </IconButton>
+            ) : null}  
             <IconButton onClick={() => handlePageChange(null, totalPages)} disabled={currentPage === totalPages} color="primary">
               <LastPage />
             </IconButton>

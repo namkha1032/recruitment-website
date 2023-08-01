@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Grid, Typography, Button, Paper,Box } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import TabInProfile from './TabInProfile/TabInProfile';
-import { NotStart,Pending , Completed} from '../Label/LabelStatus';
+import { NotStart,Pending , Completed,Pass} from '../Label/LabelStatus';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
 export default function HistoryList({ events, pathnavigate, NameList, namePage }) {
+
   const [selectedEvent, setSelectedEvent] = useState(null);
   const navigate = useNavigate();
   const [totalPositions, setTotalPositions] = useState(0);
@@ -15,8 +19,7 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
   const handleDetails = (eventId) => {
    console.log(eventId);
     navigate(`${pathnavigate}/${eventId}`);
-    // Thực hiện hành động khi người dùng nhấn vào nút "Xem chi tiết" cho từng event
-    // Bạn có thể triển khai hàm này để hiển thị thông tin chi tiết về event, ví dụ: hiển thị popup, chuyển đến trang mới, ...
+   
   };
 
   const handleEventHover = (event) => {
@@ -27,19 +30,22 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
     setSelectedEvent(null);
   };
 
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+
   const columns = [
-    { field: 'name', headerName: namePage, flex: 2 },
-    { field: 'time', headerName: 'Time', flex: 2 },
+    { field: 'name', headerName: namePage, flex:  isSm ? 2 : 3,minWidth:'300px' },
+    { field: 'time', headerName: 'Time', flex: isSm ? 2 : 3,headerClassName: 'custom-header' },
     {
       field: 'status',
       headerName: 'Status',
-      flex: 2,
+      flex: isSm ? 2 : 1,
       renderCell: (params) => {
         switch (params.value) {
           case "Đang chờ":
-            return <NotStart />;
+            return <Pending />;
           case "Đã đậu":
-            return <Completed/>
+            return <Pass/>
           case "Chưa phỏng vấn":
             return <NotStart/>;
           case "Đã phỏng vấn":
@@ -56,9 +62,20 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
       headerName: 'View',
       flex: 1,
       renderCell: (params) => (
-        <Button variant="contained" color="primary" onClick={() => handleDetails(params.row.id)} style={{ textTransform: "none", backgroundColor:"black" }}>
-          View Detail
-        </Button>
+        <>
+      {isSm ? (
+       <Button
+       variant="contained"
+       color="primary"
+       onClick={() => handleDetails(params.row.id)}
+       style={{ textTransform: "none", backgroundColor: "black" }}
+     >
+       View Detail
+     </Button>
+      ) : (
+        <VisibilityIcon onClick = { () => handleDetails(params.row.id)} style={{ color: "#1565C0" }}/>    
+      )}
+    </>
       ),
     },
   ].filter(Boolean);
@@ -93,6 +110,7 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
                 backgroundColor: selectedEvent === params.id ? '#ffdddd' : 'transparent',
                 ...(params.row.isSelected && { backgroundColor: '#64b5f6', color: '#ffffff' }),
               })}
+              
               onMouseEnter={(params) => handleEventHover(params.row)}
               onMouseLeave={handleEventLeave}
               selection={{ backgroundColor: '#1565C0', color: '#ffffff' }}
@@ -120,6 +138,9 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
                 "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
                   color: "white",
                 },
+                "&.MuiDataGrid-colCellTitle": {
+                  whiteSpace: "normal",
+                }
               }}
               
             />
