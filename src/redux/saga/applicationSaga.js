@@ -34,10 +34,24 @@ function* getApplication(action) {
     }
 
 
-
 }
 
+function* getInfoApplication(action) {
+    try {
+        // const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload}`)
+        const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`)
+        const data = response.data.filter(item => item.applicationId === action.payload)
+        console.log("data applicationid",data)
+        if(data.length ===0) 
+            yield put({ type: 'infoApplication/setInfoApplication', payload: 'none' })
+        else
+            yield put({ type: 'infoApplication/setInfoApplication', payload: data[0] })
+    } catch (error) {
+        console.log(error)
+    }
 
+
+}
 function* submitCv(action) {
     try {
         const reponse = yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Application`, action.payload)
@@ -130,6 +144,7 @@ function* applicationSaga() {
         takeEvery('saga/submitCv', submitCv),
         takeEvery('saga/getApplication', getApplication),
         takeEvery('saga/getDataForInterview', getDataForInterview),
+        takeEvery('saga/getInfoApplication', getInfoApplication),
     ])
 }
 

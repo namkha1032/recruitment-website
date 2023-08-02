@@ -48,6 +48,7 @@ import eventFooterSlice from "./reducer/eventFooterReducer";
 import profileSlice from "./reducer/profileReducer";
 import eventNavigateSlice from "./reducer/eventNavigateReducer";
 import candidateIdSlice from "./reducer/candidateIdReducer";
+import infoApplicationSlice from "./reducer/infoApplicationReducer";
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
     reducer: {
@@ -90,7 +91,8 @@ const store = configureStore({
         eventFooter: eventFooterSlice.reducer,
         profile: profileSlice.reducer,
         eventNavigate: eventNavigateSlice.reducer,
-        candidateId: candidateIdSlice.reducer
+        candidateId: candidateIdSlice.reducer,
+        infoApplication: infoApplicationSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]

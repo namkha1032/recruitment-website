@@ -15,7 +15,7 @@ const View_detail = (props) => {
     // console.log("hello" , props.detailposition.description);
     // console.log("hi", props.detailposition.departmentName);
     const theme = useTheme()
-    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    // const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     const requires = require('../../data/View_recruitment/requires.json');
     // const languages = require('../../data/View_recruitment/languages.json');
@@ -38,10 +38,10 @@ const View_detail = (props) => {
         <>
 
             <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
-                <Grid item xs={4} md={left} sx={{ ...gridSx, columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                <Grid item xs={4} md={left} sx={{ ...gridSx, columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <RadarIcon />
-                        {isMd ? (
+                        {isSm ? (
                             <Typography variant="h6" sx={{ marginLeft: "5px" }}>
                                 Position
                             </Typography>
@@ -67,10 +67,10 @@ const View_detail = (props) => {
                 </Grid>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
-                <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <HourglassBottomRoundedIcon />
-                        {isMd ? (
+                        {isSm ? (
                             <Typography variant="h6" sx={{ marginLeft: "5px" }}>
                                 Time for applied
                             </Typography>
@@ -97,10 +97,10 @@ const View_detail = (props) => {
                 </Grid>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
-                <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <ZoomInIcon />
-                        {isMd ? (
+                        {isSm ? (
                             <Typography variant="h6" sx={{ marginLeft: "5px" }} >
                                 Max Hiring
                             </Typography>
@@ -128,10 +128,10 @@ const View_detail = (props) => {
                 </Grid>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
-                <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <RecommendIcon />
-                        {isMd ? (
+                        {isSm ? (
                             <Typography variant="h6" sx={{ marginLeft: "5px" }}>
                                 Requirement
                             </Typography>
@@ -164,10 +164,10 @@ const View_detail = (props) => {
                 </Grid>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
-                <Grid item xs ={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                <Grid item xs ={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <LanguageIcon />
-                        {isMd ? (
+                        {isSm ? (
                             <Typography variant="h6" sx={{ marginLeft: "5px" }} >
                                 Language
                             </Typography>
@@ -190,7 +190,7 @@ const View_detail = (props) => {
                 </Grid>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row" }}>
-                <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isMd ? 0 : "10px" }}>
+                <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <MonetizationOnIcon />
                         <Typography variant="h6" sx={{ marginLeft: "5px" }} >

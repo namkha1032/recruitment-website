@@ -24,6 +24,7 @@ import {
   import { useDispatch, useSelector } from "react-redux";
   import ModalCertificates from "./ModalCertificates";
   import GigaCard from "../GigaCard/GigaCard";
+import Loading from "../Loading/Loading";
   
   const CVProfile = ({ cvid,page }) => {
     const dispatch = useDispatch();
@@ -39,7 +40,7 @@ import {
   
     return (
       cv &&
-      candidate ? (
+      candidate && (
         <>
         <Box>
           <Grid container spacing={3}>
@@ -255,20 +256,19 @@ import {
               </Box>
               </GigaCard>
           </Grid>
-          <Grid item md={12} xs={12}>
+          { page !== 'Profile' && <Grid item md={12} xs={12}>
           <GigaCard>
   
-          { page !== 'Profile' && <Box p={3}>
+           <Box p={3}>
           <Box m={0} component='h2' textAlign='center'> CV PDF</Box>
           <iframe style={{width:'100%',height:'800px'}} src="http://localhost:3000/data/2019_MT_KTM.pdf" ></iframe>
-        </Box>}
+        </Box>
           </GigaCard>
-          </Grid>
+          </Grid>}
           </Grid>
         </Box>
-        </>
-      ): <Box sx={{display:'flex',justifyContent:'center'}}><CircularProgress color="secondary" /> </Box>  
-    );
+        </>)
+    )
   };
   
   export default CVProfile;

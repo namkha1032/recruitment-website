@@ -32,9 +32,9 @@ const ProfileMain = ({ page }) => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.profile);
   // const profile = null
-  // const userId = useSelector(state => state.user.userId)
-  const userId = "bf39957a-5fad-4e81-a8bd-2c2afa10d15a";
-  // console.log(userId)
+  const userId = useSelector(state => state.user.userid)
+  console.log(userId)
+
   useEffect(() => {
     dispatch({ type: "saga/getPositionList" });
     dispatch({ type: "saga/getProfile" });
@@ -57,7 +57,7 @@ const ProfileMain = ({ page }) => {
     
     <Box sx={{position:'sticky',top:'300px',display:'flex',justifyContent:'center'}}>  
   
-                <CircularProgress color="secondary" />
+            <Box><CircularProgress color="secondary" /> </Box>      
      
     </Box>
     : 
@@ -68,8 +68,8 @@ const ProfileMain = ({ page }) => {
           <ProfileHeader profile={profile} />
         </Box>
         <Grid container spacing={3}>
-          <Grid item md={3} xs={12} position="relative" pb={3}>
-            <Box sx={{ position: "sticky", top: "95px" }}>
+          <Grid item md={3} xs={12} position="relative" >
+            <Box sx={{ position: "sticky", top: "0px" }}>
               <Box sx={{ width: "100%" }}>
                 <GigaCard>
                   <List
