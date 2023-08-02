@@ -12,6 +12,7 @@ import {
 } from "@mui/icons-material";
 import {
   Box,
+  Button,
   Chip,
   Divider,
   Grid,
@@ -23,9 +24,12 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ModalCertificates from "./ModalCertificates";
 import GigaCard from "../GigaCard/GigaCard";
+import Loading from "../Loading/Loading";
+import { useNavigate } from "react-router-dom";
 
 const CV = ({ cvid,page }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cv = useSelector((state) => state.cv);
   const candidate = useSelector((state) => state.candidate);
   useEffect(() => {
@@ -38,9 +42,9 @@ const CV = ({ cvid,page }) => {
 
   return (
     cv &&
-    candidate && (
+    candidate ? (
       <>
-      <Box mb={3}>
+      <Box >
       <GigaCard>
         <Grid container spacing={3} >
         {page !== "Profile" && <>
@@ -277,11 +281,20 @@ const CV = ({ cvid,page }) => {
         <iframe style={{width:'100%',height:'800px'}} src="http://localhost:3000/data/2019_MT_KTM.pdf" ></iframe>
       </Box>}
         </GigaCard>
+         {page === "profile_cv" && <Box sx={{ display: "flex", justifyContent: "flex-end", marginY: 4 }}>
+            <Button
+              variant="contained"
+              color="warning"
+              onClick={() => navigate("/profile/1/cv/1/update")}
+            >
+              update
+            </Button>
+          </Box>}
     </Box>
         
       </Box>
       </>
-    )
+    ):<Loading/>
   );
 };
 
