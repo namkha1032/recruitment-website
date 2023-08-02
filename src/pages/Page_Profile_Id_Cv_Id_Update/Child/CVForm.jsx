@@ -5,16 +5,30 @@ import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import cleanStore from "../../../utils/cleanStore";
-import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
-import axios from "axios";
+import * as React from "react";
 import { Box } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar"
 // import ViewCv from "./ViewCv";
-function CVForm() {
+//http://localhost:3000/profile/1/cv/d1c51600-6272-4c78-9b50-36af9d403a28/update
+const SkillAlert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+const CertAlert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+function CVForm(prop) {
+  const profileid=prop.profileid 
+  const cvid=prop.cvid
+  console.log(cvid)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // fetch Data
   useEffect(() => {
-    dispatch({ type: "saga/getCvinfor" });
+    dispatch({ type: "saga/getCvinfor", 
+    // payload:cvid 
+    payload:"d1c51600-6272-4c78-9b50-36af9d403a28"
+  });
     dispatch({ type: "saga/getLanguage" });
     dispatch({ type: "saga/getSkill" });
     return () => {
@@ -171,7 +185,7 @@ function CVForm() {
     );
     console.log(arr);
     if (arr[0] === undefined) {
-      alert("wrong skill");
+      handleSetSkillOpen()
       setSkillId(null);
       setSName("");
       setSInputValue("");
@@ -222,7 +236,7 @@ function CVForm() {
       dateEarned: startDate.toJSON(),
       expirationDate: endDate !== null ? endDate.toJSON() : endDate,
       link: link,
-      cvid: "d1c51600-6272-4c78-9b50-36af9d403a28",
+      cvid: cvid,
       isDeleted:false,
     };
     console.log(newCert);
@@ -297,6 +311,16 @@ function CVForm() {
     }
     setOpen(false);
   };
+  const [skillOpen, setSkillOpen] = useState(false);
+  const handleSetSkillOpen = () => {
+    setSkillOpen(true);
+  };
+  const handleSkillClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSkillOpen(false);
+  };
   async function handleSubmit(e) {
     e.preventDefault();
     try {
@@ -321,6 +345,7 @@ function CVForm() {
       dispatch({
         type: "saga/getUpdateCv",
         payload: {
+          // Cvid: cvid,
           Cvid: "d1c51600-6272-4c78-9b50-36af9d403a28",
           CvName: cvtitle,
           Introduction: intro,
@@ -339,7 +364,7 @@ function CVForm() {
       console.log(error);
     }
     cleanStore(dispatch);
-    navigate("/profile/:profileid/cv/:cvid");
+    navigate(`/profile/:profileid/cv/${cvid}`);
   }
   //COMPS
   return (
@@ -416,6 +441,32 @@ function CVForm() {
         </Grid>
       </Grid>
       {loading && <p>Loading...</p>}
+      <Snackbar
+        open={skillOpen}
+        autoHideDuration={3000}
+        onClose={handleSkillClose}
+      >
+        <SkillAlert
+          onClose={handleSkillClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Wrong skill's name
+        </SkillAlert>
+      </Snackbar>
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
+        <CertAlert
+          onClose={handleClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Lack of certificate's information
+        </CertAlert>
+      </Snackbar>
       </Box>
     </>
   );

@@ -7,9 +7,12 @@ import GigaCard from "../../../components/GigaCard/GigaCard";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import CompHeader from "./compHeader";
 import DeleteIcon from "@mui/icons-material/Delete";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 function UploadPdf(prop) {
   const fileType = ["application/pdf"];
-
+  const theme = useTheme()
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
   // const handleSubmit = (e) => {
   //   e.preventDefault();
   //   if (prop.pdfFile !== null) {
@@ -133,7 +136,7 @@ function UploadPdf(prop) {
                     <GigaCard>
                       <Box
                         sx={{
-                          height: "940px",
+                          height:isSm? "940px":"420px",
                           width: "100%",
                           margin: "auto",
                           marginBottom: "16px",

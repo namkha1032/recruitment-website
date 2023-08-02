@@ -10,7 +10,7 @@ const InputText = (prop) => {
             m: 1,
             width: prop.width,
             margin: prop.margin,
-            marginTop: "8px",
+            marginTop: "0px",
             marginLeft: prop.marginLeft,
           },
         }}

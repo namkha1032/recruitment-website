@@ -31,13 +31,13 @@ function CvStep2(prop) {
           </Grid>
 
           <Grid item xs={12}>
-            <Box sx={{ width: "98%", margin: "auto" }}>
+            <Box sx={{ width: "100%", margin: "auto" }}>
               <CompHeader headerIcon={<WorkHistoryIcon />}>
                 Work Experience
               </CompHeader>
               <ReactQuill
                 theme="snow"
-                style={{ height: "200px", marginTop: "8px" }}
+                style={{ height: "200px" , marginTop: "8px" }}
                 value={prop.experience}
                 onChange={prop.setExperience}
                 className="QuillCss"

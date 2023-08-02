@@ -8,6 +8,8 @@ import { NumericFormat } from "react-number-format";
 import CompHeader from "./compHeader";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const NumericFormatCustom = forwardRef(function NumericFormatCustom(
   props,
@@ -35,18 +37,22 @@ const NumericFormatCustom = forwardRef(function NumericFormatCustom(
 });
 
 function Box2(prop) {
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up("md"));
   return (
     <>
       <Box
       // sx={{ height: "343.88px" }}
       >
-        <Grid item container xs={12} sx={{ marginTop: "16px" }}>
-          <Grid item xs={8}>
+        <Grid item container spacing={1} xs={12} sx={{ marginTop: "16px" }}>
+          <Grid item xs={isMd ? 8 : 12}>
             <Box
               sx={{
                 "& > :not(style)": {
                   m: 1,
-                  width: "98%",
+                  marginLeft:"0",
+                  marginTop:"0",
+                  width:"100%",
                 },
               }}
               noValidate
@@ -66,13 +72,14 @@ function Box2(prop) {
               />
             </Box>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={isMd ? 4 : 12}>
             <InputText
               headerIcon={<PersonAddIcon />}
               state={"Hire number"}
               handleState={prop.handleMaxHire}
-              width="94%"
+              width={"100%"}
               type="number"
+              marginLeft="0"
               value={prop.maxHire}
             />
           </Grid>

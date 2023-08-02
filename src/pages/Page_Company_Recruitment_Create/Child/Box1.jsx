@@ -16,12 +16,13 @@ function Box1(prop) {
             headerIcon={<CreateIcon />}
             state={"Recuite Name"}
             handleState={prop.handleRname}
-            width="98%"
+            width="100%"
+            margin="0"
             value={prop.RName}
           />
         </Grid>
         <Grid item xs={12}>
-          <Box sx={{ width: "98%", margin: "auto" }}>
+          <Box sx={{ width: "100%", margin: "auto" }}>
             <CompHeader headerIcon={<ArticleIcon />}>Education</CompHeader>
             <ReactQuill
               theme="snow"

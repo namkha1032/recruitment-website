@@ -18,7 +18,8 @@ function CvStep1(prop) {
               headerIcon={<DriveFileRenameOutlineIcon />}
               state={"Title"}
               handleState={prop.handleTitle}
-              width="98%"
+              width="100%"
+              margin="0"
               value={prop.cvtitle}
             />
           </Grid>
@@ -27,12 +28,13 @@ function CvStep1(prop) {
               headerIcon={<PersonIcon />}
               state={"Introduction"}
               handleState={prop.handleIntro}
-              width="98%"
+              width="100%"
+              margin="0"
               value={prop.intro}
             />
           </Grid>
           <Grid item xs={12}>
-            <Box sx={{ width: "98%", margin: "auto" }}>
+            <Box sx={{width: "100%", margin: "auto" }}>
               <CompHeader headerIcon={<BookIcon />}>Education</CompHeader>
               <ReactQuill
                 id="education"
