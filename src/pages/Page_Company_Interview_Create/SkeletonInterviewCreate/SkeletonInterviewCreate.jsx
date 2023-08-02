@@ -36,10 +36,10 @@ const SkeletonInterviewCreate = (props) => {
         <>
             <Grid container spacing={4}>
                 <Grid item xs={12} md={6}>
-                    <Skeleton variant="rounded" sx={{ height: "600px", width: "100%" }} />
+                    <Skeleton variant="rounded" sx={{ height: "100%", width: "100%" }} />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <Skeleton variant="rounded" sx={{ height: "600px", width: "100%" }} />
+                    <Skeleton variant="rounded" sx={{ height: "100%", width: "100%" }} />
                 </Grid>
                 <Grid item md={12}>
                     <Grid container>
