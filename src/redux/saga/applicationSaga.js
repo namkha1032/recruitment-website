@@ -40,7 +40,28 @@ function* getApplication(action) {
 
 function* submitCv(action) {
     try {
+        // let submit = null;
+        // const allaplication = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application` )
+        // const candidate = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`) 
+        // console.log("data", candidate.data);
+        // const candidateid = candidate.data.filter((prop) => prop.userId === action.payload.userId);
+        // console.log('payloadinsubmit', action.payload);
+        // console.log("applicationsaga", allaplication.data);
+        // console.log('canidinsaga', candidateid);
         const reponse = yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Application`, action.payload)
+        // for (let i = 0; i< allaplication.data.length; i++){
+        //     if (allaplication.data[i].position.positionId === action.payload.positionId && allaplication.data[i].cv.candidateId ===candidateid[0].candidateId  ){
+                // const deleteapp = yield call(axios.delete, `http://leetun2k2-001-site1.gtempurl.com/api/Application/${allaplication[i].applicationId}`)
+                // submit = yield call(axios.post)
+        //         console.log('haha',allaplication.data[i] );
+        //         break;
+        //     }
+        //     else{
+        //         console.log("hellowrong")
+        //     }
+            
+        // }
+        console.log('post', action.payload);
         console.log("submitsaga", reponse.data)
         yield put({ type: 'submitcv/setSubmitcv', payload: reponse.data })
     } catch (error) {

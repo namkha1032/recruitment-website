@@ -128,13 +128,20 @@ function* getInterviewInfo(action) {
 
     console.log('skillinsaga', skilllist);
     console.log("appinsaga", application);
-    yield put({ type: "department/setDepartment", payload: department });
-    yield put({ type: "interviewer/setInterviewer", payload: response5.data });
-    yield put({ type: "shift/setShift", payload: shift });
-    yield put({ type: "room/setRoom", payload: room });
+    // yield put({ type: "department/setDepartment", payload: department });
+    // yield put({ type: "interviewer/setInterviewer", payload: response5.data });
+    // yield put({ type: "shift/setShift", payload: shift });
+    // yield put({ type: "room/setRoom", payload: room });
+    // yield put({type: "interviewidInfo/setInterviewidInfo",payload: response1.data});
+    // yield put({type: "position/setPosition", payload: response8.data});
+    // yield put({type: 'skill/setSkill', payload: skilllist})
+    yield put({ type: "interviewdepartment/setInterviewDepartment", payload: department });
+    yield put({ type: "interviewinterviewer/setInterviewInterviewer", payload: response5.data });
+    yield put({ type: "interviewshift/setInterviewShift", payload: shift });
+    yield put({ type: "interviewroom/setInterviewRoom", payload: room });
     yield put({type: "interviewidInfo/setInterviewidInfo",payload: response1.data});
-    yield put({type: "position/setPosition", payload: response8.data});
-    yield put({type: 'skill/setSkill', payload: skilllist})
+    yield put({type: "interviewposition/setInterviewPosition", payload: response8.data});
+    yield put({type: 'interviewskill/setInterviewSkill', payload: skilllist})
   } catch (error) {
     console.log(error);
   }

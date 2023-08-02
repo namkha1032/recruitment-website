@@ -164,16 +164,18 @@ function* getPosition(action) {
     console.log('skillid', response1.data.requirements)
     for (let i = 0; i < response1.data.requirements.length; i++) {
       for (let j = 0; j < response2.data.length; j++) {
-        if (response1.data.requirements[i].skillId === response2.data[j].skillId) {
+        if (response1.data.requirements[i].skillId === response2.data[j].skillId && response1.data.requirements[i].isDeleted === false ) {
           skilllist.push(response2.data[j]);
         }
       }
     }
 
     console.log('skillinsaga', skilllist);
+    // yield put({ type: 'position/setPosition', payload: response1.data })
+    // yield put({ type: 'skill/setSkill', payload: skilllist })
 
     yield put({ type: 'position/setPosition', payload: response1.data })
-    yield put({ type: 'skill/setSkill', payload: skilllist })
+    yield put({ type: 'positionskill/setPositionSkill', payload: skilllist })
   } catch (error) {
     console.log(error)
   }
