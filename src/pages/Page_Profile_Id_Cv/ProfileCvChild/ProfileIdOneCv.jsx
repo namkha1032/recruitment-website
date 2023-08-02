@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import AddIcon from '@mui/icons-material/Add';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+
 export default function ProfileIdOneCv({ events ,img}) {
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
@@ -49,9 +50,15 @@ export default function ProfileIdOneCv({ events ,img}) {
   }
 
   return (
-    <Grid container justifyContent="center" spacing={2} >
+    <Grid container justifyContent='space-between' spacing={2} >
+        <Grid item sx = {{margin:'20px 0'}}>
+          <Typography variant="h4" gutterBottom>
+            My CVs
+          </Typography>
+        </Grid>
+        
       <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px', width: '100%',marginTop:'20px'}}>
-      <Grid container justifyContent="space-between" alignItems="center" sx={{marginBottom:'20px'}}>
+      <Grid container justifyContent="space-between" alignItems="center" sx={{marginBottom:'20px',padding:'10px 10px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'}}>
         <Grid item>
           <Typography variant="h5" gutterBottom sx={{margin:'0'}}>
             CVs List
@@ -70,7 +77,7 @@ export default function ProfileIdOneCv({ events ,img}) {
       </Grid>
     </Grid>
       <Grid item xs={12} md={12} sx={{ margin: '0 0px',width:'100%'}}>
-        <Grid container  wrap="wrap" sx={{justifyContent: isSm ? 'space-between': 'center'}}>
+        <Grid container  wrap="wrap" sx={{justifyContent: isSm ? "flex-start": 'center',gap:"16px"}}>
           {displayedEvents.map((event) => (
             <Paper
               key={event.cvid}
@@ -85,36 +92,31 @@ export default function ProfileIdOneCv({ events ,img}) {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'flex-end',
-                
+                alignItems:'center',
+                flexBasis: '250px',
                 cursor: 'pointer',
               }}
               onClick={() => handleDetails(event.cvid)}
             >
               <Grid item sx={{ margin: '0 auto', marginBlockStart: '0' }}>
-                <Paper variant="outlined" sx={{ p: 2, height: '100px', width: '200px', marginBottom: '10px', padding: '0' }}>
-                  <Grid container direction="column" justifyContent="space-between" height="100%">
-                    <Grid item>
-                      <Typography variant="body1" fontWeight="bold">
-                        {event.cvName}
-                      </Typography>
-                      
-                      <Typography style={{ fontStyle: 'italic', color: '#999999' }}>
-                        By {' '} 
-                        <span style={{ color: '#b0c4de', fontStyle: 'normal' }}>
-                          Huy
-                        </span>
-                      </Typography>
+  <Paper variant="outlined" sx={{ p: 2, minHeight: '80px', width: '200px', marginBottom: '10px', padding: '0', whiteSpace: 'nowrap', overflow: 'hidden' }}>
+    <Grid container direction="column" height="100%">
+      <Grid item>
+        <Typography variant="body1" fontWeight="bold">
+          {event.cvName}
+        </Typography>
 
-                      <Typography variant="body1" component="div">
-                        Skill: {event.skills[0]}
-                      </Typography>
-                      <Typography variant="body1" component="div">
-                        Kinh nghiệm: {event.experience}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Paper>
-              </Grid>
+        <Typography variant="body1" component="div" sx={{ textOverflow: 'ellipsis' }}>
+          Skill: {event && event.skills && event.skills.length > 0 ? event.skills.map((skill) => skill.skillName).join(', ') : ''}
+        </Typography>
+        <Typography variant="body1" component="div">
+          Kinh nghiệm: {event.experience}
+        </Typography>
+      </Grid>
+    </Grid>
+  </Paper>
+</Grid>
+
             </Paper>
           ))}
         </Grid>
