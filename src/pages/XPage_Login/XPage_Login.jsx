@@ -79,8 +79,8 @@ const XPage_Login = () => {
     if (newError.status === "yes") {
       setLoading(false)
       setErrorSnackbar(true);
-      setUsername("");
-      setPassword("");
+      //setUsername("");
+      //setPassword("");
       setTimeout(() => {
         setErrorSnackbar(false);
         dispatch({
@@ -219,8 +219,6 @@ const XPage_Login = () => {
             >
               <ArrowBackIcon />
               <Typography
-                //component={Link}
-                //to="/home"
                 color="black"
                 onClick={handleClickHome}
                 paddingLeft="2px"
@@ -237,8 +235,8 @@ const XPage_Login = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                paddingTop: "7.5%",
-                paddingBottom: "7.5%",
+                paddingTop: "5%",
+                paddingBottom: "5%",
               }}
             >
               <form onSubmit={handleLogin}>
@@ -249,7 +247,7 @@ const XPage_Login = () => {
                     color: "black",
                     textAlign: "center",
                     fontWeight: "450",
-                    marginBottom: "15px",
+                    marginBottom: "10px",
                   }}
                 >
                   Sign In
@@ -257,7 +255,7 @@ const XPage_Login = () => {
 
                 <Grid
                   container
-                  spacing={2}
+                  //spacing={2}
                   sx={{
                     display: "flex",
                     justifyContent: "center",
@@ -302,39 +300,57 @@ const XPage_Login = () => {
                         sx: {
                           color: "#000",
                         },
-                        //style: { borderRadius: "12px" },
                       }}
                       sx={{
                         width: "90%",
                         height: "50px",
                         background: "transparent",
-                        //border: 'none',
                         outline: "none",
                         fontSize: "1em",
-                        //padding: '0 5px 0 5px',
                         color: "#000",
                         borderBottom: validUsername ? "2px solid black" : "2px solid red",
                         borderBottomWidth: "2px",
                       }}
-                      
-                      helperText={!validUsername &&
-                          <Typography
-                              color={"red"}
-                              sx={{
-                                  display: 'flex',
-                                  justifyContent: 'left',
-                                  alignItems: 'center',
-                              }}
-                              variant='small'
-
-                          >
-                              <ErrorOutlineOutlinedIcon color='red'
-                              sx={{ fontSize: 13, paddingRight: '0px' }}/>
-                              <Typography variant='small' paddingLeft='3px'>Username is required</Typography>
-                          </Typography>
-                      }
                     />
                   </Grid>
+
+                  {!validUsername && (
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "left",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        color={"red"}
+                        display={"flex"}
+                        marginLeft={"16px"}
+                        marginRight={"15px"}
+                        marginBottom={"3px"}
+                      >
+                        <ErrorOutlineOutlinedIcon
+                          //color="red"
+                          sx={{
+                            fontSize: 15,
+                            paddingLeft: "2px",
+                            marginTop: "2px",
+                          }}
+                        />
+
+                        <Typography
+                          color="red"
+                          fontSize="12px"
+                          lineHeight="20px"
+                          paddingLeft={"5px"}
+                        >
+                          Username is required
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  )}
 
                   <Grid
                     item
@@ -386,47 +402,63 @@ const XPage_Login = () => {
                             </IconButton>
                           </InputAdornment>
                         ),
-                        /* sx: {
-                          color: "#000",
-                        }, */
                       }}
                       sx={{
                         width: "90%",
                         height: "50px",
                         background: "transparent",
-                        //border: 'none',
                         outline: "none",
                         fontSize: "1em",
-                        //padding: '0 5px 0 5px',
                         color: "#fff",
                         borderBottom: validPassword ? "2px solid black" : "2px solid red",
                         borderBottomWidth: "2px",
                       }}
-
-                      helperText={!validPassword &&
-                        <Typography
-                            color={"red"}
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'left',
-                                alignItems: 'center',
-                            }}
-                            variant='small'
-
-                        >
-                            <ErrorOutlineOutlinedIcon color='red'
-                            sx={{ fontSize: 13, paddingRight: '0px' }}/>
-                            <Typography variant='small' paddingLeft='3px'>Password is required</Typography>
-                        </Typography>
-                      }
                     />
                   </Grid>
+
+                  {!validPassword && (
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "left",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        color={"red"}
+                        display={"flex"}
+                        marginLeft={"16px"}
+                        marginRight={"15px"}
+                        //marginBottom={"3px"}
+                      >
+                        <ErrorOutlineOutlinedIcon
+                          //color="red"
+                          sx={{
+                            fontSize: 15,
+                            paddingLeft: "2px",
+                            marginTop: "2px",
+                          }}
+                        />
+
+                        <Typography
+                          color="red"
+                          fontSize="12px"
+                          lineHeight="20px"
+                          paddingLeft={"5px"}
+                        >
+                          Password is required
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  )}
 
                   <Grid
                     item
                     xs={12}
                     sx={{
-                      margin: "10px 40px 10px",
+                      margin: "15px 40px 15px",
                       fontSize: ".9em",
                       color: "#fff",
                       display: "flex",
