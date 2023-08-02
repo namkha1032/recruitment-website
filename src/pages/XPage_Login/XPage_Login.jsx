@@ -93,7 +93,7 @@ const XPage_Login = () => {
   const handleUsernameChange = (event) => {
     let value = event.target.value;
     setUsername(value);
-    if (!usernameRegex.test(value)) {
+    if (value == "") {
       setValidUsername(false);
     } else {
       setValidUsername(true);
@@ -111,8 +111,8 @@ const XPage_Login = () => {
   const handleLogin = (event) => {
     event.preventDefault();
 
-    setLoading(true)
-    if (validUsername) {
+    if (validUsername && (username != "")) {
+      setLoading(true)
       dispatch({
         type: "saga/userLogin",
         payload: { username, password, check },
@@ -175,6 +175,7 @@ const XPage_Login = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                marginTop: "5px"
               }}
             >
               <ArrowBackIcon />
@@ -182,6 +183,7 @@ const XPage_Login = () => {
                 component={Link}
                 to="/home"
                 color="black"
+                
                 paddingLeft="2px"
                 sx={{
                   textDecoration: "none",
@@ -237,7 +239,9 @@ const XPage_Login = () => {
                       //required
                       fullWidth
                       type="text"
-                      label={<Typography color={"black"}>Username</Typography>}
+                      label={validUsername ? <Typography color={"black"}>Username</Typography>
+                        : <Typography color={"red"}>Username</Typography>
+                        }
                       autoComplete="new-text"
                       value={username}
                       onChange={handleUsernameChange}
@@ -269,26 +273,26 @@ const XPage_Login = () => {
                         fontSize: "1em",
                         //padding: '0 5px 0 5px',
                         color: "#000",
-                        borderBottom: "2px solid black",
+                        borderBottom: validUsername ? "2px solid black" : "2px solid red",
                         borderBottomWidth: "2px",
                       }}
+                      
+                      helperText={!validUsername &&
+                          <Typography
+                              color={"red"}
+                              sx={{
+                                  display: 'flex',
+                                  justifyContent: 'left',
+                                  alignItems: 'center',
+                              }}
+                              variant='small'
 
-                    // helperText={!validUsername &&
-                    //     <Typography
-                    //         color={"red"}
-                    //         sx={{
-                    //             display: 'flex',
-                    //             justifyContent: 'left',
-                    //             alignItems: 'center',
-                    //         }}
-                    //         variant='small'
-
-                    //     >
-                    //         <ErrorOutlineOutlinedIcon color='red'
-                    //         sx={{ fontSize: 13, paddingRight: '0px' }}/>
-                    //         <Typography variant='small' paddingLeft='3px'>Incorrect entry.</Typography>
-                    //     </Typography>
-                    // }
+                          >
+                              <ErrorOutlineOutlinedIcon color='red'
+                              sx={{ fontSize: 13, paddingRight: '0px' }}/>
+                              <Typography variant='small' paddingLeft='3px'>Username is required</Typography>
+                          </Typography>
+                      }
                     />
                   </Grid>
 
@@ -497,7 +501,7 @@ const XPage_Login = () => {
       >
         <Alert severity="error" onClose={() => setErrorSnackbar(false)}>
           {/* {newError.message} */}
-          Username of password is incorrect
+          Username or password is incorrect
         </Alert>
       </Snackbar>
     </Box>
