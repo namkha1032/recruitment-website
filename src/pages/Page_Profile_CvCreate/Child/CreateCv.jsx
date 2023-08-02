@@ -89,11 +89,11 @@ const CreateCv = (prop) => {
                   ))}
                 </Stepper>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} >
                 <Box>
                   <React.Fragment>
                     {activeStep === 0 ? (
-                      <Grid item xs={12}>
+                      <Grid item xs={12} sx={{paddingBottom:"16px"}}>
                         <CvStep1
                           handleTitle={prop.handleTitle}
                           cvtitle={prop.cvtitle}
@@ -104,7 +104,7 @@ const CreateCv = (prop) => {
                         />
                       </Grid>
                     ) : activeStep === 1 ? (
-                      <Grid item xs={12}>
+                      <Grid item xs={12} sx={{paddingBottom:"16px"}}>
                         <CvStep2
                           skillOption={prop.skillOption}
                           sInputValue={prop.sInputValue}
@@ -132,7 +132,7 @@ const CreateCv = (prop) => {
                         />
                       </Grid>
                     ) : (
-                      <Grid item xs={12}>
+                      <Grid item xs={12} sx={{paddingBottom:"16px"}}>
                         <CvStep3
                           cvalue={prop.cvalue}
                           setCValue={prop.setCValue}
@@ -158,7 +158,7 @@ const CreateCv = (prop) => {
                         />
                       </Grid>
                     )}
-
+                    <Grid item xs={12}>
                     <Box
                       sx={{
                         display: "flex",
@@ -197,6 +197,7 @@ const CreateCv = (prop) => {
                         </Button>
                       )}
                     </Box>
+                    </Grid>
                   </React.Fragment>
                 </Box>
               </Grid>

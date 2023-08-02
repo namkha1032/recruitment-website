@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import CompHeader from "../compHeader";
 import TimerIcon from "@mui/icons-material/Timer";
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const filter = createFilterOptions();
 export default function ChooseSkill(prop) {
