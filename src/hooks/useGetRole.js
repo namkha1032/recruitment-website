@@ -22,35 +22,33 @@ function useGetRole() {
     const [role, setRole] = useState(null)
     useEffect(() => {
         if (userlocal) {
-            try{
-                let token = `Bearer ${userlocal.token}`
-                const config = {
-                    headers: { Authorization: token },
-                }
-                axios.get('https://leetun2k2-001-site1.gtempurl.com/api/Authentication/CurrentRole', config).then(response => {
-                    console.log("response is: ", response.data.role[0])
-                    if (response.data.role[0] == "Admin") {
-                        setRole("admin")
-                    }
-                    else if (response.data.role[0] == "Recruiter") {
-                        setRole("recruiter")
-                    }
-                    else if (response.data.role[0] == "Interviewer") {
-                        setRole("interviewer")
-                    }
-                    else if (response.data.role[0] == "Candidate") {
-                        setRole("candidate")
-                    }
-                    else {
-                        //console.log("set null 1")
-                        setRole(null)
-                    }
-                })
+            let token = `Bearer ${userlocal.token}`
+            const config = {
+                headers: { Authorization: token },
             }
-            catch (error) {
+
+            axios.get('https://leetun2k2-001-site1.gtempurl.com/api/Authentication/CurrentRole', config).then(response => {
+                console.log("response is: ", response.data.role[0])
+                if (response.data.role[0] == "Admin") {
+                    setRole("admin")
+                }
+                else if (response.data.role[0] == "Recruiter") {
+                    setRole("recruiter")
+                }
+                else if (response.data.role[0] == "Interviewer") {
+                    setRole("interviewer")
+                }
+                else if (response.data.role[0] == "Candidate") {
+                    setRole("candidate")
+                }
+                else {
+                    //console.log("set null 1")
+                    setRole(null)
+                }
+            }).catch(error => {
                 console.log("error: ", error)
                 dispatch({ type: "saga/userLogout" })
-            }
+            });
         }
         else {
             //console.log("set null 2")

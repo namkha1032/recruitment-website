@@ -54,7 +54,6 @@ const ProfileChangePW = () => {
 
   const newError = useSelector((state) => state.error);
 
-
   useEffect(() => {
     if (newError.status === "no") {
       dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
@@ -157,23 +156,8 @@ const ProfileChangePW = () => {
                 opacity: "100%",
                 left: "20%",
                 right: "20%",
-                //border: "1px solid black",
               }}
             >
-              {/* <Typography 
-                variant="h2" 
-                align="center" 
-                // color='#1976d2' 
-                color="black"
-                gutterBottom
-                fontFamily={'Roboto'}
-                fontSize={'28px'}
-                lineHeight={'28px'}
-                fontWeight={'700'}
-                padding={"20px"}
-              >
-                Change password
-              </Typography> */}
 
               <form onSubmit={handleSubmit}>
 

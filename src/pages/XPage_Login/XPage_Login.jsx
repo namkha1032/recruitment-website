@@ -13,8 +13,7 @@ import {
   FormControlLabel,
   createTheme,
   IconButton,
-  Paper,
-  rgbToHex,
+  /* Link, */
   Stack,
 } from "@mui/material";
 
@@ -27,6 +26,7 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import imageBackground from "../../assets/img/background.jpg";
+//import imageBackground from "./nightwall.webm";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import CircularProgress from "@mui/material/CircularProgress";
@@ -54,6 +54,7 @@ const XPage_Login = () => {
   const [username, setUsername] = useState("");
   const [validUsername, setValidUsername] = useState(true);
   const [password, setPassword] = useState("");
+  const [validPassword, setValidPassword] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [check, setCheck] = useState(false);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
@@ -78,8 +79,8 @@ const XPage_Login = () => {
     if (newError.status === "yes") {
       setLoading(false)
       setErrorSnackbar(true);
-      setUsername("");
-      setPassword("");
+      //setUsername("");
+      //setPassword("");
       setTimeout(() => {
         setErrorSnackbar(false);
         dispatch({
@@ -93,12 +94,21 @@ const XPage_Login = () => {
   const handleUsernameChange = (event) => {
     let value = event.target.value;
     setUsername(value);
-    if (!usernameRegex.test(value)) {
+    if (value == "") {
       setValidUsername(false);
     } else {
       setValidUsername(true);
     }
   };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value)
+    if (event.target.value == "") {
+      setValidPassword(false)
+    } else {
+      setValidPassword(true)
+    }
+  }
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -111,18 +121,47 @@ const XPage_Login = () => {
   const handleLogin = (event) => {
     event.preventDefault();
 
-    setLoading(true)
-    if (validUsername) {
+    if (validUsername && (username != "") && validPassword && (password != "")) {
+      setLoading(true)
       dispatch({
         type: "saga/userLogin",
         payload: { username, password, check },
       });
       //dispatch({ type: "saga/getUserId", payload: null})
     } else {
-      setValidUsername(false);
-      setUsername("");
+      if (!validUsername || (username == "")) {
+        setValidUsername(false);
+      }
+      if (!validPassword || (password == "")) {
+        setValidPassword(false);
+      }
+      //setUsername("");
     }
   };
+
+  const handleClickHome = () => {
+    dispatch({
+      type: "error/setError",
+      payload: { status: "idle", message: "" },
+    });
+    navigate('/home')
+  }
+
+  const handleClickForgot = () => {
+    dispatch({
+      type: "error/setError",
+      payload: { status: "idle", message: "" },
+    });
+    navigate('/recovery')
+  }
+
+  const handleClickSignUp = () => {
+    dispatch({
+      type: "error/setError",
+      payload: { status: "idle", message: "" },
+    });
+    navigate('/register')
+  }
 
   const handleCheck = (event) => {
     event.preventDefault();
@@ -175,16 +214,17 @@ const XPage_Login = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                marginTop: "5px"
               }}
             >
               <ArrowBackIcon />
               <Typography
-                component={Link}
-                to="/home"
                 color="black"
+                onClick={handleClickHome}
                 paddingLeft="2px"
                 sx={{
                   textDecoration: "none",
+                  cursor: 'pointer'
                 }}
               >
                 Back to home page
@@ -195,8 +235,8 @@ const XPage_Login = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                paddingTop: "7.5%",
-                paddingBottom: "7.5%",
+                paddingTop: "5%",
+                paddingBottom: "5%",
               }}
             >
               <form onSubmit={handleLogin}>
@@ -207,7 +247,7 @@ const XPage_Login = () => {
                     color: "black",
                     textAlign: "center",
                     fontWeight: "450",
-                    marginBottom: "15px",
+                    marginBottom: "10px",
                   }}
                 >
                   Sign In
@@ -215,7 +255,7 @@ const XPage_Login = () => {
 
                 <Grid
                   container
-                  spacing={2}
+                  //spacing={2}
                   sx={{
                     display: "flex",
                     justifyContent: "center",
@@ -237,7 +277,9 @@ const XPage_Login = () => {
                       //required
                       fullWidth
                       type="text"
-                      label={<Typography color={"black"}>Username</Typography>}
+                      label={validUsername ? <Typography color={"black"}>Username</Typography>
+                        : <Typography color={"red"}>Username</Typography>
+                        }
                       autoComplete="new-text"
                       value={username}
                       onChange={handleUsernameChange}
@@ -249,7 +291,7 @@ const XPage_Login = () => {
                             sx={{
                               position: "absolute",
                               right: "8px",
-                              color: "#000",
+                              color: validUsername ? "black" : "red",
                               fontSize: "1.2em",
                               //top: '20px',
                             }}
@@ -258,39 +300,57 @@ const XPage_Login = () => {
                         sx: {
                           color: "#000",
                         },
-                        //style: { borderRadius: "12px" },
                       }}
                       sx={{
                         width: "90%",
                         height: "50px",
                         background: "transparent",
-                        //border: 'none',
                         outline: "none",
                         fontSize: "1em",
-                        //padding: '0 5px 0 5px',
                         color: "#000",
-                        borderBottom: "2px solid black",
+                        borderBottom: validUsername ? "2px solid black" : "2px solid red",
                         borderBottomWidth: "2px",
                       }}
-
-                    // helperText={!validUsername &&
-                    //     <Typography
-                    //         color={"red"}
-                    //         sx={{
-                    //             display: 'flex',
-                    //             justifyContent: 'left',
-                    //             alignItems: 'center',
-                    //         }}
-                    //         variant='small'
-
-                    //     >
-                    //         <ErrorOutlineOutlinedIcon color='red'
-                    //         sx={{ fontSize: 13, paddingRight: '0px' }}/>
-                    //         <Typography variant='small' paddingLeft='3px'>Incorrect entry.</Typography>
-                    //     </Typography>
-                    // }
                     />
                   </Grid>
+
+                  {!validUsername && (
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "left",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        color={"red"}
+                        display={"flex"}
+                        marginLeft={"16px"}
+                        marginRight={"15px"}
+                        marginBottom={"3px"}
+                      >
+                        <ErrorOutlineOutlinedIcon
+                          //color="red"
+                          sx={{
+                            fontSize: 15,
+                            paddingLeft: "2px",
+                            marginTop: "2px",
+                          }}
+                        />
+
+                        <Typography
+                          color="red"
+                          fontSize="12px"
+                          lineHeight="20px"
+                          paddingLeft={"5px"}
+                        >
+                          Username is required
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  )}
 
                   <Grid
                     item
@@ -306,10 +366,10 @@ const XPage_Login = () => {
                       //required
                       fullWidth
                       type={showPassword ? "text" : "password"}
-                      label={<Typography color={"black"}>Password</Typography>}
+                      label={validPassword ? <Typography color={"black"}>Password</Typography> : <Typography color={"red"}>Password</Typography>}
                       autoComplete="new-password"
                       value={password}
-                      onChange={(event) => setPassword(event.target.value)}
+                      onChange={handlePasswordChange}
                       InputProps={{
                         disableUnderline: true,
                         endAdornment: (
@@ -323,7 +383,7 @@ const XPage_Login = () => {
                                   sx={{
                                     position: "absolute",
                                     right: "8px",
-                                    color: "#000",
+                                    color: validPassword ? 'black' : 'red',
                                     fontSize: "0.9em",
                                     //top: '20px',
                                   }}
@@ -333,7 +393,7 @@ const XPage_Login = () => {
                                   sx={{
                                     position: "absolute",
                                     right: "8px",
-                                    color: "#000",
+                                    color: validPassword ? 'black' : 'red',
                                     fontSize: "0.9em",
                                     //top: '20px',
                                   }}
@@ -342,30 +402,63 @@ const XPage_Login = () => {
                             </IconButton>
                           </InputAdornment>
                         ),
-                        sx: {
-                          color: "#000",
-                        },
                       }}
                       sx={{
                         width: "90%",
                         height: "50px",
                         background: "transparent",
-                        //border: 'none',
                         outline: "none",
                         fontSize: "1em",
-                        //padding: '0 5px 0 5px',
                         color: "#fff",
-                        borderBottom: "2px solid black",
+                        borderBottom: validPassword ? "2px solid black" : "2px solid red",
                         borderBottomWidth: "2px",
                       }}
                     />
                   </Grid>
 
+                  {!validPassword && (
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "left",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        color={"red"}
+                        display={"flex"}
+                        marginLeft={"16px"}
+                        marginRight={"15px"}
+                        //marginBottom={"3px"}
+                      >
+                        <ErrorOutlineOutlinedIcon
+                          //color="red"
+                          sx={{
+                            fontSize: 15,
+                            paddingLeft: "2px",
+                            marginTop: "2px",
+                          }}
+                        />
+
+                        <Typography
+                          color="red"
+                          fontSize="12px"
+                          lineHeight="20px"
+                          paddingLeft={"5px"}
+                        >
+                          Password is required
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  )}
+
                   <Grid
                     item
                     xs={12}
                     sx={{
-                      margin: "10px 40px 10px",
+                      margin: "15px 40px 15px",
                       fontSize: ".9em",
                       color: "#fff",
                       display: "flex",
@@ -395,7 +488,7 @@ const XPage_Login = () => {
                           variant="small"
                           sx={{
                             lineHeight: "15px",
-                            paddingTop: "1px",
+                            //paddingTop: "1px",
                             marginLeft: "5px",
                           }}
                         >
@@ -410,9 +503,14 @@ const XPage_Login = () => {
                         alignContent: "center",
                       }}
                     />
+                    <Box sx={{
+                      alignContent: 'center',
+                      textAlign: 'center'
+                    }}>
                     <Typography
-                      component={Link}
-                      to="/recovery"
+                      //component={Link}
+                      // to="/recovery"
+                      onClick={handleClickForgot}
                       variant="small"
                       sx={{
                         // textDecoration: 'none',
@@ -421,11 +519,14 @@ const XPage_Login = () => {
                         /* fontWeight: '500' */
                         color: "black",
                         lineHeight: "15px",
+                        textDecoration: 'underline',
+                        cursor: 'pointer'
                         //paddingTop: '1px'
                       }}
                     >
                       Forgot password?{" "}
                     </Typography>
+                    </Box>
                   </Grid>
 
                   <Grid
@@ -474,10 +575,11 @@ const XPage_Login = () => {
                     <Typography variant="small" sx={{ color: "black" }}>
                       Didn't have an account?{" "}
                       <Typography
-                        component={Link}
-                        to="/register"
+                        // component={Link}
+                        // to="/register"
+                        onClick={handleClickSignUp}
                         variant="small"
-                        sx={{ /* textDecoration: 'none',  */ color: "black" }}
+                        sx={{ cursor: 'pointer' ,textDecoration: 'underline', color: "black" }}
                       >
                         Sign up
                       </Typography>
@@ -497,7 +599,7 @@ const XPage_Login = () => {
       >
         <Alert severity="error" onClose={() => setErrorSnackbar(false)}>
           {/* {newError.message} */}
-          Username of password is incorrect
+          Username or password is incorrect
         </Alert>
       </Snackbar>
     </Box>
