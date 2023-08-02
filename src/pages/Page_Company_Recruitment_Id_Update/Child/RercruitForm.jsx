@@ -296,7 +296,7 @@ function RecruitForm(prop) {
       dispatch({
         type: "saga/getUpdatePosition",
         payload: {
-          positionId: "97725743-9bb9-4a14-9922-f76574aea862",
+          positionId: recruitmentid,
           positionName: RName,
           description: description,
           salary: salary,
@@ -316,7 +316,7 @@ function RecruitForm(prop) {
     }
     e.preventDefault();
     cleanStore(dispatch);
-    navigate("/company/recruitment/:recruitmentid");
+    navigate(`/company/recruitment/${recruitmentid}`);
   }
   return (
     <>

@@ -347,7 +347,7 @@ function CVForm(prop) {
       console.log(error);
     }
     cleanStore(dispatch);
-    navigate("/profile/:profileid/cv/:cvid");
+    navigate(`/profile/:profileid/cv/${cvid}`);
   }
   //COMPS
   return (
