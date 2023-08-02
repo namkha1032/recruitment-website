@@ -1,7 +1,7 @@
-import { Outlet, Navigate, useLocation } from "react-router-dom";
+import { Outlet, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useGetRole from "../../hooks/useGetRole";
-// import Unauthorized from "../Unauthorized/Unauthorized";
+import Unauthorized from "../Unauthorized/Unauthorized";
 // import Missing from "../MissingPage/MissingPage";
 
 import { useTheme } from "@mui/material/styles";
@@ -14,7 +14,7 @@ const ProtectedRoute = (props) => {
     const location = useLocation();
     const role = useGetRole()
     const user = useSelector(state => state.user)
-
+    const navigate = useNavigate()
     if (user) {
         if (allowed.includes(role)) {
             return (
@@ -22,10 +22,12 @@ const ProtectedRoute = (props) => {
             )
         }
         else if (role) {
-            return (
-                //<Unauthorized />
-                <Navigate to="/unauthorized" state={{ from: location }} replace/>
-            )
+            navigate("/unauthorized")
+            // return (
+            //     <Unauthorized />
+            //     // <Navigate to="/unauthorized" state={{ from: location }} replace/>
+
+            // )
         }
         // else {
         //     return (
@@ -34,10 +36,11 @@ const ProtectedRoute = (props) => {
         // }
     }
     else {
-        return (
-            //<Unauthorized />
-            <Navigate to="/unauthorized" state={{ from: location }} replace/>
-        )
+        navigate("/unauthorized")
+        // return (
+        //     <Unauthorized />
+        //     // <Navigate to="/unauthorized" state={{ from: location }} replace/>
+        // )
     }
 }
 
