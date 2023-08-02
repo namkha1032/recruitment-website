@@ -19,6 +19,12 @@ const statusSlice = createSlice({
         message: action.payload,
       };
     },
+    onError(state, action) {
+      return {
+        status: "error",
+        message: action.payload,
+      };
+    },
     onReset() {
       return {
         status: "idle",

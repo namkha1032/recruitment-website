@@ -117,6 +117,11 @@ export default function Page_Company_Question() {
       dispatch({
         type: "status/onReset",
       });
+    } else if (status.status === "error") {
+      errorAlert(status.message);
+      dispatch({
+        type: "status/onReset",
+      });
     }
   }, [status]);
 
@@ -497,9 +502,11 @@ export default function Page_Company_Question() {
   ]);
 
   return (
-    <Box sx={{
-      marginTop: 3,
-    }}>
+    <Box
+      sx={{
+        marginTop: 3,
+      }}
+    >
       <GigaCard>
         <GigaCardBody>
           <Grid
@@ -609,277 +616,283 @@ export default function Page_Company_Question() {
           </Menu> */}
             </Grid>
 
-          {isMd && (<Grid
-              item
-              xs={12}
-              sm={12}
-              md={7}
-              sx={{
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center",
-              }}
-            >
-              <Autocomplete
-                disablePortal
-                id="filter-type"
-                options={["Technology", "Language", "Soft Skills"]}
+            {isMd && (
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={7}
                 sx={{
-                  width: { md: 200, sm: 200, xs: "100%" },
-                  marginRight: 2,
-                  "& .MuiAutocomplete-popupIndicator": {
-                    color: "black",
-                  },
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Category..." />
-                )}
-                renderOption={(props, option) => {
-                  if (option === "Technology") {
-                    return (
-                      <Box
-                        component="li"
-                        {...props}
-                        sx={{
-                          color: "#1565C0",
-                        }}
-                      >
-                        <SchoolRounded
+              >
+                <Autocomplete
+                  disablePortal
+                  id="filter-type"
+                  options={["Technology", "Language", "Soft Skills"]}
+                  sx={{
+                    width: { md: 200, sm: 200, xs: "100%" },
+                    marginRight: 2,
+                    "& .MuiAutocomplete-popupIndicator": {
+                      color: "black",
+                    },
+                  }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Category..." />
+                  )}
+                  renderOption={(props, option) => {
+                    if (option === "Technology") {
+                      return (
+                        <Box
+                          component="li"
+                          {...props}
                           sx={{
                             color: "#1565C0",
-                            marginRight: 1,
                           }}
-                        />
-                        {option}
-                      </Box>
-                    );
-                  } else if (option === "Language") {
-                    return (
-                      <Box
-                        component="li"
-                        {...props}
-                        sx={{
-                          color: "#008631",
-                        }}
-                      >
-                        <LanguageRounded
+                        >
+                          <SchoolRounded
+                            sx={{
+                              color: "#1565C0",
+                              marginRight: 1,
+                            }}
+                          />
+                          {option}
+                        </Box>
+                      );
+                    } else if (option === "Language") {
+                      return (
+                        <Box
+                          component="li"
+                          {...props}
                           sx={{
                             color: "#008631",
-                            marginRight: 1,
                           }}
-                        />
-                        {option}
-                      </Box>
-                    );
-                  } else if (option === "Soft Skills") {
-                    return (
-                      <Box
-                        component="li"
-                        {...props}
-                        sx={{
-                          color: "#AA336A",
-                        }}
-                      >
-                        <PsychologyRounded
+                        >
+                          <LanguageRounded
+                            sx={{
+                              color: "#008631",
+                              marginRight: 1,
+                            }}
+                          />
+                          {option}
+                        </Box>
+                      );
+                    } else if (option === "Soft Skills") {
+                      return (
+                        <Box
+                          component="li"
+                          {...props}
                           sx={{
                             color: "#AA336A",
-                            marginRight: 1,
                           }}
-                        />
-                        {option}
-                      </Box>
-                    );
-                  }
-                }}
-                value={valueChoose}
-                onChange={(event, value) => handleChooseValue(value)}
-              />
-              {valueChoose === "Technology" && (
-                <Autocomplete
-                  disablePortal
-                  id="filter-type"
-                  options={skills}
-                  sx={{ width: { md: 200, sm: 200, xs: "100%" } }}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Skill..." />
-                  )}
-                  getOptionLabel={(option) => option.skillName || ""}
-                  renderOption={(props, option) => (
-                    <li {...props} key={option.skillId}>
-                      {option.skillName}
-                    </li>
-                  )}
-                  isOptionEqualToValue={(option, value) => {
-                    return option.skillId === value.skillId;
+                        >
+                          <PsychologyRounded
+                            sx={{
+                              color: "#AA336A",
+                              marginRight: 1,
+                            }}
+                          />
+                          {option}
+                        </Box>
+                      );
+                    }
                   }}
-                  value={skillChoose}
-                  onChange={(event, value) => handleChooseSkill(value)}
+                  value={valueChoose}
+                  onChange={(event, value) => handleChooseValue(value)}
                 />
-              )}
-              {valueChoose === "Language" && (
-                <Autocomplete
-                  disablePortal
-                  id="filter-type"
-                  options={languages}
-                  sx={{ width: { md: 200, sm: "100%", xs: "100%" } }}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Language..." />
-                  )}
-                  getOptionLabel={(option) => option.languageName || ""}
-                  renderOption={(props, option) => (
-                    <li {...props} key={option.languageId}>
-                      {option.languageName}
-                    </li>
-                  )}
-                  isOptionEqualToValue={(option, value) => {
-                    return option.languageId === value.languageId;
-                  }}
-                  value={languageChoose}
-                  onChange={(event, value) => handleChooseLanguage(value)}
-                />
-              )}
-            </Grid>)}
-          
-          {isSm && (<> <Grid
-              item
-              xs={12}
-              sm={12}
-              sx={{
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center",
-              }}
-            >
-              <Autocomplete
-                disablePortal
-                id="filter-type"
-                options={["Technology", "Language", "Soft Skills"]}
-                sx={{
-                  width: "100%",
-                  "& .MuiAutocomplete-popupIndicator": {
-                    color: "black",
-                  },
-                }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Category..." />
+                {valueChoose === "Technology" && (
+                  <Autocomplete
+                    disablePortal
+                    id="filter-type"
+                    options={skills}
+                    sx={{ width: { md: 200, sm: 200, xs: "100%" } }}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Skill..." />
+                    )}
+                    getOptionLabel={(option) => option.skillName || ""}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.skillId}>
+                        {option.skillName}
+                      </li>
+                    )}
+                    isOptionEqualToValue={(option, value) => {
+                      return option.skillId === value.skillId;
+                    }}
+                    value={skillChoose}
+                    onChange={(event, value) => handleChooseSkill(value)}
+                  />
                 )}
-                renderOption={(props, option) => {
-                  if (option === "Technology") {
-                    return (
-                      <Box
-                        component="li"
-                        {...props}
-                        sx={{
-                          color: "#1565C0",
-                        }}
-                      >
-                        <SchoolRounded
-                          sx={{
-                            color: "#1565C0",
-                            marginRight: 1,
-                          }}
-                        />
-                        {option}
-                      </Box>
-                    );
-                  } else if (option === "Language") {
-                    return (
-                      <Box
-                        component="li"
-                        {...props}
-                        sx={{
-                          color: "#008631",
-                        }}
-                      >
-                        <LanguageRounded
-                          sx={{
-                            color: "#008631",
-                            marginRight: 1,
-                          }}
-                        />
-                        {option}
-                      </Box>
-                    );
-                  } else if (option === "Soft Skills") {
-                    return (
-                      <Box
-                        component="li"
-                        {...props}
-                        sx={{
-                          color: "#AA336A",
-                        }}
-                      >
-                        <PsychologyRounded
-                          sx={{
-                            color: "#AA336A",
-                            marginRight: 1,
-                          }}
-                        />
-                        {option}
-                      </Box>
-                    );
-                  }
-                }}
-                value={valueChoose}
-                onChange={(event, value) => handleChooseValue(value)}
-              />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              sx={{
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center",
-              }}
-            >
-              {valueChoose === "Technology" && (
-                <Autocomplete
-                  disablePortal
-                  id="filter-type"
-                  options={skills}
-                  sx={{ width: "100%" }}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Skill..." />
-                  )}
-                  getOptionLabel={(option) => option.skillName || ""}
-                  renderOption={(props, option) => (
-                    <li {...props} key={option.skillId}>
-                      {option.skillName}
-                    </li>
-                  )}
-                  isOptionEqualToValue={(option, value) => {
-                    return option.skillId === value.skillId;
+                {valueChoose === "Language" && (
+                  <Autocomplete
+                    disablePortal
+                    id="filter-type"
+                    options={languages}
+                    sx={{ width: { md: 200, sm: "100%", xs: "100%" } }}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Language..." />
+                    )}
+                    getOptionLabel={(option) => option.languageName || ""}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.languageId}>
+                        {option.languageName}
+                      </li>
+                    )}
+                    isOptionEqualToValue={(option, value) => {
+                      return option.languageId === value.languageId;
+                    }}
+                    value={languageChoose}
+                    onChange={(event, value) => handleChooseLanguage(value)}
+                  />
+                )}
+              </Grid>
+            )}
+
+            {isSm && (
+              <>
+                {" "}
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
                   }}
-                  value={skillChoose}
-                  onChange={(event, value) => handleChooseSkill(value)}
-                />
-              )}
-              {valueChoose === "Language" && (
-                <Autocomplete
-                  disablePortal
-                  id="filter-type"
-                  options={languages}
-                  sx={{ width: "100%" }}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Language..." />
-                  )}
-                  getOptionLabel={(option) => option.languageName || ""}
-                  renderOption={(props, option) => (
-                    <li {...props} key={option.languageId}>
-                      {option.languageName}
-                    </li>
-                  )}
-                  isOptionEqualToValue={(option, value) => {
-                    return option.languageId === value.languageId;
+                >
+                  <Autocomplete
+                    disablePortal
+                    id="filter-type"
+                    options={["Technology", "Language", "Soft Skills"]}
+                    sx={{
+                      width: "100%",
+                      "& .MuiAutocomplete-popupIndicator": {
+                        color: "black",
+                      },
+                    }}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Category..." />
+                    )}
+                    renderOption={(props, option) => {
+                      if (option === "Technology") {
+                        return (
+                          <Box
+                            component="li"
+                            {...props}
+                            sx={{
+                              color: "#1565C0",
+                            }}
+                          >
+                            <SchoolRounded
+                              sx={{
+                                color: "#1565C0",
+                                marginRight: 1,
+                              }}
+                            />
+                            {option}
+                          </Box>
+                        );
+                      } else if (option === "Language") {
+                        return (
+                          <Box
+                            component="li"
+                            {...props}
+                            sx={{
+                              color: "#008631",
+                            }}
+                          >
+                            <LanguageRounded
+                              sx={{
+                                color: "#008631",
+                                marginRight: 1,
+                              }}
+                            />
+                            {option}
+                          </Box>
+                        );
+                      } else if (option === "Soft Skills") {
+                        return (
+                          <Box
+                            component="li"
+                            {...props}
+                            sx={{
+                              color: "#AA336A",
+                            }}
+                          >
+                            <PsychologyRounded
+                              sx={{
+                                color: "#AA336A",
+                                marginRight: 1,
+                              }}
+                            />
+                            {option}
+                          </Box>
+                        );
+                      }
+                    }}
+                    value={valueChoose}
+                    onChange={(event, value) => handleChooseValue(value)}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
                   }}
-                  value={languageChoose}
-                  onChange={(event, value) => handleChooseLanguage(value)}
-                />
-              )}
-            </Grid> </>)}
-            
+                >
+                  {valueChoose === "Technology" && (
+                    <Autocomplete
+                      disablePortal
+                      id="filter-type"
+                      options={skills}
+                      sx={{ width: "100%" }}
+                      renderInput={(params) => (
+                        <TextField {...params} label="Skill..." />
+                      )}
+                      getOptionLabel={(option) => option.skillName || ""}
+                      renderOption={(props, option) => (
+                        <li {...props} key={option.skillId}>
+                          {option.skillName}
+                        </li>
+                      )}
+                      isOptionEqualToValue={(option, value) => {
+                        return option.skillId === value.skillId;
+                      }}
+                      value={skillChoose}
+                      onChange={(event, value) => handleChooseSkill(value)}
+                    />
+                  )}
+                  {valueChoose === "Language" && (
+                    <Autocomplete
+                      disablePortal
+                      id="filter-type"
+                      options={languages}
+                      sx={{ width: "100%" }}
+                      renderInput={(params) => (
+                        <TextField {...params} label="Language..." />
+                      )}
+                      getOptionLabel={(option) => option.languageName || ""}
+                      renderOption={(props, option) => (
+                        <li {...props} key={option.languageId}>
+                          {option.languageName}
+                        </li>
+                      )}
+                      isOptionEqualToValue={(option, value) => {
+                        return option.languageId === value.languageId;
+                      }}
+                      value={languageChoose}
+                      onChange={(event, value) => handleChooseLanguage(value)}
+                    />
+                  )}
+                </Grid>{" "}
+              </>
+            )}
 
             {/* <Grid
           item

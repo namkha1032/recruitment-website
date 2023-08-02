@@ -13,7 +13,11 @@ export default function DeleteAlertModal(props) {
     <Box>
       <Modal
         open={props.deleteModalStatus}
-        onClose={props.handleDeleteModalClose}
+        onClose={() => {
+          if (props.status.status !== "loading") {
+            props.handleDeleteModalClose()
+          }
+        }}
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -124,7 +128,9 @@ export default function DeleteAlertModal(props) {
                   }
                 }}
                 onClick={() => {
-                    props.handleDeleteModalClose();
+                  if (props.status.status !== "loading") {
+                    props.handleDeleteModalClose()
+                  }
                 }}
               >
                 Cancel
@@ -204,7 +210,7 @@ export default function DeleteAlertModal(props) {
                 loading
                 loadingPosition="center"
               >
-                Đồng ý
+                Delete
               </LoadingButton>}
             </Grid>
           </Grid>
