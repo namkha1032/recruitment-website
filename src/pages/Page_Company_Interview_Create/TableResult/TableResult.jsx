@@ -38,6 +38,16 @@ const TableResult = (props) => {
         chosenRoom, setChosenRoom,
         setBusyInterviewer, setBusyRoom
     } = props
+    let shiftStart = ""
+    let shiftEnd = ""
+    if (chosenShift) {
+        let startSmallTen = "0" + chosenShift.shiftstart + ":00:00"
+        let startLargeTen = chosenShift.shiftstart + ":00:00"
+        let endSmallTen = "0" + chosenShift.shiftend + ":00:00"
+        let endLargeTen = chosenShift.shiftend + ":00:00"
+        shiftStart = chosenShift.shiftstart < 10 ? startSmallTen : startLargeTen
+        shiftEnd = chosenShift.shiftend < 10 ? endSmallTen : endLargeTen
+    }
     return (
         <>
             <Grid container spacing={2} columns={12}>
@@ -62,7 +72,7 @@ const TableResult = (props) => {
                 <Grid item xs={8}>
                     {chosenDate &&
                         <Chip
-                            label={chosenDate}
+                            label={new Date(chosenDate).toLocaleDateString()}
                             icon={<EventAvailableIcon />}
                             variant="outlined"
                             onDelete={() => {
@@ -82,7 +92,7 @@ const TableResult = (props) => {
                 <Grid item xs={8}>
                     {chosenShift &&
                         <Chip
-                            label={`Shift ${chosenShift.shiftid}: ${chosenShift.shiftstart} to ${chosenShift.shiftend}`}
+                            label={`${shiftStart} to ${shiftEnd}`}
                             variant="outlined"
                             icon={<AccessTimeIcon />}
                             onDelete={() => {
