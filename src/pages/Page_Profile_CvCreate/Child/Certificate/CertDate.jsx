@@ -8,8 +8,13 @@ import Box from "@mui/material/Box";
 import CompHeader from "../compHeader";
 import BusinessIcon from "@mui/icons-material/Business";
 import DateRangeIcon from "@mui/icons-material/DateRange";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const DateComp = (prop) => {
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up("md"));
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
   const handleDateChange = (date) => {
     prop.setStart(date);
     console.log(date);
@@ -25,7 +30,7 @@ const DateComp = (prop) => {
   return (
     <>
       <Grid container spacing={0}>
-        <Grid item xs={6}>
+        <Grid item xs={isMd ? 6 : 12}>
           <NotRInputText
             headerIcon={<BusinessIcon />}
             state={"Organization"}
@@ -35,8 +40,8 @@ const DateComp = (prop) => {
             value={prop.organize}
           />
         </Grid>
-        <Grid item xs={3}>
-          <Box style={{ marginLeft: "1%", marginTop: "8px" }}>
+        <Grid item xs={isSm?(isMd ? 3 : 6):12}>
+          <Box style={{ marginLeft: isMd ? "1%" :0, marginTop: "8px" }}>
             <CompHeader headerIcon={<DateRangeIcon />}>Earned Day</CompHeader>
             <Box style={{ marginTop: "8px" }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -61,8 +66,8 @@ const DateComp = (prop) => {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={3}>
-          <Box style={{ marginLeft: "1%", marginTop: "8px" }}>
+        <Grid item xs={isSm?(isMd ? 3 : 6):12}>
+          <Box style={{ marginLeft: isSm?(isMd ? "1%":"2%"):0, marginTop: "8px" }}>
             <CompHeader headerIcon={<DateRangeIcon />}>End Day</CompHeader>
             <Box style={{ marginTop: "8px" }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>

@@ -119,18 +119,17 @@ function CVForm() {
   }
   function handleCertificateAdd() {
     console.log(startDate);
-    const newCert = {
-      certificateId: Cid,
-      certificateName: Cname,
-      organizationName: organize,
-      dateEarned: startDate.toJSON(),
-      expirationDate: endDate !== null ? endDate.toJSON() : endDate,
-      description: detail,
-      link: link,
-      isDeleted:false
-    };
-    console.log(newCert);
     if (Cname !== "" && organize !== "" && startDate !== null && link !== "") {
+      const newCert = {
+        certificateId: Cid,
+        certificateName: Cname,
+        organizationName: organize,
+        dateEarned: startDate.toJSON(),
+        expirationDate: endDate !== null ? endDate.toJSON() : endDate,
+        description: detail,
+        link: link,
+        isDeleted:false
+      };
       setCerts([...certs, newCert]);
       setCName("");
       setOrganize("");

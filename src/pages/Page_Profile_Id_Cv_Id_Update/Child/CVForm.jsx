@@ -9,12 +9,19 @@ import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 import { Box } from "@mui/material";
 // import ViewCv from "./ViewCv";
-function CVForm() {
+//http://localhost:3000/profile/1/cv/d1c51600-6272-4c78-9b50-36af9d403a28/update
+function CVForm(prop) {
+  const profileid=prop.profileid 
+  const cvid=prop.cvid
+  console.log(cvid)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // fetch Data
   useEffect(() => {
-    dispatch({ type: "saga/getCvinfor" });
+    dispatch({ type: "saga/getCvinfor", 
+    // payload:cvid 
+    payload:"d1c51600-6272-4c78-9b50-36af9d403a28"
+  });
     dispatch({ type: "saga/getLanguage" });
     dispatch({ type: "saga/getSkill" });
     return () => {
@@ -222,7 +229,7 @@ function CVForm() {
       dateEarned: startDate.toJSON(),
       expirationDate: endDate !== null ? endDate.toJSON() : endDate,
       link: link,
-      cvid: "d1c51600-6272-4c78-9b50-36af9d403a28",
+      cvid: cvid,
       isDeleted:false,
     };
     console.log(newCert);
@@ -321,6 +328,7 @@ function CVForm() {
       dispatch({
         type: "saga/getUpdateCv",
         payload: {
+          // Cvid: cvid,
           Cvid: "d1c51600-6272-4c78-9b50-36af9d403a28",
           CvName: cvtitle,
           Introduction: intro,
