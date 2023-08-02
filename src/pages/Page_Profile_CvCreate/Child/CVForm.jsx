@@ -99,7 +99,7 @@ function CVForm() {
     );
     console.log(arr);
     if (arr[0] === undefined) {
-      handleSetSkillOpen()
+      handleSetSkillOpen();
       setSkillId(null);
       setSName("");
       setSInputValue("");

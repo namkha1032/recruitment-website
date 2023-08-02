@@ -13,7 +13,12 @@ import dayjs from "dayjs";
 import cleanStore from "../../../utils/cleanStore";
 import TitleDivider from "../../../components/TitleDivider/TitleDivider";
 import { Typography } from "@mui/material";
-
+import MuiAlert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar"
+import * as React from "react";
+const SkillAlert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 function RecruitForm(prop) {
   const recruitmentid= prop.recruitmentid
   const dispatch = useDispatch();
@@ -61,7 +66,16 @@ function RecruitForm(prop) {
   const [baseRequire, setBaseRequire] = useState([]);
   const [delRequire, setDelRequire] = useState([]);
   const [addRequire, setAddRequire] = useState([]);
-
+  const [skillOpen, setSkillOpen] = useState(false);
+  const handleSetSkillOpen = () => {
+    setSkillOpen(true);
+  };
+  const handleSkillClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSkillOpen(false);
+  };
   useEffect(() => {
     if (departmentList) {
       setDepartment(
@@ -168,7 +182,7 @@ function RecruitForm(prop) {
   );
   const [skillId, setSkillId] = useState(null);
   const [skillName, setSkillName] = useState("");
-  const [experience, setExperience] = useState("");
+  const [experience, setExperience] = useState(0);
   const [note, setNote] = useState("");
   const [inputValue, setInputValue] = useState("");
   // Language comps
@@ -203,11 +217,13 @@ function RecruitForm(prop) {
   function handleDescription(e) {
     setDescription(e.target.value);
   }
-  function handleSalary(e) {
-    setSalary(e.target.value);
+  function handleSalary(event) {
+    let midleScore = parseFloat(event.target.value) >= 0? parseFloat(event.target.value) : 0
+    setSalary(midleScore);
   }
-  function handleMaxHire(e) {
-    setMaxHire(e.target.value);
+  function handleMaxHire(event) {
+    let midleScore = parseFloat(event.target.value) >= 0? parseFloat(event.target.value) : 0
+    setMaxHire(midleScore);
   }
   function handleRequirementAdd() {
     console.log(inputValue);
@@ -218,7 +234,7 @@ function RecruitForm(prop) {
     );
     console.log(arr);
     if (arr[0] === undefined) {
-      alert("wrong skill");
+      handleSetSkillOpen();
       setSkillId(null);
       setSkillName("");
       setInputValue("");
@@ -449,6 +465,19 @@ function RecruitForm(prop) {
           </Button>
         </Grid>
       </form>
+      <Snackbar
+        open={skillOpen}
+        autoHideDuration={3000}
+        onClose={handleSkillClose}
+      >
+        <SkillAlert
+          onClose={handleSkillClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Wrong skill's name
+        </SkillAlert>
+      </Snackbar>
     </>
   );
 }

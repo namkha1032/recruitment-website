@@ -18,9 +18,9 @@ export default function ChooseList(prop) {
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.up("sm"));
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
-  function handleRExp(e) {
-    console.log(e.target.value);
-    prop.setExperience(e.target.value);
+  function handleRExp(event) {
+    let midleScore = parseFloat(event.target.value) >= 0? parseFloat(event.target.value) : 0
+    prop.setExperience(midleScore);
   }
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
