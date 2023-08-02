@@ -22,12 +22,12 @@ const ProtectedRoute = (props) => {
             )
         }
         else if (role) {
-            navigate("/unauthorized")
-            // return (
-            //     <Unauthorized />
-            //     // <Navigate to="/unauthorized" state={{ from: location }} replace/>
+            // navigate("/unauthorized")
+            return (
+                <Unauthorized />
+                // <Navigate to="/unauthorized" state={{ from: location }} replace/>
 
-            // )
+            )
         }
         // else {
         //     return (
@@ -36,11 +36,11 @@ const ProtectedRoute = (props) => {
         // }
     }
     else {
-        navigate("/unauthorized")
-        // return (
-        //     <Unauthorized />
-        //     // <Navigate to="/unauthorized" state={{ from: location }} replace/>
-        // )
+        // navigate("/unauthorized")
+        return (
+            <Unauthorized />
+            // <Navigate to="/unauthorized" state={{ from: location }} replace/>
+        )
     }
 }
 
