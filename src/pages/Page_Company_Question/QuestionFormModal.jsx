@@ -146,8 +146,10 @@ export default function QuestionFormModal(props) {
         <Modal
           open={props.addModalStatus}
           onClose={() => {
-            handleResetForm();
-            props.handleAddModalClose();
+            if (props.status.status !== "loading") {
+              handleResetForm();
+              props.handleAddModalClose();
+            }
           }}
           // transition={Slide}
           sx={{
@@ -207,8 +209,10 @@ export default function QuestionFormModal(props) {
                 >
                   <IconButton
                     onClick={() => {
-                      handleResetForm();
-                      props.handleAddModalClose();
+                      if (props.status.status !== "loading") {
+                        handleResetForm();
+                        props.handleAddModalClose();
+                      }
                     }}
                   >
                     <CloseIcon />
@@ -571,8 +575,10 @@ export default function QuestionFormModal(props) {
         <Modal
           open={props.addModalStatus}
           onClose={() => {
-            handleResetForm();
-            props.handleAddModalClose();
+            if (props.status.status !== "loading") {
+              handleResetForm();
+              props.handleAddModalClose();
+            }
           }}
           // transition={Slide}
           sx={{
@@ -632,8 +638,10 @@ export default function QuestionFormModal(props) {
                 >
                   <IconButton
                     onClick={() => {
-                      handleResetForm();
-                      props.handleAddModalClose();
+                      if (props.status.status !== "loading") {
+                        handleResetForm();
+                        props.handleAddModalClose();
+                      }
                     }}
                   >
                     <CloseIcon />
