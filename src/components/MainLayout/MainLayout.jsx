@@ -66,13 +66,13 @@ const MainSection = (props) => {
 }
 
 function MainLayout() {
-    // const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
     const userStore = useSelector(state => state.user)
-    const open = useSelector(state => state.sidebar)
-    function setOpen(value) {
-        dispatch({ type: "sidebar/setSidebar", payload: value })
-    }
+    // const open = useSelector(state => state.sidebar)
+    // function setOpen(value) {
+    //     dispatch({ type: "sidebar/setSidebar", payload: value })
+    // }
     useEffect(() => {
         console.log("run useEffect in MainLayout")
         const userLocal = window.localStorage.getItem("user");

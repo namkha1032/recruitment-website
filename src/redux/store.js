@@ -17,7 +17,6 @@ import errorSlice from "./reducer/errorReducer";
 import cvListSlice from "./reducer/cvListReducer";
 import candidateSlice from "./reducer/candidateReducer";
 import cvSlice from "./reducer/cvReducer";
-import sidebarSlice from "./reducer/sidebarReducer";
 // import rootSaga
 import rootSaga from "./rootSaga";
 import positionSlice from "./reducer/positionReducer";
@@ -91,7 +90,6 @@ const store = configureStore({
         eventFooter: eventFooterSlice.reducer,
         profile: profileSlice.reducer,
         eventNavigate: eventNavigateSlice.reducer,
-        sidebar: sidebarSlice.reducer,
         candidateId: candidateIdSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
