@@ -14,14 +14,15 @@ import cleanStore from "../../../utils/cleanStore";
 import TitleDivider from "../../../components/TitleDivider/TitleDivider";
 import { Typography } from "@mui/material";
 
-function RecruitForm() {
+function RecruitForm(prop) {
+  const recruitmentid= prop.recruitmentid
   const dispatch = useDispatch();
   // fetch Data
   useEffect(() => {
     dispatch({ type: "saga/getDepartment" });
     dispatch({ type: "saga/getLanguage" });
     dispatch({ type: "saga/getSkill" });
-    dispatch({ type: "saga/getPositioninfor" });
+    dispatch({ type: "saga/getPositioninfor" , payload:recruitmentid});
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });
       dispatch({ type: "language/setLanguage", payload: null });

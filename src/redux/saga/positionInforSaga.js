@@ -4,8 +4,9 @@ import axios from 'axios'
 import host from "../host"
 
 function* getPositioninfor(action) {
+    const recruitmentid = action.payload
     const response1 = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Position')
-    const position = response1.data.filter((prop)=>prop.positionId==="97725743-9bb9-4a14-9922-f76574aea862")
+    const position = response1.data.filter((prop)=>prop.positionId===recruitmentid)
     console.log(position)
 
     const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Requirement`)

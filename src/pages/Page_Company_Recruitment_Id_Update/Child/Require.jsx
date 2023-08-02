@@ -7,7 +7,7 @@ function Require(prop) {
     <>
       {/* <div className="parentFlex">
         <div className="leftFlex"> */}
-      <Box sx={{ width: "98%", margin: "auto" }}>
+      <Box sx={{ width: "100%", margin: "auto" }}>
         <RequireUlList
           skill={prop.skill}
           comps={prop.requirement}

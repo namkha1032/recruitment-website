@@ -6,21 +6,25 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import CompHeader from "./compHeader";
 import DateRangeIcon from "@mui/icons-material/DateRange";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const SelectDate = (prop) => {
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.up("sm"));
+  const isDm = useMediaQuery(theme.breakpoints.up("md"));
   return (
     <>
-      <Grid container spacing={0}>
-        <Grid item xs={6}>
-          <Box style={{ marginLeft: "2%", marginTop: "8px" }}>
+      <Grid container spacing={2}>
+        <Grid item xs={isSm?6:12}>
+          <Box style={{marginTop: "8px" }}>
             <CompHeader headerIcon={<DateRangeIcon />}>Start Day</CompHeader>
             <Box style={{ marginTop: "8px" }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   sx={{
-                    width: "100%",
+                    width:"100%",
                   }}
-                  label="Start Day"
                   value={prop.startDate}
                   onChange={prop.handleStart}
                   required
@@ -37,19 +41,18 @@ const SelectDate = (prop) => {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={isSm?6:12}>
           <Box
-            style={{ marginLeft: "3%", marginTop: "8px", marginRight: "2%" }}
+            style={{ marginLeft:"0", marginTop: "8px"}}
           >
             <CompHeader headerIcon={<DateRangeIcon />}>End Day</CompHeader>
-            <Box style={{ marginTop: "8px" }}>
+            <Box style={{ marginTop: "8px"}}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   sx={{
-                    width: "100%",
+                    width:"100%",
                   }}
                   value={prop.endDate}
-                  label="End Day"
                   onChange={prop.handleEnd}
                 />
               </LocalizationProvider>
