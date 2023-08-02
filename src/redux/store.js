@@ -48,6 +48,8 @@ import eventFooterSlice from "./reducer/eventFooterReducer";
 import profileSlice from "./reducer/profileReducer";
 import eventNavigateSlice from "./reducer/eventNavigateReducer";
 import candidateIdSlice from "./reducer/candidateIdReducer";
+import interviewerListSlice from "./reducer/interviewerListReducer";
+import interviewResultSlice from "./reducer/interviewResultReducer";
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
     reducer: {
@@ -90,7 +92,9 @@ const store = configureStore({
         eventFooter: eventFooterSlice.reducer,
         profile: profileSlice.reducer,
         eventNavigate: eventNavigateSlice.reducer,
-        candidateId: candidateIdSlice.reducer
+        candidateId: candidateIdSlice.reducer,
+        interviewerList: interviewerListSlice.reducer,
+        interviewResult: interviewResultSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]

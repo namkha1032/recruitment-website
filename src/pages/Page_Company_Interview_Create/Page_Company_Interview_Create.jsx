@@ -79,14 +79,17 @@ const Page_Company_Interview_Create = () => {
         // }
     }, [])
 
-    const interviewList = useSelector(state => state.interview)
-    const interviewerList = useSelector(state => state.interviewer)
+    const interviewList = useSelector(state => state.interviewList)
+    const interviewerList = useSelector(state => state.interviewerList)
     const roomList = useSelector(state => state.room)
     const shiftList = useSelector(state => state.shift)
     const newError = useSelector(state => state.error)
 
     // set busyInterviewer and busyRoom
     useEffect(() => {
+        console.log("useEffect set busyInterviewer and busyRoom")
+        console.log("chosenDate: ", chosenDate)
+        console.log("chosenShift: ", chosenShift)
         setBusyInterviewer(oldList => [])
         setBusyRoom(oldList => [])
         if (chosenShift) {
@@ -111,8 +114,11 @@ const Page_Company_Interview_Create = () => {
 
     useEffect(() => {
         if (newError.status == "no") {
-            cleanStore(dispatch)
-            navigate("/company/interview/00000000-0000-0000-0000-000000000001")
+            setTimeout(() => {
+                const idToNavigate = newError.message
+                cleanStore(dispatch)
+                navigate(`/company/interview/${idToNavigate}`)
+            }, 2000)
         }
         if (newError.status == "yes") {
             setErrorSnackbar(true)
@@ -139,6 +145,7 @@ const Page_Company_Interview_Create = () => {
                 roomId: chosenRoom.roomid
             }
         }
+        console.log("newinter: ", JSON.stringify(newInterviewObj))
         dispatch({ type: "saga/createInterview", payload: newInterviewObj })
         // navigate("/company/interview/1")
     }
@@ -270,25 +277,28 @@ const Page_Company_Interview_Create = () => {
                 <Snackbar
                     // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
                     open={errorSnackbar}
-                    autoHideDuration={5000}
+                    autoHideDuration={4000}
                     onClose={() => { setErrorSnackbar(false) }}
                 // message="I love snacks"
                 // key={vertical + horizontal}
                 >
-                    <Alert onClose={() => { setErrorSnackbar(false) }} severity="error" sx={{ width: '100%' }}>
+                    <Alert variant="filled" onClose={() => { setErrorSnackbar(false) }} severity="error" sx={{ width: '100%' }}>
                         {newError.message}
                     </Alert>
                 </Snackbar>
-                <AlertDialog openAlert={openAlert} setOpenAlert={setOpenAlert} message={"Are you sure you want to create this interview?"} handleSubmit={handleSubmit} />
+                <AlertDialog openAlert={openAlert} setOpenAlert={setOpenAlert}
+                    alertMessage={"Are you sure you want to create this interview?"}
+                    successfulMessage={"Interview created successfully"}
+                    handleSubmit={handleSubmit} />
             </Grid>
             :
-            // <Backdrop
-            //     sx={{ backgroundColor: theme.palette.grey[200] }}
-            //     open={true}
-            // >
-            //     <CircularProgress color="inherit" />
-            // </Backdrop>
-            <SkeletonInterviewCreate />
+            <Backdrop
+                sx={{ backgroundColor: theme.palette.grey[200] }}
+                open={true}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+            // <SkeletonInterviewCreate />
         }
         </>
     )
