@@ -7,7 +7,7 @@ import host from "../host"
 
 function* getAllCvCandidate() {
     console.log("Hello")
-    const response = yield call(axios.get, `${host.name}/data/CVListOfCandidate.json`)
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/GetCandidateCvs/00000000-0000-0000-0000-000000000001`)
     console.log("hello 1")
     
     yield put({ type: "cvCandidate/setCvList", payload: response.data })
