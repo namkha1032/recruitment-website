@@ -29,6 +29,7 @@ import GroupAddRoundedIcon from '@mui/icons-material/GroupAddRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import { useDispatch, useSelector } from 'react-redux'
 import cleanStore from '../../utils/cleanStore'
+import dayjs from 'dayjs'
 
 
 
@@ -51,6 +52,7 @@ const Page_Company_Event_Id_Update = () => {
     const event = useSelector((state) => state.event)
     console.log("MNPQ: ", event)
     console.log("VLP: ", new Date("2023-08-18T17:00:00"))
+    console.log("V.L.P: ", dayjs("2023-08-18T17:00:00"))
 
     useEffect(() => {
         // setName(event ? event.eventName : "XYZT")
@@ -61,6 +63,7 @@ const Page_Company_Event_Id_Update = () => {
         setMaxQuantity(event ? event.maxQuantity : 0)
         setLocation(event ? event.location : "")
         setContent(event ? event.content : "")
+        setTime(event ? dayjs(new Date(event.time + "Z")) : dayjs())
     }, [event])
 
 
@@ -177,8 +180,6 @@ const Page_Company_Event_Id_Update = () => {
         }
     }, [eventStatus])
 
-
-
     return (
         // event &&
         // <>
@@ -286,7 +287,9 @@ const Page_Company_Event_Id_Update = () => {
                                                         // Step 2: console.log("DateTime created: ", newDate.toLocaleString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }))
                                                         setTime(newValue)
                                                     }}
-                                                    format='HH:mm:ss DD/MM/YYYY'
+                                                    // format='HH:mm:ss DD/MM/YYYY'
+                                                    // format='DD/MM/YYYY HH:mm'
+                                                    format='HH:mm DD/MM/YYYY'
                                                 />
                                             </DemoContainer>
                                         </LocalizationProvider>

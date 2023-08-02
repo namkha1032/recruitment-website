@@ -28,9 +28,9 @@ const Page_Event_Id = () => {
 
     const role = useGetRole()
     const candidateId = useSelector(state => state.candidateId)
-    // const userId = useSelector(state => state.user.userId)
-    const userId = "e669407a-193c-4d36-8790-def94fb5660a"
+    const userId = useSelector(state => state.user.userid)
     
+
     const { eventid } = useParams();
    
 
@@ -74,7 +74,7 @@ const Page_Event_Id = () => {
                 eventId: event.eventId
             }
         });
-        console.log("Register successfully!");
+        alert("Register successfully!");
         // alert(new Date())
     }
 
