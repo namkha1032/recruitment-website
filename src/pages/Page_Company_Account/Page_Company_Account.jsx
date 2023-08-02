@@ -7,7 +7,9 @@ import {
     DialogContentText,
     DialogTitle,
     TextField,
-    Typography
+    Typography,
+    Box,
+    CircularProgress
 } from "@mui/material"
 import {DataGrid, GridAddIcon, GridToolbar, GridToolbarQuickFilter} from "@mui/x-data-grid";
 import {useNavigate} from "react-router-dom";
@@ -59,6 +61,12 @@ function CandidateTable(props) {
     const RenderAddToBlacklist = ({params}) => {
         const [open, setOpen] = React.useState(false);
         const [reason, setReason] = React.useState('');
+        const handleGoToAccount = () => {
+            const userId = params.row.userId;
+            window.location.href = `/profile/${userId}`;
+            console.log(userId)
+            setOpen(false);
+        };
         const handleAddClick = () => {
             dispatch({type: "saga/addToBlacklist", payload: {reason: reason, candidateId: params.row.candidateId}});
             console.log(reason,params.row.candidateId);
@@ -91,6 +99,7 @@ function CandidateTable(props) {
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
                             Candidate ID: {params.row.candidateId}<br/>
+                            User ID: {params.row.userId}
                         </DialogContentText>
                         <TextField
                             autoFocus
@@ -111,9 +120,7 @@ function CandidateTable(props) {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={() => {
-                            setOpen(false)
-                        }}>Go to Account</Button>
+                        <Button onClick={handleGoToAccount}>Go To Account</Button>
                         <Button onClick={handleAddClick}>Add</Button>
                         <Button onClick={() => {
                             setOpen(false)
@@ -141,13 +148,20 @@ function CandidateTable(props) {
             </Grid>
         );
     }
-    function getUser(candidateId) {
-        return candidateNames.find(user => user.candidateId === candidateId);
-    }
     const columns = [
                 {field: "candidateId", headerName: isSm ? "Candidate ID" : "cID", flex: 0.5},
-                // {field: "userId", headerName: "User ID", flex: 0.5},
-                { field: 'name', headerName: 'Username', flex: 0.3, valueGetter: params => getUser(params.row.candidateId)?.name },
+                {
+                    field: "userName",
+                    headerName: "Username",
+                    flex: 0.3,
+                    valueGetter: (params) => params.row.user.userName,
+                },
+                {
+                    field: "fullName",
+                    headerName: "Full Name",
+                    flex: 0.4,
+                    valueGetter: (params) => params.row.user.fullName,
+                },
                 {
                     field: "addtoBlacklist",
                     headerName: isSm ? "Add to Blacklist" : "Add",
@@ -228,6 +242,12 @@ function InterviewerTable(props) {
 
     const RenderCheckInfo = ({params}) => {
         const [open, setOpen] = React.useState(false);
+        const handleGoToAccount = () => {
+            const userId = params.row.userId;
+            window.location.href = `/profile/${userId}`;
+            console.log(userId)
+            setOpen(false);
+        };
         return (
             <strong>
                 <IconButton color="black" aria-label="Add to Blacklist" size="large"
@@ -254,15 +274,11 @@ function InterviewerTable(props) {
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
                             Interviewer ID: {params.row.interviewerId}<br/>
+                            User ID: {params.row.userId}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button
-                            onClick={() => {
-                            setOpen(false)
-                        }}
-                            >
-                            Go to Account</Button>
+                        <Button onClick={handleGoToAccount}>Go To Account</Button>
                         <Button onClick={() => {
                             setOpen(false)
                         }}>
@@ -297,19 +313,29 @@ function InterviewerTable(props) {
             </Grid>
         );
     }
-    function getUser(interviewerId) {
-        return inerviewerNames.find(user => user.interviewerId === interviewerId);
-    }
+    // function getUser(interviewerId) {
+    //     return inerviewerNames.find(user => user.interviewerId === interviewerId);
+    // }
 
     const columns = [
-        {field: "interviewerId", headerName: "Interviewer ID", flex: 0.5},
-        { field: 'name', headerName: 'Username', flex: 0.3, valueGetter: params => getUser(params.row.interviewerId)?.name },
+        {field: "interviewerId", headerName: "Interviewer ID", flex: 0.4},
+        {
+            field: "userName",
+            headerName: "Username",
+            flex: 0.2,
+            valueGetter: (params) => params.row.user.userName,
+        },
+        {
+            field: "fullName",
+            headerName: "Full Name",
+            flex: 0.3,
+            valueGetter: (params) => params.row.user.fullName,
+            cellClassName: "name-column--cell",
+        },
         {
             field: "departmentName",
             headerName: "Department",
             flex: 0.2,
-            cellClassName: "name-column--cell",
-
         },
         {
             field: "checkInfo",
@@ -390,6 +416,12 @@ function RecruiterTable(props) {
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     const RenderCheckInfo = ({params}) => {
         const [open, setOpen] = React.useState(false);
+        const handleGoToAccount = () => {
+            const userId = params.row.userId;
+            window.location.href = `/profile/${userId}`;
+            console.log(userId)
+            setOpen(false);
+        };
         return (
             <strong>
                 <IconButton color="black" aria-label="Add to Blacklist" size="large"
@@ -416,12 +448,11 @@ function RecruiterTable(props) {
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
                             Recruiter ID: {params.row.recruiterId}<br/>
+                            User ID: {params.row.userId}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={() => {
-                            setOpen(false)
-                        }}>Go to Account</Button>
+                        <Button onClick={handleGoToAccount}>Go To Account</Button>
                         <Button onClick={() => {
                             setOpen(false)
                         }}>
@@ -447,9 +478,9 @@ function RecruiterTable(props) {
         const departmentName = department ? department.departmentName : "";
         return { ...recruiter, departmentName };
     });
-    function getUser(recruiterId) {
-        return recruiterNames.find(user => user.recruiterId === recruiterId);
-    }
+    // function getUser(recruiterId) {
+    //     return recruiterNames.find(user => user.recruiterId === recruiterId);
+    // }
     function QuickSearchToolbar() {
         return (
             <Grid container margin={1}
@@ -460,14 +491,21 @@ function RecruiterTable(props) {
         );
     }
     const columns = [
-        {field: "recruiterId", headerName: "Recruiter ID", flex: 0.5},
-        { field: 'name', headerName: 'Username', flex: 0.3, valueGetter: params => getUser(params.row.recruiterId)?.name },
+        {field: "recruiterId", headerName: "Recruiter ID", flex: 0.4},
         {
-            field: "departmentName",
-            headerName: "Department",
+            field: "userName",
+            headerName: "Username",
             flex: 0.2,
+            valueGetter: (params) => params.row.user.userName,
+        },
+        {
+            field: "fullName",
+            headerName: "Full Name",
+            flex: 0.3,
+            valueGetter: (params) => params.row.user.fullName,
             cellClassName: "name-column--cell",
         },
+        { field: 'departmentName', headerName: 'Department', flex: 0.2},
         {
             field: "checkInfo",
             headerName: isSm ? "Check Info" : "More",
@@ -549,6 +587,8 @@ function a11yProps(index) {
 
 function FullWidthTabs() {
     const [value, setValue] = React.useState(0);
+    const [isLoading, setIsLoading] = React.useState(true);
+
     const theme = useTheme();
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
@@ -561,24 +601,23 @@ function FullWidthTabs() {
         setValue(index);
     };
 
+    // Simulate loading data
+    React.useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 2000);
+    }, []);
 
     return (
-
         <Card
             raised="true"
             sx={{
-                // width:'77vw',
-                // display: 'flex',
-                // border: "1px solid black",
-                // borderRadius: 1,
-                padding:4,
+                padding: 4,
                 mt: 4
-            }}>
+            }}
+        >
             <Grid container>
-                <AppBar position="static"
-                        sx={{
-                            backgroundColor: '#ffffff',
-                        }}>
+                <AppBar position="static" sx={{ backgroundColor: '#ffffff' }}>
                     <Tabs
                         display="flex"
                         value={value}
@@ -593,45 +632,44 @@ function FullWidthTabs() {
                         sx={{
                             backgroundColor: '#ffffff',
                             color: '#000000',
-                            // "&.Mui-selected": {
-                            //     color: '#000000'
-                            // },
-                            // "&. Mui-indicator": {
-                            //     color: '#000000'
-                            // }
                         }}
                     >
                         <Tab label={isSm ? "Candidate" : "Cndt."} {...a11yProps(0)}
-                            sx={{
-                                "&.Mui-selected": {
-                                    color: '#000000'
-                                },
-                            }}/>
+                             sx={{
+                                 "&.Mui-selected": {
+                                     color: '#000000'
+                                 },
+                             }} />
                         <Tab label={isSm ? "Interviewer" : "Intvwr."} {...a11yProps(1)}
                              sx={{
                                  "&.Mui-selected": {
                                      color: '#000000'
                                  },
-                             }}/>
+                             }} />
                         <Tab label={isSm ? "Recruiter" : "Rctr."} {...a11yProps(2)}
                              sx={{
                                  "&.Mui-selected": {
                                      color: '#000000'
                                  },
-                             }}/>
+                             }} />
                     </Tabs>
-                    <CandidateTable value={value} index={0}>
-                    </CandidateTable>
-                    <InterviewerTable value={value} index={1}>
-                    </InterviewerTable>
-                    <RecruiterTable value={value} index={2}>
-                    </RecruiterTable>
+
+                    {isLoading ? (
+                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
+                            <CircularProgress sx={{color: '#000'}} />
+                        </Box>
+                    ) : (
+                        <React.Fragment>
+                            <CandidateTable value={value} index={0} />
+                            <InterviewerTable value={value} index={1} />
+                            <RecruiterTable value={value} index={2} />
+                        </React.Fragment>
+                    )}
                 </AppBar>
             </Grid>
         </Card>
     );
 }
-
 const Page_Company_Account = () => {
     const navigate = useNavigate()
     const theme = useTheme()
