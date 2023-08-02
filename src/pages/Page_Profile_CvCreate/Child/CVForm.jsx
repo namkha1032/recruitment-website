@@ -1,14 +1,23 @@
 import { useState, useEffect } from "react";
 // import cvinfo from "./CvData";
+import * as React from "react";
 import CreateCv from "./CreateCv";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import cleanStore from "../../../utils/cleanStore";
+import MuiAlert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar"
 // import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
 // import axios from "axios";
 
 // import ViewCv from "./ViewCv";
+const SkillAlert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+const CertAlert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 function CVForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -90,7 +99,7 @@ function CVForm() {
     );
     console.log(arr);
     if (arr[0] === undefined) {
-      alert("wrong skill");
+      handleSetSkillOpen()
       setSkillId(null);
       setSName("");
       setSInputValue("");
@@ -145,38 +154,6 @@ function CVForm() {
   function handleCertDelete(id) {
     setCerts(certs.filter((component) => component.certificateId !== id));
   }
-
-  // function handleLanguageAdd() {
-  //   console.log(lInputValue);
-  //   console.log(languageName);
-  //   let arr = languageData.filter(
-  //     (comp) =>
-  //       comp.languageName ===
-  //       (lInputValue !== null ? lInputValue.languageName : "")
-  //   );
-  //   console.log(arr);
-  //   if (arr[0] === undefined) {
-  //     alert("wrong language");
-  //     setLanguageId(null);
-  //     setLanguageName("");
-  //     setLInputValue("");
-  //   } else {
-  //     const newLanguage = {
-  //       id: lId,
-  //       languageId: languageId,
-  //       languageName: languageName,
-  //     };
-  //     console.log(newLanguage);
-  //     setLanguages([...languages, newLanguage]);
-  //     setLanguageId(null);
-  //     setLanguageName("");
-  //     setLInputValue("");
-  //     setLId((prev) => (prev += 1));
-  //   }
-  // }
-  // function handleLanguageDelete(id) {
-  //   setLanguages(languages.filter((component) => component.id !== id));
-  // }
   const handleSetOpen = () => {
     setOpen(true);
   };
@@ -185,6 +162,16 @@ function CVForm() {
       return;
     }
     setOpen(false);
+  };
+  const [skillOpen, setSkillOpen] = useState(false);
+  const handleSetSkillOpen = () => {
+    setSkillOpen(true);
+  };
+  const handleSkillClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSkillOpen(false);
   };
   async function handleSubmit(e) {
     e.preventDefault();
@@ -241,6 +228,10 @@ function CVForm() {
       <Grid container spacing={0} justifyContent="center" alignItems="center">
         <Grid item xs={12}>
           <CreateCv
+            //notify
+            handleSkillClose={handleSkillClose}
+            handleSetSkillOpen={handleSetSkillOpen}
+            skillOpen={skillOpen}
             //////////Skill////////
             skillOption={skillOption}
             setSkillId={setSkillId}
@@ -308,6 +299,32 @@ function CVForm() {
         </Grid>
       </Grid>
       {loading && <p>Loading...</p>}
+      <Snackbar
+        open={skillOpen}
+        autoHideDuration={3000}
+        onClose={handleSkillClose}
+      >
+        <SkillAlert
+          onClose={handleSkillClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Wrong skill's name
+        </SkillAlert>
+      </Snackbar>
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
+        <CertAlert
+          onClose={handleClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Lack of certificate's information
+        </CertAlert>
+      </Snackbar>
     </>
   );
 }
