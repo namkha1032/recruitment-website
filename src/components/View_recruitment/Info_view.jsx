@@ -31,6 +31,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate, useParams } from 'react-router-dom';
 import TableViewIcon from "@mui/icons-material/TableView";
 import ViewTimelineIcon from '@mui/icons-material/ViewTimeline';
+import CircularProgress from '@mui/material/CircularProgress';
 const Info_view = (props) => {
     const { recruitmentid } = useParams();
     console.log("number", recruitmentid);
@@ -54,7 +55,7 @@ const Info_view = (props) => {
             cleanStore(dispatch);
         }
     }, [])
-    const skill = useSelector(state => state.skill);
+    const skill = useSelector(state => state.positionskill);
     console.log("skillinmain", skill); // ['react','c++']
     useEffect(() => {
         dispatch({ type: 'saga/getPosition', payload: recruitmentid })
@@ -93,7 +94,7 @@ const Info_view = (props) => {
         display: "flex", alignItems: "center", columnGap: gap
     }
     console.log("skillininfo", skill);
-    const department = useSelector(state => state.department);
+    // const department = useSelector(state => state.department);
     const startDate = detailposition ? detailposition.startDate.slice(0, 10) : [];
     const endDate = detailposition ? detailposition.endDate.slice(0, 10) : [];
     console.log("date", startDate);
@@ -101,163 +102,167 @@ const Info_view = (props) => {
     return (
         // detailposition && language && skill && department &&
         // detailposition && applications &&
-        detailposition && skill && applications &&
-        <>
-            <Grid container spacing={2} >
-                <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <Typography variant="h3" sx={{ fontWeight: "bold" }}>
-                        Detail of the position
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} md={6} sm ={12}>
-                    <GigaCard>
-                        <GigaCardBody>
-                            <img style={{ width: '100%', height: "100%" }} src="https://www.pvcfc.com.vn/Data/Sites/1/News/5510/mau-1.jpg" alt="Tuyển dụng" />
-                        </GigaCardBody>
-                    </GigaCard>
+        detailposition && skill && applications ?
+            <>
+                <Grid container spacing={2} >
+                    <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        <Typography variant="h3" sx={{ fontWeight: "bold" }}>
+                            Detail of the position
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6} sm={12}>
+                        <GigaCard>
+                            <GigaCardBody>
+                                <img style={{ width: '100%', height: "100%" }} src="https://www.pvcfc.com.vn/Data/Sites/1/News/5510/mau-1.jpg" alt="Tuyển dụng" />
+                            </GigaCardBody>
+                        </GigaCard>
 
 
-                </Grid>
-                <Grid item xs={12} md={6} sm ={12} sx={{ display: "flex", flexDirection: "column" }}>
-                    <GigaCard>
-                        <GigaCardHeader color={"black"} headerIcon={<ArticleIcon sx={{ fontSize: "inherit", color: "black" }} />}>
-                            Detail information
-                        </GigaCardHeader>
-                        <GigaCardBody >
+                    </Grid>
+                    <Grid item xs={12} md={6} sm={12} sx={{ display: "flex", flexDirection: "column" }}>
+                        <GigaCard>
+                            <GigaCardHeader color={"black"} headerIcon={<ArticleIcon sx={{ fontSize: "inherit", color: "black" }} />}>
+                                Detail information
+                            </GigaCardHeader>
+                            <GigaCardBody >
 
-                            <View_detail detailposition={detailposition} skill={skill} />
-                            {/* <View_detail detailposition={detailposition[0]}  /> */}
-                        </GigaCardBody>
-                    </GigaCard>
-                </Grid>
-                <Grid item xs={12} md={12} sm ={12}>
-                    <Box sx={{ width: '100%', typography: 'body1' }}>
-                        {props.tabs == 2 ? (
-                            <GigaCard>
-                                <GigaCardBody>
+                                <View_detail detailposition={detailposition} skill={skill} />
+                                {/* <View_detail detailposition={detailposition[0]}  /> */}
+                            </GigaCardBody>
+                        </GigaCard>
+                    </Grid>
+                    <Grid item xs={12} md={12} sm={12}>
+                        <Box sx={{ width: '100%', typography: 'body1' }}>
+                            {props.tabs == 2 ? (
+                                <GigaCard>
+                                    <GigaCardBody>
 
-                                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
 
-                                        <Tabs sx={{
-                                            "& .MuiTabs-indicator": {
-                                                backgroundColor: "black",
-                                            },
-                                        }}
-                                            value={tab1} onChange={handleTab1} aria-label="lab API tabs example"
-                                        >
-                                            <Tab
-                                                icon={<ViewTimelineIcon />}
-                                                label="General"
-                                                value="1"
-                                                sx={{
-                                                    textTransform: "none",
-                                                    fontWeight: 500,
-                                                    color: "rgba(0, 0, 0, 0.85)",
-                                                    "&.hover": {
-                                                        color: "rgba(190, 190, 190, 0.85)",
-                                                    },
-                                                    "&.Mui-selected": {
-                                                        color: "black",
-                                                    },
-                                                }}
-                                            />
-                                            <Tab
-                                                icon={<TableViewIcon />}
-                                                label="Application List"
-                                                value="2"
-                                                sx={{
-                                                    textTransform: "none",
-                                                    fontWeight: 500,
-                                                    color: "rgba(0, 0, 0, 0.85)",
-                                                    "&.hover": {
-                                                        color: "rgba(190, 190, 190, 0.85)",
-                                                    },
-                                                    "&.Mui-selected": {
-                                                        color: "black",
-                                                    },
-                                                }}
-                                            />
-
-                                        </Tabs>
-
-                                    </Box>
-                                    {tab1 === "1" && (
-                                        <Box>
-                                            <View_general  detailposition={detailposition} />
-                                        </Box>
-                                    )}
-                                    {/* <TabPanel value="1" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
-                                        <Box> */}
-
-                                    {/* <View_detail detail={detail[recruitmentid]} /> */}
-                                    {/* <View_general detailposition={detailposition[0]} /> */}
-                                    {/* </Box>
-                                    </TabPanel> */}
-                                    {tab1 === "2" && (
-                                        <List_application applications={applications} />
-                                        
-                                    )}
-                                    {/* <TabPanel value="2" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
-                                        
-                                    </TabPanel> */}
-
-
-                                </GigaCardBody>
-                            </GigaCard>
-
-
-                        ) : (
-                            <GigaCard>
-                                <GigaCardBody>
-
-                                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                        <Tabs
-                                            sx={{
+                                            <Tabs sx={{
                                                 "& .MuiTabs-indicator": {
                                                     backgroundColor: "black",
                                                 },
                                             }}
-                                            value={tab2}
-                                            onChange={handleTab2} aria-label="lab API tabs example">
-                                            <Tab
-                                                icon={<ViewTimelineIcon />}
-                                                label="General"
-                                                value="3"
+                                                value={tab1} onChange={handleTab1} aria-label="lab API tabs example"
+                                            >
+                                                <Tab
+                                                    icon={<ViewTimelineIcon />}
+                                                    label="General"
+                                                    value="1"
+                                                    sx={{
+                                                        textTransform: "none",
+                                                        fontWeight: 500,
+                                                        color: "rgba(0, 0, 0, 0.85)",
+                                                        "&.hover": {
+                                                            color: "rgba(190, 190, 190, 0.85)",
+                                                        },
+                                                        "&.Mui-selected": {
+                                                            color: "black",
+                                                        },
+                                                    }}
+                                                />
+                                                <Tab
+                                                    icon={<TableViewIcon />}
+                                                    label="Application List"
+                                                    value="2"
+                                                    sx={{
+                                                        textTransform: "none",
+                                                        fontWeight: 500,
+                                                        color: "rgba(0, 0, 0, 0.85)",
+                                                        "&.hover": {
+                                                            color: "rgba(190, 190, 190, 0.85)",
+                                                        },
+                                                        "&.Mui-selected": {
+                                                            color: "black",
+                                                        },
+                                                    }}
+                                                />
+
+                                            </Tabs>
+
+                                        </Box>
+                                        {tab1 === "1" && (
+                                            <Box>
+                                                <View_general detailposition={detailposition} />
+                                            </Box>
+                                        )}
+                                        {/* <TabPanel value="1" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
+                                        <Box> */}
+
+                                        {/* <View_detail detail={detail[recruitmentid]} /> */}
+                                        {/* <View_general detailposition={detailposition[0]} /> */}
+                                        {/* </Box>
+                                    </TabPanel> */}
+                                        {tab1 === "2" && (
+                                            <List_application applications={applications} />
+
+                                        )}
+                                        {/* <TabPanel value="2" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
+                                        
+                                    </TabPanel> */}
+
+
+                                    </GigaCardBody>
+                                </GigaCard>
+
+
+                            ) : (
+                                <GigaCard>
+                                    <GigaCardBody>
+
+                                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                            <Tabs
                                                 sx={{
-                                                    textTransform: "none",
-                                                    fontWeight: 500,
-                                                    color: "rgba(0, 0, 0, 0.85)",
-                                                    "&.hover": {
-                                                        color: "rgba(190, 190, 190, 0.85)",
-                                                    },
-                                                    "&.Mui-selected": {
-                                                        color: "black",
+                                                    "& .MuiTabs-indicator": {
+                                                        backgroundColor: "black",
                                                     },
                                                 }}
-                                            />
+                                                value={tab2}
+                                                onChange={handleTab2} aria-label="lab API tabs example">
+                                                <Tab
+                                                    icon={<ViewTimelineIcon />}
+                                                    label="General"
+                                                    value="3"
+                                                    sx={{
+                                                        textTransform: "none",
+                                                        fontWeight: 500,
+                                                        color: "rgba(0, 0, 0, 0.85)",
+                                                        "&.hover": {
+                                                            color: "rgba(190, 190, 190, 0.85)",
+                                                        },
+                                                        "&.Mui-selected": {
+                                                            color: "black",
+                                                        },
+                                                    }}
+                                                />
 
-                                        </Tabs>
-                                    </Box>
-                                    {tab2 === "3" && (
-                                        <View_general department={department} detailposition={detailposition} />
-                                    )}
-                                    {/* <TabPanel value="3" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}> */}
+                                            </Tabs>
+                                        </Box>
+                                        {tab2 === "3" && (
+                                            <View_general detailposition={detailposition} />
+                                        )}
+                                        {/* <TabPanel value="3" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}> */}
 
-                                    {/* <View_detail detail={detail[recruitmentid]} /> */}
-                                    {/* <View_general  detailposition={detailposition[0]} /> */}
-                                    {/* </TabPanel> */}
+                                        {/* <View_detail detail={detail[recruitmentid]} /> */}
+                                        {/* <View_general  detailposition={detailposition[0]} /> */}
+                                        {/* </TabPanel> */}
 
-                                </GigaCardBody>
-                            </GigaCard>
+                                    </GigaCardBody>
+                                </GigaCard>
 
-                        )}
+                            )}
 
-                    </Box>
+                        </Box>
+                    </Grid>
                 </Grid>
-            </Grid>
 
-        </>
-    )
+            </>
+            :
+            <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <CircularProgress color="inherit" />
+            </Box>
+    );
 }
 
 export default Info_view

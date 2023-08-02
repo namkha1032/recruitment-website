@@ -9,7 +9,7 @@ import RecommendIcon from '@mui/icons-material/Recommend';
 import { formatDate } from '../../utils/formatDate';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-
+import dayjs from 'dayjs';
 import './Info_view.css'
 const View_detail = (props) => {
     // console.log("hello" , props.detailposition.description);

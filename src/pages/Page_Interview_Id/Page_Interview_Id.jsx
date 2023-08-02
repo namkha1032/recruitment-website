@@ -32,6 +32,8 @@ import { formatDate } from "../../utils/formatDate";
 import cleanStore from "../../utils/cleanStore";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import { convertDate } from "../../utils/convertDate";
+import dayjs from 'dayjs';
 const Page_Interview_Id = ({ cvid }) => {
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
@@ -46,19 +48,19 @@ const Page_Interview_Id = ({ cvid }) => {
             cleanStore(dispatch);
         }
     }, [])
-    const shift = useSelector(state => state.shift);
+    const shift = useSelector(state => state.interviewshift);
     console.log("interviewid", interviewidinfo);
-    let left = 5
-    let right = 6
+    let left = 4
+    let right = 7
     let gap = 2
     let gridSx = {
         display: "flex", alignItems: "center", columnGap: gap
     }
-    const room = useSelector(state => state.room);
-    const interviewer = useSelector(state => state.interviewer);
-    const department = useSelector(state => state.department);
-    const position = useSelector(state => state.position)
-    const skill_list = useSelector(state => state.skill);
+    const room = useSelector(state => state.interviewroom);
+    const interviewer = useSelector(state => state.interviewinterviewer);
+    const department = useSelector(state => state.interviewdepartment);
+    const position = useSelector(state => state.interviewposition)
+    const skill_list = useSelector(state => state.interviewskill);
     console.log("skillinmain", skill_list);
     console.log("interid", interviewidinfo)
     console.log("intermain", interviewer);
@@ -67,8 +69,8 @@ const Page_Interview_Id = ({ cvid }) => {
     console.log('departmain', department);
     console.log("positionmain", position);
     // const requirements = interviewidinfo ? interviewidinfo[0].requirement : [];
-    const birthdate = interviewer ? formatDate(interviewer.user.dateOfBirth.slice(0,10)) : [];
-    const date = interviewidinfo ? formatDate(interviewidinfo.dateInterview.slice(0, 10)) : [];
+    const birthdate = interviewer ? dayjs(convertDate(interviewer.user.dateOfBirth)).format('DD/MM/YYYY') : [];
+    const date = interviewidinfo ? dayjs(convertDate(interviewidinfo.dateInterview)).format('DD/MM/YYYY') : [];
     console.log("interview", interviewid);
     return (
         interviewidinfo && room && shift && department && interviewer && position &&
@@ -112,6 +114,7 @@ const Page_Interview_Id = ({ cvid }) => {
                                                 {/* 14:00 25/07/2023 */}
                                                 {/* {`${interviewidinfo[0].date}${' '}${interviewidinfo[0].time}`} */}
                                                 {`${date}${' '}${shift[0].shiftTimeStart}${'h'}${' - '}${shift[0].shiftTimeEnd}${'h'}`}
+                                                {/* {`${date}`} */}
                                             </Typography>
                                         </Grid>
                                     </Box>
@@ -363,11 +366,9 @@ const Page_Interview_Id = ({ cvid }) => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} md={12}>
-                    <GigaCard>
-                        <GigaCardBody>
+                    
                             <CV cvid={cvid} />
-                        </GigaCardBody>
-                    </GigaCard>
+                        
                 </Grid>
             </Grid >
 
