@@ -14,6 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Carousel from '../../components/Carousel/Carousel'
 import { useDispatch, useSelector } from 'react-redux';
 import { useRef } from 'react';
+import picture from '../../assets/img/aboutUS.jpg'
 
 //
 // import Swiper core and required modules
@@ -25,14 +26,7 @@ const styleImage = {
   objectFit: ' cover',
   height: '350px'
 }
-const styleFont = {
-  fontFamily: "EB garamond",
-  fontWeight: "bold"
-}
-const styleFontContent = {
-  fontFamily: "serif",
-  fontWeight: "bold"
-}
+
 
 //
 
@@ -74,7 +68,7 @@ const Page_Home = () => {
   }
   React.useEffect(() => {
     dispatch({ type: 'saga/getEventList' })
- }, [])
+  }, [])
   console.log(eventList)
   return (
     eventList && <Box>
@@ -105,7 +99,7 @@ const Page_Home = () => {
                   >
                     {item.EventName} • {item.EventDateTime.slice(0, 10)}
                   </Typography>
-                  {item.EventDescription}
+                  {item.EventDescription.slice(0, 30)}
 
                 </Box>
               </Box>
@@ -137,7 +131,7 @@ const Page_Home = () => {
                     >
                       {item.EventName} • {item.EventDateTime.slice(0, 10)}
                     </Typography>
-                    {item.EventDescription}
+                    {item.EventDescription.slice(0, 30)}
 
                   </Box>))}
 
@@ -146,10 +140,10 @@ const Page_Home = () => {
               </Grid>
               <Grid item md={4}
                 // onClick={handleNavigateClick}
-                sx={{ padding: '0px 16px 0px 16px', borderRight: '1px solid lightgrey', cursor: 'pointer' }}
+                sx={{ padding: '0px 16px 0px 16px', cursor: 'pointer' }}
 
               >
-                {eventList.slice(5, 9).map((item, index) => (
+                {eventList.slice(5, 8).map((item, index) => (
                   <Box key={index} onClick={() => handleNavigateClick(item.EventId)}
                     sx={{ cursor: 'pointer' }}>
                     <img src="https://www.freecodecamp.org/news/content/images/2022/04/derick-mckinney-oARTWhz1ACc-unsplash.jpg"
@@ -165,7 +159,7 @@ const Page_Home = () => {
                     >
                       {item.EventName} • {item.EventDateTime.slice(0, 10)}
                     </Typography>
-                    {item.EventDescription}
+                    {item.EventDescription.slice(4,30)}
 
                   </Box>))}
 
@@ -311,7 +305,7 @@ const Page_Home = () => {
         <Grid container spacing={1} >
           <Grid item md={6}>
             <Box sx={{ padding: '24px 0px 0px 0px' }}>
-              <img src="https://ftmm.com.pk/wp-content/uploads/2022/06/our-mission.webp"
+              <img src={picture}
                 alt=""
                 style={{ width: '100%' }}
 
