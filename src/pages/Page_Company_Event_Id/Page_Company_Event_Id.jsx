@@ -115,12 +115,12 @@ const Page_Company_Event_Id = () => {
 
     const columns = useMemo(() => [
         {
-            field: 'userId',
+            field: 'candidateId',
             type: 'number',
-            width: 150,
+            width: 300,
             headerAlign: 'center',
             align: 'center',
-            renderHeader: () => <span>ID</span>,
+            renderHeader: () => <span>Candidate ID</span>,
             renderCell: (params) => {
                 return (
                     <Box
@@ -137,12 +137,12 @@ const Page_Company_Event_Id = () => {
             },
         },
         {
-            field: 'userName',
+            field: 'candidateFullName',
             type: 'string',
-            width: 250,
+            width: 300,
             headerAlign: 'left',
             align: 'left',
-            renderHeader: () => <span>User Name</span>,
+            renderHeader: () => <span>Full Name</span>,
             renderCell: (params) => {
                 return (
                     <Box
@@ -178,10 +178,32 @@ const Page_Company_Event_Id = () => {
         //         }
         //     },
         // },
+        // {
+        //     field: 'candidateUserName',
+        //     type: 'string',
+        //     width: 250,
+        //     headerAlign: 'left',
+        //     align: 'left',
+        //     renderHeader: () => <span>Username</span>,
+        //     renderCell: (params) => {
+        //         return (
+        //             <Box
+        //                 sx={{
+        //                     "&:hover": {
+        //                         cursor: "pointer",
+        //                         textDecoration: "underline",
+        //                     },
+        //                 }}
+        //             >
+        //                 {params.value}
+        //             </Box>
+        //         );
+        //     },
+        // },
         {
-            field: 'email',
+            field: 'candidateEmail',
             type: 'string',
-            width: 250,
+            width: 300,
             headerAlign: 'left',
             align: 'left',
             renderHeader: () => <span>Email</span>,
@@ -189,21 +211,21 @@ const Page_Company_Event_Id = () => {
 
             },
         },
-        {
-            field: 'registerTime',
-            type: 'string',
-            width: 250,
-            headerAlign: 'center',
-            align: 'center',
-            renderHeader: () => <span>Registration Time</span>,
-            renderCell: (params) => {
+        // {
+        //     field: 'registerTime',
+        //     type: 'string',
+        //     width: 250,
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     renderHeader: () => <span>Registration Time</span>,
+        //     renderCell: (params) => {
 
-            },
-        },
+        //     },
+        // },
         {
             field: 'actions',
             type: 'actions',
-            width: 200,
+            width: 150,
             headerAlign: 'center',
             align: 'center',
             flex: 1,
@@ -212,7 +234,7 @@ const Page_Company_Event_Id = () => {
                 <GridActionsCellItem
                     icon={<FindInPageIcon></FindInPageIcon>}
                     label="Detail"
-                    onClick={() => handleDetailClick(params.row.userId)} />,]
+                    onClick={() => handleDetailClick(params.row.candidateId)} />,]
         }
     ]);
 
@@ -564,10 +586,10 @@ const Page_Company_Event_Id = () => {
                                     },
                                 },
                             }}
-                            getRowId={(row) => row.userId}
+                            getRowId={(row) => row.candidateId}
                             onCellClick={(params, event) => {
-                                if (params.field === "userId" || params.field === "userName") {
-                                    handleDetailClick(params.row.userId);
+                                if (params.field === "candidateId" || params.field === "candidateFullName") {
+                                    handleDetailClick(params.row.candidateId);
                                 }
                             }}>
                         </DataGrid>
