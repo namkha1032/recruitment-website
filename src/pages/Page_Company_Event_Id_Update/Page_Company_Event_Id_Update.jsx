@@ -30,6 +30,7 @@ import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import { useDispatch, useSelector } from 'react-redux'
 import cleanStore from '../../utils/cleanStore'
 import dayjs from 'dayjs'
+import { LoadingButton } from '@mui/lab'
 
 
 
@@ -161,7 +162,7 @@ const Page_Company_Event_Id_Update = () => {
                 maxParticipants: maxQuantity,
                 datetimeEvent: re,
                 place: location,
-                createdTime: "16/07/2023 10:30"
+                createdTime: "10:30 16/07/2023"
             }
         });
     }
@@ -404,7 +405,8 @@ const Page_Company_Event_Id_Update = () => {
                             </Grid>
 
                             <div style={{
-                                border: '2px dashed #1565C0',
+                                border: '2px dashed #00838f',
+                                // border: '2px dashed #1565C0',
                                 borderRadius: '5px',
                                 width: '100%',
                                 marginTop: '60px',
@@ -454,7 +456,14 @@ const Page_Company_Event_Id_Update = () => {
                                         paddingTop: 20
                                     }}
                                     >
-                                        <CloudUploadRoundedIcon fontSize='large'></CloudUploadRoundedIcon>
+                                        <CloudUploadRoundedIcon
+                                            fontSize='large'
+                                            sx={{
+                                                color: '#00838f'
+                                                // color: '#1565C0'
+                                            }}
+                                        >
+                                        </CloudUploadRoundedIcon>
                                         <p>Browse Photos to upload</p>
                                     </div>
                                 }
@@ -473,7 +482,7 @@ const Page_Company_Event_Id_Update = () => {
                                     sx={{
                                         cursor: 'pointer',
                                         // marginLeft: 5
-                                        // ADD COLOR
+                                        color: '#ff1744'
                                     }}
                                     onClick={() => {
                                         setFileName("No selected file")
@@ -481,10 +490,24 @@ const Page_Company_Event_Id_Update = () => {
                                     }}></DeleteRoundedIcon>
                             </div>
                             <Grid item xs={12} align='right' sx={{ marginTop: 6 }}>
-                                <Button type="submit" variant="contained" size='large' sx={{ backgroundColor: 'black' }}>
-                                    <TaskAltIcon sx={{ marginRight: 1 }}></TaskAltIcon>
-                                    Save
-                                </Button>
+                                {eventStatus.status !== "loading" && eventStatus.status !== "success" ?
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        size='large'
+                                        sx={{
+                                            backgroundColor: "black",
+                                            "&:hover": {
+                                                backgroundColor: "grey",
+                                            }
+                                        }}>
+                                        <TaskAltIcon sx={{ marginRight: 1 }}></TaskAltIcon>
+                                        Save
+                                    </Button>
+                                    : <LoadingButton
+                                        loading
+                                        loadingPosition='center'>
+                                    </LoadingButton>}
                             </Grid>
                         </Grid>
                     </Grid>

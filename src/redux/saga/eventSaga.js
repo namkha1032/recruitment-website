@@ -119,7 +119,7 @@ function* getEvent(action) {
       maxQuantity: res.maxParticipants,
       time: res.datetimeEvent,
       location: res.place,
-      createdTime: "10:30:00 16/07/2023"
+      createdTime: "10:30 16/07/2023"
 
       // // ----------------------------------------
       // // FAKE API FOR BACKEND
