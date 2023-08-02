@@ -28,14 +28,17 @@ const Page_Event_Id = () => {
 
     const role = useGetRole()
     const candidateId = useSelector(state => state.candidateId)
-    // const userId = useSelector(state => state.user.userId)
-    const userId = "e669407a-193c-4d36-8790-def94fb5660a"
-    
+
+
+    const user = useSelector(state => state.user)
+    const userId = user ? user.userid : ""
+
+
     const { eventid } = useParams();
-   
+
 
     const dispatch = useDispatch();
-    
+
     useEffect(() => {
         dispatch({ type: "saga/getEvent", payload: eventid })
         return () => {
@@ -48,7 +51,7 @@ const Page_Event_Id = () => {
         if (role === "candidate") {
             dispatch({ type: "saga/getCandidateId", payload: userId })
         }
-    },[role])
+    }, [role])
     console.log('ABCDEFGH: ', candidateId)
 
 
@@ -68,13 +71,13 @@ const Page_Event_Id = () => {
     // handle events
     const handleRegister = (e) => {
         dispatch({
-            type: "saga/postCandidateJoinEvent", 
+            type: "saga/postCandidateJoinEvent",
             payload: {
                 candidateId: candidateId,
                 eventId: event.eventId
             }
         });
-        console.log("Register successfully!");
+        alert("Register successfully!");
         // alert(new Date())
     }
 
@@ -121,12 +124,20 @@ const Page_Event_Id = () => {
                         <Box sx={{ paddingLeft: 4, paddingTop: 4 }}>
                             <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
                                 <Box sx={{ fontSize: 40, display: "flex", alignItems: "center" }}>
-                                    <CelebrationRoundedIcon fontSize='large' sx={{ color: '#1565C0' }}></CelebrationRoundedIcon>
+                                    <CelebrationRoundedIcon
+                                        fontSize='large'
+                                        sx={{
+                                            color: '#3f51b5'
+                                            // color: '#1565C0'
+                                        }}
+                                    >
+                                    </CelebrationRoundedIcon>
                                 </Box>
                                 <Box sx={{
                                     fontSize: 40,
                                     fontWeight: 600,
-                                    color: '#1565C0',
+                                    color: '#3f51b5',
+                                    // color: '#1565C0',
                                     display: 'flex',
                                     justifyContent: 'start',
                                     // justifyContent: 'center'
@@ -163,12 +174,20 @@ const Page_Event_Id = () => {
                                         // alignItems: 'center',
                                         // marginTop: 6
                                     }}>
-                                        <PeopleAltRoundedIcon fontSize='large' sx={{ marginRight: 2, color: '#1565C0' }}></PeopleAltRoundedIcon>
+                                        <PeopleAltRoundedIcon
+                                            fontSize='large'
+                                            sx={{
+                                                marginRight: 2,
+                                                color: '#3f51b5'
+                                                // color: '#1565C0' 
+                                            }}>
+                                        </PeopleAltRoundedIcon>
                                         <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                                             <Box sx={{
                                                 fontSize: 22,
                                                 fontWeight: 600,
-                                                color: '#1565C0'
+                                                color: '#3f51b5'
+                                                // color: '#1565C0'
                                             }}>
                                                 {/* Số lượng */}
                                                 Quantity
@@ -190,12 +209,20 @@ const Page_Event_Id = () => {
                                         // marginTop: 3
                                         // justifyContent: 'center'
                                     }}>
-                                        <AccessTimeRoundedIcon fontSize='large' sx={{ marginRight: 2, color: '#1565C0' }}></AccessTimeRoundedIcon>
+                                        <AccessTimeRoundedIcon
+                                            fontSize='large'
+                                            sx={{
+                                                marginRight: 2,
+                                                color: '#3f51b5'
+                                                // color: '#1565C0' 
+                                            }}>
+                                        </AccessTimeRoundedIcon>
                                         <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                                             <Box sx={{
                                                 fontSize: 22,
                                                 fontWeight: 600,
-                                                color: '#1565C0'
+                                                color: '#3f51b5'
+                                                // color: '#1565C0'
                                             }}>
                                                 {/* Thời gian */}
                                                 Time
@@ -217,12 +244,20 @@ const Page_Event_Id = () => {
                                         // marginTop: 3
                                         // justifyContent: 'flex-end'
                                     }}>
-                                        <LocationOnRoundedIcon fontSize='large' sx={{ marginRight: 2, color: '#1565C0' }}></LocationOnRoundedIcon>
+                                        <LocationOnRoundedIcon
+                                            fontSize='large'
+                                            sx={{
+                                                marginRight: 2,
+                                                color: '#3f51b5'
+                                                // color: '#1565C0' 
+                                            }}>
+                                        </LocationOnRoundedIcon>
                                         <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                                             <Box sx={{
                                                 fontSize: 22,
                                                 fontWeight: 600,
-                                                color: '#1565C0'
+                                                color: '#3f51b5'
+                                                // color: '#1565C0'
                                             }}>
                                                 {/* Địa điểm */}
                                                 Location
@@ -244,8 +279,13 @@ const Page_Event_Id = () => {
                                         size='large'
                                         className='btnregister'
                                         // sx={{ mx: 3 }}
+                                        sx={{
+                                            backgroundColor: "black",
+                                            "&:hover": {
+                                                backgroundColor: "grey",
+                                            }
+                                        }}
                                         onClick={handleRegister}
-                                        sx={{ backgroundColor: 'black' }}
                                     >
                                         {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
                                         {/* Đăng ký */}

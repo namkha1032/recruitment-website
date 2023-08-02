@@ -99,6 +99,7 @@ function* getEventListWithFilter(action) {
 
 
 
+// ------------------------------------------------------------------------------------------------------------------------
 function* getEvent(action) {
   console.log("eid: ", action.payload)
   try {
@@ -119,7 +120,7 @@ function* getEvent(action) {
       maxQuantity: res.maxParticipants,
       time: res.datetimeEvent,
       location: res.place,
-      createdTime: "10:30:00 16/07/2023"
+      createdTime: "10:30 16/07/2023"
 
       // // ----------------------------------------
       // // FAKE API FOR BACKEND
@@ -141,17 +142,41 @@ function* getEvent(action) {
 
 
 
-// DO LATER
 function* getAllCandidateOfEvent(action) {
-  console.log("eid: ", action.payload)
-  const response = yield call(axios.get, `${host.name}/data/candidateJoinEvent.json`)
-  // const candidateManyEvent = yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`)
-  // console.log("candidateManyEvent: ", candidateManyEvent.data)
-  console.log("res: ", response.data)
-  yield put({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: response.data })
-  // const candidateOneEvent = candidateManyEvent.data.filter((prop) => prop.eventId == action.payload)
-  // console.log("candidateOneEvent: ", candidateOneEvent)
-  // yield put({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: candidateOneEvent })
+  // console.log("eid: ", action.payload)
+  // const response = yield call(axios.get, `${host.name}/data/candidateJoinEvent.json`)
+  // console.log("res: ", response.data)
+  // yield put({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: response.data })
+  console.log("EventId: ", action.payload)
+  try {
+    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`)
+    console.log("Response 1: ", response1)
+    const response2 = response1.data.filter(element => element.eventId === action.payload)
+    console.log("Response 2: ", response2)
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`)
+    const response3 = response.data
+    console.log("Response 3: ", response3)
+    let arr = []
+    for (let i = 0; i < response2.length; i++) {
+      for (let j = 0; j < response3.length; j++) {
+        if (response2[i].candidateId === response3[j].candidateId) {
+          arr.push({ ...response2[i], candidateFullName: response3[j].user.fullName, candidateEmail: response3[j].user.email })
+        }
+      }
+    }
+    console.log("Array: ", arr)
+    const formatArr = arr.map(element => {
+      return {
+        candidateId: element.candidateId,
+        candidateFullName: element.candidateFullName,
+        candidateEmail: element.candidateEmail
+      }
+    })
+    yield put({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: formatArr });
+  }
+  catch (error) {
+    console.log(error)
+  }
 }
 
 
@@ -288,6 +313,7 @@ function* postCandidateJoinEvent(action) {
     console.log(error)
   }
 }
+// ------------------------------------------------------------------------------------------------------------------------
 
 
 function* eventSaga() {

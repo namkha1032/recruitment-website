@@ -7,10 +7,20 @@ export function transferDatetime(input) {
 }
 
 export function transferDatetimeBack(outputData) {
-    console.log("output data: ", outputData)
-    console.log(typeof (outputData))
-    const dateObject = new Date(outputData);
-    const output = dateObject.toLocaleString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })
-    console.log("output: ", output)
+    // console.log("output data: ", outputData)
+    // console.log(typeof (outputData))
+    // const dateObject = new Date(outputData);
+    // const output = dateObject.toLocaleString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })
+    // console.log("output: ", output)
+    // return output
+    const output = new Date(outputData + "Z").toLocaleString('vi-VN',
+        {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            // second: '2-digit'
+        })
     return output
 }
