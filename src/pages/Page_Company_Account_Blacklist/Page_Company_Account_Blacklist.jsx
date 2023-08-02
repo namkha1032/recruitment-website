@@ -5,7 +5,8 @@ import {
     InputAdornment, InputLabel,
     MenuItem,
     Select, TextField,
-    Typography
+    Typography,
+    CircularProgress
 } from "@mui/material"
 import {DataGrid, GridAddIcon, GridSearchIcon, GridToolbar, GridToolbarQuickFilter} from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -31,9 +32,17 @@ import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import candidateNames from '../Page_Company_Account/candidateNames.json'
 
-
-const RenderStatusButton = ({params}) => {
+const RenderCheckAccount = ({params}) => {
     const [open, setOpen] = React.useState(false);
+    const handleGoToAccount = () => {
+        const candidateId = params.row.candidateId;
+        window.location.href = `/profile/${candidateId}`;
+        console.log(candidateId)
+        setOpen(false);
+    };
+
+// rest of the component code
+
     return (
         <strong>
             <IconButton color="#000000" aria-label="Show Status" size="large"
@@ -60,12 +69,12 @@ const RenderStatusButton = ({params}) => {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         Blacklist ID: {params.row.blackListId}<br/>
+                        Candidate ID: {params.row.candidateId}<br/>
+                        User ID: {params.row.userId}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={()=>{
-                        setOpen(false)
-                    }}>Go To Account</Button>
+                    <Button onClick={handleGoToAccount}>Go To Account</Button>
                     <Button onClick={()=>{
                         setOpen(false)
                     }}>Close</Button>
@@ -84,6 +93,10 @@ const Page_Company_Account_Blacklist = () => {
     useEffect(() => {
         dispatch({type: "saga/getBlacklist"});
     }, [dispatch]);
+    useEffect(() => {
+        dispatch({type: "saga/getCandidate"});
+    }, [dispatch]);
+    const candidates = useSelector(state => state.admin.candidate)
     const blacklist = useSelector(state => state.admin.blacklist)
     function QuickSearchToolbar() {
         return (
@@ -94,13 +107,15 @@ const Page_Company_Account_Blacklist = () => {
             </Grid>
         );
     }
-    function getUser(candidateId) {
-        return candidateNames.find(user => user.candidateId === candidateId);
-    }
+    // function getUser(candidateId) {
+    //     return candidateNames.find(user => user.candidateId === candidateId);
+    // }
+
     const columns = [
         // { field: "blackListId", headerName: "Blacklist ID", flex: 0.5, headerClassName: "blacklistId-header-column", cellClassName: "blacklistId-cell-column"},
         // { field: "candidateId", headerName: "Candidate ID", flex: 0.5},
-        { field: 'name', headerName: 'Username', flex: 0.3, valueGetter: params => getUser(params.row.candidateId)?.name },
+        { field: 'fullName', headerName: 'Full Name', flex: 0.3, valueGetter: (params) => params.row.candidate?.user?.fullName || "John Vtuber" },
+        { field: 'userName', headerName: 'User Name', flex: 0.3, valueGetter: (params) => params.row.candidate?.user?.userName || "johnvtuber" },
         {
             field: "reason",
             headerName: "Reason",
@@ -113,10 +128,14 @@ const Page_Company_Account_Blacklist = () => {
             headerName: "Check Info",
             flex: 0.2,
             renderCell: (params)=>{
-                return(<RenderStatusButton params={params} />)
+                return(<RenderCheckAccount params={params} />)
             },
         },
     ];
+    const blacklistWithNames = blacklist.map((item) => {
+        const candidate = candidates.find((c) => c.candidateId === item.candidateId);
+        return { ...item, candidate };
+    });
 
     return (
         <Grid item xs={12} mb="10vh">
@@ -131,25 +150,25 @@ const Page_Company_Account_Blacklist = () => {
                 }}>
                 <Grid container>
                     <Grid item xs={10} display="flex">
-                    <Grid container>
-                        <Grid item xs={12} md={1}
-                              display="flex"
-                              alignItems="center"
-                              justifyContent="left">
-                            <DoDisturbIcon sx={isMd ? { fontSize: 60 }: {fontSize: 40}}></DoDisturbIcon>
+                        <Grid container>
+                            <Grid item xs={12} md={1}
+                                  display="flex"
+                                  alignItems="center"
+                                  justifyContent="left">
+                                <DoDisturbIcon sx={isMd ? { fontSize: 60 }: {fontSize: 40}}></DoDisturbIcon>
+                            </Grid>
+                            <Grid item md={11} xs={12}
+                                  display="flex"
+                                  alignItems="center"
+                                  justifyContent="left">
+                                <Typography variant={isMd ? "h3" : "h4"}
+                                            display="flex"
+                                            alignItems="center"
+                                            justifyContent="left">
+                                    Blacklist
+                                </Typography>
+                            </Grid>
                         </Grid>
-                    <Grid item md={11} xs={12}
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="left">
-                        <Typography variant={isMd ? "h3" : "h4"}
-                                    display="flex"
-                                    alignItems="center"
-                                    justifyContent="left">
-                            Blacklist
-                        </Typography>
-                    </Grid>
-                    </Grid>
                     </Grid>
                     <Grid item xs={2} display="flex">
                         <Grid container  spacing={{ xs: 0, sm: 3 }} rowSpacing={{ xs: 1, sm: 0 }} display="flex">
@@ -195,60 +214,59 @@ const Page_Company_Account_Blacklist = () => {
                     mt:4
                 }}>
                 <Grid container>
-                <Grid
-                    // width="78vw"
-                    item
-                    // m="0px 10px 0px 10px"
-                    xs={12}
-                    display="flex"
-                    sx={{
-                        "& .MuiDataGrid-root": {
-                            border: "none",
-                        },
-                        "& .MuiDataGrid-cell": {
-                            borderBottom: "none",
-                            backgroundColor: "#ffffff",
-                        },
-                        "& .name-column--cell": {
-                            color: grey[900],
-                        },
-                        "& .blacklistId-header-column": {
-                            color: red[800],
-                        },
-                        "& .blacklistId-cell-column": {
-                            color: red[800],
-                        },
-                        "& .MuiDataGrid-columnHeaders": {
-                            // backgroundColor: grey[100],
-                            borderBottom: "5",
-                        },
-                        "& .MuiDataGrid-virtualScroller": {
-                            backgroundColor: grey[100],
-                        },
-                        "& .MuiDataGrid-footerContainer": {
-                            borderTop: "5",
-                            // backgroundColor:grey[100],
-                        },
-                        "& .MuiCheckbox-root": {
-                            color: `${"green"} !important`,
-                        },
-                        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                            color: `${grey[700]} !important`,
-                        },
-                    }}
-                >
-                    <DataGrid
-                        rows={blacklist}
-                        getRowId={(row) => row.blackListId}
-                        columns={columns}
-                        slots={{ toolbar: QuickSearchToolbar }}
-                    />
-                </Grid>
+                    <Grid
+                        // width="78vw"
+                        item
+                        // m="0px 10px 0px 10px"
+                        xs={12}
+                        display="flex"
+                        sx={{
+                            "& .MuiDataGrid-root": {
+                                border: "none",
+                            },
+                            "& .MuiDataGrid-cell": {
+                                borderBottom: "none",
+                                backgroundColor: "#ffffff",
+                            },
+                            "& .name-column--cell": {
+                                color: grey[900],
+                            },
+                            "& .blacklistId-header-column": {
+                                color: red[800],
+                            },
+                            "& .blacklistId-cell-column": {
+                                color: red[800],
+                            },
+                            "& .MuiDataGrid-columnHeaders": {
+                                // backgroundColor: grey[100],
+                                borderBottom: "5",
+                            },
+                            "& .MuiDataGrid-virtualScroller": {
+                                backgroundColor: grey[100],
+                            },
+                            "& .MuiDataGrid-footerContainer": {
+                                borderTop: "5",
+                                // backgroundColor:grey[100],
+                            },
+                            "& .MuiCheckbox-root": {
+                                color: `${"green"} !important`,
+                            },
+                            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                                color: `${grey[700]} !important`,
+                            },
+                        }}
+                    >
+                        <DataGrid
+                            rows={blacklistWithNames}
+                            getRowId={(row) => row.blackListId}
+                            columns={columns}
+                            slots={{ toolbar: QuickSearchToolbar }}
+                        />
+                    </Grid>
                 </Grid>
             </Card>
         </Grid>
 
     );
 }
-
 export default Page_Company_Account_Blacklist

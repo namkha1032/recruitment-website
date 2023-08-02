@@ -1,12 +1,12 @@
-import { Box, Typography, Button } from '@mui/material'
+import { Box, Typography/* , Button */ } from '@mui/material'
 import React from 'react'
 //import imageBackground from "../../assets/img/404-page.png"
-import imageBackground from "../../assets/img/11132.jpg"
+//import imageBackground from "../../assets/img/11132.jpg"
 import { useNavigate } from 'react-router-dom'
 
 export default function Unauthorized() {
 
-  const navigate = useNavigate()
+  //const navigate = useNavigate()
 
 /*   const handleBack = (event) => {
     event.preventDefault()
@@ -43,7 +43,7 @@ export default function Unauthorized() {
       <Box
         sx={{
           margin: "30px auto",
-          border: "5px solid black",
+          //border: "5px solid black",
           fontSize: "126px",
           lineHeight: "126px",
           borderRadius: "30px",

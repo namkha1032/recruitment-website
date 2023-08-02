@@ -4,6 +4,9 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import TabInProfile from './TabInProfile/TabInProfile';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 export default function EventList({ events}) {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [totalPositions, setTotalPositions] = useState(0);
@@ -25,21 +28,33 @@ export default function EventList({ events}) {
   const handleEventLeave = () => {
     setSelectedEvent(null);
   };
-
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
   const columns = [
-    { field: 'name', headerName: 'Event', flex: 2 },
-    { field: 'time', headerName: 'Time', flex: 2 },
-    {
-      field: 'place', headerName: 'Place', flex: 2
-    },
+    { field: 'name', headerName: 'Event', flex:isSm ? 2 : 4 },
+    isSm ? { field: 'time', headerName: 'Time', flex: isSm ? 2 : 3} : null,
+    isSm ? {
+      field: 'place', headerName: 'Place', flex: isSm ? 2 : 3
+    } : null,
     {
       field: 'view',
       headerName: 'View',
       flex: 1,
       renderCell: (params) => (
-          <Button variant="contained" color="primary" onClick={() => handleDetails(params.row.id)} style={{ textTransform: "none", backgroundColor:"black" }}>
-            View Detail
-          </Button>
+        <>
+        {isSm ? (
+         <Button
+         variant="contained"
+         color="primary"
+         onClick={() => handleDetails(params.row.id)}
+         style={{ textTransform: "none", backgroundColor: "black" }}
+       >
+         View Detail
+       </Button>
+        ) : (
+          <VisibilityIcon onClick = { () => handleDetails(params.row.id)} style={{ color: "#1565C0" }}/>    
+        )}
+      </>
       ),
     },
   ].filter(Boolean);

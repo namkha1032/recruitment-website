@@ -5,6 +5,7 @@ import host from "../host";
 import { formatEventList } from "../../utils/formatEventList";
 import { filterEventList } from "../../utils/filterEventList";
 import { transferDatetime } from "../../utils/transferDatetime";
+import { formatEventFooter } from "../../utils/formatEventFooter";
 
 function* getEventList() {
   try {
@@ -43,12 +44,16 @@ function* getEventList() {
   }
 }
 function* getEventFooter() {
+
   try {
     yield put({ type: "loading/onLoading" });
     // const response = yield call(axios.get, `${host.name}/data/eventList.json`)
     const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event")
-
-    const data = formatEventList(response.data);
+    console.log('-------------------------------------------')
+    console.log(response.data)
+    const data = formatEventFooter(response.data);
+    console.log(data)
+    console.log('-------------------------------------------')
     yield put({ type: "eventFooter/setEventFooter", payload: data });
     yield put({ type: "loading/offLoading" });
   } catch (error) {
@@ -202,9 +207,82 @@ function* postEvent(action) {
 
 
 function* putEvent(action) {
-  console.log("put event: ", action.payload)
+  console.log("EventDataforPut: ", action.payload)
   try {
-    
+    yield put({ type: "eventNavigate/onLoading" })
+    const {
+      eventId,
+      eventName,
+      description,
+      quantity,
+      maxParticipants,
+      datetimeEvent,
+      place,
+      createdTime
+    } = action.payload;
+    console.log(action.payload)
+    const request = {
+      eventName: eventName,
+      recruiterId: "00000000-0000-0000-0000-000000000001",
+      description: description,
+      place: place,
+      isDeleted: false,
+      datetimeEvent: datetimeEvent,
+      maxParticipants: maxParticipants,
+    }
+    const response = yield call(
+      axios.put,
+      `https://leetun2k2-001-site1.gtempurl.com/api/Event/${eventId}`, request
+    );
+
+    const eventList = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event")
+
+    const EventId = eventList.data.filter(item => item.eventName === eventName && item.description === description)[0].eventId
+    console.log('eId: ', EventId)
+    yield put({ type: "eventNavigate/onSuccess", payload: EventId })
+  }
+  catch (error) {
+    console.log(error)
+  }
+}
+
+
+function* getCandidateId(action) {
+  try {
+    const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Candidate")
+    // console.log("+++++++++++", response)
+    // console.log("+++++++++++", action.payload)
+    const response1 = response.data.filter(item => item.userId === action.payload)[0]
+    yield put({ type: "candidateId/setCandidateId", payload: response1.candidateId })
+  }
+  catch (error) {
+    console.log(error)
+  }
+}
+
+
+function* postCandidateJoinEvent(action) {
+  console.log("CandidateJoinEvent: ", action.payload)
+  try {
+    yield put({ type: "eventNavigate/onLoading" })
+    const {
+      candidateId,
+      eventId
+    } = action.payload;
+    const request = {
+      candidateId: candidateId,
+      eventId: eventId
+    }
+    const response = yield call(
+      axios.post,
+      `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`, request
+    );
+
+    // const eventList = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event")
+
+    // const eventId = eventList.data.filter(item => item.eventName === eventName && item.description === description)[0].eventId
+    // console.log('eId: ', eventId)
+    // yield put({ type: "eventNavigate/onSuccess", payload: eventId })
   }
   catch (error) {
     console.log(error)
@@ -220,6 +298,9 @@ function* eventSaga() {
     takeEvery("saga/getAllCandidateOfEvent", getAllCandidateOfEvent),
     takeEvery("saga/getEventFooter", getEventFooter),
     takeEvery("saga/postEvent", postEvent),
+    takeEvery("saga/putEvent", putEvent),
+    takeEvery("saga/getCandidateId", getCandidateId),
+    takeEvery("saga/postCandidateJoinEvent", postCandidateJoinEvent)
     // takeEvery("saga/getEventListId", getEventListId),
   ]);
 }

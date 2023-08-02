@@ -29,6 +29,8 @@ import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import imageBackground from "../../assets/img/background.jpg";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
+import CircularProgress from "@mui/material/CircularProgress";
+
 //import ErrorIcon from '@mui/icons-material/Error';
 
 // const style = {
@@ -55,13 +57,14 @@ const XPage_Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [check, setCheck] = useState(false);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
-
+  const [loading, setLoading] = useState(false)
   const dispatch = useDispatch();
 
   const newError = useSelector((state) => state.error);
 
   useEffect(() => {
     if (newError.status === "no") {
+      setLoading(false)
       dispatch({
         type: "error/setError",
         payload: { status: "idle", message: "" },
@@ -73,6 +76,7 @@ const XPage_Login = () => {
       // navigate("/home");
     }
     if (newError.status === "yes") {
+      setLoading(false)
       setErrorSnackbar(true);
       setUsername("");
       setPassword("");
@@ -107,6 +111,7 @@ const XPage_Login = () => {
   const handleLogin = (event) => {
     event.preventDefault();
 
+    setLoading(true)
     if (validUsername) {
       dispatch({
         type: "saga/userLogin",
@@ -268,22 +273,22 @@ const XPage_Login = () => {
                         borderBottomWidth: "2px",
                       }}
 
-                      // helperText={!validUsername &&
-                      //     <Typography
-                      //         color={"red"}
-                      //         sx={{
-                      //             display: 'flex',
-                      //             justifyContent: 'left',
-                      //             alignItems: 'center',
-                      //         }}
-                      //         variant='small'
+                    // helperText={!validUsername &&
+                    //     <Typography
+                    //         color={"red"}
+                    //         sx={{
+                    //             display: 'flex',
+                    //             justifyContent: 'left',
+                    //             alignItems: 'center',
+                    //         }}
+                    //         variant='small'
 
-                      //     >
-                      //         <ErrorOutlineOutlinedIcon color='red'
-                      //         sx={{ fontSize: 13, paddingRight: '0px' }}/>
-                      //         <Typography variant='small' paddingLeft='3px'>Incorrect entry.</Typography>
-                      //     </Typography>
-                      // }
+                    //     >
+                    //         <ErrorOutlineOutlinedIcon color='red'
+                    //         sx={{ fontSize: 13, paddingRight: '0px' }}/>
+                    //         <Typography variant='small' paddingLeft='3px'>Incorrect entry.</Typography>
+                    //     </Typography>
+                    // }
                     />
                   </Grid>
 
@@ -432,22 +437,24 @@ const XPage_Login = () => {
                       alignItems: "center",
                     }}
                   >
-                    <Button
-                      type="submit"
-                      theme={theme}
-                      variant="contained"
-                      color="secondary"
-                      sx={{
-                        height: "40px",
-                        color: "white",
-                        borderRadius: "40px",
-                        fontSize: "1em",
-                        fontWeight: 600,
-                        width: "90%",
-                      }}
-                    >
-                      Sign in
-                    </Button>
+                    {loading ? <CircularProgress sx={{ color: "black" }} /> :
+                      <Button
+                        type="submit"
+                        theme={theme}
+                        variant="contained"
+                        color="secondary"
+                        sx={{
+                          height: "40px",
+                          color: "white",
+                          borderRadius: "20px",
+                          fontSize: "1em",
+                          fontWeight: 600,
+                          width: "90%",
+                        }}
+                      >
+                        Sign in
+                      </Button>}
+                    {/* <CircularProgress /> */}
                   </Grid>
                 </Grid>
 

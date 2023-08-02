@@ -1,6 +1,6 @@
-import * as React from "react";
+import { useState, useEffect, useRef } from "react";
 import Box from "@mui/material/Box";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
 import { Container } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { DrawerHeader } from "../../components/Sidebar/Sidebar";
@@ -11,20 +11,31 @@ import Footer from "../Footer/Footer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useGetRole from "../../hooks/useGetRole";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import SkeletonDemo from "../SkeletonDemo/SkeletonDemo";
 const drawerWidth = 240;
 
 
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => {
-        const isMd = useMediaQuery(theme.breakpoints.up('md'));
-        return {
+
+const MainSection = (props) => {
+    const open = props.open
+    const theme = useTheme();
+    const isMd = useMediaQuery(theme.breakpoints.up("md"));
+    const location = useLocation()
+    const path = location.pathname
+    const mainRef = useRef()
+    useEffect(() => {
+        mainRef.current.scrollTo(0, 0);
+    }, [path])
+    return (
+        <main ref={mainRef} style={{
             flexGrow: 1,
             // padding: isMd ? theme.spacing(3) : 0,
-            paddingBottom: theme.spacing(3),
+            // paddingBottom: theme.spacing(3),
             paddingTop: theme.spacing(3),
             transition: theme.transitions.create('margin', {
                 easing: theme.transitions.easing.sharp,
@@ -48,14 +59,22 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
             }),
             backgroundColor: theme.palette.grey[200],
             // backgroundColor: "red"
-        }
-    },
-);
+        }}>
+            {props.children}
+        </main>
+    )
+}
 
 function MainLayout() {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
+    const userStore = useSelector(state => state.user)
+    // const open = useSelector(state => state.sidebar)
+    // function setOpen(value) {
+    //     dispatch({ type: "sidebar/setSidebar", payload: value })
+    // }
     useEffect(() => {
+        console.log("run useEffect in MainLayout")
         const userLocal = window.localStorage.getItem("user");
         const userSession = window.sessionStorage.getItem("user");
         if (userLocal) {
@@ -74,7 +93,7 @@ function MainLayout() {
     const isMd = useMediaQuery(theme.breakpoints.up("md"));
     const role = useGetRole();
 
-    let userRole = "hahaha";
+
     let showSidebar =
         role == "admin" || role == "recruiter" || role == "interviewer"
             ? true
@@ -82,21 +101,23 @@ function MainLayout() {
 
     return (
         <>
-            <Box sx={{ display: 'flex' }}>
-                <Navbar open={showSidebar && isMd ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} />
-                <Sidebar open={showSidebar ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} />
-                <Main open={showSidebar ? open : false}>
-                    {/* <DrawerHeader /> */}
-                    <Container sx={{ paddingBottom: 4 }}>
-                        <Outlet />
-
-                    </Container>
-                    <Footer />
-                </Main>
-
-            </Box>
+            {userStore && role == null ?
+                <SkeletonDemo />
+                :
+                <Box sx={{ display: 'flex' }}>
+                    <Navbar open={showSidebar && isMd ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} role={role} />
+                    <Sidebar open={showSidebar ? open : false} setOpen={setOpen} drawerWidth={drawerWidth} showSidebar={showSidebar} />
+                    <MainSection open={showSidebar ? open : false}>
+                        <Container sx={{ paddingBottom: 4 }}>
+                            <Outlet />
+                        </Container>
+                        <Footer />
+                    </MainSection>
+                </Box>
+            }
         </>
     );
 }
 // hihihirhrhrhr
 export default MainLayout;
+export { MainSection }

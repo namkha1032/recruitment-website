@@ -11,6 +11,9 @@ import GigaCard from "../../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../../components/GigaCardBody/GigaCardBody";
 import dayjs from "dayjs";
 import cleanStore from "../../../utils/cleanStore";
+import TitleDivider from "../../../components/TitleDivider/TitleDivider";
+import { Typography } from "@mui/material";
+
 function RecruitForm() {
   const dispatch = useDispatch();
   // fetch Data
@@ -48,10 +51,15 @@ function RecruitForm() {
     recruitInfo.departmentId
   );
   const [languages, setLanguages] = useState("");
-  const [requirement, setRequirement] = useState([]);
   const [skill, setSkill] = useState([]);
+  const [skillData, setSkillData] = useState([]);
+
   const [language, setLanguage] = useState([]);
   const [department, setDepartment] = useState([]);
+  const [requirement, setRequirement] = useState([]);
+  const [baseRequire, setBaseRequire] = useState([]);
+  const [delRequire, setDelRequire] = useState([]);
+  const [addRequire, setAddRequire] = useState([]);
 
   useEffect(() => {
     if (departmentList) {
@@ -66,9 +74,10 @@ function RecruitForm() {
     }
     if (skillList) {
       setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
+      setSkillData(skillList ? (skillList !== [] ? skillList : []) : []);
     }
-  }, [departmentList,skillList,languageList]);
-
+  }, [departmentList, skillList, languageList]);
+  
   useEffect(() => {
     if (positionInfor) {
       setRName(
@@ -108,16 +117,16 @@ function RecruitForm() {
       );
       setLanguages(
         positionInfor
-          ? positionInfor[0].languageId !== null
-            ? positionInfor[0].languageId
+          ? positionInfor[0].language !== null
+            ? positionInfor[0].language.languageId
             : ""
           : ""
       );
 
       setDepartmentChoose(
         positionInfor
-          ? positionInfor[0].departmentId !== null
-            ? positionInfor[0].departmentId
+          ? positionInfor[0].department.departmentId !== null
+            ? positionInfor[0].department.departmentId
             : ""
           : ""
       );
@@ -130,19 +139,25 @@ function RecruitForm() {
       );
     }
   }, [positionInfor]);
-
+  console.log(languages);
   useEffect(() => {
     if (positionRequire) {
       setRequirement(
         positionRequire ? (positionRequire !== [] ? positionRequire : []) : []
       );
+      setSkill(skillData.filter(
+        (item1) => !positionRequire.some((item2) => item1.skillId === item2.skillId)
+      ))
+      setBaseRequire(
+        positionRequire ? (positionRequire !== [] ? positionRequire : []) : []
+      );
     }
-  }, [positionRequire]);
-
+  }, [positionRequire,skillData]);
+  console.log(requirement);
   const departments = department.filter(
     (comp) => comp.departmentId === departmentChoose
   );
-
+  console.log(skill)
   // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
   // const [status, setStatus] = useState(recruitInfo.status);
 
@@ -170,11 +185,7 @@ function RecruitForm() {
   let departmentWeb = departments[0] ? departments[0].website : "";
   const navigate = useNavigate();
   //FUNCTION
-  function handleSubmit(e) {
-    e.preventDefault();
-    cleanStore(dispatch)
-    navigate("/company/recruitment/:recruitmentid");
-  }
+
   const handleChange = (event) => {
     if (event.target.value === "") {
       setDepartmentChoose(null);
@@ -201,7 +212,8 @@ function RecruitForm() {
     console.log(inputValue);
     console.log(skillName);
     let arr = skill.filter(
-      (comp) => comp.skillName === (inputValue !== null ? inputValue.skillName : "")
+      (comp) =>
+        comp.skillName === (inputValue !== null ? inputValue.skillName : "")
     );
     console.log(arr);
     if (arr[0] === undefined) {
@@ -214,12 +226,16 @@ function RecruitForm() {
     } else {
       const newRequire = {
         requirementId: rId,
+        positionId: "00000000-0000-0000-0000-000000000001",
         skillId: skillId,
         experience: experience,
         notes: note,
+        isDeleted: false,
       };
       console.log(newRequire);
       setRequirement([...requirement, newRequire]);
+      setAddRequire([...addRequire, newRequire]);
+      setSkill(skill.filter((prop)=>prop.skillId!==skillId))
       setSkillName("");
       setSkillId(null);
       setRId((prev) => (prev += 1));
@@ -228,10 +244,29 @@ function RecruitForm() {
       setInputValue("");
     }
   }
+  console.log(requirement);
+  console.log(delRequire);
+  console.log(addRequire);
   function handleRequirementDelete(id) {
+    let delReq = requirement.filter((component) => component.requirementId === id)
+    let newSkill = skillData.filter((prop)=>prop.skillId===delReq[0].skillId)
+    setSkill([...skill, newSkill[0]])
     setRequirement(
       requirement.filter((component) => component.requirementId !== id)
     );
+    let delRequirement = baseRequire.filter(
+      (prop) => prop.requirementId === id
+    );
+    console.log(delRequirement);
+    if (delRequirement[0]) {
+      console.log("add delete");
+      setDelRequire([...delRequire, delRequirement[0]]);
+    } else {
+      console.log("delete add");
+      setAddRequire(
+        addRequire.filter((component) => component.requirementId !== id)
+      );
+    }
   }
   function handleLanguageAdd2() {
     console.log(lInputValue);
@@ -255,11 +290,54 @@ function RecruitForm() {
     setEndDate(date);
     console.log(date);
   }
+  function handleSubmit(e) {
+    try {
+      dispatch({
+        type: "saga/getUpdatePosition",
+        payload: {
+          positionId: "97725743-9bb9-4a14-9922-f76574aea862",
+          positionName: RName,
+          description: description,
+          salary: salary,
+          maxHiringQty: maxHire,
+          startDate: startDate.toJSON(),
+          endDate: endDate !== null ? endDate.toJSON() : endDate,
+          departmentId: departmentChoose,
+          languageId: languages,
+          recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
+          requirement: requirement,
+          delRequire: delRequire,
+          addRequire: addRequire,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    e.preventDefault();
+    cleanStore(dispatch);
+    navigate("/company/recruitment/:recruitmentid");
+  }
   return (
     <>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} justifyContent="center" alignItems="center">
           <Grid item xs={12}>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                variant="h3"
+                sx={{ fontWeight: "bold", marginBottom: "16px" }}
+              >
+                Update Position
+              </Typography>
+            </Grid>
             <GigaCard>
               <GigaCardBody>
                 <Grid
@@ -280,6 +358,9 @@ function RecruitForm() {
                 </Grid>
               </GigaCardBody>
             </GigaCard>
+          </Grid>
+          <Grid item xs={12}>
+            <TitleDivider>Detail</TitleDivider>
           </Grid>
           <Grid item xs={12}>
             <GigaCard>
@@ -316,6 +397,9 @@ function RecruitForm() {
             </GigaCard>
           </Grid>
           <Grid item xs={12}>
+            <TitleDivider>Requirement</TitleDivider>
+          </Grid>
+          <Grid item xs={12}>
             <GigaCard>
               <GigaCardBody>
                 <Grid
@@ -334,7 +418,8 @@ function RecruitForm() {
                       setExperience={setExperience}
                       note={note}
                       setNote={setNote}
-                      skill={skill}
+                      skill={skillData}
+                      SkillOption={skill}
                       setSkillName={setSkillName}
                       skillName={skillName}
                       setSkillId={setSkillId}

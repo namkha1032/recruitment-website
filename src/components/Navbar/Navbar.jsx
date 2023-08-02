@@ -40,20 +40,21 @@ import CelebrationIcon from '@mui/icons-material/Celebration';
 let innerDrawerWidth;
 
 
-const NavbarContent = () => {
+const NavbarContent = (props) => {
+    const role = props.role
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const open = Boolean(anchorElUser);
     const navigate = useNavigate()
     const location = useLocation()
     const dispatch = useDispatch()
-    const role = useGetRole()
     const user = useSelector(state => state.user)
     const theme = useTheme()
     let url = useLocation()
     url = url.pathname
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+    console.log("role: ", role)
     const navbarNavigate = [
         {
             name: "Home",
@@ -371,6 +372,7 @@ const NavbarContent = () => {
 
 const Navbar = (props) => {
     const open = props.open
+    const role = props.role
     const theme = useTheme()
     innerDrawerWidth = props.drawerWidth
     return (
@@ -411,7 +413,7 @@ const Navbar = (props) => {
                     >
                         <BusinessIcon />
                     </IconButton> : null}
-                    <NavbarContent />
+                    <NavbarContent role={role} />
                 </Toolbar>
             </AppBar>
             {/* </CustomAppBar> */}

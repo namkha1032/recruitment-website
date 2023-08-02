@@ -17,6 +17,7 @@ function CvStep2(prop) {
               sInputValue={prop.sInputValue}
               setSInputValue={prop.setSInputValue}
               skillData={prop.skillData}
+              skillOption={prop.skillOption}
               skills={prop.skills}
               handleSkilltDelete={prop.handleSkilltDelete}
               SExp={prop.SExp}

@@ -27,17 +27,30 @@ import { transferDatetimeBack } from '../../utils/transferDatetime';
 const Page_Event_Id = () => {
 
     const role = useGetRole()
-
+    const candidateId = useSelector(state => state.candidateId)
+    // const userId = useSelector(state => state.user.userId)
+    const userId = "e669407a-193c-4d36-8790-def94fb5660a"
+    
     const { eventid } = useParams();
-    console.log('event id: ', eventid);
+   
 
     const dispatch = useDispatch();
+    
     useEffect(() => {
         dispatch({ type: "saga/getEvent", payload: eventid })
         return () => {
             cleanStore(dispatch)
         }
     }, [])
+
+
+    useEffect(() => {
+        if (role === "candidate") {
+            dispatch({ type: "saga/getCandidateId", payload: userId })
+        }
+    },[role])
+    console.log('ABCDEFGH: ', candidateId)
+
 
     const event = useSelector((state) => state.event)
 
@@ -54,7 +67,14 @@ const Page_Event_Id = () => {
 
     // handle events
     const handleRegister = (e) => {
-        alert("Register successfully!");
+        dispatch({
+            type: "saga/postCandidateJoinEvent", 
+            payload: {
+                candidateId: candidateId,
+                eventId: event.eventId
+            }
+        });
+        console.log("Register successfully!");
         // alert(new Date())
     }
 
@@ -217,7 +237,7 @@ const Page_Event_Id = () => {
                                     </Box>
                                 </Grid>
                             </Grid>
-                            {role ?
+                            {role === "candidate" ?
                                 <Grid item xs={12} align='right' sx={{ marginTop: 8 }}>
                                     <Button
                                         variant='contained'

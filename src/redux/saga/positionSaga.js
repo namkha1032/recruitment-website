@@ -12,6 +12,7 @@ function* getPositionList() {
   try {
     yield put({ type: "loading/onLoading" });
     // const response = yield call(axios.get, `${host.name}/data/positionList.json`)
+    // const response = yield call(axios.get, `${host.name}/data/positionList.json`)
     // yield put({ type: "positionList/setPositionList", payload: response.data });
     
     const response = yield call(
@@ -97,10 +98,9 @@ function* updatePositionList(action) {
 
 function* getPosition(action) {
   try {
-    console.log(action.payload)
-    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload}`)
+
     // const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Language?languageId=${response1.data.languageId}`)
-    console.log("response1", response1.data);
+
     // console.log("deinresponse1", response1.data.departmentId)
     // const response3 =  yield call(axios.get, `http://leetun2k2-001-site1.gtempurl.com/api/Requirement`)
     // const requirementid = response3.data.filte r((prop) => prop.requirementId === response1.data.requirementId);
@@ -154,20 +154,26 @@ function* getPosition(action) {
     // yield put({ type: 'language/setLanguage', payload: response2.data })
     // yield put({ type: 'department/setDepartment', payload: department })
     // const response1 = yield call(axios.get, `${host.name}/data/detailposition.json`)
+    console.log("param", action.payload)
+    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload}`)
+
     let skilllist = []
     const response2 = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Skill');
-    console.log('response2', response2.data);
+    console.log('response1', response1.data);
+    console.log('reponse2', response2.data)
     console.log('skillid', response1.data.requirements)
     for (let i = 0; i < response1.data.requirements.length; i++) {
       for (let j = 0; j < response2.data.length; j++) {
         if (response1.data.requirements[i].skillId === response2.data[j].skillId) {
-          skilllist.push(response2.data[i]);
+          skilllist.push(response2.data[j]);
         }
       }
     }
+
     console.log('skillinsaga', skilllist);
+
     yield put({ type: 'position/setPosition', payload: response1.data })
-    yield put({type: 'skill/setSkill', payload: skilllist})
+    yield put({ type: 'skill/setSkill', payload: skilllist })
   } catch (error) {
     console.log(error)
   }

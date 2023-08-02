@@ -20,10 +20,6 @@ import {
     MenuItem
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import { DatePicker } from '@mui/x-date-pickers';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useNavigate, useSearchParams } from "react-router-dom";
 // import components
 import TableInterviewer from "./TableInterviewer/TableInterviewer";
@@ -46,7 +42,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import TitleDivider from "../../components/TitleDivider/TitleDivider";
 import AlertDialog from "../../components/AlertDialog/AlertDialog";
-
+import SkeletonInterviewCreate from "./SkeletonInterviewCreate/SkeletonInterviewCreate";
+import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 // import utilities
 import cleanStore from "../../utils/cleanStore";
@@ -216,7 +213,7 @@ const Page_Company_Interview_Create = () => {
                         </GigaCardBody>
                     </GigaCard>
                 </Grid>
-                <Grid item md={12}>
+                <Grid item xs={12}>
                     <GigaCard>
                         <Grid container>
                             <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column" }}>
@@ -285,9 +282,13 @@ const Page_Company_Interview_Create = () => {
                 <AlertDialog openAlert={openAlert} setOpenAlert={setOpenAlert} message={"Are you sure you want to create this interview?"} handleSubmit={handleSubmit} />
             </Grid>
             :
-            <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <CircularProgress color="inherit" />
-            </Box>
+            // <Backdrop
+            //     sx={{ backgroundColor: theme.palette.grey[200] }}
+            //     open={true}
+            // >
+            //     <CircularProgress color="inherit" />
+            // </Backdrop>
+            <SkeletonInterviewCreate />
         }
         </>
     )
