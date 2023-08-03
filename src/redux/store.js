@@ -58,6 +58,7 @@ import interviewInterviewerSlice from "./reducer/interviewInterviewerReducer";
 import interviewSkillSlice from "./reducer/interviewSkillReducer";
 import interviewDepartmentSlice from "./reducer/interviewDepartmentReducer";
 import interviewPositionSlice from "./reducer/interviewPositionReducer";
+import recruiterIdCreateEventSlice from "./reducer/recruiterIdCreateEvent";
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
     reducer: {
@@ -101,6 +102,7 @@ const store = configureStore({
         profile: profileSlice.reducer,
         eventNavigate: eventNavigateSlice.reducer,
         candidateIdRegisterEvent: candidateIdRegisterEventSlice.reducer,
+        recruiterIdCreateEvent: recruiterIdCreateEventSlice.reducer,
         infoApplication: infoApplicationSlice.reducer,
         interviewerList: interviewerListSlice.reducer,
         interviewResult: interviewResultSlice.reducer,

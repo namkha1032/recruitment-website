@@ -29,6 +29,7 @@ import GroupAddRoundedIcon from '@mui/icons-material/GroupAddRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import { useDispatch, useSelector } from 'react-redux'
 import { LoadingButton } from '@mui/lab'
+import useGetRole from '../../hooks/useGetRole'
 
 
 
@@ -38,6 +39,19 @@ const Page_Company_Event_Create = () => {
     const navigate = useNavigate()
 
     const dispatch = useDispatch();
+
+
+    const role = useGetRole()
+
+    const user = useSelector(state => state.user)
+    const userId = user ? user.userid : ""
+    useEffect(() => {
+        if (role === "recruiter") {
+            dispatch({ type: "eventSaga/getRecruiterIdCreateEvent", payload: userId })
+        }
+    }, [role])
+    const recruiterId = useSelector(state => state.recruiterIdCreateEvent)
+    console.log("DebugC: ", recruiterId)
 
 
     // useState
@@ -114,6 +128,7 @@ const Page_Company_Event_Create = () => {
             type: "eventSaga/postEvent",
             payload: {
                 eventName: name,
+                recruiterId: recruiterId,
                 description: content,
                 // quantity: 50,
                 maxParticipants: maxQuantity,

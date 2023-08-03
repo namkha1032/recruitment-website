@@ -116,7 +116,7 @@ function* getEvent(action) {
       eventId: res.eventId,
       eventName: res.eventName,
       content: res.description,
-      quantity: 50,
+      // quantity: 50,
       maxQuantity: res.maxParticipants,
       time: res.datetimeEvent,
       location: res.place,
@@ -187,6 +187,7 @@ function* postEvent(action) {
     yield put({ type: "eventNavigate/onLoading" })
     const {
       eventName,
+      recruiterId,
       description,
       // quantity,
       maxParticipants,
@@ -199,7 +200,7 @@ function* postEvent(action) {
     // console.log(datetimeEvent_edited)
     const request = {
       eventName: eventName,
-      recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
+      recruiterId: recruiterId,
       description: description,
       place: place,
       isDeleted: false,
@@ -238,17 +239,18 @@ function* putEvent(action) {
     const {
       eventId,
       eventName,
+      recruiterId,
       description,
-      quantity,
+      // quantity,
       maxParticipants,
       datetimeEvent,
       place,
-      createdTime
+      // createdTime
     } = action.payload;
     console.log(action.payload)
     const request = {
       eventName: eventName,
-      recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
+      recruiterId: recruiterId,
       description: description,
       place: place,
       isDeleted: false,
@@ -288,6 +290,22 @@ function* getCandidateIdRegisterEvent(action) {
 }
 
 
+function* getRecruiterIdCreateEvent(action) {
+  try {
+    const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Recruiter")
+    // console.log("+++++++++++", response)
+    // console.log("+++++++++++", action.payload)
+    const response1 = response.data.filter(item => item.userId === action.payload)[0]
+    console.log("DebugA: ", response1)
+    yield put({ type: "recruiterIdCreateEvent/setRecruiterIdCreateEvent", payload: response1.recruiterId })
+    console.log("DebugB: ", response1.recruiterId)
+  }
+  catch (error) {
+    console.log(error)
+  }
+}
+
+
 function* postCandidateJoinEvent(action) {
   console.log("CandidateJoinEvent: ", action.payload)
   try {
@@ -315,6 +333,23 @@ function* postCandidateJoinEvent(action) {
     console.log(error)
   }
 }
+
+
+function* deleteCandidateJoinEvent(action) {
+  console.log("deleteCandidateJoinEvent: ", action.payload)
+  try {
+    const {
+      candidateId,
+      eventId
+    } = action.payload;
+    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`)
+    const response2 = response1.data.filter(element => (element.candidateId === candidateId) && (element.eventId === eventId))[0]
+    yield call(axios.delete, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent/${response2.candidateJoinEventId}`);
+  }
+  catch (error) {
+    console.log(error)
+  }
+}
 // ------------------------------------------------------------------------------------------------------------------------
 
 
@@ -328,7 +363,9 @@ function* eventSaga() {
     takeEvery("eventSaga/postEvent", postEvent),
     takeEvery("eventSaga/putEvent", putEvent),
     takeEvery("eventSaga/getCandidateIdRegisterEvent", getCandidateIdRegisterEvent),
-    takeEvery("eventSaga/postCandidateJoinEvent", postCandidateJoinEvent)
+    takeEvery("eventSaga/getRecruiterIdCreateEvent", getRecruiterIdCreateEvent),
+    takeEvery("eventSaga/postCandidateJoinEvent", postCandidateJoinEvent),
+    takeEvery("eventSaga/deleteCandidateJoinEvent", deleteCandidateJoinEvent)
     // takeEvery("saga/getEventListId", getEventListId),
   ]);
 }
