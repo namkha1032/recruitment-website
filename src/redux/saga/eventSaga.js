@@ -292,11 +292,11 @@ function* postCandidateJoinEvent(action) {
 
 function* eventSaga() {
   yield all([
-    takeLatest("saga/getEventList", getEventList),
+    takeLatest("eventSaga/getEventList", getEventList),
     takeLatest("saga/getEventListWithFilter", getEventListWithFilter),
     takeEvery("saga/getEvent", getEvent),
     takeEvery("saga/getAllCandidateOfEvent", getAllCandidateOfEvent),
-    takeEvery("saga/getEventFooter", getEventFooter),
+    takeEvery("eventFooterSaga/getEventFooter", getEventFooter),
     takeEvery("saga/postEvent", postEvent),
     takeEvery("saga/putEvent", putEvent),
     takeEvery("saga/getCandidateId", getCandidateId),
