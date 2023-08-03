@@ -5,16 +5,18 @@ import host from "../host";
 function* getReport(action) {
   //http://leetun2k2-001-site1.gtempurl.com/api/Skill
   //http://localhost:3000/data/skillList.json
+  // `${host.name}/data/interviewAll.json`
+  console.log("REPORT: ", action.payload)
   try {
     const response = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Skill"
+      `${host.name}/data/report.json`
     );
     // const response = yield call(
     //   axios.get,
     //   `${host.name}/data/skillList.json`
     // );
-    yield put({ type: "skill/setSkill", payload: response.data });
+    yield put({ type: "report/setReport", payload: response.data });
     // yield put({
     //   type: "error/setError",
     //   payload: {
@@ -33,8 +35,8 @@ function* getReport(action) {
   }
 }
 
-function* skillSaga() {
+function* reportSaga() {
   yield all([takeEvery("reportSaga/getReport", getReport)]);
 }
 
-export default skillSaga;
+export default reportSaga;

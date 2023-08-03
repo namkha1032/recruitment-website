@@ -79,9 +79,12 @@ export default function Page_Company_Question() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user)
 
   useEffect(() => {
-    dispatch({ type: "questionSaga/getAllQuestion" });
+    dispatch({ type: "questionSaga/getAllQuestion", payload: {
+      token: `Bearer ${user.token}`
+    } });
     dispatch({ type: "skillSaga/getSkill" });
     dispatch({ type: "languageSaga/getLanguage" });
   }, []);
@@ -199,6 +202,7 @@ export default function Page_Company_Question() {
           languageId: null,
           languageName: null,
           softskill: true,
+          token: `Bearer ${user.token}`
         },
       });
     } else if (value === "Technology") {
@@ -211,6 +215,7 @@ export default function Page_Company_Question() {
           languageId: null,
           languageName: null,
           softskill: false,
+          token: `Bearer ${user.token}`
         },
       });
     } else if (value === "Language") {
@@ -223,6 +228,7 @@ export default function Page_Company_Question() {
           languageId: null,
           languageName: null,
           softskill: false,
+          token: `Bearer ${user.token}`
         },
       });
     } else {
@@ -235,6 +241,7 @@ export default function Page_Company_Question() {
           languageId: null,
           languageName: null,
           softskill: false,
+          token: `Bearer ${user.token}`
         },
       });
     }
@@ -259,6 +266,7 @@ export default function Page_Company_Question() {
         languageId: null,
         languageName: null,
         softskill: false,
+        token: `Bearer ${user.token}`
       },
     });
   }
@@ -274,6 +282,7 @@ export default function Page_Company_Question() {
         languageId: value ? value.languageId : null,
         languageName: value ? value.languageName : null,
         softskill: false,
+        token: `Bearer ${user.token}`
       },
     });
   }
@@ -293,7 +302,7 @@ export default function Page_Company_Question() {
   //  typeId: null, nếu category = "Soft Skill"
   //  typeName: null nếu category = "Soft Skill"
   // }
-  console.log("HELLO: ", valueChoose, skillChoose, languageChoose);
+
   function handleSubmitQuestion(value) {
     // successAlert("Create question");
     dispatch({
@@ -310,6 +319,7 @@ export default function Page_Company_Question() {
         languageId: languageChoose ? languageChoose.languageId : null,
         languageName: languageChoose ? languageChoose.languageName : null,
         softskill: valueChoose === "Soft Skills" ? true : false,
+        token: `Bearer ${user.token}`
       },
     });
   }
@@ -351,6 +361,7 @@ export default function Page_Company_Question() {
         languageId: languageChoose ? languageChoose.languageId : null,
         languageName: languageChoose ? languageChoose.languageName : null,
         softskill: valueChoose === "Soft Skills" ? true : false,
+        token: `Bearer ${user.token}`
       },
     });
   }
@@ -377,6 +388,7 @@ export default function Page_Company_Question() {
         languageId: languageChoose ? languageChoose.languageId : null,
         languageName: languageChoose ? languageChoose.languageName : null,
         softskill: valueChoose === "Soft Skills" ? true : false,
+        token: `Bearer ${user.token}`
       },
     });
   }

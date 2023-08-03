@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Box,
   Grid,
@@ -17,7 +17,6 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
-import datasjson from "./Page_Company_Recruitment_Id_Report_Data.json";
 import {
   NullString,
   NotStart,
@@ -31,6 +30,8 @@ import ReportGraph from "./ReportGraph";
 import ReportStatistic from "./ReportStatistic";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+import { useDispatch, useSelector } from "react-redux";
+import cleanStore from "../../utils/cleanStore";
 
 // JSON <- getReportList
 // {
@@ -123,7 +124,10 @@ const data = {
 
 export default function Page_Company_Recruitment_Id_Report(props) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
+
+  const positionId = useMemo(() => location.state.positionId, [location])
 
   // -- Navigate in Company/Recruitment
   // navigate(`./${value}/report`, {
@@ -134,9 +138,16 @@ export default function Page_Company_Recruitment_Id_Report(props) {
 
   // TEMPORARY
   // const positionId = useMemo(() => location.state.positionId);
-  const positionId = "1";
 
-  const [rows, setRows] = useState(datasjson);
+  const rows = useSelector(state => state.report);
+  const loading = useSelector(state => state.loading);
+
+  useEffect(() => {
+    dispatch({type: "reportSaga/getReport", payload: {
+      positionId: positionId
+    }})
+    return () => cleanStore(dispatch)
+  },[])
 
   const [tabValue, setTabValue] = useState("0");
 
@@ -429,6 +440,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
             <ReportDataGrid
               columns={columns}
               rows={rows}
+              loading={loading}
               handleDetailClick={handleDetailClick}
               handleCandidateClick={handleCandidateClick}
               handleInterviewerClick={handleInterviewerClick}

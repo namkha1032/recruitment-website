@@ -35,6 +35,7 @@ function* getPositionList() {
     //   },
     // });
   } catch (error) {
+    yield put({ type: "loading/offLoading" });
     // yield put({
     //   type: "error/setError",
     //   payload: {
@@ -76,6 +77,7 @@ function* getPositionListWithFilter(action) {
     //   },
     // });
   } catch (error) {
+    yield put({ type: "loading/offLoading" });
     // yield put({
     //   type: "error/setError",
     //   payload: {

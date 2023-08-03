@@ -1,13 +1,112 @@
 [
     {
-        "InterviewId": 2,
+        "InterviewId": 1,
         "CandidateId": 2,
         "CandidateName": "Nguyễn Văn B",
         "InterviewerId": 2,
         "InterviewerName": "Trần Thị Y",
         "ApplyDate": "21/07/2023",
         "InterviewDate": "25/07/2023",
-        "Status": "Đang diễn ra",
+        "Status": "Pending",
         "Score": 9.5
+    },
+    {
+        "InterviewId": 222222222,
+        "CandidateId": 2,
+        "CandidateName": "Nguyễn Văn B",
+        "InterviewerId": 2,
+        "InterviewerName": "Trần Thị Y",
+        "ApplyDate": "21/07/2023",
+        "InterviewDate": "25/07/2023",
+        "Status": "Pending",
+        "Score": 9.5
+    },
+    {
+        "InterviewId": 3,
+        "CandidateId": 2,
+        "CandidateName": "Nguyễn Văn B",
+        "InterviewerId": 2,
+        "InterviewerName": "Trần Thị Y",
+        "ApplyDate": "21/07/2023",
+        "InterviewDate": "25/07/2023",
+        "Status": "Pending",
+        "Score": 8.75
+    },
+    {
+        "InterviewId": 4,
+        "CandidateId": 2,
+        "CandidateName": "Nguyễn Văn B",
+        "InterviewerId": 2,
+        "InterviewerName": "Trần Thị Y",
+        "ApplyDate": "21/07/2023",
+        "InterviewDate": "25/07/2023",
+        "Status": "Pending",
+        "Score": 6
+    },
+    {
+        "InterviewId": 5,
+        "CandidateId": 2,
+        "CandidateName": "Nguyễn Văn B",
+        "InterviewerId": 2,
+        "InterviewerName": "Trần Thị Y",
+        "ApplyDate": "21/07/2023",
+        "InterviewDate": "25/07/2023",
+        "Status": "Pending",
+        "Score": 8
+    },
+    {
+        "InterviewId": 6,
+        "CandidateId": 2,
+        "CandidateName": "Nguyễn Văn B",
+        "InterviewerId": 2,
+        "InterviewerName": "Trần Thị Y",
+        "ApplyDate": "21/07/2023",
+        "InterviewDate": "25/07/2023",
+        "Status": "Pending",
+        "Score": 10
+    },
+    {
+        "InterviewId": 7,
+        "CandidateId": 2,
+        "CandidateName": "Nguyễn Văn B",
+        "InterviewerId": 2,
+        "InterviewerName": "Trần Thị Y",
+        "ApplyDate": "21/07/2023",
+        "InterviewDate": "25/07/2023",
+        "Status": "Pending",
+        "Score": 9.5
+    },
+    {
+        "InterviewId": 8,
+        "CandidateId": 2,
+        "CandidateName": "Nguyễn Văn B",
+        "InterviewerId": 2,
+        "InterviewerName": "Trần Thị Y",
+        "ApplyDate": "21/07/2023",
+        "InterviewDate": "25/07/2023",
+        "Status": "Pending",
+        "Score": 5
+    },
+    {
+        "InterviewId": 9,
+        "CandidateId": 2,
+        "CandidateName": "Nguyễn Văn B",
+        "InterviewerId": 2,
+        "InterviewerName": "Trần Thị Y",
+        "ApplyDate": "21/07/2023",
+        "InterviewDate": "25/07/2023",
+        "Status": "Pending",
+        "Score": 7
+    },
+    {
+        "InterviewId": 10,
+        "CandidateId": 2,
+        "CandidateName": "Nguyễn Văn B",
+        "InterviewerId": 2,
+        "InterviewerName": "Trần Thị Y",
+        "ApplyDate": "21/07/2023",
+        "InterviewDate": "25/07/2023",
+        "Status": "Pending",
+        "Score": 9
     }
 ]

@@ -34,6 +34,8 @@ function* getEventList() {
     //   },
     // });
   } catch (error) {
+
+    yield put({ type: "loading/offLoading" });
     // yield put({
     //   type: "error/setError",
     //   payload: {
@@ -57,7 +59,7 @@ function* getEventFooter() {
     yield put({ type: "eventFooter/setEventFooter", payload: data });
     yield put({ type: "loading/offLoading" });
   } catch (error) {
-
+    yield put({ type: "loading/offLoading" });
   }
 }
 
@@ -87,6 +89,7 @@ function* getEventListWithFilter(action) {
     //   },
     // });
   } catch (error) {
+    yield put({ type: "loading/offLoading" });
     // yield put({
     //   type: "error/setError",
     //   payload: {

@@ -39,7 +39,9 @@ function* getAllInterview() {
       payload: data,
     });
     yield put({ type: "loading/offLoading" });
-  } catch (error) { }
+  } catch (error) {
+    yield put({ type: "loading/offLoading" });
+  }
 }
 
 function* getInterviewWithFilter(action) {
