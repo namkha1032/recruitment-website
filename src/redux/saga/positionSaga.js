@@ -118,6 +118,10 @@ function* updatePositionList(action) {
         token: action.payload.token
       },
     });
+    yield put({
+      type: "status/onSuccess",
+      payload: ""
+    });
   } catch (error) {}
 
   // yield put({ type: "positionList/setPositionList", payload: response.data });

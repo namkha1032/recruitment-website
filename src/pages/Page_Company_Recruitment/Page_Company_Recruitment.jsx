@@ -43,6 +43,7 @@ import {
 import cleanStore from "../../utils/cleanStore";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+import { successAlert } from "../../components/Alert/SuccessAlert";
 import { errorAlert } from "../../components/Alert/ErrorAlert";
 import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -121,7 +122,21 @@ export default function Page_Company_Recruitment() {
   }, []);
 
   const loading = useSelector((state) => state.loading);
-  // const error = useSelector((state) => state.error);
+  const status = useSelector((state) => state.status);
+
+  useEffect(() => {
+    if (status.status === "success") {
+      successAlert(status.message);
+      dispatch({
+        type: "status/onReset",
+      });
+    } else if (status.status === "error") {
+      errorAlert(status.message);
+      dispatch({
+        type: "status/onReset",
+      });
+    }
+  }, [status]);
 
   // useEffect(() => {
   //   let timeoutId = null
