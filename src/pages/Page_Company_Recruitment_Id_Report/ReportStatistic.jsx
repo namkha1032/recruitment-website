@@ -8,12 +8,12 @@ export default function ReportStatistic(props) {
             borderRadius: 1,
             padding: 2
         }}>
-            <Grid container spacing={2}>
+            <Grid container>
                 <Grid item xs={12} sm={12} md={12} sx={{
                     display: "flex",
                     justifyContent: "flex-start",
                     alignItems: "center",
-                    fontSize: 20
+                    fontSize: 20,
                 }}>
                     <TroubleshootRoundedIcon sx={{
                         fontSize: 30,
@@ -21,40 +21,45 @@ export default function ReportStatistic(props) {
                     }}/> 
                     <Box sx={{
                         fontWeight: 600
-                    }}>Statistic</Box>
-                    
+                    }}>Numerical Data</Box>
                 </Grid>
+                <Grid item xs={12} sm={12} md={12}>
                 <List>
-                    <ListItem>
+                    <ListItem sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                    }}>
                         <Box>Applied Total:</Box>
-                        <Box sx={{
-                            marginLeft: 1,
-                            fontWeight: 600
-                        }}>{props.data.AppliedTotal}</Box>
+                        <Box>{props.data.AppliedTotal}</Box>
                     </ListItem>
-                    <ListItem>
+                    <ListItem sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                    }}>
                         <Box>Average:</Box>
-                        <Box sx={{
-                            marginLeft: 1,
-                            fontWeight: 600
-                        }}>{props.data.Average}</Box>
+                        <Box>{props.data.Average}</Box>
                     </ListItem>
-                    <ListItem>
+                    <ListItem sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                    }}>
                         <Box>Median:</Box>
-                        <Box sx={{
-                            marginLeft: 1,
-                            fontWeight: 600
-                        }}>{props.data.Median}</Box>
+                        <Box>{props.data.Median}</Box>
                     </ListItem>
-                    <ListItem>
+                    <ListItem sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                    }}>
                         <Box>Mode:</Box>
-                        <Box sx={{
-                            marginLeft: 1,
-                            fontWeight: 600
-                        }}>{props.data.Mode}</Box>
+                        <Box>{props.data.Mode}</Box>
                     </ListItem>
-                    
                 </List>
+                </Grid>
+                
 
             </Grid>
             

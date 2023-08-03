@@ -244,6 +244,8 @@ export default function Page_Company_Recruitment() {
       payload: {
         id: id,
         value: value,
+        departmentId: departmentChoose ? departmentChoose.departmentId : null,
+        status: statusChoose ? statusChoose : null,
       },
     });
   }
@@ -255,6 +257,8 @@ export default function Page_Company_Recruitment() {
       payload: {
         id: id,
         value: value,
+        departmentId: departmentChoose ? departmentChoose.departmentId : null,
+        status: statusChoose ? statusChoose : null,
       },
     });
   }
@@ -953,6 +957,9 @@ export default function Page_Company_Recruitment() {
                 "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
                   display: "none",
                 },
+                "&.MuiDataGrid-root .MuiDataGrid-row": {
+                  cursor: "pointer"
+                },
                 // "&.MuiDataGrid-root .MuiDataGrid-virtualScroller::-webkit-scrollbar":
                 //   {
                 //     display: "none",
@@ -1002,14 +1009,17 @@ export default function Page_Company_Recruitment() {
                 },
               }}
               getRowId={(row) => row.PositionId}
-              onCellClick={(params, event) => {
-                if (
-                  params.field === "PositionId" ||
-                  params.field === "PositionName"
-                ) {
-                  handleDetailClick(params.row.PositionId);
-                }
+              onRowClick={(params, event) => {
+                handleDetailClick(params.row.PositionId)
               }}
+              // onCellClick={(params, event) => {
+              //   if (
+              //     params.field === "PositionId" ||
+              //     params.field === "PositionName"
+              //   ) {
+              //     handleDetailClick(params.row.PositionId);
+              //   }
+              // }}
             />
           </Box>
         </GigaCardBody>

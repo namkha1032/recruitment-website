@@ -513,7 +513,7 @@ export default function QuestionFormModal(props) {
                     marginTop: 2,
                   }}
                 >
-                  {props.status.status !== "loading" && (
+                  {props.status.status !== "loading" && props.status.status !== "success" && (
                     <Button
                       // variant="outlined"
                       // sx={{
@@ -543,7 +543,7 @@ export default function QuestionFormModal(props) {
                       Create
                     </Button>
                   )}
-                  {props.status.status === "loading" && (
+                  {(props.status.status === "loading" || props.status.status === "success") && (
                     <LoadingButton
                       variant="outlined"
                       sx={{
@@ -925,7 +925,7 @@ export default function QuestionFormModal(props) {
                     marginTop: 2,
                   }}
                 >
-                  {props.status.status !== "loading" && (
+                  {props.status.status !== "loading" && props.status.status !== "success" && (
                     <Button
                       // variant="outlined"
                       // sx={{
@@ -955,7 +955,7 @@ export default function QuestionFormModal(props) {
                       Create
                     </Button>
                   )}
-                  {props.status.status === "loading" && (
+                  {(props.status.status === "loading" || props.status.status === "success") && (
                     <LoadingButton
                       variant="outlined"
                       sx={{

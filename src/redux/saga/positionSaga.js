@@ -45,12 +45,14 @@ function* getPositionList() {
   }
 }
 
+// action.payload: {
+//   departmentId: value ? value.departmentId : null,
+//   status: statusChoose,
+// }
 function* getPositionListWithFilter(action) {
   console.log("Filter by: ", action.payload);
   try {
     yield put({ type: "loading/onLoading" });
-    yield call(delay, 1500)
-
     // const response = yield call(axios.get, `${host.name}/data/positionListD.json`)
     // yield put({ type: "positionList/setPositionList", payload: response.data });
 
@@ -87,7 +89,13 @@ function* getPositionListWithFilter(action) {
 function* updatePositionList(action) {
   try {
     const response = yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Position/${action.payload.id}`, action.payload.value);
-    yield call(getPositionList)
+    yield put({
+      type: "saga/getPositionListWithFilter",
+      payload: {
+        departmentId: action.payload.departmentId,
+        status: action.payload.status,
+      },
+    })
   }
   catch (error) {
 

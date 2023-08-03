@@ -152,7 +152,6 @@ function* postQuestion(action) {
     yield put({
       type: "status/onLoading",
     });
-    yield call(delay, 3000);
     const techId = yield call(
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Technology"
@@ -390,9 +389,9 @@ function* deleteQuestion(action) {
         action.payload.QuestionId,
         questionSkills.data
       );
-        console.log("Hello====")
+
+      // Don't in QuestionSkills
       if (quesSkil !== null) {
-        console.log("Hi====")
         yield call(
           axios.delete,
           `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${quesSkil.questionSkillsId}`

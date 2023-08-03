@@ -582,7 +582,7 @@ export default function QuestionModal(props) {
                   marginTop: 1,
                 }}
               >
-                {props.status.status !== "loading" && (
+                {props.status.status !== "loading" && props.status.status !== "success" && (
                   <Button
                     // variant="outlined"
                     // sx={{
@@ -618,7 +618,7 @@ export default function QuestionModal(props) {
                     {props.type === true ? "Update" : "Edit question"}
                   </Button>
                 )}
-                {props.status.status === "loading" && (
+                {(props.status.status === "loading" || props.status.status === "success") && (
                   <LoadingButton
                     variant="outlined"
                     sx={{
@@ -1084,7 +1084,7 @@ export default function QuestionModal(props) {
                   marginTop: 2,
                 }}
               >
-                {props.status.status !== "loading" && (
+                {props.status.status !== "loading" && props.status.status !== "success" &&(
                   <Button
                     // variant="outlined"
                     // sx={{
@@ -1120,7 +1120,7 @@ export default function QuestionModal(props) {
                     {props.type === true ? "Update" : "Edit question"}
                   </Button>
                 )}
-                {props.status.status === "loading" && (
+                {(props.status.status === "loading" || props.status.status === "success") && (
                   <LoadingButton
                     variant="outlined"
                     sx={{
