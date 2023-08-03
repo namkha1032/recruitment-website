@@ -416,6 +416,13 @@ const App = () => {
         }
         setLoading(false)
     }
+    async function updateQues() {
+        if (pass == password) {
+            setLoading(true)
+            dispatch({ type: "saga/getStuff" })
+        }
+        setLoading(false)
+    }
     return (
         <>
             <input type="text" placeholder="password" onChange={(e) => { setPass(e.target.value) }} value={pass} />
@@ -432,6 +439,8 @@ const App = () => {
             <button onClick={() => { handleAddTechnology() }}>add technology</button>
             <br />
             <button onClick={() => { handleAddShift() }}>add shift</button>
+            <br />
+            <button onClick={() => { updateQues() }}>update ques</button>
         </>
     )
 }
