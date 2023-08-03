@@ -34,25 +34,17 @@ function* userLogin(action) {
             image: responseUserInformation.data.imageURL,
         }
 
+        const responseProfile = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Authentication/Profile/${responseUserInformation.data.id}`,/* responseUserInformation.data.id , */config)
+        console.log("responseProfile: ", responseProfile.data.candidateId)
+
         if (responseRole.data == "Candidate") {
-            const responseGetAllCandidate = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Candidate')
-            let allCandidate = responseGetAllCandidate.data.filter(element => element.userId === responseUserInformation.data.id) 
-            //console.log("allcan: ", allCandidate[0].candidateId)
-            userObj.candidateId = allCandidate[0].candidateId
+            userObj.candidateId = responseProfile.data.candidateId
         } else if (responseRole.data == "Recruiter") {
-            const responseGetAllRecruiter = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Recruiter')
-            let allRecruiter = responseGetAllRecruiter.data.filter(element => element.userId === responseUserInformation.data.id)
-            //console.log("allRec: ", allRecruiter[0].recruiterId)
-
-            userObj.recruiterId = allRecruiter[0].recruiterId
-            userObj.departmentId = allRecruiter[0].departmentId
+            userObj.recruiterId = responseProfile.data.recruiterId
+            userObj.departmentId = responseProfile.data.departmentId
         } else if (responseRole.data == "Interviewer") {
-            const responseGetAllInterviewer = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Interviewer')
-            let allInterviewer = responseGetAllInterviewer.data.filter(element => element.userId === responseUserInformation.data.id)
-            //console.log("allInterviewer: ", allInterviewer[0].interviewerId)
-
-            userObj.interviewerId = allInterviewer[0].interviewerId
-            userObj.departmentId = allInterviewer[0].departmentId
+            userObj.interviewerId = responseProfile.data.interviewerId
+            userObj.departmentId = responseProfile.data.departmentId
         } 
 
         // userObj = {
@@ -124,7 +116,7 @@ function* userResetPassword(action) {
 function* userChangePassword(action) {
     try {
         //console.log("action.payload is: ", action.payload)
-        let userlocal = JSON.parse(window.localStorage.getItem("user"))
+        let userlocal = window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")) : JSON.parse(window.sessionStorage.getItem("user"))
         //console.log(userlocal)
         let token = `Bearer ${userlocal.token}`
         //console.log(token)

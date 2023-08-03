@@ -19,10 +19,10 @@ import {
 // import "react-toastify/dist/ReactToastify.css";
 import { Snackbar, Alert } from "@mui/material";
 
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-//import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 
 const style = {
   marginTop: "15px",
@@ -31,11 +31,13 @@ const style = {
 
 const theme = createTheme({
   palette: {
-      secondary: {
-          main: '#000000'
-      }
-  }
+    secondary: {
+      main: "#000000",
+    },
+  },
 });
+
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{6,}$/;
 
 const ProfileChangePW = () => {
   const navigate = useNavigate();
@@ -48,7 +50,14 @@ const ProfileChangePW = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
   const [errorPasswordSnackbar, setErrorPasswordSnackbar] = useState(false);
-  const [messagePassword, setMessagePassword] = useState("")
+  const [messagePassword, setMessagePassword] = useState("");
+
+  const [validUsername, setValidUsername] = useState(true);
+  const [validCurrentPassword, setValidCurrentPassword] = useState(true);
+  const [validNewPassword, setValidNewPassword] = useState(true);
+  const [validConfirmPassword, setValidConfirmPassword] = useState(true);
+
+  const [loading, setLoading] = useState(false)
 
   const dispatch = useDispatch();
 
@@ -56,57 +65,133 @@ const ProfileChangePW = () => {
 
   useEffect(() => {
     if (newError.status === "no") {
-      dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+      setLoading(false)
+      dispatch({
+        type: "error/setError",
+        payload: { status: "idle", message: "" },
+      });
       navigate("/profile/:profileid");
     }
     if (newError.status === "yes") {
-      setErrorSnackbar(true)
-      setUsername("")
-      setCurrentPassword("")
-      setNewPassword("")
-      setConfirmPassword("")
+      setLoading(false)
+      setErrorSnackbar(true);
+      // setUsername("");
+      // setCurrentPassword("");
+      // setNewPassword("");
+      // setConfirmPassword("");
       setTimeout(() => {
-          setErrorSnackbar(false)
-          dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
-      }, 5000)
+        setErrorSnackbar(false);
+        dispatch({
+          type: "error/setError",
+          payload: { status: "idle", message: "" },
+        });
+      }, 5000);
     }
   }, [newError]);
 
+  const handleUsernameChange = (event) => {
+    let value = event.target.value;
+    setUsername(value);
+    if (!value) {
+      setValidUsername(false);
+    } else {
+      setValidUsername(true);
+    }
+  };
+
+  const handleCurrentPasswordChange = (event) => {
+    let value = event.target.value;
+    setCurrentPassword(value);
+    if (!value) {
+      setValidCurrentPassword(false);
+    } else {
+      setValidCurrentPassword(true);
+    }
+  };
+
+  const handleNewPasswordChange = (event) => {
+    let value = event.target.value;
+    setNewPassword(value);
+    if (!passwordRegex.test(value)) {
+      setValidNewPassword(false);
+    } else {
+      setValidNewPassword(true);
+    }
+  };
+
+  const handleConfirmPasswordChange = (event) => {
+    let value = event.target.value;
+    setConfirmPassword(value);
+    if (!value) {
+      setValidConfirmPassword(false);
+    } else {
+      setValidConfirmPassword(true);
+    }
+  };
+
   const handleClickShowOldPassword = () => {
     setShowOldPassword(!showOldPassword);
-  }
+  };
 
   const handleClickShowNewPassword = () => {
     setShowNewPassword(!showNewPassword);
-  }
+  };
 
   const handleClickShowConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword);
-  }
+  };
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
-  }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (currentPassword === newPassword) {
-      setMessagePassword("New password cannot be same as old password")
-      setErrorPasswordSnackbar(true)
-      setNewPassword("");
-      setConfirmPassword("");
-    } else if (newPassword !== confirmPassword) {
-      setMessagePassword("Passwords do not match")
-      setErrorPasswordSnackbar(true)
-      setNewPassword("");
-      setConfirmPassword("");
+
+    if (validUsername && username !== "" && validCurrentPassword && currentPassword !== "" && validNewPassword && newPassword !== "" && validConfirmPassword && confirmPassword !== "") {
+
+      if (confirmPassword !== newPassword) {
+        setMessagePassword("Confirm password don't match with new password");
+        setErrorPasswordSnackbar(true);
+        setConfirmPassword("");
+      } else {
+        setLoading(true)
+        dispatch({
+          type: "saga/userChangePassword",
+          payload: { username, currentPassword, newPassword, confirmPassword },
+        });
+      }
     } else {
-      console.log("bao")
-      dispatch({ 
-        type: "saga/userChangePassword", 
-        payload: { username, currentPassword, newPassword, confirmPassword}
-      })
+      if (validUsername || username === "") {
+        setValidUsername(false)
+      }
+      if (validCurrentPassword || currentPassword === "") {
+        setValidCurrentPassword(false)
+      }
+      if (validNewPassword || newPassword === "") {
+        setValidNewPassword(false)
+      }
+      if (validConfirmPassword || confirmPassword === "") {
+        setValidConfirmPassword(false)
+      }
     }
+
+    // if (currentPassword === newPassword) {
+    //   setMessagePassword("New password cannot be same as old password");
+    //   setErrorPasswordSnackbar(true);
+    //   setNewPassword("");
+    //   setConfirmPassword("");
+    // } else if (newPassword !== confirmPassword) {
+    //   setMessagePassword("Passwords do not match");
+    //   setErrorPasswordSnackbar(true);
+    //   setNewPassword("");
+    //   setConfirmPassword("");
+    // } else {
+    //   dispatch({
+    //     type: "saga/userChangePassword",
+    //     payload: { username, currentPassword, newPassword, confirmPassword },
+    //   });
+    // }
   };
 
   return (
@@ -116,22 +201,9 @@ const ProfileChangePW = () => {
         width: "100%",
       }}
     >
-      <Container sx={{ display: "flex", flexWrap:"wrap", justifyContent: "center" }}>
-      {/* <Box>
-      <Typography 
-                variant="h3" 
-                align="center" 
-                // color='#1976d2' 
-                color="black"
-                gutterBottom
-           
-                lineHeight={'28px'}
-                fontWeight={'700'}
-                padding={"20px"}
-                m={0}
-              >
-                Change password
-              </Typography></Box> */}
+      <Container
+        sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+      >
         <Grid
           container
           sx={{
@@ -142,7 +214,6 @@ const ProfileChangePW = () => {
             width: "100%",
           }}
         >
-
           <Grid item md={8} sx={{ display: "flex", justifyContent: "center" }}>
             <Grid
               item
@@ -154,271 +225,442 @@ const ProfileChangePW = () => {
                 paddingBottom: "10px",
                 backgroundColor: "white",
                 opacity: "100%",
-                left: "20%",
-                right: "20%",
+                left: "15%",
+                right: "15%",
               }}
             >
-
               <form onSubmit={handleSubmit}>
-
-              <Grid item xs={12} md={12} sx={{ ...style }}>
-                <TextField
-                  fullWidth
-                  //required
-                  variant="standard"
-                  label={<Typography color={"black"}>Username</Typography>}
-                  type="text"
-                  value={username}
-                  autoComplete='new-usename'
-                  InputProps={{
-                    disableUnderline: true,
-                    endAdornment: 
-                    (<AccountCircleOutlinedIcon
-                        sx={{
-                            position: 'absolute',
-                            right: '8px',
-                            color: '#000',
-                            fontSize: '1.2em',
+                <Grid item xs={12} md={12} 
+                  sx={{ 
+                    marginBottom: "3px",
+                    marginTop: '5px', 
+                  }}
+                >
+                  <TextField
+                    fullWidth
+                    variant="standard"
+                    label={validUsername ? <Typography color={"black"}>Username</Typography> : <Typography color={"red"}>Username</Typography>}
+                    type="text"
+                    value={username}
+                    autoComplete="new-usename"
+                    InputProps={{
+                      disableUnderline: true,
+                      endAdornment: (
+                        <AccountCircleOutlinedIcon
+                          sx={{
+                            position: "absolute",
+                            right: "8px",
+                            color: validUsername ? "black" : "red",
+                            fontSize: "1.2em",
                             //top: '20px',
-                        }}
-                    />),
-                    sx: {
-                        color: '#000',
-                    }
-                  }}
-                  sx={{
-                    width: '100%',
-                    height: '50px',
-                    background: 'transparent',
-                    //border: 'none',
-                    outline: 'none',
-                    fontSize: '1em',
-                    //padding: '0 5px 0 5px',
-                    color: '#000',
-                    borderBottom: '2px solid black',
-                    borderBottomWidth: '2px',
-                  }}
-                  onChange={e => setUsername(e.target.value)}
-                  /* error={!validUsername} */
-                />
-              </Grid>
+                          }}
+                        />
+                      ),
+                      sx: {
+                        color: "#000",
+                      },
+                    }}
+                    sx={{
+                      width: "100%",
+                      height: "50px",
+                      background: "transparent",
+                      //border: 'none',
+                      outline: "none",
+                      fontSize: "1em",
+                      //padding: '0 5px 0 5px',
+                      color: "#000",
+                      borderBottom: validUsername ? "2px solid black" : "2px solid red",
+                      borderBottomWidth: "2px",
+                    }}
+                    onChange={handleUsernameChange}
+                  />
+                </Grid>
 
-                <Grid item xs={12} md={12} sx={{ ...style }}>
+                {!validUsername && (
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "left",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        color={"red"}
+                        display={"flex"}
+                        //marginLeft={"16px"}
+                        //marginRight={"15px"}
+                        //marginBottom={"3px"}
+                      >
+                        <ErrorOutlineOutlinedIcon
+                          //color="red"
+                          sx={{
+                            fontSize: 14,
+                            //paddingLeft: "2px",
+                            marginTop: "2px",
+                          }}
+                        />
+
+                        <Typography
+                          color="red"
+                          fontSize="12px"
+                          lineHeight="20px"
+                          paddingLeft={"5px"}
+                        >
+                          Username cannot be empty
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  )}
+
+                <Grid item xs={12} md={12} 
+                  sx={{ 
+                    marginBottom: "3px",
+                    marginTop: '5px', 
+                  }}
+                >
                   <TextField
                     fullWidth
                     //required
                     variant="standard"
-                    label={<Typography color={"black"}>Current Password</Typography>}
+                    label={
+                      validCurrentPassword ? <Typography color={"black"}>Current Password</Typography> : <Typography color={"red"}>Current Password</Typography>
+                    }
                     type={showOldPassword ? "text" : "password"}
                     value={currentPassword}
-                    autoComplete='new-currentpassword'
+                    autoComplete="new-currentpassword"
                     InputProps={{
                       disableUnderline: true,
                       endAdornment: (
-                      <InputAdornment position="end">
+                        <InputAdornment position="end">
                           <IconButton
-                              onClick={handleClickShowOldPassword}
-                              onMouseDown={handleMouseDownPassword}
+                            onClick={handleClickShowOldPassword}
+                            onMouseDown={handleMouseDownPassword}
                           >
-                              {showOldPassword 
-                                  ? <VisibilityOutlinedIcon 
-                                      sx={{
-                                          position: 'absolute',
-                                          right: '8px',
-                                          color: '#000',
-                                          fontSize: '0.9em',
-                                          //top: '20px',
-                                      }}
-                                  /> 
-                                  : <VisibilityOffOutlinedIcon 
-                                      sx={{
-                                          position: 'absolute',
-                                          right: '8px',
-                                          color: '#000',
-                                          fontSize: '0.9em',
-                                          //top: '20px',
-                                      }}
-                                  />
-                              }
+                            {showOldPassword ? (
+                              <VisibilityOutlinedIcon
+                                sx={{
+                                  position: "absolute",
+                                  right: "8px",
+                                  color: validCurrentPassword ? "black" : "red",
+                                  fontSize: "0.9em",
+                                  //top: '20px',
+                                }}
+                              />
+                            ) : (
+                              <VisibilityOffOutlinedIcon
+                                sx={{
+                                  position: "absolute",
+                                  right: "8px",
+                                  color: validCurrentPassword ? "black" : "red",
+                                  fontSize: "0.9em",
+                                  //top: '20px',
+                                }}
+                              />
+                            )}
                           </IconButton>
-                      </InputAdornment>
+                        </InputAdornment>
                       ),
                       sx: {
-                          color: '#000',
-                      }
+                        color: "#000",
+                      },
                     }}
-
                     sx={{
-                      width: '100%',
-                      height: '50px',
-                      background: 'transparent',
+                      width: "100%",
+                      height: "50px",
+                      background: "transparent",
                       //border: 'none',
-                      outline: 'none',
-                      fontSize: '1em',
+                      outline: "none",
+                      fontSize: "1em",
                       //padding: '0 5px 0 5px',
-                      color: '#fff',
-                      borderBottom: '2px solid black',
-                      borderBottomWidth: '2px',
+                      color: "#fff",
+                      borderBottom: validCurrentPassword ? "2px solid black" : "2px solid red",
+                      borderBottomWidth: "2px",
                     }}
-                    onChange={(e) => {
-                      setCurrentPassword(e.target.value);
-                    }}
+                    onChange={handleCurrentPasswordChange}
                   />
                 </Grid>
 
-                <Grid item xs={12} md={12} sx={{ ...style }}>
+                {!validCurrentPassword && (
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "left",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        color={"red"}
+                        display={"flex"}
+                        // marginLeft={"16px"}
+                        // marginRight={"15px"}
+                        // marginBottom={"3px"}
+                      >
+                        <ErrorOutlineOutlinedIcon
+                          //color="red"
+                          sx={{
+                            fontSize: 14,
+                            //paddingLeft: "2px",
+                            marginTop: "2px",
+                          }}
+                        />
+
+                        <Typography
+                          color="red"
+                          fontSize="12px"
+                          lineHeight="20px"
+                          paddingLeft={"5px"}
+                        >
+                          Current password cannot be empty
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  )}
+
+                <Grid item xs={12} md={12} 
+                  sx={{ 
+                    marginBottom: "3px",
+                    marginTop: '5px', 
+                  }}
+                >
                   <TextField
                     fullWidth
                     //required
                     variant="standard"
-                    label={<Typography color={"black"}>New Password</Typography>}
+                    label={
+                      validNewPassword ? <Typography color={"black"}>New Password</Typography> : <Typography color={"red"}>New Password</Typography>
+                    }
                     type={showNewPassword ? "text" : "password"}
                     value={newPassword}
-                    autoComplete='new-newpassword'
+                    autoComplete="new-newpassword"
                     InputProps={{
                       disableUnderline: true,
                       endAdornment: (
-                      <InputAdornment position="end">
+                        <InputAdornment position="end">
                           <IconButton
-                              onClick={handleClickShowNewPassword}
-                              onMouseDown={handleMouseDownPassword}
+                            onClick={handleClickShowNewPassword}
+                            onMouseDown={handleMouseDownPassword}
                           >
-                              {showNewPassword 
-                                  ? <VisibilityOutlinedIcon 
-                                      sx={{
-                                          position: 'absolute',
-                                          right: '8px',
-                                          color: '#000',
-                                          fontSize: '0.9em',
-                                          //top: '20px',
-                                      }}
-                                  /> 
-                                  : <VisibilityOffOutlinedIcon 
-                                      sx={{
-                                          position: 'absolute',
-                                          right: '8px',
-                                          color: '#000',
-                                          fontSize: '0.9em',
-                                          //top: '20px',
-                                      }}
-                                  />
-                              }
+                            {showNewPassword ? (
+                              <VisibilityOutlinedIcon
+                                sx={{
+                                  position: "absolute",
+                                  right: "8px",
+                                  color: validNewPassword ? "black" : "red",
+                                  fontSize: "0.9em",
+                                  //top: '20px',
+                                }}
+                              />
+                            ) : (
+                              <VisibilityOffOutlinedIcon
+                                sx={{
+                                  position: "absolute",
+                                  right: "8px",
+                                  color: validNewPassword ? "black" : "red",
+                                  fontSize: "0.9em",
+                                  //top: '20px',
+                                }}
+                              />
+                            )}
                           </IconButton>
-                      </InputAdornment>
+                        </InputAdornment>
                       ),
-                      sx: {
-                          color: '#000',
-                      }
                     }}
-
                     sx={{
-                      width: '100%',
-                      height: '50px',
-                      background: 'transparent',
+                      width: "100%",
+                      height: "50px",
+                      background: "transparent",
                       //border: 'none',
-                      outline: 'none',
-                      fontSize: '1em',
+                      outline: "none",
+                      fontSize: "1em",
                       //padding: '0 5px 0 5px',
-                      color: '#fff',
-                      borderBottom: '2px solid black',
-                      borderBottomWidth: '2px',
+                      color: "#fff",
+                      borderBottom: validNewPassword ? "2px solid black" : "2px solid red",
+                      borderBottomWidth: "2px",
                     }}
-                    onChange={(e) => {
-                      setNewPassword(e.target.value);
-                    }}
+                    onChange={handleNewPasswordChange}
                   />
                 </Grid>
 
-                <Grid item xs={12} md={12} sx={{ ...style }}>
+                {!validNewPassword && (
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "left",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        color={"red"}
+                        display={"flex"}
+                        // marginLeft={"16px"}
+                        // marginRight={"15px"}
+                        // marginBottom={"3px"}
+                      >
+                        <ErrorOutlineOutlinedIcon
+                          //color="red"
+                          sx={{
+                            fontSize: 14,
+                            //paddingLeft: "2px",
+                            marginTop: "2px",
+                          }}
+                        />
+
+                        <Typography
+                          color="red"
+                          fontSize="12px"
+                          lineHeight="20px"
+                          paddingLeft={"5px"}
+                        >
+                          New passwords must be at least 6 characters have at least
+                          one uppercase letter, lowercase, digit and special
+                          character
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  )}
+
+                <Grid item xs={12} md={12} 
+                  sx={{ 
+                    marginBottom: "3px",
+                    marginTop: '5px', 
+                  }}
+                >
                   <TextField
                     fullWidth
                     //required
                     variant="standard"
-                    label={<Typography color={"black"}>Confirm Password</Typography>}
+                    label={
+                      validConfirmPassword ? <Typography color={"black"}>Confirm Password</Typography> : <Typography color={"red"}>Confirm Password</Typography>
+                    }
                     type={showConfirmPassword ? "text" : "password"}
                     value={confirmPassword}
-                    autoComplete='new-confirmpassword'
+                    autoComplete="new-confirmpassword"
                     InputProps={{
                       disableUnderline: true,
                       endAdornment: (
-                      <InputAdornment position="end">
+                        <InputAdornment position="end">
                           <IconButton
-                              onClick={handleClickShowConfirmPassword}
-                              onMouseDown={handleMouseDownPassword}
+                            onClick={handleClickShowConfirmPassword}
+                            onMouseDown={handleMouseDownPassword}
                           >
-                              {showConfirmPassword 
-                                  ? <VisibilityOutlinedIcon 
-                                      sx={{
-                                          position: 'absolute',
-                                          right: '8px',
-                                          color: '#000',
-                                          fontSize: '0.9em',
-                                          //top: '20px',
-                                      }}
-                                  /> 
-                                  : <VisibilityOffOutlinedIcon 
-                                      sx={{
-                                          position: 'absolute',
-                                          right: '8px',
-                                          color: '#000',
-                                          fontSize: '0.9em',
-                                          //top: '20px',
-                                      }}
-                                  />
-                              }
+                            {showConfirmPassword ? (
+                              <VisibilityOutlinedIcon
+                                sx={{
+                                  position: "absolute",
+                                  right: "8px",
+                                  color: validConfirmPassword ? "black" : "red",
+                                  fontSize: "0.9em",
+                                  //top: '20px',
+                                }}
+                              />
+                            ) : (
+                              <VisibilityOffOutlinedIcon
+                                sx={{
+                                  position: "absolute",
+                                  right: "8px",
+                                  color: validConfirmPassword ? "black" : "red",
+                                  fontSize: "0.9em",
+                                  //top: '20px',
+                                }}
+                              />
+                            )}
                           </IconButton>
-                      </InputAdornment>
+                        </InputAdornment>
                       ),
-                      sx: {
-                          color: '#000',
-                      }
                     }}
-
                     sx={{
-                      width: '100%',
-                      height: '50px',
-                      background: 'transparent',
+                      width: "100%",
+                      height: "50px",
+                      background: "transparent",
                       //border: 'none',
-                      outline: 'none',
-                      fontSize: '1em',
+                      outline: "none",
+                      fontSize: "1em",
                       //padding: '0 5px 0 5px',
-                      color: '#fff',
-                      borderBottom: '2px solid black',
-                      borderBottomWidth: '2px',
+                      color: "#fff",
+                      borderBottom: validConfirmPassword ? "2px solid black" : "2px solid red",
+                      borderBottomWidth: "2px",
                     }}
-                    onChange={(e) => {
-                      setConfirmPassword(e.target.value);
-                    }}
+                    onChange={handleConfirmPasswordChange}
                   />
                 </Grid>
+
+                {!validConfirmPassword && (
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "left",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        color={"red"}
+                        display={"flex"}
+                        // marginLeft={"16px"}
+                        // marginRight={"15px"}
+                        // marginBottom={"3px"}
+                      >
+                        <ErrorOutlineOutlinedIcon
+                          //color="red"
+                          sx={{
+                            fontSize: 14,
+                            //paddingLeft: "2px",
+                            marginTop: "2px",
+                          }}
+                        />
+
+                        <Typography
+                          color="red"
+                          fontSize="12px"
+                          lineHeight="20px"
+                          paddingLeft={"5px"}
+                        >
+                          Confirm password cannot be empty
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  )}
 
                 <Grid
                   item
                   xs={12}
-                  sx={{ display: "flex", justifyContent: "center", marginBottom: '15px', marginTop: '25px' }}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginBottom: "15px",
+                    marginTop: "25px",
+                  }}
                 >
-                  <Button
-                    type="submit" 
+                  {loading ? <CircularProgress sx={{ color: "black" }} /> :
+                    <Button
+                    type="submit"
                     theme={theme}
-                    variant="contained" 
+                    variant="contained"
                     color="secondary"
                     sx={{
-                        height: '40px',
-                        color: 'white',
-                        borderRadius: '20px',
-                        fontSize: '1em',
-                        fontWeight: 600,
-                        width: '100%',
+                      height: "40px",
+                      color: "white",
+                      borderRadius: "20px",
+                      fontSize: "1em",
+                      fontWeight: 600,
+                      width: "100%",
 
-                        //textTransform: "none"
+                      //textTransform: "none"
                     }}
                   >
                     change
                   </Button>
+                  }
                 </Grid>
               </form>
 
-              {/* <ToastContainer /> */}
             </Grid>
           </Grid>
         </Grid>
@@ -430,10 +672,7 @@ const ProfileChangePW = () => {
         onClose={() => setErrorSnackbar(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert 
-          severity="error"
-          onClose={() => setErrorSnackbar(false)}
-        >
+        <Alert severity="error" onClose={() => setErrorSnackbar(false)}>
           {/* {newError.message} */}
           Username or Password is incorrect
         </Alert>
@@ -445,14 +684,11 @@ const ProfileChangePW = () => {
         onClose={() => setErrorPasswordSnackbar(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert 
-          severity="error"
-          onClose={() => setErrorPasswordSnackbar(false)}
-        >
+        <Alert severity="error" onClose={() => setErrorPasswordSnackbar(false)}>
           {messagePassword}
         </Alert>
       </Snackbar>
-    </Box> 
+    </Box>
   );
 };
 

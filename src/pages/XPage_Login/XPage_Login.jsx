@@ -297,7 +297,7 @@ const XPage_Login = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      marginBottom: "2px",
+                      marginBottom: "3px",
                       marginTop: '5px',
                     }}
                   >
@@ -388,7 +388,7 @@ const XPage_Login = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      marginBottom: "2px",
+                      marginBottom: "3px",
                       marginTop: '5px',
                     }}
                   >

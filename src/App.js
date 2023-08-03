@@ -130,6 +130,10 @@ function App() {
               {/* admin, recruiter, interviewer */}
               <Route path="/company/interview/:interviewid" element={<Page_Company_Interview_Id />} />
               {/* admin, recruiter, interviewer */}
+              
+            </Route>
+
+            <Route element={<ProtectedRoute allowed={["interviewer"]} />}>
               <Route path="/company/question" element={<Page_Company_Question />} />
             </Route>
 

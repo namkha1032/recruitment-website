@@ -27,18 +27,18 @@ function useGetRole() {
                 headers: { Authorization: token },
             }
 
-            axios.get('https://leetun2k2-001-site1.gtempurl.com/api/Authentication/CurrentRole', config).then(response => {
-                console.log("response is: ", response.data.role[0])
-                if (response.data.role[0] == "Admin") {
+            axios.get('https://leetun2k2-001-site1.gtempurl.com/api/Authentication/GetRole', config).then(response => {
+                console.log("response is: ", response.data)
+                if (response.data == "Admin") {
                     setRole("admin")
                 }
-                else if (response.data.role[0] == "Recruiter") {
+                else if (response.data == "Recruiter") {
                     setRole("recruiter")
                 }
-                else if (response.data.role[0] == "Interviewer") {
+                else if (response.data == "Interviewer") {
                     setRole("interviewer")
                 }
-                else if (response.data.role[0] == "Candidate") {
+                else if (response.data == "Candidate") {
                     setRole("candidate")
                 }
                 else {

@@ -209,6 +209,30 @@ const XPage_Register = () => {
         alignItems: "center",
       }}
     >
+      <Stack>
+        <Box 
+          sx={{
+            //backgroundColor: 'red',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: '5%',
+          }}
+        >
+          <Typography 
+            color="black"
+            fontWeight="300"
+          >
+            Back to home
+          </Typography>
+          <HomeIcon 
+            onClick={handleClickHome}
+            sx={{
+              //textDecoration: "none",
+              cursor: 'pointer'
+            }}
+          />
+        </Box>
       <Container
         component="main"
         maxWidth="xs"
@@ -235,27 +259,29 @@ const XPage_Register = () => {
           }}
         >
           <Stack>
-            <Box
+            {/* <Box 
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: "5px",
+                //backgroundColor: 'red',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: '5px',
               }}
             >
-              <ArrowBackIcon 
-                onClick={handleClickHome}
-                sx={{
-                  cursor: 'pointer'
-                }}
-              />
+              <Typography 
+                color="black"
+                fontWeight="300"
+              >
+                Back to home
+              </Typography>
               <HomeIcon 
                 onClick={handleClickHome}
                 sx={{
+                  //textDecoration: "none",
                   cursor: 'pointer'
                 }}
               />
-            </Box>
+            </Box> */}
             <Box
               sx={{
                 display: "flex",
@@ -294,7 +320,7 @@ const XPage_Register = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      marginBottom: "2px",
+                      marginBottom: "3px",
                       marginTop: '5px',
                     }}
                   >
@@ -377,7 +403,7 @@ const XPage_Register = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      marginBottom: "2px",
+                      marginBottom: "3px",
                       marginTop: '5px',
                     }}
                   >
@@ -464,7 +490,7 @@ const XPage_Register = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      marginBottom: "2px",
+                      marginBottom: "3px",
                       marginTop: '5px',
                     }}
                   >
@@ -553,7 +579,7 @@ const XPage_Register = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      marginBottom: '2px',
+                      marginBottom: '3px',
                       marginTop: '5px',
                     }}
                   >
@@ -723,7 +749,7 @@ const XPage_Register = () => {
           </Stack>
         </Box>
       </Container>
-
+      </Stack>
       <Snackbar
         open={errorSnackbar}
         autoHideDuration={5000}

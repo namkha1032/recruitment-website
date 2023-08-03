@@ -9,6 +9,7 @@ import {
   InputAdornment,
   createTheme,
   IconButton,
+  CircularProgress
 } from "@mui/material";
 
 import { alpha } from "@mui/material/styles";
@@ -130,9 +131,8 @@ const ResetPassword = (props) => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    marginBottom: "5px",
-                    marginTop: "0px",
-                    paddingTop: "0px",
+                    marginBottom: '3px',
+                    marginTop: '5px',
                   }}
                 >
                   <TextField
@@ -185,7 +185,7 @@ const ResetPassword = (props) => {
                         display={"flex"}
                         marginLeft={"16px"}
                         marginRight={"15px"}
-                        marginBottom={"3px"}
+                        // marginBottom={"3px"}
                       >
                         <ErrorOutlineOutlinedIcon
                           //color="red"
@@ -215,7 +215,8 @@ const ResetPassword = (props) => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    marginBottom: "5px",
+                    marginBottom: '3px',
+                    marginTop: '5px',
                   }}
                 >
                   <TextField
@@ -290,7 +291,7 @@ const ResetPassword = (props) => {
                         display={"flex"}
                         marginLeft={"16px"}
                         marginRight={"15px"}
-                        marginBottom={"3px"}
+                        // marginBottom={"3px"}
                       >
                         <ErrorOutlineOutlinedIcon
                           //color="red"
@@ -322,7 +323,8 @@ const ResetPassword = (props) => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    marginBottom: "5px",
+                    marginBottom: '3px',
+                    marginTop: '5px',
                   }}
                 >
                   <TextField
@@ -395,7 +397,7 @@ const ResetPassword = (props) => {
                         display={"flex"}
                         marginLeft={"16px"}
                         marginRight={"15px"}
-                        marginBottom={"3px"}
+                        // marginBottom={"3px"}
                       >
                         <ErrorOutlineOutlinedIcon
                           //color="red"
@@ -425,25 +427,27 @@ const ResetPassword = (props) => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    marginTop: '15px'
+                    marginTop: '20px'
                   }}
                 >
-                  <Button
-                    type="submit"
-                    theme={theme}
-                    variant="contained"
-                    color="secondary"
-                    sx={{
-                      height: "40px",
-                      color: "white",
-                      borderRadius: "20px",
-                      fontSize: "1em",
-                      fontWeight: 600,
-                      width: "90%",
-                    }}
-                  >
-                    Reset
-                  </Button>
+                  {props.loading ? <CircularProgress sx={{ color: "black" }} /> :
+                    <Button
+                      type="submit"
+                      theme={theme}
+                      variant="contained"
+                      color="secondary"
+                      sx={{
+                        height: "40px",
+                        color: "white",
+                        borderRadius: "20px",
+                        fontSize: "1em",
+                        fontWeight: 600,
+                        width: "90%",
+                      }}
+                    >
+                      Reset
+                    </Button>
+                  }
                 </Grid>
               </Grid>
             </form>

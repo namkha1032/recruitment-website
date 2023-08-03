@@ -10,6 +10,7 @@ import {
   Container,
   /* InputAdornment, */
   createTheme,
+  CircularProgress
 } from "@mui/material";
 
 import imageBackground from "../../assets/img/background.jpg";
@@ -218,22 +219,24 @@ const Recovery = (props) => {
                     marginTop: '15px'
                   }}
                 >
-                  <Button
-                    type="submit"
-                    theme={theme}
-                    variant="contained"
-                    color="secondary"
-                    sx={{
-                      height: "40px",
-                      color: "white",
-                      borderRadius: "20px",
-                      fontSize: "1em",
-                      fontWeight: 600,
-                      width: "90%",
-                    }}
-                  >
-                    Send
-                  </Button>
+                  {props.loading ? <CircularProgress sx={{ color: "black" }} /> :
+                    <Button
+                      type="submit"
+                      theme={theme}
+                      variant="contained"
+                      color="secondary"
+                      sx={{
+                        height: "40px",
+                        color: "white",
+                        borderRadius: "20px",
+                        fontSize: "1em",
+                        fontWeight: 600,
+                        width: "90%",
+                      }}
+                    >
+                      Send
+                    </Button>
+                  }
                 </Grid>
               </Grid>
 
