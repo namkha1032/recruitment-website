@@ -196,7 +196,19 @@ function* postQuestion(action) {
       type: "status/onSuccess",
       payload: "Create question",
     });
-    yield call(getAllQuestion);
+
+    // Load with filter
+    yield put({
+      type: "questionSaga/getQuestionListWithFilter",
+      payload: {
+        categoryName: null,
+        skillId: null,
+        skillName: null,
+        languageId: null,
+        languageName: null,
+        softskill: false,
+      },
+    });
     // yield put({
     //   type: "error/setError",
     //   payload: {

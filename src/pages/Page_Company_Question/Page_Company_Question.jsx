@@ -288,7 +288,7 @@ export default function Page_Company_Question() {
   //  typeId: null, nếu category = "Soft Skill"
   //  typeName: null nếu category = "Soft Skill"
   // }
-
+  console.log("HELLO: ", valueChoose, skillChoose, languageChoose)
   function handleSubmitQuestion(value) {
     // successAlert("Create question");
     dispatch({
@@ -298,6 +298,13 @@ export default function Page_Company_Question() {
         Category: value.category,
         TypeId: value.typeId,
         TypeName: value.typeName,
+        // Filter
+        categoryName: valueChoose,
+        skillId: skillChoose ? skillChoose.skillId : null,
+        skillName: skillChoose ? skillChoose.skillName : null,
+        languageId: languageChoose ? languageChoose.languageId : null,
+        languageName: languageChoose ? languageChoose.languageName : null,
+        softskill: valueChoose === "Soft Skills" ? true : false,
       },
     });
   }
@@ -332,6 +339,13 @@ export default function Page_Company_Question() {
         Category: value.CategoryName,
         TypeId: value.TypeId,
         TypeName: value.TypeName,
+        // Filter
+        categoryName: valueChoose,
+        skillId: skillChoose ? skillChoose.skillId : null,
+        skillName: skillChoose ? skillChoose.skillName : null,
+        languageId: languageChoose ? languageChoose.languageId : null,
+        languageName: languageChoose ? languageChoose.languageName : null,
+        softskill: valueChoose === "Soft Skills" ? true : false,
       },
     });
   }
@@ -351,6 +365,13 @@ export default function Page_Company_Question() {
       payload: {
         QuestionId: value.QuestionId,
         CategoryId: value.CategoryId,
+        // Filter
+        categoryName: valueChoose,
+        skillId: skillChoose ? skillChoose.skillId : null,
+        skillName: skillChoose ? skillChoose.skillName : null,
+        languageId: languageChoose ? languageChoose.languageId : null,
+        languageName: languageChoose ? languageChoose.languageName : null,
+        softskill: valueChoose === "Soft Skills" ? true : false,
       },
     });
   }
