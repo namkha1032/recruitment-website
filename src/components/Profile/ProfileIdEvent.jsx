@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import TabInProfile from './TabInProfile/TabInProfile';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import {NoRowsOverlay,NoResultsOverlay} from '../DataRick/DataRick';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 export default function EventList({ events}) {
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -89,9 +90,9 @@ export default function EventList({ events}) {
           </Box>
          
             <DataGrid
-              rows={rows}
+              rows={rows === null ? [] : rows }
               columns={columns}
-
+              autoHeight={true}
               rowStyles={(params) => ({
                 backgroundColor: selectedEvent === params.id ? '#ffdddd' : 'transparent',
               })}
@@ -121,6 +122,11 @@ export default function EventList({ events}) {
                 "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
                   color: "white",
                 },
+              }}
+              slots = {{
+                noRowsOverlay:NoRowsOverlay,
+                noResultsOverlay:NoResultsOverlay,
+                
               }}
 
             />

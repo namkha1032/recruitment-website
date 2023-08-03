@@ -7,7 +7,7 @@ import TabInProfile from './TabInProfile/TabInProfile';
 import { NotStart,Pending , Completed,Pass} from '../Label/LabelStatus';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-
+import {NoRowsOverlay,NoResultsOverlay} from '../DataRick/DataRick';
 export default function HistoryList({ events, pathnavigate, NameList, namePage }) {
 
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -107,6 +107,7 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
             <DataGrid
               rows={events === null ? [] : events}
               columns={columns}
+              autoHeight={true}
               getRowId={(row) => row.applicationId}
               rowStyles={(params) => ({
                 backgroundColor: selectedEvent === params.applicationId ? '#ffdddd' : 'transparent',
@@ -143,6 +144,11 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
                 "&.MuiDataGrid-colCellTitle": {
                   whiteSpace: "normal",
                 }
+              }}
+              slots = {{
+                noRowsOverlay:NoRowsOverlay,
+                noResultsOverlay:NoResultsOverlay,
+                
               }}
               
             />

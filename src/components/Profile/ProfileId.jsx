@@ -7,7 +7,7 @@ import TabInProfile from './TabInProfile/TabInProfile';
 import { NotStart,Pending , Completed,Pass} from '../Label/LabelStatus';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-
+import {NoRowsOverlay,NoResultsOverlay} from '../DataRick/DataRick';
 export default function HistoryList({ events, pathnavigate, NameList, namePage }) {
 
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -32,7 +32,6 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
 
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.up('sm'));
-
   const columns = [
     { field: 'name', headerName: namePage, flex:  isSm ? 2 : 3,minWidth:'300px' },
     { field: 'time', headerName: 'Time', flex: isSm ? 2 : 3,headerClassName: 'custom-header' },
@@ -93,7 +92,7 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
           <TabInProfile />
         </Grid> 
         <Grid item xs={12} md={10}>
-          {/* Tăng chiều rộng của khung */}
+        
           <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px', width: '100%' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
               <Typography variant="h5" gutterBottom sx={{margin:'0'}}>
@@ -106,6 +105,7 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
             <DataGrid
               rows={events === null ? [] : events}
               columns={columns}
+              autoHeight={true}
               rowStyles={(params) => ({
                 backgroundColor: selectedEvent === params.id ? '#ffdddd' : 'transparent',
                 ...(params.row.isSelected && { backgroundColor: '#64b5f6', color: '#ffffff' }),
@@ -142,7 +142,11 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
                   whiteSpace: "normal",
                 }
               }}
-              
+              slots = {{
+                noRowsOverlay:NoRowsOverlay,
+                noResultsOverlay:NoResultsOverlay,
+                
+              }}
             />
           </Paper>
         </Grid>

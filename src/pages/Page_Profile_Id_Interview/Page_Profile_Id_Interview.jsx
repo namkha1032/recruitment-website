@@ -3,6 +3,7 @@ import HistoryList from '../../components/Profile/ProfileId';
 import { useDispatch, useSelector } from "react-redux";
 import cleanStore from '../../utils/cleanStore';
 import { useParams } from 'react-router-dom';
+import {NoRowsOverlay,NoResultsOverlay} from '../../components/DataRick/DataRick'
 export default function Page_Profile_Id_Interview(){
       const {profileid} = useParams();
       const dispatch = useDispatch();
@@ -17,7 +18,7 @@ export default function Page_Profile_Id_Interview(){
       const rows_draft = useSelector((state) => state.interviewListCandidate);
       const rows = rows_draft ? rows_draft : []
       console.log(rows);
-     
+    
       const pathnavigate = '/interview';
       const NameList = 'Interview List';
       const NamePage = 'Interview';
