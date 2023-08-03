@@ -201,12 +201,12 @@ function* postQuestion(action) {
     yield put({
       type: "questionSaga/getQuestionListWithFilter",
       payload: {
-        categoryName: null,
-        skillId: null,
-        skillName: null,
-        languageId: null,
-        languageName: null,
-        softskill: false,
+        categoryName: action.payload.categoryName,
+        skillId: action.payload.skillId,
+        skillName: action.payload.skillName,
+        languageId: action.payload.languageId,
+        languageName: action.payload.languageName,
+        softskill: action.payload.softskill,
       },
     });
     // yield put({
@@ -352,7 +352,18 @@ function* putQuestion(action) {
       type: "status/onSuccess",
       payload: "Update question",
     });
-    yield call(getAllQuestion);
+    // Load with filter
+    yield put({
+      type: "questionSaga/getQuestionListWithFilter",
+      payload: {
+        categoryName: action.payload.categoryName,
+        skillId: action.payload.skillId,
+        skillName: action.payload.skillName,
+        languageId: action.payload.languageId,
+        languageName: action.payload.languageName,
+        softskill: action.payload.softskill,
+      },
+    });
     // yield put({
     //   type: "error/setError",
     //   payload: {
@@ -420,7 +431,18 @@ function* deleteQuestion(action) {
       type: "status/onSuccess",
       payload: "Delete question",
     });
-    yield call(getAllQuestion);
+    // Load with filter
+    yield put({
+      type: "questionSaga/getQuestionListWithFilter",
+      payload: {
+        categoryName: action.payload.categoryName,
+        skillId: action.payload.skillId,
+        skillName: action.payload.skillName,
+        languageId: action.payload.languageId,
+        languageName: action.payload.languageName,
+        softskill: action.payload.softskill,
+      },
+    });
     // yield put({
     //   type: "error/setError",
     //   payload: {
