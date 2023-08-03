@@ -790,7 +790,7 @@ export default function Page_Company_Interview() {
         </Grid> */}
           </Grid>
 
-          {rows ? (
+          {(rows !== null && role !== null) ? (
             <Box
               sx={{
                 minHeight: 350,
