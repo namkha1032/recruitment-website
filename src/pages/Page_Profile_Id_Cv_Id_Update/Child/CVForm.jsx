@@ -25,7 +25,7 @@ function CVForm(prop) {
   const profileid = prop.profileid;
   // const cvid = prop.cvid;
   const cvid ="d1c51600-6272-4c78-9b50-36af9d403a28";
-  console.log(cvid);
+  // console.log(cvid);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // fetch Data
@@ -200,14 +200,14 @@ function CVForm(prop) {
   }
 
   function handleSkillAdd2() {
-    console.log(sInputValue);
-    console.log(languageName);
-    console.log(skillData);
+    // console.log(sInputValue);
+    // console.log(languageName);
+    // console.log(skillData);
     let arr = skillData.filter(
       (comp) =>
         comp.skillName === (sInputValue !== null ? sInputValue.skillName : "")
     );
-    console.log(arr);
+    // console.log(arr);
     if (arr[0] === undefined) {
       handleSetSkillOpen();
       setSkillId(null);
@@ -220,7 +220,7 @@ function CVForm(prop) {
         skillId: skillId,
         experienceYear: SExp,
       };
-      console.log(newSkill);
+      // console.log(newSkill);
       setSkills([...skills, newSkill]);
       setAddSkills([...addSkills, newSkill]);
       setSkillOption(skillOption.filter((prop) => prop.skillId !== skillId));
@@ -239,20 +239,20 @@ function CVForm(prop) {
     setSkillOption([...skillOption, newSkill[0]]);
     setSkills(skills.filter((component) => component.cvSkillsId !== id));
     let delskill = baseSkills.filter((prop) => prop.cvSkillsId === id);
-    console.log(delskill);
+    // console.log(delskill);
     if (delskill[0]) {
-      console.log("add delete");
+      // console.log("add delete");
       setDelSkills([...delSkills, delskill[0]]);
     } else {
-      console.log("delete add");
+      // console.log("delete add");
       setAddSkills(
         addSkills.filter((component) => component.cvSkillsId !== id)
       );
     }
   }
-  console.log(delSkills);
+  // console.log(delSkills);
   function handleCertificateAdd() {
-    console.log(startDate);
+    // console.log(startDate);
     if (Cname !== "" && organize !== "" && startDate !== null && link !== "") {
       const newCert = {
         certificateId: Cid,
@@ -265,7 +265,7 @@ function CVForm(prop) {
         cvid: cvid,
         isDeleted: false,
       };
-      console.log(newCert);
+      // console.log(newCert);
 
       setCerts([...certs, newCert]);
       setAddCerts([...addCerts, newCert]);
@@ -280,16 +280,16 @@ function CVForm(prop) {
       handleSetOpen();
     }
   }
-  console.log(certs);
+  // console.log(certs);
   function handleCertDelete(id) {
     setCerts(certs.filter((component) => component.certificateId !== id));
     let delcert = baseCerts.filter((prop) => prop.certificateId === id);
-    console.log(delcert);
+    // console.log(delcert);
     if (delcert[0]) {
-      console.log("add delete");
+      // console.log("add delete");
       setDelCerts([...delCerts, delcert[0]]);
     } else {
-      console.log("delete add");
+      // console.log("delete add");
       setAddCerts(
         addCerts.filter((component) => component.certificateId !== id)
       );
@@ -297,14 +297,14 @@ function CVForm(prop) {
   }
 
   function handleLanguageAdd() {
-    console.log(lInputValue);
-    console.log(languageName);
+    // console.log(lInputValue);
+    // console.log(languageName);
     let arr = languageData.filter(
       (comp) =>
         comp.languageName ===
         (lInputValue !== null ? lInputValue.languageName : "")
     );
-    console.log(arr);
+    // console.log(arr);
     if (arr[0] === undefined) {
       cleanStore(dispatch);
       alert("wrong language");
@@ -317,7 +317,7 @@ function CVForm(prop) {
         languageId: languageId,
         languageName: languageName,
       };
-      console.log(newLanguage);
+      // console.log(newLanguage);
       setLanguages([...languages, newLanguage]);
       setLanguageId(null);
       setLanguageName("");
@@ -347,7 +347,7 @@ function CVForm(prop) {
     }
     setSkillOpen(false);
   };
-  console.log(pdf)
+  // console.log(pdf)
   let [openAlert, setOpenAlert] = useState(false);
   async function handleSubmit(e) {
     // e.preventDefault();
@@ -376,14 +376,14 @@ function CVForm(prop) {
       });
       
       const formData = new FormData();
-      console.log(formData)
+      // console.log(formData)
       formData.append("File", pdf);
       if (pdf !== null) {
         const response3 = await axios.post(
           `https://leetun2k2-001-site1.gtempurl.com/api/Cv/UploadCvPdf/${cvid}`,
           formData,config
         );
-        console.log(response3);
+        // console.log(response3);
       }
       delay(1000);
       dispatch({
@@ -398,7 +398,7 @@ function CVForm(prop) {
         type: "error/setError",
         payload: { status: "yes", message: err.response.data.error },
       });
-      console.log("err: ", err);
+      // console.log("err: ", err);
     }
   }
   function preProcessing() {

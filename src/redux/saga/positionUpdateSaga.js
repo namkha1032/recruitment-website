@@ -46,17 +46,17 @@ function* updatePosition(action) {
       "positionId",
       positionId
     );
-    console.log("positionName: ", positionName);
-    console.log("description: ", description);
-    console.log("salary: ", salary);
-    console.log("maxHiringQty: ", maxHiringQty);
-    console.log("startDate: ", startDate);
-    console.log("endDate: ", endDate);
-    console.log("departmentId: ", departmentId);
-    console.log("languageId: ", languageId);
-    console.log("recruiterId: ", recruiterId);
-    console.log("delRequire: ", delRequire);
-    console.log("addRequire: ", addRequire);
+    // console.log("positionName: ", positionName);
+    // console.log("description: ", description);
+    // console.log("salary: ", salary);
+    // console.log("maxHiringQty: ", maxHiringQty);
+    // console.log("startDate: ", startDate);
+    // console.log("endDate: ", endDate);
+    // console.log("departmentId: ", departmentId);
+    // console.log("languageId: ", languageId);
+    // console.log("recruiterId: ", recruiterId);
+    // console.log("delRequire: ", delRequire);
+    // console.log("addRequire: ", addRequire);
   
     const response = yield call(
       axios.put,
@@ -75,7 +75,7 @@ function* updatePosition(action) {
         isDeleted: false,
       },config
     );
-    console.log(response)
+    // console.log(response)
     for (let require of updatedAddRequired3) {
       const newrequire = {
         positionId: require.positionId,
@@ -89,21 +89,21 @@ function* updatePosition(action) {
         "https://leetun2k2-001-site1.gtempurl.com/api/Requirement",
         newrequire,config
       );
-      console.log(response2);
+      // console.log(response2);
     }
     for (let require of delRequire){
-      console.log(require.requirementId)
+      // console.log(require.requirementId)
       const response2 = yield call(
         axios.delete,
         `https://leetun2k2-001-site1.gtempurl.com/api/Requirement/${require.requirementId}`,config
       );
-      console.log(response2);
+      // console.log(response2);
     }
     yield call(delay, 1000)
     yield put({ type: "error/setError", payload: { status: "no", message: positionId } })
   } catch (err) {
     yield put({ type: "error/setError", payload: { status: "yes", message: err.response.data.error } })
-    console.log("err: ", err)
+    // console.log("err: ", err)
   }
 }
 

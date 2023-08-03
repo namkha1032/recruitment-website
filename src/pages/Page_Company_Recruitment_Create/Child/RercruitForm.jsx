@@ -159,8 +159,8 @@ function RecruitForm() {
       // setDepartmentWeb(arr[0].departmentWebsite);
     }
   };
-  console.log(skill);
-  console.log(skillData);
+  // console.log(skill);
+  // console.log(skillData);
   function handleRname(e) {
     setRName(e.target.value);
   }
@@ -182,13 +182,13 @@ function RecruitForm() {
     setMaxHire(midleScore);
   }
   function handleRequirementAdd() {
-    console.log(inputValue);
-    console.log(skillName);
+    // console.log(inputValue);
+    // console.log(skillName);
     let arr = skill.filter(
       (comp) =>
         comp.skillName === (inputValue !== null ? inputValue.skillName : "")
     );
-    console.log(arr);
+    // console.log(arr);
     if (arr[0] === undefined) {
       handleSetSkillOpen();
       setSkillId(null);
@@ -206,7 +206,7 @@ function RecruitForm() {
         notes: note,
         isDeleted: false,
       };
-      console.log(newRequire);
+      // console.log(newRequire);
       setRequirement([...requirement, newRequire]);
       setSkill(skill.filter((prop) => prop.skillId !== skillId));
       setSkillName("");
@@ -231,9 +231,9 @@ function RecruitForm() {
     setSkill([...skill, newSkill[0]]);
   }
   function handleLanguageAdd2() {
-    console.log(lInputValue);
+    // console.log(lInputValue);
     let arr = language.filter((comp) => comp.languageName === lInputValue);
-    console.log(arr);
+    // console.log(arr);
     if (arr[0] === undefined) {
       alert("wrong language");
       // setLanguageId(null);
@@ -246,13 +246,13 @@ function RecruitForm() {
   }
   const handleStart = (date) => {
     setStartDate(date);
-    console.log(date);
+    // console.log(date);
   };
   function handleEnd(date) {
     setEndDate(date);
-    console.log(date);
+    // console.log(date);
   }
-  console.log(departmentChoose);
+  // console.log(departmentChoose);
 
   // let [requireError, setRequireError] = useState(false);
   // const handleRequiredOpen = () => {
@@ -320,7 +320,7 @@ function RecruitForm() {
         },
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
 
     // cleanStore(dispatch);

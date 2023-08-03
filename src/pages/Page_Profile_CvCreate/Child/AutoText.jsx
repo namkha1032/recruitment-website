@@ -6,7 +6,7 @@ import CompHeader from "./compHeader";
 
 export default function EmptyTextarea(prop) {
   function handleDetail(e) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     prop.setDetail(e.target.value);
   }
   return (

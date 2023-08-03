@@ -109,7 +109,7 @@ function CVForm() {
   const [pdfFile, setPdfFile] = useState(null);
   const [viewPdf, setViewPdf] = useState(null);
   const [pdf, setPdf] = useState(null);
-  console.log(pdf);
+  // console.log(pdf);
   //FUNCTION
   function handleTitle(e) {
     setTitle(e.target.value);
@@ -127,7 +127,7 @@ function CVForm() {
       (comp) =>
         comp.skillName === (sInputValue !== null ? sInputValue.skillName : "")
     );
-    console.log(arr);
+    // console.log(arr);
     if (arr[0] === undefined) {
       handleSetSkillOpen();
       setSkillId(null);
@@ -140,7 +140,7 @@ function CVForm() {
         skillId: skillId,
         experienceYear: SExp.toString(),
       };
-      console.log(newSkill);
+      // console.log(newSkill);
       setSkills([...skills, newSkill]);
       setSkillOption(skillOption.filter((prop) => prop.skillId !== skillId));
       setSkillId(null);
@@ -159,7 +159,7 @@ function CVForm() {
     setSkillOption([...skillOption, newSkill[0]]);
   }
   function handleCertificateAdd() {
-    console.log(startDate);
+    // console.log(startDate);
     if (Cname !== "" && organize !== "" && startDate !== null && link !== "") {
       const newCert = {
         certificateId: Cid,
@@ -211,7 +211,7 @@ function CVForm() {
     setSkillOpen(false);
   };
   const canid = userlocal.candidateId
-  console.log(canid)
+  // console.log(canid)
   let [openAlert, setOpenAlert] = useState(false);
   async function handleSubmit(e) {
     let token = `Bearer ${userlocal.token}`;
@@ -241,12 +241,12 @@ function CVForm() {
           certificates: updatedCertificates,
         }, config
       );
-      console.log("FINISHED!!!!!!!!!!!!");
-      console.log(response);
+      // console.log("FINISHED!!!!!!!!!!!!");
+      // console.log(response);
       const response2 = await axios.get(
         `https://leetun2k2-001-site1.gtempurl.com/api/Cv`,config
       );
-      console.log(response2.data);
+      // console.log(response2.data);
       const cv = response2.data.filter(
         (prop) =>
           prop.cvName === cvtitle &&
@@ -255,12 +255,12 @@ function CVForm() {
           prop.isDeleted === false
       );
       if (pdf !== null) {
-        console.log(formData);
+        // console.log(formData);
         const response3 = await axios.post(
           `https://leetun2k2-001-site1.gtempurl.com/api/Cv/UploadCvPdf/${cv[0].cvid}`,
           formData,config
         );
-        console.log(response3);
+        // console.log(response3);
       }
       delay(1000);
       dispatch({
@@ -275,7 +275,7 @@ function CVForm() {
         type: "error/setError",
         payload: { status: "yes", message: err.response.data.error },
       });
-      console.log("err: ", err);
+      // console.log("err: ", err);
     }
   }
   //COMPS

@@ -35,16 +35,16 @@ function* createPosition(action) {
         [fieldToChange]: newValue,
       }));
     };
-    console.log("positionName: ", positionName);
-    console.log("description: ", description);
-    console.log("salary: ", salary);
-    console.log("maxHiringQty: ", maxHiringQty);
-    console.log("startDate: ", startDate);
-    console.log("endDate: ", endDate);
-    console.log("departmentId: ", departmentId);
-    console.log("languageId: ", languageId);
-    console.log("recruiterId: ", recruiterId);
-    console.log("requirement: ", updatedRequired2);
+    // console.log("positionName: ", positionName);
+    // console.log("description: ", description);
+    // console.log("salary: ", salary);
+    // console.log("maxHiringQty: ", maxHiringQty);
+    // console.log("startDate: ", startDate);
+    // console.log("endDate: ", endDate);
+    // console.log("departmentId: ", departmentId);
+    // console.log("languageId: ", languageId);
+    // console.log("recruiterId: ", recruiterId);
+    // console.log("requirement: ", updatedRequired2);
 
     const response = yield call(
       axios.post,
@@ -61,14 +61,14 @@ function* createPosition(action) {
         recruiterId: recruiterId,
       },config
     );
-    console.log(response.data);
+    // console.log(response.data);
     const positionId = response.data.positionId;
     const updatedRequired3 = changeField(
       updatedRequired2,
       "positionId",
       positionId
     );
-    console.log(updatedRequired3);
+    // console.log(updatedRequired3);
     for (let require of updatedRequired3) {
       const newrequire = {
         positionId: require.positionId,
@@ -82,7 +82,7 @@ function* createPosition(action) {
         "https://leetun2k2-001-site1.gtempurl.com/api/Requirement",
         newrequire,config
       );
-      console.log(response2);
+      // console.log(response2);
     }
     yield call(delay, 1000);
     yield put({
@@ -91,7 +91,7 @@ function* createPosition(action) {
     });
   } catch (err) {
     yield put({ type: "error/setError", payload: { status: "yes", message: err.response.data.error } })
-    console.log("err: ", err)
+    // console.log("err: ", err)
   }
 }
 
