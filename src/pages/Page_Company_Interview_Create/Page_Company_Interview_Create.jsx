@@ -45,6 +45,7 @@ import AlertDialog from "../../components/AlertDialog/AlertDialog";
 import SkeletonInterviewCreate from "./SkeletonInterviewCreate/SkeletonInterviewCreate";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import InfoApplication from "../../components/InfoApplication/InfoApplication";
 // import utilities
 import cleanStore from "../../utils/cleanStore";
 const Page_Company_Interview_Create = () => {
@@ -61,7 +62,9 @@ const Page_Company_Interview_Create = () => {
     const navigate = useNavigate()
     let [searchParams, setSearchParams] = useSearchParams();
     let applicationid = searchParams.get("applicationid")
+    let recruitmentid = searchParams.get("recruitmentid")
     console.log("appid: ", applicationid)
+    console.log("recid: ", recruitmentid)
 
     const dispatch = useDispatch()
     const theme = useTheme()
@@ -85,18 +88,7 @@ const Page_Company_Interview_Create = () => {
     const shiftList = useSelector(state => state.shift)
     const newError = useSelector(state => state.error)
 
-    const url = window.location.href;
 
-// Phân tích các tham số từ URL sử dụng URLSearchParams
-const urlParams = new URLSearchParams(url);
-
-// Lấy giá trị của "recruitmentid" và "applicationid" từ URL
-const recruitmentId = urlParams.get("recruitmentid");
-const applicationId = urlParams.get("applicationid");
-
-// In kết quả ra console
-console.log("recruitmentid:", recruitmentId);
-console.log("applicationid:", applicationId);
     // set busyInterviewer and busyRoom
     useEffect(() => {
         console.log("useEffect set busyInterviewer and busyRoom")
@@ -196,9 +188,12 @@ console.log("applicationid:", applicationId);
         <>{interviewerList && interviewList && roomList && shiftList ?
             <Grid container spacing={4}>
                 <Grid item xs={12}>
+                    <InfoApplication recruitmentid={recruitmentid} applicationid={applicationid} page={""} />
+                </Grid>
+                <Grid item xs={12}>
                     <TitleDivider>
                         Create Interview
-                    </TitleDivider>
+                    </TitleDivider>``
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <GigaCard>

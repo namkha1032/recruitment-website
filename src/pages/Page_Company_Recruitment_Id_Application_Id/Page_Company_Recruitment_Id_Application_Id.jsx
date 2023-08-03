@@ -20,7 +20,7 @@ const Page_Company_Recruitment_Id_Application_Id = () => {
   const {applicationid,recruitmentid} = useParams()
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch({type:'infoApplicationSaga/getInfoApplication',payload:applicationid})
+    dispatch({type:'applicationSaga/getInfoApplication',payload:applicationid})
   },[])
   console.log(infoApplication)
   return (

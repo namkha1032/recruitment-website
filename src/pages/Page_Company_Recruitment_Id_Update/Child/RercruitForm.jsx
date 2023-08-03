@@ -26,7 +26,7 @@ function RecruitForm(prop) {
   useEffect(() => {
     dispatch({ type: "saga/getDepartment" });
     dispatch({ type: "saga/getLanguage" });
-    dispatch({ type: "saga/getSkill" });
+    dispatch({ type: "skillSaga/getSkill" });
     dispatch({ type: "positionInforsaga/getPositioninfor" , payload:recruitmentid});
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });
