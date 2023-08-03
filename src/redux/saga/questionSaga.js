@@ -6,7 +6,7 @@ import host from "../host";
 import { formatQuestionList } from "../../utils/formatQuestionList";
 import { filterQuestionList } from "../../utils/filterQuestionList";
 import { createQuestionDraft } from "../../utils/createQuestionDraft";
-import { getQuestionSkillId } from "../../utils/getQuestionSkillId";
+import { getQuestionSkillInfo } from "../../utils/getQuestionSkillInfo";
 
 function* getAllQuestion() {
   console.log("GET ALL Question");
@@ -65,6 +65,10 @@ function* getAllQuestion() {
     //     message: "message" in error ? error.message : error.response.data,
     //   },
     // });
+    yield put({
+      type: "status/onError",
+      payload: error.message,
+    });
   }
 }
 
@@ -128,6 +132,10 @@ function* getQuestionListWithFilter(action) {
     //     message: "message" in error ? error.message : error.response.data,
     //   },
     // });
+    yield put({
+      type: "status/onError",
+      payload: error.message,
+    });
   }
 }
 
@@ -141,10 +149,9 @@ function* getQuestionListWithFilter(action) {
 function* postQuestion(action) {
   console.log("POST: ", action.payload);
   try {
-    console.log("POST: ", action.payload);
     yield put({
-      type: "status/onLoading"
-    })
+      type: "status/onLoading",
+    });
     const techId = yield call(
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Technology"
@@ -187,8 +194,8 @@ function* postQuestion(action) {
     }
     yield put({
       type: "status/onSuccess",
-      payload: "Create question"
-    })
+      payload: "Create question",
+    });
     yield call(getAllQuestion);
     // yield put({
     //   type: "error/setError",
@@ -198,13 +205,10 @@ function* postQuestion(action) {
     //   },
     // });
   } catch (error) {
-    // yield put({
-    //   type: "error/setError",
-    //   payload: {
-    //     status: "yes",
-    //     message: "message" in error ? error.message : error.response.data,
-    //   },
-    // });
+    yield put({
+      type: "status/onError",
+      payload: error.message,
+    });
   }
 }
 
@@ -226,8 +230,8 @@ function* putQuestion(action) {
   console.log("PUT: ", action.payload);
   try {
     yield put({
-      type: "status/onLoading"
-    })
+      type: "status/onLoading",
+    });
     const techId = yield call(
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Technology"
@@ -254,7 +258,8 @@ function* putQuestion(action) {
       `https://leetun2k2-001-site1.gtempurl.com/api/Question?questionId=${action.payload.QuestionId}`
     );
 
-    if (ques_old.data.categoryQuestionId === ques_draft.CategoryId) {
+    // Category Not Change
+    if (ques_old.data[0].categoryQuestionId === ques_draft.CategoryId) {
       const quesId = yield call(
         axios.put,
         `https://leetun2k2-001-site1.gtempurl.com/api/Question/${action.payload.QuestionId}`,
@@ -265,28 +270,34 @@ function* putQuestion(action) {
         }
       );
       if (ques_draft.CategoryId === techId.data[0].categoryQuestionId) {
+        // Get Question Skills
         const questionSkills = yield call(
           axios.get,
           "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill"
         );
 
-        const quesSkilId = yield call(
-          getQuestionSkillId,
+        // Get Question Skill Info
+        const quesSkil = yield call(
+          getQuestionSkillInfo,
           action.payload.QuestionId,
           questionSkills.data
         );
 
-        const ques = yield call(
-          axios.put,
-          `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${quesSkilId}`,
-          {
-            questionSkillsId: quesSkilId,
-            questionId: action.payload.QuestionId,
-            skillId: ques_draft.TypeId,
-          }
-        );
+        // Question Skill change
+        if (quesSkil.skillId !== ques_draft.TypeId) {
+          const ques = yield call(
+            axios.put,
+            `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${quesSkil.questionSkillsId}`,
+            {
+              questionSkillsId: quesSkil.questionSkillsId,
+              questionId: action.payload.QuestionId,
+              skillId: ques_draft.TypeId,
+            }
+          );
+        }
       }
     }
+    // Category Change
     else {
       const quesId = yield call(
         axios.put,
@@ -306,27 +317,29 @@ function* putQuestion(action) {
             skillId: ques_draft.TypeId,
           }
         );
-      }
-      else if (ques_old.data.categoryQuestionId === techId.data[0].categoryQuestionId) {
+      } else if (
+        ques_old.data[0].categoryQuestionId ===
+        techId.data[0].categoryQuestionId
+      ) {
         const questionSkills = yield call(
           axios.get,
           "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill"
         );
-        const quesSkilId = yield call(
-          getQuestionSkillId,
+        const quesSkil = yield call(
+          getQuestionSkillInfo,
           action.payload.QuestionId,
           questionSkills.data
         );
         yield call(
           axios.delete,
-          `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${quesSkilId}`
+          `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${quesSkil.questionSkillsId}`
         );
       }
     }
     yield put({
       type: "status/onSuccess",
-      payload: "Update question"
-    })
+      payload: "Update question",
+    });
     yield call(getAllQuestion);
     // yield put({
     //   type: "error/setError",
@@ -343,6 +356,10 @@ function* putQuestion(action) {
     //     message: "message" in error ? error.message : error.response.data,
     //   },
     // });
+    yield put({
+      type: "status/onError",
+      payload: error.message,
+    });
   }
 }
 
@@ -353,12 +370,11 @@ function* putQuestion(action) {
 
 function* deleteQuestion(action) {
   console.log("DELETE: ", action.payload);
-
   try {
-    // Delete QuestionSkill
+    // Delete QuestionSkill (if have)
     yield put({
-      type: "status/onLoading"
-    })
+      type: "status/onLoading",
+    });
     const techId = yield call(
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Technology"
@@ -368,15 +384,19 @@ function* deleteQuestion(action) {
         axios.get,
         "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill"
       );
-      const quesSkilId = yield call(
-        getQuestionSkillId,
+      const quesSkil = yield call(
+        getQuestionSkillInfo,
         action.payload.QuestionId,
         questionSkills.data
       );
-      yield call(
-        axios.delete,
-        `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${quesSkilId}`
-      );
+
+      // Don't in QuestionSkills
+      if (quesSkil !== null) {
+        yield call(
+          axios.delete,
+          `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${quesSkil.questionSkillsId}`
+        );
+      }
     }
 
     // Delete Question
@@ -386,8 +406,8 @@ function* deleteQuestion(action) {
     );
     yield put({
       type: "status/onSuccess",
-      payload: "Delete question"
-    })
+      payload: "Delete question",
+    });
     yield call(getAllQuestion);
     // yield put({
     //   type: "error/setError",
@@ -404,6 +424,10 @@ function* deleteQuestion(action) {
     //     message: "message" in error ? error.message : error.response.data,
     //   },
     // });
+    yield put({
+      type: "status/onError",
+      payload: error.message,
+    });
   }
 }
 
@@ -567,13 +591,13 @@ function* getQuestion(action) {
 
 function* questionSaga() {
   yield all([
-    takeEvery("saga/getInterviewQuestion", getInterviewQuestion),
+    takeEvery("questionSaga/getInterviewQuestion", getInterviewQuestion),
     takeEvery("saga/getQuestion", getQuestion),
-    takeEvery("saga/getAllQuestion", getAllQuestion),
-    takeLatest("saga/getQuestionListWithFilter", getQuestionListWithFilter),
-    takeEvery("saga/putQuestion", putQuestion),
-    takeEvery("saga/postQuestion", postQuestion),
-    takeEvery("saga/deleteQuestion", deleteQuestion),
+    takeEvery("questionSaga/getAllQuestion", getAllQuestion),
+    takeLatest("questionSaga/getQuestionListWithFilter", getQuestionListWithFilter),
+    takeEvery("questionSaga/putQuestion", putQuestion),
+    takeEvery("questionSaga/postQuestion", postQuestion),
+    takeEvery("questionSaga/deleteQuestion", deleteQuestion),
   ]);
 }
 

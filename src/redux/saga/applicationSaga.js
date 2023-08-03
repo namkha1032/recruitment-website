@@ -16,64 +16,66 @@ function* getApplication(action) {
     // yield put({ type: 'application/setApplication', payload: application })
     try {
         // const reponse = yield call(axios.get, `${host.name}/data/applicationList.json`)
-        const reponse = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload}`)
-        yield put({ type: 'application/setApplication', payload: {...reponse.data,"cv": {
-            "cvid": "00000000-0000-0000-0000-000000000001",
-            "candidateId": "00000000-0000-0000-0000-000000000001",
-            "experience": "string",
-            "cvPdf": "string",
-            "cvName": "string",
-            "introduction": "string",
-            "education": "string",
-            "isDeleted": true,
-            "skills": [],
-            "certificates": []
-          },
+        const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload}`)
+        const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`)
+        let mergeobject = {}
+        let candidatelist = []
+        let application = response2.data.filter((prop) => prop.position.positionId === response1.data.positionId);
+        console.log("applyinsaga", application);
+        for (let i = 0; i < application.length; i++) {
+            candidatelist.push({ ...application[i], ...(yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate/${application[i].cv.candidateId}`)).data })
+        }
+        // candidatelist.push(mergeobject);
+        console.log("listinsaga", candidatelist);
 
-          "position": formatPositionList([{
-            "positionId": "00000000-0000-0000-0000-000000000001",
-            "positionName": "Junior",
-            "description": "no",
-            "requirementId": "00000000-0000-0000-0000-000000000000",
-            "requirement": null,
-            "salary": 100,
-            "maxHiringQty": 10,
-            "startDate": "2001-01-01T00:00:00",
-            "endDate": "2009-09-09T00:00:00",
-            "departmentId": "00000000-0000-0000-0000-000000000001",
-            "department": null,
-            "languageId": "00000000-0000-0000-0000-000000000001",
-            "language": null,
-            "isDeleted": false
-          }])[0] , }})
-          yield put ({type:'position/setPosition',payload:{
-            "positionId": "00000000-0000-0000-0000-000000000001",
-            "positionName": "Junior",
-            "description": "no",
-            "requirementId": "00000000-0000-0000-0000-000000000000",
-            "requirement": null,
-            "salary": 100,
-            "maxHiringQty": 10,
-            "startDate": "2001-01-01T00:00:00",
-            "endDate": "2009-09-09T00:00:00",
-            "departmentId": "00000000-0000-0000-0000-000000000001",
-            "department": null,
-            "languageId": "00000000-0000-0000-0000-000000000001",
-            "language": null,
-            "isDeleted": false
-          } })
+        yield put({ type: 'application/setApplication', payload: candidatelist })
     } catch (error) {
         console.log(error)
     }
 
 
-
 }
 
+function* getInfoApplication(action) {
+    try {
+        // const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload}`)
+        const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`)
+        const data = response.data.filter(item => item.applicationId === action.payload)
+        console.log("data applicationid",data)
+        if(data.length ===0) 
+            yield put({ type: 'infoApplication/setInfoApplication', payload: 'none' })
+        else
+            yield put({ type: 'infoApplication/setInfoApplication', payload: data[0] })
+    } catch (error) {
+        console.log(error)
+    }
 
+
+}
 function* submitCv(action) {
     try {
+        // let submit = null;
+        // const allaplication = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application` )
+        // const candidate = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`) 
+        // console.log("data", candidate.data);
+        // const candidateid = candidate.data.filter((prop) => prop.userId === action.payload.userId);
+        // console.log('payloadinsubmit', action.payload);
+        // console.log("applicationsaga", allaplication.data);
+        // console.log('canidinsaga', candidateid);
         const reponse = yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Application`, action.payload)
+        // for (let i = 0; i< allaplication.data.length; i++){
+        //     if (allaplication.data[i].position.positionId === action.payload.positionId && allaplication.data[i].cv.candidateId ===candidateid[0].candidateId  ){
+                // const deleteapp = yield call(axios.delete, `http://leetun2k2-001-site1.gtempurl.com/api/Application/${allaplication[i].applicationId}`)
+                // submit = yield call(axios.post)
+        //         console.log('haha',allaplication.data[i] );
+        //         break;
+        //     }
+        //     else{
+        //         console.log("hellowrong")
+        //     }
+            
+        // }
+        console.log('post', action.payload);
         console.log("submitsaga", reponse.data)
         yield put({ type: 'submitcv/setSubmitcv', payload: reponse.data })
     } catch (error) {
@@ -81,10 +83,12 @@ function* submitCv(action) {
     }
 
 }
+
 function* applicationSaga() {
     yield all([
-        takeEvery('saga/submitCv', submitCv),
-        takeEvery('saga/getApplication', getApplication),
+        takeEvery('applicationSaga/submitCv', submitCv),
+        takeEvery('applicationSaga/getApplication', getApplication),
+        takeEvery('applicationSaga/getInfoApplication', getInfoApplication),
     ])
 }
 

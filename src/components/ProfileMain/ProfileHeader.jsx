@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import GigaCard from "../GigaCard/GigaCard";
 
-const ProfileHeader = ({  id, userName }) => {
+const ProfileHeader = ({  id, profile }) => {
   const [selectedImage, setSelectedImage] = useState(
     "https://pbs.twimg.com/media/EYVxlOSXsAExOpX.jpg"
   );
@@ -95,7 +95,7 @@ const ProfileHeader = ({  id, userName }) => {
             </IconButton>
           </Box>
 
-          <Box sx={{ margin: "24px 0px 0px  24px" }}>{userName}</Box>
+          <Box component='h2' sx={{ margin: "24px 0px 0px  24px" }}>{profile.name}</Box>
         </Box>
 
         

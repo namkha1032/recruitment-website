@@ -61,7 +61,7 @@ import Unauthorized from './components/Unauthorized/Unauthorized';
 import RequireAuth from './components/RequireAuth/RequireAuth';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import TestLayout from './components/TestLayout/TestLayout';
-import Page_Profile_Id_History from './pages/Page_Profile_Id_History/Page_Profile_Id_History';
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function App() {
@@ -174,7 +174,6 @@ function App() {
             <Route element={<ProtectedRoute allowed={["admin", "recruiter", "interviewer", "candidate"]} />}>
               <Route path="/profile/:profileid" element={<Page_Profile_Id />} />
               <Route path="/profile/:profileid/changepassword" element={<Page_Profile_Id_ChangePassword />} />
-              // <Route path="/profile/:profileid/history" element={<Page_Profile_Id_History/>} />
               <Route path="/profile/:profileid/event" element={<Page_Profile_Id_Event />} />
               <Route path="/profile/:profileid/interview" element={<Page_Profile_Id_Interview />} />
               <Route path="/profile/:profileid/application" element={<Page_Profile_Id_Application />} />
@@ -190,6 +189,7 @@ function App() {
             <Route path="/test" element={<PageTest />} />
 
 
+            <Route path="/unauthorized" element={<Unauthorized />} />
           </Route>
 
           <Route path="/login" element={<XPage_Login /* rememberMe={rememberMe} handleRememberMe={handleRememberMe} */ />} />
@@ -199,7 +199,6 @@ function App() {
           <Route path="/test3" element={<PageTest3 />} />
           <Route path="/test4" element={<PageTest4 />} />
           <Route path="*" element={<MissingPage />} />
-          <Route path="/unauthorized" element={<Unauthorized />} />
 
         </Routes>
       </BrowserRouter>

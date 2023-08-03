@@ -22,18 +22,18 @@ function* getSkill(action) {
     //   },
     // });
   } catch (error) {
-    yield put({
-      type: "error/setError",
-      payload: {
-        status: "yes",
-        message: "message" in error ? "Skill - " + error.message : error.response.data,
-      },
-    });
+    // yield put({
+    //   type: "error/setError",
+    //   payload: {
+    //     status: "yes",
+    //     message: "message" in error ? "Skill - " + error.message : error.response.data,
+    //   },
+    // });
   }
 }
 
 function* skillSaga() {
-  yield all([takeEvery("saga/getSkill", getSkill)]);
+  yield all([takeEvery("skillSaga/getSkill", getSkill)]);
 }
 
 export default skillSaga;

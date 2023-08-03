@@ -33,10 +33,17 @@ const SmallUlList = (comp) => {
   }, [open]);
   return (
     <>
-      <Card key={comp.comp.id} sx={{ maxWidth: 200 }}>
+      <Card
+        key={comp.comp.id}
+        sx={{ minWidth: 120, maxWidth: 200, boxShadow: 10, borderRadius: 3 }}
+      >
         <CardContent>
-          <Typography sx={{ fontSize: 20 }}>{comp.comp.certificateName}</Typography>
-          <Typography sx={{ fontSize: 20 }}>{comp.comp.organizationName}</Typography>
+          <Typography sx={{ fontSize: 20 }}>
+            {comp.comp.certificateName}
+          </Typography>
+          <Typography sx={{ fontSize: 20 }}>
+            {comp.comp.organizationName}
+          </Typography>
         </CardContent>
         <CardActions disableSpacing>
           <Button onClick={handleClickOpen("paper")} size="small">
@@ -60,9 +67,13 @@ const SmallUlList = (comp) => {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-        <DialogTitle id="scroll-dialog-title">{comp.comp.certificateName}</DialogTitle>
+        <DialogTitle id="scroll-dialog-title">
+          {comp.comp.certificateName}
+        </DialogTitle>
         <DialogContent dividers={scroll === "paper"}>
-          <Typography sx={{ fontSize: 20 }}>{comp.comp.organizationName}</Typography>
+          <Typography sx={{ fontSize: 20 }}>
+            {comp.comp.organizationName}
+          </Typography>
           <Typography sx={{ fontSize: 16 }}>
             From: {dayjs(comp.comp.dateEarned).format("MMMM D YYYY")}
           </Typography>

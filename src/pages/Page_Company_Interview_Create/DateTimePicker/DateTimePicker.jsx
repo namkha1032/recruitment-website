@@ -47,12 +47,9 @@ const DateTimePicker = (props) => {
                         cursor: "pointer"
                     }
                 }} label="Choose a date" value={chosenDate} onChange={(newValue) => {
-                    let newDate = new Date(newValue.$d)
-                    const year = newDate.toLocaleString('default', { year: 'numeric' });
-                    const month = newDate.toLocaleString('default', { month: '2-digit' });
-                    const day = newDate.toLocaleString('default', { day: '2-digit' });
-                    newDate = year + "-" + month + "-" + day
-                    setChosenDate(newDate)
+                    console.log("newValue: ", newValue)
+                    console.log("newD: ", new Date(newValue.$d).toJSON())
+                    setChosenDate(new Date(newValue.$d).toJSON())
                     setChosenShift(null)
                 }} />
             </Box>
@@ -71,27 +68,34 @@ const DateTimePicker = (props) => {
                             <MenuItem value="">
                                 <em>None</em>
                             </MenuItem>
-                            {shiftList ? shiftList.map(shift => {
+                            {shiftList ? shiftList.map((shift, index) => {
+                                let startSmallTen = "0" + shift.shiftstart + ":00:00"
+                                let startLargeTen = shift.shiftstart + ":00:00"
+                                let endSmallTen = "0" + shift.shiftend + ":00:00"
+                                let endLargeTen = shift.shiftend + ":00:00"
+                                let shiftStart = shift.shiftstart < 10 ? startSmallTen : startLargeTen
+                                let shiftEnd = shift.shiftend < 10 ? endSmallTen : endLargeTen
                                 if (chosenInterviewer || chosenRoom) {
                                     for (let interview of interviewList) {
                                         if (chosenInterviewer && interview.interviewerid == chosenInterviewer.interviewerid
                                             && interview.interviewdate == chosenDate
                                             && interview.shiftid == shift.shiftid) {
+                                            console.log("index: ", index)
                                             return (
-                                                <MenuItem disabled key={shift.shiftid} value={shift}>Shift {shift.shiftid}: {shift.shiftstart} to {shift.shiftend}</MenuItem>
+                                                <MenuItem disabled key={shift.shiftid} value={shift}>Shift {index + 1}: {shiftStart} to {shiftEnd}</MenuItem>
                                             )
                                         }
                                         else if (chosenRoom && interview.roomid == chosenRoom.roomid
                                             && interview.interviewdate == chosenDate
                                             && interview.shiftid == shift.shiftid) {
                                             return (
-                                                <MenuItem disabled key={shift.shiftid} value={shift}>Shift {shift.shiftid}: {shift.shiftstart} to {shift.shiftend}</MenuItem>
+                                                <MenuItem disabled key={shift.shiftid} value={shift}>Shift {index + 1}: {shiftStart} to {shiftEnd}</MenuItem>
                                             )
                                         }
                                     }
                                 }
                                 return (
-                                    <MenuItem key={shift.shiftid} value={shift}>Shift {shift.shiftid}: {shift.shiftstart} to {shift.shiftend}</MenuItem>
+                                    <MenuItem key={shift.shiftid} value={shift}>Shift {index + 1}: {shiftStart} to {shiftEnd}</MenuItem>
                                 )
                             }) : null}
                         </Select>

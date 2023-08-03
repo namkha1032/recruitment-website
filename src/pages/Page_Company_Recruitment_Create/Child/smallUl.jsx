@@ -45,7 +45,7 @@ const SmallUlList = (comp) => {
             sx={{ marginLeft: "auto" }}
             aria-label="add to favorites"
             onClick={() => {
-              comp.handleDelete(comp.comp.id);
+              comp.handleDelete(comp.comp.requirementId);
             }}
           >
             <DeleteIcon />
@@ -63,7 +63,7 @@ const SmallUlList = (comp) => {
         <DialogContent dividers={scroll === "paper"}>
           <Typography sx={{ fontSize: 20 }}>{comp.comp.experience}</Typography>
           <Typography sx={{ maxWidth: 500, wordWrap: "break-word" }}>
-            Note: {comp.comp.note}
+            Note: {comp.comp.notes}
           </Typography>
         </DialogContent>
       </Dialog>

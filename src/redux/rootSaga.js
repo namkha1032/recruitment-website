@@ -24,9 +24,13 @@ import eventCandidateSaga from "./saga/eventCandidateSaga";
 import cvInforSaga from "./saga/cvInforSaga";
 import positionInforSaga from "./saga/positionInforSaga";
 import requirementSaga from "./saga/requirementSaga";
-import createCvSaga from "./saga/createCvSaga";
+import createCvSaga from "./saga/cvCreateSaga";
+import updateCvSaga from "./saga/cvUpdateSaga";
+import positionCreateSaga from "./saga/positionCreateSaga";
+import positionUpdateSaga from "./saga/positionUpdateSaga";
 
 import cvCandidateSaga from "./saga/cvCandidateSaga";
+import profileSaga from "./saga/profileSaga";
 function* rootSaga() {
     yield all([
         adminSaga(),
@@ -52,7 +56,11 @@ function* rootSaga() {
         requirementSaga(),
         createCvSaga(),
         testSaga(),
-        cvCandidateSaga()
+        cvCandidateSaga(),
+        profileSaga(),
+        updateCvSaga(),
+        positionCreateSaga(),
+        positionUpdateSaga()
     ])
 }
 

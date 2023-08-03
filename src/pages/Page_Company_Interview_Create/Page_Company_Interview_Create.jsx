@@ -20,11 +20,7 @@ import {
     MenuItem
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import { DatePicker } from '@mui/x-date-pickers';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 // import components
 import TableInterviewer from "./TableInterviewer/TableInterviewer";
 import TableRoom from "./TableRoom/TableRoom";
@@ -46,6 +42,10 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import TitleDivider from "../../components/TitleDivider/TitleDivider";
 import AlertDialog from "../../components/AlertDialog/AlertDialog";
+import SkeletonInterviewCreate from "./SkeletonInterviewCreate/SkeletonInterviewCreate";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import InfoApplication from "../../components/InfoApplication/InfoApplication";
 // import utilities
 import cleanStore from "../../utils/cleanStore";
 const Page_Company_Interview_Create = () => {
@@ -60,6 +60,11 @@ const Page_Company_Interview_Create = () => {
     let [errorSnackbar, setErrorSnackbar] = useState(false)
     let [openAlert, setOpenAlert] = useState(false)
     const navigate = useNavigate()
+    let [searchParams, setSearchParams] = useSearchParams();
+    let applicationid = searchParams.get("applicationid")
+    let recruitmentid = searchParams.get("recruitmentid")
+    console.log("appid: ", applicationid)
+    console.log("recid: ", recruitmentid)
 
     const dispatch = useDispatch()
     const theme = useTheme()
@@ -68,26 +73,27 @@ const Page_Company_Interview_Create = () => {
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     // fetch Data
     useEffect(() => {
-        dispatch({ type: "saga/getUpcomingInterview" })
-        dispatch({ type: "saga/getDepartmentInterviewer" })
-        dispatch({ type: "saga/getRoom" })
-        dispatch({ type: "saga/getShift" })
-        return () => {
-            dispatch({ type: "interview/setInterview", payload: null })
-            dispatch({ type: "interviewer/setInterviewer", payload: null })
-            dispatch({ type: "room/setRoom", payload: null })
-            dispatch({ type: "shift/setShift", payload: null })
-        }
+        dispatch({ type: "interviewSaga/getDataForInterview", payload: applicationid })
+        // return () => {
+        //     dispatch({ type: "interview/setInterview", payload: null })
+        //     dispatch({ type: "interviewer/setInterviewer", payload: null })
+        //     dispatch({ type: "room/setRoom", payload: null })
+        //     dispatch({ type: "shift/setShift", payload: null })
+        // }
     }, [])
 
-    const interviewList = useSelector(state => state.interview)
-    const interviewerList = useSelector(state => state.interviewer)
+    const interviewList = useSelector(state => state.interviewList)
+    const interviewerList = useSelector(state => state.interviewerList)
     const roomList = useSelector(state => state.room)
     const shiftList = useSelector(state => state.shift)
     const newError = useSelector(state => state.error)
 
+
     // set busyInterviewer and busyRoom
     useEffect(() => {
+        console.log("useEffect set busyInterviewer and busyRoom")
+        console.log("chosenDate: ", chosenDate)
+        console.log("chosenShift: ", chosenShift)
         setBusyInterviewer(oldList => [])
         setBusyRoom(oldList => [])
         if (chosenShift) {
@@ -112,8 +118,11 @@ const Page_Company_Interview_Create = () => {
 
     useEffect(() => {
         if (newError.status == "no") {
-            cleanStore(dispatch)
-            navigate("/company/interview/00000000-0000-0000-0000-000000000001")
+            setTimeout(() => {
+                const idToNavigate = newError.message
+                cleanStore(dispatch)
+                navigate(`/company/interview/${idToNavigate}`)
+            }, 2000)
         }
         if (newError.status == "yes") {
             setErrorSnackbar(true)
@@ -125,7 +134,23 @@ const Page_Company_Interview_Create = () => {
     }, [newError])
 
     function handleSubmit() {
-        dispatch({ type: "saga/createInterview", payload: null })
+        const newInterviewObj = {
+            interview: {
+                interviewerId: chosenInterviewer.interviewerid,
+                recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
+                applicationId: applicationid,
+                itrsinterviewId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                notes: "",
+                resultId: "00000000-0000-0000-0000-000000000001",
+            },
+            itrs: {
+                dateInterview: chosenDate,
+                shiftId: chosenShift.shiftid,
+                roomId: chosenRoom.roomid
+            }
+        }
+        console.log("newinter: ", JSON.stringify(newInterviewObj))
+        dispatch({ type: "interviewSaga/createInterview", payload: newInterviewObj })
         // navigate("/company/interview/1")
     }
     function preProcessing() {
@@ -160,12 +185,15 @@ const Page_Company_Interview_Create = () => {
         }
     }
     return (
-        <>{interviewerList &&
+        <>{interviewerList && interviewList && roomList && shiftList ?
             <Grid container spacing={4}>
+                <Grid item xs={12}>
+                    <InfoApplication recruitmentid={recruitmentid} applicationid={applicationid} page={""} />
+                </Grid>
                 <Grid item xs={12}>
                     <TitleDivider>
                         Create Interview
-                    </TitleDivider>
+                    </TitleDivider>``
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <GigaCard>
@@ -199,7 +227,7 @@ const Page_Company_Interview_Create = () => {
                         </GigaCardBody>
                     </GigaCard>
                 </Grid>
-                <Grid item md={12}>
+                <Grid item xs={12}>
                     <GigaCard>
                         <Grid container>
                             <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column" }}>
@@ -256,17 +284,28 @@ const Page_Company_Interview_Create = () => {
                 <Snackbar
                     // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
                     open={errorSnackbar}
-                    autoHideDuration={5000}
+                    autoHideDuration={4000}
                     onClose={() => { setErrorSnackbar(false) }}
                 // message="I love snacks"
                 // key={vertical + horizontal}
                 >
-                    <Alert onClose={() => { setErrorSnackbar(false) }} severity="error" sx={{ width: '100%' }}>
+                    <Alert variant="filled" onClose={() => { setErrorSnackbar(false) }} severity="error" sx={{ width: '100%' }}>
                         {newError.message}
                     </Alert>
                 </Snackbar>
-                <AlertDialog openAlert={openAlert} setOpenAlert={setOpenAlert} message={"Are you sure you want to create this interview?"} handleSubmit={handleSubmit} />
+                <AlertDialog openAlert={openAlert} setOpenAlert={setOpenAlert}
+                    alertMessage={"Are you sure you want to create this interview?"}
+                    successfulMessage={"Interview created successfully"}
+                    handleSubmit={handleSubmit} />
             </Grid>
+            :
+            <Backdrop
+                sx={{ backgroundColor: theme.palette.grey[200] }}
+                open={true}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+            // <SkeletonInterviewCreate />
         }
         </>
     )

@@ -32,6 +32,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import {
   EventNoteRounded,
+  ParkRounded,
   RocketLaunchRounded,
   SportsScoreRounded,
 } from "@mui/icons-material";
@@ -47,6 +48,7 @@ import { ToastContainer, Slide, Bounce, Flip, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { formatDate } from "../../utils/formatDate";
 
 // JSON -> getPositionListWithFilter
 // {
@@ -73,6 +75,19 @@ import { useTheme } from "@mui/material/styles";
 //   "phone": "",
 //   "website": ""
 // }
+// PUT position: {
+//   "positionId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+//   "positionName": "string",
+//   "description": "string",
+//   "salary": 0,
+//   "maxHiringQty": 0,
+//   "startDate": "2023-08-01T06:57:16.671Z",
+//   "endDate": "2023-08-01T06:57:16.671Z",
+//   "departmentId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+//   "languageId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+//   "recruiterId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+//   "isDeleted": true
+// }
 
 export default function Page_Company_Recruitment() {
   const theme = useTheme();
@@ -84,7 +99,7 @@ export default function Page_Company_Recruitment() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch({ type: "saga/getPositionList" });
+    dispatch({ type: "positionSaga/getPositionList" });
     dispatch({ type: "saga/getDepartment" });
     // dispatch({ type: "saga/getLanguage" });
     return () => {
@@ -169,14 +184,14 @@ export default function Page_Company_Recruitment() {
   //   setStatusChoose(null);
   //   // setLanguageChoose(null);
   //   if (value === null) {
-  //     dispatch({ type: "saga/getPositionList" });
+  //     dispatch({ type: "positionSaga/getPositionList" });
   //   }
   // }
 
   function handleChooseDepartment(value) {
     setDepartmentChoose(value);
     dispatch({
-      type: "saga/getPositionListWithFilter",
+      type: "positionSaga/getPositionListWithFilter",
       payload: {
         departmentId: value ? value.departmentId : null,
         status: statusChoose,
@@ -192,7 +207,7 @@ export default function Page_Company_Recruitment() {
   //       payload: { id: value.languageId },
   //     });
   //   } else if (value === null) {
-  //     dispatch({ type: "saga/getPositionList" });
+  //     dispatch({ type: "positionSaga/getPositionList" });
   //   }
   // }
 
@@ -200,7 +215,7 @@ export default function Page_Company_Recruitment() {
   function handleChooseStatus(value) {
     setStatusChoose(value);
     dispatch({
-      type: "saga/getPositionListWithFilter",
+      type: "positionSaga/getPositionListWithFilter",
       payload: {
         departmentId: departmentChoose ? departmentChoose.departmentId : null,
         status: value ? value : null,
@@ -223,17 +238,28 @@ export default function Page_Company_Recruitment() {
   }
 
   // Dùng isDeleted thay cho Status
-  function handleActiveClick(value) {
+  function handleActiveClick(id, value) {
     dispatch({
-      type: "saga/updatePositionList",
-      payload: { id: value, Status: false },
+      type: "positionSaga/updatePositionList",
+      payload: {
+        id: id,
+        value: value,
+        departmentId: departmentChoose ? departmentChoose.departmentId : null,
+        status: statusChoose ? statusChoose : null,
+      },
     });
   }
 
-  function handleInactiveClick(value) {
+  function handleInactiveClick(id, value) {
+    console.log(value)
     dispatch({
-      type: "saga/updatePositionList",
-      payload: { id: value, Status: true },
+      type: "positionSaga/updatePositionList",
+      payload: {
+        id: id,
+        value: value,
+        departmentId: departmentChoose ? departmentChoose.departmentId : null,
+        status: statusChoose ? statusChoose : null,
+      },
     });
   }
 
@@ -297,10 +323,11 @@ export default function Page_Company_Recruitment() {
       headerAlign: "left",
       align: "left",
       renderHeader: () => <span>Start Date</span>,
-      minWidth: 180,
-      flex: 0.4,
+      minWidth: 150,
+      flex: 0.3,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
+        return formatDate(params.value);
       },
     },
     {
@@ -309,10 +336,11 @@ export default function Page_Company_Recruitment() {
       headerAlign: "left",
       align: "left",
       renderHeader: () => <span>End Date</span>,
-      minWidth: 180,
-      flex: 0.4,
+      minWidth: 150,
+      flex: 0.3,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
+        return formatDate(params.value);
       },
     },
     // {
@@ -335,7 +363,7 @@ export default function Page_Company_Recruitment() {
     },
     {
       field: "Status",
-      minWidth: 180,
+      minWidth: 150,
       flex: 0.3,
       headerAlign: "center",
       align: "center",
@@ -390,7 +418,21 @@ export default function Page_Company_Recruitment() {
             <GridActionsCellItem
               icon={<PlayCircleOutlineRoundedIcon sx={{ color: "#1565C0" }} />}
               label="Active position"
-              onClick={() => handleActiveClick(params.row.PositionId)}
+              onClick={() =>
+                handleActiveClick(params.row.PositionId, {
+                  positionId: params.row.PositionId,
+                  positionName: params.row.PositionName,
+                  description: params.row.Description,
+                  salary: params.row.Salary,
+                  maxHiringQty: params.row.MaxHiringQty,
+                  startDate: params.row.StartDate,
+                  endDate: params.row.EndDate,
+                  departmentId: params.row.DepartmentId,
+                  languageId: params.row.LanguageId,
+                  recruiterId: params.row.RecruiterId,
+                  isDeleted: false,
+                })
+              }
               showInMenu
               sx={{
                 color: "#1565C0",
@@ -433,7 +475,21 @@ export default function Page_Company_Recruitment() {
             <GridActionsCellItem
               icon={<PauseCircleOutlineRoundedIcon sx={{ color: "#cc3300" }} />}
               label="Inactive position"
-              onClick={() => handleInactiveClick(params.row.PositionId)}
+              onClick={() => 
+                handleInactiveClick(params.row.PositionId, {
+                  positionId: params.row.PositionId,
+                  positionName: params.row.PositionName,
+                  description: params.row.Description,
+                  salary: params.row.Salary,
+                  maxHiringQty: params.row.MaxHiringQty,
+                  startDate: params.row.StartDate,
+                  endDate: params.row.EndDate,
+                  departmentId: params.row.DepartmentId,
+                  languageId: params.row.LanguageId,
+                  recruiterId: params.row.RecruiterId,
+                  isDeleted: true,
+                })
+              }
               showInMenu
               sx={{
                 color: "#cc3300",
@@ -481,9 +537,11 @@ export default function Page_Company_Recruitment() {
   // ];
 
   return (
-    <Box sx={{
-      marginTop: 3,
-    }}>
+    <Box
+      sx={{
+        marginTop: 3,
+      }}
+    >
       <GigaCard>
         <GigaCardBody>
           <Grid
@@ -899,6 +957,9 @@ export default function Page_Company_Recruitment() {
                 "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
                   display: "none",
                 },
+                "&.MuiDataGrid-root .MuiDataGrid-row": {
+                  cursor: "pointer"
+                },
                 // "&.MuiDataGrid-root .MuiDataGrid-virtualScroller::-webkit-scrollbar":
                 //   {
                 //     display: "none",
@@ -948,14 +1009,17 @@ export default function Page_Company_Recruitment() {
                 },
               }}
               getRowId={(row) => row.PositionId}
-              onCellClick={(params, event) => {
-                if (
-                  params.field === "PositionId" ||
-                  params.field === "PositionName"
-                ) {
-                  handleDetailClick(params.row.PositionId);
-                }
+              onRowClick={(params, event) => {
+                handleDetailClick(params.row.PositionId)
               }}
+              // onCellClick={(params, event) => {
+              //   if (
+              //     params.field === "PositionId" ||
+              //     params.field === "PositionName"
+              //   ) {
+              //     handleDetailClick(params.row.PositionId);
+              //   }
+              // }}
             />
           </Box>
         </GigaCardBody>

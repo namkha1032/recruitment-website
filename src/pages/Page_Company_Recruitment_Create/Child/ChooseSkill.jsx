@@ -10,12 +10,17 @@ import CompHeader from "./compHeader";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import Box from "@mui/material/Box";
 import TimerIcon from "@mui/icons-material/Timer";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const filter = createFilterOptions();
 export default function ChooseList(prop) {
-  function handleRExp(e) {
-    console.log(e.target.value);
-    prop.setExperience(e.target.value);
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.up("sm"));
+  const isMd = useMediaQuery(theme.breakpoints.up("md"));
+  function handleRExp(event) {
+      let midleScore = parseFloat(event.target.value) >= 0? parseFloat(event.target.value) : 0
+    prop.setExperience(midleScore);
   }
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -35,9 +40,9 @@ export default function ChooseList(prop) {
   };
   return (
     <>
-      <Grid container spacing={0} justifyContent="center" alignItems="center">
-        <Grid item xs={9}>
-          <Box sx={{ marginLeft: "1%", marginTop: "8px" }}>
+      <Grid container spacing={1} justifyContent="center" alignItems="center">
+        <Grid item xs={isMd?9:(isSm?6:12)}>
+          <Box sx={{marginTop: "8px" }}>
             <CompHeader headerIcon={<ConstructionIcon />}>Skill</CompHeader>
             <Autocomplete
               value={prop.inputValue}
@@ -108,7 +113,7 @@ export default function ChooseList(prop) {
                   margin: "0",
                   marginTop: "8px",
                   padding: "0",
-                  marginRight: "1%",
+                  marginRight:isMd? "1%":0,
                 },
               }}
               freeSolo
@@ -119,20 +124,19 @@ export default function ChooseList(prop) {
           </Box>
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item xs={isMd?3:(isSm?6:12)}>
           <NotRInputText
             headerIcon={<TimerIcon />}
             state={"Experiece(Year)"}
-            width="99%"
+            width="100%"
             type="number"
             value={prop.experience}
             margin="0"
-            marginLeft="1%"
             handleState={handleRExp}
           />
         </Grid>
         <Grid item xs={12}>
-          <EmptyTextarea value={prop.note} setDetail={prop.setNote} />
+          <EmptyTextarea marginLeft="1%" value={prop.note} setDetail={prop.setNote} />
         </Grid>
         <Button
           sx={{

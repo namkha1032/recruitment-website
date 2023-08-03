@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useParams } from "react-router-dom";
+import { CloseRounded, DoneRounded } from "@mui/icons-material";
 function QuickSearchToolbar() {
     return (
         <Box
@@ -40,7 +41,7 @@ const List_application = (props) => {
     const { recruitmentid } = useParams();
     let [currentTable, setCurrentTable] = useState(0)
     // const applications = useSelector(state => state.application);
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     // useEffect(() => {
     //     dispatch({ type: 'saga/getApplication' })
     //     return () => {
@@ -50,23 +51,26 @@ const List_application = (props) => {
 
     // const detail = useSelector(state => state.position);
     
-    const pending1 = props.applications ? props.applications.filter(application => {
-        return application.company_status === "Đang chờ"
-    }) : [];
+    // const pending1 = props.applications ? props.applications.filter(application => {
+    //     return application.company_status === "Đang chờ"
+    // }) : [];
     const pass1 = props.applications ? props.applications.filter(application => {
         return application.company_status === "Đã duyệt"
     }) : [];
-    const reject1 = props.applications ? props.applications.filter(application => {
-        return application.company_status === "Đã từ chối"
-    }) : [];
-    // const pendingmain = props.applications ? props.applications.filter(application => {
-    //     return application.status === "Pending"
+    // const reject1 = props.applications ? props.applications.filter(application => {
+    //     return application.company_Status === "Đã từ chối"
     // }) : [];
+    const pendingmain = props.applications ? props.applications.filter(application => {
+        return application.company_Status === "Pending"
+    }) : [];
+    const rejectmain = props.applications ? props.applications.filter(application => {
+        return application.company_Status === "Rejected"
+    }) : [];
     console.log("application", props.applications);
     // console.log("status", pendingmain);
-    console.log("chờ", pending1);
+    // console.log("chờ", pending1);
     console.log("đậu", pass1);
-    console.log("chối", reject1);
+    // console.log("chối", reject1);
     const handleEditClick = (params) => {
         navigate(`/company/recruitment/${recruitmentid}/application/${params.id}`);
     }
@@ -79,7 +83,7 @@ const List_application = (props) => {
         },
 
         {
-            field: "candidateName",
+            field: "fullName",
             headerName: "Candidate Name",
             flex: 1,
             minWidth: 200
@@ -116,17 +120,26 @@ const List_application = (props) => {
 
 
                 <Grid container spacing={2} sx ={{marginBottom: 2, marginTop: 1}} >
-                    <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-start" }}>
 
                         <Button size ={isMd ? "medium" : "small"} color="primary" variant={currentTable == 0 ? 'contained' : 'outlined'} sx={{ borderRadius: 100 }} onClick={() => { setCurrentTable(0) }} >
-                            <PendingIcon sx={{marginRight: "5px"}}></PendingIcon> Pending
+                            {isMd ? (
+                                <>
+                                <PendingIcon sx={{marginRight: "5px"}}></PendingIcon> Pending
+                                </>
+                            ): (
+                                <>
+                                <PendingIcon sx={{marginRight: "5px"}}></PendingIcon> Pend
+                                </>
+                            )}
+                            
                         </Button>
 
                         <Button size ={isMd ? "medium" : "small"} color="warning" sx={{  marginLeft: "10px", borderRadius: 100 }} variant={currentTable == 1 ? 'contained' : 'outlined'}  onClick={() => { setCurrentTable(1) }} >
-                            <FmdBadIcon sx={{marginRight: "5px"}}></FmdBadIcon> Reject
+                            <CloseRounded sx={{marginRight: "5px"}}></CloseRounded> Reject
                         </Button>
                         <Button size ={isMd ? "medium" : "small"} color="success" sx={{  marginLeft: "10px", borderRadius: 100 }} variant={currentTable == 2 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(2) }} >
-                            <GradingIcon sx={{marginRight: "5px"}}></GradingIcon> Pass
+                            <DoneRounded sx={{marginRight: "5px"}}></DoneRounded> Pass
                         </Button>
 
 
@@ -155,7 +168,7 @@ const List_application = (props) => {
                         }}
                         slots={{ toolbar: QuickSearchToolbar }}
                         rowHeight={72}
-                        rows={pending1}
+                        rows={pendingmain}
                         {...other}
                         columns={columns}
                         getRowId={(row) => row.applicationId}
@@ -195,7 +208,7 @@ const List_application = (props) => {
                         }}
                         slots={{ toolbar: QuickSearchToolbar }}
                         rowHeight={72}
-                        rows={reject1}
+                        rows={rejectmain}
                         {...other}
                         columns={columns}
                         getRowId={(row) => row.applicationId}

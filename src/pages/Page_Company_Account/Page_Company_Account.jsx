@@ -1,8 +1,18 @@
 import React, {useState, useEffect} from 'react'
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography} from "@mui/material"
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    TextField,
+    Typography,
+    Box,
+    CircularProgress
+} from "@mui/material"
 import {DataGrid, GridAddIcon, GridToolbar, GridToolbarQuickFilter} from "@mui/x-data-grid";
 import {useNavigate} from "react-router-dom";
-import {mockDataContacts} from "./mockData";
 import {grey, lightBlue, teal} from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
@@ -18,435 +28,12 @@ import useGetRole from '../../hooks/useGetRole.js';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import {getCandidate} from "../../redux/reducer/adminReducer";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import useMediaQuery from "@mui/material/useMediaQuery";
+import candidateNames from './candidateNames.json';
+import inerviewerNames from './inerviewerNames.json';
+import recruiterNames from './recruiterNames.json';
+import FindInPageIcon from "@mui/icons-material/FindInPage";
 
-
-
-
-function CandidateTable(props) {
-    const RenderAddToBlacklist = ({params}) => {
-        const [open, setOpen] = React.useState(false);
-        return (
-            <strong>
-                <IconButton color="black" aria-label="Add to Blacklist" size="large"
-                            onClick={() => {
-                                setOpen(true)
-                            }}>
-                    <GridAddIcon></GridAddIcon>
-                </IconButton>
-                <Dialog open={open}
-                        onClose={() => {
-                            setOpen(false)
-                        }}
-                        aria-labelledby="accountinfo"
-                        aria-describedby="accountdetails"
-                >
-                    <DialogTitle id="alert-dialog-title">
-                        {"Account info "}
-                    </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            Account ID: {params.row.candidateId}<br/>
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={() => {
-                            setOpen(false)
-                        }}>Go to Account</Button>
-                        <Button onClick={() => {
-                            setOpen(false)
-                        }}>
-                            Add
-                        </Button>
-                        <Button onClick={() => {
-                            setOpen(false)
-                        }}>
-                            Cancel
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </strong>
-        )
-    }
-    const {children, value, index, ...other} = props;
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch({type: "saga/getCandidate"});
-    }, [dispatch]);
-    const candidate = useSelector(state => state.admin.candidate)
-
-    function QuickSearchToolbar() {
-        return (
-            <Grid container margin={1}
-            >
-                <GridToolbarQuickFilter/>
-                <GridToolbar></GridToolbar>
-            </Grid>
-        );
-    }
-    const columns = [
-                {field: "candidateId", headerName: "Candidate ID", flex: 0.5},
-                {field: "userId", headerName: "User ID", flex: 0.5},
-                {
-                    field: "experience",
-                    headerName: "Experience",
-                    flex: 0.5,
-                    cellClassName: "name-column--cell",
-                },
-                {
-                    field: "addtoBlacklist",
-                    headerName: "Add to Blacklist",
-                    flex: 0.3,
-                    renderCell: (params) => {
-                        return (<RenderAddToBlacklist params={params}/>)
-                    },
-                },
-            ];
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`full-width-tabpanel-${index}`}
-            aria-labelledby={`full-width-tab-${index}`}
-            {...other}>
-            <Grid container>
-                <Grid
-                    border={0}
-                    width="78vw"
-                    item
-                    m="0px 0px 0px 0px"
-                    xs={12}
-                    display="flex"
-                    sx={{
-                        "& .MuiDataGrid-root": {
-                            border: "none",
-                            backgroundColor: "#ffffff",
-
-                        },
-                        "& .MuiDataGrid-cell": {
-                            borderBottom: "none",
-                            backgroundColor: "#ffffff",
-
-                        },
-                        "& .name-column--cell": {
-                            color: grey[900]
-                        },
-                        "& .MuiDataGrid-columnHeaders": {
-                            // backgroundColor: grey[100],
-                            // color: "#ffffff",
-                            borderBottom: "5"
-                        },
-                        "& .MuiDataGrid-virtualScroller": {
-                            backgroundColor: grey[100]
-                        },
-                        "& .MuiDataGrid-footerContainer": {
-                            borderTop: "5",
-                            // backgroundColor: grey[100]
-                            // color: "#ffffff"
-                        },
-                        "& .MuiCheckbox-root": {
-                            color: `${teal[300]} !important`
-                        },
-                        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                            color: `${grey[700]} !important`
-                        }
-                    }}
-                >
-                    <DataGrid
-                        rows={candidate}
-                        getRowId={(row) => row.candidateId}
-                        columns={columns}
-                        slots={{toolbar: QuickSearchToolbar}}
-                        display="flex"
-                    />
-                </Grid>
-            </Grid>
-        </div>
-    );
-}
-function InterviewerTable(props) {
-    const RenderAddToBlacklist = ({params}) => {
-        const [open, setOpen] = React.useState(false);
-        return (
-            <strong>
-                <IconButton color="black" aria-label="Add to Blacklist" size="large"
-                            onClick={() => {
-                                setOpen(true)
-                            }}>
-                    <GridAddIcon></GridAddIcon>
-                </IconButton>
-                <Dialog open={open}
-                        onClose={() => {
-                            setOpen(false)
-                        }}
-                        aria-labelledby="accountinfo"
-                        aria-describedby="accountdetails"
-                >
-                    <DialogTitle id="alert-dialog-title">
-                        {"Account info "}
-                    </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            Interviewer ID: {params.row.interviewerId}<br/>
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={() => {
-                            setOpen(false)
-                        }}>Go to Account</Button>
-                        <Button onClick={() => {
-                            setOpen(false)
-                        }}>
-                            Add
-                        </Button>
-                        <Button onClick={() => {
-                            setOpen(false)
-                        }}>
-                            Cancel
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </strong>
-        )
-    }
-    const {children, value, index, ...other} = props;
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch({type: "saga/getInterviewer"});
-    }, [dispatch]);
-    const interviewer = useSelector(state => state.admin.interviewer)
-
-    function QuickSearchToolbar() {
-        return (
-            <Grid container margin={1}
-            >
-                <GridToolbarQuickFilter/>
-                <GridToolbar></GridToolbar>
-            </Grid>
-        );
-    }
-    const columns = [
-        {field: "interviewerId", headerName: "Interviewer ID", flex: 0.5},
-        {field: "userId", headerName: "User ID", flex: 0.5},
-        {
-            field: "departmentId",
-            headerName: "Department",
-            flex: 0.5,
-            cellClassName: "name-column--cell",
-        },
-        {
-            field: "addtoBlacklist",
-            headerName: "Add to Blacklist",
-            flex: 0.3,
-            renderCell: (params) => {
-                return (<RenderAddToBlacklist params={params}/>)
-            },
-        },
-    ];
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`full-width-tabpanel-${index}`}
-            aria-labelledby={`full-width-tab-${index}`}
-            {...other}>
-            <Grid container>
-                <Grid
-                    border={0}
-                    width="78vw"
-                    item
-                    m="0px 0px 0px 0px"
-                    xs={12}
-                    display="flex"
-                    sx={{
-                        "& .MuiDataGrid-root": {
-                            border: "none",
-                            backgroundColor: "#ffffff",
-
-                        },
-                        "& .MuiDataGrid-cell": {
-                            borderBottom: "none",
-                            backgroundColor: "#ffffff",
-
-                        },
-                        "& .name-column--cell": {
-                            color: grey[900]
-                        },
-                        "& .MuiDataGrid-columnHeaders": {
-                            // backgroundColor: grey[100],
-                            // color: "#ffffff",
-                            borderBottom: "5"
-                        },
-                        "& .MuiDataGrid-virtualScroller": {
-                            backgroundColor: grey[100]
-                        },
-                        "& .MuiDataGrid-footerContainer": {
-                            borderTop: "5",
-                            // backgroundColor: grey[100]
-                            // color: "#ffffff"
-                        },
-                        "& .MuiCheckbox-root": {
-                            color: `${teal[300]} !important`
-                        },
-                        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                            color: `${grey[700]} !important`
-                        }
-                    }}
-                >
-                    <DataGrid
-                        rows={interviewer}
-                        getRowId={(row) => row.interviewerId}
-                        columns={columns}
-                        slots={{toolbar: QuickSearchToolbar}}
-                        display="flex"
-                    />
-                </Grid>
-            </Grid>
-        </div>
-    );
-}
-function RecruiterTable(props) {
-    const RenderAddToBlacklist = ({params}) => {
-        const [open, setOpen] = React.useState(false);
-        return (
-            <strong>
-                <IconButton color="black" aria-label="Add to Blacklist" size="large"
-                            onClick={() => {
-                                setOpen(true)
-                            }}>
-                    <GridAddIcon></GridAddIcon>
-                </IconButton>
-                <Dialog open={open}
-                        onClose={() => {
-                            setOpen(false)
-                        }}
-                        aria-labelledby="accountinfo"
-                        aria-describedby="accountdetails"
-                >
-                    <DialogTitle id="alert-dialog-title">
-                        {"Account info "}
-                    </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            Recruiter ID: {params.row.recruiterId}<br/>
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={() => {
-                            setOpen(false)
-                        }}>Go to Account</Button>
-                        <Button onClick={() => {
-                            setOpen(false)
-                        }}>
-                            Add
-                        </Button>
-                        <Button onClick={() => {
-                            setOpen(false)
-                        }}>
-                            Cancel
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </strong>
-        )
-    }
-    const {children, value, index, ...other} = props;
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch({type: "saga/getRecruiter"});
-    }, [dispatch]);
-    const recruiter = useSelector(state => state.admin.recruiter)
-
-    function QuickSearchToolbar() {
-        return (
-            <Grid container margin={1}
-            >
-                <GridToolbarQuickFilter/>
-                <GridToolbar></GridToolbar>
-            </Grid>
-        );
-    }
-    const columns = [
-        {field: "recruiterId", headerName: "Recruiter ID", flex: 0.5},
-        {field: "userId", headerName: "User ID", flex: 0.5},
-        {
-            field: "departmentId",
-            headerName: "Department ID",
-            flex: 0.5,
-            cellClassName: "name-column--cell",
-        },
-        {
-            field: "addtoBlacklist",
-            headerName: "Add to Blacklist",
-            flex: 0.3,
-            renderCell: (params) => {
-                return (<RenderAddToBlacklist params={params}/>)
-            },
-        },
-    ];
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`full-width-tabpanel-${index}`}
-            aria-labelledby={`full-width-tab-${index}`}
-            {...other}>
-            <Grid container>
-                <Grid
-                    border={0}
-                    width="78vw"
-                    item
-                    m="0px 0px 0px 0px"
-                    xs={12}
-                    display="flex"
-                    sx={{
-                        "& .MuiDataGrid-root": {
-                            border: "none",
-                            backgroundColor: "#ffffff",
-
-                        },
-                        "& .MuiDataGrid-cell": {
-                            borderBottom: "none",
-                            backgroundColor: "#ffffff",
-
-                        },
-                        "& .name-column--cell": {
-                            color: grey[900]
-                        },
-                        "& .MuiDataGrid-columnHeaders": {
-                            // backgroundColor: grey[100],
-                            // color: "#ffffff",
-                            borderBottom: "5"
-                        },
-                        "& .MuiDataGrid-virtualScroller": {
-                            backgroundColor: grey[100]
-                        },
-                        "& .MuiDataGrid-footerContainer": {
-                            borderTop: "5",
-                            // backgroundColor: grey[100]
-                            // color: "#ffffff"
-                        },
-                        "& .MuiCheckbox-root": {
-                            color: `${teal[300]} !important`
-                        },
-                        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                            color: `${grey[700]} !important`
-                        }
-                    }}
-                >
-                    <DataGrid
-                        rows={recruiter}
-                        getRowId={(row) => row.recruiterId}
-                        columns={columns}
-                        slots={{toolbar: QuickSearchToolbar}}
-                    />
-                </Grid>
-            </Grid>
-        </div>
-    );
-}
 
 
 
@@ -467,6 +54,530 @@ RecruiterTable.propTypes = {
 };
 
 
+function CandidateTable(props) {
+    const theme = useTheme();
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+    const RenderAddToBlacklist = ({params}) => {
+        const [open, setOpen] = React.useState(false);
+        const [reason, setReason] = React.useState('');
+        const handleGoToAccount = () => {
+            const userId = params.row.userId;
+            window.location.href = `/profile/${userId}`;
+            console.log(userId)
+            setOpen(false);
+        };
+        const handleAddClick = () => {
+            dispatch({type: "saga/addToBlacklist", payload: {reason: reason, candidateId: params.row.candidateId}});
+            console.log(reason,params.row.candidateId);
+            setOpen(false);
+        };
+        return (
+            <strong>
+                <IconButton color="black" aria-label="Add to Blacklist" size="large"
+                            onClick={() => {
+                                setOpen(true)
+                            }}>
+                    <GridAddIcon></GridAddIcon>
+                </IconButton>
+                <Dialog open={open}
+                        onClose={() => {
+                            setOpen(false)
+                        }}
+                        aria-labelledby="accountinfo"
+                        aria-describedby="accountdetails"
+                        sx={{
+                            '& .MuiButton-text': {
+                                color: 'black', // set the button text color to black
+                            },
+
+                        }}
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {"Account info "}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Candidate ID: {params.row.candidateId}<br/>
+                            User ID: {params.row.userId}
+                        </DialogContentText>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="reason"
+                            label="Reason for Blacklist"
+                            fullWidth
+                            variant="standard"
+                            value={reason}
+                            onChange={(event) => setReason(event.target.value)}
+                            sx={{
+                                color: '#000', // set the default text color to black
+                                '& .Mui-focused': {
+                                    color: '#000', // set the text color to black when the input is clicked
+                                    borderColor: '#000', // set the border color to black when the input is clicked
+                                },
+                            }}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleGoToAccount}>Go To Account</Button>
+                        <Button onClick={handleAddClick}>Add</Button>
+                        <Button onClick={() => {
+                            setOpen(false)
+                        }}>
+                            Cancel
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </strong>
+        )
+    }
+    const {children, value, index, ...other} = props;
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch({type: "saga/getCandidateAdmin"});
+    }, [dispatch]);
+    const candidate = useSelector(state => state.admin.candidate)
+
+    function QuickSearchToolbar() {
+        return (
+            <Grid container margin={1}
+            >
+                <GridToolbarQuickFilter/>
+                <GridToolbar></GridToolbar>
+            </Grid>
+        );
+    }
+    const columns = [
+                {field: "candidateId", headerName: isSm ? "Candidate ID" : "cID", flex: 0.5},
+                {
+                    field: "userName",
+                    headerName: "Username",
+                    flex: 0.3,
+                    valueGetter: (params) => params.row.user.userName,
+                },
+                {
+                    field: "fullName",
+                    headerName: "Full Name",
+                    flex: 0.4,
+                    valueGetter: (params) => params.row.user.fullName,
+                },
+                {
+                    field: "addtoBlacklist",
+                    headerName: isSm ? "Add to Blacklist" : "Add",
+                    flex: 0.2,
+                    renderCell: (params) => {
+                        return (<RenderAddToBlacklist params={params}/>)
+                    },
+                },
+            ];
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`full-width-tabpanel-${index}`}
+            aria-labelledby={`full-width-tab-${index}`}
+            {...other}>
+            <Grid container>
+                <Grid
+                    border={0}
+                    // width="77vw"
+                    item
+                    // m="0px 0px 0px 0px"
+                    xs={12}
+                    display="flex"
+                    sx={{
+                        "& .MuiDataGrid-root": {
+                            border: "none",
+                            backgroundColor: "#ffffff",
+
+                        },
+                        "& .MuiDataGrid-cell": {
+                            borderBottom: "none",
+                            backgroundColor: "#ffffff",
+
+                        },
+                        "& .name-column--cell": {
+                            color: grey[900]
+                        },
+                        "& .MuiDataGrid-columnHeaders": {
+                            // backgroundColor: grey[100],
+                            // color: "#ffffff",
+                            // borderBottom: "5"
+                        },
+                        "& .MuiDataGrid-virtualScroller": {
+                            backgroundColor: grey[100]
+                        },
+                        "& .MuiDataGrid-footerContainer": {
+                            // borderTop: "5",
+                            // backgroundColor: grey[100]
+                            // color: "#ffffff"
+                        },
+                        "& .MuiCheckbox-root": {
+                            color: `${teal[300]} !important`
+                        },
+                        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                            color: `${grey[700]} !important`
+                        }
+                    }}
+                >
+                    <DataGrid
+                        rows={candidate}
+                        getRowId={(row) => row.candidateId}
+                        columns={columns}
+                        slots={{toolbar: QuickSearchToolbar}}
+                        // display="flex"
+                    />
+                </Grid>
+            </Grid>
+        </div>
+    );
+}
+function InterviewerTable(props) {
+    const theme = useTheme();
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isXs = useMediaQuery(theme.breakpoints.up('xs'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+
+    const RenderCheckInfo = ({params}) => {
+        const [open, setOpen] = React.useState(false);
+        const handleGoToAccount = () => {
+            const userId = params.row.userId;
+            window.location.href = `/profile/${userId}`;
+            console.log(userId)
+            setOpen(false);
+        };
+        return (
+            <strong>
+                <IconButton color="black" aria-label="Add to Blacklist" size="large"
+                            onClick={() => {
+                                setOpen(true)
+                            }}>
+                    <FindInPageIcon></FindInPageIcon>
+                </IconButton>
+                <Dialog open={open}
+                        onClose={() => {
+                            setOpen(false)
+                        }}
+                        aria-labelledby="accountinfo"
+                        aria-describedby="accountdetails"
+                        sx={{
+                            '& .MuiButton-text': {
+                                color: 'black', // set the button text color to black
+                            },
+                        }}
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {"Account info "}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Interviewer ID: {params.row.interviewerId}<br/>
+                            User ID: {params.row.userId}
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleGoToAccount}>Go To Account</Button>
+                        <Button onClick={() => {
+                            setOpen(false)
+                        }}>
+                            Cancel
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </strong>
+        )
+    }
+    const {children, value, index, ...other} = props;
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch({type: "saga/getInterviewerAdmin"});
+    }, [dispatch]);
+    useEffect(() => {
+        dispatch({type: "saga/getDepartmentAdmin"});
+    }, [dispatch]);
+    const departments = useSelector(state => state.admin.department)
+    const interviewer = useSelector(state => state.admin.interviewer)
+    const interviewersWithDepartmentNames = interviewer.map((interviewer) => {
+        const department = departments.find((department) => department.departmentId === interviewer.departmentId);
+        const departmentName = department ? department.departmentName : "";
+        return { ...interviewer, departmentName };
+    });
+    function QuickSearchToolbar() {
+        return (
+            <Grid container margin={1}
+            >
+                <GridToolbarQuickFilter/>
+                <GridToolbar></GridToolbar>
+            </Grid>
+        );
+    }
+    // function getUser(interviewerId) {
+    //     return inerviewerNames.find(user => user.interviewerId === interviewerId);
+    // }
+
+    const columns = [
+        {field: "interviewerId", headerName: "Interviewer ID", flex: 0.4},
+        {
+            field: "userName",
+            headerName: "Username",
+            flex: 0.2,
+            valueGetter: (params) => params.row.user.userName,
+        },
+        {
+            field: "fullName",
+            headerName: "Full Name",
+            flex: 0.3,
+            valueGetter: (params) => params.row.user.fullName,
+            cellClassName: "name-column--cell",
+        },
+        {
+            field: "departmentName",
+            headerName: "Department",
+            flex: 0.2,
+        },
+        {
+            field: "checkInfo",
+            headerName: isSm ? "Check Info" : "More",
+            flex: 0.2,
+            renderCell: (params) => {
+                return (<RenderCheckInfo params={params}/>)
+            },
+        },
+    ];
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`full-width-tabpanel-${index}`}
+            aria-labelledby={`full-width-tab-${index}`}
+            {...other}>
+            <Grid container>
+                <Grid
+                    border={0}
+                    // width="77vw"
+                    item
+                    // m="0px 0px 0px 0px"
+                    xs={12}
+                    display="flex"
+                    sx={{
+                        "& .MuiDataGrid-root": {
+                            border: "none",
+                            backgroundColor: "#ffffff",
+
+                        },
+                        "& .MuiDataGrid-cell": {
+                            borderBottom: "none",
+                            backgroundColor: "#ffffff",
+
+                        },
+                        "& .name-column--cell": {
+                            color: grey[900]
+                        },
+                        "& .MuiDataGrid-columnHeaders": {
+                            // backgroundColor: grey[100],
+                            // color: "#ffffff",
+                            // borderBottom: "5"
+                        },
+                        "& .MuiDataGrid-virtualScroller": {
+                            backgroundColor: grey[100]
+                        },
+                        "& .MuiDataGrid-footerContainer": {
+                            // borderTop: "5",
+                            // backgroundColor: grey[100]
+                            // color: "#ffffff"
+                        },
+                        "& .MuiCheckbox-root": {
+                            color: `${teal[300]} !important`
+                        },
+                        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                            color: `${grey[700]} !important`
+                        }
+                    }}
+                >
+                    <DataGrid
+                        rows={interviewersWithDepartmentNames}
+                        getRowId={(row) => row.interviewerId}
+                        columns={columns}
+                        slots={{toolbar: QuickSearchToolbar}}
+                        display="flex"
+                    />
+                </Grid>
+            </Grid>
+        </div>
+    );
+}
+function RecruiterTable(props) {
+    const theme = useTheme();
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isXs = useMediaQuery(theme.breakpoints.up('xs'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+    const RenderCheckInfo = ({params}) => {
+        const [open, setOpen] = React.useState(false);
+        const handleGoToAccount = () => {
+            const userId = params.row.userId;
+            window.location.href = `/profile/${userId}`;
+            console.log(userId)
+            setOpen(false);
+        };
+        return (
+            <strong>
+                <IconButton color="black" aria-label="Add to Blacklist" size="large"
+                            onClick={() => {
+                                setOpen(true)
+                            }}>
+                    <FindInPageIcon></FindInPageIcon>
+                </IconButton>
+                <Dialog open={open}
+                        onClose={() => {
+                            setOpen(false)
+                        }}
+                        aria-labelledby="accountinfo"
+                        aria-describedby="accountdetails"
+                        sx={{
+                            '& .MuiButton-text': {
+                                color: 'black', // set the button text color to black
+                            },
+                        }}
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {"Account info "}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Recruiter ID: {params.row.recruiterId}<br/>
+                            User ID: {params.row.userId}
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleGoToAccount}>Go To Account</Button>
+                        <Button onClick={() => {
+                            setOpen(false)
+                        }}>
+                            Cancel
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </strong>
+        )
+    }
+    const {children, value, index, ...other} = props;
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch({type: "saga/getRecruiterAdmin"});
+    }, [dispatch]);
+    useEffect(() => {
+        dispatch({type: "saga/getDepartmentAdmin"});
+    }, [dispatch]);
+    const departments = useSelector(state => state.admin.department)
+    const recruiter = useSelector(state => state.admin.recruiter)
+    const recruitersWithDepartmentNames = recruiter.map((recruiter) => {
+        const department = departments.find((department) => department.departmentId === recruiter.departmentId);
+        const departmentName = department ? department.departmentName : "";
+        return { ...recruiter, departmentName };
+    });
+    // function getUser(recruiterId) {
+    //     return recruiterNames.find(user => user.recruiterId === recruiterId);
+    // }
+    function QuickSearchToolbar() {
+        return (
+            <Grid container margin={1}
+            >
+                <GridToolbarQuickFilter/>
+                <GridToolbar></GridToolbar>
+            </Grid>
+        );
+    }
+    const columns = [
+        {field: "recruiterId", headerName: "Recruiter ID", flex: 0.4},
+        {
+            field: "userName",
+            headerName: "Username",
+            flex: 0.2,
+            valueGetter: (params) => params.row.user.userName,
+        },
+        {
+            field: "fullName",
+            headerName: "Full Name",
+            flex: 0.3,
+            valueGetter: (params) => params.row.user.fullName,
+            cellClassName: "name-column--cell",
+        },
+        { field: 'departmentName', headerName: 'Department', flex: 0.2},
+        {
+            field: "checkInfo",
+            headerName: isSm ? "Check Info" : "More",
+            flex: 0.2,
+            renderCell: (params) => {
+                return (<RenderCheckInfo params={params}/>)
+            },
+        },
+    ];
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`full-width-tabpanel-${index}`}
+            aria-labelledby={`full-width-tab-${index}`}
+            {...other}>
+            <Grid container>
+                <Grid
+                    border={0}
+                    // width="77vw"
+                    item
+                    // m="0px 0px 0px 0px"
+                    xs={12}
+                    display="flex"
+                    sx={{
+                        "& .MuiDataGrid-root": {
+                            border: "none",
+                            backgroundColor: "#ffffff",
+
+                        },
+                        "& .MuiDataGrid-cell": {
+                            borderBottom: "none",
+                            backgroundColor: "#ffffff",
+
+                        },
+                        "& .name-column--cell": {
+                            color: grey[900]
+                        },
+                        "& .MuiDataGrid-columnHeaders": {
+                            // backgroundColor: grey[100],
+                            // color: "#ffffff",
+                            // borderBottom: "5"
+                        },
+                        "& .MuiDataGrid-virtualScroller": {
+                            backgroundColor: grey[100]
+                        },
+                        "& .MuiDataGrid-footerContainer": {
+                            // borderTop: "5",
+                            // backgroundColor: grey[100]
+                            // color: "#ffffff"
+                        },
+                        "& .MuiCheckbox-root": {
+                            color: `${teal[300]} !important`
+                        },
+                        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                            color: `${grey[700]} !important`
+                        }
+                    }}
+                >
+                    <DataGrid
+                        rows={recruitersWithDepartmentNames}
+                        getRowId={(row) => row.recruiterId}
+                        columns={columns}
+                        slots={{toolbar: QuickSearchToolbar}}
+                    />
+                </Grid>
+            </Grid>
+        </div>
+    );
+}
+
 function a11yProps(index) {
     return {
         id: `full-width-tab-${index}`,
@@ -475,8 +586,12 @@ function a11yProps(index) {
 }
 
 function FullWidthTabs() {
-    const theme = useTheme();
     const [value, setValue] = React.useState(0);
+    const [isLoading, setIsLoading] = React.useState(true);
+
+    const theme = useTheme();
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -486,54 +601,85 @@ function FullWidthTabs() {
         setValue(index);
     };
 
+    // Simulate loading data
+    React.useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 2000);
+    }, []);
 
     return (
-
         <Card
             raised="true"
             sx={{
-                // width:'77vw',
-                display: 'flex',
-                // border: "1px solid black",
-                // borderRadius: 1,
-                padding:4,
+                padding: 4,
                 mt: 4
-            }}>
+            }}
+        >
             <Grid container>
-                <AppBar position="static">
+                <AppBar position="static" sx={{ backgroundColor: '#ffffff' }}>
                     <Tabs
+                        display="flex"
                         value={value}
                         onChange={handleChange}
-                        indicatorColor="primary"
                         variant="fullWidth"
-                        aria-label="full width tabs example"
+                        aria-label="selectTableRoles"
+                        TabIndicatorProps={{
+                            style: {
+                                backgroundColor: "#000000",
+                            }
+                        }}
                         sx={{
                             backgroundColor: '#ffffff',
-                            color: "#000000"
+                            color: '#000000',
                         }}
                     >
-                        <Tab label="Candidate" {...a11yProps(0)} />
-                        <Tab label="Interviewer" {...a11yProps(1)} />
-                        <Tab label="Recruiter" {...a11yProps(2)} />
+                        <Tab label={isSm ? "Candidate" : "Cndt."} {...a11yProps(0)}
+                             sx={{
+                                 "&.Mui-selected": {
+                                     color: '#000000'
+                                 },
+                             }} />
+                        <Tab label={isSm ? "Interviewer" : "Intvwr."} {...a11yProps(1)}
+                             sx={{
+                                 "&.Mui-selected": {
+                                     color: '#000000'
+                                 },
+                             }} />
+                        <Tab label={isSm ? "Recruiter" : "Rctr."} {...a11yProps(2)}
+                             sx={{
+                                 "&.Mui-selected": {
+                                     color: '#000000'
+                                 },
+                             }} />
                     </Tabs>
-                    <CandidateTable value={value} index={0}>
-                    </CandidateTable>
-                    <InterviewerTable value={value} index={1}>
-                    </InterviewerTable>
-                    <RecruiterTable value={value} index={2}>
-                    </RecruiterTable>
+
+                    {isLoading ? (
+                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
+                            <CircularProgress sx={{color: '#000'}} />
+                        </Box>
+                    ) : (
+                        <React.Fragment>
+                            <CandidateTable value={value} index={0} />
+                            <InterviewerTable value={value} index={1} />
+                            <RecruiterTable value={value} index={2} />
+                        </React.Fragment>
+                    )}
                 </AppBar>
             </Grid>
         </Card>
     );
 }
-
 const Page_Company_Account = () => {
     const navigate = useNavigate()
-
+    const theme = useTheme()
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+    const isXs = useMediaQuery(theme.breakpoints.up('xs'));
 
     // if (useGetRole()=="admin") {
         return (
+            <Grid container>
             <Grid item xs={12}>
                 <Card
                     raised="true"
@@ -541,22 +687,21 @@ const Page_Company_Account = () => {
                         // display:'flex',
                         // border: "1px solid black",
                         // borderRadius: 1,
-                        padding: 4
+                        padding: 4,
+                        mt: '5vh'
                     }}>
-                    <Grid container columnSpacing={{xs: 0.5}}>
+                    <Grid container columnSpacing={{xs: 0.5}}  alignItems="center">
                         <Grid item xs={7} sm={12}>
                         <Grid container display="flex">
                         <Grid item md={0.8} xs={12} display="flex">
-                            <ViewListIcon sx={{fontSize: 60}}/>
+                            <ViewListIcon sx={isMd ? { fontSize: 60 }: {fontSize: 40}}/>
                         </Grid>
                         <Grid item md={11} xs={12}
                               display="flex"
-                              // alignItems="center"
                               justifyContent="left">
                             <Typography
                                 m="0px 10px 20px 0px"
-                                variant="h3"
-                                alignItems="center"
+                                variant={isMd ? "h3" : "h4"}
                                 // justifyContent="left"
                             >
                                 Account List
@@ -584,6 +729,10 @@ const Page_Company_Account = () => {
                                             boxShadow: 7,
                                             minWidth: '120px',
                                             backgroundColor: grey[900],
+                                            '&:hover': {
+                                                color: grey[900],
+                                                backgroundColor: grey[300], // set the hover color to light grey
+                                            },
                                         }}
                                         startIcon={<AccountCircleIcon />}
                                     >
@@ -608,6 +757,10 @@ const Page_Company_Account = () => {
                                             boxShadow: 7,
                                             minWidth: '120px',
                                             backgroundColor: grey[900],
+                                            '&:hover': {
+                                                color: grey[900],
+                                                backgroundColor: grey[300], // set the hover color to light grey
+                                            },
                                         }}
                                         startIcon={<FileOpen/>}
                                     >
@@ -651,7 +804,10 @@ const Page_Company_Account = () => {
                         </Grid>
                     </Grid>
                 </Card>
+            </Grid>
+                <Grid item xs={12} mb="10vh">
                 <FullWidthTabs/>
+                </Grid>
             </Grid>
 
         );

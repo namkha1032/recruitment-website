@@ -6,6 +6,7 @@ import "react-quill/dist/quill.snow.css";
 import CompHeader from "./compHeader";
 import ArticleIcon from "@mui/icons-material/Article";
 import CreateIcon from "@mui/icons-material/Create";
+
 function Box1(prop) {
   return (
     <>
@@ -15,16 +16,17 @@ function Box1(prop) {
             headerIcon={<CreateIcon />}
             state={"Recuite Name"}
             handleState={prop.handleRname}
-            width="98%"
+            width="100%"
+            margin="0"
             value={prop.RName}
           />
         </Grid>
         <Grid item xs={12}>
-          <Box sx={{ width: "98%", margin: "auto" }}>
+          <Box sx={{ width: "100%", margin: "auto" }}>
             <CompHeader headerIcon={<ArticleIcon />}>Education</CompHeader>
             <ReactQuill
               theme="snow"
-              style={{ height: "200px", marginTop:"8px" }}
+              style={{ marginTop:"8px" }}
               value={prop.description}
               onChange={prop.setDescription}
               className="QuillCss"

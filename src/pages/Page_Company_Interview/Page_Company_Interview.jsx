@@ -34,6 +34,7 @@ import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { formatDate } from "../../utils/formatDate";
 
 // JSON <- InterviewList
 // {
@@ -83,8 +84,8 @@ export default function Page_Company_Interview() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch({ type: "saga/getAllInterview" });
-    dispatch({ type: "saga/getPositionList" });
+    dispatch({ type: "interviewSaga/getAllInterview" });
+    dispatch({ type: "positionSaga/getPositionList" });
     dispatch({ type: "saga/getDepartment" });
     return () => {
       cleanStore(dispatch);
@@ -138,7 +139,7 @@ export default function Page_Company_Interview() {
   //   setPositionChoose(null);
   //   setPriorityChoose(null);
   //   if (value === null) {
-  //     dispatch({ type: "saga/getAllInterview" });
+  //     dispatch({ type: "interviewSaga/getAllInterview" });
   //   }
   // }
 
@@ -158,10 +159,10 @@ export default function Page_Company_Interview() {
       },
     });
     dispatch({
-      type: "saga/getPositionListWithFilter",
+      type: "positionSaga/getPositionListWithFilter",
       payload: {
         departmentId: value ? value.departmentId : null,
-        status: null
+        status: null,
       },
     });
   }
@@ -306,6 +307,7 @@ export default function Page_Company_Interview() {
       flex: 0.4,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
+        return formatDate(params.value)
       },
     },
     {
@@ -332,7 +334,7 @@ export default function Page_Company_Interview() {
     },
     {
       field: "Status",
-      minWidth: 140,
+      minWidth: 130,
       headerAlign: "center",
       align: "center",
       renderHeader: () => <span>Status</span>,
@@ -345,18 +347,18 @@ export default function Page_Company_Interview() {
     },
     {
       field: "Priority",
-      minWidth: 140,
+      minWidth: 130,
       headerAlign: "center",
       align: "center",
       renderHeader: () => <span>Result</span>,
       renderCell: (params) => {
         switch (params.value) {
-          case "Pending":
-            return <Pending />;
           case "Passed":
             return <Pass />;
           case "Failed":
             return <Fail />;
+          default:
+            return <Pending />;
         }
       },
     },
@@ -377,9 +379,11 @@ export default function Page_Company_Interview() {
   ]);
 
   return (
-    <Box sx={{
-      marginTop: 3,
-    }}>
+    <Box
+      sx={{
+        marginTop: 3,
+      }}
+    >
       <GigaCard>
         <GigaCardBody>
           <Grid

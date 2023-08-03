@@ -1,11 +1,15 @@
 import React from "react";
 import ProfileMain from "../../components/ProfileMain/ProfileMain";
+import { useParams } from "react-router-dom";
+import Unauthorized from "../../components/Unauthorized/Unauthorized";
 
 
 const Page_Profile_Id_ChangePassword = () => {
-  
+  const { profileid } = useParams();
+  // const userId = useSelector(state => state.user.userId)
+  const userId = "bf39957a-5fad-4e81-a8bd-2c2afa10d15a";
   return (
-    <ProfileMain page='ChangePW'/>
+    profileid === userId ? <ProfileMain page='ChangePW'/> : < Unauthorized/>
   );
 };
 

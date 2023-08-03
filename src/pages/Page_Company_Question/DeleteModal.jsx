@@ -13,7 +13,11 @@ export default function DeleteAlertModal(props) {
     <Box>
       <Modal
         open={props.deleteModalStatus}
-        onClose={props.handleDeleteModalClose}
+        onClose={() => {
+          if (props.status.status !== "loading") {
+            props.handleDeleteModalClose()
+          }
+        }}
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -77,7 +81,7 @@ export default function DeleteAlertModal(props) {
                   color: "black",
                 }}
               >
-                Xoá câu hỏi
+                Delete Question
               </Box>
             </Grid>
             <Grid
@@ -94,7 +98,7 @@ export default function DeleteAlertModal(props) {
                   textAlign: "center"
                 }}
               >
-                Bạn chắc chắn muốn xoá câu hỏi có ID là {props.id}?
+                Are you sure to delete the question with ID <span style={{fontSize: 12}}>{props.value.QuestionId}</span>?
               </Box>
             </Grid>
             <Grid
@@ -124,10 +128,12 @@ export default function DeleteAlertModal(props) {
                   }
                 }}
                 onClick={() => {
-                    props.handleDeleteModalClose();
+                  if (props.status.status !== "loading") {
+                    props.handleDeleteModalClose()
+                  }
                 }}
               >
-                Quay về
+                Cancel
               </Button>}
               {props.status.status === "loading" && <Button
                 variant="outlined"
@@ -143,7 +149,7 @@ export default function DeleteAlertModal(props) {
                 }}
                 disabled
               >
-                Quay về
+                Cancel
               </Button>}
             </Grid>
             <Grid
@@ -178,7 +184,7 @@ export default function DeleteAlertModal(props) {
                     // props.handleDeleteModalClose();
                 }}
               >
-                Đồng ý
+                Delete
               </Button>}
               {props.status.status === "loading" && <LoadingButton
                 variant="outline"
@@ -204,7 +210,7 @@ export default function DeleteAlertModal(props) {
                 loading
                 loadingPosition="center"
               >
-                Đồng ý
+                Delete
               </LoadingButton>}
             </Grid>
           </Grid>

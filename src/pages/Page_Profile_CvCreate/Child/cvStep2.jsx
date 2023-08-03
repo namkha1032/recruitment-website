@@ -17,6 +17,7 @@ function CvStep2(prop) {
               sInputValue={prop.sInputValue}
               setSInputValue={prop.setSInputValue}
               skillData={prop.skillData}
+              skillOption={prop.skillOption}
               skills={prop.skills}
               handleSkilltDelete={prop.handleSkilltDelete}
               SExp={prop.SExp}
@@ -30,13 +31,13 @@ function CvStep2(prop) {
           </Grid>
 
           <Grid item xs={12}>
-            <Box sx={{ width: "98%", margin: "auto" }}>
+            <Box sx={{ width: "100%", margin: "auto" }}>
               <CompHeader headerIcon={<WorkHistoryIcon />}>
                 Work Experience
               </CompHeader>
               <ReactQuill
                 theme="snow"
-                style={{ height: "200px", marginTop: "8px" }}
+                style={{ height: "200px" , marginTop: "8px" }}
                 value={prop.experience}
                 onChange={prop.setExperience}
                 className="QuillCss"

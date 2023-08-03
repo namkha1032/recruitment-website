@@ -1,39 +1,69 @@
 import { Box, Grid, Button } from "@mui/material";
 import { useState } from "react";
-import AddIcon from "@mui/icons-material/Add";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { Viewer, Worker } from "@react-pdf-viewer/core";
-import Typography from "@mui/material/Typography";
-
+import GigaCard from "../../../components/GigaCard/GigaCard";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import CompHeader from "./compHeader";
+import DeleteIcon from "@mui/icons-material/Delete";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 function UploadPdf(prop) {
-  const [pdfFile, setPdfFile] = useState(null);
-  const [viewPdf, setViewPdf] = useState(null);
   const fileType = ["application/pdf"];
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (pdfFile !== null) {
-      setViewPdf(pdfFile);
-    } else {
-      setPdfFile(null);
+  const theme = useTheme()
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (prop.pdfFile !== null) {
+  //     prop.setViewPdf(prop.pdfFile);
+  //   } else {
+  //     prop.setPdfFile(null);
+  //   }
+  // };
+  // console.log(prop.viewPdf);
+  function handleDelete(e) {
+    prop.setViewPdf(null);
+
+    // Reset the pdfFile state to null to remove the selected PDF file
+    prop.setPdfFile(null);
+
+    // Reset the pdf state to null to remove the selected PDF file
+    prop.setPdf(null);
+
+    // Reset the file input element to allow selecting the same file again
+    const fileInput = document.getElementById("cvpdf");
+    if (fileInput) {
+      fileInput.value = "";
     }
-  };
-  console.log(viewPdf);
+  }
   function handleChange(e) {
+    console.log("open");
     let selectedFile = e.target.files[0];
     if (selectedFile) {
       if (selectedFile && fileType.includes(selectedFile.type)) {
+        prop.setPdf(selectedFile);
         let reader = new FileReader();
         reader.readAsDataURL(selectedFile);
         reader.onload = (e) => {
-          setPdfFile(e.target.result);
+          // test view pdf without press view
+          if (e.target.result !== null) {
+            prop.setViewPdf(e.target.result);
+            prop.setPdfFile(e.target.result);
+          } else {
+            prop.setPdfFile(null);
+            prop.setPdf(null);
+          }
+          ////////////////////////////////////////
         };
       } else {
-        setViewPdf(null);
-        setPdfFile(null);
+        prop.setViewPdf(null);
+        prop.setPdfFile(null);
+        prop.setPdf(null);
       }
     } else {
-      setViewPdf(null);
+      prop.setViewPdf(null);
+      prop.setPdf(null);
       console.log("please select");
     }
   }
@@ -47,9 +77,6 @@ function UploadPdf(prop) {
           container
           xs={12}
         >
-          <Typography variant="h6" gutterBottom>
-            CV PDF (optional)
-          </Typography>
           <Grid
             item
             justifyContent="center"
@@ -57,11 +84,31 @@ function UploadPdf(prop) {
             container
             xs={12}
           >
-            <Box sx={{ margin: "auto", marginTop: "16px" }}>
-              <input type="file" onChange={handleChange} />
+            <Box sx={{ margin: "auto", display: "flex" }}>
+              <label htmlFor="cvpdf" className="pdflabel">
+                {" "}
+                <CompHeader headerIcon={<PictureAsPdfIcon />}>
+                  Choose pdf file
+                </CompHeader>
+              </label>
+              <input
+                type="file"
+                id="cvpdf"
+                className="customfile"
+                onChange={handleChange}
+              />
+              <label htmlFor="deletepdf" className="pdfdel">
+                <DeleteIcon />
+              </label>
+              <Button
+                id="deletepdf"
+                htmlFor="cvpdf"
+                className="pdfdelete"
+                onClick={handleDelete}
+              ></Button>
             </Box>
           </Grid>
-
+          {/*           
           <Button
             sx={{
               margin: "auto",
@@ -74,28 +121,31 @@ function UploadPdf(prop) {
             onClick={handleSubmit}
           >
             Upload
-          </Button>
+          </Button> */}
           <Grid
             item
-            sx={{ marginTop: "16px" }}
+            sx={{ marginTop: "32px" }}
             xs={12}
             justifyContent="center"
             alignItems="center"
           >
             <Box>
               <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.15.349/build/pdf.worker.min.js">
-                {viewPdf ? (
+                {prop.viewPdf ? (
                   <>
-                    <Box
-                      sx={{
-                        height: "940px",
-                        width: "100%",
-                        margin: "auto",
-                        marginBottom: "16px",
-                      }}
-                    >
-                      <Viewer fileUrl={viewPdf}></Viewer>
-                    </Box>
+                    <GigaCard>
+                      <Box
+                        sx={{
+                          height:isSm? "940px":"420px",
+                          width: "100%",
+                          margin: "auto",
+                          marginBottom: "16px",
+                          marginTop: "16px",
+                        }}
+                      >
+                        <Viewer fileUrl={prop.viewPdf}></Viewer>
+                      </Box>
+                    </GigaCard>
                   </>
                 ) : (
                   ""

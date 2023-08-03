@@ -29,6 +29,7 @@ import AppPagination from "../../components/AppPagination";
 import {
   Chip,
   FormControl,
+  IconButton,
   InputLabel,
   MenuItem,
   Paper,
@@ -36,10 +37,11 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import { GridDeleteIcon } from "@mui/x-data-grid";
 
 const cards1 = [1, 2, 3, 4, 5, 6];
 const cards2 = [1, 2, 3];
-const PageSize = 1;
+const PageSize = 4;
 //
 
 const defaultTheme = createTheme();
@@ -83,9 +85,9 @@ const Page_Recruitment = () => {
     navigate(`/recruitment/${id}`);
   };
   useEffect(() => {
-    dispatch({ type: "saga/getPositionList" });
-    // dispatch({ type: "saga/getRequirement" });
-    dispatch({ type: "saga/getSkill" });
+    dispatch({ type: "positionSaga/getPositionList" });
+    dispatch({ type: "recruitmentSaga/getRequirement" });
+    dispatch({ type: "skillSaga/getSkill" });
   }, []);
   const handleCloseSelect = () => {
     setBlock('none')
@@ -94,16 +96,18 @@ const Page_Recruitment = () => {
       positionList
     )
   }
-  console.log(positionList)
+  console.log(skill)
   const handleChangeSelect = (index) => {
     setSkillSelect(index)
     if (index !== -1) {
       setBlock('block')
+      console.log(positionList)
       const positionSkill = requirement.filter(
         (item) => item.skillId === skill[index].skillId
       );
+      console.log(positionSkill)
       const positionRequirement = positionList.filter((item) =>
-        positionSkill.filter((item1) => item1.positionId === item.positionId)
+        positionSkill.filter((item1) => item1.positionId === item.PositionId)
           .length === 0
           ? false
           : true
@@ -135,26 +139,26 @@ const Page_Recruitment = () => {
                   height: "300px",
                   borderRadius: "10px",
                   boxShadow: 5,
-
+                  position: 'relative'
                 }}
-                display='flex' alignItems='center' justifyContent='space-around'
+
               >
-                <Box>
-                  <Box sx={{ padding: "150px 880px 0px 110px" }} >
+                <Box sx={{ position: 'relative', top: '150px', left: '30px' }}>
+                  <Box >
 
                     <Typography
                       variant="h3"
                       align="left"
                       color="#EEEEEE"
                       fontFamily="Arial"
-                      sx={{ borderBottom: "3px solid #999999" }}
+                      sx={{}}
                     >
                       Recruitment
                     </Typography>
 
                   </Box>
 
-                  <Box sx={{ padding: "10px 350px 0px 110px" }}>
+                  <Box>
 
                     <Typography
                       variant="h6"
@@ -162,8 +166,8 @@ const Page_Recruitment = () => {
                       color="#EEEEEE"
                       fontFamily="Arial"
                     >
-                      Các sự kiện sôi động sẽ cập nhật liên tục, hãy theo dõi tin tức
-                     
+                      Thông tin tuyển dụng được cập nhật liên tục
+
                     </Typography>
 
                   </Box>
@@ -171,31 +175,7 @@ const Page_Recruitment = () => {
               </Box>
             </Box>
           </Grid>
-          {/* <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container maxWidth="sm">
-            
-            <Typography
-              component="h1"
-              variant="h3"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
-              Thông tin tuyển dụng
-              
-            </Typography>
-            
-        
-          </Container>
 
-          
-        </Box> */}
 
 
           <Grid item md={9} xs={12}>
@@ -227,7 +207,10 @@ const Page_Recruitment = () => {
                             ))}
                           </Select>
                         </FormControl>
-                        <Button variant="contained" sx={{ display: block, ml: 1, p: 0 }} onClick={handleCloseSelect} ><Close fontSize="large" sx={{ display: 'flex', ml: '12px' }} /></Button>
+                        {/* <Button variant="contained" sx={{ display: block, ml: 2, p: 1 }} onClick={handleCloseSelect} ><Close fontSize="medium" sx={{ display: 'flex', ml: '12px' }} /></Button> */}
+                        <IconButton aria-label="delete" sx={{ display: block, ml: 2, p: 1 }}  onClick={handleCloseSelect}>
+                          <GridDeleteIcon  />
+                        </IconButton>
                       </Box>
                     }
 
@@ -342,7 +325,7 @@ const Page_Recruitment = () => {
                                     variant="contained"
                                     size="small"
                                   >
-                                    Chi tiết
+                                    View
                                   </Button>
                                 </Box>
                               </Grid>
