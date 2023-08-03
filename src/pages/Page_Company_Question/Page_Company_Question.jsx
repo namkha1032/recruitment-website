@@ -77,7 +77,7 @@ export default function Page_Company_Question() {
 
   useEffect(() => {
     dispatch({ type: "questionSaga/getAllQuestion" });
-    dispatch({ type: "saga/getSkill" });
+    dispatch({ type: "skillSaga/getSkill" });
     dispatch({ type: "saga/getLanguage" });
   }, []);
 

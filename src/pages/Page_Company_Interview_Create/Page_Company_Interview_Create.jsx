@@ -45,6 +45,7 @@ import AlertDialog from "../../components/AlertDialog/AlertDialog";
 import SkeletonInterviewCreate from "./SkeletonInterviewCreate/SkeletonInterviewCreate";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import InfoApplication from "../../components/InfoApplication/InfoApplication";
 // import utilities
 import cleanStore from "../../utils/cleanStore";
 const Page_Company_Interview_Create = () => {
@@ -61,7 +62,9 @@ const Page_Company_Interview_Create = () => {
     const navigate = useNavigate()
     let [searchParams, setSearchParams] = useSearchParams();
     let applicationid = searchParams.get("applicationid")
+    let recruitmentid = searchParams.get("recruitmentid")
     console.log("appid: ", applicationid)
+    console.log("recid: ", recruitmentid)
 
     const dispatch = useDispatch()
     const theme = useTheme()
@@ -84,19 +87,11 @@ const Page_Company_Interview_Create = () => {
     const roomList = useSelector(state => state.room)
     const shiftList = useSelector(state => state.shift)
     const newError = useSelector(state => state.error)
+    const candidate = useSelector(state => state.candidate)
+    const position = useSelector(state => state.position)
+    const infoApplication = useSelector(state => state.infoApplication)
 
-    const url = window.location.href;
 
-// Phân tích các tham số từ URL sử dụng URLSearchParams
-const urlParams = new URLSearchParams(url);
-
-// Lấy giá trị của "recruitmentid" và "applicationid" từ URL
-const recruitmentId = urlParams.get("recruitmentid");
-const applicationId = urlParams.get("applicationid");
-
-// In kết quả ra console
-console.log("recruitmentid:", recruitmentId);
-console.log("applicationid:", applicationId);
     // set busyInterviewer and busyRoom
     useEffect(() => {
         console.log("useEffect set busyInterviewer and busyRoom")
@@ -145,7 +140,7 @@ console.log("applicationid:", applicationId);
         const newInterviewObj = {
             interview: {
                 interviewerId: chosenInterviewer.interviewerid,
-                recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
+                recruiterId: "cc8bb0ab-8790-4009-955e-7ab24dda359d",
                 applicationId: applicationid,
                 itrsinterviewId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 notes: "",
@@ -157,7 +152,6 @@ console.log("applicationid:", applicationId);
                 roomId: chosenRoom.roomid
             }
         }
-        console.log("newinter: ", JSON.stringify(newInterviewObj))
         dispatch({ type: "interviewSaga/createInterview", payload: newInterviewObj })
         // navigate("/company/interview/1")
     }
@@ -193,30 +187,24 @@ console.log("applicationid:", applicationId);
         }
     }
     return (
-        <>{interviewerList && interviewList && roomList && shiftList ?
+        <>{interviewerList && interviewList && roomList && shiftList
+            // && candidate && position && infoApplication 
+            ?
             <Grid container spacing={4}>
+                <Grid item xs={12}>
+                    <TitleDivider>
+                        General information
+                    </TitleDivider>
+                </Grid>
+                <Grid item xs={12}>
+                    <InfoApplication recruitmentid={recruitmentid} applicationid={applicationid} page={""} />
+                </Grid>
                 <Grid item xs={12}>
                     <TitleDivider>
                         Create Interview
                     </TitleDivider>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                    <GigaCard>
-                        <GigaCardHeader color={"black"} headerIcon={<RecordVoiceOverIcon sx={{ fontSize: "inherit" }} />}>
-                            Choose an interviewer
-                        </GigaCardHeader>
-                        <GigaCardBody>
-                            <TableInterviewer
-                                interviewerList={interviewerList}
-                                chosenShift={chosenShift}
-                                busyInterviewer={busyInterviewer}
-                                chosenInterviewer={chosenInterviewer}
-                                setChosenInterviewer={setChosenInterviewer}
-                            />
-                        </GigaCardBody>
-                    </GigaCard>
-                </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={5}>
                     <GigaCard>
                         <GigaCardHeader color={"black"} headerIcon={<RoomIcon sx={{ fontSize: "inherit" }} />}>
                             Choose a room
@@ -228,6 +216,22 @@ console.log("applicationid:", applicationId);
                                 busyRoom={busyRoom}
                                 chosenRoom={chosenRoom}
                                 setChosenRoom={setChosenRoom}
+                            />
+                        </GigaCardBody>
+                    </GigaCard>
+                </Grid>
+                <Grid item xs={12} md={7}>
+                    <GigaCard>
+                        <GigaCardHeader color={"black"} headerIcon={<RecordVoiceOverIcon sx={{ fontSize: "inherit" }} />}>
+                            Choose an interviewer
+                        </GigaCardHeader>
+                        <GigaCardBody>
+                            <TableInterviewer
+                                interviewerList={interviewerList}
+                                chosenShift={chosenShift}
+                                busyInterviewer={busyInterviewer}
+                                chosenInterviewer={chosenInterviewer}
+                                setChosenInterviewer={setChosenInterviewer}
                             />
                         </GigaCardBody>
                     </GigaCard>
