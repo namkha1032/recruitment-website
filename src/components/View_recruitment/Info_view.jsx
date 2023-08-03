@@ -2,26 +2,14 @@ import { React, useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import RecommendIcon from '@mui/icons-material/Recommend';
-import LanguageIcon from '@mui/icons-material/Language';
-import CreditScoreIcon from '@mui/icons-material/CreditScore';
-import HourglassBottomRoundedIcon from '@mui/icons-material/HourglassBottomRounded';
-import RadarIcon from '@mui/icons-material/Radar';
-import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ArticleIcon from '@mui/icons-material/Article';
+import {Button} from '@mui/material';
 import './Info_view.css'
-import Button from '@mui/material/Button';
 import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
 import Tabs from '@mui/material/Tabs';
-import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader";
-import { Chip, Stack } from '@mui/material';
 import View_detail from './View_detail';
 import View_general from './View_general';
 import List_application from './List_application';
@@ -32,6 +20,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import TableViewIcon from "@mui/icons-material/TableView";
 import ViewTimelineIcon from '@mui/icons-material/ViewTimeline';
 import CircularProgress from '@mui/material/CircularProgress';
+import ButtonApply from './ButtonApply/ButtonApply';
 const Info_view = (props) => {
     const { recruitmentid } = useParams();
     console.log("number", recruitmentid);
@@ -43,26 +32,38 @@ const Info_view = (props) => {
     const handleTab2 = (event, newValue) => {
         setTab2(newValue);
     };
-    const navigate = useNavigate();
-
     // const language = useSelector(state => state.language);
+    const user = useSelector(state => state.user);
+    const userid = user ? user.userid : '';
+    console.log('idinsaga', userid);
     const detailposition = useSelector(state => state.position);
     const applications = useSelector(state => state.application);
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch({ type: 'applicationSaga/getApplication', payload: recruitmentid })
+        dispatch({ type: 'positionSaga/getPosition', payload: recruitmentid })
+        dispatch({ type: 'cvSaga/getCvList', payload: userid })
         return () => {
             cleanStore(dispatch);
         }
     }, [])
+
+    const error = useSelector(state => state.positionError)
+    console.log('.....', error);
+    useEffect(() => {
+        if (error.status === 'error'){
+            if (error.message === 400 || error.message === 404){
+                
+                navigate('/*')
+                dispatch({type: 'positionError/onReset'})
+            }
+        }
+    }, [error])
+    console.log('ERROR', error);
     const skill = useSelector(state => state.skill);
     console.log("skillinmain", skill); // ['react','c++']
-    useEffect(() => {
-        dispatch({ type: 'positionSaga/getPosition', payload: recruitmentid })
-        return () => {
-            dispatch({ type: "positon/setPosition", payload: null })
-        }
-    }, [])
+
     // useEffect(() => {
     //     dispatch({ type: 'saga/getPosition' })
     //     return () => {
@@ -99,10 +100,19 @@ const Info_view = (props) => {
     const endDate = detailposition ? detailposition.endDate.slice(0, 10) : [];
     console.log("date", startDate);
     // console.log("department", department);
+    // BUTTON APPLY
+    const list_CV_draft = useSelector(state => state.cvlist);
+    const list_CV = list_CV_draft ? list_CV_draft : [];
+    // BUTTON EDIT
+    const navigate = useNavigate();
+    const handleEdit = () => {
+        cleanStore(dispatch)
+        navigate(`/company/recruitment/${recruitmentid}/update`);
+    }
     return (
         // detailposition && language && skill && department &&
         // detailposition && applications &&
-        detailposition && skill && applications ?
+        detailposition && skill && applications && list_CV ?
             <>
                 <Grid container spacing={2} >
                     <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -134,122 +144,139 @@ const Info_view = (props) => {
                     <Grid item xs={12} md={12} sm={12}>
                         <Box sx={{ width: '100%', typography: 'body1' }}>
                             {props.tabs == 2 ? (
-                                <GigaCard>
-                                    <GigaCardBody>
+                                <>
+                                    <GigaCard>
+                                        <GigaCardBody>
 
-                                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
 
-                                            <Tabs sx={{
-                                                "& .MuiTabs-indicator": {
-                                                    backgroundColor: "black",
-                                                },
-                                            }}
-                                                value={tab1} onChange={handleTab1} aria-label="lab API tabs example"
-                                            >
-                                                <Tab
-                                                    icon={<ViewTimelineIcon />}
-                                                    label="General"
-                                                    value="1"
-                                                    sx={{
-                                                        textTransform: "none",
-                                                        fontWeight: 500,
-                                                        color: "rgba(0, 0, 0, 0.85)",
-                                                        "&.hover": {
-                                                            color: "rgba(190, 190, 190, 0.85)",
-                                                        },
-                                                        "&.Mui-selected": {
-                                                            color: "black",
-                                                        },
-                                                    }}
-                                                />
-                                                <Tab
-                                                    icon={<TableViewIcon />}
-                                                    label="Application List"
-                                                    value="2"
-                                                    sx={{
-                                                        textTransform: "none",
-                                                        fontWeight: 500,
-                                                        color: "rgba(0, 0, 0, 0.85)",
-                                                        "&.hover": {
-                                                            color: "rgba(190, 190, 190, 0.85)",
-                                                        },
-                                                        "&.Mui-selected": {
-                                                            color: "black",
-                                                        },
-                                                    }}
-                                                />
-
-                                            </Tabs>
-
-                                        </Box>
-                                        {tab1 === "1" && (
-                                            <Box>
-                                                <View_general detailposition={detailposition} />
-                                            </Box>
-                                        )}
-                                        {/* <TabPanel value="1" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
-                                        <Box> */}
-
-                                        {/* <View_detail detail={detail[recruitmentid]} /> */}
-                                        {/* <View_general detailposition={detailposition[0]} /> */}
-                                        {/* </Box>
-                                    </TabPanel> */}
-                                        {tab1 === "2" && (
-                                            <List_application applications={applications} />
-
-                                        )}
-                                        {/* <TabPanel value="2" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
-                                        
-                                    </TabPanel> */}
-
-
-                                    </GigaCardBody>
-                                </GigaCard>
-
-
-                            ) : (
-                                <GigaCard>
-                                    <GigaCardBody>
-
-                                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                            <Tabs
-                                                sx={{
+                                                <Tabs sx={{
                                                     "& .MuiTabs-indicator": {
                                                         backgroundColor: "black",
                                                     },
                                                 }}
-                                                value={tab2}
-                                                onChange={handleTab2} aria-label="lab API tabs example">
-                                                <Tab
-                                                    icon={<ViewTimelineIcon />}
-                                                    label="General"
-                                                    value="3"
+                                                    value={tab1} onChange={handleTab1} aria-label="lab API tabs example"
+                                                >
+                                                    <Tab
+                                                        icon={<ViewTimelineIcon />}
+                                                        label="General"
+                                                        value="1"
+                                                        sx={{
+                                                            textTransform: "none",
+                                                            fontWeight: 500,
+                                                            color: "rgba(0, 0, 0, 0.85)",
+                                                            "&.hover": {
+                                                                color: "rgba(190, 190, 190, 0.85)",
+                                                            },
+                                                            "&.Mui-selected": {
+                                                                color: "black",
+                                                            },
+                                                        }}
+                                                    />
+                                                    <Tab
+                                                        icon={<TableViewIcon />}
+                                                        label="Application List"
+                                                        value="2"
+                                                        sx={{
+                                                            textTransform: "none",
+                                                            fontWeight: 500,
+                                                            color: "rgba(0, 0, 0, 0.85)",
+                                                            "&.hover": {
+                                                                color: "rgba(190, 190, 190, 0.85)",
+                                                            },
+                                                            "&.Mui-selected": {
+                                                                color: "black",
+                                                            },
+                                                        }}
+                                                    />
+
+                                                </Tabs>
+
+                                            </Box>
+                                            {tab1 === "1" && (
+                                                <Box>
+                                                    <View_general detailposition={detailposition} />
+                                                </Box>
+                                            )}
+                                            {/* <TabPanel value="1" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
+                                        <Box> */}
+
+                                            {/* <View_detail detail={detail[recruitmentid]} /> */}
+                                            {/* <View_general detailposition={detailposition[0]} /> */}
+                                            {/* </Box>
+                                    </TabPanel> */}
+                                            {tab1 === "2" && (
+                                                <List_application applications={applications} />
+
+                                            )}
+                                            {/* <TabPanel value="2" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
+                                        
+                                    </TabPanel> */}
+
+
+                                        </GigaCardBody>
+                                    </GigaCard>
+                                    <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", marginTop: 2 }}>
+                                        <Button sx={{
+                                            backgroundColor: "black",
+                                            ":hover": {
+                                                backgroundColor: "grey",
+                                            }
+                                        }} variant='contained' onClick={handleEdit}>
+                                            <EditIcon></EditIcon> EDIT
+                                        </Button>
+
+                                    </Grid>
+                                </>
+
+                            ) : (
+                                <>
+                                    <GigaCard>
+                                        <GigaCardBody>
+
+                                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                                <Tabs
                                                     sx={{
-                                                        textTransform: "none",
-                                                        fontWeight: 500,
-                                                        color: "rgba(0, 0, 0, 0.85)",
-                                                        "&.hover": {
-                                                            color: "rgba(190, 190, 190, 0.85)",
-                                                        },
-                                                        "&.Mui-selected": {
-                                                            color: "black",
+                                                        "& .MuiTabs-indicator": {
+                                                            backgroundColor: "black",
                                                         },
                                                     }}
-                                                />
+                                                    value={tab2}
+                                                    onChange={handleTab2} aria-label="lab API tabs example">
+                                                    <Tab
+                                                        icon={<ViewTimelineIcon />}
+                                                        label="General"
+                                                        value="3"
+                                                        sx={{
+                                                            textTransform: "none",
+                                                            fontWeight: 500,
+                                                            color: "rgba(0, 0, 0, 0.85)",
+                                                            "&.hover": {
+                                                                color: "rgba(190, 190, 190, 0.85)",
+                                                            },
+                                                            "&.Mui-selected": {
+                                                                color: "black",
+                                                            },
+                                                        }}
+                                                    />
 
-                                            </Tabs>
-                                        </Box>
-                                        {tab2 === "3" && (
-                                            <View_general detailposition={detailposition} />
-                                        )}
-                                        {/* <TabPanel value="3" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}> */}
+                                                </Tabs>
+                                            </Box>
+                                            {tab2 === "3" && (
+                                                <View_general detailposition={detailposition} />
+                                            )}
+                                            {/* <TabPanel value="3" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}> */}
 
-                                        {/* <View_detail detail={detail[recruitmentid]} /> */}
-                                        {/* <View_general  detailposition={detailposition[0]} /> */}
-                                        {/* </TabPanel> */}
+                                            {/* <View_detail detail={detail[recruitmentid]} /> */}
+                                            {/* <View_general  detailposition={detailposition[0]} /> */}
+                                            {/* </TabPanel> */}
 
-                                    </GigaCardBody>
-                                </GigaCard>
+                                        </GigaCardBody>
+                                    </GigaCard>
+                                    <Box sx={{ marginTop: 2 }}>
+                                        <ButtonApply position={detailposition} list_CV={list_CV} />
+                                    </Box>
+                                </>
 
                             )}
 

@@ -185,7 +185,12 @@ function* getPosition(action) {
     // yield put({ type: 'position/setPosition', payload: response1.data })
     // yield put({ type: 'positionskill/setPositionSkill', payload: skilllist })
   } catch (error) {
-    console.log(error)
+    console.log("RERERE: ", error)
+    if (error.response.request.status === 400 || error.response.request.status === 404){
+        
+        yield put({type: 'positionError/onError', payload: error.response.request.status})
+    
+      }
   }
 
 }

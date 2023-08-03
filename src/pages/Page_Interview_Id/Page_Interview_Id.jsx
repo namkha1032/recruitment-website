@@ -25,7 +25,7 @@ import AssistantIcon from '@mui/icons-material/Assistant';
 import CakeIcon from '@mui/icons-material/Cake';
 // import Page_Profile_Id_Cv_Id from "../Page_Profile_Id_Cv_Id/Page_Profile_Id_Cv"
 import CV from "../../components/CV/CV"
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { formatDate } from "../../utils/formatDate";
@@ -35,6 +35,7 @@ import { useTheme } from '@mui/material/styles';
 import { convertDate } from "../../utils/convertDate";
 import dayjs from 'dayjs';
 const Page_Interview_Id = ({ cvid }) => {
+    const navigate = useNavigate();
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     let { interviewid } = useParams();
@@ -42,12 +43,22 @@ const Page_Interview_Id = ({ cvid }) => {
     const languages = require('../../data/View_recruitment/languages.json');
     const interviewidinfo = useSelector(state => state.interviewidInfo);
     const dispatch = useDispatch();
+    const interviewerror = useSelector(state => state.interviewError)
     useEffect(() => {
         dispatch({ type: 'interviewSaga/getInterviewInfo', payload: interviewid })
         return () => {
             cleanStore(dispatch);
         }
     }, [])
+    useEffect(() => {
+        if (interviewerror.status === 'error') {
+            if (interviewerror.message === 400 || interviewerror.message === 404) {
+
+                navigate('/*')
+                dispatch({ type: 'interviewError/onReset' })
+            }
+        }
+    }, [interviewerror])
     const shift = useSelector(state => state.interviewshift);
     console.log("interviewid", interviewidinfo);
     let left = 4
@@ -278,7 +289,7 @@ const Page_Interview_Id = ({ cvid }) => {
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={7} md={right} sx={gridSx}>
-                                            <Typography variant="h6" sx={{ marginLeft: "8px", wordBreak: "break-word"}}>
+                                            <Typography variant="h6" sx={{ marginLeft: "8px", wordBreak: "break-word" }}>
                                                 {/* vietcpq@fpt.com */}
                                                 {/* {interviewidinfo[0].intervieweremail} */}
                                                 {interviewer.user.email}
@@ -288,7 +299,7 @@ const Page_Interview_Id = ({ cvid }) => {
                                     <Box sx={{ display: "flex", flexDirection: "row" }}>
                                         <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
                                             <Box sx={gridSx}>
-                                                <CakeIcon/>
+                                                <CakeIcon />
                                                 {isMd ? (
                                                     <Typography variant="h6" >
                                                         Date Birth
@@ -366,9 +377,9 @@ const Page_Interview_Id = ({ cvid }) => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} md={12}>
-                    
-                            <CV cvid={cvid} />
-                        
+
+                    <CV cvid={cvid} />
+
                 </Grid>
             </Grid >
 

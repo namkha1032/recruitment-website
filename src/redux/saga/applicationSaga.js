@@ -41,8 +41,8 @@ function* getInfoApplication(action) {
         // const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload}`)
         const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`)
         const data = response.data.filter(item => item.applicationId === action.payload)
-        console.log("data applicationid",data)
-        if(data.length ===0) 
+        console.log("data applicationid", data)
+        if (data.length === 0)
             yield put({ type: 'infoApplication/setInfoApplication', payload: 'none' })
         else
             yield put({ type: 'infoApplication/setInfoApplication', payload: data[0] })
@@ -65,15 +65,15 @@ function* submitCv(action) {
         const reponse = yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Application`, action.payload)
         // for (let i = 0; i< allaplication.data.length; i++){
         //     if (allaplication.data[i].position.positionId === action.payload.positionId && allaplication.data[i].cv.candidateId ===candidateid[0].candidateId  ){
-                // const deleteapp = yield call(axios.delete, `http://leetun2k2-001-site1.gtempurl.com/api/Application/${allaplication[i].applicationId}`)
-                // submit = yield call(axios.post)
+        // const deleteapp = yield call(axios.delete, `http://leetun2k2-001-site1.gtempurl.com/api/Application/${allaplication[i].applicationId}`)
+        // submit = yield call(axios.post)
         //         console.log('haha',allaplication.data[i] );
         //         break;
         //     }
         //     else{
         //         console.log("hellowrong")
         //     }
-            
+
         // }
         console.log('post', action.payload);
         console.log("submitsaga", reponse.data)
@@ -81,11 +81,33 @@ function* submitCv(action) {
     } catch (error) {
         console.log("error")
     }
+}
 
+function* getApplicationStatus(action) {
+    try {
+        const application = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`);
+        const allcandidate = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`);
+        const candidate = allcandidate.data.filter((prop) => prop.user.id === action.payload.userid);
+        console.log('payload', action.payload);
+        console.log('applicationinsaga', application);
+        console.log('idcaninsaga', candidate);
+        const application_status = application.data.filter((prop) => prop.cv.candidateId === candidate[0].candidateId && prop.position.positionId === action.payload.positionId)     
+
+        console.log('statusapp', application_status);
+        // let submit = false;
+        // if (application_status.length > 0){
+        //     submit = true;
+        // }
+        // yield put({ type: 'countSubmit/setCountSubmit', payload: submit});
+        yield put({ type: 'applicationStatus/setApplicationStatus', payload: application_status })
+    } catch(error){
+        console.log(error)
+    }
 }
 
 function* applicationSaga() {
     yield all([
+        takeEvery('applicationSaga/getApplicationStatus', getApplicationStatus),
         takeEvery('applicationSaga/submitCv', submitCv),
         takeEvery('applicationSaga/getApplication', getApplication),
         takeEvery('applicationSaga/getInfoApplication', getInfoApplication),

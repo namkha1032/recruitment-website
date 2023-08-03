@@ -205,7 +205,7 @@ const View_detail = (props) => {
                 </Grid>
                 <Grid item xs={7} md={right} sx={gridSx}>
                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-                        {props.detailposition.salary}
+                        {`${props.detailposition.salary}${'$'}`}
                         {/* {detail[recruitmentid].salary} */}
                     </Typography>
                     {/* <Chip sx={{ padding: "0px", marginLeft: "5px" }} label={`${detailposition[0].salary}`} variant="outlined" color='info' size="medium" /> */}

@@ -154,6 +154,11 @@ function* getInterviewInfo(action) {
     yield put({ type: 'interviewskill/setInterviewSkill', payload: skilllist })
   } catch (error) {
     console.log(error);
+    if (error.response.request.status === 400 || error.response.request.status === 404){
+        
+      yield put({type: 'interviewError/onError', payload: error.response.request.status})
+  
+    }
   }
 }
 
