@@ -238,8 +238,8 @@ function* interviewSaga() {
     takeEvery("interviewSaga/scoreInterview", scoreInterview),
     takeEvery("interviewSaga/getInterviewId", getInterviewId),
     takeEvery("interviewSaga/createInterview", createInterview),
-    takeLatest("saga/getAllInterview", getAllInterview),
-    takeLatest("saga/getInterviewWithFilter", getInterviewWithFilter),
+    takeLatest("interviewSaga/getAllInterview", getAllInterview),
+    takeLatest("interviewSaga/getInterviewWithFilter", getInterviewWithFilter),
     takeEvery('interviewSaga/getDataForInterview', getDataForInterview),
   ]);
 }

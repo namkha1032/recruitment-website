@@ -59,7 +59,7 @@ export default function Page_Company_Event() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch({ type: "saga/getEventList" });
+    dispatch({ type: "eventSaga/getEventList" });
     return () => {
       cleanStore(dispatch);
     };
@@ -127,7 +127,7 @@ export default function Page_Company_Event() {
   function handleChooseStatus(value) {
     setStatusChoose(value);
     dispatch({
-      type: "saga/getEventListWithFilter",
+      type: "eventSaga/getEventListWithFilter",
       payload: {
         status: value ? value : null,
       },
@@ -518,7 +518,10 @@ export default function Page_Company_Event() {
                 },
                 "&.MuiDataGrid-root .MuiCircularProgress-root": {
                   color: "black"
-                }
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-row": {
+                  cursor: "pointer"
+                },
               }}
               slots={{
                 toolbar: GridToolbar,
@@ -555,17 +558,20 @@ export default function Page_Company_Event() {
                 },
               }}
               getRowId={(row) => row.EventId}
-              onCellClick={(params, event) => {
-                if (
-                  params.field === "EventId" ||
-                  params.field === "EventName"
-                ) {
-                  handleDetailClick(params.row.EventId);
-                }
-                if (params.field === "CreatedByName") {
-                  handleAccountDetailClick(params.row.CreatedById);
-                }
+              onRowClick={(params, event) => {
+                handleDetailClick(params.row.EventId);
               }}
+              // onCellClick={(params, event) => {
+              //   if (
+              //     params.field === "EventId" ||
+              //     params.field === "EventName"
+              //   ) {
+              //     handleDetailClick(params.row.EventId);
+              //   }
+              //   // if (params.field === "CreatedByName") {
+              //   //   handleAccountDetailClick(params.row.CreatedById);
+              //   // }
+              // }}
             />
           </Box>
         </GigaCardBody>

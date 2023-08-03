@@ -7,5 +7,5 @@
 
 export function getQuestionSkillInfo(input, questionSkills) {
     const output = questionSkills.filter(element => element.questionId === input)
-    return output ? output[0] : null
+    return output.length > 0 ? output[0] : null
 }
