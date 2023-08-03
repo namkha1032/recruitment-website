@@ -21,6 +21,8 @@ const InputText = (prop) => {
         <CompHeader headerIcon={prop.headerIcon}>{prop.state}</CompHeader>
         <TextField
           required
+          multiline
+          maxRows={4}
           type={prop.type}
           id={prop.state}
           value={prop.value}

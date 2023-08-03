@@ -10,6 +10,8 @@ import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import axios from "axios";
 import { delay } from "../../../utils/delay";
+import Alert from "@mui/material/Alert";
+import AlertDialog from "../../../components/AlertDialog/AlertDialog";
 // import ViewCv from "./ViewCv";
 const SkillAlert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -33,6 +35,29 @@ function CVForm() {
   const skillList = useSelector((state) => state.skill);
   const languageList = useSelector((state) => state.language);
   const newError = useSelector((state) => state.error);
+  const userlocal = useSelector((state) => state.user);
+
+  let [errorSnackbar, setErrorSnackbar] = useState(false);
+  ////////////////////////////////////////////////////
+  useEffect(() => {
+    if (newError.status == "no") {
+      setTimeout(() => {
+        const idToNavigate = newError.message;
+        cleanStore(dispatch);
+        navigate(`/profile/${canid}/cv/${idToNavigate}`);
+      }, 2000);
+    }
+    if (newError.status == "yes") {
+      setErrorSnackbar(true);
+      setTimeout(() => {
+        setErrorSnackbar(false);
+        dispatch({
+          type: "error/setError",
+          payload: { status: "idle", message: "" },
+        });
+      }, 5000);
+    }
+  }, [newError]);
 
   const [skillData, setSkillData] = useState([]);
   const [skillOption, setSkillOption] = useState([]);
@@ -185,21 +210,27 @@ function CVForm() {
     }
     setSkillOpen(false);
   };
+  const canid = userlocal.candidateId
+  console.log(canid)
+  let [openAlert, setOpenAlert] = useState(false);
   async function handleSubmit(e) {
+    let token = `Bearer ${userlocal.token}`;
+    const config = {
+      headers: { Authorization: token },
+    };
     const updatedSkills = removeFieldFromCertificates(skills, "cvSkillsId");
     const updatedCertificates = removeFieldFromCertificates(
       certs,
       "certificateId"
     );
-    e.preventDefault();
     try {
-      setLoading(true);
+      // setLoading(true);
       const formData = new FormData();
       formData.append("File", pdf);
       const response = await axios.post(
         `https://leetun2k2-001-site1.gtempurl.com/api/Cv`,
         {
-          candidateId: "daa3769b-5dd9-47f7-97de-f97e4e705971",
+          candidateId: canid,
           experience: experience,
           cvPdf: "",
           cvName: cvtitle,
@@ -208,39 +239,78 @@ function CVForm() {
           isDeleted: false,
           skills: updatedSkills,
           certificates: updatedCertificates,
-        }
+        }, config
       );
       console.log("FINISHED!!!!!!!!!!!!");
       console.log(response);
       const response2 = await axios.get(
-        `https://leetun2k2-001-site1.gtempurl.com/api/Cv`
+        `https://leetun2k2-001-site1.gtempurl.com/api/Cv`,config
       );
       console.log(response2.data);
       const cv = response2.data.filter(
         (prop) =>
           prop.cvName === cvtitle &&
-          prop.candidateId === "daa3769b-5dd9-47f7-97de-f97e4e705971" &&
+          prop.candidateId === canid &&
           prop.introduction === intro &&
           prop.isDeleted === false
       );
       if (pdf !== null) {
-        console.log(formData)
+        console.log(formData);
         const response3 = await axios.post(
           `https://leetun2k2-001-site1.gtempurl.com/api/Cv/UploadCvPdf/${cv[0].cvid}`,
-          formData
+          formData,config
         );
         console.log(response3);
       }
-      delay(1000)
-      dispatch({ type: "error/setError", payload: { status: "no", message: cv[0].cvid }});
-    //   setLoading(false);
-    //   cleanStore(dispatch);
-    // navigate(`/profile/:profileid/cv/${cv[0].cvid}`);
-    } catch (error) {
-      console.log(error);
+      delay(1000);
+      dispatch({
+        type: "error/setError",
+        payload: { status: "no", message: cv[0].cvid },
+      });
+      //   setLoading(false);
+      //   cleanStore(dispatch);
+      // navigate(`/profile/:profileid/cv/${cv[0].cvid}`);
+    } catch (err) {
+      dispatch({
+        type: "error/setError",
+        payload: { status: "yes", message: err.response.data.error },
+      });
+      console.log("err: ", err);
     }
   }
   //COMPS
+  function preProcessing() {
+    const messArr = [];
+    if (skills.length === 0) {
+      messArr.push("skill");
+    }
+    if (cvtitle == "") {
+      messArr.push("title");
+    }
+    if (education == "") {
+      messArr.push("education");
+    }
+    if (experience == "") {
+      messArr.push("work experience");
+    }
+    let messString = "";
+    if (messArr.length > 0) {
+      messArr.forEach((x, index) => {
+        messString = messString + x;
+        if (index < messArr.length - 1) {
+          messString = messString + ", ";
+        } else {
+          messString = messString + ".";
+        }
+      });
+      dispatch({
+        type: "error/setError",
+        payload: { status: "yes", message: `please fill ${messString}` },
+      });
+    } else {
+      setOpenAlert(true);
+    }
+  }
   return (
     <>
       <Grid container spacing={0} justifyContent="center" alignItems="center">
@@ -250,6 +320,7 @@ function CVForm() {
             handleSkillClose={handleSkillClose}
             handleSetSkillOpen={handleSetSkillOpen}
             skillOpen={skillOpen}
+            preProcessing={preProcessing}
             //////////Skill////////
             skillOption={skillOption}
             setSkillId={setSkillId}
@@ -296,13 +367,6 @@ function CVForm() {
             handleSetOpen={handleSetOpen}
             handleClose={handleClose}
             handleSubmit={handleSubmit}
-            // handleLanguageDelete={handleLanguageDelete}
-            // lInputValue={lInputValue}
-            // setLInputValue={setLInputValue}
-            // setLanguageName={setLanguageName}
-            // languageName={languageName}
-            // setLanguageId={setLanguageId}
-            // handleLanguageAdd={handleLanguageAdd}
             cvtitle={cvtitle}
             handleTitle={handleTitle}
             skillData={skillData}
@@ -340,6 +404,34 @@ function CVForm() {
           Lack of certificate's information
         </CertAlert>
       </Snackbar>
+      <Snackbar
+        // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        open={errorSnackbar}
+        autoHideDuration={4000}
+        onClose={() => {
+          setErrorSnackbar(false);
+        }}
+        // message="I love snacks"
+        // key={vertical + horizontal}
+      >
+        <Alert
+          variant="filled"
+          onClose={() => {
+            setErrorSnackbar(false);
+          }}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {newError.message}
+        </Alert>
+      </Snackbar>
+      <AlertDialog
+        openAlert={openAlert}
+        setOpenAlert={setOpenAlert}
+        alertMessage={"Are you sure you want to create?"}
+        successfulMessage={"Create successfully"}
+        handleSubmit={handleSubmit}
+      />
     </>
   );
 }

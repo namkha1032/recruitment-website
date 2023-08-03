@@ -44,6 +44,8 @@ function RecruitForm() {
   const languageList = useSelector((state) => state.language);
   const departmentList = useSelector((state) => state.department);
   const newError = useSelector((state) => state.error);
+  const userlocal = useSelector((state) => state.user);
+  const recruiterId= userlocal.recruiterId
   // Skill data
   const [skill, setSkill] = useState([]);
   const [skillData, setSkillData] = useState([]);
@@ -299,10 +301,12 @@ function RecruitForm() {
   let [openAlert, setOpenAlert] = useState(false);
 
   function handleSubmit(e) {
+    let token = `Bearer ${userlocal.token}`;
     try {
       dispatch({
         type: "createPositionsaga/getCreatePosition",
         payload: {
+          token:token,
           positionName: RName,
           description: description,
           salary: salary,
@@ -311,7 +315,7 @@ function RecruitForm() {
           endDate: endDate !== null ? endDate.toJSON() : endDate,
           departmentId: departmentChoose,
           languageId: languages,
-          recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
+          recruiterId: recruiterId,
           requirement: requirement,
         },
       });
@@ -501,7 +505,7 @@ function RecruitForm() {
           Wrong skill's name
         </SkillAlert>
       </Snackbar>
-       <Snackbar
+      <Snackbar
         // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         open={errorSnackbar}
         autoHideDuration={4000}

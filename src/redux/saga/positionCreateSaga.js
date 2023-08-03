@@ -18,6 +18,10 @@ function* createPosition(action) {
       recruiterId,
       requirement,
     } = action.payload;
+    const token = action.payload.token
+    const config = {
+      headers: { Authorization: token },
+    };
     const removeField = (certificatesArray, fieldToRemove) => {
       return certificatesArray.map(
         ({ [fieldToRemove]: removedField, ...rest }) => rest
@@ -55,7 +59,7 @@ function* createPosition(action) {
         departmentId: departmentId,
         languageId: languageId,
         recruiterId: recruiterId,
-      }
+      },config
     );
     console.log(response.data);
     const positionId = response.data.positionId;
@@ -76,7 +80,7 @@ function* createPosition(action) {
       const response2 = yield call(
         axios.post,
         "https://leetun2k2-001-site1.gtempurl.com/api/Requirement",
-        newrequire
+        newrequire,config
       );
       console.log(response2);
     }

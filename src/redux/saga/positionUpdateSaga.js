@@ -21,6 +21,10 @@ function* updatePosition(action) {
       delRequire,
       addRequire,
     } = action.payload;
+    const token = action.payload.token
+    const config = {
+      headers: { Authorization: token },
+    };
     const removeField = (certificatesArray, fieldToRemove) => {
       return certificatesArray.map(
         ({ [fieldToRemove]: removedField, ...rest }) => rest
@@ -69,7 +73,7 @@ function* updatePosition(action) {
         languageId: languageId,
         recruiterId: recruiterId,
         isDeleted: false,
-      }
+      },config
     );
     console.log(response)
     for (let require of updatedAddRequired3) {
@@ -83,7 +87,7 @@ function* updatePosition(action) {
       const response2 = yield call(
         axios.post,
         "https://leetun2k2-001-site1.gtempurl.com/api/Requirement",
-        newrequire
+        newrequire,config
       );
       console.log(response2);
     }
@@ -91,7 +95,7 @@ function* updatePosition(action) {
       console.log(require.requirementId)
       const response2 = yield call(
         axios.delete,
-        `https://leetun2k2-001-site1.gtempurl.com/api/Requirement/${require.requirementId}`
+        `https://leetun2k2-001-site1.gtempurl.com/api/Requirement/${require.requirementId}`,config
       );
       console.log(response2);
     }

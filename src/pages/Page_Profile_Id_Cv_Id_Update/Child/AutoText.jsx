@@ -31,6 +31,7 @@ export default function EmptyTextarea(prop) {
             id={prop.state}
             variant="outlined"
             multiline
+            maxRows={4}
           />
         </Box>
       </Box>

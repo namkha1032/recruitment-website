@@ -17,6 +17,10 @@ function* updateCv(action) {
       delCerts,
       addCerts
     } = action.payload;
+    const token = `Bearer ${action.payload.token}`
+    const config = {
+      headers: { Authorization: token },
+    };
     console.log("CvName: ", CvName);
     console.log("Introduction: ", Introduction);
     console.log("Education: ", Education);
@@ -62,7 +66,7 @@ function* updateCv(action) {
         isDeleted:false,
         skills:updatedSkills2,
         certificates:updatedCertificates 
-      }
+      },config
     );
     console.log(response)
     

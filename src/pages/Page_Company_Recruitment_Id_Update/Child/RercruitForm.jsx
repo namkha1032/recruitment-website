@@ -48,6 +48,8 @@ function RecruitForm(prop) {
   const positionInfor = useSelector((state) => state.positionInfor);
   const positionRequire = useSelector((state) => state.positionRequire);
   const newError = useSelector((state) => state.error);
+  const userlocal = useSelector((state) => state.user);
+  const recruiterId = userlocal.recruiterId;
   // const skill = skillList ? skillList : [];
   // const language = languageList ? languageList : [];
   // const department = departmentList ? departmentList : [];
@@ -73,7 +75,7 @@ function RecruitForm(prop) {
   const [delRequire, setDelRequire] = useState([]);
   const [addRequire, setAddRequire] = useState([]);
   const [skillOpen, setSkillOpen] = useState(false);
-
+  const [oldRecruiter, setOldRecruiter] = useState("");
   const handleSetSkillOpen = () => {
     setSkillOpen(true);
   };
@@ -166,7 +168,13 @@ function RecruitForm(prop) {
             : ""
           : ""
       );
-
+      setOldRecruiter(
+        positionInfor
+          ? positionInfor[0].recruiter.recruiterId !== null
+            ? positionInfor[0].recruiter.recruiterId
+            : ""
+          : ""
+      );
       setDepartmentChoose(
         positionInfor
           ? positionInfor[0].department.departmentId !== null
@@ -204,6 +212,8 @@ function RecruitForm(prop) {
   const departments = department.filter(
     (comp) => comp.departmentId === departmentChoose
   );
+  console.log(recruiterId)
+  console.log(oldRecruiter)
   console.log(skill);
   // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
   // const [status, setStatus] = useState(recruitInfo.status);
@@ -349,10 +359,13 @@ function RecruitForm(prop) {
   let [openAlert, setOpenAlert] = useState(false);
 
   function handleSubmit(e) {
+    let token = `Bearer ${userlocal.token}`;
+
     try {
       dispatch({
         type: "positionUpdatesaga/getUpdatePosition",
         payload: {
+          token: token,
           positionId: recruitmentid,
           positionName: RName,
           description: description,
@@ -362,7 +375,7 @@ function RecruitForm(prop) {
           endDate: endDate !== null ? endDate.toJSON() : endDate,
           departmentId: departmentChoose,
           languageId: languages,
-          recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
+          recruiterId: oldRecruiter,
           requirement: requirement,
           delRequire: delRequire,
           addRequire: addRequire,
