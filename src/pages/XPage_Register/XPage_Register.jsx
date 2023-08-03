@@ -25,6 +25,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { MailOutline } from "@mui/icons-material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import HomeIcon from '@mui/icons-material/Home';
 
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -247,8 +248,21 @@ const XPage_Register = () => {
                 marginTop: "5px",
               }}
             >
-              <ArrowBackIcon />
-              <Typography
+              <ArrowBackIcon 
+                onClick={handleClickHome}
+                sx={{
+                  //textDecoration: "none",
+                  cursor: 'pointer'
+                }}
+              />
+              <HomeIcon 
+                onClick={handleClickHome}
+                sx={{
+                  //textDecoration: "none",
+                  cursor: 'pointer'
+                }}
+              />
+              {/* <Typography
                 // component={Link}
                 // to="/home"
                 onClick={handleClickHome}
@@ -260,7 +274,7 @@ const XPage_Register = () => {
                 }}
               >
                 Back to home page
-              </Typography>
+              </Typography> */}
             </Box>
             <Box
               sx={{
@@ -279,7 +293,7 @@ const XPage_Register = () => {
                     color: "black",
                     textAlign: "center",
                     fontWeight: "450",
-                    marginBottom: "10px",
+                    marginBottom: "5px",
                   }}
                 >
                   Sign Up
