@@ -11,7 +11,7 @@ function* getProfile(action) {
 
 function* profileSaga() {
     yield all([
-        takeEvery("saga/getProfile", getProfile)
+        takeEvery("profileSaga/getProfile", getProfile)
     ])
 }
 

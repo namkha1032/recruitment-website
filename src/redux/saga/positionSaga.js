@@ -196,7 +196,7 @@ function* getPosition(action) {
 
 function* positionSaga() {
   yield all([
-    takeEvery("positionsaga/getPosition", getPosition),
+    takeEvery("positionSaga/getPosition", getPosition),
     takeLatest("positionSaga/getPositionList", getPositionList),
     takeLatest("positionSaga/updatePositionList", updatePositionList),
     takeLatest("positionSaga/getPositionListWithFilter", getPositionListWithFilter),

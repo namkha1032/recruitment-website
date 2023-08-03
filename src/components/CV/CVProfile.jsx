@@ -31,7 +31,7 @@ import Loading from "../Loading/Loading";
     const cv = useSelector((state) => state.cv);
     const candidate = useSelector((state) => state.candidate);
     useEffect(() => {
-      dispatch({ type: "saga/getCv", payload: cvid });
+      dispatch({ type: "cvSaga/getCv", payload: cvid });
       return () => {
         dispatch({ type: "cv/setCv", payload: null });
       };
