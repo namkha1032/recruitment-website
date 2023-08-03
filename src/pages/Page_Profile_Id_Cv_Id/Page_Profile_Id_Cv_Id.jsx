@@ -11,14 +11,12 @@ import { useSelector } from "react-redux";
 const Page_Profile_Id_Cv_Id = () => {
   const user = useSelector((state) => state.user);
   const params = useParams();
-
-
+  console.log(params.cvid)
   return (
     user && (
-      <>
-        
+      <>     
         <Box mt={6}>
-          <CV user={user} cv={params.cvid} page="profile_cv"/>
+          <CV cvid={params.cvid} page="profile_cv"/>
         </Box>
       </>
     )

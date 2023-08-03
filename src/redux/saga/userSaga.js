@@ -17,15 +17,15 @@ function* userLogin(action) {
         const config = {
             headers: { Authorization: token },
         }
-        const responseUserId = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/CurrentUser', config)
-        //console.log("userId is", responseUserId.data.userId)
+        // const responseUserId = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/CurrentUser', config)
+        // console.log("userId is", responseUserId.data.userId)
 
         const responseUserInformation = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/UserLogin', config)
         //console.log("userInformation is", responseUserInformation.data)
 
         let userObj = {
             token: responseLogin.data.token,
-            userid: responseUserId.data.userId,
+            userid: responseUserInformation.data.id,
             name: responseUserInformation.data.fullName,
             email: responseUserInformation.data.email,
             birth: responseUserInformation.data.dateOfBirth,

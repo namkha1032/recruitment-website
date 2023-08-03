@@ -30,13 +30,15 @@ import Loading from "../Loading/Loading";
     const dispatch = useDispatch();
     const cv = useSelector((state) => state.cv);
     const candidate = useSelector((state) => state.candidate);
+    const user = useSelector(state => state.user)
     useEffect(() => {
-      dispatch({ type: "cvSaga/getCv", payload: cvid });
+      console.log({cvid:cvid,token:user.token,userid:user.userid} )
+      dispatch({ type: "cvSaga/getCv", payload: {cvid:cvid,token:user.token,userid:user.userid} });
       return () => {
         dispatch({ type: "cv/setCv", payload: null });
       };
     }, []);
-    
+    console.log(cv)
   
     return (
       cv &&
@@ -44,81 +46,6 @@ import Loading from "../Loading/Loading";
         <>
         <Box>
           <Grid container spacing={3}>
-          {page !== "Profile" && 
-          <Grid item md={12} xs={12}>
-          <GigaCard> 
-            <Grid container p={3}>
-            <Grid
-              item
-              md={3} sm={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                bottom: "25px",
-              }}
-            >
-              <Box
-                component="img"
-                sx={{
-                  borderRadius: "50%",
-                  border: "1px solid #ccc",
-                  width: "150px",
-                  height: "150px",
-                }}
-                src={candidate.image}
-                alt=""
-              />
-            </Grid>
-            <Grid item md={1} xs={2}></Grid>
-            <Grid item md={8} xs={7}>
-              <Box component="h1" sx={{ margin: "24px 0px 0px  0px" }}>
-                {candidate.name}
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  justifyContent: "flex-start",
-                }}
-              >
-                <Box
-                  sx={{
-                    padding: "10px 24px 0 0",
-                    display: "flex",
-                    flexWrap: "no-wrap",
-                  }}
-                >
-                  <Email fontSize="small" />
-                  <Box sx={{ pl: "10px" }}>{candidate.email}</Box>
-                </Box>
-                <Box
-                  sx={{
-                    padding: "10px 24px 0 0",
-                    display: "flex",
-                    flexWrap: "no-wrap",
-                  }}
-                >
-                  <Phone fontSize="small" />
-                  <Box sx={{ pl: "10px" }}>{candidate.phone}</Box>
-                </Box>
-                <Box
-                  sx={{
-                    padding: "10px 24px 0 0",
-                    display: "flex",
-                    flexWrap: "no-wrap",
-                  }}
-                >
-                  <LocationOn fontSize="small" />
-                  <Box sx={{ pl: "10px" }}>{candidate.address}</Box>
-                </Box>
-              </Box>
-            </Grid>
-  
-               
-                 </Grid></GigaCard>
-                </Grid>
-                }
-  
                 <Grid item md={12} xs={12}>
                 <GigaCard>
                 <Box p={3}>
@@ -219,27 +146,7 @@ import Loading from "../Loading/Loading";
               </GigaCard>
             </Grid>
   
-            <Grid item md={12} xs={12}>
-            <GigaCard>
-              <Box p={3}>
-                <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-                  <Language sx={{ mr: "15px" }} />
-                  <Box
-                    component="h2"
-                    sx={{ position: "relative", top: "5.5px", m: 0 }}
-                  >
-                    Language
-                  </Box>
-                </Box>
-                <Stack direction='row' sx={{ display:'flex',flexWrap:'wrap', padding: "10px 0 0 40px" }}>
-                  {cv.languages.map((language, index) => (
-                    <Box key={index} m='16px 16px 0 0'>
-                    <Chip  label={language.name} /></Box>
-                  ))}
-                </Stack>
-              </Box>
-             </GigaCard> 
-          </Grid>
+            
           <Grid item md={12} xs={12}>
           <GigaCard>
               <Box p={3}>

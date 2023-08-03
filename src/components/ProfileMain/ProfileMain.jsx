@@ -29,10 +29,10 @@ const ProfileMain = ({ page }) => {
   const { profileid } = useParams();
   const positionList = useSelector((state) => state.positionList);
   const dispatch = useDispatch();
-  const profile = useSelector((state) => state.profile);
+  const profile = useSelector((state) => state.user); // tạm thời lấy profile là của user đăng nhập => phải sửa thành profile của userid
   // const profile = null
   const userId = useSelector(state => state.user.userid)
-  console.log(userId)
+
 
   useEffect(() => {
     dispatch({ type: "positionSaga/getPositionList" });
@@ -50,7 +50,6 @@ const ProfileMain = ({ page }) => {
   const handleClickHistory = () => {
     if (page !== "History") navigate("/profile/1/history");
   };
-
   return (
     profile === null ?  
     
@@ -114,7 +113,7 @@ const ProfileMain = ({ page }) => {
                 </Box>
                 {role === "candidate" && (
                   <Box>
-                    <CVProfile cvid={profile.cvselected} page="Profile" />
+                    <CVProfile cvid={null} page="Profile" />
                   </Box>
                 )}
               </Box>

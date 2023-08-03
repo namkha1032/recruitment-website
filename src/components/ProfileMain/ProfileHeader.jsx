@@ -4,18 +4,29 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import GigaCard from "../GigaCard/GigaCard";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom/dist";
 
 const ProfileHeader = ({  id, profile }) => {
-  const [selectedImage, setSelectedImage] = useState(
-    "https://pbs.twimg.com/media/EYVxlOSXsAExOpX.jpg"
-  );
+  const {profileid} = useParams();
+  const user = useSelector(state => state.user)
+  const dispatch = useDispatch()
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    if (file !== null) {
-      setSelectedImage(URL.createObjectURL(file));
-      axios.patch("http://localhost:3001/user", {
-        image: URL.createObjectURL(file),
-      });
+    console.log(file)
+    if (file) {
+
+      // setSelectedImage(URL.createObjectURL(file));
+      const data = {
+        FullName: profile.name!== null ? profile.name : '',
+        DateOfBirth:profile.birth,
+        Address:profile.address!== null ? profile.address : '',
+        ImageFile:URL.createObjectURL(file),
+        PhoneNumber:profile.phone!== null ? profile.phone : ''
+      }
+      console.log(data)
+      dispatch({type:'profileSaga/updateProfile',payload: {data,userid:user.userid,token:user.token}})
+   
     }
   };
 
@@ -56,11 +67,12 @@ const ProfileHeader = ({  id, profile }) => {
               width: "100px",
               height: "100px",
             }}
-            src={selectedImage}
+            src={profile.image}
             alt=""
           />
+          { user.userid === profileid && <>
           <input
-            accept="image/*"
+            accept="image/*"  
             id="image-upload"
             type="file"
             style={{ display: "none" }}
@@ -94,7 +106,7 @@ const ProfileHeader = ({  id, profile }) => {
               </label>
             </IconButton>
           </Box>
-
+          </>}
           <Box component='h2' sx={{ margin: "24px 0px 0px  24px" }}>{profile.name}</Box>
         </Box>
 
