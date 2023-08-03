@@ -43,7 +43,7 @@ const Page_Interview_Id = ({ cvid }) => {
     const interviewidinfo = useSelector(state => state.interviewidInfo);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch({ type: 'saga/getInterviewInfo', payload: interviewid })
+        dispatch({ type: 'interviewsaga/getInterviewInfo', payload: interviewid })
         return () => {
             cleanStore(dispatch);
         }
