@@ -99,11 +99,21 @@ export default function Page_Company_Recruitment() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const role = useGetRole();
-  console.log("=======", role)
+  const user = useSelector(state => state.user);
 
   useEffect(() => {
-    dispatch({ type: "positionSaga/getPositionList" });
-    dispatch({ type: "departmentSaga/getDepartment" });
+    dispatch({
+      type: "positionSaga/getPositionList",
+      payload: {
+        token: `Bearer ${user.token}`,
+      },
+    });
+    dispatch({
+      type: "departmentSaga/getDepartment",
+      payload: {
+        token: `Bearer ${user.token}`,
+      },
+    });
     // dispatch({ type: "languageSaga/getLanguage" });
     return () => {
       cleanStore(dispatch);
@@ -198,6 +208,7 @@ export default function Page_Company_Recruitment() {
       payload: {
         departmentId: value ? value.departmentId : null,
         status: statusChoose,
+        token: `Bearer ${user.token}`,
       },
     });
   }
@@ -222,6 +233,7 @@ export default function Page_Company_Recruitment() {
       payload: {
         departmentId: departmentChoose ? departmentChoose.departmentId : null,
         status: value ? value : null,
+        token: `Bearer ${user.token}`,
       },
     });
   }
@@ -249,6 +261,7 @@ export default function Page_Company_Recruitment() {
         value: value,
         departmentId: departmentChoose ? departmentChoose.departmentId : null,
         status: statusChoose ? statusChoose : null,
+        token: `Bearer ${user.token}`,
       },
     });
   }
@@ -262,6 +275,7 @@ export default function Page_Company_Recruitment() {
         value: value,
         departmentId: departmentChoose ? departmentChoose.departmentId : null,
         status: statusChoose ? statusChoose : null,
+        token: `Bearer ${user.token}`,
       },
     });
   }
@@ -385,206 +399,217 @@ export default function Page_Company_Recruitment() {
       headerAlign: "right",
       align: "right",
       getActions: (params) => {
-        if (role === "admin") {if (params.row.Status === true) {
-          return [
-            <GridActionsCellItem
-              icon={
-                <InfoRoundedIcon
-                  variant="outlined"
-                  sx={{
-                    color: "black",
-                  }}
-                />
-              }
-              label="Detail"
-              sx={{
-                color: "black",
-              }}
-              onClick={() => handleDetailClick(params.row.PositionId)}
-              showInMenu
-            />,
-            <GridActionsCellItem
-              icon={
-                <QueryStatsRoundedIcon
-                  sx={{
-                    color: "black",
-                  }}
-                />
-              }
-              label="Report"
-              sx={{
-                color: "black",
-              }}
-              onClick={() => handleReportClick(params.row.PositionId)}
-              showInMenu
-            />,
-            <GridActionsCellItem
-              icon={<PlayCircleOutlineRoundedIcon sx={{ color: "#1565C0" }} />}
-              label="Active position"
-              onClick={() =>
-                handleActiveClick(params.row.PositionId, {
-                  positionId: params.row.PositionId,
-                  positionName: params.row.PositionName,
-                  description: params.row.Description,
-                  salary: params.row.Salary,
-                  maxHiringQty: params.row.MaxHiringQty,
-                  startDate: params.row.StartDate,
-                  endDate: params.row.EndDate,
-                  departmentId: params.row.DepartmentId,
-                  languageId: params.row.LanguageId,
-                  recruiterId: params.row.RecruiterId,
-                  isDeleted: false,
-                })
-              }
-              showInMenu
-              sx={{
-                color: "#1565C0",
-              }}
-            />,
-          ];
+        if (role === "admin") {
+          if (params.row.Status === true) {
+            return [
+              <GridActionsCellItem
+                icon={
+                  <InfoRoundedIcon
+                    variant="outlined"
+                    sx={{
+                      color: "black",
+                    }}
+                  />
+                }
+                label="Detail"
+                sx={{
+                  color: "black",
+                }}
+                onClick={() => handleDetailClick(params.row.PositionId)}
+                showInMenu
+              />,
+              <GridActionsCellItem
+                icon={
+                  <QueryStatsRoundedIcon
+                    sx={{
+                      color: "black",
+                    }}
+                  />
+                }
+                label="Report"
+                sx={{
+                  color: "black",
+                }}
+                onClick={() => handleReportClick(params.row.PositionId)}
+                showInMenu
+              />,
+              <GridActionsCellItem
+                icon={
+                  <PlayCircleOutlineRoundedIcon sx={{ color: "#1565C0" }} />
+                }
+                label="Active position"
+                onClick={() =>
+                  handleActiveClick(params.row.PositionId, {
+                    positionId: params.row.PositionId,
+                    positionName: params.row.PositionName,
+                    description: params.row.Description,
+                    salary: params.row.Salary,
+                    maxHiringQty: params.row.MaxHiringQty,
+                    startDate: params.row.StartDate,
+                    endDate: params.row.EndDate,
+                    departmentId: params.row.DepartmentId,
+                    languageId: params.row.LanguageId,
+                    recruiterId: params.row.RecruiterId,
+                    isDeleted: false,
+                  })
+                }
+                showInMenu
+                sx={{
+                  color: "#1565C0",
+                }}
+              />,
+            ];
+          } else {
+            return [
+              <GridActionsCellItem
+                icon={
+                  <InfoRoundedIcon
+                    variant="outlined"
+                    sx={{
+                      color: "black",
+                    }}
+                  />
+                }
+                label="Detail"
+                sx={{
+                  color: "black",
+                }}
+                onClick={() => handleDetailClick(params.row.PositionId)}
+                showInMenu
+              />,
+              <GridActionsCellItem
+                icon={
+                  <QueryStatsRoundedIcon
+                    sx={{
+                      color: "black",
+                    }}
+                  />
+                }
+                label="Report"
+                sx={{
+                  color: "black",
+                }}
+                onClick={() => handleReportClick(params.row.PositionId)}
+                showInMenu
+              />,
+              <GridActionsCellItem
+                icon={
+                  <PauseCircleOutlineRoundedIcon sx={{ color: "#cc3300" }} />
+                }
+                label="Inactive position"
+                onClick={() =>
+                  handleInactiveClick(params.row.PositionId, {
+                    positionId: params.row.PositionId,
+                    positionName: params.row.PositionName,
+                    description: params.row.Description,
+                    salary: params.row.Salary,
+                    maxHiringQty: params.row.MaxHiringQty,
+                    startDate: params.row.StartDate,
+                    endDate: params.row.EndDate,
+                    departmentId: params.row.DepartmentId,
+                    languageId: params.row.LanguageId,
+                    recruiterId: params.row.RecruiterId,
+                    isDeleted: true,
+                  })
+                }
+                showInMenu
+                sx={{
+                  color: "#cc3300",
+                }}
+              />,
+            ];
+          }
         } else {
-          return [
-            <GridActionsCellItem
-              icon={
-                <InfoRoundedIcon
-                  variant="outlined"
-                  sx={{
-                    color: "black",
-                  }}
-                />
-              }
-              label="Detail"
-              sx={{
-                color: "black",
-              }}
-              onClick={() => handleDetailClick(params.row.PositionId)}
-              showInMenu
-            />,
-            <GridActionsCellItem
-              icon={
-                <QueryStatsRoundedIcon
-                  sx={{
-                    color: "black",
-                  }}
-                />
-              }
-              label="Report"
-              sx={{
-                color: "black",
-              }}
-              onClick={() => handleReportClick(params.row.PositionId)}
-              showInMenu
-            />,
-            <GridActionsCellItem
-              icon={<PauseCircleOutlineRoundedIcon sx={{ color: "#cc3300" }} />}
-              label="Inactive position"
-              onClick={() =>
-                handleInactiveClick(params.row.PositionId, {
-                  positionId: params.row.PositionId,
-                  positionName: params.row.PositionName,
-                  description: params.row.Description,
-                  salary: params.row.Salary,
-                  maxHiringQty: params.row.MaxHiringQty,
-                  startDate: params.row.StartDate,
-                  endDate: params.row.EndDate,
-                  departmentId: params.row.DepartmentId,
-                  languageId: params.row.LanguageId,
-                  recruiterId: params.row.RecruiterId,
-                  isDeleted: true,
-                })
-              }
-              showInMenu
-              sx={{
-                color: "#cc3300",
-              }}
-            />,
-          ];
-        }}
-        else {if (params.row.Status === true) {
-          return [
-            <GridActionsCellItem
-              icon={
-                <InfoRoundedIcon
-                  variant="outlined"
-                  sx={{
-                    color: "black",
-                  }}
-                />
-              }
-              label="Detail"
-              sx={{
-                color: "black",
-              }}
-              onClick={() => handleDetailClick(params.row.PositionId)}
-              showInMenu
-            />,
-            <GridActionsCellItem
-              icon={<PlayCircleOutlineRoundedIcon sx={{ color: "#1565C0" }} />}
-              label="Active position"
-              onClick={() =>
-                handleActiveClick(params.row.PositionId, {
-                  positionId: params.row.PositionId,
-                  positionName: params.row.PositionName,
-                  description: params.row.Description,
-                  salary: params.row.Salary,
-                  maxHiringQty: params.row.MaxHiringQty,
-                  startDate: params.row.StartDate,
-                  endDate: params.row.EndDate,
-                  departmentId: params.row.DepartmentId,
-                  languageId: params.row.LanguageId,
-                  recruiterId: params.row.RecruiterId,
-                  isDeleted: false,
-                })
-              }
-              showInMenu
-              sx={{
-                color: "#1565C0",
-              }}
-            />,
-          ];
-        } else {
-          return [
-            <GridActionsCellItem
-              icon={
-                <InfoRoundedIcon
-                  variant="outlined"
-                  sx={{
-                    color: "black",
-                  }}
-                />
-              }
-              label="Detail"
-              sx={{
-                color: "black",
-              }}
-              onClick={() => handleDetailClick(params.row.PositionId)}
-              showInMenu
-            />,
-            <GridActionsCellItem
-              icon={<PauseCircleOutlineRoundedIcon sx={{ color: "#cc3300" }} />}
-              label="Inactive position"
-              onClick={() =>
-                handleInactiveClick(params.row.PositionId, {
-                  positionId: params.row.PositionId,
-                  positionName: params.row.PositionName,
-                  description: params.row.Description,
-                  salary: params.row.Salary,
-                  maxHiringQty: params.row.MaxHiringQty,
-                  startDate: params.row.StartDate,
-                  endDate: params.row.EndDate,
-                  departmentId: params.row.DepartmentId,
-                  languageId: params.row.LanguageId,
-                  recruiterId: params.row.RecruiterId,
-                  isDeleted: true,
-                })
-              }
-              showInMenu
-              sx={{
-                color: "#cc3300",
-              }}
-            />,
-          ];
-        }}
+          if (params.row.Status === true) {
+            return [
+              <GridActionsCellItem
+                icon={
+                  <InfoRoundedIcon
+                    variant="outlined"
+                    sx={{
+                      color: "black",
+                    }}
+                  />
+                }
+                label="Detail"
+                sx={{
+                  color: "black",
+                }}
+                onClick={() => handleDetailClick(params.row.PositionId)}
+                showInMenu
+              />,
+              <GridActionsCellItem
+                icon={
+                  <PlayCircleOutlineRoundedIcon sx={{ color: "#1565C0" }} />
+                }
+                label="Active position"
+                onClick={() =>
+                  handleActiveClick(params.row.PositionId, {
+                    positionId: params.row.PositionId,
+                    positionName: params.row.PositionName,
+                    description: params.row.Description,
+                    salary: params.row.Salary,
+                    maxHiringQty: params.row.MaxHiringQty,
+                    startDate: params.row.StartDate,
+                    endDate: params.row.EndDate,
+                    departmentId: params.row.DepartmentId,
+                    languageId: params.row.LanguageId,
+                    recruiterId: params.row.RecruiterId,
+                    isDeleted: false,
+                  })
+                }
+                showInMenu
+                sx={{
+                  color: "#1565C0",
+                }}
+              />,
+            ];
+          } else {
+            return [
+              <GridActionsCellItem
+                icon={
+                  <InfoRoundedIcon
+                    variant="outlined"
+                    sx={{
+                      color: "black",
+                    }}
+                  />
+                }
+                label="Detail"
+                sx={{
+                  color: "black",
+                }}
+                onClick={() => handleDetailClick(params.row.PositionId)}
+                showInMenu
+              />,
+              <GridActionsCellItem
+                icon={
+                  <PauseCircleOutlineRoundedIcon sx={{ color: "#cc3300" }} />
+                }
+                label="Inactive position"
+                onClick={() =>
+                  handleInactiveClick(params.row.PositionId, {
+                    positionId: params.row.PositionId,
+                    positionName: params.row.PositionName,
+                    description: params.row.Description,
+                    salary: params.row.Salary,
+                    maxHiringQty: params.row.MaxHiringQty,
+                    startDate: params.row.StartDate,
+                    endDate: params.row.EndDate,
+                    departmentId: params.row.DepartmentId,
+                    languageId: params.row.LanguageId,
+                    recruiterId: params.row.RecruiterId,
+                    isDeleted: true,
+                  })
+                }
+                showInMenu
+                sx={{
+                  color: "#cc3300",
+                }}
+              />,
+            ];
+          }
+        }
       },
     },
   ]);

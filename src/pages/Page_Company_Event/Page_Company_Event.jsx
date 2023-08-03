@@ -58,9 +58,15 @@ export default function Page_Company_Event() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    dispatch({ type: "eventSaga/getEventList" });
+    dispatch({
+      type: "eventSaga/getEventList",
+      payload: {
+        token: `Bearer ${user.token}`,
+      },
+    });
     return () => {
       cleanStore(dispatch);
     };
@@ -131,6 +137,7 @@ export default function Page_Company_Event() {
       type: "eventSaga/getEventListWithFilter",
       payload: {
         status: value ? value : null,
+        token: `Bearer ${user.token}`,
       },
     });
   }

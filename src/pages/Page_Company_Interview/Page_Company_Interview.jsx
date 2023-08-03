@@ -41,6 +41,7 @@ import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { formatDate } from "../../utils/formatDate";
+import useGetRole from "../../hooks/useGetRole";
 
 // JSON <- InterviewList
 // {
@@ -88,15 +89,35 @@ export default function Page_Company_Interview() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector(state => state.user);
+  const role = useGetRole();
+  console.log("++++++++++++++++++++", role)
 
   useEffect(() => {
-    dispatch({ type: "interviewSaga/getAllInterview" });
-    dispatch({ type: "positionSaga/getPositionList" });
-    dispatch({ type: "departmentSaga/getDepartment" });
+    dispatch({
+      type: "interviewSaga/getAllInterview",
+      payload: {
+        role: role,
+        id: "interviewerId" in user ? user.interviewerId : null,
+        token: `Bearer ${user.token}`,
+      },
+    });
+    dispatch({
+      type: "positionSaga/getPositionList",
+      payload: {
+        token: `Bearer ${user.token}`,
+      },
+    });
+    dispatch({
+      type: "departmentSaga/getDepartment",
+      payload: {
+        token: `Bearer ${user.token}`,
+      },
+    });
     return () => {
       cleanStore(dispatch);
     };
-  }, []);
+  }, [role]);
 
   const loading = useSelector((state) => state.loading);
   const rows = useSelector((state) => state.interviewList);
@@ -155,6 +176,8 @@ export default function Page_Company_Interview() {
     dispatch({
       type: "interviewSaga/getInterviewWithFilter",
       payload: {
+        role: role,
+        id: "interviewerId" in user ? user.interviewerId : null,
         departmentId: value ? value.departmentId : null,
         // positionId: positionChoose && value !== null
         //   ? positionChoose.PositionId
@@ -162,6 +185,7 @@ export default function Page_Company_Interview() {
         positionId: null,
         status: statusChoose ? statusChoose : null,
         priority: priorityChoose ? priorityChoose : null,
+        token: `Bearer ${user.token}`,
       },
     });
     dispatch({
@@ -169,6 +193,7 @@ export default function Page_Company_Interview() {
       payload: {
         departmentId: value ? value.departmentId : null,
         status: null,
+        token: `Bearer ${user.token}`,
       },
     });
   }
@@ -178,10 +203,13 @@ export default function Page_Company_Interview() {
     dispatch({
       type: "interviewSaga/getInterviewWithFilter",
       payload: {
+        role: role,
+        id: "interviewerId" in user ? user.interviewerId : null,
         departmentId: departmentChoose ? departmentChoose.departmentId : null,
         positionId: value ? value.PositionId : null,
         status: statusChoose ? statusChoose : null,
         priority: priorityChoose ? priorityChoose : null,
+        token: `Bearer ${user.token}`,
       },
     });
   }
@@ -194,11 +222,14 @@ export default function Page_Company_Interview() {
     dispatch({
       type: "interviewSaga/getInterviewWithFilter",
       payload: {
+        role: role,
+        id: "interviewerId" in user ? user.interviewerId : null,
         departmentId: departmentChoose ? departmentChoose.departmentId : null,
         positionId: positionChoose ? positionChoose.PositionId : null,
         status: value ? value : null,
         priority:
           priorityChoose && value === "Finished" ? priorityChoose : null,
+        token: `Bearer ${user.token}`,
       },
     });
   }
@@ -208,10 +239,13 @@ export default function Page_Company_Interview() {
     dispatch({
       type: "interviewSaga/getInterviewWithFilter",
       payload: {
+        role: role,
+        id: "interviewerId" in user ? user.interviewerId : null,
         departmentId: departmentChoose ? departmentChoose.departmentId : null,
         positionId: positionChoose ? positionChoose.PositionId : null,
         status: statusChoose ? statusChoose : null,
         priority: value ? value : null,
+        token: `Bearer ${user.token}`,
       },
     });
   }
@@ -272,6 +306,7 @@ export default function Page_Company_Interview() {
                 textDecoration: "underline",
               },
             }}
+            onClick={() => handleProfileDetailClick(params.row.CandidateUserId)}
           >
             {params.value}
           </Box>
@@ -297,6 +332,9 @@ export default function Page_Company_Interview() {
                 textDecoration: "underline",
               },
             }}
+            onClick={() =>
+              handleProfileDetailClick(params.row.InterviewerUserId)
+            }
           >
             {params.value}
           </Box>
@@ -345,7 +383,7 @@ export default function Page_Company_Interview() {
       align: "center",
       renderHeader: () => <span>Status</span>,
       renderCell: (params) => {
-        if (params.value === false) {
+        if (params.value === "Not start") {
           return <NotStart />;
         }
         return <Completed />;
@@ -496,6 +534,8 @@ export default function Page_Company_Interview() {
         </Grid> */}
             <Grid item xs={12} md={12}>
               <Grid container spacing={2}>
+                {role !== null && role !== "interviewer" &&
+                <>
                 <Grid
                   item
                   xs={12}
@@ -562,6 +602,8 @@ export default function Page_Company_Interview() {
                     />
                   </Grid>
                 )}
+                </>
+                }
                 <Grid
                   item
                   xs={6}
@@ -783,6 +825,9 @@ export default function Page_Company_Interview() {
                   "&.MuiDataGrid-root .MuiCircularProgress-root": {
                     color: "black",
                   },
+                  "&.MuiDataGrid-root .MuiDataGrid-row": {
+                    cursor: "pointer",
+                  },
                 }}
                 slots={{
                   toolbar: GridToolbar,
@@ -820,15 +865,22 @@ export default function Page_Company_Interview() {
                 }}
                 getRowId={(row) => row.InterviewId}
                 onCellClick={(params, event) => {
-                  if (params.field === "InterviewId") {
+                  if (
+                    params.field !== "CandidateName" &&
+                    params.field !== "InterviewerName"
+                  )
                     handleDetailClick(params.row.InterviewId);
-                  }
-                  if (params.field === "CandidateName") {
-                    handleProfileDetailClick(params.row.CandidateId);
-                  }
-                  if (params.field === "InterviewerName")
-                    handleProfileDetailClick(params.row.InterviewerId);
                 }}
+                // onCellClick={(params, event) => {
+                //   if (params.field === "InterviewId") {
+                //     handleDetailClick(params.row.InterviewId);
+                //   }
+                //   if (params.field === "CandidateName") {
+                //     handleProfileDetailClick(params.row.CandidateUserId);
+                //   }
+                //   if (params.field === "InterviewerName")
+                //     handleProfileDetailClick(params.row.InterviewerUserId);
+                // }}
               />
             </Box>
           ) : (
