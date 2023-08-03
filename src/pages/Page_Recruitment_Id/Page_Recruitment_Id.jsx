@@ -72,11 +72,14 @@ const Page_Recruitment_Id = () => {
     const dispatch = useDispatch();
     const { recruitmentid } = useParams();
     useEffect(() => {
-        dispatch({ type: 'cvsaga/getCvList', payload: userid })
+        dispatch({ type: 'cvSaga/getCvList', payload: userid })
+        
         return () => {
             dispatch({ type: 'cv/setCvList', payload: null })
         }
     }, [])
+
+
     let enddate = position ? position.endDate : '';
 
     console.log('status', getPositionStatus(enddate));
