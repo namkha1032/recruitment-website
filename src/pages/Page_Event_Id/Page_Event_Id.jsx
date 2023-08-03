@@ -27,7 +27,8 @@ import { transferDatetimeBack } from '../../utils/transferDatetime';
 const Page_Event_Id = () => {
 
     const role = useGetRole()
-    const candidateId = useSelector(state => state.candidateId)
+    const candidateId = useSelector(state => state.candidateIdRegisterEvent)
+    console.log("Debug3: ", candidateId)
 
 
     const user = useSelector(state => state.user)
@@ -35,12 +36,13 @@ const Page_Event_Id = () => {
 
 
     const { eventid } = useParams();
+    console.log('event id: ', eventid);
 
 
     const dispatch = useDispatch();
-
     useEffect(() => {
         dispatch({ type: "eventSaga/getEvent", payload: eventid })
+        dispatch({ type: "eventSaga/getAllCandidateOfEvent", payload: eventid })
         return () => {
             cleanStore(dispatch)
         }
@@ -56,7 +58,6 @@ const Page_Event_Id = () => {
 
 
     const event = useSelector((state) => state.event)
-
     const note = event ? event.content : ""
     const contentRef = useRef()
     useEffect(() => {
@@ -67,6 +68,8 @@ const Page_Event_Id = () => {
     }, [note])
     console.log("contentRef: ", contentRef);
 
+    const row_drafts = useSelector((state) => state.candidateJoinEvent)
+    const rows = row_drafts ? row_drafts : []
 
     // handle events
     const handleRegister = (e) => {
@@ -195,7 +198,8 @@ const Page_Event_Id = () => {
                                             <Box sx={{
                                                 fontSize: 16,
                                             }}>
-                                                {event.quantity} / {event.maxQuantity}
+                                                {/* {event.quantity} / {event.maxQuantity} */}
+                                                {rows.length} / {event.maxQuantity}
                                             </Box>
                                         </Box>
                                         {/* <p style={{ fontWeight: 600, fontSize: 20 }}>500/1000</p> */}

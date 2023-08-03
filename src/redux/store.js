@@ -47,7 +47,7 @@ import cvCandidateSlice from './reducer/cvCandidateReducer'
 import eventFooterSlice from "./reducer/eventFooterReducer";
 import profileSlice from "./reducer/profileReducer";
 import eventNavigateSlice from "./reducer/eventNavigateReducer";
-import candidateIdSlice from "./reducer/candidateIdReducer";
+import candidateIdRegisterEventSlice from "./reducer/candidateIdRegisterEvent";
 import infoApplicationSlice from "./reducer/infoApplicationReducer";
 import interviewerListSlice from "./reducer/interviewerListReducer";
 import interviewResultSlice from "./reducer/interviewResultReducer";
@@ -100,7 +100,7 @@ const store = configureStore({
         eventFooter: eventFooterSlice.reducer,
         profile: profileSlice.reducer,
         eventNavigate: eventNavigateSlice.reducer,
-        candidateId: candidateIdSlice.reducer,
+        candidateIdRegisterEvent: candidateIdRegisterEventSlice.reducer,
         infoApplication: infoApplicationSlice.reducer,
         interviewerList: interviewerListSlice.reducer,
         interviewResult: interviewResultSlice.reducer,

@@ -158,11 +158,11 @@ const Page_Company_Event_Id_Update = () => {
                 eventId: eventid,
                 eventName: name,
                 description: content,
-                quantity: 50,
+                // quantity: 50,
                 maxParticipants: maxQuantity,
                 datetimeEvent: re,
                 place: location,
-                createdTime: "10:30 16/07/2023"
+                // createdTime: "10:30 16/07/2023"
             }
         });
     }

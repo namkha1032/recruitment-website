@@ -188,18 +188,18 @@ function* postEvent(action) {
     const {
       eventName,
       description,
-      quantity,
+      // quantity,
       maxParticipants,
       datetimeEvent,
       place,
-      createdTime
+      // createdTime
     } = action.payload;
     // const datetimeEvent_edited = transferDatetime(datetimeEvent)
     console.log(action.payload)
     // console.log(datetimeEvent_edited)
     const request = {
       eventName: eventName,
-      recruiterId: "00000000-0000-0000-0000-000000000001",
+      recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
       description: description,
       place: place,
       isDeleted: false,
@@ -248,7 +248,7 @@ function* putEvent(action) {
     console.log(action.payload)
     const request = {
       eventName: eventName,
-      recruiterId: "00000000-0000-0000-0000-000000000001",
+      recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
       description: description,
       place: place,
       isDeleted: false,
@@ -278,7 +278,9 @@ function* getCandidateIdRegisterEvent(action) {
     // console.log("+++++++++++", response)
     // console.log("+++++++++++", action.payload)
     const response1 = response.data.filter(item => item.userId === action.payload)[0]
-    yield put({ type: "candidateIdRegister/setCandidateIdRegister", payload: response1.candidateId })
+    console.log("Debug1: ", response1)
+    yield put({ type: "candidateIdRegisterEvent/setCandidateIdRegisterEvent", payload: response1.candidateId })
+    console.log("Debug2: ", response1.candidateId)
   }
   catch (error) {
     console.log(error)

@@ -408,7 +408,8 @@ const Page_Company_Event_Id = () => {
                                                         <Box sx={{
                                                             fontSize: 16,
                                                         }}>
-                                                            {event.quantity} / {event.maxQuantity}
+                                                            {/* {event.quantity} / {event.maxQuantity} */}
+                                                            {rows.length} / {event.maxQuantity}
                                                         </Box>
                                                     </Box>
                                                     {/* <p style={{ fontWeight: 600, fontSize: 20 }}>500/1000</p> */}
