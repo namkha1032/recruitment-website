@@ -7,25 +7,42 @@ const theme = createTheme({
   components: {
     MuiTabs: {
       styleOverrides: {
+        indicator:{
+          backgroundColor:'black',
+        },
         root: {
           backgroundColor: 'rgb(255, 255, 255)', // Set the background color of the tabs
           color: '#d3d3d3', // Set the text color of the tabs
           textTransform: 'none',
           borderBottom: '1px solid #ccc', // Add a border at the bottom
           boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)', // Add a box shadow
+          
         },
+        
       },
     },
     MuiTab: {
       styleOverrides: {
         root: {
-          fontSize: '16px', // Set the font size of the tabs
-          minWidth: 'auto', // Remove the minimum width to allow tabs to shrink
+          fontSize: '16px',
+          minWidth: 'auto',
           textTransform: 'none',
           color: '#000000',
+          '&$selected': {
+            color: '#000000',
+            fontWeight: 'bold',
+            borderBottom: '2px solid black',
+          },
+          '&:hover': {
+            color: '#000000',
+          },
+         
         },
         textColorInherit: {
           opacity: 1, // Make the text fully opaque for both selected and non-selected tabs
+        },
+        selected: {
+          color: '#000000',
         },
       },
     },
@@ -38,7 +55,7 @@ export default function TabInProfile() {
   return (
     <ThemeProvider theme={theme}>
       <Box mt={2} mb={5}> {/* Add margin (10px) on top and bottom */}
-        <Tabs value={location.pathname}>
+        <Tabs value={location.pathname} textColor='black'>
           <Tab
             label="Event"
             value="/profile/1/event"

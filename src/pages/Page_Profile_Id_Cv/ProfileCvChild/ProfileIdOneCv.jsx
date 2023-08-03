@@ -67,6 +67,13 @@ export default function ProfileIdOneCv({ events ,img}) {
         <Grid item>
         <Button
           variant="contained"
+          sx={{
+            backgroundColor: 'rgba(0, 0, 0, 0.87)',
+            color: '#ffffff', // Đặt màu chữ cho nút
+            '&:hover': {
+              backgroundColor: '#808080', // Màu xám khi hover
+            },
+          }}
           color="primary"
           onClick={handleCreateCV}
           style={{ textTransform: "none" }}
@@ -95,21 +102,24 @@ export default function ProfileIdOneCv({ events ,img}) {
                 alignItems:'center',
                 flexBasis: '250px',
                 cursor: 'pointer',
+                '&:hover': {
+                  backgroundColor: 'black', // Màu xám khi hover
+                },
               }}
               onClick={() => handleDetails(event.cvid)}
             >
               <Grid item sx={{ margin: '0 auto', marginBlockStart: '0' }}>
-  <Paper variant="outlined" sx={{ p: 2, minHeight: '80px', width: '200px', marginBottom: '10px', padding: '0', whiteSpace: 'nowrap', overflow: 'hidden' }}>
+  <Paper variant="outlined" sx={{ p: 2, minHeight: '80px', width: '200px', padding: '0', whiteSpace: 'nowrap', overflow: 'hidden',backgroundColor:'black'}}>
     <Grid container direction="column" height="100%">
       <Grid item>
-        <Typography variant="body1" fontWeight="bold">
+        <Typography variant="body1" fontWeight="bold" sx={{color:'white'}}>
           {event.cvName}
         </Typography>
 
-        <Typography variant="body1" component="div" sx={{ textOverflow: 'ellipsis' }}>
+        <Typography variant="body1" component="div" sx={{ textOverflow: 'ellipsis', color:'white' }}>
           Skill: {event && event.skills && event.skills.length > 0 ? event.skills.map((skill) => skill.skillName).join(', ') : ''}
         </Typography>
-        <Typography variant="body1" component="div">
+        <Typography variant="body1" component="div" sx={{ textOverflow: 'ellipsis', color:'white' }}>
           Kinh nghiệm: {event.experience}
         </Typography>
       </Grid>
@@ -136,6 +146,11 @@ export default function ProfileIdOneCv({ events ,img}) {
           <Grid item >
             {visiblePages.map((page) => (
               <Button
+              sx={{backgroundColor:"white", 
+              color:'black',
+              '&:hover': {
+                backgroundColor: '#808080', // Màu xám khi hover
+              },}}
                 key={page}
                 variant={currentPage === page ? 'contained' : 'outlined'}
                 color="primary"
