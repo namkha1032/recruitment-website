@@ -91,7 +91,6 @@ export default function Page_Company_Interview() {
   const navigate = useNavigate();
   const user = useSelector(state => state.user);
   const role = useGetRole();
-  console.log("++++++++++++++++++++", role)
 
   useEffect(() => {
     dispatch({
@@ -532,9 +531,10 @@ export default function Page_Company_Interview() {
             onChange={(event, value) => handleChooseValue(value)}
           />
         </Grid> */}
+          {role !== null && 
             <Grid item xs={12} md={12}>
               <Grid container spacing={2}>
-                {role !== null && role !== "interviewer" &&
+                {role !== "interviewer" &&
                 <>
                 <Grid
                   item
@@ -751,6 +751,7 @@ export default function Page_Company_Interview() {
                 )}
               </Grid>
             </Grid>
+          }
 
             {/* <Grid
           item

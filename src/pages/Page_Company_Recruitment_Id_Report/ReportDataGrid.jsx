@@ -63,7 +63,7 @@ export default function ReportDataGrid(props) {
           //   display: 'none',
           // },
           "&.MuiDataGrid-root .MuiDataGrid-row": {
-            cursor: "pointer"
+            cursor: "pointer",
           },
           "&.MuiDataGrid-root .MuiCircularProgress-root": {
             color: "black",
@@ -106,12 +106,12 @@ export default function ReportDataGrid(props) {
         }}
         getRowId={(row) => row.InterviewId}
         onCellClick={(params, event) => {
-          if (params.field === "InterviewId") {
-            props.handleDetailClick(params.row.InterviewId);
-          } else if (params.field === "InterviewerName") {
+          if (params.field === "InterviewerName") {
             props.handleInterviewerClick(params.row.InterviewerId);
           } else if (params.field === "CandidateName") {
             props.handleCandidateClick(params.row.CandidateId);
+          } else {
+            props.handleDetailClick(params.row.InterviewId);
           }
         }}
       />
