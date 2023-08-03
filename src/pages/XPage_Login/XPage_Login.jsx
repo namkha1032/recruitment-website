@@ -184,6 +184,30 @@ const XPage_Login = () => {
         alignItems: "center",
       }}
     >
+      <Stack>
+      <Box 
+        sx={{
+          //backgroundColor: 'red',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom: '5%',
+        }}
+      >
+        <Typography 
+          color="black"
+          fontWeight="300"
+        >
+          Back to home
+        </Typography>
+        <HomeIcon 
+          onClick={handleClickHome}
+          sx={{
+            //textDecoration: "none",
+            cursor: 'pointer'
+          }}
+        />
+      </Box>
       <Container
         component="main"
         maxWidth="xs"
@@ -210,7 +234,7 @@ const XPage_Login = () => {
           }}
         >
           <Stack>
-            <Box /* backgroundColor="red" */
+            {/* <Box 
               sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -232,18 +256,8 @@ const XPage_Login = () => {
                   cursor: 'pointer'
                 }}
               />
-              {/* <Typography
-                color="black"
-                onClick={handleClickHome}
-                paddingLeft="2px"
-                sx={{
-                  textDecoration: "none",
-                  cursor: 'pointer'
-                }}
-              >
-                Back to home page
-              </Typography> */}
-            </Box>
+            </Box> */}
+            
             <Box
               sx={{
                 display: "flex",
@@ -261,7 +275,7 @@ const XPage_Login = () => {
                     color: "black",
                     textAlign: "center",
                     fontWeight: "450",
-                    marginBottom: "5px",
+                    //marginBottom: "5px",
                   }}
                 >
                   Sign In
@@ -283,7 +297,8 @@ const XPage_Login = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      marginBottom: "5px",
+                      marginBottom: "2px",
+                      marginTop: '5px',
                     }}
                   >
                     <TextField
@@ -343,7 +358,7 @@ const XPage_Login = () => {
                         display={"flex"}
                         marginLeft={"16px"}
                         marginRight={"15px"}
-                        marginBottom={"3px"}
+                        //marginBottom={"3px"}
                       >
                         <ErrorOutlineOutlinedIcon
                           //color="red"
@@ -373,6 +388,8 @@ const XPage_Login = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
+                      marginBottom: "2px",
+                      marginTop: '5px',
                     }}
                   >
                     <TextField
@@ -426,6 +443,7 @@ const XPage_Login = () => {
                         color: "#fff",
                         borderBottom: validPassword ? "2px solid black" : "2px solid red",
                         borderBottomWidth: "2px",
+                        marginTop: "3px",
                       }}
                     />
                   </Grid>
@@ -445,10 +463,8 @@ const XPage_Login = () => {
                         display={"flex"}
                         marginLeft={"16px"}
                         marginRight={"15px"}
-                        //marginBottom={"3px"}
                       >
                         <ErrorOutlineOutlinedIcon
-                          //color="red"
                           sx={{
                             fontSize: 15,
                             paddingLeft: "2px",
@@ -478,6 +494,7 @@ const XPage_Login = () => {
                       display: "flex",
                       justifyContent: "space-between",
                       alignContent: "center",
+                      textAlign: 'center'
                     }}
                   >
                     <FormControlLabel
@@ -485,16 +502,19 @@ const XPage_Login = () => {
                         <Checkbox
                           checked={check}
                           onClick={handleCheck}
-                          size="small"
+                          //size="small"
                           sx={{
                             color: "black",
                             "&.Mui-checked": {
                               color: "black",
                             },
-                            height: "10px",
-                            width: "10px",
+                            '& .MuiSvgIcon-root': { 
+                              fontSize: 18
+                            },
+                            //fontSize: '1em',
+                            height: "8px",
+                            width: "8px",
                             marginLeft: "9px",
-                            //paddingBottom: '2px',
                           }}
                         />
                       }
@@ -503,8 +523,7 @@ const XPage_Login = () => {
                           variant="small"
                           sx={{
                             lineHeight: "15px",
-                            //paddingTop: "1px",
-                            marginLeft: "5px",
+                            marginLeft: "3px",
                           }}
                         >
                           Remember me
@@ -516,6 +535,7 @@ const XPage_Login = () => {
                         display: "flex",
                         justifyContent: "space-between",
                         alignContent: "center",
+                        textAlign: "center",
                       }}
                     />
                     <Box sx={{
@@ -523,20 +543,13 @@ const XPage_Login = () => {
                       textAlign: 'center'
                     }}>
                     <Typography
-                      //component={Link}
-                      // to="/recovery"
                       onClick={handleClickForgot}
                       variant="small"
                       sx={{
-                        // textDecoration: 'none',
-                        // color: '#1976d2',
-                        // paddingTop: '8px',
-                        /* fontWeight: '500' */
                         color: "black",
                         lineHeight: "15px",
                         textDecoration: 'underline',
                         cursor: 'pointer'
-                        //paddingTop: '1px'
                       }}
                     >
                       Forgot password?{" "}
@@ -606,6 +619,7 @@ const XPage_Login = () => {
           </Stack>
         </Box>
       </Container>
+      </Stack>
       <Snackbar
         open={errorSnackbar}
         autoHideDuration={5000}

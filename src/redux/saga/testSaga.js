@@ -2,23 +2,15 @@ import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects"
 import axios from 'axios'
 import host from "../host"
 function* getStuff(action) {
-    // const { title, author, comments } = action.payload
-    // const newPost = { title, author }
-    // const response1 = yield call(axios.post, `http://localhost:3001/posts`, newPost)
-    // console.log("resdata1: ", response1.data)
-    // for (let cmt of comments) {
-    //     const newCmt = {
-    //         body: cmt.body,
-    //         postId: response1.data.id
-    //     }
-    //     const response2 = yield call(axios.post, `http://localhost:3001/comments`, newCmt)
-    //     console.log("resdata2: ", response2.data)
-    // }
-    for (let item of action.payload) {
-        const response = yield call(axios.post, "http://localhost:3001/posts", item)
-        console.log("resdata: ", response.data)
+    let token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic3BpZGVycmVjcnVpdGVyIiwianRpIjoiMjlkM2MwMWItZTZjMi00OTUyLWI2ZGUtMDVmZTJmMGIwZWNiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiUmVjcnVpdGVyIiwiZXhwIjoxNjkxMDc1NDA2LCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo3MDI5In0.S_JmoOAVYzgQg6JokBPZeqLK__0tcTDiBn6pdCezq-Y`
+    const config = {
+        headers: { Authorization: token },
     }
-    console.log("ahahaha")
+    let body = {
+        questionString: "Tell me about your girlfriend",
+        categoryQuestionId: "a0c0bbca-af3c-466c-b9ce-7bbbdf499577"
+    }
+    yield call(axios.put, "https://leetun2k2-001-site1.gtempurl.com/api/Question/e660c3a6-5bda-4a47-9b32-80a240fc5692", body, config)
 }
 
 function* testSaga() {
