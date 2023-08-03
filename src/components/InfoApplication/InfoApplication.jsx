@@ -35,17 +35,22 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
   const detailposition = useSelector((state) => state.position);
   const candidate = useSelector((state) => state.candidate);
 
+
+
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: "infoApplicationSaga/getInfoApplication", payload: applicationid });
-    dispatch({ type: "skillSaga/getSkill"});
+    dispatch({ type: "applicationSaga/getInfoApplication", payload: applicationid });
+    dispatch({ type: "skillSaga/getSkill" });
     dispatch({ type: "candidateSaga/getCandidate", payload: 0 });
     dispatch({ type: "positionSaga/getPosition", payload: recruitmentid });
     return () => {
       cleanStore(dispatch);
     };
   }, []);
+
+
 
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up("sm"));

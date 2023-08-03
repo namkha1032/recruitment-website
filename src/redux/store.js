@@ -42,7 +42,7 @@ import candidateJoinEventSlice from './reducer/candidateJoinEventReducer'
 import interviewidInfoSlice from './reducer/interviewidInfoReducer'
 import requirementSlice from "./reducer/requirementReducer";
 import statusSlice from "./reducer/statusReducer";
-
+import interviewListCandidateSlice from "./reducer/interviewCandidateReducer";
 import cvCandidateSlice from './reducer/cvCandidateReducer'
 import eventFooterSlice from "./reducer/eventFooterReducer";
 import profileSlice from "./reducer/profileReducer";
@@ -110,7 +110,8 @@ const store = configureStore({
         interviewinterviewer: interviewInterviewerSlice.reducer,
         interviewskill: interviewSkillSlice.reducer,
         interviewdepartment: interviewDepartmentSlice.reducer,
-        interviewposition: interviewPositionSlice.reducer
+        interviewposition: interviewPositionSlice.reducer,
+        interviewListCandidate: interviewCandidateSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]

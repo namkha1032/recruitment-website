@@ -14,7 +14,7 @@ export default function Page_Profile_Id_Interview(){
 
       }, [])
       
-      const rows_draft = useSelector((state) => state.interviewCandidate);
+      const rows_draft = useSelector((state) => state.interviewListCandidate);
       const rows = rows_draft ? rows_draft : []
       console.log(rows);
      
