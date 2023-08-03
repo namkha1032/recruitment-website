@@ -1,15 +1,15 @@
 {
   "interview": {
-    "interviewerId": "24cbb8bd-9194-46c0-a15a-520d7ba84046",
-    "recruiterId": "13b849af-bea9-49a4-a9e4-316d13b3a08a",
-    "applicationId": "00000000-0000-0000-0000-000000000001",
+    "interviewerId": "a36e34fb-72e7-45bd-9a82-7fa8319ebaaa",
+    "recruiterId": "cc8bb0ab-8790-4009-955e-7ab24dda359d",
+    "applicationId": "79fbc8b9-d754-4afa-9b3e-04468fb9ca1b",
     "itrsinterviewId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     "notes": "",
     "resultId": "00000000-0000-0000-0000-000000000001"
   },
   "itrs": {
-    "dateInterview": "2023-08-30T17:00:00.000Z",
-    "shiftId": "00000000-0000-0000-0000-000000000002",
-    "roomId": "00000000-0000-0000-0000-000000000003"
+    "dateInterview": "2023-09-19T17:00:00.000Z",
+    "shiftId": "38e7dd95-4321-4aa5-a65d-5e553b1f60d9",
+    "roomId": "00000000-0000-0000-0000-000000000002"
   }
 }
