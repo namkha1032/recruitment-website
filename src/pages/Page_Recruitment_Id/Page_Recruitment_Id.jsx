@@ -112,7 +112,7 @@ const Page_Recruitment_Id = () => {
             }
             else {
                 dispatch({
-                    type: 'submitsaga/submitCv',
+                    type: 'applicationSaga/submitCv',
                     payload: {
                         cvId: CV,
                         positionId: recruitmentid,
