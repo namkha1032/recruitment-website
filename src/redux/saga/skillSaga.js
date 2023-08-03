@@ -33,7 +33,7 @@ function* getSkill(action) {
 }
 
 function* skillSaga() {
-  yield all([takeEvery("saga/getSkill", getSkill)]);
+  yield all([takeEvery("skillSaga/getSkill", getSkill)]);
 }
 
 export default skillSaga;

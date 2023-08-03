@@ -30,7 +30,7 @@ function CVForm(prop) {
     payload:"d1c51600-6272-4c78-9b50-36af9d403a28"
   });
     dispatch({ type: "saga/getLanguage" });
-    dispatch({ type: "saga/getSkill" });
+    dispatch({ type: "skillSaga/getSkill" });
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });
       dispatch({ type: "language/setLanguage", payload: null });
