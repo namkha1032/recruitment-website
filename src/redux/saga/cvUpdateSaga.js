@@ -138,7 +138,7 @@ function* updateCv(action) {
 }
 
 function* updateCvSaga() {
-  yield all([takeEvery("saga/getUpdateCv", updateCv)]);
+  yield all([takeEvery("updateCvsaga/getUpdateCv", updateCv)]);
 }
 
 export default updateCvSaga;

@@ -25,7 +25,7 @@ function CVForm(prop) {
   const dispatch = useDispatch();
   // fetch Data
   useEffect(() => {
-    dispatch({ type: "saga/getCvinfor", 
+    dispatch({ type: "cvInforsaga/getCvinfor", 
     // payload:cvid 
     payload:"d1c51600-6272-4c78-9b50-36af9d403a28"
   });
@@ -343,7 +343,7 @@ function CVForm(prop) {
     //   // console.log("FINISHED!!!!!!!!!!!!");
     //   // console.log(response);
       dispatch({
-        type: "saga/getUpdateCv",
+        type: "updateCvsaga/getUpdateCv",
         payload: {
           // Cvid: cvid,
           Cvid: "d1c51600-6272-4c78-9b50-36af9d403a28",

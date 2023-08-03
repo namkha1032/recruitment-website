@@ -24,8 +24,8 @@ import eventCandidateSaga from "./saga/eventCandidateSaga";
 import cvInforSaga from "./saga/cvInforSaga";
 import positionInforSaga from "./saga/positionInforSaga";
 import requirementSaga from "./saga/requirementSaga";
-import createCvSaga from "./saga/createCvSaga";
-import updateCvSaga from "./saga/updateCvSaga";
+import createCvSaga from "./saga/cvCreateSaga";
+import updateCvSaga from "./saga/cvUpdateSaga";
 import positionCreateSaga from "./saga/positionCreateSaga";
 import positionUpdateSaga from "./saga/positionUpdateSaga";
 

@@ -99,7 +99,7 @@ function* updatePosition(action) {
 }
 
 function* positionUpdateSaga() {
-  yield all([takeEvery("saga/getUpdatePosition", updatePosition)]);
+  yield all([takeEvery("positionUpdatesaga/getUpdatePosition", updatePosition)]);
 }
 
 export default positionUpdateSaga;

@@ -239,7 +239,7 @@ function RecruitForm() {
   function handleSubmit(e) {
     try {
       dispatch({
-        type: "saga/getCreatePosition",
+        type: "createPositionsaga/getCreatePosition",
         payload: {
           positionName: RName,
           description: description,
