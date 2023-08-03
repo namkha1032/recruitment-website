@@ -66,7 +66,7 @@ function* getCvinfor(action) {
 }
 
 function* cvInforSaga() {
-  yield all([takeEvery("saga/getCvinfor", getCvinfor)]);
+  yield all([takeEvery("cvInforsaga/getCvinfor", getCvinfor)]);
 }
 
 export default cvInforSaga;

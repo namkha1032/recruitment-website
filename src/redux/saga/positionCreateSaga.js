@@ -84,7 +84,7 @@ function* createPosition(action) {
 }
 
 function* positionCreateSaga() {
-  yield all([takeEvery("saga/getCreatePosition", createPosition)]);
+  yield all([takeEvery("createPositionsaga/getCreatePosition", createPosition)]);
 }
 
 export default positionCreateSaga;

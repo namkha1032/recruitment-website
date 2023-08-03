@@ -27,7 +27,7 @@ function RecruitForm(prop) {
     dispatch({ type: "saga/getDepartment" });
     dispatch({ type: "saga/getLanguage" });
     dispatch({ type: "saga/getSkill" });
-    dispatch({ type: "saga/getPositioninfor" , payload:recruitmentid});
+    dispatch({ type: "positionInforsaga/getPositioninfor" , payload:recruitmentid});
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });
       dispatch({ type: "language/setLanguage", payload: null });
@@ -310,7 +310,7 @@ function RecruitForm(prop) {
   function handleSubmit(e) {
     try {
       dispatch({
-        type: "saga/getUpdatePosition",
+        type: "positionUpdatesaga/getUpdatePosition",
         payload: {
           positionId: recruitmentid,
           positionName: RName,

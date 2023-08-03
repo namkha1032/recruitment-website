@@ -124,7 +124,7 @@ function* createCv(action) {
 }
 
 function* createCvSaga() {
-  yield all([takeEvery("saga/getCreateCv", createCv)]);
+  yield all([takeEvery("cvCreatesaga/getCreateCv", createCv)]);
 }
 
 export default createCvSaga;

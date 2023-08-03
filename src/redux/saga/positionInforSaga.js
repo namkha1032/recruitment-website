@@ -31,7 +31,7 @@ function* getPositioninfor(action) {
 
 function* positionInforSaga() {
     yield all([
-        takeEvery("saga/getPositioninfor", getPositioninfor),
+        takeEvery("positionInforsaga/getPositioninfor", getPositioninfor),
     ])
 }
 

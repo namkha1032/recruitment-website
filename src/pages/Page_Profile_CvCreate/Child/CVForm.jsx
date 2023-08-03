@@ -178,7 +178,7 @@ function CVForm() {
     try {
       setLoading(true);
       dispatch({
-        type: "saga/getCreateCv",
+        type: "cvCreatesaga/getCreateCv",
         payload:{
           CvName: cvtitle,
           Introduction: intro,
