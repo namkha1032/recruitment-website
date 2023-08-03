@@ -166,7 +166,7 @@ const Page_Recruitment = () => {
                       color="#EEEEEE"
                       fontFamily="Arial"
                     >
-                      Thông tin tuyển dụng được cập nhật liên tục
+                      Recruitment information is constantly updated
 
                     </Typography>
 

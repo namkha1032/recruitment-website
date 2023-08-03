@@ -15,6 +15,7 @@ import Carousel from '../../components/Carousel/Carousel'
 import { useDispatch, useSelector } from 'react-redux';
 import { useRef } from 'react';
 import picture from '../../assets/img/aboutUS.jpg'
+import picture2 from '../../assets/img/team.jpg'
 import { AttachMoneyRounded } from '@mui/icons-material';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 
@@ -86,7 +87,9 @@ const Page_Home = () => {
                   style={{ width: '100%' }}
                 />
                 <Box sx={{ marginTop: '16px' }}>
-                  <Typography>
+                  <Typography
+                  fontWeight="bold"
+                  >
                     {item.EventName}
                   </Typography>
                   <Typography
@@ -121,7 +124,9 @@ const Page_Home = () => {
                       alt=""
                       style={{ width: '100%' }}
                     />
-                    <Typography>
+                    <Typography
+                    fontWeight="bold"
+                    >
                       {item.EventName}
                     </Typography>
                     <Typography
@@ -153,7 +158,9 @@ const Page_Home = () => {
                       alt=""
                       style={{ width: '100%' }}
                     />
-                    <Typography>
+                    <Typography
+                    fontWeight="bold"
+                    >
                       {item.EventName}
                     </Typography>
                     <Typography
@@ -273,7 +280,7 @@ const Page_Home = () => {
       </Box>}
       <Box sx={{ padding: '24px', borderTop: '1px solid lightgrey' }} id='AboutUs'>
         <Box sx={{ padding: '0px 0px 30px 0px' }}>
-          <Typography align='center' variant='h3'>About us</Typography>
+          <Typography align='center' variant='h2' fontFamily="Arial" >About us</Typography>
 
         </Box>
         <Grid container spacing={1} >
@@ -295,6 +302,7 @@ const Page_Home = () => {
                   color="text.secondary"
                   component="p"
                   sx={{ display: 'flex', justifyContent: 'flex-start' }}
+                  
                 >
                   About us
                 </Typography>
@@ -315,7 +323,7 @@ const Page_Home = () => {
                   component="p"
                   sx={{ display: 'flex', justifyContent: 'flex-start' }}
                 >
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, perspiciatis repellat maxime, adipisci non ipsam at itaque rerum vitae, necessitatibus nulla animi expedita cumque provident inventore? Voluptatum in tempora earum deleniti, culpa odit veniam, ea reiciendis sunt ullam temporibus aut!
+                Teamwork is the heart of success in any organization. A team is a group of individuals who come together, united by a common goal, to collaborate and achieve objectives that would be difficult or impossible to accomplish alone. Effective teamwork fosters creativity, harnesses diverse perspectives, and maximizes individual strengths.
                 </Typography>
               </Box>
               <Box sx={{ padding: '10px 0px 0px 30px' }}>
@@ -325,7 +333,7 @@ const Page_Home = () => {
                   component="p"
                   sx={{ display: 'flex', justifyContent: 'flex-start' }}
                 >
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, perspiciatis repellat maxime, adipisci non ipsam at itaque rerum vitae, necessitatibus nulla animi expedita cumque provident inventore? Voluptatum in tempora earum deleniti, culpa odit veniam, ea reiciendis sunt ullam temporibus aut!
+                  Successful teams celebrate achievements together and learn from failures collectively. They value feedback and continuously seek opportunities for growth and improvement. By fostering a positive and inclusive team culture, organizations can harness the true potential of teamwork and achieve remarkable results.
                 </Typography>
               </Box>
             </Box>
@@ -367,7 +375,7 @@ const Page_Home = () => {
                   component="p"
                   sx={{ display: 'flex', justifyContent: 'flex-start' }}
                 >
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, perspiciatis repellat maxime, adipisci non ipsam at itaque rerum vitae, necessitatibus nulla animi expedita cumque provident inventore? Voluptatum in tempora earum deleniti, culpa odit veniam, ea reiciendis sunt ullam temporibus aut!
+                The importance of direction for Frontend developers. They need a strong foundation in HTML, CSS, and JavaScript, along with knowledge of modern frameworks like React, Angular, or Vue.js. Continuous learning, problem-solving skills, and adaptability are crucial traits. 
                 </Typography>
               </Box>
               <Box sx={{ padding: '10px 0px 0px 0px' }}>
@@ -377,7 +385,7 @@ const Page_Home = () => {
                   component="p"
                   sx={{ display: 'flex', justifyContent: 'flex-start' }}
                 >
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, perspiciatis repellat maxime, adipisci non ipsam at itaque rerum vitae, necessitatibus nulla animi expedita cumque provident inventore? Voluptatum in tempora earum deleniti, culpa odit veniam, ea reiciendis sunt ullam temporibus aut!
+                 Understanding design principles and effective communication with team members are also highlighted as essential for creating seamless user experiences in the constantly evolving field of Frontend development.
                 </Typography>
               </Box>
             </Box>
@@ -385,10 +393,11 @@ const Page_Home = () => {
 
           </Grid>
           <Grid item md={6.5}>
-            <Box sx={{ padding: '24px 0px 0px 20px' }}>
-              <img src="https://cutewallpaper.org/21/image/Image-Dimensions-Monterey-Regional-Airport.jpeg"
+            <Box sx={{ padding: '24px 0px 0px 20px'  }} >
+              <img src={picture2}
+                
                 alt=""
-                style={{ width: '100%' }}
+                style={{ width: '98%'}}
 
               />
             </Box>

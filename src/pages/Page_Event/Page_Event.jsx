@@ -116,7 +116,7 @@ const Page_Event = () => {
                   color="#EEEEEE"
                   fontFamily="Arial"
                 >
-                  Các sự kiện sôi động sẽ cập nhật liên tục
+                  Exciting events will be updated continuously
                 </Typography>
               </Box>
             </Box>

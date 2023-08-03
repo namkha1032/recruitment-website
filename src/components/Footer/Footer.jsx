@@ -56,10 +56,7 @@ const Footer = () => {
                   component="p"
                   sx={{ display: "flex", justifyContent: "flex-start" }}
                 >
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Facilis, perspiciatis repellat maxime, adipisci non ipsam at
-                  adipisci non ipsam at
-                  adipisci non ipsam at
+                 Teamwork is the heart of success in any organization. A team is a group of individuals who come together, united by a common goal, to collaborate.
 
                 </Typography>
               </Box>
