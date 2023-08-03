@@ -143,8 +143,8 @@ function* applicationSaga() {
     yield all([
         takeEvery('saga/submitCv', submitCv),
         takeEvery('saga/getApplication', getApplication),
-        takeEvery('saga/getDataForInterview', getDataForInterview),
-        takeEvery('saga/getInfoApplication', getInfoApplication),
+        takeEvery('infoApplicationSaga/getDataForInterview', getDataForInterview),
+        takeEvery('infoApplicationSaga/getInfoApplication', getInfoApplication),
     ])
 }
 

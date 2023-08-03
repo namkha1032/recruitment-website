@@ -186,10 +186,10 @@ function* getPosition(action) {
 
 function* positionSaga() {
   yield all([
-    takeEvery("saga/getPosition", getPosition),
-    takeLatest("saga/getPositionList", getPositionList),
-    takeLatest("saga/updatePositionList", updatePositionList),
-    takeLatest("saga/getPositionListWithFilter", getPositionListWithFilter),
+    takeEvery("positionSaga/getPosition", getPosition),
+    takeLatest("positionSaga/getPositionList", getPositionList),
+    takeLatest("positionSaga/updatePositionList", updatePositionList),
+    takeLatest("positionSaga/getPositionListWithFilter", getPositionListWithFilter),
   ]);
 }
 

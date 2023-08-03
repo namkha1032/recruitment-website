@@ -19,7 +19,6 @@ import ProfileChangePW from "./ProfileChangPW";
 import ProfileInfo from "./ProfileInfo";
 import GigaCard from "../GigaCard/GigaCard";
 import useGetRole from "../../hooks/useGetRole";
-import ProfileHistory from "./ProfileHistory/ProfileHistory";
 import CVProfile from "../CV/CVProfile";
 import { useParams } from "react-router-dom/dist";
 
@@ -36,8 +35,8 @@ const ProfileMain = ({ page }) => {
   console.log(userId)
 
   useEffect(() => {
-    dispatch({ type: "saga/getPositionList" });
-    dispatch({ type: "saga/getProfile" });
+    dispatch({ type: "positionSaga/getPositionList" });
+    dispatch({ type: "profileSaga/getProfile" });
   }, []);
   const handleClickChangePW = () => {
     if (page !== "ChangePW") navigate(`/profile/${profileid}/changepassword`);
@@ -125,15 +124,6 @@ const ProfileMain = ({ page }) => {
                 <GigaCard>
                   <Box sx={{ padding: "24px" }}>
                     <ProfileChangePW />
-                  </Box>
-                </GigaCard>
-              </Box>
-            )}
-            {page === "History" && (
-              <Box sx={{ mb: "24px" }}>
-                <GigaCard>
-                  <Box sx={{ padding: "24px" }}>
-                    <ProfileHistory />
                   </Box>
                 </GigaCard>
               </Box>

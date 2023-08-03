@@ -107,7 +107,7 @@ const Page_Recruitment_Id = () => {
                     type: 'saga/submitCv',
                     payload: {
                         cvId: CV,
-                        positionId: recruitmentid
+                        positionId: recruitmentid,
                     }
                 })
 

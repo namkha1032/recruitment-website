@@ -106,8 +106,8 @@ function* getCvList(action) {
 
 function* cvSaga() {
     yield all([
-        takeEvery("saga/getCv", getCv),
-        takeEvery("saga/getCvList", getCvList)
+        takeEvery("cvSaga/getCv", getCv),
+        takeEvery("cvSaga/getCvList", getCvList)
     ])
 }
 

@@ -85,6 +85,18 @@ const Page_Company_Interview_Create = () => {
     const shiftList = useSelector(state => state.shift)
     const newError = useSelector(state => state.error)
 
+    const url = window.location.href;
+
+// Phân tích các tham số từ URL sử dụng URLSearchParams
+const urlParams = new URLSearchParams(url);
+
+// Lấy giá trị của "recruitmentid" và "applicationid" từ URL
+const recruitmentId = urlParams.get("recruitmentid");
+const applicationId = urlParams.get("applicationid");
+
+// In kết quả ra console
+console.log("recruitmentid:", recruitmentId);
+console.log("applicationid:", applicationId);
     // set busyInterviewer and busyRoom
     useEffect(() => {
         setBusyInterviewer(oldList => [])
