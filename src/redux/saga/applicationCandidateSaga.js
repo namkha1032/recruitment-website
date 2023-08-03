@@ -7,7 +7,7 @@ import host from "../host"
 
 function* getAllApplicationCandidate() {
     console.log("Hello")
-    const response = yield call(axios.get, `${host.name}/data/applicationAllOfCandidate.json`)
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/ApplicationHistory/00000000-0000-0000-0000-000000000001`)
     yield put({ type: "applicationCandidate/setApplicationList", payload: response.data })
 
 }

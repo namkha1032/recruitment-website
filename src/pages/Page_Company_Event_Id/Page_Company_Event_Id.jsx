@@ -43,7 +43,7 @@ import { transferDatetimeBack } from '../../utils/transferDatetime';
 
 
 const Page_Company_Event_Id = () => {
-    
+
 
     // useNavigate
     const navigate = useNavigate()
@@ -63,7 +63,6 @@ const Page_Company_Event_Id = () => {
     }, [])
 
     const event = useSelector((state) => state.event)
-
     const note = event ? event.content : ""
     const contentRef = useRef()
     useEffect(() => {
@@ -116,12 +115,12 @@ const Page_Company_Event_Id = () => {
 
     const columns = useMemo(() => [
         {
-            field: 'userId',
+            field: 'candidateId',
             type: 'number',
-            width: 150,
+            width: 300,
             headerAlign: 'center',
             align: 'center',
-            renderHeader: () => <span>ID</span>,
+            renderHeader: () => <span>Candidate ID</span>,
             renderCell: (params) => {
                 return (
                     <Box
@@ -138,12 +137,12 @@ const Page_Company_Event_Id = () => {
             },
         },
         {
-            field: 'userName',
+            field: 'candidateFullName',
             type: 'string',
-            width: 250,
+            width: 300,
             headerAlign: 'left',
             align: 'left',
-            renderHeader: () => <span>User Name</span>,
+            renderHeader: () => <span>Full Name</span>,
             renderCell: (params) => {
                 return (
                     <Box
@@ -179,10 +178,32 @@ const Page_Company_Event_Id = () => {
         //         }
         //     },
         // },
+        // {
+        //     field: 'candidateUserName',
+        //     type: 'string',
+        //     width: 250,
+        //     headerAlign: 'left',
+        //     align: 'left',
+        //     renderHeader: () => <span>Username</span>,
+        //     renderCell: (params) => {
+        //         return (
+        //             <Box
+        //                 sx={{
+        //                     "&:hover": {
+        //                         cursor: "pointer",
+        //                         textDecoration: "underline",
+        //                     },
+        //                 }}
+        //             >
+        //                 {params.value}
+        //             </Box>
+        //         );
+        //     },
+        // },
         {
-            field: 'email',
+            field: 'candidateEmail',
             type: 'string',
-            width: 250,
+            width: 300,
             headerAlign: 'left',
             align: 'left',
             renderHeader: () => <span>Email</span>,
@@ -190,21 +211,21 @@ const Page_Company_Event_Id = () => {
 
             },
         },
-        {
-            field: 'registerTime',
-            type: 'string',
-            width: 250,
-            headerAlign: 'center',
-            align: 'center',
-            renderHeader: () => <span>Registration Time</span>,
-            renderCell: (params) => {
+        // {
+        //     field: 'registerTime',
+        //     type: 'string',
+        //     width: 250,
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     renderHeader: () => <span>Registration Time</span>,
+        //     renderCell: (params) => {
 
-            },
-        },
+        //     },
+        // },
         {
             field: 'actions',
             type: 'actions',
-            width: 200,
+            width: 150,
             headerAlign: 'center',
             align: 'center',
             flex: 1,
@@ -213,7 +234,7 @@ const Page_Company_Event_Id = () => {
                 <GridActionsCellItem
                     icon={<FindInPageIcon></FindInPageIcon>}
                     label="Detail"
-                    onClick={() => handleDetailClick(params.row.userId)} />,]
+                    onClick={() => handleDetailClick(params.row.candidateId)} />,]
         }
     ]);
 
@@ -257,7 +278,7 @@ const Page_Company_Event_Id = () => {
                                 textTransform: "none",
                                 fontSize: 23,
                                 marginRight: 4,
-                                fontWeight: 500,
+                                fontWeight: 600,
                                 color: "rgba(0, 0, 0, 0.85)",
                                 "&:hover": {
                                     color: "rgba(190, 190, 190, 0.85)",
@@ -277,7 +298,7 @@ const Page_Company_Event_Id = () => {
                                 textTransform: "none",
                                 fontSize: 23,
                                 marginRight: 4,
-                                fontWeight: 500,
+                                fontWeight: 600,
                                 color: "rgba(0, 0, 0, 0.85)",
                                 "&:hover": {
                                     color: "rgba(190, 190, 190, 0.85)",
@@ -316,12 +337,20 @@ const Page_Company_Event_Id = () => {
                                     <Box sx={{ paddingLeft: 4, paddingTop: 4 }}>
                                         <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
                                             <Box sx={{ fontSize: 40, display: "flex", alignItems: "center" }}>
-                                                <CelebrationRoundedIcon fontSize='large' sx={{ color: '#1565C0' }}></CelebrationRoundedIcon>
+                                                <CelebrationRoundedIcon
+                                                    fontSize='large'
+                                                    sx={{
+                                                        color: '#3f51b5'
+                                                        // color: '#1565C0'
+                                                    }}
+                                                >
+                                                </CelebrationRoundedIcon>
                                             </Box>
                                             <Box sx={{
                                                 fontSize: 40,
                                                 fontWeight: 600,
-                                                color: '#1565C0',
+                                                color: '#3f51b5',
+                                                // color: '#1565C0',
                                                 display: 'flex',
                                                 justifyContent: 'start',
                                                 // justifyContent: 'center'
@@ -358,12 +387,20 @@ const Page_Company_Event_Id = () => {
                                                     // alignItems: 'center',
                                                     // marginTop: 6
                                                 }}>
-                                                    <PeopleAltRoundedIcon fontSize='large' sx={{ marginRight: 2, color: '#1565C0' }}></PeopleAltRoundedIcon>
+                                                    <PeopleAltRoundedIcon
+                                                        fontSize='large'
+                                                        sx={{
+                                                            marginRight: 2,
+                                                            color: '#3f51b5',
+                                                            // color: '#1565C0' 
+                                                        }}>
+                                                    </PeopleAltRoundedIcon>
                                                     <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                                                         <Box sx={{
                                                             fontSize: 22,
                                                             fontWeight: 600,
-                                                            color: '#1565C0'
+                                                            color: '#3f51b5',
+                                                            // color: '#1565C0'
                                                         }}>
                                                             {/* Số lượng */}
                                                             Quantity
@@ -384,12 +421,20 @@ const Page_Company_Event_Id = () => {
                                                     // marginTop: 3
                                                     // justifyContent: 'center'
                                                 }}>
-                                                    <AccessTimeRoundedIcon fontSize='large' sx={{ marginRight: 2, color: '#1565C0' }}></AccessTimeRoundedIcon>
+                                                    <AccessTimeRoundedIcon
+                                                        fontSize='large'
+                                                        sx={{
+                                                            marginRight: 2,
+                                                            color: '#3f51b5',
+                                                            // color: '#1565C0'
+                                                        }}>
+                                                    </AccessTimeRoundedIcon>
                                                     <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                                                         <Box sx={{
                                                             fontSize: 22,
                                                             fontWeight: 600,
-                                                            color: '#1565C0'
+                                                            color: '#3f51b5',
+                                                            // color: '#1565C0'
                                                         }}>
                                                             {/* Thời gian */}
                                                             Time
@@ -410,12 +455,20 @@ const Page_Company_Event_Id = () => {
                                                     // marginTop: 3
                                                     // justifyContent: 'flex-end'
                                                 }}>
-                                                    <LocationOnRoundedIcon fontSize='large' sx={{ marginRight: 2, color: '#1565C0' }}></LocationOnRoundedIcon>
+                                                    <LocationOnRoundedIcon
+                                                        fontSize='large'
+                                                        sx={{
+                                                            marginRight: 2,
+                                                            color: '#3f51b5',
+                                                            // color: '#1565C0' 
+                                                        }}>
+                                                    </LocationOnRoundedIcon>
                                                     <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                                                         <Box sx={{
                                                             fontSize: 22,
                                                             fontWeight: 600,
-                                                            color: '#1565C0'
+                                                            color: '#3f51b5',
+                                                            // color: '#1565C0'
                                                         }}>
                                                             {/* Địa điểm */}
                                                             Location
@@ -436,7 +489,18 @@ const Page_Company_Event_Id = () => {
                                     <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon>
                                     Đăng ký
                                 </Button> */}
-                                            <Button variant='contained' size='large' color='primary' onClick={handleEdit} sx={{ backgroundColor: 'black' }}>
+                                            <Button
+                                                variant='contained'
+                                                size='large'
+                                                // color='primary'
+                                                sx={{
+                                                    backgroundColor: "black",
+                                                    "&:hover": {
+                                                        backgroundColor: "grey",
+                                                    }
+                                                }}
+                                                onClick={handleEdit}
+                                            >
                                                 {/* Chỉnh sửa */}
                                                 <EditIcon sx={{ marginRight: 1 }}></EditIcon>
                                                 Edit
@@ -522,10 +586,10 @@ const Page_Company_Event_Id = () => {
                                     },
                                 },
                             }}
-                            getRowId={(row) => row.userId}
+                            getRowId={(row) => row.candidateId}
                             onCellClick={(params, event) => {
-                                if (params.field === "userId" || params.field === "userName") {
-                                    handleDetailClick(params.row.userId);
+                                if (params.field === "candidateId" || params.field === "candidateFullName") {
+                                    handleDetailClick(params.row.candidateId);
                                 }
                             }}>
                         </DataGrid>

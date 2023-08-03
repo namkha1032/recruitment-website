@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
@@ -11,6 +11,7 @@ import {
   InputAdornment,
   IconButton,
   createTheme,
+  CircularProgress,
 } from "@mui/material";
 
 // import { toast } from "react-toastify";
@@ -52,8 +53,6 @@ const ProfileChangePW = () => {
   const dispatch = useDispatch();
 
   const newError = useSelector((state) => state.error);
-  /* const user = useSelector((state) => state.user);
-  console.log("user = ", user.userId) */
 
   useEffect(() => {
     if (newError.status === "no") {
@@ -157,23 +156,8 @@ const ProfileChangePW = () => {
                 opacity: "100%",
                 left: "20%",
                 right: "20%",
-                //border: "1px solid black",
               }}
             >
-              {/* <Typography 
-                variant="h2" 
-                align="center" 
-                // color='#1976d2' 
-                color="black"
-                gutterBottom
-                fontFamily={'Roboto'}
-                fontSize={'28px'}
-                lineHeight={'28px'}
-                fontWeight={'700'}
-                padding={"20px"}
-              >
-                Change password
-              </Typography> */}
 
               <form onSubmit={handleSubmit}>
 
@@ -468,7 +452,7 @@ const ProfileChangePW = () => {
           {messagePassword}
         </Alert>
       </Snackbar>
-    </Box>
+    </Box> 
   );
 };
 

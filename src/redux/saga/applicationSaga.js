@@ -22,8 +22,8 @@ function* getApplication(action) {
         let candidatelist = []
         let application = response2.data.filter((prop) => prop.position.positionId === response1.data.positionId);
         console.log("applyinsaga", application);
-        for (let i = 0; i < application.length; i++ ){
-            candidatelist.push({ ...application[i],...(yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate/${application[i].cv.candidateId}`)).data})
+        for (let i = 0; i < application.length; i++) {
+            candidatelist.push({ ...application[i], ...(yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate/${application[i].cv.candidateId}`)).data })
         }
         // candidatelist.push(mergeobject);
         console.log("listinsaga", candidatelist);
@@ -34,13 +34,48 @@ function* getApplication(action) {
     }
 
 
-
 }
 
+function* getInfoApplication(action) {
+    try {
+        // const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload}`)
+        const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`)
+        const data = response.data.filter(item => item.applicationId === action.payload)
+        console.log("data applicationid",data)
+        if(data.length ===0) 
+            yield put({ type: 'infoApplication/setInfoApplication', payload: 'none' })
+        else
+            yield put({ type: 'infoApplication/setInfoApplication', payload: data[0] })
+    } catch (error) {
+        console.log(error)
+    }
 
+
+}
 function* submitCv(action) {
     try {
+        // let submit = null;
+        // const allaplication = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application` )
+        // const candidate = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`) 
+        // console.log("data", candidate.data);
+        // const candidateid = candidate.data.filter((prop) => prop.userId === action.payload.userId);
+        // console.log('payloadinsubmit', action.payload);
+        // console.log("applicationsaga", allaplication.data);
+        // console.log('canidinsaga', candidateid);
         const reponse = yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Application`, action.payload)
+        // for (let i = 0; i< allaplication.data.length; i++){
+        //     if (allaplication.data[i].position.positionId === action.payload.positionId && allaplication.data[i].cv.candidateId ===candidateid[0].candidateId  ){
+                // const deleteapp = yield call(axios.delete, `http://leetun2k2-001-site1.gtempurl.com/api/Application/${allaplication[i].applicationId}`)
+                // submit = yield call(axios.post)
+        //         console.log('haha',allaplication.data[i] );
+        //         break;
+        //     }
+        //     else{
+        //         console.log("hellowrong")
+        //     }
+            
+        // }
+        console.log('post', action.payload);
         console.log("submitsaga", reponse.data)
         yield put({ type: 'submitcv/setSubmitcv', payload: reponse.data })
     } catch (error) {
@@ -49,87 +84,11 @@ function* submitCv(action) {
 
 }
 
-function* getDataForInterview(action) {
-    // const responseApplication = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload}`)
-    // --------hàng tạm thời------------
-    // get application infor
-    const responseAppList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`)
-    const appItem = responseAppList.data.find((item) => {
-        return item.applicationId == action.payload
-    })
-    const responsePositionList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position`)
-    const findPosition = responsePositionList.data.find((item) => item.positionId == appItem.position.positionId)
-    const responseDepartmentList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Department`)
-    const findDepartment = responseDepartmentList.data.find((item) => item.departmentId == findPosition.department.departmentId)
-    console.log("appItem: ", appItem)
-    // get upcoming interview
-    const responseInterviewList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`)
-    let interviewList = []
-    for (let resInter of responseInterviewList.data) {
-        const responseItrsList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Itrsinterview?id=${resInter.itrsinterviewId}`)
-        const responseRoomList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Room`)
-        const findRoom = responseRoomList.data.find((item) => item.roomId == responseItrsList.data.roomId)
-        const newInter = {
-            interviewid: resInter.interviewId,
-            departmentid: findPosition.department.departmentId,
-            departmentname: findPosition.department.departmentName,
-            candidateid: appItem.cv.candidateId,
-            candidatename: "Goku",
-            interviewerid: resInter.interviewerId,
-            interviewername: "Interviewer Name",
-            interviewdate: responseItrsList.data.dateInterview,
-            shiftid: responseItrsList.data.shiftId,
-            roomid: responseItrsList.data.roomId,
-            roomname: findRoom.roomName
-        }
-        interviewList.push(newInter)
-    }
-    // get department interviewer
-    const responseDepartInterviewerList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interviewer`)
-    const filterInterviewerList = responseDepartInterviewerList.data.filter((item) => item.departmentId == findPosition.department.departmentId)
-    let interviewerList = []
-    for (let filterInter of filterInterviewerList) {
-        let newInterviewer = {
-            departmentid: filterInter.departmentId,
-            interviewerid: filterInter.interviewerId,
-            interviewername: "Interviewer Name",
-        }
-        interviewerList.push(newInterviewer)
-    }
-    // Get room
-    const responseRoomList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Room`)
-    let roomList = responseRoomList.data.map((item) => {
-        const newRoomObj = {
-            roomid: item.roomId,
-            roomname: item.roomName
-        }
-        return newRoomObj
-    })
-    // Get shift
-    const responseShiftList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Shift`)
-    let shiftList = responseShiftList.data.map((item) => {
-        let newShiftObj = {
-            shiftid: item.shiftId,
-            shiftstart: item.shiftTimeStart,
-            shiftend: item.shiftTimeEnd
-        }
-        return newShiftObj
-    })
-    shiftList.sort((a, b) => {
-        return a.shiftstart - b.shiftstart;
-    });
-    // ---------------------------------
-    yield put({ type: "application/setApplication", payload: appItem })
-    yield put({ type: "interview/setInterview", payload: interviewList })
-    yield put({ type: "interviewer/setInterviewer", payload: interviewerList })
-    yield put({ type: "room/setRoom", payload: roomList })
-    yield put({ type: "shift/setShift", payload: shiftList })
-}
 function* applicationSaga() {
     yield all([
         takeEvery('saga/submitCv', submitCv),
         takeEvery('saga/getApplication', getApplication),
-        takeEvery('saga/getDataForInterview', getDataForInterview),
+        takeEvery('saga/getInfoApplication', getInfoApplication),
     ])
 }
 

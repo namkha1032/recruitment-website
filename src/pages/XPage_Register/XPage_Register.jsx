@@ -26,6 +26,8 @@ import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { MailOutline } from "@mui/icons-material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
+import CircularProgress from "@mui/material/CircularProgress";
+
 import imageBackground from "../../assets/img/background.jpg";
 
 // const style = {
@@ -44,7 +46,7 @@ const theme = createTheme({
 const fullnameRegex = /^[a-zA-Z-' ]{2,}$/;
 const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{6,}$/;
 
 const XPage_Register = () => {
   const navigate = useNavigate();
@@ -52,6 +54,8 @@ const XPage_Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [loading, setLoading] = useState(false)
 
   const [validFullName, setValidFullName] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
@@ -67,6 +71,7 @@ const XPage_Register = () => {
 
   useEffect(() => {
     if (newError.status === "no") {
+      setLoading(false)
       dispatch({
         type: "error/setError",
         payload: { status: "idle", message: "" },
@@ -74,9 +79,10 @@ const XPage_Register = () => {
       navigate("/login");
     }
     if (newError.status === "yes") {
+      setLoading(false)
       setErrorSnackbar(true);
-      setUsername("");
-      setEmail("");
+      //setUsername("");
+      //setEmail("");
       setTimeout(() => {
         setErrorSnackbar(false);
         dispatch({
@@ -91,13 +97,11 @@ const XPage_Register = () => {
     let value = event.target.value;
     setFullName(value);
     if (!fullnameRegex.test(value)) {
-      setValidFullName(false)
+      setValidFullName(false);
+    } else {
+      setValidFullName(true);
     }
-    else {
-      setValidFullName(true)
-    }
-  }
-
+  };
 
   const handleUsernameChange = (event) => {
     let value = event.target.value;
@@ -137,9 +141,35 @@ const XPage_Register = () => {
     event.preventDefault();
   };
 
+  const handleClickHome = () => {
+    dispatch({
+      type: "error/setError",
+      payload: { status: "idle", message: "" },
+    });
+    navigate("/home");
+  };
+
+  const handleClickSignIn = () => {
+    dispatch({
+      type: "error/setError",
+      payload: { status: "idle", message: "" },
+    });
+    navigate("/login");
+  };
+
   const handleRegister = (event) => {
     event.preventDefault();
-    if (validFullName && validUsername && validEmail && validPassword) {
+    if (
+      validFullName &&
+      fullName != "" &&
+      validUsername &&
+      username != "" &&
+      validEmail &&
+      email != "" &&
+      validPassword &&
+      password != ""
+    ) {
+      setLoading(true)
       dispatch({
         type: "saga/userRegister",
         payload: {
@@ -150,19 +180,19 @@ const XPage_Register = () => {
         },
       });
     } else {
-      if (!validFullName) {
-        setValidFullName(false)
-        setFullName("")
+      if (!validFullName || fullName == "") {
+        setValidFullName(false);
+        setFullName("");
       }
-      if (!validUsername) {
+      if (!validUsername || username == "") {
         setValidUsername(false);
         setUsername("");
       }
-      if (!validEmail) {
+      if (!validEmail || email == "") {
         setValidEmail(false);
         setEmail("");
       }
-      if (!validPassword) {
+      if (!validPassword || password == "") {
         setValidPassword(false);
         setPassword("");
       }
@@ -214,15 +244,18 @@ const XPage_Register = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                marginTop: "5px",
               }}
             >
               <ArrowBackIcon />
               <Typography
-                component={Link}
-                to="/home"
+                // component={Link}
+                // to="/home"
+                onClick={handleClickHome}
                 color="black"
                 paddingLeft="2px"
                 sx={{
+                  cursor: "pointer",
                   textDecoration: "none",
                 }}
               >
@@ -234,8 +267,8 @@ const XPage_Register = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                paddingTop: "7.5%",
-                paddingBottom: "7.5%",
+                paddingTop: "5%",
+                paddingBottom: "5%",
               }}
             >
               <form onSubmit={handleRegister}>
@@ -246,7 +279,7 @@ const XPage_Register = () => {
                     color: "black",
                     textAlign: "center",
                     fontWeight: "450",
-                    marginBottom: "15px",
+                    marginBottom: "10px",
                   }}
                 >
                   Sign Up
@@ -254,15 +287,14 @@ const XPage_Register = () => {
 
                 <Grid
                   container
-                  spacing={2}
+                  //spacing={2}
                   sx={{
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
-
-<Grid
+                  <Grid
                     item
                     xs={12}
                     sx={{
@@ -277,7 +309,7 @@ const XPage_Register = () => {
                       //required
                       fullWidth
                       type="text"
-                      label={<Typography color={"black"}>Fullname</Typography>}
+                      label={validFullName ? <Typography color={"black"}>Fullname</Typography> : <Typography color={"red"}>Fullname</Typography>}
                       autoComplete="new-text"
                       value={fullName}
                       onChange={handleFullNameChange}
@@ -289,14 +321,11 @@ const XPage_Register = () => {
                             sx={{
                               position: "absolute",
                               right: "8px",
-                              color: "#000",
+                              color: validFullName ? "black" : "red",
                               fontSize: "1.2em",
                             }}
                           />
                         ),
-                        sx: {
-                          color: "#000",
-                        },
                       }}
                       sx={{
                         width: "90%",
@@ -305,32 +334,49 @@ const XPage_Register = () => {
                         outline: "none",
                         fontSize: "1em",
                         color: "#000",
-                        borderBottom: "2px solid black",
+                        borderBottom: validFullName ? "2px solid black" : "2px solid red",
                         borderBottomWidth: "2px",
                       }}
-                      helperText={
-                        !validFullName && (
-                          <Typography
-                            color={"red"}
-                            sx={{
-                              display: "flex",
-                              justifyContent: "left",
-                              alignItems: "center",
-                            }}
-                            variant="small"
-                          >
-                            <ErrorOutlineOutlinedIcon
-                              color="red"
-                              sx={{ fontSize: 13, paddingRight: "0px" }}
-                            />
-                            <Typography variant="small" paddingLeft="3px">
-                            Full name must be at least 2 characters long
-                            </Typography>
-                          </Typography>
-                        )
-                      }
                     />
                   </Grid>
+
+                  {!validFullName && (
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "left",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        color={"red"}
+                        display={"flex"}
+                        marginLeft={"16px"}
+                        marginRight={"15px"}
+                        marginBottom={"3px"}
+                      >
+                        <ErrorOutlineOutlinedIcon
+                          //color="red"
+                          sx={{
+                            fontSize: 15,
+                            paddingLeft: "2px",
+                            marginTop: "2px",
+                          }}
+                        />
+
+                        <Typography
+                          color="red"
+                          fontSize="12px"
+                          lineHeight="20px"
+                          paddingLeft={"5px"}
+                        >
+                          Full name must be at least 2 characters long
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  )}
 
                   <Grid
                     item
@@ -347,7 +393,7 @@ const XPage_Register = () => {
                       //required
                       fullWidth
                       type="text"
-                      label={<Typography color={"black"}>Username</Typography>}
+                      label={validUsername ? <Typography color={"black"}>Username</Typography> : <Typography color={"red"}>Username</Typography>}
                       autoComplete="new-text"
                       value={username}
                       onChange={handleUsernameChange}
@@ -359,7 +405,7 @@ const XPage_Register = () => {
                             sx={{
                               position: "absolute",
                               right: "8px",
-                              color: "#000",
+                              color: validUsername ? "black" : "red",
                               fontSize: "1.2em",
                             }}
                           />
@@ -375,32 +421,49 @@ const XPage_Register = () => {
                         outline: "none",
                         fontSize: "1em",
                         color: "#000",
-                        borderBottom: "2px solid black",
+                        borderBottom: validUsername ? "2px solid black" : "2px solid red",
                         borderBottomWidth: "2px",
                       }}
-                      helperText={
-                        !validUsername && (
-                          <Typography
-                            color={"red"}
-                            sx={{
-                              display: "flex",
-                              justifyContent: "left",
-                              alignItems: "center",
-                            }}
-                            variant="small"
-                          >
-                            <ErrorOutlineOutlinedIcon
-                              color="red"
-                              sx={{ fontSize: 13, paddingRight: "0px" }}
-                            />
-                            <Typography variant="small" paddingLeft="3px">
-                              Username must be 3-20 characters long
-                            </Typography>
-                          </Typography>
-                        )
-                      }
                     />
                   </Grid>
+
+                  {!validUsername && (
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "left",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        color={"red"}
+                        display={"flex"}
+                        marginLeft={"16px"}
+                        marginRight={"15px"}
+                        marginBottom={"3px"}
+                      >
+                        <ErrorOutlineOutlinedIcon
+                          //color="red"
+                          sx={{
+                            fontSize: 15,
+                            paddingLeft: "2px",
+                            marginTop: "2px",
+                          }}
+                        />
+
+                        <Typography
+                          color="red"
+                          fontSize="12px"
+                          lineHeight="20px"
+                          paddingLeft={"5px"}
+                        >
+                          Username must be 3-20 characters long
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  )}
 
                   <Grid
                     item
@@ -417,7 +480,7 @@ const XPage_Register = () => {
                       //required
                       fullWidth
                       type="email"
-                      label={<Typography color={"black"}>Email</Typography>}
+                      label={validEmail ? <Typography color={"black"}>Email</Typography> : <Typography color={"red"}>Email</Typography>}
                       autoComplete="new-email"
                       value={email}
                       onChange={handleEmailChange}
@@ -429,7 +492,7 @@ const XPage_Register = () => {
                             sx={{
                               position: "absolute",
                               right: "8px",
-                              color: "#000",
+                              color: validEmail ? "black" : "red",
                               fontSize: "1.2em",
                               //top: '20px',
                             }}
@@ -438,43 +501,57 @@ const XPage_Register = () => {
                         sx: {
                           color: "#000",
                         },
-                        //style: { borderRadius: "12px" },
                       }}
                       sx={{
                         width: "90%",
                         height: "50px",
                         background: "transparent",
-                        //border: 'none',
                         outline: "none",
                         fontSize: "1em",
-                        //padding: '0 5px 0 5px',
                         color: "#000",
-                        borderBottom: "2px solid black",
+                        borderBottom: validEmail ? "2px solid black" : "2px solid red",
                         borderBottomWidth: "2px",
                       }}
-                      helperText={
-                        !validEmail && (
-                          <Typography
-                            color={"red"}
-                            sx={{
-                              display: "flex",
-                              justifyContent: "left",
-                              alignItems: "center",
-                            }}
-                            variant="small"
-                          >
-                            <ErrorOutlineOutlinedIcon
-                              color="red"
-                              sx={{ fontSize: 13, paddingRight: "0px" }}
-                            />
-                            <Typography variant="small" paddingLeft="3px">
-                              Must be a valid email
-                            </Typography>
-                          </Typography>
-                        )
-                      }
                     />
                   </Grid>
+
+                  {!validEmail && (
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "left",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        color={"red"}
+                        display={"flex"}
+                        marginLeft={"16px"}
+                        marginRight={"15px"}
+                        marginBottom={"3px"}
+                      >
+                        <ErrorOutlineOutlinedIcon
+                          //color="red"
+                          sx={{
+                            fontSize: 15,
+                            paddingLeft: "2px",
+                            marginTop: "2px",
+                          }}
+                        />
+
+                        <Typography
+                          color="red"
+                          fontSize="12px"
+                          lineHeight="20px"
+                          paddingLeft={"5px"}
+                        >
+                          Must be a valid email
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  )}
 
                   <Grid
                     item
@@ -490,7 +567,7 @@ const XPage_Register = () => {
                       //required
                       fullWidth
                       type={showPassword ? "text" : "password"}
-                      label={<Typography color={"black"}>Password</Typography>}
+                      label={validPassword ? <Typography color={"black"}>Password</Typography> : <Typography color={"red"}>Password</Typography>}
                       autoComplete="new-password"
                       value={password}
                       onChange={handlePasswordChange}
@@ -508,7 +585,7 @@ const XPage_Register = () => {
                                   sx={{
                                     position: "absolute",
                                     right: "8px",
-                                    color: "#000",
+                                    color: validPassword ? "black" : "red",
                                     fontSize: "0.9em",
                                     //top: '20px',
                                   }}
@@ -518,7 +595,7 @@ const XPage_Register = () => {
                                   sx={{
                                     position: "absolute",
                                     right: "8px",
-                                    color: "#000",
+                                    color: validPassword ? "black" : "red",
                                     fontSize: "0.9em",
                                     //top: '20px',
                                   }}
@@ -535,38 +612,53 @@ const XPage_Register = () => {
                         width: "90%",
                         height: "50px",
                         background: "transparent",
-                        //border: 'none',
                         outline: "none",
                         fontSize: "1em",
-                        //padding: '0 5px 0 5px',
                         color: "#fff",
-                        borderBottom: "2px solid black",
+                        borderBottom: validPassword ? "2px solid black" : "2px solid red",
                         borderBottomWidth: "2px",
                       }}
-                      helperText={
-                        !validPassword && (
-                          <Typography
-                            color={"red"}
-                            sx={{
-                              display: "flex",
-                              justifyContent: "left",
-                              alignItems: "center",
-                              //marginBottom: '30px'
-                            }}
-                            variant="small"
-                          >
-                            <ErrorOutlineOutlinedIcon
-                              color="red"
-                              sx={{ fontSize: 13, paddingRight: "0px" }}
-                            />
-                            <Typography variant="small" paddingLeft="3px">
-                              Password must be at least 8 characters long
-                            </Typography>
-                          </Typography>
-                        )
-                      }
                     />
                   </Grid>
+
+                  {!validPassword && (
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "left",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        color={"red"}
+                        display={"flex"}
+                        marginLeft={"16px"}
+                        marginRight={"15px"}
+                      >
+                        <ErrorOutlineOutlinedIcon
+                          //color="red"
+                          sx={{
+                            fontSize: 15,
+                            paddingLeft: "2px",
+                            marginTop: "2px",
+                          }}
+                        />
+
+                        <Typography
+                          color="red"
+                          fontSize="12px"
+                          lineHeight="20px"
+                          paddingLeft={"5px"}
+                        >
+                          Passwords must be at least 6 characters have at least
+                          one uppercase letter, lowercase, digit and special
+                          character
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  )}
 
                   <Grid
                     item
@@ -575,25 +667,28 @@ const XPage_Register = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
+                      marginTop: '10px'
                     }}
                   >
-                    <Button
-                      type="submit"
-                      theme={theme}
-                      variant="contained"
-                      color="secondary"
-                      sx={{
-                        height: "40px",
-                        color: "white",
-                        borderRadius: "20px",
-                        fontSize: "1em",
-                        fontWeight: 600,
-                        width: "90%",
-                        marginTop: "20px",
-                      }}
-                    >
-                      Sign Up
-                    </Button>
+                    {loading ? <CircularProgress sx={{ color: "black" }} /> :
+                      <Button
+                        type="submit"
+                        theme={theme}
+                        variant="contained"
+                        color="secondary"
+                        sx={{
+                          height: "40px",
+                          color: "white",
+                          borderRadius: "20px",
+                          fontSize: "1em",
+                          fontWeight: 600,
+                          width: "90%",
+                          marginTop: "15px",
+                        }}
+                      >
+                        Sign Up
+                      </Button>
+                    }
                   </Grid>
                 </Grid>
 
@@ -613,10 +708,15 @@ const XPage_Register = () => {
                     <Typography variant="small" sx={{ color: "black" }}>
                       Already have account?{" "}
                       <Typography
-                        component={Link}
-                        to="/login"
+                        // component={Link}
+                        // to="/login"
+                        onClick={handleClickSignIn}
                         variant="small"
-                        sx={{ /* textDecoration: 'none',  */ color: "black" }}
+                        sx={{
+                          textDecoration: "underline",
+                          cursor: "pointer",
+                          color: "black",
+                        }}
                       >
                         Sign in
                       </Typography>

@@ -14,7 +14,12 @@ const TitleDivider = (props) => {
                 borderWidth: "1px"
             },
         }}>
-            <Button variant="contained" sx={{ backgroundColor: "black", color: "white", fontSize: isMd ? 25 : 15, borderRadius: 100 }}>
+            <Button variant="contained" sx={{
+                backgroundColor: "black", color: "white", fontSize: isMd ? 25 : 15, borderRadius: 100,
+                "&:hover": {
+                    backgroundColor: "black"
+                }
+            }}>
                 {props.children}
             </Button>
         </Divider>

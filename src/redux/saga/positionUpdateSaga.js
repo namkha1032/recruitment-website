@@ -51,7 +51,7 @@ function* updatePosition(action) {
     console.log("recruiterId: ", recruiterId);
     console.log("delRequire: ", delRequire);
     console.log("addRequire: ", addRequire);
-
+  
     const response = yield call(
       axios.put,
       `https://leetun2k2-001-site1.gtempurl.com/api/Position/${positionId}`,

@@ -1,24 +1,15 @@
 {
-  "posts": [
-    {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    },
-    {
-      "title": "naruto len lam hokage",
-      "author": "kakashi",
-      "id": 2
-    }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "typicode"
+  "interview": {
+    "interviewerId": "24cbb8bd-9194-46c0-a15a-520d7ba84046",
+    "recruiterId": "13b849af-bea9-49a4-a9e4-316d13b3a08a",
+    "applicationId": "00000000-0000-0000-0000-000000000001",
+    "itrsinterviewId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "notes": "",
+    "resultId": "00000000-0000-0000-0000-000000000001"
+  },
+  "itrs": {
+    "dateInterview": "2023-08-30T17:00:00.000Z",
+    "shiftId": "00000000-0000-0000-0000-000000000002",
+    "roomId": "00000000-0000-0000-0000-000000000003"
   }
 }

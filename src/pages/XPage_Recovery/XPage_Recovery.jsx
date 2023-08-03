@@ -11,7 +11,8 @@ import Recovery from "./Recovery";
 import ResetPassword from "./ResetPassword";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const passwordRegex = /^.{8,}$/;
+const otpRegex = /^\d{6}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{6,}$/;
 
 const XPage_Recovery = () => {
   const navigate = useNavigate();
@@ -22,11 +23,13 @@ const XPage_Recovery = () => {
 
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [validEmail, setValidEmail] = useState(true);
+  const [validOTP, setValidOTP] = useState(true);
   const [validNewPassword, setValidNewPassword] = useState(true);
+  const [validConfirmPassword, setValidConfirmPassword] = useState(true);
 
-  const [errorSnackbar, setErrorSnackbar] = useState(false)
-  const [errorResetSnackbar, setErrorResetSnackbar] = useState(false)
-  const [message, setMessage] = useState("")
+  const [errorSnackbar, setErrorSnackbar] = useState(false);
+  const [errorResetSnackbar, setErrorResetSnackbar] = useState(false);
+  const [message, setMessage] = useState("");
 
   const dispatch = useDispatch();
 
@@ -34,41 +37,56 @@ const XPage_Recovery = () => {
 
   useEffect(() => {
     if (newError.status === "no") {
-      if (!isEmailValid){
-        dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
-        setIsEmailValid(true)
-      }
-      else {
-        dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+      if (!isEmailValid) {
+        dispatch({
+          type: "error/setError",
+          payload: { status: "idle", message: "" },
+        });
+        setIsEmailValid(true);
+      } else {
+        dispatch({
+          type: "error/setError",
+          payload: { status: "idle", message: "" },
+        });
         navigate("/login");
       }
     }
     if (newError.status === "yes") {
       if (!isEmailValid) {
-        setErrorSnackbar(true)
-        setEmail("")
+        setErrorSnackbar(true);
+        //setEmail("");
         setTimeout(() => {
-            setErrorSnackbar(false)
-            dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
-        }, 5000)
-      }
-      else {
-        setErrorSnackbar(true)
-        setOTP("")
-        setNewPassword("")
-        setConfirmPassword("")
+          setErrorSnackbar(false);
+          dispatch({
+            type: "error/setError",
+            payload: { status: "idle", message: "" },
+          });
+        }, 5000);
+      } else {
+        setErrorSnackbar(true);
+        //setOTP("");
+        //setNewPassword("");
+        //setConfirmPassword("");
         setTimeout(() => {
-            setErrorSnackbar(false)
-            dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
-        }, 5000)
-
+          setErrorSnackbar(false);
+          dispatch({
+            type: "error/setError",
+            payload: { status: "idle", message: "" },
+          });
+        }, 5000);
       }
     }
   }, [newError]);
 
   const handleChangeOTP = (event) => {
-    setOTP(event.target.value);
-  }
+    let value = event.target.value;
+    setOTP(value);
+    if (!otpRegex.test(value)) {
+      setValidOTP(false);
+    } else {
+      setValidOTP(true);
+    }
+  };
 
   const handleNewPasswordChange = (event) => {
     let value = event.target.value;
@@ -78,11 +96,17 @@ const XPage_Recovery = () => {
     } else {
       setValidNewPassword(true);
     }
-  }
+  };
 
   const handleConfirmPasswordChange = (event) => {
-    setConfirmPassword(event.target.value);
-  }
+    let value = event.target.value
+    setConfirmPassword(value)
+    if (!passwordRegex.test(value)) {
+      setValidConfirmPassword(false);
+    } else {
+      setValidConfirmPassword(true);
+    }
+  };
 
   const handleEmailChange = (event) => {
     let value = event.target.value;
@@ -92,39 +116,64 @@ const XPage_Recovery = () => {
     } else {
       setValidEmail(true);
     }
-  }
+  };
 
   const handleEmailSubmit = (event) => {
     event.preventDefault();
-    if (!isEmailValid && validEmail) {
-      dispatch({ type: "saga/emailRecovery", payload: { email }})
-    }
-    else {
+    if (!isEmailValid && validEmail && email != "") {
+      dispatch({ type: "saga/emailRecovery", payload: { email } });
+    } else {
       setValidEmail(false);
       setEmail("");
     }
   };
 
-
   const handlePasswordSubmit = (event) => {
     event.preventDefault();
-    if (!validNewPassword) {
-      setNewPassword("");
-      setConfirmPassword("");
-    }
-    else{
+    if(validOTP && validNewPassword && validConfirmPassword && otp != "" && newPassword != "" && confirmPassword != "") {
       if (newPassword !== confirmPassword) {
-        setMessage("Passwords do not match")
-        setErrorResetSnackbar(true)
-        //setNewPassword("");
+        setMessage("Passwords do not match");
+        setErrorResetSnackbar(true);
         setConfirmPassword("");
       } else {
-        /* setMessage("Password reset successfully")
-        setErrorResetSnackbar(true) */
-
-        dispatch({ type: "saga/userResetPassword", payload: { email, otp, newPassword }})
+        dispatch({
+          type: "saga/userResetPassword",
+          payload: { email, otp, newPassword },
+        });
+      }
+      
+    } else {
+      if (!validOTP || otp == "") {
+        setValidOTP(false)
+        //setOTP("");
+      }
+      if (!validNewPassword || newPassword == "") {
+        setValidNewPassword(false)
+        //setNewPassword("");
+      }
+      if (!validConfirmPassword || confirmPassword == "") {
+        setValidConfirmPassword(false)
+        //setConfirmPassword("");
       }
     }
+
+
+    // if (!validNewPassword || newPassword == "" || confirmPassword == "") {
+    //   setNewPassword("");
+    //   setConfirmPassword("");
+    // } else {
+    //   if (newPassword !== confirmPassword) {
+    //     setMessage("Passwords do not match");
+    //     setErrorResetSnackbar(true);
+    //     //setNewPassword("");
+    //     setConfirmPassword("");
+    //   } else {
+    //     dispatch({
+    //       type: "saga/userResetPassword",
+    //       payload: { email, otp, newPassword },
+    //     });
+    //   }
+    // }
   };
 
   return (
@@ -136,18 +185,20 @@ const XPage_Recovery = () => {
           handleSubmit={handleEmailSubmit}
           validEmail={validEmail}
         />
-      ) :  (
+      ) : (
         <>
-        <ResetPassword
-          otp={otp}
-          handleChangeOTP={handleChangeOTP}
-          newPassword={newPassword}
-          confirmPassword={confirmPassword}
-          validNewPassword={validNewPassword}
-          handleNewPasswordChange={handleNewPasswordChange}
-          handleConfirmPasswordChange={handleConfirmPasswordChange}
-          handleSubmit={handlePasswordSubmit}
-        />
+          <ResetPassword
+            otp={otp}
+            handleChangeOTP={handleChangeOTP}
+            newPassword={newPassword}
+            confirmPassword={confirmPassword}
+            validOTP={validOTP}
+            validNewPassword={validNewPassword}
+            validConfirmPassword={validConfirmPassword}
+            handleNewPasswordChange={handleNewPasswordChange}
+            handleConfirmPasswordChange={handleConfirmPasswordChange}
+            handleSubmit={handlePasswordSubmit}
+          />
         </>
       )}
 
@@ -157,10 +208,7 @@ const XPage_Recovery = () => {
         onClose={() => setErrorSnackbar(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert 
-          severity="error"
-          onClose={() => setErrorSnackbar(false)}
-        >
+        <Alert severity="error" onClose={() => setErrorSnackbar(false)}>
           {!isEmailValid ? "Email not found" : "OTP is incorrect"}
         </Alert>
       </Snackbar>
@@ -171,10 +219,7 @@ const XPage_Recovery = () => {
         onClose={() => setErrorResetSnackbar(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert 
-          severity="error"
-          onClose={() => setErrorResetSnackbar(false)}
-        >
+        <Alert severity="error" onClose={() => setErrorResetSnackbar(false)}>
           {message}
         </Alert>
       </Snackbar>

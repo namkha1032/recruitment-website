@@ -2,44 +2,36 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { useDispatch } from "react-redux";
 
-const arr = [
+const shiftArray = [
     {
-        "shiftId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "shiftTimeStart": 8,
         "shiftTimeEnd": 9
     },
     {
-        "shiftId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "shiftTimeStart": 9,
         "shiftTimeEnd": 10
     },
     {
-        "shiftId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "shiftTimeStart": 10,
         "shiftTimeEnd": 11
     },
     {
-        "shiftId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "shiftTimeStart": 11,
         "shiftTimeEnd": 12
     },
     {
-        "shiftId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "shiftTimeStart": 13,
         "shiftTimeEnd": 14
     },
     {
-        "shiftId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "shiftTimeStart": 14,
         "shiftTimeEnd": 15
     },
     {
-        "shiftId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "shiftTimeStart": 15,
         "shiftTimeEnd": 16
     },
     {
-        "shiftId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "shiftTimeStart": 16,
         "shiftTimeEnd": 17
     }
@@ -330,8 +322,9 @@ const App = () => {
     const [pass, setPass] = useState("")
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
+    let password = "namkha"
     async function handleDeleteQuestionSkill() {
-        if (pass == "namkha") {
+        if (pass == password) {
             setLoading(true)
             const responseQS = await axios.get(`https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill`)
             for (let QS of responseQS.data) {
@@ -342,7 +335,7 @@ const App = () => {
         setLoading(false)
     }
     async function handleDeleteQuestion() {
-        if (pass == "namkha") {
+        if (pass == password) {
             setLoading(true)
             const responseQuestionList = await axios.get(`https://leetun2k2-001-site1.gtempurl.com/api/Question`)
             for (let ques of responseQuestionList.data) {
@@ -357,7 +350,7 @@ const App = () => {
         setLoading(false)
     }
     async function handleAddSoftSkill() {
-        if (pass == "namkha") {
+        if (pass == password) {
             setLoading(true)
             for (let content of softSkillQuestions) {
                 const newQues = {
@@ -371,7 +364,7 @@ const App = () => {
         setLoading(false)
     }
     async function handleAddLanguage() {
-        if (pass == "namkha") {
+        if (pass == password) {
             setLoading(true)
             for (let content of languageQuestions) {
                 const newQues = {
@@ -385,7 +378,7 @@ const App = () => {
         setLoading(false)
     }
     async function handleAddTechnology() {
-        if (pass == "namkha") {
+        if (pass == password) {
             setLoading(true)
             for (let skill of technologyQuestion) {
                 console.log("skill name: ", skill.skillName)
@@ -414,6 +407,15 @@ const App = () => {
         setPass("")
         setLoading(false)
     }
+    async function handleAddShift() {
+        if (pass == password) {
+            setLoading(true)
+            for (let shift of shiftArray) {
+                await axios.post("https://leetun2k2-001-site1.gtempurl.com/api/Shift", shift)
+            }
+        }
+        setLoading(false)
+    }
     return (
         <>
             <input type="text" placeholder="password" onChange={(e) => { setPass(e.target.value) }} value={pass} />
@@ -428,6 +430,8 @@ const App = () => {
             <button onClick={() => { handleAddLanguage() }}>add language</button>
             <br />
             <button onClick={() => { handleAddTechnology() }}>add technology</button>
+            <br />
+            <button onClick={() => { handleAddShift() }}>add shift</button>
         </>
     )
 }

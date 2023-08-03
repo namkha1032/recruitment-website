@@ -10,9 +10,13 @@ import Box from "@mui/material/Box";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import CompHeader from "../compHeader";
 import TimerIcon from "@mui/icons-material/Timer";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const filter = createFilterOptions();
 export default function ChooseSkill(prop) {
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up("md"));
   function handleSExp(e) {
     console.log(e.target.value);
     prop.setSExp(e.target.value);
@@ -43,7 +47,7 @@ export default function ChooseSkill(prop) {
           handleDelete={prop.handleSkilltDelete}
         />
         <Grid item xs={12}></Grid>
-        <Grid item xs={9}>
+        <Grid item xs={isMd ? 9 : 12}>
           <Box sx={{ marginTop: "8px" }}>
             <CompHeader headerIcon={<ConstructionIcon />}>Skill</CompHeader>
             <Autocomplete
@@ -115,7 +119,6 @@ export default function ChooseSkill(prop) {
                   margin: "0",
                   marginTop: "8px",
                   padding: "0",
-                  marginLeft: "1%",
                 },
               }}
               freeSolo
@@ -125,15 +128,15 @@ export default function ChooseSkill(prop) {
             />
           </Box>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={isMd ? 3 : 12}>
           <NotRInputText
             headerIcon={<TimerIcon />}
             type="number"
             state={"Experiece(Year)"}
-            width="90%"
+            width={isMd ? "94%" : "100%"}
             value={prop.SExp}
             margin="0"
-            marginLeft="6%"
+            marginLeft={isMd ? "6%" : "auto"}
             handleState={handleSExp}
           />
         </Grid>
@@ -154,6 +157,7 @@ export default function ChooseSkill(prop) {
         </Button>
         <Grid item xs={12}></Grid>
       </Grid>
+      
     </>
   );
 }

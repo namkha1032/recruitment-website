@@ -91,7 +91,7 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
         </Grid>
         <Grid item>
           <TabInProfile />
-        </Grid>
+        </Grid> 
         <Grid item xs={12} md={10}>
           {/* Tăng chiều rộng của khung */}
           <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px', width: '100%' }}>

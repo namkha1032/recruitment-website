@@ -23,7 +23,6 @@ const NotRInputText = (prop) => {
           type={prop.type}
           id="outlined-basic"
           value={prop.value}
-          label={prop.state}
           variant="outlined"
           onChange={prop.handleState}
         />

@@ -26,7 +26,7 @@ function Box3(prop) {
           />
         </Grid>
         <Grid item xs={12}>
-          <Box sx={{ margin: "auto", width: "98%", marginTop: "8px" }}>
+          <Box sx={{ margin: "auto", width: "100%", marginTop: "8px" }}>
             {/* <LanguageUlList
               comps={prop.languages}
               handleDelete={prop.handleLanguageDelete}
