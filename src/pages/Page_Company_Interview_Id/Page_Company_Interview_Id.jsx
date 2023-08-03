@@ -56,7 +56,7 @@ const Page_Company_Interview_Id = () => {
     const [openAlertAccept, setOpenAlertAccept] = useState(false)
     const [openAlertReject, setOpenAlertReject] = useState(false)
     useEffect(() => {
-        dispatch({ type: "saga/getInterviewId" })
+        dispatch({ type: "interviewSaga/getInterviewId" })
     }, [])
     const interview = useSelector(state => state.interviewResult)
     console.log("interview: ", interview)

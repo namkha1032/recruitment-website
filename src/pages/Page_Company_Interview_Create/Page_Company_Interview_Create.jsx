@@ -70,7 +70,7 @@ const Page_Company_Interview_Create = () => {
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     // fetch Data
     useEffect(() => {
-        dispatch({ type: "saga/getDataForInterview", payload: applicationid })
+        dispatch({ type: "interviewSaga/getDataForInterview", payload: applicationid })
         // return () => {
         //     dispatch({ type: "interview/setInterview", payload: null })
         //     dispatch({ type: "interviewer/setInterviewer", payload: null })
@@ -146,7 +146,7 @@ const Page_Company_Interview_Create = () => {
             }
         }
         console.log("newinter: ", JSON.stringify(newInterviewObj))
-        dispatch({ type: "saga/createInterview", payload: newInterviewObj })
+        dispatch({ type: "interviewSaga/createInterview", payload: newInterviewObj })
         // navigate("/company/interview/1")
     }
     function preProcessing() {

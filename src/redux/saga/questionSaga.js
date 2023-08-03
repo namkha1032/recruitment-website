@@ -592,7 +592,7 @@ function* getQuestion(action) {
 
 function* questionSaga() {
   yield all([
-    takeEvery("saga/getInterviewQuestion", getInterviewQuestion),
+    takeEvery("questionSaga/getInterviewQuestion", getInterviewQuestion),
     takeEvery("saga/getQuestion", getQuestion),
     takeEvery("saga/getAllQuestion", getAllQuestion),
     takeLatest("saga/getQuestionListWithFilter", getQuestionListWithFilter),

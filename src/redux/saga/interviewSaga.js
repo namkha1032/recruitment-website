@@ -146,9 +146,9 @@ function* getInterviewInfo(action) {
     yield put({ type: "interviewinterviewer/setInterviewInterviewer", payload: response5.data });
     yield put({ type: "interviewshift/setInterviewShift", payload: shift });
     yield put({ type: "interviewroom/setInterviewRoom", payload: room });
-    yield put({type: "interviewidInfo/setInterviewidInfo",payload: response1.data});
-    yield put({type: "interviewposition/setInterviewPosition", payload: response8.data});
-    yield put({type: 'interviewskill/setInterviewSkill', payload: skilllist})
+    yield put({ type: "interviewidInfo/setInterviewidInfo", payload: response1.data });
+    yield put({ type: "interviewposition/setInterviewPosition", payload: response8.data });
+    yield put({ type: 'interviewskill/setInterviewSkill', payload: skilllist })
   } catch (error) {
     console.log(error);
   }
@@ -234,13 +234,13 @@ function* getDataForInterview(action) {
 function* interviewSaga() {
   yield all([
     takeEvery("saga/getInterviewInfo", getInterviewInfo),
-    takeEvery("saga/getUpcomingInterview", getUpcomingInterview),
-    takeEvery("saga/scoreInterview", scoreInterview),
-    takeEvery("saga/getInterviewId", getInterviewId),
-    takeEvery("saga/createInterview", createInterview),
+    takeEvery("interviewSaga/getUpcomingInterview", getUpcomingInterview),
+    takeEvery("interviewSaga/scoreInterview", scoreInterview),
+    takeEvery("interviewSaga/getInterviewId", getInterviewId),
+    takeEvery("interviewSaga/createInterview", createInterview),
     takeLatest("saga/getAllInterview", getAllInterview),
     takeLatest("saga/getInterviewWithFilter", getInterviewWithFilter),
-    takeEvery('saga/getDataForInterview', getDataForInterview),
+    takeEvery('interviewSaga/getDataForInterview', getDataForInterview),
   ]);
 }
 

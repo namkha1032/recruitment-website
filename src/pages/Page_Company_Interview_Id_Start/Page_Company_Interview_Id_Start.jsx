@@ -46,7 +46,7 @@ export default function Page_Company_Interview_Id_Start() {
     let [note, setNote] = useState("")
     const noteRef = useRef()
     useEffect(() => {
-        dispatch({ type: "saga/getInterviewQuestion" })
+        dispatch({ type: "questionSaga/getInterviewQuestion" })
         return () => {
             dispatch({ type: "question/setQuestion", payload: null })
         }
