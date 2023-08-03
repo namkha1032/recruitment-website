@@ -111,6 +111,10 @@ function* updatePositionList(action) {
       }
     );
     yield put({
+      type: "status/onSuccess",
+      payload: action.payload.value.isDeleted ? "Inactive" : "Active"
+    });
+    yield put({
       type: "positionSaga/getPositionListWithFilter",
       payload: {
         departmentId: action.payload.departmentId,
@@ -118,11 +122,12 @@ function* updatePositionList(action) {
         token: action.payload.token
       },
     });
+  } catch (error) {
     yield put({
-      type: "status/onSuccess",
-      payload: ""
+      type: "status/onError",
+      payload: error.message
     });
-  } catch (error) {}
+  }
 
   // yield put({ type: "positionList/setPositionList", payload: response.data });
 }
