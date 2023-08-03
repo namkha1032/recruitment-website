@@ -9,23 +9,23 @@ function* userLogin(action) {
         const responseLogin = yield call(axios.post, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/Login', { username, password })
         //console.log("response is: ", responseLogin.data)
 
-        
-        
-
         let token = `Bearer ${responseLogin.data.token}`
         //console.log(token)
         const config = {
             headers: { Authorization: token },
         }
-        const responseUserId = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/CurrentUser', config)
+        //const responseUserId = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/CurrentUser', config)
         //console.log("userId is", responseUserId.data.userId)
 
         const responseUserInformation = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/UserLogin', config)
         //console.log("userInformation is", responseUserInformation.data)
 
+        const responseRole = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/GetRole', config)
+
+        console.log("responseRole: ", responseRole.data)
         let userObj = {
             token: responseLogin.data.token,
-            userid: responseUserId.data.userId,
+            userid: responseUserInformation.data.id,
             name: responseUserInformation.data.fullName,
             email: responseUserInformation.data.email,
             birth: responseUserInformation.data.dateOfBirth,
@@ -33,6 +33,38 @@ function* userLogin(action) {
             address: responseUserInformation.data.address,
             image: responseUserInformation.data.imageURL,
         }
+
+        if (responseRole.data == "Candidate") {
+            const responseGetAllCandidate = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Candidate')
+            let allCandidate = responseGetAllCandidate.data.filter(element => element.userId === responseUserInformation.data.id) 
+            //console.log("allcan: ", allCandidate[0].candidateId)
+            userObj.candidateId = allCandidate[0].candidateId
+        } else if (responseRole.data == "Recruiter") {
+            const responseGetAllRecruiter = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Recruiter')
+            let allRecruiter = responseGetAllRecruiter.data.filter(element => element.userId === responseUserInformation.data.id)
+            //console.log("allRec: ", allRecruiter[0].recruiterId)
+
+            userObj.recruiterId = allRecruiter[0].recruiterId
+            userObj.departmentId = allRecruiter[0].departmentId
+        } else if (responseRole.data == "Interviewer") {
+            const responseGetAllInterviewer = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Interviewer')
+            let allInterviewer = responseGetAllInterviewer.data.filter(element => element.userId === responseUserInformation.data.id)
+            //console.log("allInterviewer: ", allInterviewer[0].interviewerId)
+
+            userObj.interviewerId = allInterviewer[0].interviewerId
+            userObj.departmentId = allInterviewer[0].departmentId
+        } 
+
+        // userObj = {
+        //     token: responseLogin.data.token,
+        //     userid: responseUserId.data.userId,
+        //     name: responseUserInformation.data.fullName,
+        //     email: responseUserInformation.data.email,
+        //     birth: responseUserInformation.data.dateOfBirth,
+        //     phone: responseUserInformation.data.phoneNumber,
+        //     address: responseUserInformation.data.address,
+        //     image: responseUserInformation.data.imageURL,
+        // }
 
         if (check) {
             window.localStorage.setItem("user", JSON.stringify(userObj))
@@ -49,50 +81,6 @@ function* userLogin(action) {
         console.log("err: ", error.response.data.status)
     }
 }
-
-// function* userLogin(action) {
-//     try {
-//         const { username, password, check } = action.payload
-//         let api = ""
-//         if (username == "candidate1" && password == "candidate1") {
-//             api = `${host.name}/data/userCandidate.json`
-//         }
-//         else if (username == "interviewer1" && password == "interviewer1") {
-//             api = `${host.name}/data/userInterviewer.json`
-//         }
-//         else if (username == "recruiter1" && password == "recruiter1") {
-//             api = `${host.name}/data/userRecruiter.json`
-//         }
-//         else if (username == "admin1" && password == "admin1") {
-//             api = `${host.name}/data/userAdmin.json`
-//         }
-//         else {
-//             throw {
-//                 response: {
-//                     data: {
-//                         error: "username or password is incorrect"
-//                     }
-//                 }
-//             }
-//         }
-//         const response = yield call(axios.get, api)
-//         yield put({ type: "user/setUser", payload: response.data })
-//         if (check) {
-//             window.localStorage.setItem("user", JSON.stringify(response.data))
-//         }
-//         else {
-//             window.sessionStorage.setItem("user", JSON.stringify(response.data))
-//         }
-//         yield put({ type: "error/setError", payload: { status: "no", message: "" } })
-
-//     }
-//     catch (error) {
-//         yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
-//         console.log("err: ", error)
-//     }
-// }
-
-
 
 function* userRegister(action) {
     try {
