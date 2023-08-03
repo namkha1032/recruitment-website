@@ -135,7 +135,7 @@ function CandidateTable(props) {
     const {children, value, index, ...other} = props;
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch({type: "saga/getCandidate"});
+        dispatch({type: "saga/getCandidateAdmin"});
     }, [dispatch]);
     const candidate = useSelector(state => state.admin.candidate)
 
@@ -292,7 +292,7 @@ function InterviewerTable(props) {
     const {children, value, index, ...other} = props;
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch({type: "saga/getInterviewer"});
+        dispatch({type: "saga/getInterviewerAdmin"});
     }, [dispatch]);
     useEffect(() => {
         dispatch({type: "saga/getDepartmentAdmin"});
@@ -466,7 +466,7 @@ function RecruiterTable(props) {
     const {children, value, index, ...other} = props;
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch({type: "saga/getRecruiter"});
+        dispatch({type: "saga/getRecruiterAdmin"});
     }, [dispatch]);
     useEffect(() => {
         dispatch({type: "saga/getDepartmentAdmin"});
