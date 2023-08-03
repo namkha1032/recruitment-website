@@ -90,7 +90,7 @@ function* updatePositionList(action) {
   try {
     const response = yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Position/${action.payload.id}`, action.payload.value);
     yield put({
-      type: "saga/getPositionListWithFilter",
+      type: "positionSaga/getPositionListWithFilter",
       payload: {
         departmentId: action.payload.departmentId,
         status: action.payload.status,
@@ -197,9 +197,9 @@ function* getPosition(action) {
 function* positionSaga() {
   yield all([
     takeEvery("saga/getPosition", getPosition),
-    takeLatest("saga/getPositionList", getPositionList),
-    takeLatest("saga/updatePositionList", updatePositionList),
-    takeLatest("saga/getPositionListWithFilter", getPositionListWithFilter),
+    takeLatest("positionSaga/getPositionList", getPositionList),
+    takeLatest("positionSaga/updatePositionList", updatePositionList),
+    takeLatest("positionSaga/getPositionListWithFilter", getPositionListWithFilter),
   ]);
 }
 

@@ -99,7 +99,7 @@ export default function Page_Company_Recruitment() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch({ type: "saga/getPositionList" });
+    dispatch({ type: "positionSaga/getPositionList" });
     dispatch({ type: "saga/getDepartment" });
     // dispatch({ type: "saga/getLanguage" });
     return () => {
@@ -184,14 +184,14 @@ export default function Page_Company_Recruitment() {
   //   setStatusChoose(null);
   //   // setLanguageChoose(null);
   //   if (value === null) {
-  //     dispatch({ type: "saga/getPositionList" });
+  //     dispatch({ type: "positionSaga/getPositionList" });
   //   }
   // }
 
   function handleChooseDepartment(value) {
     setDepartmentChoose(value);
     dispatch({
-      type: "saga/getPositionListWithFilter",
+      type: "positionSaga/getPositionListWithFilter",
       payload: {
         departmentId: value ? value.departmentId : null,
         status: statusChoose,
@@ -207,7 +207,7 @@ export default function Page_Company_Recruitment() {
   //       payload: { id: value.languageId },
   //     });
   //   } else if (value === null) {
-  //     dispatch({ type: "saga/getPositionList" });
+  //     dispatch({ type: "positionSaga/getPositionList" });
   //   }
   // }
 
@@ -215,7 +215,7 @@ export default function Page_Company_Recruitment() {
   function handleChooseStatus(value) {
     setStatusChoose(value);
     dispatch({
-      type: "saga/getPositionListWithFilter",
+      type: "positionSaga/getPositionListWithFilter",
       payload: {
         departmentId: departmentChoose ? departmentChoose.departmentId : null,
         status: value ? value : null,
@@ -240,7 +240,7 @@ export default function Page_Company_Recruitment() {
   // Dùng isDeleted thay cho Status
   function handleActiveClick(id, value) {
     dispatch({
-      type: "saga/updatePositionList",
+      type: "positionSaga/updatePositionList",
       payload: {
         id: id,
         value: value,
@@ -253,7 +253,7 @@ export default function Page_Company_Recruitment() {
   function handleInactiveClick(id, value) {
     console.log(value)
     dispatch({
-      type: "saga/updatePositionList",
+      type: "positionSaga/updatePositionList",
       payload: {
         id: id,
         value: value,

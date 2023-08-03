@@ -76,7 +76,7 @@ export default function Page_Company_Question() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: "saga/getAllQuestion" });
+    dispatch({ type: "questionSaga/getAllQuestion" });
     dispatch({ type: "saga/getSkill" });
     dispatch({ type: "saga/getLanguage" });
   }, []);
@@ -186,7 +186,7 @@ export default function Page_Company_Question() {
     setSkillChoose(null);
     if (value === "Soft Skills") {
       dispatch({
-        type: "saga/getQuestionListWithFilter",
+        type: "questionSaga/getQuestionListWithFilter",
         payload: {
           categoryName: "Soft Skills",
           skillId: null,
@@ -198,7 +198,7 @@ export default function Page_Company_Question() {
       });
     } else if (value === "Technology") {
       dispatch({
-        type: "saga/getQuestionListWithFilter",
+        type: "questionSaga/getQuestionListWithFilter",
         payload: {
           categoryName: "Technology",
           skillId: null,
@@ -210,7 +210,7 @@ export default function Page_Company_Question() {
       });
     } else if (value === "Language") {
       dispatch({
-        type: "saga/getQuestionListWithFilter",
+        type: "questionSaga/getQuestionListWithFilter",
         payload: {
           categoryName: "Language",
           skillId: null,
@@ -222,7 +222,7 @@ export default function Page_Company_Question() {
       });
     } else {
       dispatch({
-        type: "saga/getQuestionListWithFilter",
+        type: "questionSaga/getQuestionListWithFilter",
         payload: {
           categoryName: null,
           skillId: null,
@@ -246,7 +246,7 @@ export default function Page_Company_Question() {
   function handleChooseSkill(value) {
     setSkillChoose(value);
     dispatch({
-      type: "saga/getQuestionListWithFilter",
+      type: "questionSaga/getQuestionListWithFilter",
       payload: {
         categoryName: "Technology",
         skillId: value ? value.skillId : null,
@@ -261,7 +261,7 @@ export default function Page_Company_Question() {
   function handleChooseLanguage(value) {
     setLanguageChoose(value);
     dispatch({
-      type: "saga/getQuestionListWithFilter",
+      type: "questionSaga/getQuestionListWithFilter",
       payload: {
         categoryName: "Language",
         skillId: null,
@@ -292,7 +292,7 @@ export default function Page_Company_Question() {
   function handleSubmitQuestion(value) {
     // successAlert("Create question");
     dispatch({
-      type: "saga/postQuestion",
+      type: "questionSaga/postQuestion",
       payload: {
         QuestionName: value.question,
         Category: value.category,
@@ -325,7 +325,7 @@ export default function Page_Company_Question() {
 
   function handleUpdateQuestion(value) {
     dispatch({
-      type: "saga/putQuestion",
+      type: "questionSaga/putQuestion",
       payload: {
         QuestionId: value.QuestionId,
         QuestionName: value.QuestionName,
@@ -347,7 +347,7 @@ export default function Page_Company_Question() {
 
   function handleDeleteQuestion(value) {
     dispatch({
-      type: "saga/deleteQuestion",
+      type: "questionSaga/deleteQuestion",
       payload: {
         QuestionId: value.QuestionId,
         CategoryId: value.CategoryId,

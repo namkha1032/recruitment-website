@@ -59,7 +59,7 @@ export default function Page_Company_Event() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch({ type: "saga/getEventList" });
+    dispatch({ type: "eventSaga/getEventList" });
     return () => {
       cleanStore(dispatch);
     };
@@ -127,7 +127,7 @@ export default function Page_Company_Event() {
   function handleChooseStatus(value) {
     setStatusChoose(value);
     dispatch({
-      type: "saga/getEventListWithFilter",
+      type: "eventSaga/getEventListWithFilter",
       payload: {
         status: value ? value : null,
       },

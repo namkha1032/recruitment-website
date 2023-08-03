@@ -84,8 +84,8 @@ export default function Page_Company_Interview() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch({ type: "saga/getAllInterview" });
-    dispatch({ type: "saga/getPositionList" });
+    dispatch({ type: "interviewSaga/getAllInterview" });
+    dispatch({ type: "positionSaga/getPositionList" });
     dispatch({ type: "saga/getDepartment" });
     return () => {
       cleanStore(dispatch);
@@ -139,7 +139,7 @@ export default function Page_Company_Interview() {
   //   setPositionChoose(null);
   //   setPriorityChoose(null);
   //   if (value === null) {
-  //     dispatch({ type: "saga/getAllInterview" });
+  //     dispatch({ type: "interviewSaga/getAllInterview" });
   //   }
   // }
 
@@ -159,7 +159,7 @@ export default function Page_Company_Interview() {
       },
     });
     dispatch({
-      type: "saga/getPositionListWithFilter",
+      type: "positionSaga/getPositionListWithFilter",
       payload: {
         departmentId: value ? value.departmentId : null,
         status: null,

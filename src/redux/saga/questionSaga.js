@@ -593,11 +593,11 @@ function* questionSaga() {
   yield all([
     takeEvery("saga/getInterviewQuestion", getInterviewQuestion),
     takeEvery("saga/getQuestion", getQuestion),
-    takeEvery("saga/getAllQuestion", getAllQuestion),
-    takeLatest("saga/getQuestionListWithFilter", getQuestionListWithFilter),
-    takeEvery("saga/putQuestion", putQuestion),
-    takeEvery("saga/postQuestion", postQuestion),
-    takeEvery("saga/deleteQuestion", deleteQuestion),
+    takeEvery("questionSaga/getAllQuestion", getAllQuestion),
+    takeLatest("questionSaga/getQuestionListWithFilter", getQuestionListWithFilter),
+    takeEvery("questionSaga/putQuestion", putQuestion),
+    takeEvery("questionSaga/postQuestion", postQuestion),
+    takeEvery("questionSaga/deleteQuestion", deleteQuestion),
   ]);
 }
 
