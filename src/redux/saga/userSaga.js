@@ -36,7 +36,7 @@ function* userLogin(action) {
 
         if (responseRole.data == "Candidate") {
             const responseGetAllCandidate = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Candidate')
-            let allCandidate = responseGetAllCandidate.data.filter(element => element.userId === responseUserInformation.data.id) 
+            let allCandidate = responseGetAllCandidate.data.filter(element => element.userId === responseUserInformation.data.id)
             //console.log("allcan: ", allCandidate[0].candidateId)
             userObj.candidateId = allCandidate[0].candidateId
         } else if (responseRole.data == "Recruiter") {
@@ -53,7 +53,7 @@ function* userLogin(action) {
 
             userObj.interviewerId = allInterviewer[0].interviewerId
             userObj.departmentId = allInterviewer[0].departmentId
-        } 
+        }
 
         // userObj = {
         //     token: responseLogin.data.token,
@@ -65,7 +65,7 @@ function* userLogin(action) {
         //     address: responseUserInformation.data.address,
         //     image: responseUserInformation.data.imageURL,
         // }
-
+        console.log("userobj: ", userObj)
         if (check) {
             window.localStorage.setItem("user", JSON.stringify(userObj))
         }

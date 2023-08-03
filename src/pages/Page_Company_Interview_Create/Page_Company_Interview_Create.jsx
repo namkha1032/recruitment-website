@@ -87,6 +87,9 @@ const Page_Company_Interview_Create = () => {
     const roomList = useSelector(state => state.room)
     const shiftList = useSelector(state => state.shift)
     const newError = useSelector(state => state.error)
+    const candidate = useSelector(state => state.candidate)
+    const position = useSelector(state => state.position)
+    const infoApplication = useSelector(state => state.infoApplication)
 
 
     // set busyInterviewer and busyRoom
@@ -184,7 +187,9 @@ const Page_Company_Interview_Create = () => {
         }
     }
     return (
-        <>{interviewerList && interviewList && roomList && shiftList ?
+        <>{interviewerList && interviewList && roomList && shiftList
+            // && candidate && position && infoApplication 
+            ?
             <Grid container spacing={4}>
                 <Grid item xs={12}>
                     <TitleDivider>
