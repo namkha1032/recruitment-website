@@ -1,14 +1,14 @@
 // import libraries
 import { createSlice } from '@reduxjs/toolkit'
 
-const candidateIdSlice = createSlice({
-    name: "candidateId",
+const candidateIdRegisterEventSlice = createSlice({
+    name: "candidateIdRegisterEvent",
     initialState: null,
     reducers: {
-        setCandidateId(state, action) {
+        setCandidateIdRegisterEvent(state, action) {
             return action.payload
         }
     }
 })
 
-export default candidateIdSlice
+export default candidateIdRegisterEventSlice

@@ -111,7 +111,7 @@ const Page_Company_Event_Create = () => {
         // ---------------------------------------
 
         dispatch({
-            type: "saga/postEvent",
+            type: "eventSaga/postEvent",
             payload: {
                 eventName: name,
                 description: content,

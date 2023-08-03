@@ -44,7 +44,7 @@ const Page_Company_Event_Id_Update = () => {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch({ type: "saga/getEvent", payload: eventid })
+        dispatch({ type: "eventSaga/getEvent", payload: eventid })
         return () => {
             cleanStore(dispatch)
         }
@@ -153,7 +153,7 @@ const Page_Company_Event_Id_Update = () => {
         // ---------------------------------------
 
         dispatch({
-            type: "saga/putEvent",
+            type: "eventSaga/putEvent",
             payload: {
                 eventId: eventid,
                 eventName: name,
