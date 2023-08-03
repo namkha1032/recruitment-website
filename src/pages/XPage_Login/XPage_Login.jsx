@@ -272,7 +272,7 @@ const XPage_Login = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      marginBottom: "5px",
+                      marginBottom: "2px",
                     }}
                   >
                     <TextField
@@ -362,6 +362,7 @@ const XPage_Login = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
+                      marginBottom: "2px",
                     }}
                   >
                     <TextField
