@@ -10,7 +10,7 @@ function* getAllCvCandidate() {
     const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/GetCandidateCvs/00000000-0000-0000-0000-000000000001`)
     console.log("hello 1")
     
-    yield put({ type: "cvCandidate/setCvList", payload: response.data })
+    yield put({ type: "cvCandidate/setCvCandidate", payload: response.data })
     console.log(response.data)
 
 }

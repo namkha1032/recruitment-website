@@ -4,7 +4,7 @@ const cvCandidateSlice = createSlice({
     name: "cvCandidate",
     initialState: null,
     reducers: {
-        setCvList(state, action) {
+        setCvCandidate(state, action) {
        
             return action.payload
         }

@@ -21,7 +21,7 @@ function cleanStore(dispatch) {
     dispatch({ type: "interviewListCandidate/setInterviewList", payload: null})
     dispatch({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: null})
     dispatch({ type: "interviewidInfo/setInterviewidInfo", payload: null})
-
+    dispatch({ type: "cvCandidate/setCvCandidate", payload: null })
     dispatch({ type: "loading/offLoading" })
     dispatch({ type: "status/onReset" })
 }
