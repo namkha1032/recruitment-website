@@ -233,7 +233,7 @@ function* getDataForInterview(action) {
 
 function* interviewSaga() {
   yield all([
-    takeEvery("saga/getInterviewInfo", getInterviewInfo),
+    takeEvery("interviewsaga/getInterviewInfo", getInterviewInfo),
     takeEvery("interviewSaga/getUpcomingInterview", getUpcomingInterview),
     takeEvery("interviewSaga/scoreInterview", scoreInterview),
     takeEvery("interviewSaga/getInterviewId", getInterviewId),

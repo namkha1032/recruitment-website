@@ -171,11 +171,11 @@ function* getPosition(action) {
     }
 
     console.log('skillinsaga', skilllist);
-    // yield put({ type: 'position/setPosition', payload: response1.data })
-    // yield put({ type: 'skill/setSkill', payload: skilllist })
-
     yield put({ type: 'position/setPosition', payload: response1.data })
-    yield put({ type: 'positionskill/setPositionSkill', payload: skilllist })
+    yield put({ type: 'skill/setSkill', payload: skilllist })
+
+    // yield put({ type: 'position/setPosition', payload: response1.data })
+    // yield put({ type: 'positionskill/setPositionSkill', payload: skilllist })
   } catch (error) {
     console.log(error)
   }
@@ -188,7 +188,7 @@ function* getPosition(action) {
 
 function* positionSaga() {
   yield all([
-    takeEvery("saga/getPosition", getPosition),
+    takeEvery("positionsaga/getPosition", getPosition),
     takeLatest("saga/getPositionList", getPositionList),
     takeLatest("saga/updatePositionList", updatePositionList),
     takeLatest("saga/getPositionListWithFilter", getPositionListWithFilter),

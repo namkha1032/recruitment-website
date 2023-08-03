@@ -50,15 +50,15 @@ const Info_view = (props) => {
     const applications = useSelector(state => state.application);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch({ type: 'saga/getApplication', payload: recruitmentid })
+        dispatch({ type: 'applicationsaga/getApplication', payload: recruitmentid })
         return () => {
             cleanStore(dispatch);
         }
     }, [])
-    const skill = useSelector(state => state.positionskill);
+    const skill = useSelector(state => state.skill);
     console.log("skillinmain", skill); // ['react','c++']
     useEffect(() => {
-        dispatch({ type: 'saga/getPosition', payload: recruitmentid })
+        dispatch({ type: 'positionsaga/getPosition', payload: recruitmentid })
         return () => {
             dispatch({ type: "positon/setPosition", payload: null })
         }

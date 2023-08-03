@@ -72,7 +72,7 @@ const Page_Recruitment_Id = () => {
     const dispatch = useDispatch();
     const { recruitmentid } = useParams();
     useEffect(() => {
-        dispatch({ type: 'saga/getCvList', payload: userid })
+        dispatch({ type: 'cvsaga/getCvList', payload: userid })
         return () => {
             dispatch({ type: 'cv/setCvList', payload: null })
         }
