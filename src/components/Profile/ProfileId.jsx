@@ -23,7 +23,7 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
   };
 
   const handleEventHover = (event) => {
-    setSelectedEvent(event.id);
+    setSelectedEvent(event.interviewId);
   };
 
   const handleEventLeave = () => {
@@ -33,11 +33,12 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.up('sm'));
   const columns = [
-    { field: 'name', headerName: namePage, flex:  isSm ? 2 : 3,minWidth:'300px' },
-    { field: 'time', headerName: 'Time', flex: isSm ? 2 : 3,headerClassName: 'custom-header' },
+    { field: 'name', headerName: namePage, flex:  isSm ? 2 : 3,minWidth:'300px',valueGetter: (params) => params.row.positionName },
+    { field: 'time', headerName: 'Time', flex: isSm ? 2 : 3,valueGetter: (params) => params.row.dateTime },
     {
       field: 'status',
       headerName: 'Status',
+      valueGetter: (params) => params.row.Status,
       flex: isSm ? 2 : 1,
       renderCell: (params) => {
         switch (params.value) {
@@ -66,13 +67,13 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
        <Button
        variant="contained"
        color="primary"
-       onClick={() => handleDetails(params.row.id)}
+       onClick={() => handleDetails(params.row.interviewId)}
        style={{ textTransform: "none", backgroundColor: "black" }}
      >
        View Detail
      </Button>
       ) : (
-        <VisibilityIcon onClick = { () => handleDetails(params.row.id)} style={{ color: "#1565C0" }}/>    
+        <VisibilityIcon onClick = { () => handleDetails(params.row.interviewId)} style={{ color: "#1565C0" }}/>    
       )}
     </>
       ),
@@ -105,9 +106,10 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
             <DataGrid
               rows={events === null ? [] : events}
               columns={columns}
+              getRowId={(row) => row.interviewId}
               autoHeight={true}
               rowStyles={(params) => ({
-                backgroundColor: selectedEvent === params.id ? '#ffdddd' : 'transparent',
+                backgroundColor: selectedEvent === params.interviewId ? '#ffdddd' : 'transparent',
                 ...(params.row.isSelected && { backgroundColor: '#64b5f6', color: '#ffffff' }),
               })}
               

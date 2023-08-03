@@ -4,8 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import cleanStore from '../../utils/cleanStore';
 export default function Page_Profile_Id_Application(){
       const dispatch = useDispatch();
+      const user = useSelector(state => state.user)
       useEffect( () => {
-        dispatch({type:"saga/getAllApplicationCandidate"});
+        dispatch(
+          {
+            type:"saga/getAllApplicationCandidate",
+            payload:{
+              token: `Bearer ${user.token}`,
+            }
+          }
+        );
+
         return () => {
           cleanStore(dispatch);
         }

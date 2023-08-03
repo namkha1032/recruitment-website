@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useSelector } from 'react-redux';
 
 const theme = createTheme({
   components: {
@@ -41,9 +42,9 @@ const theme = createTheme({
         textColorInherit: {
           opacity: 1, // Make the text fully opaque for both selected and non-selected tabs
         },
-        selected: {
-          color: '#000000',
-        },
+        "&.Mui-selected": {
+          "color": "#000000"
+        }
       },
     },
   },
@@ -51,29 +52,30 @@ const theme = createTheme({
 
 export default function TabInProfile() {
   const location = useLocation();
-
+  const CandidateId = useSelector(state => state.user.candidateId);
+  console.log(CandidateId);
   return (
     <ThemeProvider theme={theme}>
       <Box mt={2} mb={5}> {/* Add margin (10px) on top and bottom */}
-        <Tabs value={location.pathname} textColor='black'>
+        <Tabs value={location.pathname} textColor='inherit'>
           <Tab
             label="Event"
-            value="/profile/1/event"
+            value={`/profile/${CandidateId}/event`}
             component={Link}
-            to="/profile/1/event"
+            to={`/profile/${CandidateId}/event` }
            
           />
           <Tab
             label="Application"
-            value="/profile/1/application"
+            value={`/profile/${CandidateId}/application`}
             component={Link}
-            to="/profile/1/application"
+            to={`/profile/${CandidateId}/application`}
           />
           <Tab
             label="Interview"
-            value="/profile/1/interview"
+            value={`/profile/${CandidateId}/interview`}
             component={Link}
-            to="/profile/1/interview"
+            to={`/profile/${CandidateId}/interview`}
           />
         </Tabs>
       </Box>

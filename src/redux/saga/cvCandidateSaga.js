@@ -6,10 +6,12 @@ import host from "../host"
 import { error } from "jquery"
 // const fs = require("fs");
 
-function* getAllCvCandidate() {
+function* getAllCvCandidate(action) {
     try{
+        
+        
     console.log("Hello")
-    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/GetCandidateCvs/00000000-0000-0000-0000-000000000001`)
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/GetCandidateCvs/db20f8d0-eb45-43af-9790-e89f48a1a587`)
     console.log("hello 1")
     
     yield put({ type: "cvCandidate/setCvCandidate", payload: response.data })

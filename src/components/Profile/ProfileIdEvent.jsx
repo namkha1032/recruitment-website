@@ -23,7 +23,7 @@ export default function EventList({ events}) {
   };
 
   const handleEventHover = (event) => {
-    setSelectedEvent(event.eventId);
+    setSelectedEvent(event.event.eventId);
   };
 
   const handleEventLeave = () => {
@@ -60,12 +60,15 @@ export default function EventList({ events}) {
     },
   ].filter(Boolean);
 
-  const rows = events.map((event) => ({
-    id: event.eventId,
-    name: event.eventName,
-    place: event.place,
-    time:event.datetimeEvent,
-  }));
+  const rows = events.map((event) => {
+    console.log("EventId",event.event.eventId); // Thêm dòng này để kiểm tra giá trị của eventId
+    return {
+      id: event.event.eventId,
+      name: event.event.eventName,
+      place: event.event.place,
+      time: event.event.datetimeEvent,
+    };
+  });
 
   return (
     <Grid container direction="column">
