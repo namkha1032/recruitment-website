@@ -26,7 +26,9 @@ import ModalCertificates from "./ModalCertificates";
 import GigaCard from "../GigaCard/GigaCard";
 import Loading from "../Loading/Loading";
 import { useNavigate } from "react-router-dom";
-
+import { useParams } from "react-router-dom/dist";
+import MissingPage from "../MissingPage/MissingPage";
+import NoteField from '../../pages/Page_Company_Interview_Id/NoteField/NoteField'
 const CV = ({ cvid,page }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,9 +41,10 @@ const CV = ({ cvid,page }) => {
       dispatch({ type: "cv/setCv", payload: null });
     };
   }, []);
-  
-  console.log("CV ",cv)
+  const {profileid} = useParams()
+
   return (
+    cv === "none" ? <MissingPage/> :
     cv &&
     candidate ? (
       <>
@@ -272,7 +275,8 @@ const CV = ({ cvid,page }) => {
                   Education
                 </Box>
               </Box>
-              <Box sx={{ padding: "10px 0 0 40px" }}>{cv.education}</Box>
+              
+              <Box sx={{ padding: "10px 0 0 40px" }}> <NoteField note={cv.education}/></Box>
             
             </Box>
     
@@ -292,7 +296,7 @@ const CV = ({ cvid,page }) => {
             <Button
               variant="contained"
               color="warning"
-              onClick={() => navigate("/profile/1/cv/1/update")}
+              onClick={() => navigate(`/profile/${profileid}/cv/${cvid}/update`)}
             >
               update
             </Button>

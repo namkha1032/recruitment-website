@@ -13,10 +13,7 @@ const ProfileHeader = ({  id, profile }) => {
   const dispatch = useDispatch()
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    console.log(file)
     if (file) {
-
-      // setSelectedImage(URL.createObjectURL(file));
       const data = {
         FullName: profile.name!== null ? profile.name : '',
         DateOfBirth:profile.birth,

@@ -21,6 +21,7 @@ import GigaCard from "../GigaCard/GigaCard";
 import useGetRole from "../../hooks/useGetRole";
 import CVProfile from "../CV/CVProfile";
 import { useParams } from "react-router-dom/dist";
+import MissingPage from "../MissingPage/MissingPage";
 
 const ProfileMain = ({ page }) => {
   const navigate = useNavigate();
@@ -51,6 +52,7 @@ const ProfileMain = ({ page }) => {
     if (page !== "History") navigate("/profile/1/history");
   };
   return (
+   
     profile === null ?  
     
     <Box sx={{position:'sticky',top:'300px',display:'flex',justifyContent:'center'}}>  
@@ -59,7 +61,7 @@ const ProfileMain = ({ page }) => {
      
     </Box>
     : 
-    
+    profile.userid === profileid ?
     (
       <Container>
         <Box sx={{ paddingTop: "40px", paddingBottom: "20px" }}>
@@ -130,7 +132,7 @@ const ProfileMain = ({ page }) => {
           </Grid>
         </Grid>
       </Container>
-    ) 
+    ) : <MissingPage/>
              
         
        

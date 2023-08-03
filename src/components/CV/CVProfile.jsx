@@ -25,6 +25,7 @@ import {
   import ModalCertificates from "./ModalCertificates";
   import GigaCard from "../GigaCard/GigaCard";
 import Loading from "../Loading/Loading";
+import NoteField from "../../pages/Page_Company_Interview_Id/NoteField/NoteField";
   
   const CVProfile = ({ cvid,page }) => {
     const dispatch = useDispatch();
@@ -41,8 +42,8 @@ import Loading from "../Loading/Loading";
     console.log(cv)
   
     return (
-      cv &&
-      candidate && (
+      cv === 'none' ? <> </> :
+      cv && candidate ? (
         <>
         <Box>
           <Grid container spacing={3}>
@@ -159,7 +160,7 @@ import Loading from "../Loading/Loading";
                     Education
                   </Box>
                 </Box>
-                <Box sx={{ padding: "10px 0 0 40px" }}>{cv.education}</Box>
+                <Box sx={{ padding: "10px 0 0 40px" }}><NoteField note={cv.education}/></Box>
               </Box>
               </GigaCard>
           </Grid>
@@ -174,7 +175,7 @@ import Loading from "../Loading/Loading";
           </Grid>}
           </Grid>
         </Box>
-        </>)
+        </>)  : <Loading/>
     )
   };
   
