@@ -1,36 +1,17 @@
-import React, {useEffect, useState} from 'react'
-import {
-    Box,
-    Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
-    InputAdornment, InputLabel,
-    MenuItem,
-    Select, TextField,
-    Typography,
-    CircularProgress
-} from "@mui/material"
-import {DataGrid, GridAddIcon, GridSearchIcon, GridToolbar, GridToolbarQuickFilter} from "@mui/x-data-grid";
-import { useNavigate } from "react-router-dom";
-import {grey, lightBlue, red, teal} from "@mui/material/colors";
+import React, {useEffect} from 'react'
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography} from "@mui/material"
+import {DataGrid, GridToolbar, GridToolbarQuickFilter} from "@mui/x-data-grid";
+import {useNavigate} from "react-router-dom";
+import {grey, red} from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import {
-    AddBox,
-    ArrowBack,
-    ArrowBackIos,
-    ArrowBackIosNewRounded,
-    ArrowBackRounded,
-    DoorBackRounded
-} from "@mui/icons-material";
+import {ArrowBackIosNewRounded} from "@mui/icons-material";
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import FormControl from "@mui/material/FormControl";
-import { shadows } from '@mui/system';
 import FindInPageIcon from "@mui/icons-material/FindInPage";
 import {useDispatch, useSelector} from "react-redux";
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import candidateNames from '../Page_Company_Account/candidateNames.json'
 
 const RenderCheckAccount = ({params}) => {
     const [open, setOpen] = React.useState(false);
@@ -52,7 +33,7 @@ const RenderCheckAccount = ({params}) => {
                 <FindInPageIcon></FindInPageIcon>
             </IconButton>
             <Dialog open={open}
-                    onClose={()=>{
+                    onClose={() => {
                         setOpen(false)
                     }}
                     aria-labelledby="accountinfo"
@@ -75,7 +56,7 @@ const RenderCheckAccount = ({params}) => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleGoToAccount}>Go To Account</Button>
-                    <Button onClick={()=>{
+                    <Button onClick={() => {
                         setOpen(false)
                     }}>Close</Button>
                 </DialogActions>
@@ -98,6 +79,7 @@ const Page_Company_Account_Blacklist = () => {
     }, [dispatch]);
     const candidates = useSelector(state => state.admin.candidate)
     const blacklist = useSelector(state => state.admin.blacklist)
+
     function QuickSearchToolbar() {
         return (
             <Grid container margin={1}
@@ -107,6 +89,7 @@ const Page_Company_Account_Blacklist = () => {
             </Grid>
         );
     }
+
     // function getUser(candidateId) {
     //     return candidateNames.find(user => user.candidateId === candidateId);
     // }
@@ -114,27 +97,37 @@ const Page_Company_Account_Blacklist = () => {
     const columns = [
         // { field: "blackListId", headerName: "Blacklist ID", flex: 0.5, headerClassName: "blacklistId-header-column", cellClassName: "blacklistId-cell-column"},
         // { field: "candidateId", headerName: "Candidate ID", flex: 0.5},
-        { field: 'fullName', headerName: 'Full Name', flex: 0.3, valueGetter: (params) => params.row.candidate?.user?.fullName || "John Vtuber" },
-        { field: 'userName', headerName: 'User Name', flex: 0.3, valueGetter: (params) => params.row.candidate?.user?.userName || "johnvtuber" },
+        {
+            field: 'fullName',
+            headerName: 'Full Name',
+            flex: 0.3,
+            valueGetter: (params) => params.row.candidate?.user?.fullName || "John Vtuber"
+        },
+        {
+            field: 'userName',
+            headerName: 'User Name',
+            flex: 0.3,
+            valueGetter: (params) => params.row.candidate?.user?.userName || "johnvtuber"
+        },
         {
             field: "reason",
             headerName: "Reason",
             flex: 0.4,
             cellClassName: "name-column--cell",
         },
-        { field: "dateTime", headerName: "Blacklist Date", flex: 0.3},
+        {field: "dateTime", headerName: "Blacklist Date", flex: 0.3},
         {
             field: "info",
             headerName: "Check Info",
             flex: 0.2,
-            renderCell: (params)=>{
-                return(<RenderCheckAccount params={params} />)
+            renderCell: (params) => {
+                return (<RenderCheckAccount params={params}/>)
             },
         },
     ];
     const blacklistWithNames = blacklist.map((item) => {
         const candidate = candidates.find((c) => c.candidateId === item.candidateId);
-        return { ...item, candidate };
+        return {...item, candidate};
     });
 
     return (
@@ -146,7 +139,7 @@ const Page_Company_Account_Blacklist = () => {
                     // border: "1px solid black",
                     // borderRadius: 1,
                     mt: '5vh',
-                    padding:4
+                    padding: 4
                 }}>
                 <Grid container>
                     <Grid item xs={10} display="flex">
@@ -155,7 +148,7 @@ const Page_Company_Account_Blacklist = () => {
                                   display="flex"
                                   alignItems="center"
                                   justifyContent="left">
-                                <DoDisturbIcon sx={isMd ? { fontSize: 60 }: {fontSize: 40}}></DoDisturbIcon>
+                                <DoDisturbIcon sx={isMd ? {fontSize: 60} : {fontSize: 40}}></DoDisturbIcon>
                             </Grid>
                             <Grid item md={11} xs={12}
                                   display="flex"
@@ -164,6 +157,7 @@ const Page_Company_Account_Blacklist = () => {
                                 <Typography variant={isMd ? "h3" : "h4"}
                                             display="flex"
                                             alignItems="center"
+                                            fontWeight="bold"
                                             justifyContent="left">
                                     Blacklist
                                 </Typography>
@@ -171,7 +165,7 @@ const Page_Company_Account_Blacklist = () => {
                         </Grid>
                     </Grid>
                     <Grid item xs={2} display="flex">
-                        <Grid container  spacing={{ xs: 0, sm: 3 }} rowSpacing={{ xs: 1, sm: 0 }} display="flex">
+                        <Grid container spacing={{xs: 0, sm: 3}} rowSpacing={{xs: 1, sm: 0}} display="flex">
                             <Grid
                                 item
                                 m="10px 0 10px 0"
@@ -186,7 +180,7 @@ const Page_Company_Account_Blacklist = () => {
                                         navigate("/company/account")
                                     }}
                                     sx={{
-                                        boxShadow:7,
+                                        boxShadow: 7,
                                         backgroundColor: grey[900],
                                         '&:hover': {
                                             color: grey[900],
@@ -207,11 +201,11 @@ const Page_Company_Account_Blacklist = () => {
                 raised="true"
                 sx={{
                     // width:'77vw',
-                    display:'flex',
+                    display: 'flex',
                     // border: "1px solid black",
                     // borderRadius: 1,
-                    padding:4,
-                    mt:4
+                    padding: 4,
+                    mt: 4
                 }}>
                 <Grid container>
                     <Grid
@@ -260,7 +254,7 @@ const Page_Company_Account_Blacklist = () => {
                             rows={blacklistWithNames}
                             getRowId={(row) => row.blackListId}
                             columns={columns}
-                            slots={{ toolbar: QuickSearchToolbar }}
+                            slots={{toolbar: QuickSearchToolbar}}
                         />
                     </Grid>
                 </Grid>

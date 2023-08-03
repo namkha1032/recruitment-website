@@ -1,22 +1,22 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import {
+    Box,
     Button,
+    CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
     DialogTitle,
     TextField,
-    Typography,
-    Box,
-    CircularProgress
+    Typography
 } from "@mui/material"
 import {DataGrid, GridAddIcon, GridToolbar, GridToolbarQuickFilter} from "@mui/x-data-grid";
 import {useNavigate} from "react-router-dom";
-import {grey, lightBlue, teal} from "@mui/material/colors";
+import {grey, teal} from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import {AddCard, FileOpen} from "@mui/icons-material";
+import {FileOpen} from "@mui/icons-material";
 import Card from "@mui/material/Card";
 import PropTypes from "prop-types";
 import {useTheme} from "@mui/material/styles";
@@ -24,17 +24,10 @@ import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import {useDispatch, useSelector} from 'react-redux';
-import useGetRole from '../../hooks/useGetRole.js';
 import ViewListIcon from '@mui/icons-material/ViewList';
-import {getCandidate} from "../../redux/reducer/adminReducer";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import useMediaQuery from "@mui/material/useMediaQuery";
-import candidateNames from './candidateNames.json';
-import inerviewerNames from './inerviewerNames.json';
-import recruiterNames from './recruiterNames.json';
 import FindInPageIcon from "@mui/icons-material/FindInPage";
-
-
 
 
 CandidateTable.propTypes = {
@@ -69,7 +62,7 @@ function CandidateTable(props) {
         };
         const handleAddClick = () => {
             dispatch({type: "saga/addToBlacklist", payload: {reason: reason, candidateId: params.row.candidateId}});
-            console.log(reason,params.row.candidateId);
+            console.log(reason, params.row.candidateId);
             setOpen(false);
         };
         return (
@@ -135,9 +128,12 @@ function CandidateTable(props) {
     const {children, value, index, ...other} = props;
     const dispatch = useDispatch()
     useEffect(() => {
+        // console.log("start dispatch")
         dispatch({type: "saga/getCandidateAdmin"});
+        // console.log("end dispatch")
     }, [dispatch]);
     const candidate = useSelector(state => state.admin.candidate)
+    console.log("state: ", candidate)
 
     function QuickSearchToolbar() {
         return (
@@ -148,29 +144,31 @@ function CandidateTable(props) {
             </Grid>
         );
     }
+
     const columns = [
-                {field: "candidateId", headerName: isSm ? "Candidate ID" : "cID", flex: 0.5},
-                {
-                    field: "userName",
-                    headerName: "Username",
-                    flex: 0.3,
-                    valueGetter: (params) => params.row.user.userName,
-                },
-                {
-                    field: "fullName",
-                    headerName: "Full Name",
-                    flex: 0.4,
-                    valueGetter: (params) => params.row.user.fullName,
-                },
-                {
-                    field: "addtoBlacklist",
-                    headerName: isSm ? "Add to Blacklist" : "Add",
-                    flex: 0.2,
-                    renderCell: (params) => {
-                        return (<RenderAddToBlacklist params={params}/>)
-                    },
-                },
-            ];
+        {field: "candidateId", headerName: isSm ? "Candidate ID" : "cID", flex: isSm ? 0.5 : 0.3},
+        {
+            field: "userName",
+            headerName: "Username",
+            flex: 0.3,
+            valueGetter: (params) => params.row.user.userName,
+        },
+        {
+            field: "fullName",
+            headerName: "Full Name",
+            flex: 0.3,
+            valueGetter: (params) => params.row.user.fullName,
+            hide: true,
+        },
+        {
+            field: "addtoBlacklist",
+            headerName: isSm ? "Add to Blacklist" : "Add",
+            flex: 0.2,
+            renderCell: (params) => {
+                return (<RenderAddToBlacklist params={params}/>)
+            },
+        },
+    ];
 
     return (
         <div
@@ -228,12 +226,13 @@ function CandidateTable(props) {
                         columns={columns}
                         slots={{toolbar: QuickSearchToolbar}}
                         // display="flex"
-                    />
+                        disableColumnMenu={true}/>
                 </Grid>
             </Grid>
         </div>
     );
 }
+
 function InterviewerTable(props) {
     const theme = useTheme();
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
@@ -302,8 +301,9 @@ function InterviewerTable(props) {
     const interviewersWithDepartmentNames = interviewer.map((interviewer) => {
         const department = departments.find((department) => department.departmentId === interviewer.departmentId);
         const departmentName = department ? department.departmentName : "";
-        return { ...interviewer, departmentName };
+        return {...interviewer, departmentName};
     });
+
     function QuickSearchToolbar() {
         return (
             <Grid container margin={1}
@@ -313,6 +313,7 @@ function InterviewerTable(props) {
             </Grid>
         );
     }
+
     // function getUser(interviewerId) {
     //     return inerviewerNames.find(user => user.interviewerId === interviewerId);
     // }
@@ -402,13 +403,14 @@ function InterviewerTable(props) {
                         getRowId={(row) => row.interviewerId}
                         columns={columns}
                         slots={{toolbar: QuickSearchToolbar}}
-                        display="flex"
-                    />
+                        // display="flex"
+                        disableColumnMenu={true}/>
                 </Grid>
             </Grid>
         </div>
     );
 }
+
 function RecruiterTable(props) {
     const theme = useTheme();
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
@@ -476,7 +478,7 @@ function RecruiterTable(props) {
     const recruitersWithDepartmentNames = recruiter.map((recruiter) => {
         const department = departments.find((department) => department.departmentId === recruiter.departmentId);
         const departmentName = department ? department.departmentName : "";
-        return { ...recruiter, departmentName };
+        return {...recruiter, departmentName};
     });
     // function getUser(recruiterId) {
     //     return recruiterNames.find(user => user.recruiterId === recruiterId);
@@ -490,6 +492,7 @@ function RecruiterTable(props) {
             </Grid>
         );
     }
+
     const columns = [
         {field: "recruiterId", headerName: "Recruiter ID", flex: 0.4},
         {
@@ -505,7 +508,7 @@ function RecruiterTable(props) {
             valueGetter: (params) => params.row.user.fullName,
             cellClassName: "name-column--cell",
         },
-        { field: 'departmentName', headerName: 'Department', flex: 0.2},
+        {field: 'departmentName', headerName: 'Department', flex: 0.2},
         {
             field: "checkInfo",
             headerName: isSm ? "Check Info" : "More",
@@ -571,7 +574,7 @@ function RecruiterTable(props) {
                         getRowId={(row) => row.recruiterId}
                         columns={columns}
                         slots={{toolbar: QuickSearchToolbar}}
-                    />
+                        disableColumnMenu={true}/>
                 </Grid>
             </Grid>
         </div>
@@ -617,7 +620,7 @@ function FullWidthTabs() {
             }}
         >
             <Grid container>
-                <AppBar position="static" sx={{ backgroundColor: '#ffffff' }}>
+                <AppBar position="static" sx={{backgroundColor: '#ffffff'}}>
                     <Tabs
                         display="flex"
                         value={value}
@@ -639,30 +642,30 @@ function FullWidthTabs() {
                                  "&.Mui-selected": {
                                      color: '#000000'
                                  },
-                             }} />
+                             }}/>
                         <Tab label={isSm ? "Interviewer" : "Intvwr."} {...a11yProps(1)}
                              sx={{
                                  "&.Mui-selected": {
                                      color: '#000000'
                                  },
-                             }} />
+                             }}/>
                         <Tab label={isSm ? "Recruiter" : "Rctr."} {...a11yProps(2)}
                              sx={{
                                  "&.Mui-selected": {
                                      color: '#000000'
                                  },
-                             }} />
+                             }}/>
                     </Tabs>
 
                     {isLoading ? (
-                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
-                            <CircularProgress sx={{color: '#000'}} />
+                        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200}}>
+                            <CircularProgress sx={{color: '#000'}}/>
                         </Box>
                     ) : (
                         <React.Fragment>
-                            <CandidateTable value={value} index={0} />
-                            <InterviewerTable value={value} index={1} />
-                            <RecruiterTable value={value} index={2} />
+                            <CandidateTable value={value} index={0}/>
+                            <InterviewerTable value={value} index={1}/>
+                            <RecruiterTable value={value} index={2}/>
                         </React.Fragment>
                     )}
                 </AppBar>
@@ -670,6 +673,7 @@ function FullWidthTabs() {
         </Card>
     );
 }
+
 const Page_Company_Account = () => {
     const navigate = useNavigate()
     const theme = useTheme()
@@ -678,8 +682,8 @@ const Page_Company_Account = () => {
     const isXs = useMediaQuery(theme.breakpoints.up('xs'));
 
     // if (useGetRole()=="admin") {
-        return (
-            <Grid container>
+    return (
+        <Grid container>
             <Grid item xs={12}>
                 <Card
                     raised="true"
@@ -690,26 +694,27 @@ const Page_Company_Account = () => {
                         padding: 4,
                         mt: '5vh'
                     }}>
-                    <Grid container columnSpacing={{xs: 0.5}}  alignItems="center">
+                    <Grid container columnSpacing={{xs: 0.5}} alignItems="center">
                         <Grid item xs={7} sm={12}>
-                        <Grid container display="flex">
-                        <Grid item md={0.8} xs={12} display="flex">
-                            <ViewListIcon sx={isMd ? { fontSize: 60 }: {fontSize: 40}}/>
+                            <Grid container display="flex">
+                                <Grid item md={0.8} xs={12} display="flex">
+                                    <ViewListIcon sx={isMd ? {fontSize: 60} : {fontSize: 40}}/>
+                                </Grid>
+                                <Grid item md={11} xs={12}
+                                      display="flex"
+                                      justifyContent="left">
+                                    <Typography
+                                        m="0px 10px 20px 0px"
+                                        variant={isMd ? "h3" : "h4"}
+                                        // justifyContent="left"
+                                        fontWeight="bold"
+                                    >
+                                        Account List
+                                    </Typography>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                        <Grid item md={11} xs={12}
-                              display="flex"
-                              justifyContent="left">
-                            <Typography
-                                m="0px 10px 20px 0px"
-                                variant={isMd ? "h3" : "h4"}
-                                // justifyContent="left"
-                            >
-                                Account List
-                            </Typography>
-                        </Grid>
-                        </Grid>
-                        </Grid>
-                        <Grid item xs={5} sm={12} >
+                        <Grid item xs={5} sm={12}>
                             <Grid container spacing={{xs: 0, sm: 3}} rowSpacing={{xs: 1, sm: 0}} display="flex">
                                 <Grid
                                     item
@@ -734,7 +739,7 @@ const Page_Company_Account = () => {
                                                 backgroundColor: grey[300], // set the hover color to light grey
                                             },
                                         }}
-                                        startIcon={<AccountCircleIcon />}
+                                        startIcon={<AccountCircleIcon/>}
                                     >
                                         Add Advanced Account
                                     </Button>
@@ -805,12 +810,12 @@ const Page_Company_Account = () => {
                     </Grid>
                 </Card>
             </Grid>
-                <Grid item xs={12} mb="10vh">
+            <Grid item xs={12} mb="10vh">
                 <FullWidthTabs/>
-                </Grid>
             </Grid>
+        </Grid>
 
-        );
+    );
     // else {
     //     return(
     //       <Typography
