@@ -5,17 +5,18 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormHelperText from '@mui/material/FormHelperText';
+import FormHelperText, { formHelperTextClasses } from '@mui/material/FormHelperText';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { ToastContainer, toast } from "react-toastify";
+
 // import useGetRole from '../../hooks/useGetRole';
 import useGetRole from '../../../hooks/useGetRole';
 import { useParams } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -69,29 +70,33 @@ const ButtonApply = (props) => {
     const dispatch = useDispatch();
     const { recruitmentid } = useParams();
     const appstatus = useSelector(state => state.applicationStatus);
-    const statusmain = appstatus ? appstatus : [];
+    // const statusmain = appstatus ? appstatus : [];
     useEffect(() => {
-        dispatch({
-            type: 'applicationSaga/getApplicationStatus', payload: {
-                userid: userid,
-                positionId: recruitmentid
-            }
-        })
+        if (user !== null) {
+            dispatch({
+                type: 'applicationSaga/getApplicationStatus', payload: {
+                    userid: userid,
+                    positionId: recruitmentid,
+                    token: `Bearer ${user.token}`
+                },
+            })
+        }
+
         return () => {
             dispatch({ type: 'applicationStatus/setApplicationStatus', payload: null })
         }
-    }, [])
-    // useEffect(() => {
-    //     if (appstatus !== null){
-    //         if (appstatus.length > 0){
-    //             setSubmitstatus(true);
-    //         }
-    //     }
-    // }, [appstatus])
-    const countsubmit = useSelector(state => state.countSubmit);
+    }, [user])
+    useEffect(() => {
+        if (appstatus !== null) {
+            if (appstatus.length > 0) {
+                setSubmitstatus(true);
+            }
+        }
+    }, [appstatus])
+    // const countsubmit = useSelector(state => state.countSubmit);
     // const submitstatus = countsubmit ? countsubmit : '';
-    
-    console.log('appstatus', statusmain);
+
+    // console.log('appstatus', statusmain);
     let enddate = props.position ? props.position.endDate : '';
 
     console.log('status', getPositionStatus(enddate));
@@ -115,11 +120,11 @@ const ButtonApply = (props) => {
     const submitcv = useSelector(state => state.submitcv);
     // const error = useSelector(state => state.error);
 
-    console.log("submit", submitcv);
+    // console.log("submit", submitcv);
     console.log("mainid", recruitmentid);
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (role === null)
+
         if (submit === true) {
             if (CV === null) {
                 setOpen(true)
@@ -127,15 +132,46 @@ const ButtonApply = (props) => {
                 setSubmit(false);
             }
             else {
-                dispatch({
-                    type: 'applicationSaga/submitCv',
-                    payload: {
-                        cvId: CV,
-                        positionId: recruitmentid,
-                        userId: userid
-                    }
-                })
-                setApply(true);
+                console.log("hello")
+                if (submitstatus === false) {
+                    dispatch({
+                        type: 'applicationSaga/submitCv',
+                        payload: {
+                            cvId: CV,
+                            positionId: recruitmentid,
+                            userId: userid,
+                            token: `Bearer ${user.token}`
+                        }
+                    })
+                }
+                else {
+                    console.log('hielse');
+                    console.log('appwithoutapplication', appstatus);
+                    console.log('app', appstatus[0]);
+                    // console.log('testappid', appstatus[0].applicationId);
+                    // console.log('testcanid', appstatus[0].cv.candidateId);
+                    // console.log('testposid', appstatus[0].position.positionId);
+                    // console.log('dateTime', appstatus[0].dateTime );
+                    // console.log('comstatus',  appstatus[0].company_Status);
+                    // console.log('priority', appstatus[0].candidate_Status);
+                    console.log('testcvid', CV);
+                    dispatch({
+                        type: 'applicationSaga/updatesubmitCv',
+                        payload: {
+                            applicationId: appstatus[0].applicationId,
+                            candidateId: appstatus[0].cv.candidateId,
+                            cvid: CV,
+                            positionId: appstatus[0].position.positionId,
+                            dateTime: appstatus[0].dateTime,
+                            company_Status: appstatus[0].company_Status,
+                            priority: appstatus[0].candidate_Status,
+                            isDeleted: false,
+                            token: `Bearer ${user.token}`
+                        }
+                    })
+                }
+                setSubmitstatus(true)
+                // setApply(true);
                 setNotice(true);
                 setCV('')
                 console.log(CV);
@@ -165,171 +201,192 @@ const ButtonApply = (props) => {
             setHelperText('');
         }
     };
-    console.log("apply", apply)
+    console.log('hiappstatus', appstatus);
+    console.log("statussubmitbutton", submitstatus)
     const tabs = 1
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     return (
-            <>
+        appstatus &&
+        <>
 
-                <Grid container spacing={2} >
-                    {role == "candidate" && status != true ? (
-                        <>
-                       
-                            <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
-                                <Button sx={{
-                                    backgroundColor: "black",
-                                    ":hover": {
-                                        backgroundColor: "grey",
-                                    }
-                                }} variant='contained' onClick={handleOpen}>
-                                    <InsertDriveFileIcon></InsertDriveFileIcon>  Apply
-                                </Button>
-                            </Grid>
-                            <Modal
-                                open={open}
-                                onClose={handleSubmit}
-                                aria-labelledby="modal-modal-title"
-                                aria-describedby="modal-modal-description"
-                            >
-                                <Box sx={{ ...style, width: isMd ? "50%" : "90%" }}>
-                                    {/* <Typography id="modal-modal-title" variant="h6" component="h2" sx ={{marginBottom: "10px"}} >
-                                Choose your CV
-                            </Typography> */}
-                                    <Box sx={{ display: "flex", flexDirection: "flex-start", p: 4, paddingBottom: 0, backgroundColor: "black" }}>
-                                        <Typography id="modal-modal-title" variant="h5" component="h2" sx={{ marginBottom: "10px", fontWeight: "bold", color: "white" }}>
-                                            Choose your CV
-                                        </Typography>
-                                    </Box>
-                                    <Divider sx={{ marginY: 0 }} />
-                                    {props.list_CV.length > 0 ? (
-                                        <Box sx={{ overflowY: "auto", paddingLeft: 4, paddingBottom: 4, paddingTop: 0 }}>
-                                            <form onSubmit={handleSubmit}>
-                                                <FormControl sx={{ display: "flex", flexDirection: "column", width: "100%" }} variant="standard">
-                                                    <Box sx={{ display: "flex", flexDirection: "row" }}>
-                                                        <Grid item xs={9} md={9} sm={6}>
-                                                            <Box >
-                                                                <RadioGroup
-                                                                    aria-labelledby="demo-error-radios"
-                                                                    name="choose CV"
-                                                                    value={CV}
-                                                                    onChange={handleCVChange}
-                                                                >
-                                                                    {props.list_CV.map((CV) => (
-                                                                        <FormControlLabel key={CV.cvid} value={CV.cvid} control={<Radio />} label={CV.cvName} />
-                                                                    ))}
-                                                                </RadioGroup>
-                                                            </Box>
-                                                        </Grid>
-                                                        <Grid item xs={2} md={2} sm={2}>
-                                                            <Box sx={{ display: "flex", flexDirection: "column" }}>
-                                                                {props.list_CV.map((CV) => (
-                                                                    <Button key={CV.cvid} sx={{
-
-                                                                        backgroundColor: "black",
-                                                                        // top right bottom left
-                                                                        margin: "0px 0px 6px 8px",
-                                                                        ":hover": {
-                                                                            backgroundColor: "grey",
-                                                                        }
-
-                                                                    }} variant="contained" onClick={() => handleTextClick(CV.cvid)}>
-                                                                        Detail
-                                                                    </Button>
-                                                                ))}
-                                                            </Box>
-                                                        </Grid>
-                                                    </Box>
-                                                    <Box>
-                                                        <Grid item xs={12}>
-                                                            <FormHelperText sx={{ fontSize: "20px", color: "red", fontWeight: "bold" }}>{helperText}</FormHelperText>
-                                                        </Grid>
-                                                    </Box>
-                                                </FormControl>
-                                                <Box sx={{ display: "flex" }}>
-                                                    <Grid item xs={6} md={6} sx={{ display: "flex", justifyContent: "flex-start" }}>
-                                                        <Button sx={{
-
-                                                            backgroundColor: "black",
-                                                            ":hover": {
-                                                                backgroundColor: "grey",
-                                                            }
-                                                        }} size="medium" type="submit" variant="contained" onClick={handleClose}   >
-
-                                                            <CloseIcon></CloseIcon> Close
-                                                        </Button>
-                                                    </Grid>
-                                                    <Grid item xs={6} md={6} sx={{ display: "flex", justifyContent: "flex-end", marginRight: isMd ? 2 : 0 }}>
-                                                        <Button sx={{
-
-                                                            backgroundColor: "black",
-                                                            ":hover": {
-                                                                backgroundColor: "grey",
-                                                            }
-                                                        }} size="medium" type="submit" variant="contained" onClick={hanldebutton}   >
-                                                            {isMd ? (
-                                                                <>
-                                                                    <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit your CV
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit
-                                                                </>
-                                                            )}
-
-                                                        </Button>
-
-                                                    </Grid>
-                                                </Box>
-                                            </form>
-                                        </Box>
+            <Grid container spacing={2} >
+                {(role == "candidate" && status != true) ? (
+                    <>
+                        {(appstatus.length > 0 && appstatus[0].company_Status == "Pending") || (appstatus.length == 0) ? (
+                            <>
+                                <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
+                                    {submitstatus === false ? (
+                                        <Button sx={{
+                                            backgroundColor: "black",
+                                            ":hover": {
+                                                backgroundColor: "grey",
+                                            }
+                                        }} variant='contained' onClick={handleOpen}>
+                                            <InsertDriveFileIcon></InsertDriveFileIcon>  Apply
+                                        </Button>
                                     ) : (
-                                        <Box sx={{ display: "flex", flexDirection: 'column', p: 4 }}>
-                                            <Box>
-                                                <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                                                    You haven't had any CV yet. Do you want to create it?
+                                        <>
+                                            <Box sx={{ display: "flex" }}>
+                                                <Typography sx={{ marginRight: 2 }}>
+                                                    You have applied this position.
                                                 </Typography>
-                                            </Box>
-                                            <Box sx={{ display: "flex", alignItems: "flex-end", justifyContent: "flex-end" }}>
                                                 <Button sx={{
                                                     backgroundColor: "black",
                                                     ":hover": {
                                                         backgroundColor: "grey",
                                                     }
-                                                }} size="large" variant="contained" onClick={handlecreate}   >
-                                                    CREATE CV
+                                                }} variant='contained' onClick={handleOpen}>
+                                                    <InsertDriveFileIcon></InsertDriveFileIcon>  Apply
                                                 </Button>
                                             </Box>
+                                        </>
 
-
-
-                                        </Box>
                                     )}
 
-                                </Box>
-                            </Modal>
-                            <ToastContainer
-                                position="top-center"
-                                autoClose={5000}
-                                hideProgressBar={false}
-                                newestOnTop={false}
-                                closeOnClick
-                                rtl={false}
-                                pauseOnFocusLoss
-                                draggable
-                                pauseOnHover={false}
-                                theme="colored"
-                            />
-                        </>
-                    ) : 
-                    null
-                    }
+                                </Grid>
+                                <Modal
+                                    open={open}
+                                    onClose={handleSubmit}
+                                    aria-labelledby="modal-modal-title"
+                                    aria-describedby="modal-modal-description"
+                                >
+                                    <Box sx={{ ...style, width: isMd ? "50%" : "90%" }}>
+                                        <Box sx={{ display: "flex", flexDirection: "flex-start", p: 4, paddingBottom: 0, backgroundColor: "black" }}>
+                                            <Typography id="modal-modal-title" variant="h5" component="h2" sx={{ marginBottom: "10px", fontWeight: "bold", color: "white" }}>
+                                                Choose your CV
+                                            </Typography>
+                                        </Box>
+                                        <Divider sx={{ marginY: 0 }} />
+                                        {props.list_CV.length > 0 ? (
+                                            <Box sx={{ overflowY: "auto", paddingLeft: 4, paddingBottom: 4, paddingTop: 0 }}>
+                                                <form onSubmit={handleSubmit}>
+                                                    <FormControl sx={{ display: "flex", flexDirection: "column", width: "100%" }} variant="standard">
+                                                        <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                                            <Grid item xs={9} md={9} sm={6}>
+                                                                <Box >
+                                                                    <RadioGroup
+                                                                        aria-labelledby="demo-error-radios"
+                                                                        name="choose CV"
+                                                                        value={CV}
+                                                                        onChange={handleCVChange}
+                                                                    >
+                                                                        {props.list_CV.map((CV) => (
+                                                                            <FormControlLabel key={CV.cvid} value={CV.cvid} control={<Radio />} label={CV.cvName} />
+                                                                        ))}
+                                                                    </RadioGroup>
+                                                                </Box>
+                                                            </Grid>
+                                                            <Grid item xs={2} md={2} sm={2}>
+                                                                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                                                                    {props.list_CV.map((CV) => (
+                                                                        <Button key={CV.cvid} sx={{
 
-                </Grid >
-            </>
-            
-            
+                                                                            backgroundColor: "black",
+                                                                            // top right bottom left
+                                                                            margin: "0px 0px 6px 8px",
+                                                                            ":hover": {
+                                                                                backgroundColor: "grey",
+                                                                            }
+
+                                                                        }} variant="contained" onClick={() => handleTextClick(CV.cvid)}>
+                                                                            Detail
+                                                                        </Button>
+                                                                    ))}
+                                                                </Box>
+                                                            </Grid>
+                                                        </Box>
+                                                        <Box>
+                                                            <Grid item xs={12}>
+                                                                <FormHelperText sx={{ fontSize: "20px", color: "red", fontWeight: "bold" }}>{helperText}</FormHelperText>
+                                                            </Grid>
+                                                        </Box>
+                                                    </FormControl>
+                                                    <Box sx={{ display: "flex" }}>
+                                                        <Grid item xs={6} md={6} sx={{ display: "flex", justifyContent: "flex-start" }}>
+                                                            <Button sx={{
+
+                                                                backgroundColor: "black",
+                                                                ":hover": {
+                                                                    backgroundColor: "grey",
+                                                                }
+                                                            }} size="medium" type="submit" variant="contained" onClick={handleClose}   >
+
+                                                                <CloseIcon></CloseIcon> Close
+                                                            </Button>
+                                                        </Grid>
+                                                        <Grid item xs={6} md={6} sx={{ display: "flex", justifyContent: "flex-end", marginRight: isMd ? 2 : 0 }}>
+                                                            <Button sx={{
+
+                                                                backgroundColor: "black",
+                                                                ":hover": {
+                                                                    backgroundColor: "grey",
+                                                                }
+                                                            }} size="medium" type="submit" variant="contained" onClick={hanldebutton}   >
+                                                                {isMd ? (
+                                                                    <>
+                                                                        <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit your CV
+                                                                    </>
+                                                                ) : (
+                                                                    <>
+                                                                        <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit
+                                                                    </>
+                                                                )}
+
+                                                            </Button>
+
+                                                        </Grid>
+                                                    </Box>
+                                                </form>
+                                            </Box>
+                                        ) : (
+                                            <Box sx={{ display: "flex", flexDirection: 'column', p: 4 }}>
+                                                <Box>
+                                                    <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                                                        You haven't had any CV yet. Do you want to create it?
+                                                    </Typography>
+                                                </Box>
+                                                <Box sx={{ display: "flex", alignItems: "flex-end", justifyContent: "flex-end" }}>
+                                                    <Button sx={{
+                                                        backgroundColor: "black",
+                                                        ":hover": {
+                                                            backgroundColor: "grey",
+                                                        }
+                                                    }} size="large" variant="contained" onClick={handlecreate}   >
+                                                        CREATE CV
+                                                    </Button>
+                                                </Box>
+                                            </Box>
+                                        )}
+
+                                    </Box>
+                                </Modal>
+                                <ToastContainer
+                                    position="top-center"
+                                    autoClose={5000}
+                                    hideProgressBar={false}
+                                    newestOnTop={false}
+                                    closeOnClick
+                                    rtl={false}
+                                    pauseOnFocusLoss
+                                    draggable
+                                    pauseOnHover={false}
+                                    theme="colored"
+                                />
+                            </>
+                        ) : (
+                            null
+                        )}
+                    </>
+                ) :
+                    null
+                }
+
+            </Grid >
+        </>
+
+
     )
 }
 

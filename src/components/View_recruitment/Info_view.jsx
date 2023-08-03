@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import ArticleIcon from '@mui/icons-material/Article';
-import {Button} from '@mui/material';
+import { Button } from '@mui/material';
 import './Info_view.css'
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -21,6 +21,8 @@ import TableViewIcon from "@mui/icons-material/TableView";
 import ViewTimelineIcon from '@mui/icons-material/ViewTimeline';
 import CircularProgress from '@mui/material/CircularProgress';
 import ButtonApply from './ButtonApply/ButtonApply';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const Info_view = (props) => {
     const { recruitmentid } = useParams();
     console.log("number", recruitmentid);
@@ -39,27 +41,39 @@ const Info_view = (props) => {
     const detailposition = useSelector(state => state.position);
     const applications = useSelector(state => state.application);
     const dispatch = useDispatch();
-
+    console.log('userinfo', user);
     useEffect(() => {
-        dispatch({ type: 'applicationSaga/getApplication', payload: recruitmentid })
-        dispatch({ type: 'positionSaga/getPosition', payload: recruitmentid })
-        dispatch({ type: 'cvSaga/getCvList', payload: userid })
+        if (user !== null){
+            dispatch({ type: 'applicationSaga/getApplication', payload: {
+                recruitmentid: recruitmentid,
+                token:  `Bearer ${user.token}`,
+            } })
+            dispatch({ type: 'positionSaga/getPosition', payload: {
+                recruitmentid: recruitmentid,
+                token: `Bearer ${user.token}`,
+            } })
+            dispatch({ type: 'cvSaga/getCvList', payload: {
+                userid: userid,
+                token: `Bearer ${user.token}`
+            }})
+        }
+        
         return () => {
             cleanStore(dispatch);
         }
-    }, [])
+    }, [user])
 
     const error = useSelector(state => state.positionError)
     console.log('.....', error);
     useEffect(() => {
-        if (error.status === 'error'){
-            if (error.message === 400 || error.message === 404){
-                
+        if (error.status === 'error') {
+            if (error.message === 400 || error.message === 404) {
                 navigate('/*')
-                dispatch({type: 'positionError/onReset'})
+                dispatch({ type: 'positionError/onReset' })
             }
         }
     }, [error])
+    
     console.log('ERROR', error);
     const skill = useSelector(state => state.skill);
     console.log("skillinmain", skill); // ['react','c++']
@@ -283,7 +297,18 @@ const Info_view = (props) => {
                         </Box>
                     </Grid>
                 </Grid>
-
+                <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover={false}
+                    theme="colored"
+                />
             </>
             :
             <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>

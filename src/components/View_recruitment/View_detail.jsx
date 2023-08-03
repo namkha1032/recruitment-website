@@ -9,6 +9,7 @@ import RecommendIcon from '@mui/icons-material/Recommend';
 import { formatDate } from '../../utils/formatDate';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import { convertDate } from "../../utils/convertDate";
 import dayjs from 'dayjs';
 import './Info_view.css'
 const View_detail = (props) => {
@@ -25,8 +26,8 @@ const View_detail = (props) => {
     let gridSx = {
         display: "flex", alignItems: "center"
     }
-    const startDate = props.detailposition ? formatDate(props.detailposition.startDate.slice(0, 10)) : [];
-    const endDate = props.detailposition ? formatDate(props.detailposition.endDate.slice(0, 10)) : [];
+    const startDate = props.detailposition ? dayjs(convertDate(props.detailposition.startDate)).format('DD/MM/YYYY') : [];
+    const endDate = props.detailposition ? dayjs(convertDate(props.detailposition.endDate)).format('DD/MM/YYYY') : [];
     console.log("hello", props.detailposition);
     // console.log("hellode", props.department);
     console.log("left", left);

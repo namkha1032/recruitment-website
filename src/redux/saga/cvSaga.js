@@ -9,8 +9,9 @@ function* getCv(action) {
 
     // yield put({ type: "saga/getCandidate", payload: response1.data.userid })
     console.log(response1.data[0])
-    const data = {...response1.data[0],
-        "introduction":`I am a dedicated and highly motivated professional with a passion for web development and front-end technologies. With a Bachelor's degree in Computer Science and several years of experience in designing and implementing user-friendly web applications, I have honed my skills in HTML, CSS, JavaScript, and ReactJS.
+    const data = {
+        ...response1.data[0],
+        "introduction": `I am a dedicated and highly motivated professional with a passion for web development and front-end technologies. With a Bachelor's degree in Computer Science and several years of experience in designing and implementing user-friendly web applications, I have honed my skills in HTML, CSS, JavaScript, and ReactJS.
 
         Throughout my career, I have worked on various projects, collaborating with cross-functional teams to deliver high-quality and visually appealing websites. I possess a keen eye for detail, ensuring that each project is thoroughly tested and optimized for optimal performance.
         
@@ -30,85 +31,91 @@ function* getCv(action) {
         
         I am excited to further grow as a developer and contribute my expertise to create innovative digital experiences that positively impact users.`
         ,
-        education:'Đại học '
-        ,"languages": [
-        {
-            "cvlanguageid": 0,
-            "name": "English",
-            "decription": ""
-        },
-        {
-            "cvlanguageid": 1,
-            "name": "Korean",
-            "decription": ""
-        },
-        {
-            "cvlanguageid": 2,
-            "name": "Chinese",
-            "decription": ""
-        }],"certificates": [...response1.data[0].certificates,
-        {
-            "certificateId": "8483e625-6146-48ec-9abc-e7b3452a48a7",
-            "certificateName": "Javascript",
-            "description": "Javascript 1 năm",
-            "organizationName": "organize",
-            "dateEarned": "2023-07-01T00:00:00",
-            "expirationDate": "2023-07-01T00:00:00",
-            "link": "link",
-            "cvid": "d1c51600-6272-4c78-9b50-36af9d403a28",
-            "isDeleted": false
-          },
-          {
-            "certificateId": "8483e625-6146-48ec-9abc-e7b3452a48a7",
-            "certificateName": "ReactJS ",
-            "description": "ReactJS quá dễ",
-            "organizationName": "organize",
-            "dateEarned": "2023-07-05T00:00:00",
-            "expirationDate": "2023-07-05T00:00:00",
-            "link": "link",
-            "cvid": "d1c51600-6272-4c78-9b50-36af9d403a28",
-            "isDeleted": false
-          },
-          {
-            "certificateId": "8483e625-6146-48ec-9abc-e7b3452a48a7",
-            "certificateName": "C/C++",
-            "description": "C/C++ .......",
-            "organizationName": "organize",
-            "dateEarned": "2023-07-12T00:00:00",
-            "expirationDate": "2023-07-12T00:00:00",
-            "link": "link",
-            "cvid": "d1c51600-6272-4c78-9b50-36af9d403a28",
-            "isDeleted": false
-          }
-    ]
+        education: 'Đại học '
+        , "languages": [
+            {
+                "cvlanguageid": 0,
+                "name": "English",
+                "decription": ""
+            },
+            {
+                "cvlanguageid": 1,
+                "name": "Korean",
+                "decription": ""
+            },
+            {
+                "cvlanguageid": 2,
+                "name": "Chinese",
+                "decription": ""
+            }], "certificates": [...response1.data[0].certificates,
+            {
+                "certificateId": "8483e625-6146-48ec-9abc-e7b3452a48a7",
+                "certificateName": "Javascript",
+                "description": "Javascript 1 năm",
+                "organizationName": "organize",
+                "dateEarned": "2023-07-01T00:00:00",
+                "expirationDate": "2023-07-01T00:00:00",
+                "link": "link",
+                "cvid": "d1c51600-6272-4c78-9b50-36af9d403a28",
+                "isDeleted": false
+            },
+            {
+                "certificateId": "8483e625-6146-48ec-9abc-e7b3452a48a7",
+                "certificateName": "ReactJS ",
+                "description": "ReactJS quá dễ",
+                "organizationName": "organize",
+                "dateEarned": "2023-07-05T00:00:00",
+                "expirationDate": "2023-07-05T00:00:00",
+                "link": "link",
+                "cvid": "d1c51600-6272-4c78-9b50-36af9d403a28",
+                "isDeleted": false
+            },
+            {
+                "certificateId": "8483e625-6146-48ec-9abc-e7b3452a48a7",
+                "certificateName": "C/C++",
+                "description": "C/C++ .......",
+                "organizationName": "organize",
+                "dateEarned": "2023-07-12T00:00:00",
+                "expirationDate": "2023-07-12T00:00:00",
+                "link": "link",
+                "cvid": "d1c51600-6272-4c78-9b50-36af9d403a28",
+                "isDeleted": false
+            }
+            ]
     }
     const compareDates = (date1, date2) => {
-        return new Date(date1.expirationDate.slice(0,10)) - new Date(date2.expirationDate.slice(0,10));
-      };
-      data.certificates.sort(compareDates)
-      console.log(data.certificates)
+        return new Date(date1.expirationDate.slice(0, 10)) - new Date(date2.expirationDate.slice(0, 10));
+    };
+    data.certificates.sort(compareDates)
+    console.log(data.certificates)
     yield put({ type: "cv/setCv", payload: data })
     yield put({ type: "candidate/setCandidate", payload: response2.data })
 }
 
 function* getCvList(action) {
-    try{
-        const candidate = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`) 
+    try {
+        
+        const config = {
+            headers: {
+                Authorization: action.payload.token,
+            }
+        };
+        const candidate = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`, config)
         console.log("caninsaga", candidate.data);
         // const test = candidate.data.filter((prop) => prop.userId === 'bf39957a-5fad-4e81-a8bd-2c2afa10d15a');
         // console.log('test', test);
-        
-        const cvlist = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/GetCandidateCvs/${(candidate.data.filter((props) => props.userId === action.payload))[0].candidateId}`)
+
+        const cvlist = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/GetCandidateCvs/${(candidate.data.filter((props) => props.userId === action.payload.userid))[0].candidateId}`, config)
         console.log('id', cvlist.data);
         console.log('payload', action.payload);
         // const reponse1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/GetCandidateCvs`) 
         // const reponse = yield call(axios.get, `${host.name}/data/CVList.json`)
         // const reponse = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv`)
         yield put({ type: 'cvlist/setCvList', payload: cvlist.data })
-    } catch(error){
+    } catch (error) {
         console.log(error)
     }
-    
+
 }
 
 function* cvSaga() {
