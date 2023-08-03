@@ -25,7 +25,7 @@ const Footer = () => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    dispatch({ type: "saga/getEventFooter" });
+    dispatch({ type: "eventSaga/getEventFooter" });
   }, []);
   const handleNavigateClick = (id) => {
     navigate(`/event/${id}`);

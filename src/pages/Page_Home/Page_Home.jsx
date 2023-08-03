@@ -67,7 +67,7 @@ const Page_Home = () => {
     navigate('/recruitment')
   }
   React.useEffect(() => {
-    dispatch({ type: 'saga/getEventList' })
+    dispatch({ type: 'eventSaga/getEventList' })
   }, [])
   console.log(eventList)
   return (

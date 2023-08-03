@@ -29,7 +29,7 @@ import Pagination from "@mui/material/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import AppPagination from "../../components/AppPagination/index";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import { AccountCircle, Search } from "@mui/icons-material";
+import { AccessTime, AccessTimeFilled, AccountCircle, Search } from "@mui/icons-material";
 
 //
 const cards1 = [1, 2, 3, 4, 5, 6];
@@ -56,7 +56,7 @@ const Page_Event = () => {
   const list = useSelector((state) => state.eventList);
 
   useEffect(() => {
-    dispatch({ type: "saga/getEventList" });
+    dispatch({ type: "eventSaga/getEventList" });
   }, []);
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -177,9 +177,35 @@ const Page_Event = () => {
                                   padding: "0px 0px 5px 0px",
                                 }}
                               >
-                                <PermIdentityIcon></PermIdentityIcon>
-                                {card.NumOfJoined} • July 5th 23
+                                
+                                
+                                 
                               </Typography>
+                              <Box>
+                                <Typography variant="subtitle2"
+                                align="left"
+                                color="text.secondary"
+                                component="p"
+                               
+                                >
+                                  
+                                </Typography>
+                              <PermIdentityIcon />
+                                  {card.NumOfJoined} 
+                              </Box>
+
+                           
+                                
+                                <Box>
+                               <Typography variant="subtitle2"
+                                align="left"
+                                color="text.secondary"
+                                component="p">
+                               
+                              <AccessTime />
+                                {card.EventDateTime.slice(0, 10)}
+                                </Typography>
+                                </Box>
                               <Typography
                                 variant="subtitle1"
                                 align="center"
@@ -206,7 +232,7 @@ const Page_Event = () => {
                             variant="filled"
                             onClick={() => handleNavigateClick1(card.EventId)}
                           >
-                            View
+                            View 
                           </Button>
                         </CardActions>
                       </Card>
@@ -225,22 +251,7 @@ const Page_Event = () => {
             setChangeList={setEventList}
           />
         )}
-        {/* Footer */}
-        {/* <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
-          <Typography variant="h6" align="center" gutterBottom>
-            Team 4
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            align="center"
-            color="text.secondary"
-            component="p"
-          >
-            Something here to give the footer a purpose!
-          </Typography>
-          <Copyright />
-        </Box> */}
-        {/* End footer */}
+        
       </>
     )
   );

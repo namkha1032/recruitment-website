@@ -10,7 +10,7 @@ function* getRequiment(action) {
 
 function* requirementSaga() {
     yield all([
-        takeEvery("saga/getRequirement", getRequiment)
+        takeEvery("recruitmentSaga/getRequirement", getRequiment)
     ])
 }
 

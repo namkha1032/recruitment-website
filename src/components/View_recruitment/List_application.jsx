@@ -61,7 +61,7 @@ const List_application = (props) => {
     //     return application.company_Status === "Đã từ chối"
     // }) : [];
     const pendingmain = props.applications ? props.applications.filter(application => {
-        return application.company_Status === "afafs"
+        return application.company_Status === "Pending"
     }) : [];
     const rejectmain = props.applications ? props.applications.filter(application => {
         return application.company_Status === "Rejected"
