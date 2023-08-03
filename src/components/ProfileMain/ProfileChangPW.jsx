@@ -117,7 +117,7 @@ const ProfileChangePW = () => {
       }}
     >
       <Container sx={{ display: "flex", flexWrap:"wrap", justifyContent: "center" }}>
-      <Box>
+      {/* <Box>
       <Typography 
                 variant="h3" 
                 align="center" 
@@ -131,7 +131,7 @@ const ProfileChangePW = () => {
                 m={0}
               >
                 Change password
-              </Typography></Box>
+              </Typography></Box> */}
         <Grid
           container
           sx={{

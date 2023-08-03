@@ -28,6 +28,7 @@ import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import imageBackground from "../../assets/img/background.jpg";
 //import imageBackground from "./nightwall.webm";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import HomeIcon from '@mui/icons-material/Home';
 
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -217,8 +218,21 @@ const XPage_Login = () => {
                 marginTop: "5px"
               }}
             >
-              <ArrowBackIcon />
-              <Typography
+              <ArrowBackIcon 
+                onClick={handleClickHome}
+                sx={{
+                  //textDecoration: "none",
+                  cursor: 'pointer'
+                }}
+              />
+              <HomeIcon 
+                onClick={handleClickHome}
+                sx={{
+                  //textDecoration: "none",
+                  cursor: 'pointer'
+                }}
+              />
+              {/* <Typography
                 color="black"
                 onClick={handleClickHome}
                 paddingLeft="2px"
@@ -228,7 +242,7 @@ const XPage_Login = () => {
                 }}
               >
                 Back to home page
-              </Typography>
+              </Typography> */}
             </Box>
             <Box
               sx={{
@@ -247,7 +261,7 @@ const XPage_Login = () => {
                     color: "black",
                     textAlign: "center",
                     fontWeight: "450",
-                    marginBottom: "10px",
+                    marginBottom: "5px",
                   }}
                 >
                   Sign In
@@ -458,7 +472,7 @@ const XPage_Login = () => {
                     item
                     xs={12}
                     sx={{
-                      margin: "15px 40px 15px",
+                      margin: "15px 20px 15px",
                       fontSize: ".9em",
                       color: "#fff",
                       display: "flex",
@@ -479,6 +493,7 @@ const XPage_Login = () => {
                             },
                             height: "10px",
                             width: "10px",
+                            marginLeft: "9px",
                             //paddingBottom: '2px',
                           }}
                         />
