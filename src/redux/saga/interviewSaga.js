@@ -77,13 +77,15 @@ function* scoreInterview(action) {
 
 function* createInterview(action) {
   try {
+    console.log("input: ", JSON.stringify(action.payload))
+    // console.log("inre: ", action.payload)
     yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Interview/${action.payload.interview.applicationId}`, action.payload)
-    const responseInterviewList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`)
-    const findInterview = responseInterviewList.data.find((item) => {
-      return item.recruiterId == action.payload.interview.recruiterId
-        && item.applicationId == action.payload.interview.applicationId
-        && item.interviewerId == action.payload.interview.interviewerId
-    })
+    // const responseInterviewList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`)
+    // const findInterview = responseInterviewList.data.find((item) => {
+    //   return item.recruiterId == action.payload.interview.recruiterId
+    //     && item.applicationId == action.payload.interview.applicationId
+    //     && item.interviewerId == action.payload.interview.interviewerId
+    // })
     yield call(delay, 1000)
     // throw {
     //     response: {
@@ -92,10 +94,11 @@ function* createInterview(action) {
     //         }
     //     }
     // }
-    yield put({ type: "error/setError", payload: { status: "no", message: findInterview.interviewId } })
+    // yield put({ type: "error/setError", payload: { status: "no", message: findInterview.interviewId } })
+    yield put({ type: "error/setError", payload: { status: "no", message: "" } })
   }
   catch (err) {
-    yield put({ type: "error/setError", payload: { status: "yes", message: err.response.data.error } })
+    // yield put({ type: "error/setError", payload: { status: "yes", message: err.response.data.error } })
     console.log("err: ", err)
   }
 }
@@ -199,7 +202,7 @@ function* getDataForInterview(action) {
     let newInterviewer = {
       departmentid: filterInter.departmentId,
       interviewerid: filterInter.interviewerId,
-      interviewername: filterInter.user.fullName,
+      user: filterInter.user,
     }
     interviewerList.push(newInterviewer)
   }
@@ -226,6 +229,9 @@ function* getDataForInterview(action) {
     return a.shiftstart - b.shiftstart;
   });
   // ---------------------------------
+  // -----------------------------------FAKE---------------------------------------
+  
+  // -----------------------------------FAKE---------------------------------------
   // yield put({ type: "application/setApplication", payload: appItem })
   yield put({ type: "interviewList/setInterviewList", payload: interviewList })
   yield put({ type: "interviewerList/setInterviewerList", payload: interviewerList })

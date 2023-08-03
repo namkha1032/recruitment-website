@@ -17,7 +17,8 @@ import {
     FormControl,
     Select,
     InputLabel,
-    MenuItem
+    MenuItem,
+    Avatar
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import CheckIcon from '@mui/icons-material/Check';
@@ -25,27 +26,42 @@ import CloseIcon from '@mui/icons-material/Close';
 import { DatePicker } from '@mui/x-date-pickers';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
-
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-
+import InterviewerDialog from "../InterviewerDialog/InterviewerDialog";
 const TableInterviewer = (props) => {
     const { interviewerList, chosenShift, busyInterviewer,
         chosenInterviewer, setChosenInterviewer } = props
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+    const position = useSelector(state => state.position)
     const interviewerRows = interviewerList.map(inter => (
         {
             interviewerid: inter.interviewerid,
-            interviewername: inter.interviewername,
+            interviewername: inter.user.fullName,
+            dob: inter.user.dateOfBirth,
+            email: inter.user.email,
+            departmentname: position ? position.department.departmentName : "",
+            avatar: inter.user.imageURL ? inter.user.imageURL : "https://i.kym-cdn.com/entries/icons/original/000/026/152/gigachadd.jpg",
             status: "status",
             action: "action"
         }
     ))
     const interviewerColumns = [
-        { field: 'interviewerid', headerName: 'ID', flex: 1 },
+        { field: 'interviewerid', headerName: 'ID', flex: 0 },
         { field: 'interviewername', headerName: 'Name', flex: 3 },
+        { field: 'dob', headerName: 'Dob', flex: 0 },
+        { field: 'email', headerName: 'Email', flex: 0 },
+        { field: 'departmentname', headerName: 'Department', flex: 0 },
+        {
+            field: 'avatar', headerName: '', flex: 1,
+            renderCell: (params) => {
+                return (
+                    <InterviewerDialog params={params} />
+                )
+            }
+        },
         {
             field: 'status',
             headerName: 'Status',
@@ -104,6 +120,16 @@ const TableInterviewer = (props) => {
                 disableColumnSelector
                 disableDensitySelector
                 disableRowSelectionOnClick
+                initialState={{
+                    columns: {
+                        columnVisibilityModel: {
+                            interviewerid: false,
+                            dob: false,
+                            email: false,
+                            departmentname: false
+                        },
+                    },
+                }}
                 slots={{ toolbar: GridToolbar }}
                 slotProps={{
                     toolbar: {

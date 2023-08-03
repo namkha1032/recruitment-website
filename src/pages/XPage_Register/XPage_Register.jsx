@@ -31,11 +31,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import imageBackground from "../../assets/img/background.jpg";
 
-// const style = {
-//   marginTop: "15px",
-//   marginBottom: "15px",
-// };
-
 const theme = createTheme({
   palette: {
     secondary: {
@@ -240,7 +235,7 @@ const XPage_Register = () => {
           }}
         >
           <Stack>
-            <Box /* backgroundColor="red" */
+            <Box
               sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -251,30 +246,15 @@ const XPage_Register = () => {
               <ArrowBackIcon 
                 onClick={handleClickHome}
                 sx={{
-                  //textDecoration: "none",
                   cursor: 'pointer'
                 }}
               />
               <HomeIcon 
                 onClick={handleClickHome}
                 sx={{
-                  //textDecoration: "none",
                   cursor: 'pointer'
                 }}
               />
-              {/* <Typography
-                // component={Link}
-                // to="/home"
-                onClick={handleClickHome}
-                color="black"
-                paddingLeft="2px"
-                sx={{
-                  cursor: "pointer",
-                  textDecoration: "none",
-                }}
-              >
-                Back to home page
-              </Typography> */}
             </Box>
             <Box
               sx={{
@@ -293,7 +273,7 @@ const XPage_Register = () => {
                     color: "black",
                     textAlign: "center",
                     fontWeight: "450",
-                    marginBottom: "5px",
+                    //marginBottom: "5px",
                   }}
                 >
                   Sign Up
@@ -301,7 +281,6 @@ const XPage_Register = () => {
 
                 <Grid
                   container
-                  //spacing={2}
                   sx={{
                     display: "flex",
                     justifyContent: "center",
@@ -315,12 +294,12 @@ const XPage_Register = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      marginBottom: "5px",
+                      marginBottom: "2px",
+                      marginTop: '5px',
                     }}
                   >
                     <TextField
                       variant="standard"
-                      //required
                       fullWidth
                       type="text"
                       label={validFullName ? <Typography color={"black"}>Fullname</Typography> : <Typography color={"red"}>Fullname</Typography>}
@@ -369,10 +348,9 @@ const XPage_Register = () => {
                         display={"flex"}
                         marginLeft={"16px"}
                         marginRight={"15px"}
-                        marginBottom={"3px"}
+                        //marginBottom={"3px"}
                       >
                         <ErrorOutlineOutlinedIcon
-                          //color="red"
                           sx={{
                             fontSize: 15,
                             paddingLeft: "2px",
@@ -399,12 +377,12 @@ const XPage_Register = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      marginBottom: "5px",
+                      marginBottom: "2px",
+                      marginTop: '5px',
                     }}
                   >
                     <TextField
                       variant="standard"
-                      //required
                       fullWidth
                       type="text"
                       label={validUsername ? <Typography color={"black"}>Username</Typography> : <Typography color={"red"}>Username</Typography>}
@@ -456,7 +434,7 @@ const XPage_Register = () => {
                         display={"flex"}
                         marginLeft={"16px"}
                         marginRight={"15px"}
-                        marginBottom={"3px"}
+                        //marginBottom={"3px"}
                       >
                         <ErrorOutlineOutlinedIcon
                           //color="red"
@@ -486,7 +464,8 @@ const XPage_Register = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      marginBottom: "5px",
+                      marginBottom: "2px",
+                      marginTop: '5px',
                     }}
                   >
                     <TextField
@@ -544,7 +523,7 @@ const XPage_Register = () => {
                         display={"flex"}
                         marginLeft={"16px"}
                         marginRight={"15px"}
-                        marginBottom={"3px"}
+                        //marginBottom={"3px"}
                       >
                         <ErrorOutlineOutlinedIcon
                           //color="red"
@@ -574,6 +553,8 @@ const XPage_Register = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
+                      marginBottom: '2px',
+                      marginTop: '5px',
                     }}
                   >
                     <TextField
@@ -681,7 +662,7 @@ const XPage_Register = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      marginTop: '10px'
+                      marginTop: '5px'
                     }}
                   >
                     {loading ? <CircularProgress sx={{ color: "black" }} /> :
@@ -715,7 +696,7 @@ const XPage_Register = () => {
                       justifyContent: "center",
                       alignItems: "center",
                       lineHeight: "15px",
-                      paddingTop: "15px",
+                      paddingTop: "10px",
                       fontSize: ".9em",
                     }}
                   >
