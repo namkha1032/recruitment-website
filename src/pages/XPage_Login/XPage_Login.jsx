@@ -232,17 +232,6 @@ const XPage_Login = () => {
                   cursor: 'pointer'
                 }}
               />
-              {/* <Typography
-                color="black"
-                onClick={handleClickHome}
-                paddingLeft="2px"
-                sx={{
-                  textDecoration: "none",
-                  cursor: 'pointer'
-                }}
-              >
-                Back to home page
-              </Typography> */}
             </Box>
             <Box
               sx={{
@@ -426,6 +415,7 @@ const XPage_Login = () => {
                         color: "#fff",
                         borderBottom: validPassword ? "2px solid black" : "2px solid red",
                         borderBottomWidth: "2px",
+                        marginTop: "3px",
                       }}
                     />
                   </Grid>
