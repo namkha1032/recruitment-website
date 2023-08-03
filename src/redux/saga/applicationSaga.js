@@ -86,8 +86,8 @@ function* submitCv(action) {
 
 function* applicationSaga() {
     yield all([
-        takeEvery('applicationsaga/submitCv', submitCv),
-        takeEvery('applicationsaga/getApplication', getApplication),
+        takeEvery('applicationSaga/submitCv', submitCv),
+        takeEvery('applicationSaga/getApplication', getApplication),
         takeEvery('saga/getInfoApplication', getInfoApplication),
     ])
 }
