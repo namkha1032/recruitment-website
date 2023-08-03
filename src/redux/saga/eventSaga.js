@@ -272,13 +272,13 @@ function* putEvent(action) {
 }
 
 
-function* getCandidateId(action) {
+function* getCandidateIdRegisterEvent(action) {
   try {
     const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Candidate")
     // console.log("+++++++++++", response)
     // console.log("+++++++++++", action.payload)
     const response1 = response.data.filter(item => item.userId === action.payload)[0]
-    yield put({ type: "candidateId/setCandidateId", payload: response1.candidateId })
+    yield put({ type: "candidateIdRegister/setCandidateIdRegister", payload: response1.candidateId })
   }
   catch (error) {
     console.log(error)
@@ -320,13 +320,13 @@ function* eventSaga() {
   yield all([
     takeLatest("eventSaga/getEventList", getEventList),
     takeLatest("eventSaga/getEventListWithFilter", getEventListWithFilter),
-    takeEvery("saga/getEvent", getEvent),
-    takeEvery("saga/getAllCandidateOfEvent", getAllCandidateOfEvent),
-    takeEvery("saga/getEventFooter", getEventFooter),
-    takeEvery("saga/postEvent", postEvent),
-    takeEvery("saga/putEvent", putEvent),
-    takeEvery("saga/getCandidateId", getCandidateId),
-    takeEvery("saga/postCandidateJoinEvent", postCandidateJoinEvent)
+    takeEvery("eventSaga/getEvent", getEvent),
+    takeEvery("eventSaga/getAllCandidateOfEvent", getAllCandidateOfEvent),
+    takeEvery("eventSaga/getEventFooter", getEventFooter),
+    takeEvery("eventSaga/postEvent", postEvent),
+    takeEvery("eventSaga/putEvent", putEvent),
+    takeEvery("eventSaga/getCandidateIdRegisterEvent", getCandidateIdRegisterEvent),
+    takeEvery("eventSaga/postCandidateJoinEvent", postCandidateJoinEvent)
     // takeEvery("saga/getEventListId", getEventListId),
   ]);
 }

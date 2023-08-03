@@ -40,7 +40,7 @@ const Page_Event_Id = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch({ type: "saga/getEvent", payload: eventid })
+        dispatch({ type: "eventSaga/getEvent", payload: eventid })
         return () => {
             cleanStore(dispatch)
         }
@@ -49,7 +49,7 @@ const Page_Event_Id = () => {
 
     useEffect(() => {
         if (role === "candidate") {
-            dispatch({ type: "saga/getCandidateId", payload: userId })
+            dispatch({ type: "eventSaga/getCandidateIdRegisterEvent", payload: userId })
         }
     }, [role])
     console.log('ABCDEFGH: ', candidateId)
@@ -71,7 +71,7 @@ const Page_Event_Id = () => {
     // handle events
     const handleRegister = (e) => {
         dispatch({
-            type: "saga/postCandidateJoinEvent",
+            type: "eventSaga/postCandidateJoinEvent",
             payload: {
                 candidateId: candidateId,
                 eventId: event.eventId

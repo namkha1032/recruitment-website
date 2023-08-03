@@ -55,8 +55,8 @@ const Page_Company_Event_Id = () => {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch({ type: "saga/getEvent", payload: eventid })
-        dispatch({ type: "saga/getAllCandidateOfEvent", payload: eventid })
+        dispatch({ type: "eventSaga/getEvent", payload: eventid })
+        dispatch({ type: "eventSaga/getAllCandidateOfEvent", payload: eventid })
         return () => {
             cleanStore(dispatch)
         }
