@@ -21,7 +21,7 @@ function* getDepartment(action) {
 }
 
 function* departmentSaga() {
-  yield all([takeEvery("saga/getDepartment", getDepartment)]);
+  yield all([takeEvery("departmentSaga/getDepartment", getDepartment)]);
 }
 
 export default departmentSaga;

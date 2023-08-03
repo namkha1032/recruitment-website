@@ -6,6 +6,7 @@ import {
   TextField,
   IconButton,
   Tooltip,
+  CircularProgress,
 } from "@mui/material";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import InfoIcon from "@mui/icons-material/Info";
@@ -54,7 +55,7 @@ export default function Page_Company_Event() {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
   const isSm = useMediaQuery(theme.breakpoints.down("md"));
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -226,7 +227,7 @@ export default function Page_Company_Event() {
       renderHeader: () => <span>Date</span>,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
-        return formatDatetime(params.value)
+        return formatDatetime(params.value);
       },
     },
     {
@@ -273,9 +274,11 @@ export default function Page_Company_Event() {
   ]);
 
   return (
-    <Box sx={{
-      marginTop: 3,
-    }}>
+    <Box
+      sx={{
+        marginTop: 3,
+      }}
+    >
       <GigaCard>
         <GigaCardBody>
           <Grid
@@ -485,95 +488,112 @@ export default function Page_Company_Event() {
         </Grid> */}
           </Grid>
 
-          <Box
-            sx={{
-              minHeight: 350,
-            }}
-          >
-            <DataGrid
-              autoHeight
-              loading={loading || rows === null}
-              columns={columns}
-              rows={rows === null ? [] : rows}
+          {rows ? (
+            <Box
               sx={{
-                "&.MuiDataGrid-root": {
-                  borderRadius: 1,
-                },
-                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
-                  outline: "none",
-                },
-                "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
-                  outline: "none",
-                },
-                "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
-                  backgroundColor: "black",
-                  color: "white",
-                  fontWeight: 700,
-                },
-                "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
-                  display: "none",
-                },
-                "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
-                  color: "white",
-                },
-                "&.MuiDataGrid-root .MuiCircularProgress-root": {
-                  color: "black"
-                },
-                "&.MuiDataGrid-root .MuiDataGrid-row": {
-                  cursor: "pointer"
-                },
+                minHeight: 350,
               }}
-              slots={{
-                toolbar: GridToolbar,
-                noRowsOverlay: NoRowsOverlay,
-                noResultsOverlay: NoResultsOverlay,
-              }}
-              slotProps={{
-                toolbar: {
-                  showQuickFilter: true,
-                  quickFilterProps: {
-                    debounceMs: 500,
-                    placeholder: "Search...",
-                    sx: {
-                      width: 300,
-                      marginBottom: 1,
+            >
+              <DataGrid
+                autoHeight
+                loading={loading || rows === null}
+                columns={columns}
+                rows={rows === null ? [] : rows}
+                sx={{
+                  "&.MuiDataGrid-root": {
+                    borderRadius: 1,
+                  },
+                  "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                    outline: "none",
+                  },
+                  "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                    outline: "none",
+                  },
+                  "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
+                    backgroundColor: "black",
+                    color: "white",
+                    fontWeight: 700,
+                  },
+                  "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                    display: "none",
+                  },
+                  "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+                    color: "white",
+                  },
+                  "&.MuiDataGrid-root .MuiCircularProgress-root": {
+                    color: "black",
+                  },
+                  "&.MuiDataGrid-root .MuiDataGrid-row": {
+                    cursor: "pointer",
+                  },
+                }}
+                slots={{
+                  toolbar: GridToolbar,
+                  noRowsOverlay: NoRowsOverlay,
+                  noResultsOverlay: NoResultsOverlay,
+                }}
+                slotProps={{
+                  toolbar: {
+                    showQuickFilter: true,
+                    quickFilterProps: {
+                      debounceMs: 500,
+                      placeholder: "Search...",
+                      sx: {
+                        width: 300,
+                        marginBottom: 1,
+                      },
+                    },
+                    csvOptions: { disableToolbarButton: true },
+                    printOptions: { disableToolbarButton: true },
+                  },
+                }}
+                disableColumnMenu
+                disableColumnFilter
+                disableColumnSelector
+                disableDensitySelector
+                disableRowSelectionOnClick
+                pagination
+                pageSizeOptions={[5, 10, 25, 50, 100]}
+                initialState={{
+                  pagination: {
+                    paginationModel: {
+                      pageSize: 25,
                     },
                   },
-                  csvOptions: { disableToolbarButton: true },
-                  printOptions: { disableToolbarButton: true },
-                },
+                }}
+                getRowId={(row) => row.EventId}
+                onRowClick={(params, event) => {
+                  handleDetailClick(params.row.EventId);
+                }}
+                // onCellClick={(params, event) => {
+                //   if (
+                //     params.field === "EventId" ||
+                //     params.field === "EventName"
+                //   ) {
+                //     handleDetailClick(params.row.EventId);
+                //   }
+                //   // if (params.field === "CreatedByName") {
+                //   //   handleAccountDetailClick(params.row.CreatedById);
+                //   // }
+                // }}
+              />
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: 50,
               }}
-              disableColumnMenu
-              disableColumnFilter
-              disableColumnSelector
-              disableDensitySelector
-              disableRowSelectionOnClick
-              pagination
-              pageSizeOptions={[5, 10, 25, 50, 100]}
-              initialState={{
-                pagination: {
-                  paginationModel: {
-                    pageSize: 25,
-                  },
-                },
-              }}
-              getRowId={(row) => row.EventId}
-              onRowClick={(params, event) => {
-                handleDetailClick(params.row.EventId);
-              }}
-              // onCellClick={(params, event) => {
-              //   if (
-              //     params.field === "EventId" ||
-              //     params.field === "EventName"
-              //   ) {
-              //     handleDetailClick(params.row.EventId);
-              //   }
-              //   // if (params.field === "CreatedByName") {
-              //   //   handleAccountDetailClick(params.row.CreatedById);
-              //   // }
-              // }}
-            />
-          </Box>
+            >
+              <CircularProgress
+                sx={{
+                  color: "black",
+                }}
+              />
+            </Box>
+          )}
         </GigaCardBody>
       </GigaCard>
 

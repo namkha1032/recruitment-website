@@ -1,5 +1,11 @@
 import { useMemo, useState, useEffect } from "react";
-import { Chip, Autocomplete, TextField, IconButton } from "@mui/material";
+import {
+  Chip,
+  Autocomplete,
+  TextField,
+  IconButton,
+  CircularProgress,
+} from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import InfoIcon from "@mui/icons-material/Info";
@@ -86,7 +92,7 @@ export default function Page_Company_Interview() {
   useEffect(() => {
     dispatch({ type: "interviewSaga/getAllInterview" });
     dispatch({ type: "positionSaga/getPositionList" });
-    dispatch({ type: "saga/getDepartment" });
+    dispatch({ type: "departmentSaga/getDepartment" });
     return () => {
       cleanStore(dispatch);
     };
@@ -147,7 +153,7 @@ export default function Page_Company_Interview() {
     setPositionChoose(null);
     setDepartmentChoose(value);
     dispatch({
-      type: "saga/getInterviewWithFilter",
+      type: "interviewSaga/getInterviewWithFilter",
       payload: {
         departmentId: value ? value.departmentId : null,
         // positionId: positionChoose && value !== null
@@ -170,7 +176,7 @@ export default function Page_Company_Interview() {
   function handleChoosePosition(value) {
     setPositionChoose(value);
     dispatch({
-      type: "saga/getInterviewWithFilter",
+      type: "interviewSaga/getInterviewWithFilter",
       payload: {
         departmentId: departmentChoose ? departmentChoose.departmentId : null,
         positionId: value ? value.PositionId : null,
@@ -186,7 +192,7 @@ export default function Page_Company_Interview() {
     }
     setStatusChoose(value);
     dispatch({
-      type: "saga/getInterviewWithFilter",
+      type: "interviewSaga/getInterviewWithFilter",
       payload: {
         departmentId: departmentChoose ? departmentChoose.departmentId : null,
         positionId: positionChoose ? positionChoose.PositionId : null,
@@ -200,7 +206,7 @@ export default function Page_Company_Interview() {
   function handleChooseResult(value) {
     setPriorityChoose(value);
     dispatch({
-      type: "saga/getInterviewWithFilter",
+      type: "interviewSaga/getInterviewWithFilter",
       payload: {
         departmentId: departmentChoose ? departmentChoose.departmentId : null,
         positionId: positionChoose ? positionChoose.PositionId : null,
@@ -307,7 +313,7 @@ export default function Page_Company_Interview() {
       flex: 0.4,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
-        return formatDate(params.value)
+        return formatDate(params.value);
       },
     },
     {
@@ -741,89 +747,106 @@ export default function Page_Company_Interview() {
         </Grid> */}
           </Grid>
 
-          <Box
-            sx={{
-              minHeight: 350,
-            }}
-          >
-            <DataGrid
-              autoHeight
-              columns={columns}
-              rows={rows === null ? [] : rows}
-              loading={loading || rows === null}
+          {rows ? (
+            <Box
               sx={{
-                "&.MuiDataGrid-root": {
-                  borderRadius: 1,
-                },
-                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
-                  outline: "none",
-                },
-                "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
-                  outline: "none",
-                },
-                "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
-                  // backgroundColor: "#1565C0",
-                  backgroundColor: "black",
-                  color: "white",
-                  fontWeight: 700,
-                },
-                "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
-                  display: "none",
-                },
-                "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
-                  color: "white",
-                },
-                "&.MuiDataGrid-root .MuiCircularProgress-root": {
-                  color: "black",
-                },
+                minHeight: 350,
               }}
-              slots={{
-                toolbar: GridToolbar,
-                noRowsOverlay: NoRowsOverlay,
-                noResultsOverlay: NoResultsOverlay,
-              }}
-              slotProps={{
-                toolbar: {
-                  showQuickFilter: true,
-                  quickFilterProps: {
-                    debounceMs: 500,
-                    placeholder: "Search...",
-                    sx: {
-                      width: 300,
-                      marginBottom: 1,
+            >
+              <DataGrid
+                autoHeight
+                columns={columns}
+                rows={rows === null ? [] : rows}
+                loading={loading || rows === null}
+                sx={{
+                  "&.MuiDataGrid-root": {
+                    borderRadius: 1,
+                  },
+                  "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                    outline: "none",
+                  },
+                  "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                    outline: "none",
+                  },
+                  "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
+                    // backgroundColor: "#1565C0",
+                    backgroundColor: "black",
+                    color: "white",
+                    fontWeight: 700,
+                  },
+                  "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                    display: "none",
+                  },
+                  "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+                    color: "white",
+                  },
+                  "&.MuiDataGrid-root .MuiCircularProgress-root": {
+                    color: "black",
+                  },
+                }}
+                slots={{
+                  toolbar: GridToolbar,
+                  noRowsOverlay: NoRowsOverlay,
+                  noResultsOverlay: NoResultsOverlay,
+                }}
+                slotProps={{
+                  toolbar: {
+                    showQuickFilter: true,
+                    quickFilterProps: {
+                      debounceMs: 500,
+                      placeholder: "Search...",
+                      sx: {
+                        width: 300,
+                        marginBottom: 1,
+                      },
+                    },
+                    csvOptions: { disableToolbarButton: true },
+                    printOptions: { disableToolbarButton: true },
+                  },
+                }}
+                disableColumnMenu
+                disableColumnFilter
+                disableColumnSelector
+                disableDensitySelector
+                disableRowSelectionOnClick
+                pagination
+                pageSizeOptions={[5, 10, 25, 50, 100]}
+                initialState={{
+                  pagination: {
+                    paginationModel: {
+                      pageSize: 25,
                     },
                   },
-                  csvOptions: { disableToolbarButton: true },
-                  printOptions: { disableToolbarButton: true },
-                },
+                }}
+                getRowId={(row) => row.InterviewId}
+                onCellClick={(params, event) => {
+                  if (params.field === "InterviewId") {
+                    handleDetailClick(params.row.InterviewId);
+                  }
+                  if (params.field === "CandidateName") {
+                    handleProfileDetailClick(params.row.CandidateId);
+                  }
+                  if (params.field === "InterviewerName")
+                    handleProfileDetailClick(params.row.InterviewerId);
+                }}
+              />
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: 50,
               }}
-              disableColumnMenu
-              disableColumnFilter
-              disableColumnSelector
-              disableDensitySelector
-              disableRowSelectionOnClick
-              pagination
-              pageSizeOptions={[5, 10, 25, 50, 100]}
-              initialState={{
-                pagination: {
-                  paginationModel: {
-                    pageSize: 25,
-                  },
-                },
-              }}
-              getRowId={(row) => row.InterviewId}
-              onCellClick={(params, event) => {
-                if (params.field === "InterviewId") {
-                  handleDetailClick(params.row.InterviewId);
-                }
-                if (params.field === "CandidateName") {
-                  handleProfileDetailClick(params.row.CandidateId);
-                }
-                if (params.field === "InterviewerName")
-                  handleProfileDetailClick(params.row.InterviewerId);
-              }}
-            />
-          </Box>
+            >
+              <CircularProgress
+                sx={{
+                  color: "black",
+                }}
+              />
+            </Box>
+          )}
         </GigaCardBody>
       </GigaCard>
     </Box>

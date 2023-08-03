@@ -1,0 +1,13 @@
+[
+    {
+        "InterviewId": 2,
+        "CandidateId": 2,
+        "CandidateName": "Nguyễn Văn B",
+        "InterviewerId": 2,
+        "InterviewerName": "Trần Thị Y",
+        "ApplyDate": "21/07/2023",
+        "InterviewDate": "25/07/2023",
+        "Status": "Đang diễn ra",
+        "Score": 9.5
+    }
+]

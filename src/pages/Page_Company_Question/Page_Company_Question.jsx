@@ -1,5 +1,10 @@
 import { useMemo, useState, useEffect, useRef } from "react";
-import { Button, Autocomplete, TextField } from "@mui/material";
+import {
+  Button,
+  Autocomplete,
+  TextField,
+  CircularProgress,
+} from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -78,7 +83,7 @@ export default function Page_Company_Question() {
   useEffect(() => {
     dispatch({ type: "questionSaga/getAllQuestion" });
     dispatch({ type: "skillSaga/getSkill" });
-    dispatch({ type: "saga/getLanguage" });
+    dispatch({ type: "languageSaga/getLanguage" });
   }, []);
 
   const rows = useSelector((state) => state.questionList);
@@ -288,7 +293,7 @@ export default function Page_Company_Question() {
   //  typeId: null, nếu category = "Soft Skill"
   //  typeName: null nếu category = "Soft Skill"
   // }
-  console.log("HELLO: ", valueChoose, skillChoose, languageChoose)
+  console.log("HELLO: ", valueChoose, skillChoose, languageChoose);
   function handleSubmitQuestion(value) {
     // successAlert("Create question");
     dispatch({
@@ -956,12 +961,29 @@ export default function Page_Company_Question() {
         </Grid> */}
           </Grid>
 
-          <QuestionDataGrid
-            columns={columns}
-            rows={rows}
-            loading={loading}
-            handleModalOpen={handleModalOpen}
-          />
+          {rows ? (
+            <QuestionDataGrid
+              columns={columns}
+              rows={rows}
+              loading={loading}
+              handleModalOpen={handleModalOpen}
+            />
+          ) : (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: 50,
+              }}
+            >
+              <CircularProgress
+                sx={{
+                  color: "black",
+                }}
+              />
+            </Box>
+          )}
 
           <QuestionFormModal
             key={addModalStatus}

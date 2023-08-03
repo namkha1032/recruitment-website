@@ -1,20 +1,20 @@
 import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 import host from "../host";
-import { filterIsDeleted } from "../../utils/filterIsDeleted";
 
-function* getLanguage(action) {
+function* getReport(action) {
+  //http://leetun2k2-001-site1.gtempurl.com/api/Skill
+  //http://localhost:3000/data/skillList.json
   try {
     const response = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Language"
+      "https://leetun2k2-001-site1.gtempurl.com/api/Skill"
     );
     // const response = yield call(
     //   axios.get,
-    //   `${host.name}/data/languageList.json`
+    //   `${host.name}/data/skillList.json`
     // );
-    const data = filterIsDeleted(response.data);
-    yield put({ type: "language/setLanguage", payload: data });
+    yield put({ type: "skill/setSkill", payload: response.data });
     // yield put({
     //   type: "error/setError",
     //   payload: {
@@ -27,14 +27,14 @@ function* getLanguage(action) {
     //   type: "error/setError",
     //   payload: {
     //     status: "yes",
-    //     message: "message" in error ? "Language - " + error.message : error.response.data,
+    //     message: "message" in error ? "Skill - " + error.message : error.response.data,
     //   },
     // });
   }
 }
 
-function* languageSaga() {
-  yield all([takeEvery("languageSaga/getLanguage", getLanguage)]);
+function* skillSaga() {
+  yield all([takeEvery("reportSaga/getReport", getReport)]);
 }
 
-export default languageSaga;
+export default skillSaga;

@@ -23,7 +23,7 @@ function CVForm() {
   const dispatch = useDispatch();
   // fetch Data
   useEffect(() => {
-    dispatch({ type: "saga/getLanguage" });
+    dispatch({ type: "languageSaga/getLanguage" });
     dispatch({ type: "skillSaga/getSkill" });
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });
