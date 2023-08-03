@@ -37,6 +37,8 @@ const Page_Company_Account_Create = () => {
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('Recruiter');
     const [departmentSelected, setDepartment] = useState('');
+    const [alertType, setAlertType] = useState("success");
+
 
     const department = useSelector(state => state.admin.department)
     const newError = useSelector((state) => state.error);
@@ -55,7 +57,7 @@ const Page_Company_Account_Create = () => {
     useEffect(() => {
         console.log("error toast start", newError)
         if (newError.status=="no"){
-            setErrorMessage("Account OK!")
+            setErrorMessage("Account created successfully. Check your account list for updates")
             setErrorSnackbar(true);
             setTimeout(() => {
                 setErrorSnackbar(false);
@@ -66,9 +68,11 @@ const Page_Company_Account_Create = () => {
             },3000)
         }
         if (newError.status=="yes"){
-            setErrorMessage(newError.message)
+            setErrorMessage("One of your inputs are wrong. Make sure you have at least 1 special, 1 capital and 1 alphanumerical character in your password")
+            setAlertType("error")
             setErrorSnackbar(true);
             setTimeout(() => {
+                setAlertType("success")
                 setErrorSnackbar(false);
                 dispatch({type: "error/setError",payload: {
                         status: "idle",
@@ -162,7 +166,7 @@ const Page_Company_Account_Create = () => {
                 onClose={() => setErrorSnackbar(false)}
                 anchorOrigin={{vertical: "top", horizontal: "center"}}
             >
-                <Alert severity="error" onClose={() => setErrorSnackbar(false)}>
+                <Alert severity={alertType} onClose={() => setErrorSnackbar(false)}>
                     {/* {newError.message} */}
                     {errorMessage}
                 </Alert>

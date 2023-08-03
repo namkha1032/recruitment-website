@@ -146,7 +146,7 @@ function CandidateTable(props) {
     }
 
     const columns = [
-        {field: "candidateId", headerName: isSm ? "Candidate ID" : "cID", flex: isSm ? 0.5 : 0.3},
+        // {field: "candidateId", headerName: isSm ? "Candidate ID" : "cID", flex: isSm ? 0.5 : 0.3},
         {
             field: "userName",
             headerName: "Username",
@@ -319,7 +319,7 @@ function InterviewerTable(props) {
     // }
 
     const columns = [
-        {field: "interviewerId", headerName: "Interviewer ID", flex: 0.4},
+        // {field: "interviewerId", headerName: "Interviewer ID", flex: 0.4},
         {
             field: "userName",
             headerName: "Username",
@@ -494,7 +494,7 @@ function RecruiterTable(props) {
     }
 
     const columns = [
-        {field: "recruiterId", headerName: "Recruiter ID", flex: 0.4},
+        // {field: "recruiterId", headerName: "Recruiter ID", flex: 0.4},
         {
             field: "userName",
             headerName: "Username",

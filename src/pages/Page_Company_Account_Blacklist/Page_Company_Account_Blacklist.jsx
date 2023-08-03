@@ -13,58 +13,64 @@ import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-const RenderCheckAccount = ({params}) => {
+const RenderCheckAccount = ({ params }) => {
     const [open, setOpen] = React.useState(false);
+
     const handleGoToAccount = () => {
-        const candidateId = params.row.candidateId;
-        window.location.href = `/profile/${candidateId}`;
-        console.log(candidateId)
+        const userId = params.row.userId;
+        window.location.href = `/profile/${userId}`;
         setOpen(false);
     };
 
-// rest of the component code
-
     return (
         <strong>
-            <IconButton color="#000000" aria-label="Show Status" size="large"
-                        onClick={() => {
-                            setOpen(true)
-                        }}>
-                <FindInPageIcon></FindInPageIcon>
-            </IconButton>
-            <Dialog open={open}
-                    onClose={() => {
-                        setOpen(false)
-                    }}
-                    aria-labelledby="accountinfo"
-                    aria-describedby="accountdetails"
-                    sx={{
-                        '& .MuiButton-text': {
-                            color: 'black', // set the button text color to black
-                        },
-                    }}
+            <IconButton
+                color="#000000"
+                aria-label="Show Status"
+                size="large"
+                onClick={() => {
+                    setOpen(true);
+                }}
             >
-                <DialogTitle id="alert-dialog-title">
-                    {"Account info "}
-                </DialogTitle>
+                <FindInPageIcon />
+            </IconButton>
+            <Dialog
+                open={open}
+                onClose={() => {
+                    setOpen(false);
+                }}
+                aria-labelledby="accountinfo"
+                aria-describedby="accountdetails"
+                sx={{
+                    '& .MuiButton-text': {
+                        color: 'black', // set the button text color to black
+                    },
+                }}
+            >
+                <DialogTitle id="alert-dialog-title">Account info</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Blacklist ID: {params.row.blackListId}<br/>
-                        Candidate ID: {params.row.candidateId}<br/>
-                        User ID: {params.row.userId}
+                        Blacklist ID: {params.row.blackListId}
+                        <br />
+                        Candidate ID: {params.row.candidateId}
+                        <br />
+                        User ID: {params.row.userId || 'No ID'}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleGoToAccount}>Go To Account</Button>
-                    <Button onClick={() => {
-                        setOpen(false)
-                    }}>Close</Button>
+                    <Button
+                        onClick={() => {
+                            setOpen(false);
+                        }}
+                    >
+                        Close
+                    </Button>
                 </DialogActions>
             </Dialog>
         </strong>
-    )
-}
-const Page_Company_Account_Blacklist = () => {
+    );
+};const Page_Company_Account_Blacklist = () => {
     const theme = useTheme();
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
@@ -101,7 +107,7 @@ const Page_Company_Account_Blacklist = () => {
             field: 'fullName',
             headerName: 'Full Name',
             flex: 0.3,
-            valueGetter: (params) => params.row.candidate?.user?.fullName || "John Vtuber"
+            valueGetter: (params) => params.row.candidate?.user?.fullName || "John Doe"
         },
         {
             field: 'userName',
@@ -127,7 +133,8 @@ const Page_Company_Account_Blacklist = () => {
     ];
     const blacklistWithNames = blacklist.map((item) => {
         const candidate = candidates.find((c) => c.candidateId === item.candidateId);
-        return {...item, candidate};
+        const userId = candidate ? candidate.userId : ""; // Check if candidate exists before extracting the userId field
+        return { ...item, candidate, userId };
     });
 
     return (

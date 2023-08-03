@@ -3,14 +3,17 @@ import axios from 'axios';
 
 function* doGetCandidate(action) {
     try {
-        // let userlocal = JSON.parse(window.localStorage.getItem("user"))
-        // // console.log("lololol")
-        // let token = `Bearer ${userlocal.token}`
-        // // console.log(token)
-        // const config = {
-        //     headers: { Authorization: token },
-        // }
-        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`);
+        let userlocal = window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")) : JSON.parse(window.sessionStorage.getItem("user"))
+        console.log(userlocal)
+        let token = `Bearer ${userlocal.token}`
+        console.log(token)
+        const config = {
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        };
+        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`,config);
         // console.log("data: ",res.data)
         yield put({type: "admin/getCandidate", payload: res.data})
         // console.log("data: ", res.data)
@@ -21,14 +24,17 @@ function* doGetCandidate(action) {
 
 function* doGetRecruiter(action) {
     try {
-        // let userlocal = JSON.parse(window.localStorage.getItem("user"))
-        // console.log(userlocal)
-        // let token = `Bearer ${userlocal.token}`
-        // console.log(token)
-        // const config = {
-        //     headers: { Authorization: token },
-        // }
-        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Recruiter`);
+        let userlocal = window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")) : JSON.parse(window.sessionStorage.getItem("user"))
+        console.log(userlocal)
+        let token = `Bearer ${userlocal.token}`
+        console.log(token)
+        const config = {
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        };
+        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Recruiter`,config);
         yield put({type: "admin/getRecruiter", payload: res.data})
     } catch (error) {
         // yield put({
@@ -44,14 +50,17 @@ function* doGetRecruiter(action) {
 
 function* doGetInterviewer(action) {
     try {
-        // let userlocal = JSON.parse(window.localStorage.getItem("user"))
-        // console.log(userlocal)
-        // let token = `Bearer ${userlocal.token}`
-        // console.log(token)
-        // const config = {
-        //     headers: { Authorization: token },
-        // }
-        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interviewer`);
+        let userlocal = window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")) : JSON.parse(window.sessionStorage.getItem("user"))
+        console.log(userlocal)
+        let token = `Bearer ${userlocal.token}`
+        console.log(token)
+        const config = {
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        };
+        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interviewer`,config);
         yield put({type: "admin/getInterviewer", payload: res.data})
     } catch (error) {
         // yield put({
@@ -67,14 +76,17 @@ function* doGetInterviewer(action) {
 
 function* doGetBlacklist(action) {
     try {
-        // let userlocal = JSON.parse(window.localStorage.getItem("user"))
-        // console.log(userlocal)
-        // let token = `Bearer ${userlocal.token}`
-        // console.log(token)
-        // const config = {
-        //     headers: { Authorization: token },
-        // }
-        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Blacklist`);
+        let userlocal = window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")) : JSON.parse(window.sessionStorage.getItem("user"))
+        console.log(userlocal)
+        let token = `Bearer ${userlocal.token}`
+        console.log(token)
+        const config = {
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        };
+        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Blacklist`,config);
         yield put({type: "admin/getBlacklist", payload: res.data})
     } catch (error) {
         // yield put({
@@ -90,14 +102,17 @@ function* doGetBlacklist(action) {
 
 function* doGetDepartment(action) {
     try {
-        // let userlocal = JSON.parse(window.localStorage.getItem("user"))
-        // console.log(userlocal)
-        // let token = `Bearer ${userlocal.token}`
-        // console.log(token)
-        // const config = {
-        //     headers: { Authorization: token },
-        // }
-        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Department`);
+        let userlocal = window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")) : JSON.parse(window.sessionStorage.getItem("user"))
+        console.log(userlocal)
+        let token = `Bearer ${userlocal.token}`
+        console.log(token)
+        const config = {
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        };
+        const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Department`,config);
         yield put({type: "admin/getDepartments", payload: res.data})
     } catch (error) {
         // yield put({
@@ -113,13 +128,16 @@ function* doGetDepartment(action) {
 
 function* doAddToBlacklist(action) {
     try {
-        // let userlocal = JSON.parse(window.localStorage.getItem("user"))
-        // console.log(userlocal)
-        // let token = `Bearer ${userlocal.token}`
-        // console.log(token)
-        // const config = {
-        //     headers: { Authorization: token },
-        // }
+        let userlocal = window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")) : JSON.parse(window.sessionStorage.getItem("user"))
+        console.log(userlocal)
+        let token = `Bearer ${userlocal.token}`
+        console.log(token)
+        const config = {
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        };
         const {
             candidateId,
             reason,
@@ -131,9 +149,7 @@ function* doAddToBlacklist(action) {
             reason,
             dateTime,
         };
-        const res = yield call(axios.post, 'https://leetun2k2-001-site1.gtempurl.com/api/BlackList', data, {
-            headers: {'Content-Type': 'application/json'}
-        });
+        const res = yield call(axios.post, 'https://leetun2k2-001-site1.gtempurl.com/api/BlackList', data, config);
     } catch (error) {
         console.log(error);
     }
