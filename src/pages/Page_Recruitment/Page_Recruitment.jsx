@@ -29,6 +29,7 @@ import AppPagination from "../../components/AppPagination";
 import {
   Chip,
   FormControl,
+  IconButton,
   InputLabel,
   MenuItem,
   Paper,
@@ -36,6 +37,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import { GridDeleteIcon } from "@mui/x-data-grid";
 
 const cards1 = [1, 2, 3, 4, 5, 6];
 const cards2 = [1, 2, 3];
@@ -83,8 +85,8 @@ const Page_Recruitment = () => {
     navigate(`/recruitment/${id}`);
   };
   useEffect(() => {
-    dispatch({ type: "saga/getPositionList" });
-    dispatch({ type: "saga/getRequirement" });
+    dispatch({ type: "positionSaga/getPositionList" });
+    dispatch({ type: "recruitmentSaga/getRequirement" });
     dispatch({ type: "saga/getSkill" });
   }, []);
   const handleCloseSelect = () => {
@@ -137,11 +139,11 @@ const Page_Recruitment = () => {
                   height: "300px",
                   borderRadius: "10px",
                   boxShadow: 5,
-                  position:'relative' 
+                  position: 'relative'
                 }}
-        
+
               >
-                <Box sx={{position:'relative',top:'150px', left:'30px'}}>
+                <Box sx={{ position: 'relative', top: '150px', left: '30px' }}>
                   <Box >
 
                     <Typography
@@ -149,7 +151,7 @@ const Page_Recruitment = () => {
                       align="left"
                       color="#EEEEEE"
                       fontFamily="Arial"
-                      sx={{ }}
+                      sx={{}}
                     >
                       Recruitment
                     </Typography>
@@ -165,7 +167,7 @@ const Page_Recruitment = () => {
                       fontFamily="Arial"
                     >
                       Thông tin tuyển dụng được cập nhật liên tục
-                     
+
                     </Typography>
 
                   </Box>
@@ -173,7 +175,7 @@ const Page_Recruitment = () => {
               </Box>
             </Box>
           </Grid>
-         
+
 
 
           <Grid item md={9} xs={12}>
@@ -205,7 +207,10 @@ const Page_Recruitment = () => {
                             ))}
                           </Select>
                         </FormControl>
-                        <Button variant="contained" sx={{ display: block, ml: 2, p: 1 }} onClick={handleCloseSelect} ><Close fontSize="medium" sx={{ display: 'flex', ml: '12px' }} /></Button>
+                        {/* <Button variant="contained" sx={{ display: block, ml: 2, p: 1 }} onClick={handleCloseSelect} ><Close fontSize="medium" sx={{ display: 'flex', ml: '12px' }} /></Button> */}
+                        <IconButton aria-label="delete" sx={{ display: block, ml: 2, p: 1 }}  onClick={handleCloseSelect}>
+                          <GridDeleteIcon  />
+                        </IconButton>
                       </Box>
                     }
 
@@ -320,7 +325,7 @@ const Page_Recruitment = () => {
                                     variant="contained"
                                     size="small"
                                   >
-                                    Chi tiết
+                                    View
                                   </Button>
                                 </Box>
                               </Grid>
