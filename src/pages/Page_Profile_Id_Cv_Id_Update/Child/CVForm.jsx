@@ -8,7 +8,8 @@ import cleanStore from "../../../utils/cleanStore";
 import * as React from "react";
 import { Box } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
-import Snackbar from "@mui/material/Snackbar"
+import Snackbar from "@mui/material/Snackbar";
+import axios from "axios";
 // import ViewCv from "./ViewCv";
 //http://localhost:3000/profile/1/cv/d1c51600-6272-4c78-9b50-36af9d403a28/update
 const SkillAlert = React.forwardRef(function Alert(props, ref) {
@@ -18,17 +19,18 @@ const CertAlert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 function CVForm(prop) {
-  const profileid=prop.profileid 
-  const cvid=prop.cvid
-  console.log(cvid)
+  const profileid = prop.profileid;
+  const cvid = prop.cvid;
+  console.log(cvid);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // fetch Data
   useEffect(() => {
-    dispatch({ type: "cvInforsaga/getCvinfor", 
-    // payload:cvid 
-    payload:"d1c51600-6272-4c78-9b50-36af9d403a28"
-  });
+    dispatch({
+      type: "cvInforsaga/getCvinfor",
+      // payload:cvid
+      payload: "d1c51600-6272-4c78-9b50-36af9d403a28",
+    });
     dispatch({ type: "saga/getLanguage" });
     dispatch({ type: "skillSaga/getSkill" });
     return () => {
@@ -120,11 +122,13 @@ function CVForm(prop) {
     if (cvSkill) {
       setSkills(cvSkill ? (cvSkill !== [] ? cvSkill : []) : []);
       setBaseSkills(cvSkill ? (cvSkill !== [] ? cvSkill : []) : []);
-      setSkillOption(skillData.filter(
-        (item1) => !cvSkill.some((item2) => item1.skillId === item2.skillId)
-      ))
+      setSkillOption(
+        skillData.filter(
+          (item1) => !cvSkill.some((item2) => item1.skillId === item2.skillId)
+        )
+      );
     }
-  }, [cvSkill,skillData]);
+  }, [cvSkill, skillData]);
 
   // CERTIFICATE COMPS
   const [Cid, setCid] = useState(certs.length > 0 ? certs.length : 0);
@@ -139,8 +143,13 @@ function CVForm(prop) {
   const [sname, setSName] = useState("");
   const [skillId, setSkillId] = useState(null);
   const [Sid, setSid] = useState(skills.length > 0 ? skills.length : 0);
-  const [SExp, setSExp] = useState("");
+  const [SExp, setSExp] = useState(0);
   const [sInputValue, setSInputValue] = useState("");
+  function handleSExp(event) {
+    let midleScore =
+      parseFloat(event.target.value) >= 0 ? parseFloat(event.target.value) : 0;
+    setSExp(midleScore);
+  }
   // Language comps
   const [lId, setLId] = useState(languages.length > 0 ? languages.length : 0);
   const [languageId, setLanguageId] = useState(null);
@@ -160,21 +169,7 @@ function CVForm(prop) {
   function handleExp(e) {
     setExperience(e.target.value);
   }
-  // function handleSkillAdd() {
-  //   console.log(sname);
-  //   console.log(SExp);
-  //   const newSkill = {
-  //     id: Sid,
-  //     name: sname,
-  //     skillExperienc: SExp,
-  //   };
-  //   if (sname !== "") {
-  //     setSkills([...skills, newSkill]);
-  //     setSName("");
-  //     setSExp("");
-  //     setSid((prev) => (prev += 1));
-  //   }
-  // }
+
   function handleSkillAdd2() {
     console.log(sInputValue);
     console.log(languageName);
@@ -185,7 +180,7 @@ function CVForm(prop) {
     );
     console.log(arr);
     if (arr[0] === undefined) {
-      handleSetSkillOpen()
+      handleSetSkillOpen();
       setSkillId(null);
       setSName("");
       setSInputValue("");
@@ -199,7 +194,7 @@ function CVForm(prop) {
       console.log(newSkill);
       setSkills([...skills, newSkill]);
       setAddSkills([...addSkills, newSkill]);
-      setSkillOption(skillOption.filter((prop)=>prop.skillId!==skillId))
+      setSkillOption(skillOption.filter((prop) => prop.skillId !== skillId));
       setSkillId(null);
       setSName("");
       setSInputValue("");
@@ -208,9 +203,11 @@ function CVForm(prop) {
     }
   }
   function handleSkilltDelete(id) {
-    let delReq = skills.filter((component) => component.cvSkillsId === id)
-    let newSkill = skillData.filter((prop)=>prop.skillId===delReq[0].skillId)
-    setSkillOption([...skillOption, newSkill[0]])
+    let delReq = skills.filter((component) => component.cvSkillsId === id);
+    let newSkill = skillData.filter(
+      (prop) => prop.skillId === delReq[0].skillId
+    );
+    setSkillOption([...skillOption, newSkill[0]]);
     setSkills(skills.filter((component) => component.cvSkillsId !== id));
     let delskill = baseSkills.filter((prop) => prop.cvSkillsId === id);
     console.log(delskill);
@@ -228,19 +225,19 @@ function CVForm(prop) {
   function handleCertificateAdd() {
     console.log(startDate);
     if (Cname !== "" && organize !== "" && startDate !== null && link !== "") {
-    const newCert = {
-      certificateId: Cid,
-      certificateName: Cname,
-      description: detail,
-      organizationName: organize,
-      dateEarned: startDate.toJSON(),
-      expirationDate: endDate !== null ? endDate.toJSON() : endDate,
-      link: link,
-      cvid: cvid,
-      isDeleted:false,
-    };
-    console.log(newCert);
-    
+      const newCert = {
+        certificateId: Cid,
+        certificateName: Cname,
+        description: detail,
+        organizationName: organize,
+        dateEarned: startDate.toJSON(),
+        expirationDate: endDate !== null ? endDate.toJSON() : endDate,
+        link: link,
+        cvid: cvid,
+        isDeleted: false,
+      };
+      console.log(newCert);
+
       setCerts([...certs, newCert]);
       setAddCerts([...addCerts, newCert]);
       setCName("");
@@ -321,35 +318,17 @@ function CVForm(prop) {
     }
     setSkillOpen(false);
   };
+  console.log(pdf)
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-    //   // setLoading(true);
-    //   // const formData = new FormData();
-    //   // formData.append("Cvid", "d1c51600-6272-4c78-9b50-36af9d403a28");
-    //   // formData.append("CandidateId", "00000000-0000-0000-0000-000000000001");
-    //   // formData.append("Experience", experience);
-    //   // formData.append("CvPdf", null);
-    //   // formData.append("CvFile", pdf);
-    //   // formData.append("CvName", cvtitle);
-    //   // formData.append("Introduction", intro);
-    //   // formData.append("Education", education);
-    //   // formData.append("IsDeleted", false);
-
-    //   // const response = await axios.put(
-    //   //   `https://leetun2k2-001-site1.gtempurl.com/api/Cv/d1c51600-6272-4c78-9b50-36af9d403a28`,
-    //   //   formData
-    //   // );
-    //   // console.log("FINISHED!!!!!!!!!!!!");
-    //   // console.log(response);
       dispatch({
         type: "updateCvsaga/getUpdateCv",
         payload: {
-          // Cvid: cvid,
-          Cvid: "d1c51600-6272-4c78-9b50-36af9d403a28",
+          Cvid: cvid,
           CvName: cvtitle,
           Introduction: intro,
-          Education:education,
+          Education: education,
           Experience: experience,
           Skills: skills,
           delSkills: delSkills,
@@ -359,114 +338,122 @@ function CVForm(prop) {
           addCerts: addCerts,
         },
       });
+      
+      const formData = new FormData();
+      console.log(formData)
+      formData.append("File", pdf);
+      if (pdf !== null) {
+        const response3 = await axios.post(
+          `https://leetun2k2-001-site1.gtempurl.com/api/Cv/UploadCvPdf/${cvid}`,
+          formData
+        );
+        console.log(response3);
+      }
       setLoading(false);
+      cleanStore(dispatch);
+      navigate(`/profile/${profileid}/cv/${cvid}`);
     } catch (error) {
       console.log(error);
     }
-    cleanStore(dispatch);
-    navigate(`/profile/:profileid/cv/${cvid}`);
   }
   //COMPS
   return (
     <>
-    <Box >
-      <Grid container spacing={0} justifyContent="center" alignItems="center">
-        <Grid item xs={12}>
-          <CreateCv
-            //////////Skill////////
-            skillOption={skillOption}
-            setSkillId={setSkillId}
-            intro={intro}
-            setIntro={setIntro}
-            education={education}
-            setEducation={setEducation}
-            experience={experience}
-            setExperience={setExperience}
-            certs={certs}
-            setCerts={setCerts}
-            skills={skills}
-            setSkills={setSkills}
-            Cid={Cid}
-            setCid={setCid}
-            Cname={Cname}
-            setCName={setCName}
-            organize={organize}
-            setOrganize={setOrganize}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={endDate}
-            setEndDate={setEndDate}
-            detail={detail}
-            setDetail={setDetail}
-            link={link}
-            setLink={setLink}
-            open={open}
-            setOpen={setOpen}
-            name={sname}
-            setName={setSName}
-            Sid={Sid}
-            setSid={setSid}
-            SExp={SExp}
-            setSExp={setSExp}
-            sInputValue={sInputValue}
-            setSInputValue={setSInputValue}
-            handleIntro={handleIntro}
-            handleExp={handleExp}
-            handleSkillAdd={handleSkillAdd2}
-            handleSkilltDelete={handleSkilltDelete}
-            handleCertificateAdd={handleCertificateAdd}
-            handleCertDelete={handleCertDelete}
-            handleSetOpen={handleSetOpen}
-            handleClose={handleClose}
-            handleSubmit={handleSubmit}
-            languages={languages}
-            handleLanguageDelete={handleLanguageDelete}
-            lInputValue={lInputValue}
-            setLInputValue={setLInputValue}
-            setLanguageName={setLanguageName}
-            languageName={languageName}
-            setLanguageId={setLanguageId}
-            handleLanguageAdd={handleLanguageAdd}
-            cvtitle={cvtitle}
-            handleTitle={handleTitle}
-            skillData={skillData}
-            languageData={languageData}
-            // cvpfd
-            pdfFile={pdfFile}
-            setPdfFile={setPdfFile}
-            viewPdf={viewPdf}
-            setViewPdf={setViewPdf}
-            setPdf={setPdf}
-          />
+      <Box>
+        <Grid container spacing={0} justifyContent="center" alignItems="center">
+          <Grid item xs={12}>
+            <CreateCv
+              //////////Skill////////
+              handleSExp={handleSExp}
+              skillOption={skillOption}
+              setSkillId={setSkillId}
+              intro={intro}
+              setIntro={setIntro}
+              education={education}
+              setEducation={setEducation}
+              experience={experience}
+              setExperience={setExperience}
+              certs={certs}
+              setCerts={setCerts}
+              skills={skills}
+              setSkills={setSkills}
+              Cid={Cid}
+              setCid={setCid}
+              Cname={Cname}
+              setCName={setCName}
+              organize={organize}
+              setOrganize={setOrganize}
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+              detail={detail}
+              setDetail={setDetail}
+              link={link}
+              setLink={setLink}
+              open={open}
+              setOpen={setOpen}
+              name={sname}
+              setName={setSName}
+              Sid={Sid}
+              setSid={setSid}
+              SExp={SExp}
+              setSExp={setSExp}
+              sInputValue={sInputValue}
+              setSInputValue={setSInputValue}
+              handleIntro={handleIntro}
+              handleExp={handleExp}
+              handleSkillAdd={handleSkillAdd2}
+              handleSkilltDelete={handleSkilltDelete}
+              handleCertificateAdd={handleCertificateAdd}
+              handleCertDelete={handleCertDelete}
+              handleSetOpen={handleSetOpen}
+              handleClose={handleClose}
+              handleSubmit={handleSubmit}
+              languages={languages}
+              handleLanguageDelete={handleLanguageDelete}
+              lInputValue={lInputValue}
+              setLInputValue={setLInputValue}
+              setLanguageName={setLanguageName}
+              languageName={languageName}
+              setLanguageId={setLanguageId}
+              handleLanguageAdd={handleLanguageAdd}
+              cvtitle={cvtitle}
+              handleTitle={handleTitle}
+              skillData={skillData}
+              languageData={languageData}
+              // cvpfd
+              pdfFile={pdfFile}
+              setPdfFile={setPdfFile}
+              viewPdf={viewPdf}
+              setViewPdf={setViewPdf}
+              setPdf={setPdf}
+            />
+          </Grid>
         </Grid>
-      </Grid>
-      {loading && <p>Loading...</p>}
-      <Snackbar
-        open={skillOpen}
-        autoHideDuration={3000}
-        onClose={handleSkillClose}
-      >
-        <SkillAlert
+        {loading && <p>Loading...</p>}
+        <Snackbar
+          open={skillOpen}
+          autoHideDuration={3000}
           onClose={handleSkillClose}
-          severity="error"
-          sx={{ width: "100%" }}
         >
-          Wrong skill's name
-        </SkillAlert>
-      </Snackbar>
-      <Snackbar
-        open={open}
-        autoHideDuration={3000}
-        onClose={handleClose}
-      >
-        <CertAlert
-          onClose={handleClose}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          Lack of certificate's information
-        </CertAlert>
-      </Snackbar>
+          <SkillAlert
+            onClose={handleSkillClose}
+            severity="error"
+            sx={{ width: "100%" }}
+          >
+            Wrong skill's name
+          </SkillAlert>
+        </Snackbar>
+        <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+          <CertAlert
+            onClose={handleClose}
+            severity="error"
+            sx={{ width: "100%" }}
+          >
+            Lack of certificate's information
+          </CertAlert>
+        </Snackbar>
       </Box>
     </>
   );

@@ -2,6 +2,8 @@
 import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 import host from "../host";
+import { delay } from "../../utils/delay";
+
 function* updatePosition(action) {
   try {
     const {
@@ -93,8 +95,11 @@ function* updatePosition(action) {
       );
       console.log(response2);
     }
-  } catch (error) {
-    console.log(error);
+    yield call(delay, 1000)
+    yield put({ type: "error/setError", payload: { status: "no", message: positionId } })
+  } catch (err) {
+    yield put({ type: "error/setError", payload: { status: "yes", message: err.response.data.error } })
+    console.log("err: ", err)
   }
 }
 

@@ -100,7 +100,7 @@ export default function Page_Company_Recruitment() {
 
   useEffect(() => {
     dispatch({ type: "positionSaga/getPositionList" });
-    dispatch({ type: "saga/getDepartment" });
+    dispatch({ type: "departmentSaga/getDepartment" });
     // dispatch({ type: "saga/getLanguage" });
     return () => {
       cleanStore(dispatch);

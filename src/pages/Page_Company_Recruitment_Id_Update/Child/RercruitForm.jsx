@@ -14,20 +14,24 @@ import cleanStore from "../../../utils/cleanStore";
 import TitleDivider from "../../../components/TitleDivider/TitleDivider";
 import { Typography } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
-import Snackbar from "@mui/material/Snackbar"
+import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
+import Alert from "@mui/material/Alert";
 const SkillAlert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 function RecruitForm(prop) {
-  const recruitmentid= prop.recruitmentid
+  const recruitmentid = prop.recruitmentid;
   const dispatch = useDispatch();
   // fetch Data
   useEffect(() => {
-    dispatch({ type: "saga/getDepartment" });
+    dispatch({ type: "departmentSaga/getDepartment" });
     dispatch({ type: "saga/getLanguage" });
     dispatch({ type: "skillSaga/getSkill" });
-    dispatch({ type: "positionInforsaga/getPositioninfor" , payload:recruitmentid});
+    dispatch({
+      type: "positionInforsaga/getPositioninfor",
+      payload: recruitmentid,
+    });
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });
       dispatch({ type: "language/setLanguage", payload: null });
@@ -42,6 +46,7 @@ function RecruitForm(prop) {
   const departmentList = useSelector((state) => state.department);
   const positionInfor = useSelector((state) => state.positionInfor);
   const positionRequire = useSelector((state) => state.positionRequire);
+  const newError = useSelector((state) => state.error);
   // const skill = skillList ? skillList : [];
   // const language = languageList ? languageList : [];
   // const department = departmentList ? departmentList : [];
@@ -67,6 +72,7 @@ function RecruitForm(prop) {
   const [delRequire, setDelRequire] = useState([]);
   const [addRequire, setAddRequire] = useState([]);
   const [skillOpen, setSkillOpen] = useState(false);
+
   const handleSetSkillOpen = () => {
     setSkillOpen(true);
   };
@@ -76,6 +82,28 @@ function RecruitForm(prop) {
     }
     setSkillOpen(false);
   };
+
+  let [errorSnackbar, setErrorSnackbar] = useState(false);
+  ////////////////////////////////////////////////////
+  useEffect(() => {
+    if (newError.status == "no") {
+      setTimeout(() => {
+        const idToNavigate = newError.message;
+        cleanStore(dispatch);
+        navigate(`/company/recruitment/${idToNavigate}`);
+      }, 2000);
+    }
+    if (newError.status == "yes") {
+      setErrorSnackbar(true);
+      setTimeout(() => {
+        setErrorSnackbar(false);
+        dispatch({
+          type: "error/setError",
+          payload: { status: "idle", message: "" },
+        });
+      }, 5000);
+    }
+  }, [newError]);
   useEffect(() => {
     if (departmentList) {
       setDepartment(
@@ -92,7 +120,7 @@ function RecruitForm(prop) {
       setSkillData(skillList ? (skillList !== [] ? skillList : []) : []);
     }
   }, [departmentList, skillList, languageList]);
-  
+
   useEffect(() => {
     if (positionInfor) {
       setRName(
@@ -160,19 +188,22 @@ function RecruitForm(prop) {
       setRequirement(
         positionRequire ? (positionRequire !== [] ? positionRequire : []) : []
       );
-      setSkill(skillData.filter(
-        (item1) => !positionRequire.some((item2) => item1.skillId === item2.skillId)
-      ))
+      setSkill(
+        skillData.filter(
+          (item1) =>
+            !positionRequire.some((item2) => item1.skillId === item2.skillId)
+        )
+      );
       setBaseRequire(
         positionRequire ? (positionRequire !== [] ? positionRequire : []) : []
       );
     }
-  }, [positionRequire,skillData]);
+  }, [positionRequire, skillData]);
   console.log(requirement);
   const departments = department.filter(
     (comp) => comp.departmentId === departmentChoose
   );
-  console.log(skill)
+  console.log(skill);
   // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
   // const [status, setStatus] = useState(recruitInfo.status);
 
@@ -218,11 +249,13 @@ function RecruitForm(prop) {
     setDescription(e.target.value);
   }
   function handleSalary(event) {
-    let midleScore = parseFloat(event.target.value) >= 0? parseFloat(event.target.value) : 0
+    let midleScore =
+      parseFloat(event.target.value) >= 0 ? parseFloat(event.target.value) : 0;
     setSalary(midleScore);
   }
   function handleMaxHire(event) {
-    let midleScore = parseFloat(event.target.value) >= 0? parseFloat(event.target.value) : 0
+    let midleScore =
+      parseFloat(event.target.value) >= 0 ? parseFloat(event.target.value) : 0;
     setMaxHire(midleScore);
   }
   function handleRequirementAdd() {
@@ -245,14 +278,14 @@ function RecruitForm(prop) {
         requirementId: rId,
         positionId: "00000000-0000-0000-0000-000000000001",
         skillId: skillId,
-        experience: experience,
+        experience: experience.toString(),
         notes: note,
         isDeleted: false,
       };
       console.log(newRequire);
       setRequirement([...requirement, newRequire]);
       setAddRequire([...addRequire, newRequire]);
-      setSkill(skill.filter((prop)=>prop.skillId!==skillId))
+      setSkill(skill.filter((prop) => prop.skillId !== skillId));
       setSkillName("");
       setSkillId(null);
       setRId((prev) => (prev += 1));
@@ -265,9 +298,13 @@ function RecruitForm(prop) {
   console.log(delRequire);
   console.log(addRequire);
   function handleRequirementDelete(id) {
-    let delReq = requirement.filter((component) => component.requirementId === id)
-    let newSkill = skillData.filter((prop)=>prop.skillId===delReq[0].skillId)
-    setSkill([...skill, newSkill[0]])
+    let delReq = requirement.filter(
+      (component) => component.requirementId === id
+    );
+    let newSkill = skillData.filter(
+      (prop) => prop.skillId === delReq[0].skillId
+    );
+    setSkill([...skill, newSkill[0]]);
     setRequirement(
       requirement.filter((component) => component.requirementId !== id)
     );
@@ -331,8 +368,8 @@ function RecruitForm(prop) {
       console.log(error);
     }
     e.preventDefault();
-    cleanStore(dispatch);
-    navigate(`/company/recruitment/${recruitmentid}`);
+    // cleanStore(dispatch);
+    // navigate(`/company/recruitment/${recruitmentid}`);
   }
   return (
     <>
@@ -477,6 +514,27 @@ function RecruitForm(prop) {
         >
           Wrong skill's name
         </SkillAlert>
+      </Snackbar>
+      <Snackbar
+        // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        open={errorSnackbar}
+        autoHideDuration={4000}
+        onClose={() => {
+          setErrorSnackbar(false);
+        }}
+        // message="I love snacks"
+        // key={vertical + horizontal}
+      >
+        <Alert
+          variant="filled"
+          onClose={() => {
+            setErrorSnackbar(false);
+          }}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {newError.message}
+        </Alert>
       </Snackbar>
     </>
   );

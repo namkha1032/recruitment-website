@@ -137,7 +137,7 @@ export default function ChooseSkill(prop) {
             value={prop.SExp}
             margin="0"
             marginLeft={isMd ? "6%" : "auto"}
-            handleState={handleSExp}
+            handleState={prop.handleSExp}
           />
         </Grid>
         <Button

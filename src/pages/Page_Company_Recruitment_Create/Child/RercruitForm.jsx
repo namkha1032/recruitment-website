@@ -15,6 +15,7 @@ import { Typography } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
+import Alert from "@mui/material/Alert";
 const SkillAlert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -22,7 +23,7 @@ function RecruitForm() {
   const dispatch = useDispatch();
   // fetch Data
   useEffect(() => {
-    dispatch({ type: "saga/getDepartment" });
+    dispatch({ type: "departmentSaga/getDepartment" });
     dispatch({ type: "saga/getLanguage" });
     dispatch({ type: "skillSaga/getSkill" });
     return () => {
@@ -35,6 +36,7 @@ function RecruitForm() {
   const skillList = useSelector((state) => state.skill);
   const languageList = useSelector((state) => state.language);
   const departmentList = useSelector((state) => state.department);
+  const newError = useSelector((state) => state.error);
   // Skill data
   const [skill, setSkill] = useState([]);
   const [skillData, setSkillData] = useState([]);
@@ -78,6 +80,29 @@ function RecruitForm() {
     }
     setSkillOpen(false);
   };
+
+  let [errorSnackbar, setErrorSnackbar] = useState(false);
+  ////////////////////////////////////////////////////
+  useEffect(() => {
+    if (newError.status == "no") {
+      setTimeout(() => {
+        const idToNavigate = newError.message;
+        cleanStore(dispatch);
+        navigate(`/company/recruitment/${idToNavigate}`);
+      }, 2000);
+    }
+    if (newError.status == "yes") {
+      setErrorSnackbar(true);
+      setTimeout(() => {
+        setErrorSnackbar(false);
+        dispatch({
+          type: "error/setError",
+          payload: { status: "idle", message: "" },
+        });
+      }, 5000);
+    }
+  }, [newError]);
+
   const [languages, setLanguages] = useState(null);
   // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
   // const [status, setStatus] = useState(recruitInfo.status);
@@ -134,11 +159,17 @@ function RecruitForm() {
     setDescription(e.target.value);
   }
   function handleSalary(event) {
-    let midleScore = parseFloat(event.target.value) >= 0? parseFloat(event.target.value) : 0
+    let midleScore =
+      parseFloat(event.target.value) >= 0
+        ? parseFloat(event.target.value)
+        : "0";
     setSalary(midleScore);
   }
   function handleMaxHire(event) {
-    let midleScore = parseFloat(event.target.value) >= 0? parseFloat(event.target.value) : 0
+    let midleScore =
+      parseFloat(event.target.value) >= 0
+        ? parseFloat(event.target.value)
+        : "0";
     setMaxHire(midleScore);
   }
   function handleRequirementAdd() {
@@ -162,7 +193,7 @@ function RecruitForm() {
         positionId: "00000000-0000-0000-0000-000000000001",
         skillId: skillId,
         skillname: skillName,
-        experience: experience,
+        experience: experience.toString(),
         notes: note,
         isDeleted: false,
       };
@@ -257,8 +288,8 @@ function RecruitForm() {
       console.log(error);
     }
     e.preventDefault();
-    cleanStore(dispatch);
-    navigate("/company/recruitment/:recruitmentid");
+    // cleanStore(dispatch);
+    // navigate("/company/recruitment/:recruitmentid");
   }
   return (
     <>
@@ -402,6 +433,27 @@ function RecruitForm() {
         >
           Wrong skill's name
         </SkillAlert>
+      </Snackbar>
+      <Snackbar
+        // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        open={errorSnackbar}
+        autoHideDuration={4000}
+        onClose={() => {
+          setErrorSnackbar(false);
+        }}
+        // message="I love snacks"
+        // key={vertical + horizontal}
+      >
+        <Alert
+          variant="filled"
+          onClose={() => {
+            setErrorSnackbar(false);
+          }}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {newError.message}
+        </Alert>
       </Snackbar>
     </>
   );

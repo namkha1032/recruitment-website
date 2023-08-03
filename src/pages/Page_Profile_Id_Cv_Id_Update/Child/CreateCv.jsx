@@ -105,6 +105,7 @@ const CreateCv = (prop) => {
                     ) : activeStep === 1 ? (
                       <Grid item xs={12}>
                         <CvStep2
+                          handleSExp={prop.handleSExp}
                           skillOption={prop.skillOption}
                           sInputValue={prop.sInputValue}
                           setSInputValue={prop.setSInputValue}

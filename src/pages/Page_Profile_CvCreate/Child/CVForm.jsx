@@ -7,9 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import cleanStore from "../../../utils/cleanStore";
 import MuiAlert from "@mui/material/Alert";
-import Snackbar from "@mui/material/Snackbar"
-// import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
-// import axios from "axios";
+import Snackbar from "@mui/material/Snackbar";
+import axios from "axios";
 
 // import ViewCv from "./ViewCv";
 const SkillAlert = React.forwardRef(function Alert(props, ref) {
@@ -68,7 +67,12 @@ function CVForm() {
   const [sname, setSName] = useState("");
   const [skillId, setSkillId] = useState(null);
   const [Sid, setSid] = useState(0);
-  const [SExp, setSExp] = useState("");
+  const [SExp, setSExp] = useState(0);
+  function handleSExp(event) {
+    let midleScore =
+      parseFloat(event.target.value) >= 0 ? parseFloat(event.target.value) : 0;
+    setSExp(midleScore);
+  }
   const [sInputValue, setSInputValue] = useState("");
   // Language comps
   // const [lId, setLId] = useState(0);
@@ -103,28 +107,30 @@ function CVForm() {
       setSkillId(null);
       setSName("");
       setSInputValue("");
-      setSExp("");
+      setSExp(0);
     } else {
       const newSkill = {
         cvSkillsId: Sid,
         skillId: skillId,
-        experienceYear: SExp,
+        experienceYear: SExp.toString(),
       };
       console.log(newSkill);
       setSkills([...skills, newSkill]);
-      setSkillOption(skillOption.filter((prop)=>prop.skillId!==skillId))
+      setSkillOption(skillOption.filter((prop) => prop.skillId !== skillId));
       setSkillId(null);
       setSName("");
       setSInputValue("");
-      setSExp("");
+      setSExp(0);
       setSid((prev) => (prev += 1));
     }
   }
   function handleSkilltDelete(id) {
-    let delReq = skills.filter((component) => component.cvSkillsId === id)
-    let newSkill = skillData.filter((prop)=>prop.skillId===delReq[0].skillId)
+    let delReq = skills.filter((component) => component.cvSkillsId === id);
+    let newSkill = skillData.filter(
+      (prop) => prop.skillId === delReq[0].skillId
+    );
     setSkills(skills.filter((component) => component.cvSkillsId !== id));
-    setSkillOption([...skillOption, newSkill[0]])
+    setSkillOption([...skillOption, newSkill[0]]);
   }
   function handleCertificateAdd() {
     console.log(startDate);
@@ -137,7 +143,7 @@ function CVForm() {
         expirationDate: endDate !== null ? endDate.toJSON() : endDate,
         description: detail,
         link: link,
-        isDeleted:false
+        isDeleted: false,
       };
       setCerts([...certs, newCert]);
       setCName("");
@@ -151,6 +157,11 @@ function CVForm() {
       handleSetOpen();
     }
   }
+  const removeFieldFromCertificates = (certificatesArray, fieldToRemove) => {
+    return certificatesArray.map(
+      ({ [fieldToRemove]: removedField, ...rest }) => rest
+    );
+  };
   function handleCertDelete(id) {
     setCerts(certs.filter((component) => component.certificateId !== id));
   }
@@ -174,53 +185,58 @@ function CVForm() {
     setSkillOpen(false);
   };
   async function handleSubmit(e) {
+    const updatedSkills = removeFieldFromCertificates(skills, "cvSkillsId");
+    const updatedCertificates = removeFieldFromCertificates(
+      certs,
+      "certificateId"
+    );
     e.preventDefault();
     try {
       setLoading(true);
-      dispatch({
-        type: "cvCreatesaga/getCreateCv",
-        payload:{
-          CvName: cvtitle,
-          Introduction: intro,
-          Education:education,
-          Experience: experience,
-          Skills:skills,
-          Certificates:certs,
+      const formData = new FormData();
+      formData.append("File", pdf);
+      const response = await axios.post(
+        `https://leetun2k2-001-site1.gtempurl.com/api/Cv`,
+        {
+          candidateId: "daa3769b-5dd9-47f7-97de-f97e4e705971",
+          experience: experience,
+          cvPdf: "",
+          cvName: cvtitle,
+          introduction: intro,
+          education: education,
+          isDeleted: false,
+          skills: updatedSkills,
+          certificates: updatedCertificates,
         }
-      })
-      // const formData = new FormData();
-      // formData.append("CvName", cvtitle);
-      // formData.append("Introduction", intro);
-      // formData.append("Education", education);
-      // formData.append("Experience", experience);
-      // formData.append("CvFile", pdf); // Make sure to provide the actual file here
-      // formData.append("CvPdf", null);
-      // formData.append("IsDeleted", false);
-      // formData.append("CandidateId", "daa3769b-5dd9-47f7-97de-f97e4e705971");
-      // formData.append("Cvid", "1f357759-6d1e-47e7-a04b-01a92e73c115");
-      // const response = await axios.post(
-      //   `https://leetun2k2-001-site1.gtempurl.com/api/Cv`,
-      //   formData
-      // );
-      // console.log("FINISHED!!!!!!!!!!!!");
-      // console.log(response);
-      // dispatch({
-      //   type: "saga/getCreateCv",
-      //   payload: {
-      //     CvName: cvtitle,
-      //     Introduction: intro,
-      //     Education: education,
-      //     Experience: experience,
-      //     Skills: skills,
-      //     Certificates: certs,
-      //   },
-      // });
+      );
+      console.log("FINISHED!!!!!!!!!!!!");
+      console.log(response);
+      const response2 = await axios.get(
+        `https://leetun2k2-001-site1.gtempurl.com/api/Cv`
+      );
+      console.log(response2.data);
+      const cv = response2.data.filter(
+        (prop) =>
+          prop.cvName === cvtitle &&
+          prop.candidateId === "daa3769b-5dd9-47f7-97de-f97e4e705971" &&
+          prop.introduction === intro &&
+          prop.isDeleted === false
+      );
+      if (pdf !== null) {
+        console.log(formData)
+        const response3 = await axios.post(
+          `https://leetun2k2-001-site1.gtempurl.com/api/Cv/UploadCvPdf/${cv[0].cvid}`,
+          formData
+        );
+        console.log(response3);
+      }
+      
       setLoading(false);
+      cleanStore(dispatch);
+    navigate(`/profile/:profileid/cv/${cv[0].cvid}`);
     } catch (error) {
       console.log(error);
     }
-    cleanStore(dispatch);
-    navigate("/profile/:profileid/cv/:cvid");
   }
   //COMPS
   return (
@@ -295,6 +311,7 @@ function CVForm() {
             viewPdf={viewPdf}
             setViewPdf={setViewPdf}
             setPdf={setPdf}
+            handleSExp={handleSExp}
           />
         </Grid>
       </Grid>
@@ -312,11 +329,7 @@ function CVForm() {
           Wrong skill's name
         </SkillAlert>
       </Snackbar>
-      <Snackbar
-        open={open}
-        autoHideDuration={3000}
-        onClose={handleClose}
-      >
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
         <CertAlert
           onClose={handleClose}
           severity="error"

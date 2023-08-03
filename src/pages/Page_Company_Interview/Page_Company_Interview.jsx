@@ -86,7 +86,7 @@ export default function Page_Company_Interview() {
   useEffect(() => {
     dispatch({ type: "interviewSaga/getAllInterview" });
     dispatch({ type: "positionSaga/getPositionList" });
-    dispatch({ type: "saga/getDepartment" });
+    dispatch({ type: "departmentSaga/getDepartment" });
     return () => {
       cleanStore(dispatch);
     };
