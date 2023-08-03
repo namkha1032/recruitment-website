@@ -94,7 +94,7 @@ const Page_Company_Account_Blacklist = () => {
         dispatch({type: "saga/getBlacklist"});
     }, [dispatch]);
     useEffect(() => {
-        dispatch({type: "saga/getCandidate"});
+        dispatch({type: "saga/getCandidateAdmin"});
     }, [dispatch]);
     const candidates = useSelector(state => state.admin.candidate)
     const blacklist = useSelector(state => state.admin.blacklist)

@@ -175,9 +175,9 @@ function* doAddAccount(action){
 
 
 function* adminSaga(){
-    yield takeEvery('saga/getCandidate',doGetCandidate);
-    yield takeEvery('saga/getInterviewer',doGetInterviewer);
-    yield takeEvery('saga/getRecruiter',doGetRecruiter);
+    yield takeEvery('saga/getCandidateAdmin',doGetCandidate);
+    yield takeEvery('saga/getInterviewerAdmin',doGetInterviewer);
+    yield takeEvery('saga/getRecruiterAdmin',doGetRecruiter);
     yield takeEvery('saga/getBlacklist',doGetBlacklist);
     yield takeEvery('saga/getDepartmentAdmin',doGetDepartment);
     yield takeEvery('saga/addToBlacklist',doAddToBlacklist);
