@@ -16,15 +16,16 @@ import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
 import Alert from "@mui/material/Alert";
-import AlertRequire from "./AlertRequire";
+// import Alert from "@mui/material/Alert";
+import AlertDialog from "../../../components/AlertDialog/AlertDialog";
 
 const SkillAlert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const RequiredAlert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+// const RequiredAlert = React.forwardRef(function Alert(props, ref) {
+//   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+// });
 function RecruitForm() {
   const dispatch = useDispatch();
   // fetch Data
@@ -90,14 +91,14 @@ function RecruitForm() {
   let [errorSnackbar, setErrorSnackbar] = useState(false);
   ////////////////////////////////////////////////////
   useEffect(() => {
-    if (newError.status == "no") {
+    if (newError.status === "no") {
       setTimeout(() => {
         const idToNavigate = newError.message;
         cleanStore(dispatch);
         navigate(`/company/recruitment/${idToNavigate}`);
       }, 2000);
     }
-    if (newError.status == "yes") {
+    if (newError.status === "yes") {
       setErrorSnackbar(true);
       setTimeout(() => {
         setErrorSnackbar(false);
@@ -249,86 +250,108 @@ function RecruitForm() {
     setEndDate(date);
     console.log(date);
   }
-  console.log(departmentChoose)
+  console.log(departmentChoose);
 
-  let [requireError, setRequireError] = useState(false);
-  const handleRequiredOpen = () => {
-    setRequireError(true);
-  };
-  const handleRequiredClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setRequireError(false);
-  };
+  // let [requireError, setRequireError] = useState(false);
+  // const handleRequiredOpen = () => {
+  //   setRequireError(true);
+  // };
+  // const handleRequiredClose = (event, reason) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+  //   setRequireError(false);
+  // };
 
-  let [languageError, setLanguageError] = useState(false);
-  const handleLanguageOpen = () => {
-    setLanguageError(true);
-  };
-  const handleLanguageClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setLanguageError(false);
-  };
+  // let [languageError, setLanguageError] = useState(false);
+  // const handleLanguageOpen = () => {
+  //   setLanguageError(true);
+  // };
+  // const handleLanguageClose = (event, reason) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+  //   setLanguageError(false);
+  // };
 
-  let [departmentError, setDepartmentError] = useState(false);
-  const handleDepartmentOpen = () => {
-    setDepartmentError(true);
-  };
-  const handleDepartmentClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setDepartmentError(false);
-  };
+  // let [departmentError, setDepartmentError] = useState(false);
+  // const handleDepartmentOpen = () => {
+  //   setDepartmentError(true);
+  // };
+  // const handleDepartmentClose = (event, reason) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+  //   setDepartmentError(false);
+  // };
 
-  let [dateError, setDateError] = useState(false);
-  const handleDateOpen = () => {
-    setDateError(true);
-  };
-  const handleDateClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setDateError(false);
-  };
+  // let [dateError, setDateError] = useState(false);
+  // const handleDateOpen = () => {
+  //   setDateError(true);
+  // };
+  // const handleDateClose = (event, reason) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+  //   setDateError(false);
+  // };
+
+  let [openAlert, setOpenAlert] = useState(false);
 
   function handleSubmit(e) {
-    e.preventDefault();
-    if (requirement.length === 0) {
-      handleRequiredOpen()
-    } else if(languages === null){
-      handleLanguageOpen()
-    } else if(departmentChoose===null){
-      handleDepartmentOpen()
-    }else if (startDate === null || endDate === null){
-      handleDateOpen()
+    try {
+      dispatch({
+        type: "createPositionsaga/getCreatePosition",
+        payload: {
+          positionName: RName,
+          description: description,
+          salary: salary,
+          maxHiringQty: maxHire,
+          startDate: startDate !== null ? startDate.toJSON() : startDate,
+          endDate: endDate !== null ? endDate.toJSON() : endDate,
+          departmentId: departmentChoose,
+          languageId: languages,
+          recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
+          requirement: requirement,
+        },
+      });
+    } catch (error) {
+      console.log(error);
     }
-    else {
-      try {
-        dispatch({
-          type: "createPositionsaga/getCreatePosition",
-          payload: {
-            positionName: RName,
-            description: description,
-            salary: salary,
-            maxHiringQty: maxHire,
-            startDate: startDate!== null?startDate.toJSON(): startDate,
-            endDate: endDate !== null ? endDate.toJSON() : endDate,
-            departmentId: departmentChoose,
-            languageId: languages,
-            recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
-            requirement: requirement,
-          },
-        });
-      } catch (error) {
-        console.log(error);
-      }
-      
-      // cleanStore(dispatch);
-      // navigate("/company/recruitment/:recruitmentid");
+
+    // cleanStore(dispatch);
+    // navigate("/company/recruitment/:recruitmentid");
+  }
+  function preProcessing() {
+    const messArr = [];
+    if (requirement.length === 0) {
+      messArr.push("Requirement");
+    }
+    if (languages == null) {
+      messArr.push("Language");
+    }
+    if (departmentChoose == null) {
+      messArr.push("Department");
+    }
+    if (startDate === null || endDate === null) {
+      messArr.push("Date");
+    }
+    let messString = "";
+    if (messArr.length > 0) {
+      messArr.forEach((x, index) => {
+        messString = messString + x;
+        if (index < messArr.length - 1) {
+          messString = messString + ", ";
+        } else {
+          messString = messString + ".";
+        }
+      });
+      dispatch({
+        type: "error/setError",
+        payload: { status: "yes", message: `please choose ${messString}` },
+      });
+    } else {
+      setOpenAlert(true);
     }
   }
   return (
@@ -456,8 +479,12 @@ function RecruitForm() {
           </Grid>
           <Grid item xs={12}></Grid>
           <img src="./img/logo.png" alt="" />
-          <Button variant="contained" className="AddButton" type="submit">
-            Submit
+          <Button
+            variant="contained"
+            className="AddButton"
+            onClick={preProcessing}
+          >
+            Create
           </Button>
         </Grid>
       </form>
@@ -474,7 +501,7 @@ function RecruitForm() {
           Wrong skill's name
         </SkillAlert>
       </Snackbar>
-      <Snackbar
+       <Snackbar
         // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         open={errorSnackbar}
         autoHideDuration={4000}
@@ -495,6 +522,7 @@ function RecruitForm() {
           {newError.message}
         </Alert>
       </Snackbar>
+      {/*
       <Snackbar
         open={requireError}
         autoHideDuration={3000}
@@ -546,7 +574,14 @@ function RecruitForm() {
         >
           Choose date
         </RequiredAlert>
-      </Snackbar>
+      </Snackbar> */}
+      <AlertDialog
+        openAlert={openAlert}
+        setOpenAlert={setOpenAlert}
+        alertMessage={"Are you sure you want to create?"}
+        successfulMessage={"Create successfully"}
+        handleSubmit={handleSubmit}
+      />
     </>
   );
 }

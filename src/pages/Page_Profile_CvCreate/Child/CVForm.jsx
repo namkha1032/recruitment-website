@@ -9,7 +9,7 @@ import cleanStore from "../../../utils/cleanStore";
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import axios from "axios";
-
+import { delay } from "../../../utils/delay";
 // import ViewCv from "./ViewCv";
 const SkillAlert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -32,6 +32,7 @@ function CVForm() {
   // CV COMPS
   const skillList = useSelector((state) => state.skill);
   const languageList = useSelector((state) => state.language);
+  const newError = useSelector((state) => state.error);
 
   const [skillData, setSkillData] = useState([]);
   const [skillOption, setSkillOption] = useState([]);
@@ -230,10 +231,11 @@ function CVForm() {
         );
         console.log(response3);
       }
-      
-      setLoading(false);
-      cleanStore(dispatch);
-    navigate(`/profile/:profileid/cv/${cv[0].cvid}`);
+      delay(1000)
+      dispatch({ type: "error/setError", payload: { status: "no", message: cv[0].cvid }});
+    //   setLoading(false);
+    //   cleanStore(dispatch);
+    // navigate(`/profile/:profileid/cv/${cv[0].cvid}`);
     } catch (error) {
       console.log(error);
     }

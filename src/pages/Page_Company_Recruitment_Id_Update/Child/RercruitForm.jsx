@@ -17,6 +17,7 @@ import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
 import Alert from "@mui/material/Alert";
+import AlertDialog from "../../../components/AlertDialog/AlertDialog";
 const SkillAlert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -344,6 +345,9 @@ function RecruitForm(prop) {
     setEndDate(date);
     console.log(date);
   }
+
+  let [openAlert, setOpenAlert] = useState(false);
+
   function handleSubmit(e) {
     try {
       dispatch({
@@ -367,9 +371,40 @@ function RecruitForm(prop) {
     } catch (error) {
       console.log(error);
     }
-    e.preventDefault();
     // cleanStore(dispatch);
     // navigate(`/company/recruitment/${recruitmentid}`);
+  }
+  function preProcessing() {
+    const messArr = [];
+    if (requirement.length === 0) {
+      messArr.push("Requirement");
+    }
+    if (languages == null) {
+      messArr.push("Language");
+    }
+    if (departmentChoose == null) {
+      messArr.push("Department");
+    }
+    if (startDate === null || endDate === null) {
+      messArr.push("Date");
+    }
+    let messString = "";
+    if (messArr.length > 0) {
+      messArr.forEach((x, index) => {
+        messString = messString + x;
+        if (index < messArr.length - 1) {
+          messString = messString + ", ";
+        } else {
+          messString = messString + ".";
+        }
+      });
+      dispatch({
+        type: "error/setError",
+        payload: { status: "yes", message: `please choose ${messString}` },
+      });
+    } else {
+      setOpenAlert(true);
+    }
   }
   return (
     <>
@@ -497,8 +532,13 @@ function RecruitForm(prop) {
           </Grid>
           <Grid item xs={12}></Grid>
           <img src="./img/logo.png" alt="" />
-          <Button variant="contained" className="AddButton" type="submit">
-            Submit
+          <Button
+            variant="contained"
+            className="AddButton"
+            // type="submit"
+            onClick={preProcessing}
+          >
+            Update
           </Button>
         </Grid>
       </form>
@@ -536,6 +576,13 @@ function RecruitForm(prop) {
           {newError.message}
         </Alert>
       </Snackbar>
+      <AlertDialog
+        openAlert={openAlert}
+        setOpenAlert={setOpenAlert}
+        alertMessage={"Are you sure you want to update?"}
+        successfulMessage={"Update successfully"}
+        handleSubmit={handleSubmit}
+      />
     </>
   );
 }
