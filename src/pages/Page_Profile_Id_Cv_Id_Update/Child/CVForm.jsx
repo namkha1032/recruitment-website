@@ -20,7 +20,8 @@ const CertAlert = React.forwardRef(function Alert(props, ref) {
 });
 function CVForm(prop) {
   const profileid = prop.profileid;
-  const cvid = prop.cvid;
+  // const cvid = prop.cvid;
+  const cvid ="d1c51600-6272-4c78-9b50-36af9d403a28";
   console.log(cvid);
   const navigate = useNavigate();
   const dispatch = useDispatch();

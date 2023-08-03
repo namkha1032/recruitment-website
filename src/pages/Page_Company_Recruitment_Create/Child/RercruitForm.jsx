@@ -16,7 +16,13 @@ import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
 import Alert from "@mui/material/Alert";
+import AlertRequire from "./AlertRequire";
+
 const SkillAlert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+const RequiredAlert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 function RecruitForm() {
@@ -221,30 +227,6 @@ function RecruitForm() {
 
     setSkill([...skill, newSkill[0]]);
   }
-
-  // function handleLanguageAdd() {
-  //   console.log(lInputValue);
-  //   console.log(languageName);
-  //   let arr = language.filter(
-  //     (comp) =>
-  //       comp.languageName ===
-  //       (lInputValue !== null ? lInputValue.languageName : "")
-  //   );
-  //   console.log(arr);
-  //   if (arr[0] === undefined) {
-  //     alert("wrong language");
-  //     // setLanguageId(null);
-  //     setLanguageName("");
-  //     setLInputValue("");
-  //   } else {
-  //     // const newLanguage = {
-  //     //   languageId: languageId,
-  //     //   languageName: languageName,
-  //     // };
-  //     // console.log(newLanguage);
-  //     // setLanguages(newLanguage);
-  //   }
-  // }
   function handleLanguageAdd2() {
     console.log(lInputValue);
     let arr = language.filter((comp) => comp.languageName === lInputValue);
@@ -267,29 +249,87 @@ function RecruitForm() {
     setEndDate(date);
     console.log(date);
   }
-  function handleSubmit(e) {
-    try {
-      dispatch({
-        type: "createPositionsaga/getCreatePosition",
-        payload: {
-          positionName: RName,
-          description: description,
-          salary: salary,
-          maxHiringQty: maxHire,
-          startDate: startDate.toJSON(),
-          endDate: endDate !== null ? endDate.toJSON() : endDate,
-          departmentId: departmentChoose,
-          languageId: languages,
-          recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
-          requirement: requirement,
-        },
-      });
-    } catch (error) {
-      console.log(error);
+  console.log(departmentChoose)
+
+  let [requireError, setRequireError] = useState(false);
+  const handleRequiredOpen = () => {
+    setRequireError(true);
+  };
+  const handleRequiredClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
     }
+    setRequireError(false);
+  };
+
+  let [languageError, setLanguageError] = useState(false);
+  const handleLanguageOpen = () => {
+    setLanguageError(true);
+  };
+  const handleLanguageClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setLanguageError(false);
+  };
+
+  let [departmentError, setDepartmentError] = useState(false);
+  const handleDepartmentOpen = () => {
+    setDepartmentError(true);
+  };
+  const handleDepartmentClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setDepartmentError(false);
+  };
+
+  let [dateError, setDateError] = useState(false);
+  const handleDateOpen = () => {
+    setDateError(true);
+  };
+  const handleDateClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setDateError(false);
+  };
+
+  function handleSubmit(e) {
     e.preventDefault();
-    // cleanStore(dispatch);
-    // navigate("/company/recruitment/:recruitmentid");
+    if (requirement.length === 0) {
+      handleRequiredOpen()
+    } else if(languages === null){
+      handleLanguageOpen()
+    } else if(departmentChoose===null){
+      handleDepartmentOpen()
+    }else if (startDate === null || endDate === null){
+      handleDateOpen()
+    }
+    else {
+      try {
+        dispatch({
+          type: "createPositionsaga/getCreatePosition",
+          payload: {
+            positionName: RName,
+            description: description,
+            salary: salary,
+            maxHiringQty: maxHire,
+            startDate: startDate!== null?startDate.toJSON(): startDate,
+            endDate: endDate !== null ? endDate.toJSON() : endDate,
+            departmentId: departmentChoose,
+            languageId: languages,
+            recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
+            requirement: requirement,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+      
+      // cleanStore(dispatch);
+      // navigate("/company/recruitment/:recruitmentid");
+    }
   }
   return (
     <>
@@ -454,6 +494,58 @@ function RecruitForm() {
         >
           {newError.message}
         </Alert>
+      </Snackbar>
+      <Snackbar
+        open={requireError}
+        autoHideDuration={3000}
+        onClose={handleRequiredClose}
+      >
+        <RequiredAlert
+          onClose={handleRequiredClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Need at least one requirement
+        </RequiredAlert>
+      </Snackbar>
+      <Snackbar
+        open={languageError}
+        autoHideDuration={3000}
+        onClose={handleLanguageClose}
+      >
+        <RequiredAlert
+          onClose={handleLanguageClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Choose require language
+        </RequiredAlert>
+      </Snackbar>
+      <Snackbar
+        open={departmentError}
+        autoHideDuration={3000}
+        onClose={handleDepartmentClose}
+      >
+        <RequiredAlert
+          onClose={handleDepartmentClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Choose require department
+        </RequiredAlert>
+      </Snackbar>
+      <Snackbar
+        open={dateError}
+        autoHideDuration={3000}
+        onClose={handleDateClose}
+      >
+        <RequiredAlert
+          onClose={handleDateClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Choose date
+        </RequiredAlert>
       </Snackbar>
     </>
   );
