@@ -14,14 +14,22 @@ function* getPositionList(action) {
     // const response = yield call(axios.get, `${host.name}/data/positionList.json`)
     // const response = yield call(axios.get, `${host.name}/data/positionList.json`)
     // yield put({ type: "positionList/setPositionList", payload: response.data });
-
-    const response = yield call(
-      axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Position",
-      {
-        headers: { Authorization: action.payload.token },
-      }
-    );
+    let response
+    if (action.payload) {
+      response = yield call(
+        axios.get,
+        "https://leetun2k2-001-site1.gtempurl.com/api/Position",
+        {
+          headers: { Authorization: action.payload.token },
+        }
+      );
+    }
+    else {
+      response = yield call(
+        axios.get,
+        "https://leetun2k2-001-site1.gtempurl.com/api/Position"
+      );
+    }
 
     const candidatesPosition = yield call(
       axios.get,
@@ -207,7 +215,7 @@ function* getPosition(action) {
       for (let j = 0; j < response2.data.length; j++) {
         if (
           response1.data.requirements[i].skillId ===
-            response2.data[j].skillId &&
+          response2.data[j].skillId &&
           response1.data.requirements[i].isDeleted === false
         ) {
           skilllist.push(response2.data[j]);

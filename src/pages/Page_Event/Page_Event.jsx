@@ -57,7 +57,7 @@ const Page_Event = () => {
   const list = useSelector((state) => state.eventList);
 
   useEffect(() => {
-    dispatch({ type: "eventSaga/getEventList" });
+    dispatch({ type: "eventSaga/getEventList", payload: { token: "goku" } });
   }, []);
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -163,11 +163,11 @@ const Page_Event = () => {
                         />
                         <CardContent sx={{ flexGrow: 1 }}>
                           <Box sx={{ padding: "0px 0px 5px 5px" }}>
-                          <Typography gutterBottom variant="h5" component="h2" >
-                            {card.EventName}
-                          </Typography>
+                            <Typography gutterBottom variant="h5" component="h2" >
+                              {card.EventName}
+                            </Typography>
                           </Box>
-                         
+
                           <Box>
                             <Box sx={{ padding: "0px 0px 5px 0px" }}>
                               <Typography
@@ -188,8 +188,8 @@ const Page_Event = () => {
 
                               <Box display="flex">
                                 <PermIdentityIcon />
-                                <Typography 
-                                variant="subtitle2"
+                                <Typography
+                                  variant="subtitle2"
                                   align="left"
                                   color="black"
                                   component="p"
@@ -203,7 +203,7 @@ const Page_Event = () => {
                                 </Typography>
 
                                 {card.NumOfJoined}
-                                
+
                               </Box>
 
 
@@ -221,8 +221,8 @@ const Page_Event = () => {
                                     justifyContent: "flex-start",
                                     padding: "0px 0px 0px 5px",
                                   }}
-                                  >
-                                 
+                                >
+
 
 
                                   {card.EventDateTime.slice(0, 10)}
@@ -256,19 +256,19 @@ const Page_Event = () => {
                         <CardActions
                           sx={{ display: "flex", justifyContent: "right" }}
                         >
-                          <Box marginBottom="10px"  marginRight=" 10px">
-                          <Button
-                            disabled={false}
-                            size="small"
-                            variant="contained"
-                            // sx={{backgroundColor:"black", ":hover":{backgroundColor:"grey"}} }
-                            onClick={() => handleNavigateClick1(card.EventId)}
-                            
-                          >
-                            View
-                          </Button>
+                          <Box marginBottom="10px" marginRight=" 10px">
+                            <Button
+                              disabled={false}
+                              size="small"
+                              variant="contained"
+                              // sx={{backgroundColor:"black", ":hover":{backgroundColor:"grey"}} }
+                              onClick={() => handleNavigateClick1(card.EventId)}
+
+                            >
+                              View
+                            </Button>
                           </Box>
-                      
+
                         </CardActions>
                       </Card>
                     </Grid>

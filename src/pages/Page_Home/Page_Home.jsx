@@ -60,12 +60,24 @@ const Page_Home = () => {
     navigate(`/recruitment/${id}`)
   }
   React.useEffect(() => {
-    dispatch({ type: 'eventSaga/getEventList' })
+    dispatch({
+      type: 'eventSaga/getEventList', payload: {
+        token: "hehehe"
+      }
+    })
   }, [])
-  React.useEffect(()=>{
-    dispatch({type:'positionSaga/getPositionList'})
-    dispatch({ type: "saga/getSkill" });
-  },[])
+  React.useEffect(() => {
+    dispatch({
+      type: 'positionSaga/getPositionList', payload: {
+        token: "hehehe"
+      }
+    })
+    dispatch({
+      type: "skillSaga/getSkill", payload: {
+        token: "hehehe"
+      }
+    });
+  }, [])
   console.log(eventList)
   return (
     eventList && <Box>
@@ -88,7 +100,7 @@ const Page_Home = () => {
                 />
                 <Box sx={{ marginTop: '16px' }}>
                   <Typography
-                  fontWeight="bold"
+                    fontWeight="bold"
                   >
                     {item.EventName}
                   </Typography>
@@ -125,7 +137,7 @@ const Page_Home = () => {
                       style={{ width: '100%' }}
                     />
                     <Typography
-                    fontWeight="bold"
+                      fontWeight="bold"
                     >
                       {item.EventName}
                     </Typography>
@@ -151,7 +163,7 @@ const Page_Home = () => {
 
               >
                 {eventList.slice(5, 8).map((item, index) => (
-                  
+
                   <Box key={index} onClick={() => handleNavigateClick(item.EventId)}
                     sx={{ cursor: 'pointer' }}>
                     <img src="https://www.freecodecamp.org/news/content/images/2022/04/derick-mckinney-oARTWhz1ACc-unsplash.jpg"
@@ -159,7 +171,7 @@ const Page_Home = () => {
                       style={{ width: '100%' }}
                     />
                     <Typography
-                    fontWeight="bold"
+                      fontWeight="bold"
                     >
                       {item.EventName}
                     </Typography>
@@ -199,77 +211,77 @@ const Page_Home = () => {
 
                   </Box>
 
-                 {positionList&&positionList.slice(0, 5).map((card, index) =>(
-                  
+                  {positionList && positionList.slice(0, 5).map((card, index) => (
 
-                 
-                  <Box key={index} onClick={() => handleNavigateClick1(card.PositionId) }
-                  style={{ cursor: 'pointer' }}
-                   sx={{
 
-                    borderTop: '1px solid lightgrey',
-                    // borderRight: '1px solid lightgrey,',
-                    padding: '20px 10px 20px 10px'
-                  }}>
-                    <Box marginLeft='3px' marginBottom="5px">
-                    <Typography
-                    variant="h7"
-                    align="left"
-                    color="#black"
-                    fontWeight='bold'
-                    component="p"
-                    >
-                    {card.PositionName}
-                    </Typography>
+
+                    <Box key={index} onClick={() => handleNavigateClick1(card.PositionId)}
+                      style={{ cursor: 'pointer' }}
+                      sx={{
+
+                        borderTop: '1px solid lightgrey',
+                        // borderRight: '1px solid lightgrey,',
+                        padding: '20px 10px 20px 10px'
+                      }}>
+                      <Box marginLeft='3px' marginBottom="5px">
+                        <Typography
+                          variant="h7"
+                          align="left"
+                          color="#black"
+                          fontWeight='bold'
+                          component="p"
+                        >
+                          {card.PositionName}
+                        </Typography>
+                      </Box>
+
+
+
+                      <Box display="flex">
+                        <AttachMoneyRounded fontSize='small' />
+
+                        <Typography
+                          variant="subtitle2"
+                          align="center"
+                          color="text.secondary"
+                          component="p"
+                          sx={{ display: 'flex', justifyContent: 'flex-start' }}
+
+                        >
+                          {card.Salary}
+                        </Typography>
+                      </Box>
+
+                      <Box display="flex" >
+                        <AccessTimeOutlinedIcon fontSize='small' />
+                        <Box marginLeft="2px">
+                          <Typography
+                            variant="subtitle2"
+                            align="center"
+                            color="text.secondary"
+                            component="p"
+                            sx={{ display: 'flex', justifyContent: 'flex-start' }}
+
+                          >
+
+                            {card.EndDate.slice(0, 10)}
+
+                          </Typography>
+                        </Box>
+                      </Box>
+
+
                     </Box>
 
-                   
+                  ))}
 
-                <Box display="flex">
-                    <AttachMoneyRounded fontSize='small' />
 
-                    <Typography
-                      variant="subtitle2"
-                      align="center"
-                      color="text.secondary"
-                      component="p"
-                      sx={{ display: 'flex', justifyContent: 'flex-start' }}
-                     
-                    >
-                      {card.Salary}
-                    </Typography>
-                    </Box>
-                  
-                    <Box display="flex" >
-                      <AccessTimeOutlinedIcon fontSize='small' />
-                      <Box marginLeft="2px">
-                    <Typography
-                      variant="subtitle2"
-                      align="center"
-                      color="text.secondary"
-                      component="p"
-                      sx={{ display: 'flex', justifyContent: 'flex-start' }}
-                      
-                    >
-                      
-                      {card.EndDate.slice(0, 10)}
-                      
-                    </Typography>
-                    </Box>
-                  </Box>
 
-                   
-                  </Box>
-                  
-                 ))}
-                
-                 
-                
-                  
-                 
-                  
 
-                 
+
+
+
+
                 </Box>
 
               </Grid>
@@ -302,7 +314,7 @@ const Page_Home = () => {
                   color="text.secondary"
                   component="p"
                   sx={{ display: 'flex', justifyContent: 'flex-start' }}
-                  
+
                 >
                   About us
                 </Typography>
@@ -323,7 +335,7 @@ const Page_Home = () => {
                   component="p"
                   sx={{ display: 'flex', justifyContent: 'flex-start' }}
                 >
-                Teamwork is the heart of success in any organization. A team is a group of individuals who come together, united by a common goal, to collaborate and achieve objectives that would be difficult or impossible to accomplish alone. Effective teamwork fosters creativity, harnesses diverse perspectives, and maximizes individual strengths.
+                  Teamwork is the heart of success in any organization. A team is a group of individuals who come together, united by a common goal, to collaborate and achieve objectives that would be difficult or impossible to accomplish alone. Effective teamwork fosters creativity, harnesses diverse perspectives, and maximizes individual strengths.
                 </Typography>
               </Box>
               <Box sx={{ padding: '10px 0px 0px 30px' }}>
@@ -375,7 +387,7 @@ const Page_Home = () => {
                   component="p"
                   sx={{ display: 'flex', justifyContent: 'flex-start' }}
                 >
-                The importance of direction for Frontend developers. They need a strong foundation in HTML, CSS, and JavaScript, along with knowledge of modern frameworks like React, Angular, or Vue.js. Continuous learning, problem-solving skills, and adaptability are crucial traits. 
+                  The importance of direction for Frontend developers. They need a strong foundation in HTML, CSS, and JavaScript, along with knowledge of modern frameworks like React, Angular, or Vue.js. Continuous learning, problem-solving skills, and adaptability are crucial traits.
                 </Typography>
               </Box>
               <Box sx={{ padding: '10px 0px 0px 0px' }}>
@@ -385,7 +397,7 @@ const Page_Home = () => {
                   component="p"
                   sx={{ display: 'flex', justifyContent: 'flex-start' }}
                 >
-                 Understanding design principles and effective communication with team members are also highlighted as essential for creating seamless user experiences in the constantly evolving field of Frontend development.
+                  Understanding design principles and effective communication with team members are also highlighted as essential for creating seamless user experiences in the constantly evolving field of Frontend development.
                 </Typography>
               </Box>
             </Box>
@@ -393,11 +405,11 @@ const Page_Home = () => {
 
           </Grid>
           <Grid item md={6.5}>
-            <Box sx={{ padding: '24px 0px 0px 20px'  }} >
+            <Box sx={{ padding: '24px 0px 0px 20px' }} >
               <img src={picture2}
-                
+
                 alt=""
-                style={{ width: '98%'}}
+                style={{ width: '98%' }}
 
               />
             </Box>

@@ -76,18 +76,18 @@ const Page_Recruitment = () => {
   useEffect(() => {
     setPositionListSelect(positionList);
   }, [positionList]);
-  React.useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  // React.useEffect(() => {
+  //   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  }, []);
+  // }, []);
   const navigate = useNavigate();
   const handleNavigateClick1 = (id) => {
     navigate(`/recruitment/${id}`);
   };
   useEffect(() => {
-    dispatch({ type: "positionSaga/getPositionList" });
-    dispatch({ type: "recruitmentSaga/getRequirement" });
-    dispatch({ type: "skillSaga/getSkill" });
+    dispatch({ type: "positionSaga/getPositionList", payload: { token: "haha" } });
+    dispatch({ type: "recruitmentSaga/getRequirement", payload: { token: "haha" } });
+    dispatch({ type: "skillSaga/getSkill", payload: { token: "haha" } });
   }, []);
   const handleCloseSelect = () => {
     setBlock('none')
@@ -130,7 +130,7 @@ const Page_Recruitment = () => {
       <main id="recruitment">
         {/* Hero unit */}
         <Grid container spacing={3} p={3}>
-          <Grid item md={12} xs={12}  textAlign='center' >
+          <Grid item md={12} xs={12} textAlign='center' >
             <Box >
               <Box
                 sx={{
@@ -208,8 +208,8 @@ const Page_Recruitment = () => {
                           </Select>
                         </FormControl>
                         {/* <Button variant="contained" sx={{ display: block, ml: 2, p: 1 }} onClick={handleCloseSelect} ><Close fontSize="medium" sx={{ display: 'flex', ml: '12px' }} /></Button> */}
-                        <IconButton aria-label="delete" sx={{ display: block, ml: 2, p: 1 }}  onClick={handleCloseSelect}>
-                          <GridDeleteIcon  />
+                        <IconButton aria-label="delete" sx={{ display: block, ml: 2, p: 1 }} onClick={handleCloseSelect}>
+                          <GridDeleteIcon />
                         </IconButton>
                       </Box>
                     }
@@ -301,7 +301,7 @@ const Page_Recruitment = () => {
                               </Grid>
                               <Grid
                                 item
-                                md={3} xs={12}  sm={12}
+                                md={3} xs={12} sm={12}
                                 sx={{
                                   display: "flex",
                                   flexDirection: "column",
@@ -313,8 +313,8 @@ const Page_Recruitment = () => {
                                 </Box>
                                 <Box
                                   sx={{
-                                    padding:'30px 0px 0px 0px',
-                                    margin:"15px",
+                                    padding: '30px 0px 0px 0px',
+                                    margin: "15px",
                                     display: "flex",
                                     justifyContent: "end",
                                   }}
