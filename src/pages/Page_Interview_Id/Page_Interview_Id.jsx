@@ -70,8 +70,8 @@ const Page_Interview_Id = ({ cvid }) => {
     // }, [interviewerror])
     //const shift = useSelector(state => state.interviewshift);
     console.log("interviewid", interviewidinfo);
-    let left = 4
-    let right = 7
+    let left = 5
+    let right = 6
     let gap = 2
     let gridSx = {
         display: "flex", alignItems: "center", columnGap: gap
@@ -127,7 +127,7 @@ const Page_Interview_Id = ({ cvid }) => {
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={7} md={right} sx={gridSx}>
-                                                <Typography variant="h6" sx={{ marginLeft: "8px" }}>
+                                                <Typography variant="h6" sx={{ marginLeft: "6px" }}>
                                                     {/* 14:00 25/07/2023 */}
                                                     {/* {`${interviewidinfo[0].date}${' '}${interviewidinfo[0].time}`} */}
                                                     {`${date}${' '}${interviewidinfo.itrsinterview.shift.shiftTimeStart}${'h'}${' - '}${interviewidinfo.itrsinterview.shift.shiftTimeEnd}${'h'}`}
@@ -150,7 +150,7 @@ const Page_Interview_Id = ({ cvid }) => {
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={7} md={right} sx={gridSx}>
-                                                <Typography variant="h6" sx={{ marginLeft: "8px" }}>
+                                                <Typography variant="h6" sx={{ marginLeft: "6px" }}>
                                                     {/* {interviewidinfo[0].room} */}
                                                     {/* 202B4 */}
                                                     {interviewidinfo.itrsinterview.room.roomName}
@@ -179,7 +179,7 @@ const Page_Interview_Id = ({ cvid }) => {
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={7} md={right} sx={gridSx}>
-                                                <Typography variant="h6" sx={{ marginLeft: "8px" }} >
+                                                <Typography variant="h6" sx={{ marginLeft: "6px" }} >
                                                     {/* Front-end Development  */}
                                                     {interviewidinfo.application.position.positionName}
                                                     {/* {interviewidinfo[0].positionName} */}
@@ -210,7 +210,7 @@ const Page_Interview_Id = ({ cvid }) => {
                                                 <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-start", alignItems: "flex-start" }}>
                                                     {skill_list.map((skill) => (
 
-                                                        <Chip key={skill.skillId} sx={{ margin: "0px 0px 5px 8px" }} value={skill.skillName} label={skill.skillName} variant='outlined' size='medium' color="warning" />
+                                                        <Chip key={skill.skillId} sx={{ margin: "0px 0px 5px 6px" }} value={skill.skillName} label={skill.skillName} variant='outlined' size='medium' color="warning" />
 
                                                     ))}
                                                     {/* {requires.map((require) => (
@@ -273,12 +273,12 @@ const Page_Interview_Id = ({ cvid }) => {
                                                 <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
                                                     {interviewidinfo.candidate_Status === "Not start" &&
                                                         <>
-                                                            <Chip sx={{ margin: "0px 0px 5px 8px" }} label="Not start" variant='outlined' size='medium' color="info" />
+                                                            <Chip sx={{ margin: "0px 0px 5px 6px" }} label="Not start" variant='outlined' size='medium' color="info" />
                                                         </>
                                                     }
                                                     {interviewidinfo.candidate_Status === "Finished" &&
                                                         <>
-                                                            <Chip sx={{ margin: "0px 0px 5px 8px" }} label="Finished" variant='outlined' size='medium' color="info" />
+                                                            <Chip sx={{ margin: "0px 0px 5px 6px" }} label="Finished" variant='outlined' size='medium' color="info" />
                                                         </>
                                                     }
 
@@ -311,7 +311,7 @@ const Page_Interview_Id = ({ cvid }) => {
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={7} md={right} sx={gridSx}>
-                                                <Typography variant="h6" sx={{ marginLeft: "8px" }} >
+                                                <Typography variant="h6" sx={{ marginLeft: "6px" }} >
                                                     {/* Cong Pham Quoc Viet */}
                                                     {/* {interviewidinfo[0].interviewername} */}
                                                     {interviewidinfo.interviewer.user.fullName}
@@ -333,7 +333,7 @@ const Page_Interview_Id = ({ cvid }) => {
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={7} md={right} sx={gridSx}>
-                                                <Typography variant="h6" sx={{ marginLeft: "8px", wordBreak: "break-word" }}>
+                                                <Typography variant="h6" sx={{ marginLeft: "5px", wordBreak: "break-word" }}>
                                                     {/* vietcpq@fpt.com */}
                                                     {/* {interviewidinfo[0].intervieweremail} */}
                                                     {interviewidinfo.interviewer.user.email}
@@ -361,7 +361,7 @@ const Page_Interview_Id = ({ cvid }) => {
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={7} md={right} sx={gridSx}>
-                                                <Typography variant="h6" sx={{ marginLeft: "8px" }} >
+                                                <Typography variant="h6" sx={{ marginLeft: "6px" }} >
                                                     {/* {interviewidinfo[0].interviewerphone} */}
                                                     {/* 123456789 */}
                                                     {birthdate}
@@ -389,7 +389,7 @@ const Page_Interview_Id = ({ cvid }) => {
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={7} md={right} sx={gridSx}>
-                                                <Typography variant="h6" sx={{ marginLeft: "8px" }} >
+                                                <Typography variant="h6" sx={{ marginLeft: "6px" }} >
                                                     {/* {interviewidinfo[0].departmentName} */}
                                                     {/* {interviewidinfo.position.department.departmentName} */}
                                                     {/* {department[0].departmentName} */}
