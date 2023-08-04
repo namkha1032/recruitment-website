@@ -63,40 +63,216 @@ function* getUpcomingInterview(action) {
   }
 }
 
-function* getInterviewId(action) {
-  const response = yield call(axios.get, `${host.name}/data/interviewid.json`);
-  yield put({ type: "interviewResult/setInterviewResult", payload: response.data });
+function* getInterviewResult(action) {
+  try {
+    let token = `Bearer ${action.payload.token}`
+    const config = {
+      headers: { Authorization: token },
+    }
+    const responseInterview = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview?id=${action.payload.interviewid}`, config)
+    const responsePosition = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${responseInterview.data.application.position.positionId}`, config)
+    const responseQSList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill`, config);
+
+    const responseAllQuestion = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Question`, config)
+
+    const responseCategoryList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion`, config)
+    const responseSkillList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Skill`, config)
+    const responseRoundList = yield call(axios.get, `${host.name}/data/roundfake.json`, config)
+
+    console.log("responseInterview: ", responseInterview.data)
+    console.log("responsePosition: ", responsePosition.data)
+    console.log("responseQSList: ", responseQSList.data)
+    console.log("responseAllQuestion: ", responseAllQuestion.data)
+    console.log("responseCategoryList: ", responseCategoryList.data)
+    console.log("responseSkillList: ", responseSkillList.data)
+    console.log("responseRoundList: ", responseRoundList.data)
+
+    let interStruc = {
+      interviewid: action.payload.interviewid,
+      note: responseInterview.data.notes,
+      round: []
+    };
+    // Soft Skill
+    for (let cate of responseCategoryList.data) {
+      if (cate.categoryQuestionName == "Soft Skill") {
+        let newCate = {
+          categoryid: cate.categoryQuestionId,
+          categoryname: cate.categoryQuestionName,
+          questions: []
+        }
+        interStruc.round.push(newCate)
+        for (let softRo of responseRoundList.data) {
+          let findQues = null
+          findQues = responseAllQuestion.data.find((item) => {
+            return item.questionId == softRo.questionId && item.categoryQuestionId == cate.categoryQuestionId
+          })
+          if (findQues) {
+            const newRo = {
+              questionid: softRo.questionId,
+              questionstring: findQues.questionString,
+              score: softRo.score
+            }
+            interStruc.round[0].questions.push(newRo)
+          }
+        }
+
+      }
+    }
+    // Language
+    for (let cate of responseCategoryList.data) {
+      if (cate.categoryQuestionName == "Language") {
+        let newCate = {
+          categoryid: cate.categoryQuestionId,
+          categoryname: cate.categoryQuestionName,
+          languages: []
+        }
+        interStruc.round.push(newCate)
+        let newLang = {
+          languageid: responsePosition.data.language.languageId,
+          languagename: responsePosition.data.language.languageName,
+          questions: []
+        }
+        interStruc.round[1].languages.push(newLang)
+        let prefix = ""
+        if (responsePosition.data.language.languageName == "English") {
+          prefix = "$eng$"
+        }
+        else if (responsePosition.data.language.languageName == "Chinese") {
+          prefix = "$chi$"
+        }
+        else if (responsePosition.data.language.languageName == "Italian") {
+          prefix = "$ita$"
+        }
+        else if (responsePosition.data.language.languageName == "Spanish") {
+          prefix = "$spa$"
+        }
+        else if (responsePosition.data.language.languageName == "French") {
+          prefix = "$fre$"
+        }
+        else if (responsePosition.data.language.languageName == "Russian") {
+          prefix = "$rus$"
+        }
+        else if (responsePosition.data.language.languageName == "Japanese") {
+          prefix = "$rus$"
+        }
+        else if (responsePosition.data.language.languageName == "Korean") {
+          prefix = "$kor$"
+        }
+        else if (responsePosition.data.language.languageName == "German") {
+          prefix = "$ger$"
+        }
+        else if (responsePosition.data.language.languageName == "Portuguese") {
+          prefix = "$por$"
+        }
+        else if (responsePosition.data.language.languageName == "Hindi") {
+          prefix = "$hin$"
+        }
+
+        for (let langRo of responseRoundList.data) {
+          let findLangQues = null
+          findLangQues = responseAllQuestion.data.find((item) => {
+            return langRo.questionId == item.questionId && item.categoryQuestionId == cate.categoryQuestionId
+          })
+          if (findLangQues) {
+            const newLangQues = {
+              questionid: langRo.questionId,
+              questionstring: findLangQues.questionString.slice(5),
+              score: langRo.score,
+            }
+            interStruc.round[1].languages[0].questions.push(newLangQues)
+          }
+        }
+
+      }
+    }
+    // Technology
+    for (let cate of responseCategoryList.data) {
+      if (cate.categoryQuestionName == "Technology") {
+        let newCate = {
+          categoryid: cate.categoryQuestionId,
+          categoryname: cate.categoryQuestionName,
+          skills: []
+        }
+        interStruc.round.push(newCate)
+        for (let skill of responseSkillList.data) {
+          for (let skillRequired of responsePosition.data.requirements) {
+            if (skill.skillId == skillRequired.skillId) {
+              let newSkill = {
+                skillid: skillRequired.skillId,
+                skillname: skill.skillName,
+                questions: []
+              }
+              interStruc.round[2].skills.push(newSkill)
+              for (let QS of responseQSList.data) {
+                if (QS.skillId == skillRequired.skillId)
+                  for (let techRo of responseRoundList.data) {
+                    let findTechQues = null
+                    findTechQues = responseAllQuestion.data.find((item) => {
+                      return techRo.questionId == item.questionId && item.categoryQuestionId == cate.categoryQuestionId && item.questionId == QS.questionId
+                    })
+                    if (findTechQues) {
+                      const newTechRo = {
+                        questionid: techRo.questionId,
+                        questionstring: findTechQues.questionString,
+                        score: techRo.score,
+                      }
+                      interStruc.round[2].skills[interStruc.round[2].skills.length - 1].questions.push(newTechRo)
+                    }
+                  }
+              }
+            }
+          }
+        }
+
+      }
+    }
+    yield put({ type: "interviewResult/setInterviewResult", payload: interStruc });
+  }
+  catch (error) {
+    console.log("error: ", error)
+  }
+  // const response = yield call(axios.get, `${host.name}/data/interviewid.json`);
 }
 
 function* scoreInterview(action) {
   // const abc = yield call(axios.post, "http://localhost:3001/api/interview", action.payload)
-  console.log("hehehe");
+  try {
+    let token = `Bearer ${action.payload.token}`
+    const config = {
+      headers: { Authorization: token },
+    }
+    console.log("input: ", JSON.stringify(action.payload))
+    // yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Interview/PostQuestionInterviewResult/${action.payload.interviewid}`, action.payload.result, config)
+    // yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Interview/UpdateStatusInterview/${action.payload.interviewid}?Candidate_Status=Finished&Company_Status=Pending`, null, config)
+    yield put({ type: "error/setError", payload: { status: "no", message: action.payload.interviewid } })
+  }
+  catch (error) {
+    console.log("err: ", error)
+    yield put({ type: "error/setError", payload: { status: "yes", message: "Cannot end interview" } })
+  }
 }
 
 function* createInterview(action) {
   try {
-    console.log("input: ", JSON.stringify(action.payload))
-    // console.log("inre: ", action.payload)
-    yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Interview/${action.payload.interview.applicationId}`, action.payload)
-    // const responseInterviewList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`)
-    // const findInterview = responseInterviewList.data.find((item) => {
-    //   return item.recruiterId == action.payload.interview.recruiterId
-    //     && item.applicationId == action.payload.interview.applicationId
-    //     && item.interviewerId == action.payload.interview.interviewerId
-    // })
-    yield call(delay, 1000)
-    // throw {
-    //     response: {
-    //         data: {
-    //             error: "trung lich roi lam lai di"
-    //         }
-    //     }
-    // }
-    // yield put({ type: "error/setError", payload: { status: "no", message: findInterview.interviewId } })
-    yield put({ type: "error/setError", payload: { status: "no", message: "" } })
+    let token = `Bearer ${action.payload.token}`
+    const config = {
+      headers: { Authorization: token },
+    }
+    yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Interview/${action.payload.newInter.interview.applicationId}`, action.payload.newInter, config)
+    // update Application status
+    yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Application/UpdateStatusApplication/${action.payload.newInter.interview.applicationId}?Candidate_Status=Pending&Company_Status=Accepted`, null, config)
+    const responseInterviewList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview/GetInterviewsByInterviewer/${action.payload.newInter.interview.interviewerId}`, config)
+    const findInterview = responseInterviewList.data.find((item) => {
+      return item.recruiter.recruiterId == action.payload.newInter.interview.recruiterId
+        && item.application.applicationId == action.payload.newInter.interview.applicationId
+        && item.interviewer.interviewerId == action.payload.newInter.interview.interviewerId
+        && item.itrsinterview.room.roomId == action.payload.newInter.itrs.roomId
+        && item.itrsinterview.shift.shiftId == action.payload.newInter.itrs.shiftId
+    })
+    yield put({ type: "error/setError", payload: { status: "no", message: findInterview.interviewId } })
   }
   catch (err) {
-    // yield put({ type: "error/setError", payload: { status: "yes", message: err.response.data.error } })
+    yield put({ type: "error/setError", payload: { status: "yes", message: "Conflict" } })
     console.log("err: ", err)
   }
 }
@@ -161,51 +337,52 @@ function* getDataForInterview(action) {
   // const responseApplication = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload}`)
   // --------hàng tạm thời------------
   // get application infor
-  const responseAppList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`)
-  const appItem = responseAppList.data.find((item) => {
-    return item.applicationId == action.payload
-  })
-  const responsePositionList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position`)
-  const findPosition = responsePositionList.data.find((item) => item.positionId == appItem.position.positionId)
-  const responseDepartmentList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Department`)
-  const findDepartment = responseDepartmentList.data.find((item) => item.departmentId == findPosition.department.departmentId)
-  console.log("appItem: ", appItem)
+  let token = `Bearer ${action.payload.token}`
+  const config = {
+    headers: { Authorization: token },
+  }
+  // const responseApp = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload.applicationid}`, config)
+  // const appItem = responseApp.data
+  const responsePosition = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload.recruitmentid}`, config)
+  const findPosition = responsePosition.data
+  // const findDepartment = findPosition.department
   // get upcoming interview
-  const responseInterviewList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`)
+  // sửa lại chỗ này
+  const responseInterviewList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`, config)
   let interviewList = []
   for (let resInter of responseInterviewList.data) {
-    const responseItrsList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Itrsinterview?id=${resInter.itrsinterviewId}`)
-    const responseRoomList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Room`)
-    const findRoom = responseRoomList.data.find((item) => item.roomId == responseItrsList.data.roomId)
+    // const responseItrsList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Itrsinterview?id=${resInter.itrsinterviewId}`)
+    // const responseRoomList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Room`)
+    // const findRoom = responseRoomList.data.find((item) => item.roomId == responseItrsList.data.roomId)
     const newInter = {
       interviewid: resInter.interviewId,
-      departmentid: findPosition.department.departmentId,
-      departmentname: findPosition.department.departmentName,
-      candidateid: appItem.cv.candidateId,
-      candidatename: "Goku",
-      interviewerid: resInter.interviewerId,
-      interviewername: "Interviewer Name",
-      interviewdate: responseItrsList.data.dateInterview.slice(0, 11) + "17" + responseItrsList.data.dateInterview.slice(13) + ".000Z",
-      shiftid: responseItrsList.data.shiftId,
-      roomid: responseItrsList.data.roomId,
-      roomname: findRoom.roomName
+      departmentid: resInter.application.position.department.departmentId,
+      departmentname: resInter.application.position.department.departmentName,
+      candidateid: resInter.application.cv.candidateId,
+      candidatename: resInter.application.cv.candidate.user.fullName,
+      interviewerid: resInter.interviewer.interviewerId,
+      interviewername: resInter.interviewer.user.fullName,
+      interviewdate: resInter.itrsinterview.dateInterview.slice(0, 11) + "17" + resInter.itrsinterview.dateInterview.slice(13) + ".000Z",
+      shiftid: resInter.itrsinterview.shift.shiftId,
+      roomid: resInter.itrsinterview.room.roomId,
+      roomname: resInter.itrsinterview.room.roomName
     }
     interviewList.push(newInter)
   }
   // get department interviewer
-  const responseDepartInterviewerList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interviewer`)
-  const filterInterviewerList = responseDepartInterviewerList.data.filter((item) => item.departmentId == findPosition.department.departmentId)
+  const responseDepartInterviewerList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interviewer?departmentId=${findPosition.department.departmentId}`, config)
   let interviewerList = []
-  for (let filterInter of filterInterviewerList) {
+  for (let filterInter of responseDepartInterviewerList.data) {
     let newInterviewer = {
       departmentid: filterInter.departmentId,
       interviewerid: filterInter.interviewerId,
+      userid: filterInter.userId,
       user: filterInter.user,
     }
     interviewerList.push(newInterviewer)
   }
   // Get room
-  const responseRoomList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Room`)
+  const responseRoomList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Room`, config)
   let roomList = responseRoomList.data.map((item) => {
     const newRoomObj = {
       roomid: item.roomId,
@@ -214,7 +391,7 @@ function* getDataForInterview(action) {
     return newRoomObj
   })
   // Get shift
-  const responseShiftList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Shift`)
+  const responseShiftList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Shift`, config)
   let shiftList = responseShiftList.data.map((item) => {
     let newShiftObj = {
       shiftid: item.shiftId,
@@ -228,7 +405,7 @@ function* getDataForInterview(action) {
   });
   // ---------------------------------
   // -----------------------------------FAKE---------------------------------------
-  
+
   // -----------------------------------FAKE---------------------------------------
   // yield put({ type: "application/setApplication", payload: appItem })
   yield put({ type: "interviewList/setInterviewList", payload: interviewList })
@@ -242,7 +419,7 @@ function* interviewSaga() {
     takeEvery("interviewSaga/getInterviewInfo", getInterviewInfo),
     takeEvery("interviewSaga/getUpcomingInterview", getUpcomingInterview),
     takeEvery("interviewSaga/scoreInterview", scoreInterview),
-    takeEvery("interviewSaga/getInterviewId", getInterviewId),
+    takeEvery("interviewSaga/getInterviewResult", getInterviewResult),
     takeEvery("interviewSaga/createInterview", createInterview),
     takeLatest("interviewSaga/getAllInterview", getAllInterview),
     takeLatest("interviewSaga/getInterviewWithFilter", getInterviewWithFilter),

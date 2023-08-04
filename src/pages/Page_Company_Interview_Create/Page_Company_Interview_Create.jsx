@@ -71,15 +71,26 @@ const Page_Company_Interview_Create = () => {
 
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+
+
     // fetch Data
     useEffect(() => {
-        dispatch({ type: "interviewSaga/getDataForInterview", payload: applicationid })
+        dispatch({
+            type: "interviewSaga/getDataForInterview", payload: {
+                applicationid: applicationid,
+                recruitmentid: recruitmentid,
+                token: user.token
+            }
+        })
         // return () => {
         //     dispatch({ type: "interview/setInterview", payload: null })
         //     dispatch({ type: "interviewer/setInterviewer", payload: null })
         //     dispatch({ type: "room/setRoom", payload: null })
         //     dispatch({ type: "shift/setShift", payload: null })
         // }
+        return (() => {
+            cleanStore()
+        })
     }, [])
 
     const interviewList = useSelector(state => state.interviewList)
@@ -90,7 +101,7 @@ const Page_Company_Interview_Create = () => {
     const candidate = useSelector(state => state.candidate)
     const position = useSelector(state => state.position)
     const infoApplication = useSelector(state => state.infoApplication)
-
+    const user = useSelector(state => state.user)
 
     // set busyInterviewer and busyRoom
     useEffect(() => {
@@ -140,11 +151,11 @@ const Page_Company_Interview_Create = () => {
         const newInterviewObj = {
             interview: {
                 interviewerId: chosenInterviewer.interviewerid,
-                recruiterId: "cc8bb0ab-8790-4009-955e-7ab24dda359d",
+                recruiterId: user.recruiterId,
                 applicationId: applicationid,
                 itrsinterviewId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 notes: "",
-                resultId: "00000000-0000-0000-0000-000000000001",
+                resultId: "14106e09-cacd-4a89-8858-5f06499b7b81",
             },
             itrs: {
                 dateInterview: chosenDate,
@@ -152,7 +163,12 @@ const Page_Company_Interview_Create = () => {
                 roomId: chosenRoom.roomid
             }
         }
-        dispatch({ type: "interviewSaga/createInterview", payload: newInterviewObj })
+        dispatch({
+            type: "interviewSaga/createInterview", payload: {
+                newInter: newInterviewObj,
+                token: user.token
+            }
+        })
         // navigate("/company/interview/1")
     }
     function preProcessing() {

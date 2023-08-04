@@ -15,7 +15,7 @@ import {
 import Grid from '@mui/material/Grid';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Plot from 'react-plotly.js';
 import useGetRole from '../../hooks/useGetRole';
 // import components
@@ -55,13 +55,19 @@ const Page_Company_Interview_Id = () => {
     const [openAlertStart, setOpenAlertStart] = useState(false)
     const [openAlertAccept, setOpenAlertAccept] = useState(false)
     const [openAlertReject, setOpenAlertReject] = useState(false)
+    const { interviewid } = useParams()
+    const user = useSelector(state => state.user)
     useEffect(() => {
-        dispatch({ type: "interviewSaga/getInterviewId" })
+        let newObj = {
+            interviewid: interviewid,
+            token: user.token
+        }
+        dispatch({ type: "interviewSaga/getInterviewResult", payload: newObj })
     }, [])
     const interview = useSelector(state => state.interviewResult)
     console.log("interview: ", interview)
     function handleStart() {
-        navigate("/company/interview/1/start")
+        navigate(`/company/interview/${interviewid}/start`)
     }
     function handleAccept() {
         setOpenAlertAccept(false)
@@ -72,7 +78,7 @@ const Page_Company_Interview_Id = () => {
     return (
         interview && role
             ? <>
-                <Page_Interview_Id />
+                {/* <Page_Interview_Id /> */}
                 {role == "admin" || role == "interviewer"
                     ?
                     <>
@@ -86,7 +92,7 @@ const Page_Company_Interview_Id = () => {
                             handleSubmit={handleStart} />
                     </>
                     : null}
-                {role == "admin" ?
+                {(role == "admin" || role == "interviewer") ?
                     <>
                         <TitleDivider>
                             RESULT OF THE INTERVIEW

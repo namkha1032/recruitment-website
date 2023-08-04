@@ -1,0 +1,15 @@
+{
+    "interview": {
+        "interviewerId": "80f6783a-72c5-4ac0-ba9f-957cd4819edc",
+        "recruiterId": "0fdb8bd4-0298-4f47-ba7a-da1920b96b61",
+        "applicationId": "b4024cbb-42b5-44fa-9a83-76612d07e24e",
+        "itrsinterviewId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "notes": "",
+        "resultId": "00000000-0000-0000-0000-000000000001"
+    },
+    "itrs": {
+        "dateInterview": "2023-09-28T17:00:00.000Z",
+        "shiftId": "9035f81f-5864-427b-be85-87961cfdc3e9",
+        "roomId": "b92a755f-4973-455e-a8f8-1719ba969c66"
+    }
+}
