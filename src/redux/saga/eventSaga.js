@@ -123,12 +123,13 @@ function* getEventListWithFilter(action) {
 
 // ------------------------------------------------------------------------------------------------------------------------
 function* getEvent(action) {
-  console.log("eid: ", action.payload);
+  console.log("eid: ", action.payload.eventid)
   try {
-    const response = yield call(
-      axios.get,
-      `https://leetun2k2-001-site1.gtempurl.com/api/Event?id=${action.payload}`
-    );
+    let token = `Bearer ${action.payload.token}`
+    const config = {
+      headers: { Authorization: token },
+    }
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Event?id=${action.payload.eventid}`, config)
 
     // // ----------------------------------------
     // // FAKE API FOR BACKEND
@@ -141,7 +142,7 @@ function* getEvent(action) {
       eventId: res.eventId,
       eventName: res.eventName,
       content: res.description,
-      quantity: 50,
+      // quantity: 50,
       maxQuantity: res.maxParticipants,
       time: res.datetimeEvent,
       location: res.place,
@@ -169,24 +170,20 @@ function* getAllCandidateOfEvent(action) {
   // const response = yield call(axios.get, `${host.name}/data/candidateJoinEvent.json`)
   // console.log("res: ", response.data)
   // yield put({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: response.data })
-  console.log("EventId: ", action.payload);
+  console.log("EventId: ", action.payload.eventid)
   try {
-    const response1 = yield call(
-      axios.get,
-      `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`
-    );
-    console.log("Response 1: ", response1);
-    const response2 = response1.data.filter(
-      (element) => element.eventId === action.payload
-    );
-    console.log("Response 2: ", response2);
-    const response = yield call(
-      axios.get,
-      `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`
-    );
-    const response3 = response.data;
-    console.log("Response 3: ", response3);
-    let arr = [];
+    let token = `Bearer ${action.payload.token}`
+    const config = {
+      headers: { Authorization: token },
+    }
+    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`, config)
+    console.log("Response 1: ", response1)
+    const response2 = response1.data.filter(element => element.eventId === action.payload.eventid)
+    console.log("Response 2: ", response2)
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`, config)
+    const response3 = response.data
+    console.log("Response 3: ", response3)
+    let arr = []
     for (let i = 0; i < response2.length; i++) {
       for (let j = 0; j < response3.length; j++) {
         if (response2[i].candidateId === response3[j].candidateId) {
@@ -218,22 +215,27 @@ function* getAllCandidateOfEvent(action) {
 function* postEvent(action) {
   console.log("EventData: ", action.payload);
   try {
-    yield put({ type: "eventNavigate/onLoading" });
+    let token = `Bearer ${action.payload.token}`
+    const config = {
+      headers: { Authorization: token },
+    }
+    yield put({ type: "eventNavigate/onLoading" })
     const {
       eventName,
+      recruiterId,
       description,
-      quantity,
+      // quantity,
       maxParticipants,
       datetimeEvent,
       place,
-      createdTime,
+      // createdTime
     } = action.payload;
     // const datetimeEvent_edited = transferDatetime(datetimeEvent)
     console.log(action.payload);
     // console.log(datetimeEvent_edited)
     const request = {
       eventName: eventName,
-      recruiterId: "00000000-0000-0000-0000-000000000001",
+      recruiterId: recruiterId,
       description: description,
       place: place,
       isDeleted: false,
@@ -242,14 +244,10 @@ function* postEvent(action) {
     };
     const response = yield call(
       axios.post,
-      `https://leetun2k2-001-site1.gtempurl.com/api/Event`,
-      request
+      `https://leetun2k2-001-site1.gtempurl.com/api/Event`, request, config
     );
 
-    const eventList = yield call(
-      axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Event"
-    );
+    const eventList = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event", config)
 
     const eventId = eventList.data.filter(
       (item) => item.eventName === eventName && item.description === description
@@ -271,21 +269,26 @@ function* postEvent(action) {
 function* putEvent(action) {
   console.log("EventDataforPut: ", action.payload);
   try {
-    yield put({ type: "eventNavigate/onLoading" });
+    let token = `Bearer ${action.payload.token}`
+    const config = {
+      headers: { Authorization: token },
+    }
+    yield put({ type: "eventNavigate/onLoading" })
     const {
       eventId,
       eventName,
+      recruiterId,
       description,
-      quantity,
+      // quantity,
       maxParticipants,
       datetimeEvent,
       place,
-      createdTime,
+      // createdTime
     } = action.payload;
     console.log(action.payload);
     const request = {
       eventName: eventName,
-      recruiterId: "00000000-0000-0000-0000-000000000001",
+      recruiterId: recruiterId,
       description: description,
       place: place,
       isDeleted: false,
@@ -294,14 +297,10 @@ function* putEvent(action) {
     };
     const response = yield call(
       axios.put,
-      `https://leetun2k2-001-site1.gtempurl.com/api/Event/${eventId}`,
-      request
+      `https://leetun2k2-001-site1.gtempurl.com/api/Event/${eventId}`, request, config
     );
 
-    const eventList = yield call(
-      axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Event"
-    );
+    const eventList = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event", config)
 
     const EventId = eventList.data.filter(
       (item) => item.eventName === eventName && item.description === description
@@ -315,46 +314,120 @@ function* putEvent(action) {
 
 function* getCandidateIdRegisterEvent(action) {
   try {
-    const response = yield call(
-      axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Candidate"
-    );
+    let token = `Bearer ${action.payload.token}`
+    const config = {
+      headers: { Authorization: token },
+    }
+    const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Candidate", config)
     // console.log("+++++++++++", response)
     // console.log("+++++++++++", action.payload)
-    const response1 = response.data.filter(
-      (item) => item.userId === action.payload
-    )[0];
-    yield put({
-      type: "candidateIdRegister/setCandidateIdRegister",
-      payload: response1.candidateId,
-    });
-  } catch (error) {
-    console.log(error);
+    const response1 = response.data.filter(item => item.userId === action.payload.userId)[0]
+    console.log("Debug1: ", response1)
+    yield put({ type: "candidateIdRegisterEvent/setCandidateIdRegisterEvent", payload: response1.candidateId })
+    console.log("Debug2: ", response1.candidateId)
+  }
+  catch (error) {
+    console.log(error)
+  }
+}
+
+
+function* getRecruiterIdCreateEvent(action) {
+  try {
+    let token = `Bearer ${action.payload.token}`
+    const config = {
+      headers: { Authorization: token },
+    }
+    const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Recruiter", config)
+    // console.log("+++++++++++", response)
+    // console.log("+++++++++++", action.payload)
+    const response1 = response.data.filter(item => item.userId === action.payload.userId)[0]
+    console.log("DebugA: ", response1)
+    yield put({ type: "recruiterIdCreateEvent/setRecruiterIdCreateEvent", payload: response1.recruiterId })
+    console.log("DebugB: ", response1.recruiterId)
+  }
+  catch (error) {
+    console.log(error)
   }
 }
 
 function* postCandidateJoinEvent(action) {
   console.log("CandidateJoinEvent: ", action.payload);
   try {
-    yield put({ type: "eventNavigate/onLoading" });
-    const { candidateId, eventId } = action.payload;
+    let token = `Bearer ${action.payload.token}`
+    const config = {
+      headers: { Authorization: token },
+    }
+    yield put({ type: "eventIdStatus/onLoading" })
+    const {
+      candidateId,
+      eventId
+    } = action.payload;
     const request = {
       candidateId: candidateId,
       eventId: eventId,
     };
     const response = yield call(
       axios.post,
-      `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`,
-      request
+      `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`, request, config
     );
 
     // const eventList = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event")
 
     // const eventId = eventList.data.filter(item => item.eventName === eventName && item.description === description)[0].eventId
     // console.log('eId: ', eventId)
-    // yield put({ type: "eventNavigate/onSuccess", payload: eventId })
-  } catch (error) {
-    console.log(error);
+    yield put({ type: "eventIdStatus/onSuccess", payload: "Register event" })
+    yield put({ type: "eventSaga/getEvent", payload: eventId })
+    yield put({ type: "eventRegistered/setEventRegistered", payload: true })
+  }
+  catch (error) {
+    console.log(error)
+    yield put({ type: "eventIdStatus/onError", payload: error.message })
+  }
+}
+
+
+function* deleteCandidateJoinEvent(action) {
+  console.log("deleteCandidateJoinEvent: ", action.payload)
+  try {
+    let token = `Bearer ${action.payload.token}`
+    const config = {
+      headers: { Authorization: token },
+    }
+    const {
+      candidateId,
+      eventId
+    } = action.payload;
+    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`, config)
+    const response2 = response1.data.filter(element => (element.candidateId === candidateId) && (element.eventId === eventId))[0]
+    yield call(axios.delete, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent/${response2.candidateJoinEventId}`, config);
+    yield put({ type: "eventRegistered/setEventRegistered", payload: false })
+  }
+  catch (error) {
+    console.log(error)
+  }
+}
+
+
+function* checkCandidateJoinEvent(action) {
+  try {
+    let token = `Bearer ${action.payload.token}`
+    const config = {
+      headers: { Authorization: token },
+    }
+    console.log("ABCD: ", action.payload)
+    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`, config)
+    const response2 = response1.data.filter(element => (element.candidateId === action.payload.candidateId) && (element.eventId === action.payload.eventId))
+    console.log("MNOP: ", response2)
+    if (response2.length > 0) {
+      yield put({ type: "eventRegistered/setEventRegistered", payload: true })
+    }
+    else {
+      yield put({ type: "eventRegistered/setEventRegistered", payload: false })
+    }
+  }
+  catch (error) {
+
   }
 }
 // ------------------------------------------------------------------------------------------------------------------------
@@ -368,11 +441,11 @@ function* eventSaga() {
     takeEvery("eventSaga/getEventFooter", getEventFooter),
     takeEvery("eventSaga/postEvent", postEvent),
     takeEvery("eventSaga/putEvent", putEvent),
-    takeEvery(
-      "eventSaga/getCandidateIdRegisterEvent",
-      getCandidateIdRegisterEvent
-    ),
+    takeEvery("eventSaga/getCandidateIdRegisterEvent", getCandidateIdRegisterEvent),
+    takeEvery("eventSaga/getRecruiterIdCreateEvent", getRecruiterIdCreateEvent),
     takeEvery("eventSaga/postCandidateJoinEvent", postCandidateJoinEvent),
+    takeEvery("eventSaga/deleteCandidateJoinEvent", deleteCandidateJoinEvent),
+    takeEvery("eventSaga/checkCandidateJoinEvent", checkCandidateJoinEvent)
     // takeEvery("saga/getEventListId", getEventListId),
   ]);
 }

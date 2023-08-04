@@ -47,7 +47,7 @@ import cvCandidateSlice from './reducer/cvCandidateReducer'
 import eventFooterSlice from "./reducer/eventFooterReducer";
 import profileSlice from "./reducer/profileReducer";
 import eventNavigateSlice from "./reducer/eventNavigateReducer";
-import candidateIdSlice from "./reducer/candidateIdReducer";
+import candidateIdRegisterEventSlice from "./reducer/candidateIdRegisterEvent";
 import infoApplicationSlice from "./reducer/infoApplicationReducer";
 import interviewerListSlice from "./reducer/interviewerListReducer";
 import interviewResultSlice from "./reducer/interviewResultReducer";
@@ -59,6 +59,9 @@ import interviewSkillSlice from "./reducer/interviewSkillReducer";
 import interviewDepartmentSlice from "./reducer/interviewDepartmentReducer";
 import interviewPositionSlice from "./reducer/interviewPositionReducer";
 import reportSlice from "./reducer/reportReducer";
+import recruiterIdCreateEventSlice from "./reducer/recruiterIdCreateEvent";
+import eventIdStatusSlice from "./reducer/eventIdStatusReducer";
+import eventRegisteredSlice from "./reducer/eventRegisteredReducer";
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
     reducer: {
@@ -101,7 +104,8 @@ const store = configureStore({
         eventFooter: eventFooterSlice.reducer,
         profile: profileSlice.reducer,
         eventNavigate: eventNavigateSlice.reducer,
-        candidateId: candidateIdSlice.reducer,
+        candidateIdRegisterEvent: candidateIdRegisterEventSlice.reducer,
+        recruiterIdCreateEvent: recruiterIdCreateEventSlice.reducer,
         infoApplication: infoApplicationSlice.reducer,
         interviewerList: interviewerListSlice.reducer,
         interviewResult: interviewResultSlice.reducer,
@@ -114,6 +118,8 @@ const store = configureStore({
         interviewposition: interviewPositionSlice.reducer,
         interviewListCandidate: interviewCandidateSlice.reducer,
         report: reportSlice.reducer,
+        eventIdStatus: eventIdStatusSlice.reducer,
+        eventRegistered: eventRegisteredSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]
