@@ -43,6 +43,10 @@ const TableInterviewer = (props) => {
             dob: inter.user.dateOfBirth,
             email: inter.user.email,
             departmentname: position ? position.department.departmentName : "",
+            departmentaddress: position ? position.department.address : "",
+            departmentemail: position ? position.department.email : "",
+            departmentphone: position ? position.department.phone : "",
+            departmentwebsite: position ? position.department.website : "",
             avatar: inter.user.imageURL ? inter.user.imageURL : "https://i.kym-cdn.com/entries/icons/original/000/026/152/gigachadd.jpg",
             status: "status",
             action: "action"
@@ -54,6 +58,10 @@ const TableInterviewer = (props) => {
         { field: 'dob', headerName: 'Dob', flex: 0 },
         { field: 'email', headerName: 'Email', flex: 0 },
         { field: 'departmentname', headerName: 'Department', flex: 0 },
+        { field: 'departmentaddress', headerName: 'Department Address', flex: 0 },
+        { field: 'departmentemail', headerName: 'Department Email', flex: 0 },
+        { field: 'departmentphone', headerName: 'Department Phone', flex: 0 },
+        { field: 'departmentwebsite', headerName: 'Department Website', flex: 0 },
         {
             field: 'avatar', headerName: '', flex: 1,
             renderCell: (params) => {
@@ -126,7 +134,11 @@ const TableInterviewer = (props) => {
                             interviewerid: false,
                             dob: false,
                             email: false,
-                            departmentname: false
+                            departmentname: false,
+                            departmentaddress: false,
+                            departmentemail: false,
+                            departmentphone: false,
+                            departmentwebsite: false,
                         },
                     },
                 }}

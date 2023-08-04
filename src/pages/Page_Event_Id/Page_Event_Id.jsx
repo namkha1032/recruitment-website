@@ -1,6 +1,6 @@
 // import MUI components
 import { Box, Container, Divider, Grid, Paper, Typography } from '@mui/material'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './Page_Event_Id.scss'
 import { Button } from '@mui/material'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -11,6 +11,7 @@ import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 import TodayRoundedIcon from '@mui/icons-material/TodayRounded';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import picture from '../../assets/img/event.png'
 import GigaCard from '../../components/GigaCard/GigaCard';
@@ -26,37 +27,57 @@ import { transferDatetimeBack } from '../../utils/transferDatetime';
 
 const Page_Event_Id = () => {
 
-    const role = useGetRole()
-    const candidateId = useSelector(state => state.candidateId)
 
+    // const [isRegistered, setIsRegistered] = useState(false)
+
+    const role = useGetRole()
 
     const user = useSelector(state => state.user)
     const userId = user ? user.userid : ""
+    useEffect(() => {
+        if (role === "candidate") {
+            dispatch({
+                type: "eventSaga/getCandidateIdRegisterEvent",
+                payload: {
+                    userId: userId,
+                    token: user.token
+                }
+            })
+        }
+    }, [role])
+    const candidateId = useSelector(state => state.candidateIdRegisterEvent)
+    console.log("Debug3: ", candidateId)
 
 
     const { eventid } = useParams();
-
-
+    console.log('event id: ', eventid);
     const dispatch = useDispatch();
-
     useEffect(() => {
-        dispatch({ type: "eventSaga/getEvent", payload: eventid })
+        dispatch({
+            type: "eventSaga/getEvent",
+            payload: {
+                eventid: eventid,
+                token: user.token
+            }
+        })
+        dispatch({
+            type: "eventSaga/checkCandidateJoinEvent",
+            payload: {
+                eventId: eventid,
+                candidateId: candidateId,
+                token: user.token
+            }
+        })
+        // dispatch({ type: "eventSaga/getAllCandidateOfEvent", payload: eventid })
         return () => {
             cleanStore(dispatch)
         }
-    }, [])
+    }, [candidateId])
 
-
-    useEffect(() => {
-        if (role === "candidate") {
-            dispatch({ type: "eventSaga/getCandidateIdRegisterEvent", payload: userId })
-        }
-    }, [role])
-    console.log('ABCDEFGH: ', candidateId)
+    const isRegistered = useSelector(state => state.eventRegistered)
 
 
     const event = useSelector((state) => state.event)
-
     const note = event ? event.content : ""
     const contentRef = useRef()
     useEffect(() => {
@@ -68,19 +89,57 @@ const Page_Event_Id = () => {
     console.log("contentRef: ", contentRef);
 
 
+    useEffect(() => {
+        dispatch({
+            type: "eventSaga/getAllCandidateOfEvent",
+            payload: {
+                eventid: eventid,
+                token: user.token
+            }
+        })
+        return () => {
+            cleanStore(dispatch)
+        }
+    }, [])
+    const row_drafts = useSelector((state) => state.candidateJoinEvent)
+    const rows = row_drafts ? row_drafts : []
+
+
+    const status = useSelector(state => state.eventIdStatus)
+    useEffect(() => {
+        if (status.status === "success") {
+            // setIsRegistered(true)
+            dispatch({ type: "eventIdStatus/onReset" })
+        }
+    }, [status])
+
+
     // handle events
-    const handleRegister = (e) => {
+    const handleRegister = () => {
         dispatch({
             type: "eventSaga/postCandidateJoinEvent",
             payload: {
                 candidateId: candidateId,
-                eventId: event.eventId
+                eventId: event.eventId,
+                token: user.token
             }
         });
-        alert("Register successfully!");
+        // alert("Register successfully!")
+        // setIsRegistered(true)
         // alert(new Date())
     }
 
+    const handleRemoveRegister = () => {
+        dispatch({
+            type: "eventSaga/deleteCandidateJoinEvent",
+            payload: {
+                candidateId: candidateId,
+                eventId: event.eventId,
+                token: user.token
+            }
+        });
+        // setIsRegistered(false)
+    }
 
 
     return (
@@ -195,7 +254,8 @@ const Page_Event_Id = () => {
                                             <Box sx={{
                                                 fontSize: 16,
                                             }}>
-                                                {event.quantity} / {event.maxQuantity}
+                                                {/* {event.quantity} / {event.maxQuantity} */}
+                                                {rows.length} / {event.maxQuantity}
                                             </Box>
                                         </Box>
                                         {/* <p style={{ fontWeight: 600, fontSize: 20 }}>500/1000</p> */}
@@ -274,24 +334,46 @@ const Page_Event_Id = () => {
                             </Grid>
                             {role === "candidate" ?
                                 <Grid item xs={12} align='right' sx={{ marginTop: 8 }}>
-                                    <Button
-                                        variant='contained'
-                                        size='large'
-                                        className='btnregister'
-                                        // sx={{ mx: 3 }}
-                                        sx={{
-                                            backgroundColor: "black",
-                                            "&:hover": {
-                                                backgroundColor: "grey",
-                                            }
-                                        }}
-                                        onClick={handleRegister}
-                                    >
-                                        {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
-                                        {/* Đăng ký */}
-                                        <ArrowForwardIcon sx={{ marginRight: 1 }}></ArrowForwardIcon>
-                                        Register Now
-                                    </Button>
+                                    {isRegistered ?
+                                        (
+                                            <Button
+                                                variant='contained'
+                                                size='large'
+                                                // className='btnregister'
+                                                // sx={{ mx: 3 }}
+                                                sx={{
+                                                    backgroundColor: "red",
+                                                    "&:hover": {
+                                                        backgroundColor: "grey",
+                                                    }
+                                                }}
+                                                onClick={handleRemoveRegister}
+                                            >
+                                                {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
+                                                {/* Đăng ký */}
+                                                <DeleteIcon sx={{ marginRight: 1 }}></DeleteIcon>
+                                                Remove Register
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                variant='contained'
+                                                size='large'
+                                                className='btnregister'
+                                                // sx={{ mx: 3 }}
+                                                sx={{
+                                                    backgroundColor: "black",
+                                                    "&:hover": {
+                                                        backgroundColor: "grey",
+                                                    }
+                                                }}
+                                                onClick={handleRegister}
+                                            >
+                                                {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
+                                                {/* Đăng ký */}
+                                                <ArrowForwardIcon sx={{ marginRight: 1 }}></ArrowForwardIcon>
+                                                Register Now
+                                            </Button>
+                                        )}
                                 </Grid>
                                 : null}
                         </GigaCardBody>

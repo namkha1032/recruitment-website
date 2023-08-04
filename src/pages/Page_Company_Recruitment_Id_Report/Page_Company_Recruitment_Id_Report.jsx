@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Box,
   Grid,
@@ -17,7 +17,6 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
-import datasjson from "./Page_Company_Recruitment_Id_Report_Data.json";
 import {
   NullString,
   NotStart,
@@ -31,6 +30,8 @@ import ReportGraph from "./ReportGraph";
 import ReportStatistic from "./ReportStatistic";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
+import { useDispatch, useSelector } from "react-redux";
+import cleanStore from "../../utils/cleanStore";
 
 // JSON <- getReportList
 // {
@@ -53,11 +54,80 @@ const data = {
   Average: 8.89,
   Median: 6.5,
   Mode: 8,
-}
+  Value: [
+    6.67, 7.67, 6.67, 8.33, 7.0, 8.33, 8.0, 7.33, 8.33, 9.33, 6.0, 8.67, 9.0,
+    7.67, 6.0, 8.67, 5.67, 7.0, 8.0, 8.33, 6.67, 9.0, 7.33, 9.0, 9.33, 6.33,
+    8.67, 7.67, 8.67, 7.67, 6.33, 6.0, 8.33, 8.0, 7.0, 9.0, 8.0, 8.0, 8.0, 8.33,
+    6.67, 5.67, 8.33, 7.0, 6.67, 6.67, 8.33, 9.33, 8.67, 9.33, 8.0, 9.67, 7.67,
+    8.67, 8.67, 8.33, 9.0, 6.67, 8.0, 8.33, 6.67, 8.67, 7.67, 7.67, 8.67, 7.67,
+    9.33, 8.67, 8.33, 7.0, 6.67, 8.0, 6.33, 8.67, 7.67, 8.67, 7.0, 7.33, 6.67,
+    7.33, 7.67, 7.67, 8.0, 8.67, 7.33, 8.33, 7.0, 6.67, 8.33, 5.67, 8.33, 6.67,
+    8.67, 7.0, 7.33, 8.33, 9.0, 8.0, 7.0, 6.0, 7.67, 7.0, 7.33, 7.67, 6.0, 7.33,
+    8.33, 5.33, 8.67, 7.0, 9.0, 7.0, 9.0, 8.0, 7.67, 7.33, 8.0, 9.0, 8.67, 6.67,
+    8.0, 9.67, 8.0, 7.33, 8.33, 8.33, 8.0, 9.0, 9.0, 8.33, 9.33, 8.67, 9.0,
+    7.33, 9.0, 9.33, 9.0, 8.0, 7.67, 8.0, 8.33, 9.67, 8.0, 9.0, 8.33, 9.0, 9.0,
+    9.0, 6.0, 7.67, 9.0, 8.0, 9.33, 8.0, 9.33, 7.67, 4.33, 8.33, 7.67, 5.0,
+    8.67, 7.0, 4.33, 8.0, 7.67, 7.33, 9.33, 3.67, 7.33, 6.67, 9.0, 8.67, 7.33,
+    6.67, 7.33, 8.33, 8.0, 8.0, 8.0, 9.0, 7.0, 7.0, 8.33, 7.67, 7.0, 9.0, 8.0,
+    8.0, 8.33, 8.0, 6.67, 7.0, 7.33, 7.33, 8.67, 7.67, 7.0, 8.33, 8.67, 7.0,
+    8.67, 7.67, 8.67, 7.33, 8.33, 8.0, 7.33, 7.67, 8.33, 9.33, 7.0, 9.33, 8.33,
+    8.33, 6.67, 8.67, 8.67, 8.0, 6.67, 3.33, 4.67, 8.33, 8.0, 8.0, 8.33, 0.0,
+    7.33, 9.0, 7.67, 7.33, 6.67, 7.67, 6.67, 9.0, 8.33, 8.0, 8.67, 6.0, 9.67,
+    5.67, 7.33, 9.67, 7.67, 5.67, 6.33, 8.67, 9.67, 4.67, 5.33, 7.0, 7.67, 9.0,
+    7.0, 5.67, 8.33, 8.33, 8.33, 8.33, 8.0, 8.33, 8.33, 7.0, 6.33, 8.0, 8.33,
+    8.0, 8.33, 7.67, 9.33, 9.33, 7.33, 8.33, 0.0, 6.67, 8.0, 8.33, 7.67, 7.67,
+    6.33, 7.67, 8.67, 8.0, 8.0, 9.33, 8.33, 7.67, 7.0, 7.33, 7.0, 8.67, 7.33,
+    5.67, 9.0, 9.0, 7.67, 9.0, 9.0, 8.33, 6.67, 8.33, 9.33, 8.67, 6.67, 6.33,
+    9.0, 9.0, 7.0, 7.0, 8.67, 8.33, 8.67, 9.0, 9.33, 9.0, 7.33, 8.33, 7.0, 9.0,
+    7.33, 7.67, 8.0, 8.67, 8.33, 6.67, 9.0, 8.0, 6.67, 7.0, 7.33, 7.67, 9.0,
+    7.67, 9.33, 7.33, 7.0, 7.0, 8.33, 8.33, 7.33, 8.67, 8.0, 9.0, 7.67, 9.33,
+    8.67, 7.0, 8.0, 8.0, 8.67, 8.67, 8.0, 8.67, 6.67, 8.0, 8.67, 6.33, 7.0, 8.0,
+    7.67, 7.33, 8.67, 6.33, 8.0, 8.67, 5.67, 9.33, 7.0, 9.0, 7.33, 8.67, 9.33,
+    8.67, 8.0, 8.33, 8.33, 8.0, 8.0, 6.33, 7.33, 8.67, 9.0, 7.0, 8.0, 9.33,
+    8.33, 8.0, 8.67, 6.67, 7.0, 8.67, 9.0, 9.0, 5.33, 8.67, 7.67, 6.67, 8.67,
+    8.0, 8.0, 8.33, 9.67, 7.67, 7.33, 8.33, 9.33, 9.0, 8.0, 5.33, 6.67, 6.67,
+    8.33, 8.0, 8.0, 8.0, 6.33, 8.0, 9.67, 8.0, 7.33, 8.33, 8.67, 9.0, 6.0, 8.0,
+    8.67, 8.33, 8.0, 6.33, 8.33, 9.0, 8.0, 9.0, 8.0, 7.67, 9.33, 7.33, 9.0,
+    7.67, 7.33, 9.33, 6.67, 8.67, 9.67, 9.0, 7.0, 8.0, 7.67, 8.33, 7.0, 8.67,
+    7.33, 7.67, 6.33, 8.0, 7.67, 7.33, 7.0, 7.67, 7.67, 9.0, 7.67, 6.33, 6.67,
+    8.0, 8.33, 9.0, 5.67, 8.33, 9.33, 9.33, 9.0, 8.67, 7.0, 8.33, 7.67, 7.33,
+    6.67, 7.33, 7.33, 9.0, 7.67, 7.0, 8.0, 9.67, 9.0, 7.0, 7.0, 7.67, 8.33,
+    8.33, 7.33, 9.0, 6.67, 8.33, 7.33, 9.33, 5.33, 9.0, 7.0, 8.0, 7.0, 8.33,
+    9.0, 7.67, 7.0, 9.0, 9.33, 9.0, 8.0, 7.0, 8.67, 8.67, 9.0, 9.33, 7.33, 8.33,
+    6.67, 9.0, 8.33, 8.33, 8.33, 7.67, 7.0, 8.0, 9.0, 7.67, 7.33, 8.33, 7.0,
+    8.0, 9.0, 7.0, 8.0, 8.0, 7.67, 6.33, 7.0, 7.33, 4.33, 7.67, 7.67, 8.67,
+    7.67, 7.33, 8.33, 8.0, 8.33, 9.67, 7.33, 7.0, 3.33, 8.33, 5.67, 9.67, 8.0,
+    8.33, 8.0, 6.33, 7.0, 8.67, 8.67, 7.0, 9.0, 8.33, 4.33, 8.0, 8.67, 8.33,
+    8.33, 9.0, 6.33, 9.67, 8.33, 8.67, 9.0, 8.0, 6.33, 7.67, 8.67, 9.0, 8.0,
+    7.0, 8.67, 8.0, 8.0, 7.0, 7.33, 8.33, 7.33, 8.0, 8.0, 8.0, 6.67, 9.0, 8.67,
+    7.67, 7.67, 9.0, 7.0, 8.67, 6.67, 6.67, 7.0, 7.33, 8.67, 8.0, 8.67, 6.67,
+    7.33, 7.0, 7.67, 5.33, 8.67, 8.0, 7.0, 7.67, 7.0, 9.33, 6.67, 7.67, 8.33,
+    8.33, 8.0, 7.0, 9.0, 7.0, 5.33, 8.67, 7.33, 6.67, 8.33, 7.67, 7.0, 8.33,
+    7.33, 7.67, 9.33, 6.0, 8.67, 7.33, 8.67, 9.0, 8.33, 6.33, 8.0, 7.0, 7.0,
+    7.0, 7.67, 7.0, 7.33, 6.0, 9.33, 7.67, 5.33, 8.67, 9.0, 7.67, 7.33, 8.67,
+    8.0, 8.67, 5.33, 8.33, 6.33, 8.33, 7.0, 8.0, 8.0, 8.33, 4.33, 7.67, 8.67,
+    8.67, 8.67, 8.33, 7.0, 8.67, 8.67, 9.33, 8.33, 7.33, 8.67, 7.0, 8.0, 7.0,
+    6.67, 7.33, 8.0, 8.67, 9.0, 6.0, 6.67, 7.67, 7.33, 6.33, 9.67, 8.67, 8.33,
+    8.67, 6.67, 8.0, 9.0, 7.0, 7.67, 8.67, 5.67, 8.0, 7.0, 8.67, 7.0, 8.0, 7.67,
+    7.33, 7.33, 5.0, 8.67, 8.0, 8.33, 8.0, 8.33, 9.33, 0.0, 5.33, 5.33, 8.0,
+    7.33, 7.0, 0.0, 9.0, 8.33, 8.67, 7.67, 0.0, 8.0, 8.33, 8.0, 8.0, 8.0, 7.67,
+    6.67, 9.67, 7.67, 7.33, 8.33, 6.33, 6.33, 7.33, 7.67, 8.33, 8.67, 7.33,
+    5.67, 6.33, 6.33, 7.33, 7.33, 7.67, 6.33, 7.0, 9.0, 7.0, 9.0, 8.0, 8.0,
+    6.67, 8.33, 7.67, 7.67, 9.0, 7.33, 7.33, 6.33, 8.67, 7.67, 7.33, 7.0, 6.0,
+    4.33, 9.0, 7.0, 8.0, 6.67, 7.33, 7.33, 7.0, 8.33, 7.67, 6.67, 8.33, 8.33,
+    7.33, 8.33, 8.33, 7.33, 7.0, 6.67, 8.33, 8.33, 7.67, 6.0, 8.33, 7.0, 7.67,
+    7.0, 7.33, 9.0, 7.67, 4.67, 6.67, 7.0, 8.67, 7.67, 7.67, 9.0, 7.0, 9.0,
+    7.67, 9.33, 9.33, 4.67, 8.0, 5.33, 7.67, 8.67, 8.33, 9.0, 8.33, 8.0, 0.0,
+    5.33, 8.0, 8.0, 7.67,
+  ],
+};
 
 export default function Page_Company_Recruitment_Id_Report(props) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
+
+  const positionId = useMemo(() => location.state.positionId, [location])
 
   // -- Navigate in Company/Recruitment
   // navigate(`./${value}/report`, {
@@ -65,12 +135,19 @@ export default function Page_Company_Recruitment_Id_Report(props) {
   //     positionId: value,
   //   },
   // });
-  
+
   // TEMPORARY
   // const positionId = useMemo(() => location.state.positionId);
-  const positionId = "1";
 
-  const [rows, setRows] = useState(datasjson);
+  const rows = useSelector(state => state.report);
+  const loading = useSelector(state => state.loading);
+
+  useEffect(() => {
+    dispatch({type: "reportSaga/getReport", payload: {
+      positionId: positionId
+    }})
+    return () => cleanStore(dispatch)
+  },[])
 
   const [tabValue, setTabValue] = useState("0");
 
@@ -87,11 +164,11 @@ export default function Page_Company_Recruitment_Id_Report(props) {
   }
 
   function handleCandidateClick(value) {
-    navigate(`/profile/${value}`)
+    navigate(`/profile/${value}`);
   }
 
   function handleInterviewerClick(value) {
-    navigate(`/profile/${value}`)
+    navigate(`/profile/${value}`);
   }
 
   const columns = useMemo(() => [
@@ -215,13 +292,19 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       renderCell: (params) => {
         if (params.value !== null && params.value !== undefined) {
           if (params.value < 6) {
-            return <Box sx={{color: "#cc3300", fontWeight: 600}}>{params.value}</Box>;
-          }
-          else if (params.value < 8.5) {
-            return <Box sx={{color: "black"}}>{params.value}</Box>;
-          }
-          else {
-            return <Box sx={{color: "#008631", fontWeight: 600}}>{params.value}</Box>;
+            return (
+              <Box sx={{ color: "#cc3300", fontWeight: 600 }}>
+                {params.value}
+              </Box>
+            );
+          } else if (params.value < 8.5) {
+            return <Box sx={{ color: "black" }}>{params.value}</Box>;
+          } else {
+            return (
+              <Box sx={{ color: "#008631", fontWeight: 600 }}>
+                {params.value}
+              </Box>
+            );
           }
         }
       },
@@ -244,7 +327,11 @@ export default function Page_Company_Recruitment_Id_Report(props) {
   ]);
 
   return (
-    <Box>
+    <Box
+      sx={{
+        marginTop: 3,
+      }}
+    >
       <GigaCard>
         <GigaCardBody>
           <Grid container spacing={2}>
@@ -353,6 +440,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
             <ReportDataGrid
               columns={columns}
               rows={rows}
+              loading={loading}
               handleDetailClick={handleDetailClick}
               handleCandidateClick={handleCandidateClick}
               handleInterviewerClick={handleInterviewerClick}
@@ -363,12 +451,55 @@ export default function Page_Company_Recruitment_Id_Report(props) {
             <Box>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={8}>
-                  <ReportGraph />
+                  <ReportGraph title={"General"} data={data} />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <ReportStatistic 
-                    data={data}
-                  />
+                  <ReportStatistic data={data} />
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Divider
+                    sx={{
+                      borderColor: "gray.100",
+                    }}
+                  ></Divider>
+                </Grid>
+
+                <Grid item xs={12} md={8}>
+                  <ReportGraph title={"Technology"} data={data} />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <ReportStatistic data={data} />
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Divider
+                    sx={{
+                      borderColor: "gray.100",
+                    }}
+                  ></Divider>
+                </Grid>
+
+                <Grid item xs={12} md={8}>
+                  <ReportGraph title={"Language"} data={data} />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <ReportStatistic data={data} />
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Divider
+                    sx={{
+                      borderColor: "gray.100",
+                    }}
+                  ></Divider>
+                </Grid>
+
+                <Grid item xs={12} md={8}>
+                  <ReportGraph title={"Soft Skills"} data={data} />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <ReportStatistic data={data} />
                 </Grid>
               </Grid>
             </Box>

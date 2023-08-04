@@ -5,7 +5,7 @@ import host from "../host";
 import { formatPositionList } from "../../utils/formatPositionList";
 import { filterPositionList } from "../../utils/filterPositionList";
 
-function* getPositionList() {
+function* getPositionList(action) {
   console.log("Get All Position");
   // yield call(delay, 1500)
   // const response = yield call(axios.get, `${host.name}/data/positionList.json`)
@@ -14,16 +14,30 @@ function* getPositionList() {
     // const response = yield call(axios.get, `${host.name}/data/positionList.json`)
     // const response = yield call(axios.get, `${host.name}/data/positionList.json`)
     // yield put({ type: "positionList/setPositionList", payload: response.data });
-    
-    const response = yield call(
-      axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Position"
-    );
+    let response
+    if (action.payload) {
+      response = yield call(
+        axios.get,
+        "https://leetun2k2-001-site1.gtempurl.com/api/Position",
+        {
+          headers: { Authorization: action.payload.token },
+        }
+      );
+    }
+    else {
+      response = yield call(
+        axios.get,
+        "https://leetun2k2-001-site1.gtempurl.com/api/Position"
+      );
+    }
 
     const candidatesPosition = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Application"
-    )
+      "https://leetun2k2-001-site1.gtempurl.com/api/Application",
+      {
+        headers: { Authorization: action.payload.token },
+      }
+    );
     const data = formatPositionList(response.data, candidatesPosition.data);
     yield put({ type: "positionList/setPositionList", payload: data });
     yield put({ type: "loading/offLoading" });
@@ -35,6 +49,7 @@ function* getPositionList() {
     //   },
     // });
   } catch (error) {
+    yield put({ type: "loading/offLoading" });
     // yield put({
     //   type: "error/setError",
     //   payload: {
@@ -58,12 +73,18 @@ function* getPositionListWithFilter(action) {
 
     const response = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Position"
+      "https://leetun2k2-001-site1.gtempurl.com/api/Position",
+      {
+        headers: { Authorization: action.payload.token },
+      }
     );
     const candidatesPosition = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Application"
-    )
+      "https://leetun2k2-001-site1.gtempurl.com/api/Application",
+      {
+        headers: { Authorization: action.payload.token },
+      }
+    );
     const draft = filterPositionList(response.data, action.payload);
     const data = formatPositionList(draft, candidatesPosition.data);
     yield put({ type: "positionList/setPositionList", payload: data });
@@ -76,6 +97,7 @@ function* getPositionListWithFilter(action) {
     //   },
     // });
   } catch (error) {
+    yield put({ type: "loading/offLoading" });
     // yield put({
     //   type: "error/setError",
     //   payload: {
@@ -88,25 +110,38 @@ function* getPositionListWithFilter(action) {
 
 function* updatePositionList(action) {
   try {
-    const response = yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Position/${action.payload.id}`, action.payload.value);
+    const response = yield call(
+      axios.put,
+      `https://leetun2k2-001-site1.gtempurl.com/api/Position/${action.payload.id}`,
+      action.payload.value,
+      {
+        headers: { Authorization: action.payload.token },
+      }
+    );
+    yield put({
+      type: "status/onSuccess",
+      payload: action.payload.value.isDeleted ? "Inactive" : "Active"
+    });
     yield put({
       type: "positionSaga/getPositionListWithFilter",
       payload: {
         departmentId: action.payload.departmentId,
         status: action.payload.status,
+        token: action.payload.token
       },
-    })
+    });
+  } catch (error) {
+    yield put({
+      type: "status/onError",
+      payload: error.message
+    });
   }
-  catch (error) {
 
-  }
-  
   // yield put({ type: "positionList/setPositionList", payload: response.data });
 }
 
 function* getPosition(action) {
   try {
-
     // const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Language?languageId=${response1.data.languageId}`)
 
     // console.log("deinresponse1", response1.data.departmentId)
@@ -162,8 +197,11 @@ function* getPosition(action) {
     // yield put({ type: 'language/setLanguage', payload: response2.data })
     // yield put({ type: 'department/setDepartment', payload: department })
     // const response1 = yield call(axios.get, `${host.name}/data/detailposition.json`)
+    
+    
+
     console.log("param", action.payload)
-    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload}`)
+    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload.recruitmentid}`)
 
     let skilllist = []
     const response2 = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Skill');
@@ -172,23 +210,30 @@ function* getPosition(action) {
     console.log('skillid', response1.data.requirements)
     for (let i = 0; i < response1.data.requirements.length; i++) {
       for (let j = 0; j < response2.data.length; j++) {
-        if (response1.data.requirements[i].skillId === response2.data[j].skillId && response1.data.requirements[i].isDeleted === false ) {
+        if (response1.data.requirements[i].skillId === response2.data[j].skillId && response1.data.requirements[i].isDeleted === false) {
           skilllist.push(response2.data[j]);
         }
       }
     }
+    console.log("response1.data",response1.data)
 
-    console.log('skillinsaga', skilllist);
-    yield put({ type: 'position/setPosition', payload: response1.data })
-    yield put({ type: 'skill/setSkill', payload: skilllist })
+    console.log("skillinsaga", skilllist);
+    yield put({ type: "position/setPosition", payload: response1.data });
+    yield put({ type: "skill/setSkill", payload: skilllist });
 
     // yield put({ type: 'position/setPosition', payload: response1.data })
     // yield put({ type: 'positionskill/setPositionSkill', payload: skilllist })
   } catch (error) {
-    console.log(error)
-  }
+    console.log("RERERE: ", error)
+    if (error.response.request.status === 400 || error.response.request.status === 404) {
 
+      yield put({ type: 'positionError/onError', payload: error.response.request.status })
+
+    }
+  }
 }
+
+
 // function* getDetailPosition(action){
 //     const reponse = yield call(axios.get, `http://localhost:3001/positions?PositionId=${action.payload}`)
 //     yield put({ type: 'detail/setDetail', payload: reponse.data})
@@ -199,7 +244,10 @@ function* positionSaga() {
     takeEvery("positionSaga/getPosition", getPosition),
     takeLatest("positionSaga/getPositionList", getPositionList),
     takeLatest("positionSaga/updatePositionList", updatePositionList),
-    takeLatest("positionSaga/getPositionListWithFilter", getPositionListWithFilter),
+    takeLatest(
+      "positionSaga/getPositionListWithFilter",
+      getPositionListWithFilter
+    ),
   ]);
 }
 

@@ -38,7 +38,7 @@ function UploadPdf(prop) {
     }
   }
   function handleChange(e) {
-    console.log("open");
+    // console.log("open");
     let selectedFile = e.target.files[0];
     if (selectedFile) {
       if (selectedFile && fileType.includes(selectedFile.type)) {
@@ -64,7 +64,7 @@ function UploadPdf(prop) {
     } else {
       prop.setViewPdf(null);
       prop.setPdf(null);
-      console.log("please select");
+      // console.log("please select");
     }
   }
   return (

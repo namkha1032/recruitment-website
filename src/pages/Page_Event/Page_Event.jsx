@@ -30,7 +30,8 @@ import { useDispatch, useSelector } from "react-redux";
 import AppPagination from "../../components/AppPagination/index";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import { AccessTime, AccessTimeFilled, AccountCircle, Search } from "@mui/icons-material";
-
+import NoteField from "../Page_Company_Interview_Id/NoteField/NoteField";
+import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 //
 const cards1 = [1, 2, 3, 4, 5, 6];
 const pageSize = 6;
@@ -56,11 +57,11 @@ const Page_Event = () => {
   const list = useSelector((state) => state.eventList);
 
   useEffect(() => {
-    dispatch({ type: "eventSaga/getEventList" });
+    dispatch({ type: "eventSaga/getEventList", payload: { token: "goku" } });
   }, []);
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    
+
   }, []);
   //
   const handleNavigateClick1 = (id) => {
@@ -95,35 +96,35 @@ const Page_Event = () => {
               boxShadow: 5,
             }}
           >
-            <Box sx={{position:'relative',top:'150px', left:'30px'}}>
-            <Box>
-              <Typography
-                variant="h3"
-                align="left"
-                color="#FFFFFF"
-                fontFamily="Arial"
-                sx={{ }}
-              >
-                Event
-              </Typography>
-            </Box>
+            <Box sx={{ position: 'relative', top: '150px', left: '30px' }}>
+              <Box>
+                <Typography
+                  variant="h3"
+                  align="left"
+                  color="#FFFFFF"
+                  fontFamily="Arial"
+                  sx={{}}
+                >
+                  Event
+                </Typography>
+              </Box>
 
-            <Box >
-              <Typography
-                variant="h6"
-                align="left"
-                color="#EEEEEE"
-                fontFamily="Arial"
-              >
-                Các sự kiện sôi động sẽ cập nhật liên tục
-              </Typography>
-            </Box>
+              <Box >
+                <Typography
+                  variant="h6"
+                  align="left"
+                  color="#EEEEEE"
+                  fontFamily="Arial"
+                >
+                  Exciting events will be updated continuously
+                </Typography>
+              </Box>
             </Box>
           </Box>
         </Box>
         {eventList && (
           <Box p="24px">
-            <Paper p="16px">
+            <Paper p="16px" sx={{ boxShadow: 5, padding: '0px 0px 10px 0px' }} >
               <Box sx={{ p: "24px 48px 24px 48px" }}>
                 {
                   /* End hero unit */
@@ -143,7 +144,7 @@ const Page_Event = () => {
                 }
                 <Divider />
                 <Grid container spacing={4} mt="auto">
-                  {eventList.map((card,index) => (
+                  {eventList.map((card, index) => (
                     <Grid item key={index} xs={12} sm={6} md={4}>
                       <Card
                         sx={{
@@ -161,9 +162,12 @@ const Page_Event = () => {
                           image="https://greenwich.edu.vn/wp-content/uploads/2023/07/CF23web-940x400.png"
                         />
                         <CardContent sx={{ flexGrow: 1 }}>
-                          <Typography gutterBottom variant="h5" component="h2">
-                            {card.EventName}
-                          </Typography>
+                          <Box sx={{ padding: "0px 0px 5px 5px" }}>
+                            <Typography gutterBottom variant="h5" component="h2" >
+                              {card.EventName}
+                            </Typography>
+                          </Box>
+
                           <Box>
                             <Box sx={{ padding: "0px 0px 5px 0px" }}>
                               <Typography
@@ -177,63 +181,94 @@ const Page_Event = () => {
                                   padding: "0px 0px 5px 0px",
                                 }}
                               >
-                                
-                                
-                                 
+
+
+
                               </Typography>
-                              <Box>
-                                <Typography variant="subtitle2"
-                                align="left"
-                                color="text.secondary"
-                                component="p"
-                               
+
+                              <Box display="flex">
+                                <PermIdentityIcon />
+                                <Typography
+                                  variant="subtitle2"
+                                  align="left"
+                                  color="black"
+                                  component="p"
+                                  sx={{
+                                    display: "flex",
+                                    justifyContent: "flex-start",
+                                    padding: "0px 0px 0px 5px",
+                                  }}
                                 >
-                                  
+
                                 </Typography>
-                              <PermIdentityIcon />
-                                  {card.NumOfJoined} 
+
+                                {card.NumOfJoined}
+
                               </Box>
 
-                           
-                                
-                                <Box>
-                               <Typography variant="subtitle2"
-                                align="left"
-                                color="text.secondary"
-                                component="p">
-                               
-                              <AccessTime />
-                                {card.EventDateTime.slice(0, 10)}
+
+
+                              <Box display="flex" sx={{ padding: '8px 0px 0px 0px' }} >
+                                <AccessTime />
+
+                                <Typography
+                                  variant="subtitle2"
+                                  align="left"
+                                  color="black"
+                                  component="p"
+                                  sx={{
+                                    display: "flex",
+                                    justifyContent: "flex-start",
+                                    padding: "0px 0px 0px 5px",
+                                  }}
+                                >
+
+
+
+                                  {card.EventDateTime.slice(0, 10)}
                                 </Typography>
-                                </Box>
-                              <Typography
-                                variant="subtitle1"
-                                align="center"
-                                color="#A0522D"
-                                sx={{
-                                  display: "flex",
-                                  justifyContent: "flex-start",
-                                  padding: "0px 0px 5px 0px",
-                                }}
-                              >
-                                {card.EventCampus}
-                              </Typography>
+                              </Box>
+
+
+                              <Box display="flex" sx={{ padding: '8px 0px 0px 0px' }}>
+                                <PlaceOutlinedIcon />
+                                <Typography
+                                  variant="subtitle1"
+                                  align="left"
+                                  color="#A0522D"
+                                  sx={{
+                                    display: "flex",
+                                    justifyContent: "flex-start",
+                                    padding: "0px 0px 5px 5px",
+                                  }}
+                                >
+                                  {card.EventCampus}
+                                </Typography>
+                              </Box>
+
                             </Box>
 
-                            <Typography>{card.EventDescription}</Typography>
+                            {/* <Typography
+                            variant="subtitle1"
+                            ><NoteField note={card.EventDescription.slice(0,30)}/></Typography> */}
                           </Box>
                         </CardContent>
                         <CardActions
                           sx={{ display: "flex", justifyContent: "right" }}
                         >
-                          <Button
-                            disabled={false}
-                            size="small"
-                            variant="filled"
-                            onClick={() => handleNavigateClick1(card.EventId)}
-                          >
-                            View 
-                          </Button>
+                          <Box marginBottom="10px" marginRight=" 10px">
+                            <Button
+                              disabled={false}
+                              size="small"
+                              variant="contained"
+                              // sx={{backgroundColor:"black", ":hover":{backgroundColor:"grey"}} }
+                              onClick={() => handleNavigateClick1(card.EventId)}
+
+                            >
+                              View
+                            </Button>
+                          </Box>
+
                         </CardActions>
                       </Card>
                     </Grid>
@@ -251,7 +286,7 @@ const Page_Event = () => {
             setChangeList={setEventList}
           />
         )}
-        
+
       </>
     )
   );

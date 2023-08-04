@@ -1,69 +1,105 @@
 import { Box, Grid, List, ListItem } from "@mui/material";
-import TroubleshootRoundedIcon from '@mui/icons-material/TroubleshootRounded';
+import TroubleshootRoundedIcon from "@mui/icons-material/TroubleshootRounded";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 export default function ReportStatistic(props) {
-    return (
-        <Box sx={{
-            border: "1px solid gray",
-            borderRadius: 1,
-            padding: 2
-        }}>
-            <Grid container>
-                <Grid item xs={12} sm={12} md={12} sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    fontSize: 20,
-                }}>
-                    <TroubleshootRoundedIcon sx={{
-                        fontSize: 30,
-                        marginRight: 1
-                    }}/> 
-                    <Box sx={{
-                        fontWeight: 600
-                    }}>Numerical Data</Box>
-                </Grid>
-                <Grid item xs={12} sm={12} md={12}>
-                <List>
-                    <ListItem sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center"
-                    }}>
-                        <Box>Applied Total:</Box>
-                        <Box>{props.data.AppliedTotal}</Box>
-                    </ListItem>
-                    <ListItem sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center"
-                    }}>
-                        <Box>Average:</Box>
-                        <Box>{props.data.Average}</Box>
-                    </ListItem>
-                    <ListItem sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center"
-                    }}>
-                        <Box>Median:</Box>
-                        <Box>{props.data.Median}</Box>
-                    </ListItem>
-                    <ListItem sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center"
-                    }}>
-                        <Box>Mode:</Box>
-                        <Box>{props.data.Mode}</Box>
-                    </ListItem>
-                </List>
-                </Grid>
-                
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up("md"));
+  const isSm = useMediaQuery(theme.breakpoints.down("sm"));
 
-            </Grid>
-            
-        
-        </Box>
-    )
+  return (
+    <Box
+      sx={{
+        borderLeft: isMd ? "1px solid gray" : "",
+        border: isMd ? "" : "1px solid gray",
+        borderRadius: isMd ? 0 : 1,
+        paddingTop: isMd ? 0 : 2,
+        paddingLeft: 2,
+        paddingBottom: isMd ? 0 : 2,
+        paddingRight: 2,
+      }}
+    >
+      <Grid container>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          sx={{
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+          }}
+        >
+          <TroubleshootRoundedIcon
+            sx={{
+              fontSize: 30,
+              marginRight: 1,
+            }}
+          />
+          <Box
+            sx={{
+              fontWeight: 600,
+              fontSize: 20,
+            }}
+          >
+            Numerical Data
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12}>
+          <List>
+            <ListItem
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Box>Applied Total:</Box>
+              <Box sx={{
+                fontWeight: 600
+              }}>{props.data.AppliedTotal}</Box>
+            </ListItem>
+            <ListItem
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Box>Average:</Box>
+              <Box sx={{
+                fontWeight: 600
+              }}>{props.data.Average}</Box>
+            </ListItem>
+            <ListItem
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Box>Median:</Box>
+              <Box sx={{
+                fontWeight: 600
+              }}>{props.data.Median}</Box>
+            </ListItem>
+            <ListItem
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Box>Mode:</Box>
+              <Box sx={{
+                fontWeight: 600
+              }}>{props.data.Mode}</Box>
+            </ListItem>
+          </List>
+        </Grid>
+      </Grid>
+    </Box>
+  );
 }

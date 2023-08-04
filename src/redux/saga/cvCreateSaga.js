@@ -21,12 +21,12 @@ function* createCv(action) {
     //   Certificates,
     // } = action.payload;
     ///////////////////////////////////////////////
-    console.log("CvName: ", CvName);
-    console.log("Introduction: ", Introduction);
-    console.log("Education: ", Education);
-    console.log("Experience: ", Experience);
-    console.log("Skills: ", Skills);
-    console.log("Certificates: ", Certificates);
+    // console.log("CvName: ", CvName);
+    // console.log("Introduction: ", Introduction);
+    // console.log("Education: ", Education);
+    // console.log("Experience: ", Experience);
+    // console.log("Skills: ", Skills);
+    // console.log("Certificates: ", Certificates);
 
     const removeFieldFromCertificates = (certificatesArray, fieldToRemove) => {
       return certificatesArray.map(
@@ -35,8 +35,8 @@ function* createCv(action) {
     };
     const updatedSkills = removeFieldFromCertificates(Skills, 'cvSkillsId');
     const updatedCertificates = removeFieldFromCertificates(Certificates, 'certificateId');
-    console.log(" new Certificates: ", updatedCertificates);
-    console.log(" new Skills: ", updatedSkills);
+    // console.log(" new Certificates: ", updatedCertificates);
+    // console.log(" new Skills: ", updatedSkills);
      ///////////////////////////////////////////////
     // const formData = new FormData();
     // formData.append("CvName", CvName);
@@ -70,7 +70,7 @@ function* createCv(action) {
           certificates:updatedCertificates
         }
       );
-      console.log(response)
+      // console.log(response)
     /////////////////////////////////////////////////////////////////////
     // const response1 = yield call(
     //   axios.get,
@@ -119,7 +119,7 @@ function* createCv(action) {
 
     // console.log(response);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 }
 

@@ -7,7 +7,7 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 
 export default function EmptyTextarea(prop) {
   function handleDetail(e) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     prop.setDetail(e.target.value);
   }
   return (

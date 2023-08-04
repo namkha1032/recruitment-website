@@ -31,19 +31,31 @@ const XPage_Recovery = () => {
   const [errorResetSnackbar, setErrorResetSnackbar] = useState(false);
   const [message, setMessage] = useState("");
 
+  const [loading, setLoading] = useState(false)
+
   const dispatch = useDispatch();
 
   const newError = useSelector((state) => state.error);
 
+  const handleClickHome = () => {
+    dispatch({
+      type: "error/setError",
+      payload: { status: "idle", message: "" },
+    });
+    navigate("/home");
+  };
+
   useEffect(() => {
     if (newError.status === "no") {
       if (!isEmailValid) {
+        setLoading(false)
         dispatch({
           type: "error/setError",
           payload: { status: "idle", message: "" },
         });
         setIsEmailValid(true);
       } else {
+        setLoading(false)
         dispatch({
           type: "error/setError",
           payload: { status: "idle", message: "" },
@@ -53,6 +65,7 @@ const XPage_Recovery = () => {
     }
     if (newError.status === "yes") {
       if (!isEmailValid) {
+        setLoading(false)
         setErrorSnackbar(true);
         //setEmail("");
         setTimeout(() => {
@@ -63,6 +76,7 @@ const XPage_Recovery = () => {
           });
         }, 5000);
       } else {
+        setLoading(false)
         setErrorSnackbar(true);
         //setOTP("");
         //setNewPassword("");
@@ -101,7 +115,7 @@ const XPage_Recovery = () => {
   const handleConfirmPasswordChange = (event) => {
     let value = event.target.value
     setConfirmPassword(value)
-    if (!passwordRegex.test(value)) {
+    if (value === "") {
       setValidConfirmPassword(false);
     } else {
       setValidConfirmPassword(true);
@@ -121,6 +135,7 @@ const XPage_Recovery = () => {
   const handleEmailSubmit = (event) => {
     event.preventDefault();
     if (!isEmailValid && validEmail && email != "") {
+      setLoading(true)
       dispatch({ type: "saga/emailRecovery", payload: { email } });
     } else {
       setValidEmail(false);
@@ -136,6 +151,7 @@ const XPage_Recovery = () => {
         setErrorResetSnackbar(true);
         setConfirmPassword("");
       } else {
+        setLoading(true)
         dispatch({
           type: "saga/userResetPassword",
           payload: { email, otp, newPassword },
@@ -184,6 +200,8 @@ const XPage_Recovery = () => {
           handleEmailChange={handleEmailChange}
           handleSubmit={handleEmailSubmit}
           validEmail={validEmail}
+          loading={loading}
+          handleClickHome={handleClickHome}
         />
       ) : (
         <>
@@ -198,6 +216,8 @@ const XPage_Recovery = () => {
             handleNewPasswordChange={handleNewPasswordChange}
             handleConfirmPasswordChange={handleConfirmPasswordChange}
             handleSubmit={handlePasswordSubmit}
+            loading={loading}
+            handleClickHome={handleClickHome}
           />
         </>
       )}

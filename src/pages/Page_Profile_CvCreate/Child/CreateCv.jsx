@@ -59,6 +59,7 @@ const CreateCv = (prop) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          marginBottom:"32px"
         }}
       >
         <Box className={`CVForm InputForm`}>
@@ -89,11 +90,11 @@ const CreateCv = (prop) => {
                   ))}
                 </Stepper>
               </Grid>
-              <Grid item xs={12} >
+              <Grid item xs={12}>
                 <Box>
                   <React.Fragment>
                     {activeStep === 0 ? (
-                      <Grid item xs={12} sx={{paddingBottom:"16px"}}>
+                      <Grid item xs={12} sx={{ paddingBottom: "16px" }}>
                         <CvStep1
                           handleTitle={prop.handleTitle}
                           cvtitle={prop.cvtitle}
@@ -104,8 +105,9 @@ const CreateCv = (prop) => {
                         />
                       </Grid>
                     ) : activeStep === 1 ? (
-                      <Grid item xs={12} sx={{paddingBottom:"16px"}}>
+                      <Grid item xs={12} sx={{ paddingBottom: "16px" }}>
                         <CvStep2
+                          handleSExp={prop.handleSExp}
                           skillOption={prop.skillOption}
                           sInputValue={prop.sInputValue}
                           setSInputValue={prop.setSInputValue}
@@ -132,7 +134,7 @@ const CreateCv = (prop) => {
                         />
                       </Grid>
                     ) : (
-                      <Grid item xs={12} sx={{paddingBottom:"16px"}}>
+                      <Grid item xs={12} sx={{ paddingBottom: "16px" }}>
                         <CvStep3
                           cvalue={prop.cvalue}
                           setCValue={prop.setCValue}
@@ -159,44 +161,44 @@ const CreateCv = (prop) => {
                       </Grid>
                     )}
                     <Grid item xs={12}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        pt: 2,
-                        width: "80%",
-                        margin: "auto",
-                      }}
-                    >
-                      <Button
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
-                        variant="contained"
-                        className="AddButton"
-                        sx={{ mr: 1 }}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          pt: 2,
+                          width: "80%",
+                          margin: "auto",
+                        }}
                       >
-                        Back
-                      </Button>
-                      <Box sx={{ flex: "1 1 auto" }} />
-                      {activeStep === 2 ? (
                         <Button
+                          disabled={activeStep === 0}
+                          onClick={handleBack}
                           variant="contained"
                           className="AddButton"
-                          onClick={prop.handleSubmit}
-                        >
-                          Finish
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="contained"
-                          className="AddButton"
-                          onClick={handleNext}
                           sx={{ mr: 1 }}
                         >
-                          Next
+                          Back
                         </Button>
-                      )}
-                    </Box>
+                        <Box sx={{ flex: "1 1 auto" }} />
+                        {activeStep === 2 ? (
+                          <Button
+                            variant="contained"
+                            className="AddButton"
+                            onClick={prop.preProcessing}
+                          >
+                            Finish
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="contained"
+                            className="AddButton"
+                            onClick={handleNext}
+                            sx={{ mr: 1 }}
+                          >
+                            Next
+                          </Button>
+                        )}
+                      </Box>
                     </Grid>
                   </React.Fragment>
                 </Box>
@@ -213,6 +215,7 @@ const CreateCv = (prop) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          marginTop:"32px"
         }}
       >
         <Box className={`CVForm InputForm`}>

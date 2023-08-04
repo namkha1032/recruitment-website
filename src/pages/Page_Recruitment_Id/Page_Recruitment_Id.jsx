@@ -16,14 +16,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { ToastContainer, toast } from "react-toastify";
 import useGetRole from '../../hooks/useGetRole';
-import GigaCard from "../../components/GigaCard/GigaCard";
-import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
-import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader";
 import { useParams } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { getPositionStatus } from '../../utils/getPositionStatus';
+import CircularProgress from '@mui/material/CircularProgress';
 import cleanStore from '../../utils/cleanStore';
 const style = {
     position: 'absolute',
@@ -46,124 +44,17 @@ const style = {
 
 
 const Page_Recruitment_Id = () => {
-
-    const navigate = useNavigate();
-    const [showCV, setShowCV] = useState(false);
-    const [open, setOpen] = useState(false);
-    const [submit, setSubmit] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const [notice, setNotice] = useState(false);
-    const [CV, setCV] = useState(null);
-    const handleClose = () => setOpen(false);
-    const [helperText, setHelperText] = useState('');
-    const [apply, setApply] = useState(false);
-    const handleCVChange = (event) => {
-        setCV(event.target.value);
-        setHelperText('');
-    };
-    const handleCloseCV = () => setShowCV(true);
-    const list_CV_draft = useSelector(state => state.cvlist);
-    const position = useSelector(state => state.position)
-    const list_CV = list_CV_draft ? list_CV_draft : []
-    const user = useSelector(state => state.user);
-    console.log("user", user);
-    const userid = user ? user.userid : '';
-    console.log('idinsaga', userid);
-    const dispatch = useDispatch();
-    const { recruitmentid } = useParams();
-    useEffect(() => {
-        dispatch({ type: 'cvsaga/getCvList', payload: userid })
-        return () => {
-            dispatch({ type: 'cv/setCvList', payload: null })
-        }
-    }, [])
-    let enddate = position ? position.endDate : '';
-
-    console.log('status', getPositionStatus(enddate));
-    let status = getPositionStatus(enddate);
-    let role = useGetRole();
-    console.log("hi", role);
-    console.log("Cvlist", list_CV);
-
-
-    const handleTextClick = (id) => {
-        window.open(`/profile/:profileid/cv/${id}`);
-    };
-
-
-    const hanldebutton = () => {
-        setSubmit(true);
-    }
-    const handlecreate = () => {
-        navigate('/profile/cv-create');
-    }
-    const submitcv = useSelector(state => state.submitcv);
-    // const error = useSelector(state => state.error);
-
-    console.log("submit", submitcv);
-    console.log("mainid", recruitmentid);
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (submit === true) {
-            if (CV === null) {
-                setOpen(true)
-                setHelperText('Please select your CV');
-                setSubmit(false);
-            }
-            else {
-                dispatch({
-                    type: 'applicationSaga/submitCv',
-                    payload: {
-                        cvId: CV,
-                        positionId: recruitmentid,
-                        userId: userid
-                    }
-                })
-                setApply(true);
-                setNotice(true);
-                setCV('')
-                console.log(CV);
-                setSubmit(false);
-                // setTimeout(() => {
-                //     setOpen(false);
-                //     setNotice(false);
-                // }, 3000)
-                setOpen(false);
-
-                toast.success('You submited successfully.', {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-
-
-            }
-        }
-        else {
-            setOpen(false);
-            setHelperText('');
-        }
-    };
-    console.log("apply", apply)
     const tabs = 1
-    const theme = useTheme()
-    const isMd = useMediaQuery(theme.breakpoints.up('md'));
-    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     return (
+       
+            <>
 
-        <Grid container spacing={2} >
-            <Grid item xs={12} md={12} sm={12}>
-                {/* tabs={tabs} */}
-                <Info_view tabs={tabs} />
-            </Grid>
-            {role == "candidate" && status != true ? (
-                <>
-                    {submitcv === false ? (
+                <Grid container spacing={2} >
+                    <Grid item xs={12} md={12} sm={12}>
+                        {/* tabs={tabs} */}
+                        <Info_view tabs={tabs} />
+                    </Grid>
+                    {/* {role == "candidate" && status != true ? (
                         <>
                             <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
                                 <Button sx={{
@@ -181,11 +72,11 @@ const Page_Recruitment_Id = () => {
                                 aria-labelledby="modal-modal-title"
                                 aria-describedby="modal-modal-description"
                             >
-                                <Box sx={{ ...style, width: isMd ? "50%" : "90%" }}>
+                                <Box sx={{ ...style, width: isMd ? "50%" : "90%" }}>  */}
                                     {/* <Typography id="modal-modal-title" variant="h6" component="h2" sx ={{marginBottom: "10px"}} >
                                 Choose your CV
                             </Typography> */}
-                                    <Box sx={{ display: "flex", flexDirection: "flex-start", p: 4, paddingBottom: 0, backgroundColor: "black" }}>
+                                    {/* <Box sx={{ display: "flex", flexDirection: "flex-start", p: 4, paddingBottom: 0, backgroundColor: "black" }}>
                                         <Typography id="modal-modal-title" variant="h5" component="h2" sx={{ marginBottom: "10px", fontWeight: "bold", color: "white" }}>
                                             Choose your CV
                                         </Typography>
@@ -215,9 +106,9 @@ const Page_Recruitment_Id = () => {
                                                                 {list_CV.map((CV) => (
                                                                     <Button key={CV.cvid} sx={{
 
-                                                                        backgroundColor: "black",
-                                                                        // top right bottom left
-                                                                        margin: "0px 0px 6px 8px",
+                                                                        backgroundColor: "black", */}
+                                                                        
+                                                                        {/* margin: "0px 0px 6px 8px",
                                                                         ":hover": {
                                                                             backgroundColor: "grey",
                                                                         }
@@ -310,19 +201,15 @@ const Page_Recruitment_Id = () => {
                                 theme="colored"
                             />
                         </>
-                    ) : (
-                        <>
-                            <Box sx={{ borderColor:"1px solid black" ,display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
-                                    APPLIED
-                            </Box>
-                        </>
-                    )}
 
-                </>
-            ) : null
-            }
 
-        </Grid >
+
+                    ) : null
+                    } */}
+
+                </Grid >
+            </>
+           
     )
 }
 

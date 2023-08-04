@@ -26,21 +26,28 @@ import ModalCertificates from "./ModalCertificates";
 import GigaCard from "../GigaCard/GigaCard";
 import Loading from "../Loading/Loading";
 import { useNavigate } from "react-router-dom";
-
+import { useParams } from "react-router-dom/dist";
+import MissingPage from "../MissingPage/MissingPage";
+import NoteField from '../../pages/Page_Company_Interview_Id/NoteField/NoteField'
+import cleanStore from "../../utils/cleanStore";
 const CV = ({ cvid,page }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cv = useSelector((state) => state.cv);
   const candidate = useSelector((state) => state.candidate);
+  const user = useSelector(state => state.user)
+  const {profileid} = useParams()
+  console.log(user)
   useEffect(() => {
-    dispatch({ type: "cvSaga/getCv", payload: cvid });
+    dispatch({ type: "cvSaga/getCv", payload: {cvid:cvid,token:user.token,userid:profileid} });
     return () => {
-      dispatch({ type: "cv/setCv", payload: null });
+      cleanStore(dispatch)
     };
   }, []);
   
-
+  console.log("CV :" , cv)
   return (
+    cv === "none" ? <MissingPage/> :
     cv &&
     candidate ? (
       <>
@@ -54,11 +61,13 @@ const CV = ({ cvid,page }) => {
           <Grid container >
           <Grid
             item
-            md={3} sm={3}
+            md={3} sm={3} xs={12}
             sx={{
               display: "flex",
               alignItems: "center",
+              justifyContent:'space-around',
               bottom: "25px",
+        
             }}
           >
             <Box
@@ -73,10 +82,10 @@ const CV = ({ cvid,page }) => {
               alt=""
             />
           </Grid>
-          <Grid item md={1} xs={2}></Grid>
-          <Grid item md={8} xs={7}>
-            <Box component="h1" sx={{ margin: "24px 0px 0px  0px" }}>
-              {candidate.name}
+          <Grid item md={1} sm={1} xs={12}></Grid>
+          <Grid item md={8} sm={8} xs={12}>
+            <Box sx={{ margin: "24px 0px 0px  0px" }}>
+             <h1> {candidate.name}</h1>
             </Box>
             <Box>
               <Box
@@ -86,8 +95,9 @@ const CV = ({ cvid,page }) => {
                   flexWrap: "no-wrap",
                 }}
               >
-                <Email fontSize="small" />
-                <Box sx={{ pl: "10px" }}>{candidate.email}</Box>
+              <Box mr="15px" ><Email fontSize="small" /></Box>
+                
+                <Box >{candidate.email}</Box>
               </Box>
               <Box
                 sx={{
@@ -96,8 +106,10 @@ const CV = ({ cvid,page }) => {
                   flexWrap: "no-wrap",
                 }}
               >
-                <Phone fontSize="small" />
-                <Box sx={{ pl: "10px" }}>{candidate.phone}</Box>
+              <Box mr="15px" ><Phone fontSize="small" /></Box>
+
+                
+                <Box >{candidate.phone}</Box>
               </Box>
               <Box
                 sx={{
@@ -106,8 +118,9 @@ const CV = ({ cvid,page }) => {
                   flexWrap: "no-wrap",
                 }}
               >
-                <LocationOn fontSize="small" />
-                <Box sx={{ pl: "10px" }}>{candidate.address}</Box>
+              <Box mr="15px" ><LocationOn fontSize="small" /></Box>
+                
+                <Box >{candidate.address}</Box>
               </Box>
             </Box>
             
@@ -194,7 +207,7 @@ const CV = ({ cvid,page }) => {
                 <Box
               
                 >
-                  
+                  {console.log("Certificate",cv.certificates)}
                   
                   {cv.certificates.map((certificate, index) => (
                   
@@ -225,13 +238,12 @@ const CV = ({ cvid,page }) => {
                   Experience
                 </Box>
               </Box>
-              <Box sx={{ padding: "10px 0 0 40px" }}>{`${cv.experience}`}</Box>
+              <Box sx={{ padding: "10px 0 0 40px" }}><NoteField note={cv.experience}/></Box>
               <Box><Divider orientation="horizontal" flexItem sx={{mt:3,height:'0.5px' }} /></Box>
             </Box>
-
           </Grid>
 
-          <Grid item md={12} xs={12}>
+        {/*  <Grid item md={12} xs={12}>
 
             <Box px={3}>
               <Box sx={{ display: "flex", alignItems: "flex-end" }}>
@@ -252,7 +264,7 @@ const CV = ({ cvid,page }) => {
               <Box><Divider orientation="horizontal" flexItem sx={{mt:3,height:'0.5px' }} /></Box>
             </Box>
 
-        </Grid>
+        </Grid>*/}
         <Grid item md={12} xs={12}>
  
             <Box p='0 24px 24px 24px'>
@@ -265,7 +277,8 @@ const CV = ({ cvid,page }) => {
                   Education
                 </Box>
               </Box>
-              <Box sx={{ padding: "10px 0 0 40px" }}>{cv.education}</Box>
+              
+              <Box sx={{ padding: "10px 0 0 40px" }}> <NoteField note={cv.education}/></Box>
             
             </Box>
     
@@ -285,7 +298,7 @@ const CV = ({ cvid,page }) => {
             <Button
               variant="contained"
               color="warning"
-              onClick={() => navigate("/profile/1/cv/1/update")}
+              onClick={() => navigate(`/profile/${profileid}/cv/${cvid}/update`)}
             >
               update
             </Button>

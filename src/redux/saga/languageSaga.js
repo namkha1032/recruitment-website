@@ -34,7 +34,7 @@ function* getLanguage(action) {
 }
 
 function* languageSaga() {
-  yield all([takeEvery("saga/getLanguage", getLanguage)]);
+  yield all([takeEvery("languageSaga/getLanguage", getLanguage)]);
 }
 
 export default languageSaga;

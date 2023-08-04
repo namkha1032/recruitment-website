@@ -54,22 +54,36 @@ const List_application = (props) => {
     // const pending1 = props.applications ? props.applications.filter(application => {
     //     return application.company_status === "Đang chờ"
     // }) : [];
-    const pass1 = props.applications ? props.applications.filter(application => {
-        return application.company_status === "Đã duyệt"
+    const passmain = props.applications ? props.applications.filter(application => {
+        return application.company_Status === "Accepted"
     }) : [];
     // const reject1 = props.applications ? props.applications.filter(application => {
     //     return application.company_Status === "Đã từ chối"
     // }) : [];
+    const pass = passmain.map((item) => item = {
+        ...item,
+        fullName: item.user.fullName
+    })
+    console.log('pass', pass);
     const pendingmain = props.applications ? props.applications.filter(application => {
         return application.company_Status === "Pending"
     }) : [];
+    const pending = pendingmain.map((item) => item = {
+        ...item,
+        fullName: item.user.fullName
+    })
+    console.log('dang cho', pending)
     const rejectmain = props.applications ? props.applications.filter(application => {
         return application.company_Status === "Rejected"
     }) : [];
+    const reject = rejectmain.map((item) => item ={
+        ...item,
+        fullName: item.user.fullName
+    } )
     console.log("application", props.applications);
     // console.log("status", pendingmain);
     // console.log("chờ", pending1);
-    console.log("đậu", pass1);
+    // console.log("đậu", pass1);
     // console.log("chối", reject1);
     const handleEditClick = (params) => {
         navigate(`/company/recruitment/${recruitmentid}/application/${params.id}`);
@@ -96,7 +110,12 @@ const List_application = (props) => {
                     <Button
                         onClick={() => handleEditClick(cellValues)}
                         variant="contained"
-
+                        sx={{
+                            backgroundColor: "black",
+                            ":hover": {
+                                backgroundColor: "grey",
+                            }
+                        }}
                     >
                         Detail
                     </Button>
@@ -139,7 +158,7 @@ const List_application = (props) => {
                             <CloseRounded sx={{marginRight: "5px"}}></CloseRounded> Reject
                         </Button>
                         <Button size ={isMd ? "medium" : "small"} color="success" sx={{  marginLeft: "10px", borderRadius: 100 }} variant={currentTable == 2 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(2) }} >
-                            <DoneRounded sx={{marginRight: "5px"}}></DoneRounded> Pass
+                            <DoneRounded sx={{marginRight: "5px"}}></DoneRounded> Accept
                         </Button>
 
 
@@ -168,7 +187,7 @@ const List_application = (props) => {
                         }}
                         slots={{ toolbar: QuickSearchToolbar }}
                         rowHeight={72}
-                        rows={pendingmain}
+                        rows={pending}
                         {...other}
                         columns={columns}
                         getRowId={(row) => row.applicationId}
@@ -208,7 +227,7 @@ const List_application = (props) => {
                         }}
                         slots={{ toolbar: QuickSearchToolbar }}
                         rowHeight={72}
-                        rows={rejectmain}
+                        rows={reject}
                         {...other}
                         columns={columns}
                         getRowId={(row) => row.applicationId}
@@ -245,7 +264,7 @@ const List_application = (props) => {
                         }}
                         slots={{ toolbar: QuickSearchToolbar }}
                         rowHeight={72}
-                        rows={pass1}
+                        rows={pass}
                         {...other}
                         columns={columns}
                         getRowId={(row) => row.applicationId}

@@ -103,7 +103,7 @@ const Department = (prop) => {
                 variant="h6"
                 gutterBottom
               >
-                Address
+                Website:
               </Typography>
             </Grid>
             <Grid item xs={isSm?8:12}>

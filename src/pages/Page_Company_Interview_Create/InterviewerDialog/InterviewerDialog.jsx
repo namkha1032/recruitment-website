@@ -26,6 +26,12 @@ import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+
+import MenuList from '@mui/material/MenuList';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
+
 // import utils
 import transformDateOnly from "../../../utils/transformDateOnly";
 const InterviewerDialog = (props) => {
@@ -40,6 +46,10 @@ const InterviewerDialog = (props) => {
     const dob = params.row.dob
     const email = params.row.email
     const departmentname = params.row.departmentname
+    const departmentaddress = params.row.departmentaddress
+    const departmentemail = params.row.departmentemail
+    const departmentphone = params.row.departmentphone
+    const departmentwebsite = params.row.departmentwebsite
     const avatar = params.row.avatar
 
 
@@ -90,9 +100,12 @@ const InterviewerDialog = (props) => {
                     </Box>
                 </DialogTitle>
                 <Divider />
-                <DialogContent>
-                    <Box sx={{ display: "flex" }}>
-                        <Box>
+                <DialogContent sx={{ width: "600px" }}>
+                    <Grid container rowSpacing={2}>
+                        <Grid item xs={12} sx={{ display: "flex", flexDirection: "column", rowGap: 2 }}>
+                            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                                Profile
+                            </Typography>
                             <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
                                 <Grid3x3Icon />
                                 <TextField
@@ -129,9 +142,42 @@ const InterviewerDialog = (props) => {
                                     }}
                                 />
                             </Box>
-                        </Box>
-                        <Divider orientation="vertical" />
-                    </Box>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Divider />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                                {departmentname}
+                            </Typography>
+                            <MenuList>
+                                <MenuItem sx={{ paddingX: 0 }}>
+                                    <ListItemIcon>
+                                        <TungstenIcon fontSize="small" />
+                                    </ListItemIcon>
+                                    <ListItemText>{departmentaddress}</ListItemText>
+                                </MenuItem>
+                                <MenuItem sx={{ paddingX: 0 }}>
+                                    <ListItemIcon>
+                                        <TungstenIcon fontSize="small" />
+                                    </ListItemIcon>
+                                    <ListItemText>{departmentemail}</ListItemText>
+                                </MenuItem>
+                                <MenuItem sx={{ paddingX: 0 }}>
+                                    <ListItemIcon>
+                                        <TungstenIcon fontSize="small" />
+                                    </ListItemIcon>
+                                    <ListItemText>{departmentphone}</ListItemText>
+                                </MenuItem>
+                                <MenuItem sx={{ paddingX: 0 }}>
+                                    <ListItemIcon>
+                                        <TungstenIcon fontSize="small" />
+                                    </ListItemIcon>
+                                    <ListItemText>{departmentwebsite}</ListItemText>
+                                </MenuItem>
+                            </MenuList>
+                        </Grid>
+                    </Grid>
                 </DialogContent>
             </Dialog>
             <Avatar onClick={() => setOpen(true)} sx={{ width: 30, height: 30, cursor: "pointer" }} src={avatar}>

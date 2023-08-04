@@ -1,0 +1,34 @@
+{
+    "applicationId": "fa100501-8f79-44e6-87fa-2bde137976df",
+    "cv": {
+        "cvid": "85d61bb8-5d21-4825-9699-a9e5e8cf5de7",
+        "candidateId": "db20f8d0-eb45-43af-9790-e89f48a1a587",
+        "candidate": null,
+        "experience": "10 years with Front-end Developer",
+        "cvPdf": "string",
+        "cvName": "Intern FE",
+        "introduction": "I am a dedicated and highly motivated professional with a passion for web development and front-end technologies. With a Bachelor's degree in Computer Science and several years of experience in designing and implementing user-friendly web applications, I have honed my skills in HTML, CSS, JavaScript, and ReactJS.",
+        "education": "HCMUT",
+        "isDeleted": false,
+        "skills": [],
+        "certificates": []
+    },
+    "position": {
+        "positionId": "e9ebc9d4-2ef2-43c8-96f4-2bd0745d3325",
+        "positionName": "React Front End",
+        "description": "<p>React, Html</p>",
+        "salary": 1000,
+        "maxHiringQty": 10,
+        "startDate": "2023-08-01T00:00:00",
+        "endDate": "2023-08-30T00:00:00",
+        "department": null,
+        "language": null,
+        "recruiter": null,
+        "isDeleted": false,
+        "requirements": []
+    },
+    "dateTime": "2023-08-02T02:49:08.367",
+    "company_Status": "Pending",
+    "candidate_Status": "Pending",
+    "priority": null
+}

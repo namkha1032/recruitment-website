@@ -11,12 +11,12 @@ import DescriptionIcon from '@mui/icons-material/Description';
 
 export default function CertificateForm(prop) {
   function handleLink(e) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     prop.setLink(e.target.value);
   }
   function handleCert(e) {
     prop.handleState(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   }
   return (
     <>

@@ -35,7 +35,6 @@ const NumericFormatCustom = forwardRef(function NumericFormatCustom(
     />
   );
 });
-
 function Box2(prop) {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
