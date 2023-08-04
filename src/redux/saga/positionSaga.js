@@ -163,18 +163,13 @@ function* getPosition(action) {
     // yield put({ type: 'department/setDepartment', payload: department })
     // const response1 = yield call(axios.get, `${host.name}/data/detailposition.json`)
     
-    const config = {
-      headers: {
-        Authorization: action.payload.token,
-        
-      }
-    };
+    
 
     console.log("param", action.payload)
-    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload.recruitmentid}`, config)
+    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload}`)
 
     let skilllist = []
-    const response2 = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Skill', config);
+    const response2 = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Skill');
     console.log('response1', response1.data);
     console.log('reponse2', response2.data)
     console.log('skillid', response1.data.requirements)

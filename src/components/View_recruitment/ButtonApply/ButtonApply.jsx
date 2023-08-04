@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Grid, Button, Modal, Box, Divider } from '@mui/material';
+import {LoadingButton }from '@mui/lab';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -56,6 +57,7 @@ const ButtonApply = (props) => {
     const [helperText, setHelperText] = useState('');
     const [apply, setApply] = useState(false);
     const [submitstatus, setSubmitstatus] = useState(false);
+    const [loading, setLoading] = useState(false);
     const handleCVChange = (event) => {
         setCV(event.target.value);
         setHelperText('');
@@ -70,6 +72,7 @@ const ButtonApply = (props) => {
     const dispatch = useDispatch();
     const { recruitmentid } = useParams();
     const appstatus = useSelector(state => state.applicationStatus);
+    const submitNotify = useSelector(state => state.submitNotify);
     // const statusmain = appstatus ? appstatus : [];
     useEffect(() => {
         if (user !== null) {
@@ -93,6 +96,30 @@ const ButtonApply = (props) => {
             }
         }
     }, [appstatus])
+    useEffect(() => {
+        if (submitNotify === "loading"){
+            setLoading(true);
+            setOpen(true);
+        }
+        else{
+            if (submitNotify === "success")
+            {
+                toast.success('You submited successfully.', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+            }
+            setLoading(false);
+            setOpen(false);
+            dispatch({type: 'submitNotify/setSubmitNotify', payload: "no"})
+        }
+    }, [submitNotify])
     // const countsubmit = useSelector(state => state.countSubmit);
     // const submitstatus = countsubmit ? countsubmit : '';
 
@@ -180,18 +207,8 @@ const ButtonApply = (props) => {
                 //     setOpen(false);
                 //     setNotice(false);
                 // }, 3000)
-                setOpen(false);
 
-                toast.success('You submited successfully.', {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
+                
 
 
             }
@@ -223,14 +240,14 @@ const ButtonApply = (props) => {
                                             ":hover": {
                                                 backgroundColor: "grey",
                                             }
-                                        }} variant='contained' onClick={handleOpen}>
+                                        }}size="medium" variant='contained' onClick={handleOpen}>
                                             <InsertDriveFileIcon></InsertDriveFileIcon>  Apply
                                         </Button>
                                     ) : (
                                         <>
                                             <Box sx={{ display: "flex" }}>
-                                                <Typography sx={{ marginRight: 2 }}>
-                                                    You have applied this position.
+                                                <Typography variant="h6" sx={{ marginRight: 2 }}>
+                                                    You have applied this position
                                                 </Typography>
                                                 <Button sx={{
                                                     backgroundColor: "black",
@@ -317,8 +334,9 @@ const ButtonApply = (props) => {
                                                             </Button>
                                                         </Grid>
                                                         <Grid item xs={6} md={6} sx={{ display: "flex", justifyContent: "flex-end", marginRight: isMd ? 2 : 0 }}>
-                                                            <Button sx={{
-
+                                                            <LoadingButton 
+                                                            loading={loading}
+                                                            sx={{
                                                                 backgroundColor: "black",
                                                                 ":hover": {
                                                                     backgroundColor: "grey",
@@ -334,7 +352,7 @@ const ButtonApply = (props) => {
                                                                     </>
                                                                 )}
 
-                                                            </Button>
+                                                            </LoadingButton>
 
                                                         </Grid>
                                                     </Box>
@@ -353,7 +371,7 @@ const ButtonApply = (props) => {
                                                         ":hover": {
                                                             backgroundColor: "grey",
                                                         }
-                                                    }} size="large" variant="contained" onClick={handlecreate}   >
+                                                    }} size="medium" variant="contained" onClick={handlecreate}   >
                                                         CREATE CV
                                                     </Button>
                                                 </Box>

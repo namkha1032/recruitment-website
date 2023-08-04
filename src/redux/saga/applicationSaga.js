@@ -65,6 +65,7 @@ function* getInfoApplication(action) {
 
 }
 function* submitCv(action) {
+    yield put({type: 'submitNotify/setSubmitNotify', payload: 'loading'})
     try {
         
         const config = {
@@ -76,12 +77,14 @@ function* submitCv(action) {
         console.log('post', action.payload);
         console.log("submitsaga", reponse.data)
         yield put({ type: 'submitcv/setSubmitcv', payload: reponse.data })
+        yield put({type: 'submitNotify/setSubmitNotify', payload: 'success'})
     } catch (error) {
         console.log("error")
     }
 }
 
 function* updatesubmitCv(action) {
+    yield put({type: 'submitNotify/setSubmitNotify', payload: 'loading'})
     try {
         
         const config = {
@@ -90,6 +93,7 @@ function* updatesubmitCv(action) {
             }
         };
         const reponse = yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload.applicationId}`, action.payload, config)
+        yield put({type: 'submitNotify/setSubmitNotify', payload: 'success'})
         console.log('update', reponse.data);
     } catch (error) {
         console.log(error)

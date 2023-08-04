@@ -23,6 +23,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import ButtonApply from './ButtonApply/ButtonApply';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import useGetRole from '../../hooks/useGetRole';
 const Info_view = (props) => {
     const { recruitmentid } = useParams();
     console.log("number", recruitmentid);
@@ -48,21 +49,21 @@ const Info_view = (props) => {
                 recruitmentid: recruitmentid,
                 token:  `Bearer ${user.token}`,
             } })
-            dispatch({ type: 'positionSaga/getPosition', payload: {
-                recruitmentid: recruitmentid,
-                token: `Bearer ${user.token}`,
-            } })
             dispatch({ type: 'cvSaga/getCvList', payload: {
                 userid: userid,
                 token: `Bearer ${user.token}`
             }})
         }
-        
         return () => {
             cleanStore(dispatch);
         }
     }, [user])
-
+    useEffect(() => {
+        dispatch({ type: 'positionSaga/getPosition', payload: recruitmentid })
+        return () => {
+            cleanStore(dispatch);
+        }
+    }, [])
     const error = useSelector(state => state.positionError)
     console.log('.....', error);
     useEffect(() => {
@@ -123,10 +124,12 @@ const Info_view = (props) => {
         cleanStore(dispatch)
         navigate(`/company/recruitment/${recruitmentid}/update`);
     }
+    let role = useGetRole();
     return (
         // detailposition && language && skill && department &&
         // detailposition && applications &&
-        detailposition && skill && applications && list_CV ?
+        // detailposition && skill && applications && list_CV ?
+        detailposition && skill  ?
             <>
                 <Grid container spacing={2} >
                     <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -231,14 +234,19 @@ const Info_view = (props) => {
                                         </GigaCardBody>
                                     </GigaCard>
                                     <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", marginTop: 2 }}>
-                                        <Button sx={{
-                                            backgroundColor: "black",
-                                            ":hover": {
-                                                backgroundColor: "grey",
-                                            }
-                                        }} variant='contained' onClick={handleEdit}>
-                                            <EditIcon></EditIcon> EDIT
-                                        </Button>
+                                        {role == "admin" ? (
+                                            null
+                                        ): (
+                                            <Button sx={{
+                                                backgroundColor: "black",
+                                                ":hover": {
+                                                    backgroundColor: "grey",
+                                                }
+                                            }} variant='contained' onClick={handleEdit}>
+                                                <EditIcon></EditIcon> EDIT
+                                            </Button>
+                                        )}
+                                        
 
                                     </Grid>
                                 </>

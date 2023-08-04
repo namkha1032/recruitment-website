@@ -55,7 +55,7 @@ const List_application = (props) => {
     //     return application.company_status === "Đang chờ"
     // }) : [];
     const passmain = props.applications ? props.applications.filter(application => {
-        return application.company_status === "Accepted"
+        return application.company_Status === "Accepted"
     }) : [];
     // const reject1 = props.applications ? props.applications.filter(application => {
     //     return application.company_Status === "Đã từ chối"
@@ -64,6 +64,7 @@ const List_application = (props) => {
         ...item,
         fullName: item.user.fullName
     })
+    console.log('pass', pass);
     const pendingmain = props.applications ? props.applications.filter(application => {
         return application.company_Status === "Pending"
     }) : [];
@@ -109,7 +110,12 @@ const List_application = (props) => {
                     <Button
                         onClick={() => handleEditClick(cellValues)}
                         variant="contained"
-
+                        sx={{
+                            backgroundColor: "black",
+                            ":hover": {
+                                backgroundColor: "grey",
+                            }
+                        }}
                     >
                         Detail
                     </Button>
