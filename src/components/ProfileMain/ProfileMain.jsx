@@ -67,9 +67,9 @@ const ProfileMain = ({ page }) => {
     : 
     profile.id === profileid ?
     (
-      <Container>
+      <Container mb={3}>
         <Box sx={{ paddingTop: "40px", paddingBottom: "20px" }}>
-          <ProfileHeader profile={profile} />
+          <ProfileHeader />
         </Box>
         <Grid container spacing={3}>
           <Grid item md={3} xs={12} position="relative" >
@@ -114,10 +114,10 @@ const ProfileMain = ({ page }) => {
           <Grid item md={9} xs={12}>
             {page === "Profile" && (
               <Box>
-                <Box sx={{ mb: "24px" }}>
-                  <ProfileInfo profile={profile} />
+                <Box>
+                  <ProfileInfo />
                 </Box>
-                {role === "candidate" && (
+                {role === "candidate" && profileid === userId && (
                   <Box>
                     <CVProfile cvid={null} page="Profile" />
                   </Box>
@@ -125,7 +125,7 @@ const ProfileMain = ({ page }) => {
               </Box>
             )}
             {page === "ChangePW" && (
-              <Box sx={{ mb: "24px" }}>
+              <Box >
                 <GigaCard>
                   <Box sx={{ padding: "24px" }}>
                     <ProfileChangePW />

@@ -72,14 +72,13 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
             xs={12}
             sx={{
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "flex-start",
               padding: "15px",
             }}
           >
             <Typography variant="h5">
               Date: {infoApplication.dateTime.slice(0, 10)}
             </Typography>
-            <em>{infoApplication.company_Status}</em>
           </Box>
         )}
         <Grid container spacing={3} marginBottom={3}>

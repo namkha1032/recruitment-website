@@ -46,8 +46,8 @@ import cleanStore from "../../utils/cleanStore";
       cv === 'none' ? <> </> :
       cv && candidate ? (
         <>
-        <Box>
-          <Grid container spacing={3}>
+        <Box mt={3}>
+          <Grid container spacing={3} >
                 <Grid item md={12} xs={12}>
                 <GigaCard>
                 <Box p={3}>
@@ -176,7 +176,7 @@ import cleanStore from "../../utils/cleanStore";
           </Grid>}
           </Grid>
         </Box>
-        </>)  : <Loading/>
+        </>)  : <Box mt={3}><Loading/> </Box> 
     )
   };
   

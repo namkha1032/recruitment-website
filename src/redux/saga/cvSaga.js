@@ -13,7 +13,7 @@ function* getCv(action) {
         : response1.data.filter(item => item.candidateId ===res.data.candidates[0].candidateId)
     console.log(data1)
     const data = data1.length >= 1  ? data1[0] : null;
-    if (data1.length === 1 ) {
+    if (data1.length >= 1 ) {
         
         const compareDates = (date1, date2) => {
             return new Date(date1.expirationDate.slice(0,10)) - new Date(date2.expirationDate.slice(0,10));

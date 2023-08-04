@@ -31,8 +31,10 @@ import { LoadingButton } from "@mui/lab";
 import { useParams } from "react-router-dom/dist";
 import cleanStore from "../../utils/cleanStore";
 
-const ProfileInfo = ({ profile }) => {
+const ProfileInfo = () => {
   const user = useSelector((state) => state.user);
+  const profile = useSelector((state) => state.profile);
+
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.down("md"));
   const isSm = useMediaQuery(theme.breakpoints.down("sm"));
@@ -50,16 +52,21 @@ const ProfileInfo = ({ profile }) => {
   const [faild, setFaild] = useState(false);
   const [loading,setLoading] = useState(false)
     useEffect(() => {
+      console.log("change")
       if( loading === true){
         setLoading(false)
         setBlock(true);
         setOpen(true)
         
       }
+     
+      
+    },[profile])
+    useEffect(() => {
       return () => {
-        cleanStore(dispatch)
+          cleanStore(dispatch)
       }
-    },[user])
+    },[])
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -78,7 +85,7 @@ const ProfileInfo = ({ profile }) => {
       FullName: name,
       DateOfBirth: birth.format('YYYY-MM-DDTHH:mm:ss'),
       Address: address,
-      ImageFile: profile.image ? profile.image : "",
+      ImageFile: profile.imageURL ? profile.imageURL : "",
       PhoneNumber: phone,
     };
     console.log(data);
@@ -99,7 +106,7 @@ const ProfileInfo = ({ profile }) => {
       {faild ?<> Không thành công</> :<>Thành công !</>  }
     </Alert>
   </Snackbar>
-    <Box id="detail">
+    <Box>
       <GigaCard>
         <Box sx={{ padding: "24px" }}>
           <Box

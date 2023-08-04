@@ -40,7 +40,7 @@ const  ModalCertificates = ({certificate}) => {
       <Box>Name: {certificate.certificateName}</Box>  
       <Box>Decription: {certificate.description}</Box>  
       <Box display={open ? 'block' : 'none'}>Orgranizationname: {certificate.organizationName}</Box>
-      <Box display={open ? 'block' : 'none'}>ExpirationDate: {certificate.expirationDate}</Box>
+      <Box display={open ? 'block' : 'none'}>ExpirationDate: {certificate.expirationDate.slice(0,10)}</Box>
       </Box>
       <Box display={open ? 'block' : 'none'}> Link: <a target="_blank" style={{textDecoration:'none',color:'black'}} href={`https://${certificate.link}`}>{certificate.link}</a></Box>
     </Box>

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import cleanStore from "../../utils/cleanStore";
 function Copyright() {
   return (
     <Typography variant="body2" color="white" align="center">
@@ -26,6 +27,9 @@ const Footer = () => {
 
   React.useEffect(() => {
     dispatch({ type: "eventSaga/getEventFooter" });
+    return () => {
+      dispatch({ type: "eventFooter/setEventFooter",payload: null });
+    }
   }, []);
   const handleNavigateClick = (id) => {
     navigate(`/event/${id}`);

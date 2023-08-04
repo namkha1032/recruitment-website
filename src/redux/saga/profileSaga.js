@@ -5,6 +5,7 @@ import host from "../host";
 function* updateProfile(action) {
   try {
     const { data, token, userid } = action.payload;
+    console.log(data.ImageFile)
     const response1 =  yield call (axios.get, data.ImageFile!== '' ? data.ImageFile : "http://localhost:3000/data/avatar.png", { responseType: "blob" });
     const blob = new Blob([response1.data], { type: "image/jpeg" });
     const formData = new FormData();
@@ -42,6 +43,13 @@ function* updateProfile(action) {
       image: responseUserInformation.data.imageURL,
     };
     yield put({ type: "user/setUser", payload: data1 });
+    yield put({ type: "profile/updateProfile", payload: {
+      fullName:data1.name,
+      dateOfBirth:data1.birth,
+      address:data1.address,
+      phoneNumber:data1.phone,
+      imageURL:data1.image
+    } });
     const item = window.localStorage.getItem("user");
     if (item) window.localStorage.setItem("user", JSON.stringify(data1));
     else window.sessionStorage.setItem("user", JSON.stringify(data1));
