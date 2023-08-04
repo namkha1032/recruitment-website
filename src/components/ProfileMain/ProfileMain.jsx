@@ -21,6 +21,8 @@ import GigaCard from "../GigaCard/GigaCard";
 import useGetRole from "../../hooks/useGetRole";
 import CVProfile from "../CV/CVProfile";
 import { useParams } from "react-router-dom/dist";
+import MissingPage from "../MissingPage/MissingPage";
+import cleanStore from "../../utils/cleanStore";
 
 const ProfileMain = ({ page }) => {
   const navigate = useNavigate();
@@ -29,14 +31,16 @@ const ProfileMain = ({ page }) => {
   const { profileid } = useParams();
   const positionList = useSelector((state) => state.positionList);
   const dispatch = useDispatch();
-  const profile = useSelector((state) => state.profile);
+  const profile = useSelector((state) => state.profile); // tạm thời lấy profile là của user đăng nhập => phải sửa thành profile của userid
   // const profile = null
   const userId = useSelector(state => state.user.userid)
-  console.log(userId)
+  console.log(profile)
 
   useEffect(() => {
     dispatch({ type: "positionSaga/getPositionList" });
-    dispatch({ type: "profileSaga/getProfile" });
+    return () => {
+      cleanStore(dispatch)
+    }
   }, []);
   const handleClickChangePW = () => {
     if (page !== "ChangePW") navigate(`/profile/${profileid}/changepassword`);
@@ -50,8 +54,9 @@ const ProfileMain = ({ page }) => {
   const handleClickHistory = () => {
     if (page !== "History") navigate("/profile/1/history");
   };
-
+  console.log(profile.id)
   return (
+   
     profile === null ?  
     
     <Box sx={{position:'sticky',top:'300px',display:'flex',justifyContent:'center'}}>  
@@ -60,7 +65,7 @@ const ProfileMain = ({ page }) => {
      
     </Box>
     : 
-    
+    profile.id === profileid ?
     (
       <Container>
         <Box sx={{ paddingTop: "40px", paddingBottom: "20px" }}>
@@ -114,7 +119,7 @@ const ProfileMain = ({ page }) => {
                 </Box>
                 {role === "candidate" && (
                   <Box>
-                    <CVProfile cvid={profile.cvselected} page="Profile" />
+                    <CVProfile cvid={null} page="Profile" />
                   </Box>
                 )}
               </Box>
@@ -131,7 +136,7 @@ const ProfileMain = ({ page }) => {
           </Grid>
         </Grid>
       </Container>
-    ) 
+    ) : <MissingPage/>
              
         
        

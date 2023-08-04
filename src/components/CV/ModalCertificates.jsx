@@ -25,23 +25,24 @@ const  ModalCertificates = ({certificate}) => {
     </Box>
     <Box width='100%' sx={{display:'flex',justifyContent:'space-between'}}>
     <Box
-      className='button'
+      
       sx={{
        
-        fontSize: isMd ? '14px' :'16px',
-        maxHeight: "180px",
+        
         m:'8px 0 0 16px',
         
         cursor:'pointer'
       }}
       // onMouseLeave={handleClose}
     >
-      <Box> {certificate.expirationDate}</Box>
+    <Box onClick={handleClick}>
+      <Box> {certificate.dateEarned.slice(0,10)}</Box>
       <Box>Name: {certificate.certificateName}</Box>  
       <Box>Decription: {certificate.description}</Box>  
       <Box display={open ? 'block' : 'none'}>Orgranizationname: {certificate.organizationName}</Box>
-      <Box display={open ? 'block' : 'none'}>Dateearned: {certificate.dateEarned}</Box>
-      <Box display={open ? 'block' : 'none'}>Link: {certificate.link}</Box>
+      <Box display={open ? 'block' : 'none'}>ExpirationDate: {certificate.expirationDate}</Box>
+      </Box>
+      <Box display={open ? 'block' : 'none'}> Link: <a target="_blank" style={{textDecoration:'none',color:'black'}} href={`https://${certificate.link}`}>{certificate.link}</a></Box>
     </Box>
     {console.log(isMd)}
     <Box display='flex' flexDirection='column' justifyContent='flex-end'><Box sx={{display: isMd ? 'none' : 'block', cursor:'pointer'}} onClick={handleClick}> { open ?'See less' : 'See more...'}</Box></Box>
