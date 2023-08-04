@@ -30,9 +30,10 @@ function RecruitForm() {
   const dispatch = useDispatch();
   // fetch Data
   useEffect(() => {
-    dispatch({ type: "departmentSaga/getDepartment" });
-    dispatch({ type: "saga/getLanguage" });
-    dispatch({ type: "skillSaga/getSkill" });
+    
+    dispatch({ type: "departmentSaga/getDepartment" , payload:{ token: `Bearer ${userlocal.token}`}});
+    dispatch({ type: "saga/getLanguage", payload:{ token: `Bearer ${userlocal.token}`} });
+    dispatch({ type: "skillSaga/getSkill", payload:{ token: `Bearer ${userlocal.token}`} });
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });
       dispatch({ type: "language/setLanguage", payload: null });
