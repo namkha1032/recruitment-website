@@ -26,6 +26,7 @@ import {
   import GigaCard from "../GigaCard/GigaCard";
 import Loading from "../Loading/Loading";
 import NoteField from "../../pages/Page_Company_Interview_Id/NoteField/NoteField";
+import cleanStore from "../../utils/cleanStore";
   
   const CVProfile = ({ cvid,page }) => {
     const dispatch = useDispatch();
@@ -36,7 +37,7 @@ import NoteField from "../../pages/Page_Company_Interview_Id/NoteField/NoteField
       console.log({cvid:cvid,token:user.token,userid:user.userid} )
       dispatch({ type: "cvSaga/getCv", payload: {cvid:cvid,token:user.token,userid:user.userid} });
       return () => {
-        dispatch({ type: "cv/setCv", payload: null });
+        cleanStore(dispatch)
       };
     }, []);
     console.log(cv)
@@ -142,7 +143,7 @@ import NoteField from "../../pages/Page_Company_Interview_Id/NoteField/NoteField
                     Experience
                   </Box>
                 </Box>
-                <Box sx={{ padding: "10px 0 0 40px" }}>{`${cv.experience}`}</Box>
+                <Box sx={{ padding: "10px 0 0 40px" }}><NoteField note={cv.experience}/></Box>
               </Box>
               </GigaCard>
             </Grid>

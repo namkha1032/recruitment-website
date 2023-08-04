@@ -29,20 +29,23 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom/dist";
 import MissingPage from "../MissingPage/MissingPage";
 import NoteField from '../../pages/Page_Company_Interview_Id/NoteField/NoteField'
+import cleanStore from "../../utils/cleanStore";
 const CV = ({ cvid,page }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cv = useSelector((state) => state.cv);
   const candidate = useSelector((state) => state.candidate);
   const user = useSelector(state => state.user)
+  const {profileid} = useParams()
+  console.log(user)
   useEffect(() => {
-    dispatch({ type: "cvSaga/getCv", payload: {cvid:cvid,token:user.token} });
+    dispatch({ type: "cvSaga/getCv", payload: {cvid:cvid,token:user.token,userid:user.profileid} });
     return () => {
-      dispatch({ type: "cv/setCv", payload: null });
+      cleanStore(dispatch)
     };
   }, []);
-  const {profileid} = useParams()
-
+  
+  console.log("CV :" , cv)
   return (
     cv === "none" ? <MissingPage/> :
     cv &&
@@ -235,10 +238,9 @@ const CV = ({ cvid,page }) => {
                   Experience
                 </Box>
               </Box>
-              <Box sx={{ padding: "10px 0 0 40px" }}>{`${cv.experience}`}</Box>
+              <Box sx={{ padding: "10px 0 0 40px" }}><NoteField note={cv.experience}/></Box>
               <Box><Divider orientation="horizontal" flexItem sx={{mt:3,height:'0.5px' }} /></Box>
             </Box>
-
           </Grid>
 
         {/*  <Grid item md={12} xs={12}>

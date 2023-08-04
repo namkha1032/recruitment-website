@@ -50,6 +50,17 @@ function* updateProfile(action) {
 function* getProfile(action) {
   try {
     const {token, userid } = action.payload;
+    const res = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Authentication/Profile/All`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      }
+    );
+    const list = res.data.filter(item => item.id === userid)
+    if (list.length === 0) {
+      yield put({ type: "profile/setProfile", payload: 'none' })
+    }else{
     const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Authentication/Profile/${userid}`,
       {
         headers: {
@@ -72,6 +83,7 @@ function* getProfile(action) {
 
     }else{
     yield put({ type: "profile/setProfile", payload: response.data })}
+  }
   } catch {}
 }
 function* profileSaga() {

@@ -1,19 +1,32 @@
 import { CameraAltOutlined } from "@mui/icons-material";
-import { Box, IconButton} from "@mui/material";
+import { Alert, Box, IconButton, Snackbar} from "@mui/material";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import GigaCard from "../GigaCard/GigaCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom/dist";
+import cleanStore from "../../utils/cleanStore";
 
 const ProfileHeader = ({  id, profile }) => {
   const {profileid} = useParams();
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
+  const [open, setOpen] = useState(false);
+  const [faild, setFaild] = useState(false);
+  const [loading,setLoading] = useState(false)
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }setOpen(false);
+  };
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
+      const fileType = file.type;
+      const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/bmp'];
+      if (validImageTypes.includes(fileType)){
+        setLoading(true)
       const data = {
         FullName: profile.name!== null ? profile.name : '',
         DateOfBirth:profile.birth,
@@ -23,11 +36,29 @@ const ProfileHeader = ({  id, profile }) => {
       }
       console.log(data)
       dispatch({type:'profileSaga/updateProfile',payload: {data,userid:user.userid,token:user.token}})
-   
+      }else{
+        setFaild(true)
+        setOpen(true)
+      }
     }
   };
-
+  useEffect(() => {
+    if(loading===true){
+      setLoading(false)
+      setOpen(true)
+    }
+    return () => {
+      cleanStore(dispatch)
+    }
+  },[user])
   return (
+    <>
+    <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+    <Alert onClose={handleClose} severity={faild ? "error" : "success"} elevation={6} variant="filled">
+      {faild ?<> Không thành công</> :<>Thành công !</>  }
+    </Alert>
+  </Snackbar>
+    
     <GigaCard>
       <img
         height="250px"
@@ -64,15 +95,15 @@ const ProfileHeader = ({  id, profile }) => {
               width: "100px",
               height: "100px",
             }}
-            src={profile.image}
+            src={profile.imageURL}
             alt=""
           />
           { user.userid === profileid && <>
           <input
-            accept="image/*"  
+            // accept="image/*"  
             id="image-upload"
             type="file"
-            style={{ display: "none" }}
+            style={{ display: "none",cursor:'pointer' }}
             onChange={handleFileChange}
           />
           <Box
@@ -88,28 +119,29 @@ const ProfileHeader = ({  id, profile }) => {
               height: "25px",
               left: "75px",
               bottom: "3px",
+              
             }}
           >
             <IconButton
               sx={{
-                padding: "2.5px",
+                padding: "2.5px"
               }}
             >
               <label
                 htmlFor="image-upload"
-                style={{ display: "flex", alignItems: "center" }}
+                style={{ display: "flex", alignItems: "center" ,cursor:'pointer'}}
               >
                 <CameraAltOutlined fontSize="small" />
               </label>
             </IconButton>
           </Box>
           </>}
-          <Box component='h2' sx={{ margin: "24px 0px 0px  24px" }}>{profile.name}</Box>
+          <Box component='h2' sx={{ margin: "24px 0px 0px  24px" }}>{profile.fullName}</Box>
         </Box>
 
         
       </Box>
-      </GigaCard>
+      </GigaCard></>
   );
 };
 

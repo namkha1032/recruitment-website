@@ -28,6 +28,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LoadingButton } from "@mui/lab";
+import { useParams } from "react-router-dom/dist";
+import cleanStore from "../../utils/cleanStore";
 
 const ProfileInfo = ({ profile }) => {
   const user = useSelector((state) => state.user);
@@ -35,12 +37,12 @@ const ProfileInfo = ({ profile }) => {
   const isMd = useMediaQuery(theme.breakpoints.down("md"));
   const isSm = useMediaQuery(theme.breakpoints.down("sm"));
   const dispatch = useDispatch();
-
+  const {profileid} = useParams()
   const [block, setBlock] = useState(true);
-  const [name, setName] = useState(profile.name ? profile.name : "");
+  const [name, setName] = useState(profile.fullName ? profile.fullName : "");
   const [email, setEmail] = useState(profile.email ? profile.email : "");
-  const [birth, setBirth] = useState(profile.birth ? dayjs(profile.birth) : "");
-  const [phone, setPhone] = useState(profile.phone ? profile.phone : "");
+  const [birth, setBirth] = useState(profile.dateOfBirth ? dayjs(profile.dateOfBirth) : "");
+  const [phone, setPhone] = useState(profile.phoneNumber ? profile.phoneNumber : "");
   const [address, setAddress] = useState(
     profile.address ? profile.address : ""
   );
@@ -54,7 +56,9 @@ const ProfileInfo = ({ profile }) => {
         setOpen(true)
         
       }
-      
+      return () => {
+        cleanStore(dispatch)
+      }
     },[user])
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -88,7 +92,7 @@ const ProfileInfo = ({ profile }) => {
   const handleEdit = () => {
     setBlock(false);
   };
-
+  console.log(profile)
   return (
     <> <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
     <Alert onClose={handleClose} severity={faild ? "error" : "success"} elevation={6} variant="filled">
@@ -108,11 +112,12 @@ const ProfileInfo = ({ profile }) => {
             }}
           >
             Detail{" "}
-            <Edit
+            {user.userid === profileid ? <Edit
               onClick={handleEdit}
+              
               fontSize="small"
-              sx={{ ml: "5px", color: "black" }}
-            />
+              sx={{ ml: "5px", color: "black",cursor:'pointer'}}
+            /> : <></>} 
           </Box>
           <Box sx={{ margin: "24px 0px 0px" }}>
             <Box
@@ -143,6 +148,7 @@ const ProfileInfo = ({ profile }) => {
               <PermContactCalendar />
               <Box sx={{ marginLeft: "16px", width:'100%'}}>
               <LocalizationProvider
+              sx={{  borderColor:'black' }} 
                 dateAdapter={AdapterDayjs}
         
               >
@@ -153,8 +159,9 @@ const ProfileInfo = ({ profile }) => {
                     value={birth}
                     readOnly={block} 
                     height=""
+                    
                     onChange={(newValue) => setBirth(newValue)}
-                    sx={{  width: '100%' }}
+                    sx={{  width: '100%'}}
                     
                   />
                 </DemoContainer>

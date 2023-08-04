@@ -7,22 +7,27 @@ import { useDispatch, useSelector } from "react-redux";
 import MissingPage from "../../components/MissingPage/MissingPage";
 import { useEffect } from "react";
 import Loading from "../../components/Loading/Loading";
+import cleanStore from "../../utils/cleanStore";
 
 
 
 const Page_Recruitment_Id_Application_Id = () => {
   const infoApplication = useSelector(state => state.infoApplication )
   const {applicationid,recruitmentid} = useParams()
+  const user = useSelector(state => state.user)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch({type:'applicationSaga/getInfoApplication',payload:applicationid})
+    dispatch({type:'applicationSaga/getInfoApplication',payload:{applicationid:applicationid,token:user.token}})
+    return () => {
+      cleanStore(dispatch)
+    };
   },[])
   console.log(infoApplication)
   return (
     infoApplication!== null ? ( infoApplication === 'none' ? <MissingPage/> :
       ( infoApplication.position.positionId === recruitmentid  ?
     <Container>
-      <Application cvid={0} page="normal"/>
+      <Application cvid={infoApplication.cv.cvid} page="normal"/>
     
     </Container> : <MissingPage/>)) : <Loading/>
      
