@@ -80,7 +80,7 @@ const ButtonApply = (props) => {
                 type: 'applicationSaga/getApplicationStatus', payload: {
                     userid: userid,
                     positionId: recruitmentid,
-                    token: `Bearer ${user.token}`
+                    token: "haha"
                 },
             })
         }
@@ -167,7 +167,7 @@ const ButtonApply = (props) => {
                             cvId: CV,
                             positionId: recruitmentid,
                             userId: userid,
-                            token: `Bearer ${user.token}`
+                            token: "haha"
                         }
                     })
                 }
@@ -193,7 +193,7 @@ const ButtonApply = (props) => {
                             company_Status: appstatus[0].company_Status,
                             priority: appstatus[0].candidate_Status,
                             isDeleted: false,
-                            token: `Bearer ${user.token}`
+                            token: "haha"
                         }
                     })
                 }

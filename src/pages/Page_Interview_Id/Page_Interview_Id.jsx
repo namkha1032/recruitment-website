@@ -47,18 +47,18 @@ const Page_Interview_Id = ({ cvid }) => {
     const dispatch = useDispatch();
     const interviewerror = useSelector(state => state.interviewError)
     useEffect(() => {
-        if (user !== null) {
-            dispatch({
-                type: 'interviewSaga/getInterviewInfo', payload: {
-                    interviewid: interviewid,
-                    token: `Bearer ${user.token}`
-                }
-            })
-        }
+
+        dispatch({
+            type: 'interviewSaga/getInterviewInfo', payload: {
+                interviewid: interviewid,
+                token: "haha"
+            }
+        })
+
         return () => {
             cleanStore(dispatch);
         }
-    }, [user])
+    }, [])
     // useEffect(() => {
     //     if (interviewerror.status === 'error') {
     //         if (interviewerror.message === 400 || interviewerror.message === 404) {

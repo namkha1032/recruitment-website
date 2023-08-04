@@ -166,7 +166,7 @@ function* getPosition(action) {
     
 
     console.log("param", action.payload)
-    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload}`)
+    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload.recruitmentid}`)
 
     let skilllist = []
     const response2 = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Skill');

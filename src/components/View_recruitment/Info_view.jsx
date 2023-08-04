@@ -44,22 +44,20 @@ const Info_view = (props) => {
     const dispatch = useDispatch();
     console.log('userinfo', user);
     useEffect(() => {
-        if (user !== null){
+        
             dispatch({ type: 'applicationSaga/getApplication', payload: {
                 recruitmentid: recruitmentid,
-                token:  `Bearer ${user.token}`,
+                token:  "haha",
             } })
             dispatch({ type: 'cvSaga/getCvList', payload: {
                 userid: userid,
-                token: `Bearer ${user.token}`
+                token: "haha"
             }})
-        }
-        return () => {
-            cleanStore(dispatch);
-        }
-    }, [user])
-    useEffect(() => {
-        dispatch({ type: 'positionSaga/getPosition', payload: recruitmentid })
+            dispatch({ type: 'positionSaga/getPosition', payload: {
+                recruitmentid: recruitmentid,
+                token: "haha"
+            } })
+        
         return () => {
             cleanStore(dispatch);
         }
