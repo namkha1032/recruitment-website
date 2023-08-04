@@ -62,6 +62,13 @@ import reportSlice from "./reducer/reportReducer";
 import recruiterIdCreateEventSlice from "./reducer/recruiterIdCreateEvent";
 import eventIdStatusSlice from "./reducer/eventIdStatusReducer";
 import eventRegisteredSlice from "./reducer/eventRegisteredReducer";
+import applicationStatusSlice from "./reducer/applicationStatusReducer";
+
+import positionErrorSlice from "./reducer/positionErrorReducer";
+import interviewErrorSlice from "./reducer/interviewErrorReducer";
+import updatesubmitcvSlice from "./reducer/updatesubmitCvReducer";
+import applicationErrorSlice from "./reducer/applicationErrorReducer";
+import submitNotifySlice from "./reducer/submitNotifyReducer";
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
     reducer: {
@@ -120,6 +127,12 @@ const store = configureStore({
         report: reportSlice.reducer,
         eventIdStatus: eventIdStatusSlice.reducer,
         eventRegistered: eventRegisteredSlice.reducer,
+        applicationStatus: applicationStatusSlice.reducer,
+        positionError: positionErrorSlice.reducer,
+        interviewError: interviewErrorSlice.reducer,
+        applicationError: applicationErrorSlice.reducer,
+        updatesubmitcv: updatesubmitcvSlice.reducer,
+        submitNotify: submitNotifySlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]

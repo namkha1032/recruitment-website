@@ -197,11 +197,11 @@ function* getPosition(action) {
     // yield put({ type: 'language/setLanguage', payload: response2.data })
     // yield put({ type: 'department/setDepartment', payload: department })
     // const response1 = yield call(axios.get, `${host.name}/data/detailposition.json`)
-    console.log("param", action.payload);
-    const response1 = yield call(
-      axios.get,
-      `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload}`
-    );
+    
+    
+
+    console.log("param", action.payload)
+    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload.recruitmentid}`)
 
     let skilllist = [];
     const response2 = yield call(
@@ -213,11 +213,7 @@ function* getPosition(action) {
     console.log("skillid", response1.data.requirements);
     for (let i = 0; i < response1.data.requirements.length; i++) {
       for (let j = 0; j < response2.data.length; j++) {
-        if (
-          response1.data.requirements[i].skillId ===
-          response2.data[j].skillId &&
-          response1.data.requirements[i].isDeleted === false
-        ) {
+        if (response1.data.requirements[i].skillId === response2.data[j].skillId && response1.data.requirements[i].isDeleted === false) {
           skilllist.push(response2.data[j]);
         }
       }
@@ -230,7 +226,12 @@ function* getPosition(action) {
     // yield put({ type: 'position/setPosition', payload: response1.data })
     // yield put({ type: 'positionskill/setPositionSkill', payload: skilllist })
   } catch (error) {
-    console.log(error);
+    console.log("RERERE: ", error)
+    if (error.response.request.status === 400 || error.response.request.status === 404) {
+
+      yield put({ type: 'positionError/onError', payload: error.response.request.status })
+
+    }
   }
 }
 // function* getDetailPosition(action){

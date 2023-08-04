@@ -9,6 +9,7 @@ import RecommendIcon from '@mui/icons-material/Recommend';
 import { formatDate } from '../../utils/formatDate';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import { convertDate } from "../../utils/convertDate";
 import dayjs from 'dayjs';
 import './Info_view.css'
 const View_detail = (props) => {
@@ -25,8 +26,8 @@ const View_detail = (props) => {
     let gridSx = {
         display: "flex", alignItems: "center"
     }
-    const startDate = props.detailposition ? formatDate(props.detailposition.startDate.slice(0, 10)) : [];
-    const endDate = props.detailposition ? formatDate(props.detailposition.endDate.slice(0, 10)) : [];
+    const startDate = props.detailposition ? dayjs(convertDate(props.detailposition.startDate)).format('DD/MM/YYYY') : [];
+    const endDate = props.detailposition ? dayjs(convertDate(props.detailposition.endDate)).format('DD/MM/YYYY') : [];
     console.log("hello", props.detailposition);
     // console.log("hellode", props.department);
     console.log("left", left);
@@ -37,7 +38,7 @@ const View_detail = (props) => {
         // props.detail &&
         <>
 
-            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: 2 }}>
                 <Grid item xs={4} md={left} sx={{ ...gridSx, columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <RadarIcon />
@@ -66,7 +67,7 @@ const View_detail = (props) => {
                     </Typography>
                 </Grid>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: 2 }}>
                 <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <HourglassBottomRoundedIcon />
@@ -96,7 +97,7 @@ const View_detail = (props) => {
                     {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`} /> */}
                 </Grid>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: 2 }}>
                 <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <ZoomInIcon />
@@ -127,7 +128,7 @@ const View_detail = (props) => {
                     {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].hireMax}`} /> */}
                 </Grid>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: 2 }}>
                 <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <RecommendIcon />
@@ -163,7 +164,7 @@ const View_detail = (props) => {
                     </Stack>
                 </Grid>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: 2}}>
                 <Grid item xs ={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <LanguageIcon />
@@ -205,7 +206,7 @@ const View_detail = (props) => {
                 </Grid>
                 <Grid item xs={7} md={right} sx={gridSx}>
                     <Typography variant="h6" sx={{ marginLeft: "8px" }}>
-                        {props.detailposition.salary}
+                        {`${props.detailposition.salary}${'$'}`}
                         {/* {detail[recruitmentid].salary} */}
                     </Typography>
                     {/* <Chip sx={{ padding: "0px", marginLeft: "5px" }} label={`${detailposition[0].salary}`} variant="outlined" color='info' size="medium" /> */}

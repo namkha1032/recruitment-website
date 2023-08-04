@@ -12,8 +12,9 @@ import { useDispatch } from "react-redux";
 
 const Page_Company_Recruitment_Id = () => {
     const {recruitmentid} = useParams();
-    const navigate = useNavigate();
+    
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const handleEdit = () => {
         cleanStore(dispatch)
         navigate(`/company/recruitment/${recruitmentid}/update`);
@@ -32,7 +33,7 @@ const Page_Company_Recruitment_Id = () => {
                     {/* tabs = {tabs} */}
                     <Info_view tabs={tabs} />
                 </Grid>
-                <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", marginTop: "16px" }}>
+                {/* <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", marginTop: "16px" }}>
                     <Button sx={{
                         backgroundColor: "black",
                         ":hover": {
@@ -42,7 +43,7 @@ const Page_Company_Recruitment_Id = () => {
                         <EditIcon></EditIcon> EDIT
                     </Button>
 
-                </Grid>
+                </Grid> */}
             </Grid>
 
         </div>
