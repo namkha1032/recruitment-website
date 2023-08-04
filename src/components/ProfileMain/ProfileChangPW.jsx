@@ -647,7 +647,7 @@ const ProfileChangePW = () => {
                     sx={{
                       height: "40px",
                       color: "white",
-                      borderRadius: "20px",
+                      borderRadius: "10px",
                       fontSize: "1em",
                       fontWeight: 600,
                       width: "100%",

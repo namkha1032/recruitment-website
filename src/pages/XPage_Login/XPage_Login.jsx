@@ -261,7 +261,7 @@ const XPage_Login = () => {
                   //marginBottom: "5px",
                 }}
               >
-                Sign In
+                Log In
               </Typography>
 
               <Grid
@@ -564,7 +564,7 @@ const XPage_Login = () => {
                         width: "90%",
                       }}
                     >
-                      Sign in
+                      Log in
                     </Button>}
                   {/* <CircularProgress /> */}
                 </Grid>
@@ -592,7 +592,7 @@ const XPage_Login = () => {
                       variant="small"
                       sx={{ cursor: 'pointer' ,textDecoration: 'underline', color: "black" }}
                     >
-                      Sign up
+                      Register
                     </Typography>
                   </Typography>
                 </Grid>
