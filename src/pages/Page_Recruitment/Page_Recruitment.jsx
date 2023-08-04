@@ -130,7 +130,7 @@ const Page_Recruitment = () => {
       <main id="recruitment">
         {/* Hero unit */}
         <Grid container spacing={3} p={3}>
-          <Grid item md={12} xs={12} textAlign='center' >
+          <Grid item md={12} xs={12}  textAlign='center' >
             <Box >
               <Box
                 sx={{
@@ -301,11 +301,11 @@ const Page_Recruitment = () => {
                               </Grid>
                               <Grid
                                 item
-                                md={3} xs={3}
+                                md={3} xs={12}  sm={12}
                                 sx={{
                                   display: "flex",
                                   flexDirection: "column",
-                                  justifyContent: "space-between",
+                                  justifyContent: "right",
                                 }}
                               >
                                 <Box sx={{ margin: "15px" }}>
@@ -313,7 +313,8 @@ const Page_Recruitment = () => {
                                 </Box>
                                 <Box
                                   sx={{
-                                    margin: "15px",
+                                    padding:'30px 0px 0px 0px',
+                                    margin:"15px",
                                     display: "flex",
                                     justifyContent: "end",
                                   }}

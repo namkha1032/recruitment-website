@@ -27,7 +27,7 @@ function useGetRole() {
                 headers: { Authorization: token },
             }
 
-            axios.get('https://leetun2k2-001-site1.gtempurl.com/api/Authentication/CurrentRole', config).then(response => {
+            axios.get('https://leetun2k2-001-site1.gtempurl.com/api/Authentication/Role', config).then(response => {
                 console.log("response is: ", response.data.role[0])
                 if (response.data.role[0] == "Admin") {
                     setRole("admin")

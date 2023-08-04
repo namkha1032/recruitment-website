@@ -17,7 +17,7 @@ function* userLogin(action) {
         const config = {
             headers: { Authorization: token },
         }
-        const responseUserId = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/CurrentUser', config)
+        const responseUserId = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/GetRole', config)
         //console.log("userId is", responseUserId.data.userId)
 
         const responseUserInformation = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/UserLogin', config)
