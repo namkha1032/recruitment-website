@@ -24,6 +24,7 @@ import ButtonApply from './ButtonApply/ButtonApply';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import useGetRole from '../../hooks/useGetRole';
+import StatusPostion from './StatusPosittion/StatusPosition';
 const Info_view = (props) => {
     const { recruitmentid } = useParams();
     console.log("number", recruitmentid);
@@ -153,6 +154,7 @@ const Info_view = (props) => {
 
                                 <View_detail detailposition={detailposition} skill={skill} />
                                 {/* <View_detail detailposition={detailposition[0]}  /> */}
+                                <StatusPostion detailposition={detailposition} />
                             </GigaCardBody>
                         </GigaCard>
                     </Grid>
