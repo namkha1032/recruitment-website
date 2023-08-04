@@ -36,14 +36,14 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
   const candidate = useSelector((state) => state.candidate);
   const user = useSelector(state => state.user)
 
-  console.log(user)
+  console.log(detailposition)
 
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     dispatch({ type: "applicationSaga/getInfoApplication", payload:{applicationid:applicationid,token:user.token} });
     dispatch({ type: "skillSaga/getSkill" });
-    dispatch({ type: "positionSaga/getPosition", payload: recruitmentid });
+    dispatch({ type: "positionSaga/getPosition", payload: {recruitmentid:recruitmentid} });
     return () => {
       cleanStore(dispatch);
     };
@@ -60,7 +60,7 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
     display: "flex",
     alignItems: "center",
   };
-  console.log(infoApplication)
+  
   return (
     infoApplication &&
     detailposition &&
