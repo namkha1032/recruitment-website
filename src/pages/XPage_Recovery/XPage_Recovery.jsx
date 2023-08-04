@@ -37,6 +37,14 @@ const XPage_Recovery = () => {
 
   const newError = useSelector((state) => state.error);
 
+  const handleClickHome = () => {
+    dispatch({
+      type: "error/setError",
+      payload: { status: "idle", message: "" },
+    });
+    navigate("/home");
+  };
+
   useEffect(() => {
     if (newError.status === "no") {
       if (!isEmailValid) {
@@ -193,6 +201,7 @@ const XPage_Recovery = () => {
           handleSubmit={handleEmailSubmit}
           validEmail={validEmail}
           loading={loading}
+          handleClickHome={handleClickHome}
         />
       ) : (
         <>
@@ -208,6 +217,7 @@ const XPage_Recovery = () => {
             handleConfirmPasswordChange={handleConfirmPasswordChange}
             handleSubmit={handlePasswordSubmit}
             loading={loading}
+            handleClickHome={handleClickHome}
           />
         </>
       )}

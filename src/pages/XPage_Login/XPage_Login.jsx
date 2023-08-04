@@ -26,7 +26,7 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import imageBackground from "../../assets/img/background.jpg";
-//import imageBackground from "./nightwall.webm";
+//import videoBg from "./nightwall.webm";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import HomeIcon from '@mui/icons-material/Home';
 
@@ -37,7 +37,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 // const style = {
 //   marginTop: "15px",
 //   marginBottom: "15px",
-// };
+// };bg
 
 const theme = createTheme({
   palette: {
@@ -195,8 +195,14 @@ const XPage_Login = () => {
         }}
       >
         <Typography 
-          color="black"
-          fontWeight="300"
+          // color="white"
+          // fontWeight="300"
+          onClick={handleClickHome}
+          sx={{
+            color: 'white',
+            cursor: 'pointer',
+            fontWeight: '300',
+          }}
         >
           Back to home
         </Typography>
@@ -204,7 +210,9 @@ const XPage_Login = () => {
           onClick={handleClickHome}
           sx={{
             //textDecoration: "none",
-            cursor: 'pointer'
+            color: 'white',
+            cursor: 'pointer',
+            marginLeft: '3px'
           }}
         />
       </Box>
@@ -220,7 +228,7 @@ const XPage_Login = () => {
         <Box
           sx={{
             position: "relative",
-            width: "100%",
+            width: "95%",
             height: "100%",
             background: "transparent",
             border: "2px solid rgba(255, 255, 255, 0.5)",
@@ -233,390 +241,364 @@ const XPage_Login = () => {
             boxShadow: "0px 0px 10px 10px rgba(255, 255, 255, 0.25)",
           }}
         >
-          <Stack>
-            {/* <Box 
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: "5px"
-              }}
-            >
-              <ArrowBackIcon 
-                onClick={handleClickHome}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingTop: "5%",
+              paddingBottom: "5%",
+            }}
+          >
+            <form onSubmit={handleLogin}>
+              <Typography
+                variant="h2"
                 sx={{
-                  //textDecoration: "none",
-                  cursor: 'pointer'
+                  fontSize: "3rem",
+                  color: "black",
+                  textAlign: "center",
+                  fontWeight: "450",
+                  //marginBottom: "5px",
                 }}
-              />
-              <HomeIcon 
-                onClick={handleClickHome}
+              >
+                Sign In
+              </Typography>
+
+              <Grid
+                container
+                //spacing={2}
                 sx={{
-                  //textDecoration: "none",
-                  cursor: 'pointer'
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-              />
-            </Box> */}
-            
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                paddingTop: "5%",
-                paddingBottom: "5%",
-              }}
-            >
-              <form onSubmit={handleLogin}>
-                <Typography
-                  variant="h2"
+              >
+                <Grid
+                  item
+                  xs={12}
                   sx={{
-                    fontSize: "3rem",
-                    color: "black",
-                    textAlign: "center",
-                    fontWeight: "450",
-                    //marginBottom: "5px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: "3px",
+                    //marginTop: '5px',
                   }}
                 >
-                  Sign In
-                </Typography>
+                  <TextField
+                    variant="standard"
+                    //required
+                    fullWidth
+                    type="text"
+                    label={validUsername ? <Typography color={"black"}>Username</Typography>
+                      : <Typography color={"red"}>Username</Typography>
+                      }
+                    autoComplete="new-text"
+                    value={username}
+                    onChange={handleUsernameChange}
+                    error={!validUsername}
+                    InputProps={{
+                      disableUnderline: true,
+                      endAdornment: (
+                        <AccountCircleOutlinedIcon
+                          sx={{
+                            position: "absolute",
+                            right: "8px",
+                            color: validUsername ? "black" : "red",
+                            fontSize: "1.2em",
+                            //top: '20px',
+                          }}
+                        />
+                      ),
+                      sx: {
+                        color: "#000",
+                      },
+                    }}
+                    sx={{
+                      width: "90%",
+                      height: "50px",
+                      background: "transparent",
+                      outline: "none",
+                      fontSize: "1em",
+                      color: "#000",
+                      borderBottom: validUsername ? "2px solid black" : "2px solid red",
+                      borderBottomWidth: "2px",
+                    }}
+                  />
+                </Grid>
+
+                {!validUsername && (
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "left",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      color={"red"}
+                      display={"flex"}
+                      marginLeft={"16px"}
+                      marginRight={"15px"}
+                      //marginBottom={"3px"}
+                    >
+                      <ErrorOutlineOutlinedIcon
+                        //color="red"
+                        sx={{
+                          fontSize: 15,
+                          paddingLeft: "2px",
+                          marginTop: "2px",
+                        }}
+                      />
+
+                      <Typography
+                        color="red"
+                        fontSize="12px"
+                        lineHeight="20px"
+                        paddingLeft={"5px"}
+                      >
+                        Username is required
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
 
                 <Grid
-                  container
-                  //spacing={2}
+                  item
+                  xs={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: "3px",
+                    marginTop: '5px',
+                  }}
+                >
+                  <TextField
+                    variant="standard"
+                    //required
+                    fullWidth
+                    type={showPassword ? "text" : "password"}
+                    label={validPassword ? <Typography color={"black"}>Password</Typography> : <Typography color={"red"}>Password</Typography>}
+                    autoComplete="new-password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    InputProps={{
+                      disableUnderline: true,
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            onClick={handleShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? (
+                              <VisibilityOutlinedIcon
+                                sx={{
+                                  position: "absolute",
+                                  right: "8px",
+                                  color: validPassword ? 'black' : 'red',
+                                  fontSize: "0.9em",
+                                  //top: '20px',
+                                }}
+                              />
+                            ) : (
+                              <VisibilityOffOutlinedIcon
+                                sx={{
+                                  position: "absolute",
+                                  right: "8px",
+                                  color: validPassword ? 'black' : 'red',
+                                  fontSize: "0.9em",
+                                  //top: '20px',
+                                }}
+                              />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    sx={{
+                      width: "90%",
+                      height: "50px",
+                      background: "transparent",
+                      outline: "none",
+                      fontSize: "1em",
+                      color: "#fff",
+                      borderBottom: validPassword ? "2px solid black" : "2px solid red",
+                      borderBottomWidth: "2px",
+                      marginTop: "3px",
+                    }}
+                  />
+                </Grid>
+
+                {!validPassword && (
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "left",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      color={"red"}
+                      display={"flex"}
+                      marginLeft={"16px"}
+                      marginRight={"15px"}
+                    >
+                      <ErrorOutlineOutlinedIcon
+                        sx={{
+                          fontSize: 15,
+                          paddingLeft: "2px",
+                          marginTop: "2px",
+                        }}
+                      />
+
+                      <Typography
+                        color="red"
+                        fontSize="12px"
+                        lineHeight="20px"
+                        paddingLeft={"5px"}
+                      >
+                        Password is required
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
+
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    margin: "15px 20px 15px",
+                    fontSize: ".9em",
+                    color: "#fff",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignContent: "center",
+                    textAlign: 'center'
+                  }}
+                >
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={check}
+                        onClick={handleCheck}
+                        //size="small"
+                        sx={{
+                          color: "black",
+                          "&.Mui-checked": {
+                            color: "black",
+                          },
+                          '& .MuiSvgIcon-root': { 
+                            fontSize: 18
+                          },
+                          //fontSize: '1em',
+                          height: "8px",
+                          width: "8px",
+                          marginLeft: "9px",
+                        }}
+                      />
+                    }
+                    label={
+                      <Typography
+                        variant="small"
+                        sx={{
+                          lineHeight: "15px",
+                          marginLeft: "3px",
+                        }}
+                      >
+                        Remember me
+                      </Typography>
+                    }
+                    sx={{
+                      color: "#000",
+                      textDecoration: "none",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignContent: "center",
+                      textAlign: "center",
+                    }}
+                  />
+                  <Box sx={{
+                    alignContent: 'center',
+                    textAlign: 'center'
+                  }}>
+                  <Typography
+                    onClick={handleClickForgot}
+                    variant="small"
+                    sx={{
+                      color: "black",
+                      lineHeight: "15px",
+                      textDecoration: 'underline',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Forgot password?{" "}
+                  </Typography>
+                  </Box>
+                </Grid>
+
+                <Grid
+                  item
+                  xs={12}
                   sx={{
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
-                  <Grid
-                    item
-                    xs={12}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginBottom: "3px",
-                      marginTop: '5px',
-                    }}
-                  >
-                    <TextField
-                      variant="standard"
-                      //required
-                      fullWidth
-                      type="text"
-                      label={validUsername ? <Typography color={"black"}>Username</Typography>
-                        : <Typography color={"red"}>Username</Typography>
-                        }
-                      autoComplete="new-text"
-                      value={username}
-                      onChange={handleUsernameChange}
-                      error={!validUsername}
-                      InputProps={{
-                        disableUnderline: true,
-                        endAdornment: (
-                          <AccountCircleOutlinedIcon
-                            sx={{
-                              position: "absolute",
-                              right: "8px",
-                              color: validUsername ? "black" : "red",
-                              fontSize: "1.2em",
-                              //top: '20px',
-                            }}
-                          />
-                        ),
-                        sx: {
-                          color: "#000",
-                        },
-                      }}
+                  {loading ? <CircularProgress sx={{ color: "black" }} /> :
+                    <Button
+                      type="submit"
+                      theme={theme}
+                      variant="contained"
+                      color="secondary"
                       sx={{
-                        width: "90%",
-                        height: "50px",
-                        background: "transparent",
-                        outline: "none",
+                        height: "40px",
+                        color: "white",
+                        borderRadius: "20px",
                         fontSize: "1em",
-                        color: "#000",
-                        borderBottom: validUsername ? "2px solid black" : "2px solid red",
-                        borderBottomWidth: "2px",
-                      }}
-                    />
-                  </Grid>
-
-                  {!validUsername && (
-                    <Grid
-                      item
-                      xs={12}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "left",
-                        alignItems: "center",
+                        fontWeight: 600,
+                        width: "90%",
                       }}
                     >
-                      <Box
-                        color={"red"}
-                        display={"flex"}
-                        marginLeft={"16px"}
-                        marginRight={"15px"}
-                        //marginBottom={"3px"}
-                      >
-                        <ErrorOutlineOutlinedIcon
-                          //color="red"
-                          sx={{
-                            fontSize: 15,
-                            paddingLeft: "2px",
-                            marginTop: "2px",
-                          }}
-                        />
+                      Sign in
+                    </Button>}
+                  {/* <CircularProgress /> */}
+                </Grid>
+              </Grid>
 
-                        <Typography
-                          color="red"
-                          fontSize="12px"
-                          lineHeight="20px"
-                          paddingLeft={"5px"}
-                        >
-                          Username is required
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  )}
-
-                  <Grid
-                    item
-                    xs={12}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginBottom: "3px",
-                      marginTop: '5px',
-                    }}
-                  >
-                    <TextField
-                      variant="standard"
-                      //required
-                      fullWidth
-                      type={showPassword ? "text" : "password"}
-                      label={validPassword ? <Typography color={"black"}>Password</Typography> : <Typography color={"red"}>Password</Typography>}
-                      autoComplete="new-password"
-                      value={password}
-                      onChange={handlePasswordChange}
-                      InputProps={{
-                        disableUnderline: true,
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton
-                              onClick={handleShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                            >
-                              {showPassword ? (
-                                <VisibilityOutlinedIcon
-                                  sx={{
-                                    position: "absolute",
-                                    right: "8px",
-                                    color: validPassword ? 'black' : 'red',
-                                    fontSize: "0.9em",
-                                    //top: '20px',
-                                  }}
-                                />
-                              ) : (
-                                <VisibilityOffOutlinedIcon
-                                  sx={{
-                                    position: "absolute",
-                                    right: "8px",
-                                    color: validPassword ? 'black' : 'red',
-                                    fontSize: "0.9em",
-                                    //top: '20px',
-                                  }}
-                                />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                      sx={{
-                        width: "90%",
-                        height: "50px",
-                        background: "transparent",
-                        outline: "none",
-                        fontSize: "1em",
-                        color: "#fff",
-                        borderBottom: validPassword ? "2px solid black" : "2px solid red",
-                        borderBottomWidth: "2px",
-                        marginTop: "3px",
-                      }}
-                    />
-                  </Grid>
-
-                  {!validPassword && (
-                    <Grid
-                      item
-                      xs={12}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "left",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Box
-                        color={"red"}
-                        display={"flex"}
-                        marginLeft={"16px"}
-                        marginRight={"15px"}
-                      >
-                        <ErrorOutlineOutlinedIcon
-                          sx={{
-                            fontSize: 15,
-                            paddingLeft: "2px",
-                            marginTop: "2px",
-                          }}
-                        />
-
-                        <Typography
-                          color="red"
-                          fontSize="12px"
-                          lineHeight="20px"
-                          paddingLeft={"5px"}
-                        >
-                          Password is required
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  )}
-
-                  <Grid
-                    item
-                    xs={12}
-                    sx={{
-                      margin: "15px 20px 15px",
-                      fontSize: ".9em",
-                      color: "#fff",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignContent: "center",
-                      textAlign: 'center'
-                    }}
-                  >
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={check}
-                          onClick={handleCheck}
-                          //size="small"
-                          sx={{
-                            color: "black",
-                            "&.Mui-checked": {
-                              color: "black",
-                            },
-                            '& .MuiSvgIcon-root': { 
-                              fontSize: 18
-                            },
-                            //fontSize: '1em',
-                            height: "8px",
-                            width: "8px",
-                            marginLeft: "9px",
-                          }}
-                        />
-                      }
-                      label={
-                        <Typography
-                          variant="small"
-                          sx={{
-                            lineHeight: "15px",
-                            marginLeft: "3px",
-                          }}
-                        >
-                          Remember me
-                        </Typography>
-                      }
-                      sx={{
-                        color: "#000",
-                        textDecoration: "none",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignContent: "center",
-                        textAlign: "center",
-                      }}
-                    />
-                    <Box sx={{
-                      alignContent: 'center',
-                      textAlign: 'center'
-                    }}>
+              <Grid container justifyContent="center">
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    lineHeight: "15px",
+                    paddingTop: "15px",
+                    fontSize: ".9em",
+                  }}
+                >
+                  <Typography variant="small" sx={{ color: "black" }}>
+                    Didn't have an account?{" "}
                     <Typography
-                      onClick={handleClickForgot}
+                      // component={Link}
+                      // to="/register"
+                      onClick={handleClickSignUp}
                       variant="small"
-                      sx={{
-                        color: "black",
-                        lineHeight: "15px",
-                        textDecoration: 'underline',
-                        cursor: 'pointer'
-                      }}
+                      sx={{ cursor: 'pointer' ,textDecoration: 'underline', color: "black" }}
                     >
-                      Forgot password?{" "}
+                      Sign up
                     </Typography>
-                    </Box>
-                  </Grid>
-
-                  <Grid
-                    item
-                    xs={12}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    {loading ? <CircularProgress sx={{ color: "black" }} /> :
-                      <Button
-                        type="submit"
-                        theme={theme}
-                        variant="contained"
-                        color="secondary"
-                        sx={{
-                          height: "40px",
-                          color: "white",
-                          borderRadius: "20px",
-                          fontSize: "1em",
-                          fontWeight: 600,
-                          width: "90%",
-                        }}
-                      >
-                        Sign in
-                      </Button>}
-                    {/* <CircularProgress /> */}
-                  </Grid>
+                  </Typography>
                 </Grid>
-
-                <Grid container justifyContent="center">
-                  <Grid
-                    item
-                    xs={12}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      lineHeight: "15px",
-                      paddingTop: "15px",
-                      fontSize: ".9em",
-                    }}
-                  >
-                    <Typography variant="small" sx={{ color: "black" }}>
-                      Didn't have an account?{" "}
-                      <Typography
-                        // component={Link}
-                        // to="/register"
-                        onClick={handleClickSignUp}
-                        variant="small"
-                        sx={{ cursor: 'pointer' ,textDecoration: 'underline', color: "black" }}
-                      >
-                        Sign up
-                      </Typography>
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </form>
-            </Box>
-          </Stack>
+              </Grid>
+            </form>
+          </Box>
         </Box>
       </Container>
       </Stack>
