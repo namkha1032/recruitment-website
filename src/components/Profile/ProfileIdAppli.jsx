@@ -7,18 +7,18 @@ import TabInProfile from './TabInProfile/TabInProfile';
 import { NotStart,Pending , Completed,Pass} from '../Label/LabelStatus';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-
-export default function HistoryList({ events, pathnavigate, NameList, namePage }) {
-
+import {NoRowsOverlay,NoResultsOverlay} from '../DataRick/DataRick';
+export default function HistoryListApp({ events, NameList, namePage }) {
+  console.log("eventAppli:", events)
   const [selectedEvent, setSelectedEvent] = useState(null);
   const navigate = useNavigate();
   const [totalPositions, setTotalPositions] = useState(0);
   useEffect(() => {
     setTotalPositions(events.length);
   }, [events]);
-  const handleDetails = (eventId) => {
-   console.log(eventId);
-    navigate(`${pathnavigate}/${eventId}`);
+  const handleDetails = (event) => {
+   console.log("applicationId",event);
+    navigate(`/recruitment/${event.positionId}/application/${event.applicationId}`);
    
   };
 
@@ -68,13 +68,13 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
        <Button
        variant="contained"
        color="primary"
-       onClick={() => handleDetails(params.row.applicationId)}
+       onClick={() => handleDetails(params.row)}
        style={{ textTransform: "none", backgroundColor: "black" }}
      >
        View Detail
      </Button>
       ) : (
-        <VisibilityIcon onClick = { () => handleDetails(params.row.applicationId)} style={{ color: "#1565C0" }}/>    
+        <VisibilityIcon onClick = { () => handleDetails(params.row)} style={{ color: "#1565C0" }}/>    
       )}
     </>
       ),
@@ -107,6 +107,7 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
             <DataGrid
               rows={events === null ? [] : events}
               columns={columns}
+              autoHeight={true}
               getRowId={(row) => row.applicationId}
               rowStyles={(params) => ({
                 backgroundColor: selectedEvent === params.applicationId ? '#ffdddd' : 'transparent',
@@ -143,6 +144,11 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
                 "&.MuiDataGrid-colCellTitle": {
                   whiteSpace: "normal",
                 }
+              }}
+              slots = {{
+                noRowsOverlay:NoRowsOverlay,
+                noResultsOverlay:NoResultsOverlay,
+                
               }}
               
             />

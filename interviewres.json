@@ -1,0 +1,104 @@
+{
+    "interviewId": "c55039ea-6c4a-4fe3-a130-0f9fba368f81",
+    "company_Status": "Pending",
+    "candidate_Status": "Not start",
+    "notes": "",
+    "priority": null,
+    "isDeleted": false,
+    "application": {
+        "applicationId": "b3547d66-4f78-4ab5-883b-5a1e78b2dc3b",
+        "cv": {
+            "cvid": "85d61bb8-5d21-4825-9699-a9e5e8cf5de7",
+            "candidateId": "db20f8d0-eb45-43af-9790-e89f48a1a587",
+            "candidate": {
+                "candidateId": "db20f8d0-eb45-43af-9790-e89f48a1a587",
+                "userId": "bf39957a-5fad-4e81-a8bd-2c2afa10d15a",
+                "experience": "",
+                "isDeleted": false,
+                "user": {
+                    "id": "bf39957a-5fad-4e81-a8bd-2c2afa10d15a",
+                    "fullName": "Nobita",
+                    "dateOfBirth": "1411-11-11T00:00:00",
+                    "imageURL": "http://res.cloudinary.com/dzysxfuzi/image/upload/v1691066302/ezhg0o1rwrslhwdxx8lp.jpg",
+                    "userName": "thien291002",
+                    "email": "thienbao291002@gmail.com"
+                }
+            },
+            "experience": "10 years with Front-end Developer",
+            "cvPdf": "string",
+            "cvName": "Intern FE",
+            "introduction": "I am a dedicated and highly motivated professional with a passion for web development and front-end technologies. With a Bachelor's degree in Computer Science and several years of experience in designing and implementing user-friendly web applications, I have honed my skills in HTML, CSS, JavaScript, and ReactJS.",
+            "education": "HCMUT",
+            "isDeleted": false,
+            "skills": [],
+            "certificates": []
+        },
+        "position": {
+            "positionId": "e9ebc9d4-2ef2-43c8-96f4-2bd0745d3325",
+            "positionName": "React Front End",
+            "description": "<p>React, Html</p>",
+            "salary": 1000,
+            "maxHiringQty": 10,
+            "startDate": "2023-08-01T00:00:00",
+            "endDate": "2023-08-30T00:00:00",
+            "department": {
+                "departmentId": "9212b6b2-daac-4e64-a7c6-55cc837fe353",
+                "departmentName": "FrontEnd",
+                "address": "F Town 2",
+                "email": "frontend@fpt.com",
+                "phone": "0123456789",
+                "website": "https://fpt.frontend.com",
+                "isDeleted": false
+            },
+            "language": null,
+            "recruiter": null,
+            "isDeleted": false,
+            "requirements": []
+        },
+        "dateTime": "2023-08-02T00:02:32",
+        "company_Status": "Accepted",
+        "candidate_Status": "Pending",
+        "priority": null
+    },
+    "interviewer": {
+        "interviewerId": "157fc7c4-c57b-4d28-9faa-8799e95a426a",
+        "userId": "b1b86c54-70f7-4015-be67-bba3a5507748",
+        "departmentId": "9212b6b2-daac-4e64-a7c6-55cc837fe353",
+        "user": {
+            "id": "b1b86c54-70f7-4015-be67-bba3a5507748",
+            "fullName": "Ironman Interviewer",
+            "dateOfBirth": "0001-01-01T00:00:00",
+            "imageURL": null,
+            "userName": "ironmaninterviewer",
+            "email": "ironmaninterviewer@marvel.com"
+        },
+        "isDeleted": false
+    },
+    "itrsinterview": {
+        "itrsinterviewId": "472fa93d-15a2-4406-8736-7810d3cf3d29",
+        "dateInterview": "2023-10-19T00:00:00",
+        "room": {
+            "roomId": "00000000-0000-0000-0000-000000000002",
+            "roomName": "Boston"
+        },
+        "shift": {
+            "shiftId": "38e7dd95-4321-4aa5-a65d-5e553b1f60d9",
+            "shiftTimeStart": 8,
+            "shiftTimeEnd": 9
+        }
+    },
+    "recruiter": {
+        "recruiterId": "cc8bb0ab-8790-4009-955e-7ab24dda359d",
+        "userId": "222a7f2e-056b-4817-99ff-98d4cfc2ad15",
+        "departmentId": "00000000-0000-0000-0000-000000000001",
+        "user": {
+            "id": "222a7f2e-056b-4817-99ff-98d4cfc2ad15",
+            "fullName": "Spider Recruiter",
+            "dateOfBirth": "0001-01-01T00:00:00",
+            "imageURL": null,
+            "userName": "spiderrecruiter",
+            "email": "spiderrecruiter@marvel.com"
+        },
+        "isDeleted": false
+    }
+}

@@ -56,15 +56,12 @@ const Footer = () => {
                   component="p"
                   sx={{ display: "flex", justifyContent: "flex-start" }}
                 >
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Facilis, perspiciatis repellat maxime, adipisci non ipsam at
-                  adipisci non ipsam at
-                  adipisci non ipsam at
+                 Teamwork is the heart of success in any organization. A team is a group of individuals who come together, united by a common goal, to collaborate.
 
                 </Typography>
               </Box>
               <Box sx={{ padding: "15px 0px 0px 30px" }}>
-                <Link color="#FFFFF" sx={{ cursor: 'pointer' }}>Read more</Link>
+                <Link color="#FF9933" sx={{ cursor: 'pointer' }}>Read more</Link>
               </Box>
               <Box sx={{ padding: "15px 0px 0px 30px" }}>
                 {isSm ?
@@ -94,7 +91,7 @@ const Footer = () => {
                 <Typography
                   variant="h6"
                   align="center"
-                  color="#C0C0C0"
+                  color="#FF9933"
                   component="p"
                   sx={{ display: "flex", justifyContent: "flex-start", cursor: 'pointer' }}
                   mt={2}
@@ -105,7 +102,7 @@ const Footer = () => {
                 <Typography
                   variant="h6"
                   align="center"
-                  color="#C0C0C0"
+                  color="#FF9933"
                   component="p"
                   sx={{ display: "flex", justifyContent: "flex-start", cursor: 'pointer' }}
                   mt={2}
@@ -116,7 +113,7 @@ const Footer = () => {
                 <Typography
                   variant="h6"
                   align="center"
-                  color="#C0C0C0"
+                  color="#FF9933"
                   component="p"
                   sx={{ display: "flex", justifyContent: "flex-start", cursor: 'pointer' }}
                   mt={2}
@@ -145,7 +142,7 @@ const Footer = () => {
                 </Typography>
               </Box>
               <Box p='30px 24px 0 24px'>
-                {eventFooter.slice(0, 4).map((item, index) => (
+                {eventFooter.slice(0, 6).map((item, index) => (
                   <Box
                     key={index}
                     onClick={() => handleNavigateClick(item.EventId)}
@@ -165,7 +162,7 @@ const Footer = () => {
 
                       <Typography
                         variant="subtitle1"
-                        align="center"
+                        align="left"
                         color="#FFFFFF"
                         component="p"
                         sx={{
@@ -178,21 +175,21 @@ const Footer = () => {
                       </Typography>
                       <Typography
                         variant="subtitle1"
-                        align="center"
-                        color="#C0C0C0"
+                        align="left"
+                        color="#FF9933"
                         component="p"
                         sx={{ display: "flex", justifyContent: "flex-start" }}
                       >
                         {" "} {item.EventDateTime.slice(0, 10)}
                       </Typography>
-                      <Typography
+                      {/* <Typography
                         variant="subtitle1"
-                        align="center"
-                        color="#C0C0C0"
+                        align="left"
+                        color="#FF9933"
                         component="p"
                         sx={{ display: "flex", justifyContent: "flex-start" }}
-                      >{item.EventDescription}
-                      </Typography>
+                      >{item.EventCampus} */}
+                      {/* </Typography> */}
 
                     </Box>
                   </Box>

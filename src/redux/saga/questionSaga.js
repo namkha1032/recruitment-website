@@ -8,7 +8,10 @@ import { filterQuestionList } from "../../utils/filterQuestionList";
 import { createQuestionDraft } from "../../utils/createQuestionDraft";
 import { getQuestionSkillInfo } from "../../utils/getQuestionSkillInfo";
 
-function* getAllQuestion() {
+// action.payload: {
+//   token: `Bearer ${user.token}`
+// }
+function* getAllQuestion(action) {
   console.log("GET ALL Question");
   try {
     yield put({ type: "loading/onLoading" });
@@ -18,26 +21,40 @@ function* getAllQuestion() {
 
     const response = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Question"
+      "https://leetun2k2-001-site1.gtempurl.com/api/Question",
+      {
+        headers: { Authorization: action.payload.token },
+      }
     );
-    console.log("0: ", response.data);
     // --- GET NAME
 
     const categorys = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion"
+      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion",
+      {
+        headers: { Authorization: action.payload.token },
+      }
     );
     const skillsQ = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill"
+      "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill",
+      {
+        headers: { Authorization: action.payload.token },
+      }
     );
     const skills = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Skill"
+      "https://leetun2k2-001-site1.gtempurl.com/api/Skill",
+      {
+        headers: { Authorization: action.payload.token },
+      }
     );
     const languages = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Language"
+      "https://leetun2k2-001-site1.gtempurl.com/api/Language",
+      {
+        headers: { Authorization: action.payload.token },
+      }
     );
     const data = yield call(
       formatQuestionList,
@@ -65,6 +82,7 @@ function* getAllQuestion() {
     //     message: "message" in error ? error.message : error.response.data,
     //   },
     // });
+    yield put({ type: "loading/offLoading" });
     yield put({
       type: "status/onError",
       payload: error.message,
@@ -82,26 +100,39 @@ function* getQuestionListWithFilter(action) {
 
     const response = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Question"
+      "https://leetun2k2-001-site1.gtempurl.com/api/Question",
+      {
+        headers: { Authorization: action.payload.token },
+      }
     );
 
     // --- GET NAME
 
     const categorys = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion"
+      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion",
+      {
+        headers: { Authorization: action.payload.token },
+      }
     );
     const skillsQ = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill"
+      "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill",
+      {
+        headers: { Authorization: action.payload.token },
+      }
     );
     const skills = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Skill"
+      "https://leetun2k2-001-site1.gtempurl.com/api/Skill", {
+        headers: { Authorization: action.payload.token },
+      }
     );
     const languages = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Language"
+      "https://leetun2k2-001-site1.gtempurl.com/api/Language", {
+        headers: { Authorization: action.payload.token },
+      }
     );
     const draft = yield call(
       formatQuestionList,
@@ -132,6 +163,7 @@ function* getQuestionListWithFilter(action) {
     //     message: "message" in error ? error.message : error.response.data,
     //   },
     // });
+    yield put({ type: "loading/offLoading" });
     yield put({
       type: "status/onError",
       payload: error.message,
@@ -154,15 +186,21 @@ function* postQuestion(action) {
     });
     const techId = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Technology"
+      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Technology", {
+        headers: { Authorization: action.payload.token },
+      }
     );
     const langId = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Language"
+      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Language", {
+        headers: { Authorization: action.payload.token },
+      }
     );
     const softId = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Soft%20Skill"
+      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Soft%20Skill", {
+        headers: { Authorization: action.payload.token },
+      }
     );
 
     const ques_draft = yield call(
@@ -179,6 +217,8 @@ function* postQuestion(action) {
       {
         questionString: ques_draft.QuestionName,
         categoryQuestionId: ques_draft.CategoryId,
+      }, {
+        headers: { Authorization: action.payload.token },
       }
     );
 
@@ -189,6 +229,8 @@ function* postQuestion(action) {
         {
           questionId: quesId.data.questionId,
           skillId: ques_draft.TypeId,
+        }, {
+          headers: { Authorization: action.payload.token },
         }
       );
     }
@@ -196,7 +238,20 @@ function* postQuestion(action) {
       type: "status/onSuccess",
       payload: "Create question",
     });
-    yield call(getAllQuestion);
+
+    // Load with filter
+    yield put({
+      type: "questionSaga/getQuestionListWithFilter",
+      payload: {
+        categoryName: action.payload.categoryName,
+        skillId: action.payload.skillId,
+        skillName: action.payload.skillName,
+        languageId: action.payload.languageId,
+        languageName: action.payload.languageName,
+        softskill: action.payload.softskill,
+        token: action.payload.token
+      },
+    });
     // yield put({
     //   type: "error/setError",
     //   payload: {
@@ -205,6 +260,7 @@ function* postQuestion(action) {
     //   },
     // });
   } catch (error) {
+    yield put({ type: "loading/offLoading" });
     yield put({
       type: "status/onError",
       payload: error.message,
@@ -234,15 +290,21 @@ function* putQuestion(action) {
     });
     const techId = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Technology"
+      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Technology", {
+        headers: { Authorization: action.payload.token },
+      }
     );
     const langId = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Language"
+      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Language", {
+        headers: { Authorization: action.payload.token },
+      }
     );
     const softId = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Soft%20Skill"
+      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Soft%20Skill", {
+        headers: { Authorization: action.payload.token },
+      }
     );
 
     const ques_draft = yield call(
@@ -255,7 +317,9 @@ function* putQuestion(action) {
 
     const ques_old = yield call(
       axios.get,
-      `https://leetun2k2-001-site1.gtempurl.com/api/Question?questionId=${action.payload.QuestionId}`
+      `https://leetun2k2-001-site1.gtempurl.com/api/Question?questionId=${action.payload.QuestionId}`, {
+        headers: { Authorization: action.payload.token },
+      }
     );
 
     // Category Not Change
@@ -264,16 +328,20 @@ function* putQuestion(action) {
         axios.put,
         `https://leetun2k2-001-site1.gtempurl.com/api/Question/${action.payload.QuestionId}`,
         {
-          questionId: action.payload.QuestionId,
+          // questionId: action.payload.QuestionId,
           questionString: ques_draft.QuestionName,
           categoryQuestionId: ques_draft.CategoryId,
+        }, {
+          headers: { Authorization: action.payload.token },
         }
       );
       if (ques_draft.CategoryId === techId.data[0].categoryQuestionId) {
         // Get Question Skills
         const questionSkills = yield call(
           axios.get,
-          "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill"
+          "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill", {
+            headers: { Authorization: action.payload.token },
+          }
         );
 
         // Get Question Skill Info
@@ -292,6 +360,8 @@ function* putQuestion(action) {
               questionSkillsId: quesSkil.questionSkillsId,
               questionId: action.payload.QuestionId,
               skillId: ques_draft.TypeId,
+            }, {
+              headers: { Authorization: action.payload.token },
             }
           );
         }
@@ -299,13 +369,16 @@ function* putQuestion(action) {
     }
     // Category Change
     else {
+      console.log("HELLLOOOOO")
       const quesId = yield call(
         axios.put,
         `https://leetun2k2-001-site1.gtempurl.com/api/Question/${action.payload.QuestionId}`,
         {
-          questionId: action.payload.QuestionId,
+          // questionId: action.payload.QuestionId,
           questionString: ques_draft.QuestionName,
           categoryQuestionId: ques_draft.CategoryId,
+        }, {
+          headers: { Authorization: action.payload.token },
         }
       );
       if (ques_draft.CategoryId === techId.data[0].categoryQuestionId) {
@@ -315,6 +388,8 @@ function* putQuestion(action) {
           {
             questionId: action.payload.QuestionId,
             skillId: ques_draft.TypeId,
+          }, {
+            headers: { Authorization: action.payload.token },
           }
         );
       } else if (
@@ -323,7 +398,9 @@ function* putQuestion(action) {
       ) {
         const questionSkills = yield call(
           axios.get,
-          "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill"
+          "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill", {
+            headers: { Authorization: action.payload.token },
+          }
         );
         const quesSkil = yield call(
           getQuestionSkillInfo,
@@ -332,7 +409,9 @@ function* putQuestion(action) {
         );
         yield call(
           axios.delete,
-          `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${quesSkil.questionSkillsId}`
+          `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${quesSkil.questionSkillsId}`, {
+            headers: { Authorization: action.payload.token },
+          }
         );
       }
     }
@@ -340,7 +419,19 @@ function* putQuestion(action) {
       type: "status/onSuccess",
       payload: "Update question",
     });
-    yield call(getAllQuestion);
+    // Load with filter
+    yield put({
+      type: "questionSaga/getQuestionListWithFilter",
+      payload: {
+        categoryName: action.payload.categoryName,
+        skillId: action.payload.skillId,
+        skillName: action.payload.skillName,
+        languageId: action.payload.languageId,
+        languageName: action.payload.languageName,
+        softskill: action.payload.softskill,
+        token: action.payload.token
+      },
+    });
     // yield put({
     //   type: "error/setError",
     //   payload: {
@@ -356,6 +447,7 @@ function* putQuestion(action) {
     //     message: "message" in error ? error.message : error.response.data,
     //   },
     // });
+    yield put({ type: "loading/offLoading" });
     yield put({
       type: "status/onError",
       payload: error.message,
@@ -377,12 +469,16 @@ function* deleteQuestion(action) {
     });
     const techId = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Technology"
+      "https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion?name=Technology", {
+        headers: { Authorization: action.payload.token },
+      }
     );
     if (action.payload.CategoryId === techId.data[0].categoryQuestionId) {
       const questionSkills = yield call(
         axios.get,
-        "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill"
+        "https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill", {
+          headers: { Authorization: action.payload.token },
+        }
       );
       const quesSkil = yield call(
         getQuestionSkillInfo,
@@ -394,7 +490,9 @@ function* deleteQuestion(action) {
       if (quesSkil !== null) {
         yield call(
           axios.delete,
-          `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${quesSkil.questionSkillsId}`
+          `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${quesSkil.questionSkillsId}`, {
+            headers: { Authorization: action.payload.token },
+          }
         );
       }
     }
@@ -402,13 +500,27 @@ function* deleteQuestion(action) {
     // Delete Question
     yield call(
       axios.delete,
-      `https://leetun2k2-001-site1.gtempurl.com/api/Question/${action.payload.QuestionId}`
+      `https://leetun2k2-001-site1.gtempurl.com/api/Question/${action.payload.QuestionId}`, {
+        headers: { Authorization: action.payload.token },
+      }
     );
     yield put({
       type: "status/onSuccess",
       payload: "Delete question",
     });
-    yield call(getAllQuestion);
+    // Load with filter
+    yield put({
+      type: "questionSaga/getQuestionListWithFilter",
+      payload: {
+        categoryName: action.payload.categoryName,
+        skillId: action.payload.skillId,
+        skillName: action.payload.skillName,
+        languageId: action.payload.languageId,
+        languageName: action.payload.languageName,
+        softskill: action.payload.softskill,
+        token: action.payload.token
+      },
+    });
     // yield put({
     //   type: "error/setError",
     //   payload: {
@@ -424,6 +536,7 @@ function* deleteQuestion(action) {
     //     message: "message" in error ? error.message : error.response.data,
     //   },
     // });
+    yield put({ type: "loading/offLoading" });
     yield put({
       type: "status/onError",
       payload: error.message,
@@ -432,157 +545,151 @@ function* deleteQuestion(action) {
 }
 
 function* getInterviewQuestion(action) {
-  // const response = yield call(
+  let token = `Bearer ${action.payload.token}`
+  const config = {
+    headers: { Authorization: token },
+  }
+  const responseInterview = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview?id=${action.payload.interviewid}`, config)
+  const responsePosition = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${responseInterview.data.application.position.positionId}`, config)
+  const responseSoftList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Question/GetAllSoftSkillQuestions/SoftSkill`, config);
+  const responseLangList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Question/GetAllLanguageQuestions/Language`, config);
+  const responseTechList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Question/GetAllTechnologyQuestions/Technology`, config);
+  const responseQSList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill`, config);
+
+  const responseAllQuestion = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Question`, config)
+
+  const responseCategoryList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion`, config)
+  const responseSkillList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Skill`, config)
+  console.log("quessoft: ", responseSoftList)
+  let quesStruc = [];
+  // Soft Skill
+  for (let cate of responseCategoryList.data) {
+    if (cate.categoryQuestionName == "Soft Skill") {
+      let newCate = {
+        categoryid: cate.categoryQuestionId,
+        categoryname: cate.categoryQuestionName,
+        questions: []
+      }
+      quesStruc.push(newCate)
+      for (let softQues of responseAllQuestion.data) {
+        if (softQues.categoryQuestionId == cate.categoryQuestionId) {
+          let newQuesObj = {
+            questionid: softQues.questionId,
+            questionstring: softQues.questionString
+          }
+          quesStruc[0].questions.push(newQuesObj)
+        }
+      }
+
+    }
+  }
+  // Language
+  for (let cate of responseCategoryList.data) {
+    if (cate.categoryQuestionName == "Language") {
+      let newCate = {
+        categoryid: cate.categoryQuestionId,
+        categoryname: cate.categoryQuestionName,
+        languages: []
+      }
+      quesStruc.push(newCate)
+      let newLang = {
+        languageid: responsePosition.data.language.languageId,
+        languagename: responsePosition.data.language.languageName,
+        questions: []
+      }
+      quesStruc[1].languages.push(newLang)
+      let prefix = ""
+      if (responsePosition.data.language.languageName == "English") {
+        prefix = "$eng$"
+      }
+      else if (responsePosition.data.language.languageName == "Chinese") {
+        prefix = "$chi$"
+      }
+      else if (responsePosition.data.language.languageName == "Italian") {
+        prefix = "$ita$"
+      }
+      else if (responsePosition.data.language.languageName == "Spanish") {
+        prefix = "$spa$"
+      }
+      else if (responsePosition.data.language.languageName == "French") {
+        prefix = "$fre$"
+      }
+      else if (responsePosition.data.language.languageName == "Russian") {
+        prefix = "$rus$"
+      }
+      else if (responsePosition.data.language.languageName == "Japanese") {
+        prefix = "$rus$"
+      }
+      else if (responsePosition.data.language.languageName == "Korean") {
+        prefix = "$kor$"
+      }
+      else if (responsePosition.data.language.languageName == "German") {
+        prefix = "$ger$"
+      }
+      else if (responsePosition.data.language.languageName == "Portuguese") {
+        prefix = "$por$"
+      }
+      else if (responsePosition.data.language.languageName == "Hindi") {
+        prefix = "$hin$"
+      }
+      for (let langQues of responseLangList.data) {
+        if (langQues.questionString.slice(0, 5) == prefix) {
+          let newQuesObj = {
+            questionid: langQues.questionId,
+            questionstring: langQues.questionString.slice(5)
+          }
+          quesStruc[1].languages[0].questions.push(newQuesObj)
+        }
+      }
+
+    }
+  }
+  // Technology
+  for (let cate of responseCategoryList.data) {
+    if (cate.categoryQuestionName == "Technology") {
+      let newCate = {
+        categoryid: cate.categoryQuestionId,
+        categoryname: cate.categoryQuestionName,
+        skills: []
+      }
+      quesStruc.push(newCate)
+      for (let skill of responseSkillList.data) {
+        for (let skillRequired of responsePosition.data.requirements) {
+          if (skill.skillId == skillRequired.skillId) {
+            let newSkill = {
+              skillid: skillRequired.skillId,
+              skillname: skill.skillName,
+              questions: []
+            }
+            quesStruc[2].skills.push(newSkill)
+            for (let QS of responseQSList.data) {
+              if (QS.skillId == skillRequired.skillId)
+                for (let techQues of responseTechList.data) {
+                  if (techQues.questionId == QS.questionId) {
+                    let newQues = {
+                      questionid: techQues.questionId,
+                      questionstring: techQues.questionString
+                    }
+                    quesStruc[2].skills[quesStruc[2].skills.length - 1].questions.push(newQues)
+                  }
+                }
+            }
+          }
+        }
+      }
+
+    }
+  }
+  yield put({ type: "question/setInterviewQuestion", payload: quesStruc });
+
+  // const responsefake = yield call(
   //   axios.get,
-  //   `http://leetun2k2-001-site1.gtempurl.com/api/Question`
+  //   `${host.name}/data/questionlist.json`
   // );
-  // const response1 = yield call(
-  //   axios.get,
-  //   `http://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion`
-  // );
-  // const response2 = yield call(
-  //   axios.get,
-  //   `http://leetun2k2-001-site1.gtempurl.com/api/Skill`
-  // );
-  // const response3 = yield call(
-  //   axios.get,
-  //   `http://leetun2k2-001-site1.gtempurl.com/api/Language`
-  // );
-  // const resList = response.data;
-  // const res1List = response1.data;
-  // const res2List = response2.data;
-  // const res3List = response3.data;
-  // let quesStruc = [];
-  // // Soft skill
-  // for (let res1 of res1List) {
-  //   if (res1.categoryQuestionName == "Soft Skill") {
-  //     let newCate = {
-  //       categoryid: res1.categoryQuestionId,
-  //       categoryname: res1.categoryQuestionName,
-  //       questions: [],
-  //     };
-  //     quesStruc.push(newCate);
-  //     for (let res of resList) {
-  //       if (res.categoryQuestionId == res1.categoryQuestionId) {
-  //         let newQues = {
-  //           questionid: res.questionId,
-  //           questionstring: res.questionString,
-  //         };
-  //         quesStruc[0].questions.push(newQues);
-  //       }
-  //     }
-  //     break;
-  //   }
-  // }
-  // // Language
-  // for (let res1 of res1List) {
-  //   if (res1.categoryQuestionName == "Language") {
-  //     let newCate = {
-  //       categoryid: res1.categoryQuestionId,
-  //       categoryname: res1.categoryQuestionName,
-  //       languages: [],
-  //     };
-  //     quesStruc.push(newCate);
-  //     for (let res3 of res3List) {
-  //       if (res3.languageName == "English") {
-  //         const newObj = {
-  //           languageid: res3.languageId,
-  //           languagename: res3.languageName,
-  //           questions: [],
-  //         };
-  //         quesStruc[1].languages.push(newObj);
-  //         for (let res of resList) {
-  //           if (res.categoryQuestionId == res1.categoryQuestionId) {
-  //             let newQues = {
-  //               questionid: res.questionId,
-  //               questionstring: res.questionString.slice(5),
-  //             };
-  //             quesStruc[1].languages[0].questions.push(newQues);
-  //           }
-  //         }
-  //       }
-  //     }
-  //     break;
-  //   }
-  // }
-  // // Technology
-  // for (let res1 of res1List) {
-  //   if (res1.categoryQuestionName == "Technology") {
-  //     let newCate = {
-  //       categoryid: res1.categoryQuestionId,
-  //       categoryname: res1.categoryQuestionName,
-  //       skills: [],
-  //     };
-  //     quesStruc.push(newCate);
-  //     for (let res2 of res2List) {
-  //       if (res2.skillName == "React") {
-  //         const newObj = {
-  //           skillid: res2.skillId,
-  //           skillname: res2.skillName,
-  //           questions: [],
-  //         };
-  //         quesStruc[2].skills.push(newObj);
-  //         for (let res of resList) {
-  //           if (res.categoryQuestionId == res1.categoryQuestionId) {
-  //             let newQues = {
-  //               questionid: res.questionId,
-  //               questionstring: res.questionString,
-  //             };
-  //             quesStruc[2].skills[0].questions.push(newQues);
-  //           }
-  //         }
-  //       }
-  //     }
-  //     for (let res2 of res2List) {
-  //       if (res2.skillName == "C#") {
-  //         const newObj = {
-  //           skillid: res2.skillId,
-  //           skillname: res2.skillName,
-  //           questions: [],
-  //         };
-  //         quesStruc[2].skills.push(newObj);
-  //         for (let res of resList) {
-  //           if (res.categoryQuestionId == res1.categoryQuestionId) {
-  //             let newQues = {
-  //               questionid: res.questionId,
-  //               questionstring: res.questionString,
-  //             };
-  //             quesStruc[2].skills[1].questions.push(newQues);
-  //           }
-  //         }
-  //       }
-  //     }
-  //     for (let res2 of res2List) {
-  //       if (res2.skillName == "Java") {
-  //         const newObj = {
-  //           skillid: res2.skillId,
-  //           skillname: res2.skillName,
-  //           questions: [],
-  //         };
-  //         quesStruc[2].skills.push(newObj);
-  //         for (let res of resList) {
-  //           if (res.categoryQuestionId == res1.categoryQuestionId) {
-  //             let newQues = {
-  //               questionid: res.questionId,
-  //               questionstring: res.questionString,
-  //             };
-  //             quesStruc[2].skills[2].questions.push(newQues);
-  //           }
-  //         }
-  //       }
-  //     }
-  //     break;
-  //   }
-  // }
-  // yield put({ type: "question/setInterviewQuestion", payload: quesStruc });
-  const responsefake = yield call(
-    axios.get,
-    `${host.name}/data/questionlist.json`
-  );
-  yield put({
-    type: "question/setInterviewQuestion",
-    payload: responsefake.data,
-  });
+  // yield put({
+  //   type: "question/setInterviewQuestion",
+  //   payload: responsefake.data,
+  // });
 }
 
 function* getQuestion(action) {
@@ -594,7 +701,10 @@ function* questionSaga() {
     takeEvery("questionSaga/getInterviewQuestion", getInterviewQuestion),
     takeEvery("saga/getQuestion", getQuestion),
     takeEvery("questionSaga/getAllQuestion", getAllQuestion),
-    takeLatest("questionSaga/getQuestionListWithFilter", getQuestionListWithFilter),
+    takeLatest(
+      "questionSaga/getQuestionListWithFilter",
+      getQuestionListWithFilter
+    ),
     takeEvery("questionSaga/putQuestion", putQuestion),
     takeEvery("questionSaga/postQuestion", postQuestion),
     takeEvery("questionSaga/deleteQuestion", deleteQuestion),

@@ -6,7 +6,7 @@ import CompHeader from "./compHeader";
 
 export default function EmptyTextarea(prop) {
   function handleDetail(e) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     prop.setDetail(e.target.value);
   }
   return (
@@ -26,11 +26,12 @@ export default function EmptyTextarea(prop) {
         >
           <CompHeader headerIcon={prop.headerIcon}>{prop.state}</CompHeader>
           <TextField
+            multiline
+            maxRows={4}
             value={prop.value}
             onChange={handleDetail}
             id="outlined-basic"
             variant="outlined"
-            multiline
           />
         </Box>
       </Box>

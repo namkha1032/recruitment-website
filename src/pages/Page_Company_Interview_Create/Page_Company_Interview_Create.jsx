@@ -71,15 +71,26 @@ const Page_Company_Interview_Create = () => {
 
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+
+
     // fetch Data
     useEffect(() => {
-        dispatch({ type: "interviewSaga/getDataForInterview", payload: applicationid })
+        dispatch({
+            type: "interviewSaga/getDataForInterview", payload: {
+                applicationid: applicationid,
+                recruitmentid: recruitmentid,
+                token: user.token
+            }
+        })
         // return () => {
         //     dispatch({ type: "interview/setInterview", payload: null })
         //     dispatch({ type: "interviewer/setInterviewer", payload: null })
         //     dispatch({ type: "room/setRoom", payload: null })
         //     dispatch({ type: "shift/setShift", payload: null })
         // }
+        return (() => {
+            cleanStore()
+        })
     }, [])
 
     const interviewList = useSelector(state => state.interviewList)
@@ -87,7 +98,10 @@ const Page_Company_Interview_Create = () => {
     const roomList = useSelector(state => state.room)
     const shiftList = useSelector(state => state.shift)
     const newError = useSelector(state => state.error)
-
+    const candidate = useSelector(state => state.candidate)
+    const position = useSelector(state => state.position)
+    const infoApplication = useSelector(state => state.infoApplication)
+    const user = useSelector(state => state.user)
 
     // set busyInterviewer and busyRoom
     useEffect(() => {
@@ -137,11 +151,11 @@ const Page_Company_Interview_Create = () => {
         const newInterviewObj = {
             interview: {
                 interviewerId: chosenInterviewer.interviewerid,
-                recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
+                recruiterId: user.recruiterId,
                 applicationId: applicationid,
                 itrsinterviewId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 notes: "",
-                resultId: "00000000-0000-0000-0000-000000000001",
+                resultId: "14106e09-cacd-4a89-8858-5f06499b7b81",
             },
             itrs: {
                 dateInterview: chosenDate,
@@ -149,8 +163,12 @@ const Page_Company_Interview_Create = () => {
                 roomId: chosenRoom.roomid
             }
         }
-        console.log("newinter: ", JSON.stringify(newInterviewObj))
-        dispatch({ type: "interviewSaga/createInterview", payload: newInterviewObj })
+        dispatch({
+            type: "interviewSaga/createInterview", payload: {
+                newInter: newInterviewObj,
+                token: user.token
+            }
+        })
         // navigate("/company/interview/1")
     }
     function preProcessing() {
@@ -185,33 +203,24 @@ const Page_Company_Interview_Create = () => {
         }
     }
     return (
-        <>{interviewerList && interviewList && roomList && shiftList ?
+        <>{interviewerList && interviewList && roomList && shiftList
+            // && candidate && position && infoApplication 
+            ?
             <Grid container spacing={4}>
+                <Grid item xs={12}>
+                    <TitleDivider>
+                        General information
+                    </TitleDivider>
+                </Grid>
                 <Grid item xs={12}>
                     <InfoApplication recruitmentid={recruitmentid} applicationid={applicationid} page={""} />
                 </Grid>
                 <Grid item xs={12}>
                     <TitleDivider>
                         Create Interview
-                    </TitleDivider>``
+                    </TitleDivider>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                    <GigaCard>
-                        <GigaCardHeader color={"black"} headerIcon={<RecordVoiceOverIcon sx={{ fontSize: "inherit" }} />}>
-                            Choose an interviewer
-                        </GigaCardHeader>
-                        <GigaCardBody>
-                            <TableInterviewer
-                                interviewerList={interviewerList}
-                                chosenShift={chosenShift}
-                                busyInterviewer={busyInterviewer}
-                                chosenInterviewer={chosenInterviewer}
-                                setChosenInterviewer={setChosenInterviewer}
-                            />
-                        </GigaCardBody>
-                    </GigaCard>
-                </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={5}>
                     <GigaCard>
                         <GigaCardHeader color={"black"} headerIcon={<RoomIcon sx={{ fontSize: "inherit" }} />}>
                             Choose a room
@@ -223,6 +232,22 @@ const Page_Company_Interview_Create = () => {
                                 busyRoom={busyRoom}
                                 chosenRoom={chosenRoom}
                                 setChosenRoom={setChosenRoom}
+                            />
+                        </GigaCardBody>
+                    </GigaCard>
+                </Grid>
+                <Grid item xs={12} md={7}>
+                    <GigaCard>
+                        <GigaCardHeader color={"black"} headerIcon={<RecordVoiceOverIcon sx={{ fontSize: "inherit" }} />}>
+                            Choose an interviewer
+                        </GigaCardHeader>
+                        <GigaCardBody>
+                            <TableInterviewer
+                                interviewerList={interviewerList}
+                                chosenShift={chosenShift}
+                                busyInterviewer={busyInterviewer}
+                                chosenInterviewer={chosenInterviewer}
+                                setChosenInterviewer={setChosenInterviewer}
                             />
                         </GigaCardBody>
                     </GigaCard>

@@ -11,10 +11,10 @@ export default function Page_Profile_Id_Cv(){
         }
       }, [])
       const rows_draft = useSelector((state => state.cvCandidate));
-      console.log("test CV:", rows_draft);
+     
       const rows = rows_draft ? rows_draft : [];
-
-      const img =  "https://th.bing.com/th/id/R.639fde3d458d9202a53e90645dcb1fa9?rik=jTiM1x47cHsctg&pid=ImgRaw&r=0";
+      console.log("test CV:", rows_draft);
+      const img =  "https://www.topcv.vn/images/cv/screenshots/vi/mau-cv-ambitious.png?v=1.0.1";
       return(
         
         <ProfileIdOneCv events={rows} img={img}/>

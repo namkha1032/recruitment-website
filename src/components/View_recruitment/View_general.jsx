@@ -35,7 +35,7 @@ const View_general = (props) => {
         <>
             <Grid container spacing={1} sx={{ marginTop: "0px", display: "flex", flexDirection: "column" }}>
                 <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
-                    <Box sx={{...gridSx, paddingBottom: isMd ? 2 : 4}}>
+                    <Box sx={{...gridSx, paddingTop: 1,  paddingBottom:  1 }}>
                         <DescriptionIcon color="black" />
                         <Typography color="primary" variant='h5' sx={{ fontWeight: "bold", color: "black" }}>
                             Description
@@ -53,7 +53,7 @@ const View_general = (props) => {
                 <Divider sx={{ marginY: 3,  borderColor: "1px" }} />
 
                 <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
-                    <Box sx={{...gridSx, paddingBottom: isMd ? 2 : 4}}>
+                    <Box sx={{...gridSx, paddingBottom:  1 }}>
                         <LocationCityIcon color="black" />
                         <Typography color="primary" variant='h5' sx={{ fontWeight: "bold", color: "black" }}>
                             Department

@@ -48,6 +48,7 @@ const TableResult = (props) => {
         shiftStart = chosenShift.shiftstart < 10 ? startSmallTen : startLargeTen
         shiftEnd = chosenShift.shiftend < 10 ? endSmallTen : endLargeTen
     }
+    console.log('choseninterviewer: ', chosenInterviewer)
     return (
         <>
             <Grid container spacing={2} columns={12}>
@@ -59,7 +60,7 @@ const TableResult = (props) => {
                         <Chip
                             label={chosenInterviewer.interviewername}
                             variant="outlined"
-                            avatar={<Avatar alt="Natacha" src="https://i.kym-cdn.com/entries/icons/original/000/026/152/gigachadd.jpg" />}
+                            avatar={<Avatar alt="Natacha" src={chosenInterviewer.avatar} />}
                             onDelete={() => { setChosenInterviewer(null) }}
                         />}
                 </Grid>

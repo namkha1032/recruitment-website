@@ -28,6 +28,7 @@ import createCvSaga from "./saga/cvCreateSaga";
 import updateCvSaga from "./saga/cvUpdateSaga";
 import positionCreateSaga from "./saga/positionCreateSaga";
 import positionUpdateSaga from "./saga/positionUpdateSaga";
+import reportSaga from "./saga/reportSaga";
 
 import cvCandidateSaga from "./saga/cvCandidateSaga";
 import profileSaga from "./saga/profileSaga";
@@ -60,7 +61,8 @@ function* rootSaga() {
         profileSaga(),
         updateCvSaga(),
         positionCreateSaga(),
-        positionUpdateSaga()
+        positionUpdateSaga(),
+        reportSaga()
     ])
 }
 

@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 // import components
@@ -29,48 +29,106 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import "./Page_Company_Interview_Id_Start.scss"
 import CircularProgress from '@mui/material/CircularProgress';
 import TitleDivider from '../../components/TitleDivider/TitleDivider';
+import cleanStore from '../../utils/cleanStore';
+import AlertDialog from '../../components/AlertDialog/AlertDialog';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+
 export default function Page_Company_Interview_Id_Start() {
     const dispatch = useDispatch()
 
     let allQuestion = useSelector(state => state.question)
-
+    const { interviewid } = useParams()
     let leftSoft = allQuestion ? allQuestion.left[0] : null
     let leftLang = allQuestion ? allQuestion.left[1] : null
     let leftTech = allQuestion ? allQuestion.left[2] : null
     let rightSoft = allQuestion ? allQuestion.right[0] : null
     let rightLang = allQuestion ? allQuestion.right[1] : null
     let rightTech = allQuestion ? allQuestion.right[2] : null
-
+    const user = useSelector(state => state.user)
     let [currentCateTab, setCurrentCateTab] = useState(0);
-
+    let [openAlert, setOpenAlert] = useState(false)
+    let [errorSnackbar, setErrorSnackbar] = useState(false)
     let [note, setNote] = useState("")
+    const newError = useSelector(state => state.error)
     const noteRef = useRef()
     useEffect(() => {
-        dispatch({ type: "questionSaga/getInterviewQuestion" })
+        dispatch({
+            type: "questionSaga/getInterviewQuestion", payload: {
+                interviewid: interviewid,
+                token: user.token
+            }
+        })
         return () => {
-            dispatch({ type: "question/setQuestion", payload: null })
+            cleanStore(dispatch)
         }
     }, [])
+    useEffect(() => {
+        if (newError.status == "no") {
+            setTimeout(() => {
+                const idToNavigate = newError.message
+                cleanStore(dispatch)
+                navigate(`/company/interview/${idToNavigate}`)
+            }, 2000)
+        }
+        if (newError.status == "yes") {
+            setErrorSnackbar(true)
+            setTimeout(() => {
+                setErrorSnackbar(false)
+                dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+            }, 5000)
+        }
+    }, [newError])
     useEffect(() => {
         if (noteRef.current) {
             console.log("noteRef: ", noteRef)
             noteRef.current.innerHTML = note
         }
-    })
+    }, [noteRef])
     const navigate = useNavigate()
     function handleSubmit(e) {
-        e.preventDefault()
-        const newObj = {
-            interviewid: "123",
-            note: note,
-            round: [
-                rightSoft,
-                rightLang,
-                rightTech
+        let newObj = {
+            interviewerId: user.interviewerId,
+            notes: note,
+            rounds: [
+                // rightSoft,
+                // rightLang,
+                // rightTech
             ]
         }
-        dispatch({ type: "saga/scoreInterview", payload: newObj })
-        navigate("/company/interview/00000000-0000-0000-0000-000000000001")
+        for (let softRes of rightSoft.questions) {
+            let newSoftRes = {
+                questionId: softRes.questionid,
+                score: softRes.score
+            }
+            newObj.rounds.push(newSoftRes)
+        }
+        for (let langRes of rightLang.languages[0].questions) {
+            let newLangRes = {
+                questionId: langRes.questionid,
+                score: langRes.score
+            }
+            newObj.rounds.push(newLangRes)
+        }
+        for (let skill of rightTech.skills) {
+            for (let techRes of skill.questions) {
+                let newTechRes = {
+                    questionId: techRes.questionid,
+                    score: techRes.score
+                }
+                newObj.rounds.push(newTechRes)
+            }
+        }
+        dispatch({
+            type: "interviewSaga/scoreInterview", payload: {
+                result: newObj,
+                interviewid: interviewid,
+                token: user.token
+            }
+        })
+    }
+    function preprocessing() {
+        setOpenAlert(true)
     }
     console.log("note: ", note)
     return (
@@ -79,61 +137,79 @@ export default function Page_Company_Interview_Id_Start() {
                 <TitleDivider>
                     Score Interview
                 </TitleDivider>
-                <form autoComplete='off' onSubmit={handleSubmit}>
-                    <Grid container spacing={4}>
-                        <Grid item xs={12}>
-                            <GigaCard>
-                                <GigaCardHeader color={"black"} headerIcon={<QuestionMarkIcon sx={{ fontSize: "inherit" }} />}>
-                                    Questions
-                                </GigaCardHeader>
-                                <GigaCardBody>
-                                    <CateTab currentCateTab={currentCateTab} setCurrentCateTab={setCurrentCateTab} />
-                                    {/* Soft Skill */}
-                                    {currentCateTab == 0
-                                        ? <QuestionTransfer leftTable={leftSoft} rightTable={rightSoft} cate={0} />
-                                        : null}
-                                    {/* Language Skill */}
-                                    {currentCateTab == 1
-                                        ? <QuestionTransfer leftTable={leftLang} rightTable={rightLang} cate={1} />
-                                        : null}
-                                    {/* Technology Skill */}
-                                    {currentCateTab == 2
-                                        ? <QuestionTransfer leftTable={leftTech} rightTable={rightTech} cate={2} />
-                                        : null}
-                                </GigaCardBody>
-                            </GigaCard>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <GigaCard>
-                                <GigaCardHeader color={"black"} headerIcon={<EditNoteIcon sx={{ fontSize: "inherit" }} />}>
-                                    Note
-                                </GigaCardHeader>
-                                <GigaCardBody>
-                                    <ReactQuill theme="snow" value={note} onChange={setNote} />
-                                </GigaCardBody>
-                            </GigaCard>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            {/* <Card variant="outlined" sx={{ border: "1px solid black", borderRadius: 5 }}> */}
-                            <GigaCard>
-                                <GigaCardHeader color={"black"} headerIcon={<SportsScoreIcon sx={{ fontSize: "inherit" }} />}>
-                                    Final Score
-                                </GigaCardHeader>
-                                <GigaCardBody>
-                                    <ScoreTable allResult={allQuestion.right} />
-                                </GigaCardBody>
-                            </GigaCard>
-                            {/* </Card> */}
-                        </Grid>
+                <Grid container spacing={4}>
+                    <Grid item xs={12}>
+                        <GigaCard>
+                            <GigaCardHeader color={"black"} headerIcon={<QuestionMarkIcon sx={{ fontSize: "inherit" }} />}>
+                                Questions
+                            </GigaCardHeader>
+                            <GigaCardBody>
+                                <CateTab currentCateTab={currentCateTab} setCurrentCateTab={setCurrentCateTab} />
+                                {/* Soft Skill */}
+                                {currentCateTab == 0
+                                    ? <QuestionTransfer leftTable={leftSoft} rightTable={rightSoft} cate={0} />
+                                    : null}
+                                {/* Language Skill */}
+                                {currentCateTab == 1
+                                    ? <QuestionTransfer leftTable={leftLang} rightTable={rightLang} cate={1} />
+                                    : null}
+                                {/* Technology Skill */}
+                                {currentCateTab == 2
+                                    ? <QuestionTransfer leftTable={leftTech} rightTable={rightTech} cate={2} />
+                                    : null}
+                            </GigaCardBody>
+                        </GigaCard>
                     </Grid>
-                    <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 4 }}>
-                        <Button variant="contained" type="submit" sx={{
-                            backgroundColor: "black", "&:hover": {
-                                backgroundColor: "grey"
-                            }
-                        }}>Save record</Button>
-                    </Box>
-                </form >
+                    <Grid item xs={12} md={6}>
+                        <GigaCard>
+                            <GigaCardHeader color={"black"} headerIcon={<EditNoteIcon sx={{ fontSize: "inherit" }} />}>
+                                Note
+                            </GigaCardHeader>
+                            <GigaCardBody>
+                                <ReactQuill theme="snow" value={note} onChange={setNote} />
+                            </GigaCardBody>
+                        </GigaCard>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        {/* <Card variant="outlined" sx={{ border: "1px solid black", borderRadius: 5 }}> */}
+                        <GigaCard>
+                            <GigaCardHeader color={"black"} headerIcon={<SportsScoreIcon sx={{ fontSize: "inherit" }} />}>
+                                Final Score
+                            </GigaCardHeader>
+                            <GigaCardBody>
+                                <ScoreTable allResult={allQuestion.right} />
+                            </GigaCardBody>
+                        </GigaCard>
+                        {/* </Card> */}
+                    </Grid>
+                </Grid>
+                <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 4 }}>
+                    <Button variant="contained" onClick={preprocessing} sx={{
+                        backgroundColor: "black", "&:hover": {
+                            backgroundColor: "grey"
+                        }
+                    }}>Save record</Button>
+                </Box>
+                <AlertDialog
+                    openAlert={openAlert}
+                    setOpenAlert={setOpenAlert}
+                    alertMessage={"Are you sure you want to end this interview?"}
+                    successfulMessage={"Result saved successfully"}
+                    handleSubmit={handleSubmit}
+                />
+                <Snackbar
+                    // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                    open={errorSnackbar}
+                    autoHideDuration={4000}
+                    onClose={() => { setErrorSnackbar(false) }}
+                // message="I love snacks"
+                // key={vertical + horizontal}
+                >
+                    <Alert variant="filled" onClose={() => { setErrorSnackbar(false) }} severity="error" sx={{ width: '100%' }}>
+                        {newError.message}
+                    </Alert>
+                </Snackbar>
+
             </>
             :
             <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>

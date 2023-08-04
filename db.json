@@ -1,15 +1,54 @@
 {
-  "interview": {
-    "interviewerId": "24cbb8bd-9194-46c0-a15a-520d7ba84046",
-    "recruiterId": "13b849af-bea9-49a4-a9e4-316d13b3a08a",
-    "applicationId": "00000000-0000-0000-0000-000000000001",
-    "itrsinterviewId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    "notes": "",
-    "resultId": "00000000-0000-0000-0000-000000000001"
+  "result": {
+    "interviewerId": "134f0ba2-42d3-4dad-82c6-e352a1262e91",
+    "notes": "<p>hehehehehhe</p><h2>fesaceasfe</h2><p>a<u>dsf</u>ae <em>thang anc</em>eoah<strong>fdascnesa fea</strong></p><p><br></p><p><br></p><p><strong><em><u>adsfae thang anceoahfdascnesa fea</u></em></strong></p>",
+    "rounds": [
+      {
+        "questionId": "179f4852-c47e-49ab-903c-3315f8e06f7a",
+        "score": 5
+      },
+      {
+        "questionId": "f363b347-b8c1-4077-a3fd-6dea807a7ea5",
+        "score": 6
+      },
+      {
+        "questionId": "0a6b4c5e-0abd-4102-afb2-4ac7f52dcef5",
+        "score": 1
+      },
+      {
+        "questionId": "49efbce2-2d33-44ec-844c-76347406ec22",
+        "score": 2
+      },
+      {
+        "questionId": "60f37fda-3516-4654-a4a8-779dc153e742",
+        "score": 2
+      },
+      {
+        "questionId": "9a6a5487-43df-4bee-8409-224a0572646b",
+        "score": 9
+      },
+      {
+        "questionId": "a056d6be-0961-4235-b358-8fa5aa916364",
+        "score": 8
+      },
+      {
+        "questionId": "9f65a29c-c5dd-4b4d-b6f6-42df470a90bb",
+        "score": 7
+      },
+      {
+        "questionId": "0d25f883-3dc9-42a4-87d2-599e1301482b",
+        "score": 8
+      },
+      {
+        "questionId": "8d011796-3507-4f72-941d-9790cb2ae3a5",
+        "score": 9
+      },
+      {
+        "questionId": "32dd871a-0206-4ebc-8001-71ed5f07d9d4",
+        "score": 8
+      }
+    ]
   },
-  "itrs": {
-    "dateInterview": "2023-08-30T17:00:00.000Z",
-    "shiftId": "00000000-0000-0000-0000-000000000002",
-    "roomId": "00000000-0000-0000-0000-000000000003"
-  }
+  "interviewid": "c89338fb-79e4-448e-8e17-994b167b74dc",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiaW50ZXJ2aWV3ZXI1IiwianRpIjoiZWRkZjBiZmEtODNkMi00NzBkLTlkYzUtNzgxOTY3N2ZlZGIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiSW50ZXJ2aWV3ZXIiLCJleHAiOjE2OTExNDIxMzEsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjcwMjkifQ.ed3cXXM6KbqRCYo0IWpVLNU2IObFCcFGIlA5y5qEBEE"
 }

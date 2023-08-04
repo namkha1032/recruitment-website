@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import TabInProfile from './TabInProfile/TabInProfile';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import {NoRowsOverlay,NoResultsOverlay} from '../DataRick/DataRick';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 export default function EventList({ events}) {
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -22,7 +23,7 @@ export default function EventList({ events}) {
   };
 
   const handleEventHover = (event) => {
-    setSelectedEvent(event.eventId);
+    setSelectedEvent(event.event.eventId);
   };
 
   const handleEventLeave = () => {
@@ -59,12 +60,15 @@ export default function EventList({ events}) {
     },
   ].filter(Boolean);
 
-  const rows = events.map((event) => ({
-    id: event.eventId,
-    name: event.eventName,
-    place: event.place,
-    time:event.datetimeEvent,
-  }));
+  const rows = events.map((event) => {
+    console.log("EventId",event.event.eventId); // Thêm dòng này để kiểm tra giá trị của eventId
+    return {
+      id: event.event.eventId,
+      name: event.event.eventName,
+      place: event.event.place,
+      time: event.event.datetimeEvent,
+    };
+  });
 
   return (
     <Grid container direction="column">
@@ -89,9 +93,9 @@ export default function EventList({ events}) {
           </Box>
          
             <DataGrid
-              rows={rows}
+              rows={rows === null ? [] : rows }
               columns={columns}
-
+              autoHeight={true}
               rowStyles={(params) => ({
                 backgroundColor: selectedEvent === params.id ? '#ffdddd' : 'transparent',
               })}
@@ -121,6 +125,11 @@ export default function EventList({ events}) {
                 "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
                   color: "white",
                 },
+              }}
+              slots = {{
+                noRowsOverlay:NoRowsOverlay,
+                noResultsOverlay:NoResultsOverlay,
+                
               }}
 
             />

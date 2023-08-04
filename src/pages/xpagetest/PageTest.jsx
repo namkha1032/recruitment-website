@@ -37,6 +37,91 @@ const shiftArray = [
     }
 ];
 
+const languageArray = [
+    {
+        languageName: "English"
+    },
+    {
+        languageName: "French"
+    },
+    {
+        languageName: "Japanese"
+    },
+    {
+        languageName: "Russian"
+    },
+    {
+        languageName: "Chinese"
+    },
+    {
+        languageName: "Korean"
+    },
+    {
+        languageName: "Spanish"
+    },
+    {
+        languageName: "Portuguese"
+    },
+    {
+        languageName: "German"
+    },
+    {
+        languageName: "Italian"
+    }
+]
+
+const skillArray = [
+    {
+        skillName: "React",
+        description: "React is a free and open-source front-end JavaScript library for building user interfaces based on components.",
+        isDeleted: false
+    },
+    {
+        skillName: "C#",
+        description: "C# is a general-purpose high-level programming language supporting multiple paradigms.",
+        isDeleted: false
+    },
+    {
+        skillName: "Java",
+        description: "Java is a high-level, class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.",
+        isDeleted: false
+    },
+    {
+        skillName: "Kotlin",
+        description: "Kotlin is a cross-platform, statically typed, general-purpose high-level programming language with type inference.",
+        isDeleted: false
+    },
+    {
+        skillName: "Nextjs",
+        description: "Next.js is an open-source web development framework created by the private company Vercel providing React-based web applications with server-side rendering and static website generation.",
+        isDeleted: false
+    },
+    {
+        skillName: "C++",
+        description: "C++ is a high-level, general-purpose programming language created by Danish computer scientist Bjarne Stroustrup.",
+        isDeleted: false
+    },
+    {
+        skillName: "Python",
+        description: "Python is a high-level, general-purpose programming language.",
+        isDeleted: false
+    },
+    {
+        skillName: "OpenCV",
+        description: "OpenCV is a library of programming functions mainly for real-time computer vision.",
+        isDeleted: false
+    },
+    {
+        skillName: "Git",
+        description: "Git is a distributed version control system that tracks changes in any set of computer files, usually used for coordinating work among programmers collaboratively developing source code during software development.",
+        isDeleted: false
+    },
+    {
+        skillName: "TensorFlow",
+        description: "TensorFlow is a free and open-source software library for machine learning and artificial intelligence.",
+        isDeleted: false
+    }
+]
 
 const softSkillQuestions = [
     "Tell me about a time when you had to work collaboratively with a difficult team member. How did you handle the situation?",
@@ -161,6 +246,29 @@ const languageQuestions = [
     "$por$Quem é o pintor renascentista conhecido por 'O Último Jantar'?",
     "$por$Qual é o dia da independência do Brasil?",
     "$por$Quantos países fazem parte dos países lusófonos?"
+];
+
+const roomList = [
+    { roomName: "New York City" },
+    { roomName: "Tokyo" },
+    { roomName: "London" },
+    { roomName: "Paris" },
+    { roomName: "Sydney" },
+    { roomName: "Los Angeles" },
+    { roomName: "Berlin" },
+    { roomName: "Mumbai" },
+    { roomName: "Seoul" },
+    { roomName: "Rio de Janeiro" },
+    { roomName: "Istanbul" },
+    { roomName: "Cairo" },
+    { roomName: "Moscow" },
+    { roomName: "Toronto" },
+    { roomName: "Bangkok" },
+    { roomName: "Cape Town" },
+    { roomName: "Dubai" },
+    { roomName: "Rome" },
+    { roomName: "Singapore" },
+    { roomName: "Beijing" },
 ];
 
 const technologyQuestion = [
@@ -315,6 +423,7 @@ const technologyQuestion = [
         ]
     }
 ]
+
 const xoa = []
 
 console.log("length: ", xoa.length)
@@ -322,13 +431,18 @@ const App = () => {
     const [pass, setPass] = useState("")
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
+
+    let token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4xIiwianRpIjoiMzg5MjI4YmUtZGM4OC00ODdhLThhNDAtOTljNWJhODIzOTJhIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE2OTExMjczNjUsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjcwMjkifQ.O8UA3FLyMfnYDhJEAGardEtsA4wDo0vfNe7aR1bynlk`
+    const config = {
+        headers: { Authorization: token },
+    }
     let password = "namkha"
     async function handleDeleteQuestionSkill() {
         if (pass == password) {
             setLoading(true)
-            const responseQS = await axios.get(`https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill`)
+            const responseQS = await axios.get(`https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill`, config)
             for (let QS of responseQS.data) {
-                await axios.delete(`https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${QS.questionSkillsId}`)
+                await axios.delete(`https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill/${QS.questionSkillsId}`, config)
             }
         }
         setPass("")
@@ -337,12 +451,12 @@ const App = () => {
     async function handleDeleteQuestion() {
         if (pass == password) {
             setLoading(true)
-            const responseQuestionList = await axios.get(`https://leetun2k2-001-site1.gtempurl.com/api/Question`)
+            const responseQuestionList = await axios.get(`https://leetun2k2-001-site1.gtempurl.com/api/Question`, config)
             for (let ques of responseQuestionList.data) {
                 if (ques.questionId != "00000000-0000-0000-0000-000000000001"
                     && ques.questionId != "00000000-0000-0000-0000-000000000002"
                     && ques.questionId != "00000000-0000-0000-0000-000000000003") {
-                    await axios.delete(`https://leetun2k2-001-site1.gtempurl.com/api/Question/${ques.questionId}`)
+                    await axios.delete(`https://leetun2k2-001-site1.gtempurl.com/api/Question/${ques.questionId}`, config)
                 }
             }
         }
@@ -355,9 +469,9 @@ const App = () => {
             for (let content of softSkillQuestions) {
                 const newQues = {
                     questionString: content,
-                    categoryQuestionId: "a0c0bbca-af3c-466c-b9ce-7bbbdf499577"
+                    categoryQuestionId: "5f9c75be-4407-4079-a7a8-616e5dad476d"
                 }
-                await axios.post(`https://leetun2k2-001-site1.gtempurl.com/api/Question`, newQues)
+                await axios.post(`https://leetun2k2-001-site1.gtempurl.com/api/Question`, newQues, config)
             }
         }
         setPass("")
@@ -369,9 +483,9 @@ const App = () => {
             for (let content of languageQuestions) {
                 const newQues = {
                     questionString: content,
-                    categoryQuestionId: "6df1c9e3-9a68-4ae0-8236-2fcf13e259b6"
+                    categoryQuestionId: "0b8d0a30-f34d-49ba-a0b4-10ce23d0bd7e"
                 }
-                await axios.post(`https://leetun2k2-001-site1.gtempurl.com/api/Question`, newQues)
+                await axios.post(`https://leetun2k2-001-site1.gtempurl.com/api/Question`, newQues, config)
             }
         }
         setPass("")
@@ -382,17 +496,17 @@ const App = () => {
             setLoading(true)
             for (let skill of technologyQuestion) {
                 console.log("skill name: ", skill.skillName)
-                const responseSkillList = await axios.get(`https://leetun2k2-001-site1.gtempurl.com/api/Skill`)
+                const responseSkillList = await axios.get(`https://leetun2k2-001-site1.gtempurl.com/api/Skill`, config)
                 const responseSkill = responseSkillList.data.find((item) => {
                     return item.skillName == skill.skillName
                 })
                 for (let ques of skill.questions) {
                     const newQuesObj = {
                         questionString: ques,
-                        categoryQuestionId: "6a454d2b-2668-444e-b36a-566d3e732b4d"
+                        categoryQuestionId: "b8d71eed-a7a5-474c-89c6-890c535b4c34"
                     }
-                    await axios.post(`https://leetun2k2-001-site1.gtempurl.com/api/Question`, newQuesObj)
-                    const responseQuestionList = await axios.get(`https://leetun2k2-001-site1.gtempurl.com/api/Question`)
+                    await axios.post(`https://leetun2k2-001-site1.gtempurl.com/api/Question`, newQuesObj, config)
+                    const responseQuestionList = await axios.get(`https://leetun2k2-001-site1.gtempurl.com/api/Question`, config)
                     const quesToFind = responseQuestionList.data.find((item) => {
                         return item.questionString == ques
                     })
@@ -400,7 +514,7 @@ const App = () => {
                         questionId: quesToFind.questionId,
                         skillId: responseSkill.skillId
                     }
-                    await axios.post(`https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill`, newQSObj)
+                    await axios.post(`https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill`, newQSObj, config)
                 }
             }
         }
@@ -411,10 +525,49 @@ const App = () => {
         if (pass == password) {
             setLoading(true)
             for (let shift of shiftArray) {
-                await axios.post("https://leetun2k2-001-site1.gtempurl.com/api/Shift", shift)
+                await axios.post("https://leetun2k2-001-site1.gtempurl.com/api/Shift", shift, config)
             }
         }
         setLoading(false)
+        setPass("")
+    }
+    async function updateQues() {
+        if (pass == password) {
+            setLoading(true)
+            dispatch({ type: "saga/getStuff" })
+        }
+        setLoading(false)
+        setPass("")
+    }
+    async function addLanguage() {
+        if (pass == password) {
+            setLoading(true)
+            for (let lang of languageArray) {
+                await axios.post(`https://leetun2k2-001-site1.gtempurl.com/api/Language`, lang, config)
+            }
+        }
+        setLoading(false)
+        setPass("")
+    }
+    async function addSkill() {
+        if (pass == password) {
+            setLoading(true)
+            for (let skill of skillArray) {
+                await axios.post(`https://leetun2k2-001-site1.gtempurl.com/api/Skill`, skill, config)
+            }
+        }
+        setLoading(false)
+        setPass("")
+    }
+    async function addRoom() {
+        if (pass == password) {
+            setLoading(true)
+            for (let room of roomList) {
+                await axios.post(`https://leetun2k2-001-site1.gtempurl.com/api/Room`, room, config)
+            }
+        }
+        setLoading(false)
+        setPass("")
     }
     return (
         <>
@@ -425,13 +578,21 @@ const App = () => {
             <br />
             <button onClick={() => { handleDeleteQuestion() }}>delete question</button>
             <br />
-            <button onClick={() => { handleAddSoftSkill() }}>add soft skill</button>
+            <button onClick={() => { handleAddSoftSkill() }}>add soft skill Ques</button>
             <br />
-            <button onClick={() => { handleAddLanguage() }}>add language</button>
+            <button onClick={() => { handleAddLanguage() }}>add language Ques</button>
             <br />
-            <button onClick={() => { handleAddTechnology() }}>add technology</button>
+            <button onClick={() => { handleAddTechnology() }}>add technology Ques</button>
             <br />
             <button onClick={() => { handleAddShift() }}>add shift</button>
+            <br />
+            <button onClick={() => { updateQues() }}>update ques</button>
+            <br />
+            <button onClick={() => { addLanguage() }}>add language</button>
+            <br />
+            <button onClick={() => { addSkill() }}>add skill</button>
+            <br />
+            <button onClick={() => { addRoom() }}>add room</button>
         </>
     )
 }

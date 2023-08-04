@@ -57,7 +57,7 @@ function* userLogin(action) {
         //     address: responseUserInformation.data.address,
         //     image: responseUserInformation.data.imageURL,
         // }
-
+        console.log("userobj: ", userObj)
         if (check) {
             window.localStorage.setItem("user", JSON.stringify(userObj))
         }

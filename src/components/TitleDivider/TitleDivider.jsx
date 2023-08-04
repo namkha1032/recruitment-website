@@ -8,7 +8,6 @@ const TitleDivider = (props) => {
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     return (
         <Divider sx={{
-            marginY: 7,
             "&::before, &::after": {
                 borderColor: "black",
                 borderWidth: "1px"

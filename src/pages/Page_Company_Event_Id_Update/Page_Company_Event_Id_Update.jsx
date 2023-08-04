@@ -31,6 +31,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import cleanStore from '../../utils/cleanStore'
 import dayjs from 'dayjs'
 import { LoadingButton } from '@mui/lab'
+import useGetRole from '../../hooks/useGetRole'
 
 
 
@@ -39,12 +40,38 @@ const Page_Company_Event_Id_Update = () => {
     // useNavigate
     const navigate = useNavigate()
 
+    const dispatch = useDispatch();
+
+
+    const role = useGetRole();
+
+    const user = useSelector(state => state.user)
+    const userId = user ? user.userid : ""
+    useEffect(() => {
+        if (role === "recruiter") {
+            dispatch({
+                type: "eventSaga/getRecruiterIdCreateEvent",
+                payload: {
+                    userId: userId,
+                    token: user.token
+                }
+            })
+        }
+    }, [role])
+    const recruiterId = useSelector(state => state.recruiterIdCreateEvent)
+    console.log("DebugC: ", recruiterId)
+
+
     const { eventid } = useParams();
     console.log('company event id for update: ', eventid);
-
-    const dispatch = useDispatch();
     useEffect(() => {
-        dispatch({ type: "eventSaga/getEvent", payload: eventid })
+        dispatch({
+            type: "eventSaga/getEvent",
+            payload: {
+                eventid: eventid,
+                token: user.token
+            }
+        })
         return () => {
             cleanStore(dispatch)
         }
@@ -157,12 +184,14 @@ const Page_Company_Event_Id_Update = () => {
             payload: {
                 eventId: eventid,
                 eventName: name,
+                recruiterId: recruiterId,
                 description: content,
-                quantity: 50,
+                // quantity: 50,
                 maxParticipants: maxQuantity,
                 datetimeEvent: re,
                 place: location,
-                createdTime: "10:30 16/07/2023"
+                // createdTime: "10:30 16/07/2023"
+                token: user.token
             }
         });
     }
@@ -180,6 +209,8 @@ const Page_Company_Event_Id_Update = () => {
             dispatch({ type: "eventNavigate/onReset" })
         }
     }, [eventStatus])
+
+
 
     return (
         // event &&

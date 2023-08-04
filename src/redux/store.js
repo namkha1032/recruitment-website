@@ -47,7 +47,7 @@ import cvCandidateSlice from './reducer/cvCandidateReducer'
 import eventFooterSlice from "./reducer/eventFooterReducer";
 import profileSlice from "./reducer/profileReducer";
 import eventNavigateSlice from "./reducer/eventNavigateReducer";
-import candidateIdSlice from "./reducer/candidateIdReducer";
+import candidateIdRegisterEventSlice from "./reducer/candidateIdRegisterEvent";
 import infoApplicationSlice from "./reducer/infoApplicationReducer";
 import interviewerListSlice from "./reducer/interviewerListReducer";
 import interviewResultSlice from "./reducer/interviewResultReducer";
@@ -58,6 +58,17 @@ import interviewInterviewerSlice from "./reducer/interviewInterviewerReducer";
 import interviewSkillSlice from "./reducer/interviewSkillReducer";
 import interviewDepartmentSlice from "./reducer/interviewDepartmentReducer";
 import interviewPositionSlice from "./reducer/interviewPositionReducer";
+import reportSlice from "./reducer/reportReducer";
+import recruiterIdCreateEventSlice from "./reducer/recruiterIdCreateEvent";
+import eventIdStatusSlice from "./reducer/eventIdStatusReducer";
+import eventRegisteredSlice from "./reducer/eventRegisteredReducer";
+import applicationStatusSlice from "./reducer/applicationStatusReducer";
+
+import positionErrorSlice from "./reducer/positionErrorReducer";
+import interviewErrorSlice from "./reducer/interviewErrorReducer";
+import updatesubmitcvSlice from "./reducer/updatesubmitCvReducer";
+import applicationErrorSlice from "./reducer/applicationErrorReducer";
+import submitNotifySlice from "./reducer/submitNotifyReducer";
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
     reducer: {
@@ -100,7 +111,8 @@ const store = configureStore({
         eventFooter: eventFooterSlice.reducer,
         profile: profileSlice.reducer,
         eventNavigate: eventNavigateSlice.reducer,
-        candidateId: candidateIdSlice.reducer,
+        candidateIdRegisterEvent: candidateIdRegisterEventSlice.reducer,
+        recruiterIdCreateEvent: recruiterIdCreateEventSlice.reducer,
         infoApplication: infoApplicationSlice.reducer,
         interviewerList: interviewerListSlice.reducer,
         interviewResult: interviewResultSlice.reducer,
@@ -111,7 +123,16 @@ const store = configureStore({
         interviewskill: interviewSkillSlice.reducer,
         interviewdepartment: interviewDepartmentSlice.reducer,
         interviewposition: interviewPositionSlice.reducer,
-        interviewListCandidate: interviewCandidateSlice.reducer
+        interviewListCandidate: interviewCandidateSlice.reducer,
+        report: reportSlice.reducer,
+        eventIdStatus: eventIdStatusSlice.reducer,
+        eventRegistered: eventRegisteredSlice.reducer,
+        applicationStatus: applicationStatusSlice.reducer,
+        positionError: positionErrorSlice.reducer,
+        interviewError: interviewErrorSlice.reducer,
+        applicationError: applicationErrorSlice.reducer,
+        updatesubmitcv: updatesubmitcvSlice.reducer,
+        submitNotify: submitNotifySlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]

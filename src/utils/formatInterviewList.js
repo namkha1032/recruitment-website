@@ -102,97 +102,120 @@
 //       "email": "gigachad@example.com"
 //     }
 //   },
-import { formatDate } from "./formatDate"
+import { formatDate } from "./formatDate";
 
-export function formatInterviewList(input, applications, itrsinterviews, rooms, shifts, recruiters, interviewers, candidates) {
-    for (let i = 0; i < input.length; i++) {
-        for (let j = 0; j < applications.length; j++) {
-            if (input[i].applicationId === applications[j].applicationId) {
-                input[i] = {
-                    ...input[i],
-                    candidateId: applications[j].cv.candidateId,
-                }
-            }
-        }
-    }
-    for (let i = 0; i < input.length; i++) {
-        for (let j = 0; j < itrsinterviews.length; j++) {
-            if (input[i].itrsinterviewId === itrsinterviews[j].itrsinterviewId) {
-                input[i] = {
-                    ...input[i],
-                    dateInterview: itrsinterviews[j].dateInterview,
-                    shiftId: itrsinterviews[j].shiftId,
-                    roomId: itrsinterviews[j].roomId,
-                }
-            }
-        }
-    }
-    for (let i = 0; i < input.length; i++) {
-        for (let j = 0; j < shifts.length; j++) {
-            if (input[i].roomId === rooms[j].roomId) {
-                input[i] = {
-                    ...input[i],
-                    roomName: rooms[j].roomName,
-                }
-            }
-        }
-    }
+// export function formatInterviewList(input, applications, itrsinterviews, rooms, shifts, recruiters, interviewers, candidates) {
+//     for (let i = 0; i < input.length; i++) {
+//         for (let j = 0; j < applications.length; j++) {
+//             if (input[i].applicationId === applications[j].applicationId) {
+//                 input[i] = {
+//                     ...input[i],
+//                     candidateId: applications[j].cv.candidateId,
+//                 }
+//             }
+//         }
+//     }
+//     for (let i = 0; i < input.length; i++) {
+//         for (let j = 0; j < itrsinterviews.length; j++) {
+//             if (input[i].itrsinterviewId === itrsinterviews[j].itrsinterviewId) {
+//                 input[i] = {
+//                     ...input[i],
+//                     dateInterview: itrsinterviews[j].dateInterview,
+//                     shiftId: itrsinterviews[j].shiftId,
+//                     roomId: itrsinterviews[j].roomId,
+//                 }
+//             }
+//         }
+//     }
+//     for (let i = 0; i < input.length; i++) {
+//         for (let j = 0; j < shifts.length; j++) {
+//             if (input[i].roomId === rooms[j].roomId) {
+//                 input[i] = {
+//                     ...input[i],
+//                     roomName: rooms[j].roomName,
+//                 }
+//             }
+//         }
+//     }
 
-    for (let i = 0; i < input.length; i++) {
-        for (let j = 0; j < shifts.length; j++) {
-            if (input[i].shiftId === shifts[j].shiftId) {
-                input[i] = {
-                    ...input[i],
-                    shiftTimeStart: shifts[j].shiftTimeStart,
-                    shiftTimeEnd: shifts[j].shiftTimeStart,
-                }
-            }
-        }
-    }
-    // for (let i = 0; i < input.length; i++) {
-    //     for (let j = 0; j < recruiters.length; j++) {
-    //         if (input[i].recruiterId === recruiters[j].recruiterId) {
-    //             input[i] = {
-    //                 ...input[i],
-    //                 recruiterName: recruiters[j].user.fullName,
-    //             }
-    //         }
-    //     }
-    // }
-    // console.log(input)
-    for (let i = 0; i < input.length; i++) {
-        for (let j = 0; j < interviewers.length; j++) {
-            if (input[i].interviewerId === interviewers[j].interviewerId) {
-                input[i] = {
-                    ...input[i],
-                    interviewerName: interviewers[j].user.fullName,
-                }
-            }
-        }
-    }
-    for (let i = 0; i < input.length; i++) {
-        for (let j = 0; j < candidates.length; j++) {
-            if (input[i].candidateId === candidates[j].candidateId) {
-                input[i] = {
-                    ...input[i],
-                    candidateName: candidates[j].user.fullName,
-                }
-            }
-        }
-    }
-    const output = input.map((element) => {
-        return {
-            InterviewId: element.interviewId,
-            InterviewerName: element.interviewerName,
-            InterviewerId: element.interviewerId,
-            CandidateName: element.candidateName,
-            CandidateId: element.candidateId,
-            StartTime: element.dateInterview,
-            Shift: element.shiftTimeStart,
-            Room: element.roomName,
-            Status: element.candidate_Status,
-            Priority: element.company_Status,
-        }
-    })
-    return output
+//     for (let i = 0; i < input.length; i++) {
+//         for (let j = 0; j < shifts.length; j++) {
+//             if (input[i].shiftId === shifts[j].shiftId) {
+//                 input[i] = {
+//                     ...input[i],
+//                     shiftTimeStart: shifts[j].shiftTimeStart,
+//                     shiftTimeEnd: shifts[j].shiftTimeStart,
+//                 }
+//             }
+//         }
+//     }
+//     // for (let i = 0; i < input.length; i++) {
+//     //     for (let j = 0; j < recruiters.length; j++) {
+//     //         if (input[i].recruiterId === recruiters[j].recruiterId) {
+//     //             input[i] = {
+//     //                 ...input[i],
+//     //                 recruiterName: recruiters[j].user.fullName,
+//     //             }
+//     //         }
+//     //     }
+//     // }
+//     // console.log(input)
+//     for (let i = 0; i < input.length; i++) {
+//         for (let j = 0; j < interviewers.length; j++) {
+//             if (input[i].interviewerId === interviewers[j].interviewerId) {
+//                 input[i] = {
+//                     ...input[i],
+//                     interviewerName: interviewers[j].user.fullName,
+//                 }
+//             }
+//         }
+//     }
+//     for (let i = 0; i < input.length; i++) {
+//         for (let j = 0; j < candidates.length; j++) {
+//             if (input[i].candidateId === candidates[j].candidateId) {
+//                 input[i] = {
+//                     ...input[i],
+//                     candidateName: candidates[j].user.fullName,
+//                 }
+//             }
+//         }
+//     }
+//     const output = input.map((element) => {
+//         return {
+//             InterviewId: element.interviewId,
+//             InterviewerName: element.interviewerName,
+//             InterviewerId: element.interviewerId,
+//             CandidateName: element.candidateName,
+//             CandidateId: element.candidateId,
+//             StartTime: element.dateInterview,
+//             Shift: element.shiftTimeStart,
+//             Room: element.roomName,
+//             Status: element.candidate_Status,
+//             Priority: element.company_Status,
+//         }
+//     })
+//     return output
+// }
+
+export function formatInterviewList(input) {
+  const output = input.map((element) => {
+    return {
+      InterviewId: element.interviewId,
+      InterviewerName: element.interviewer.user.fullName,
+      InterviewerId: element.interviewer.interviewerId,
+      InterviewerUserId: element.interviewer.userId,
+      CandidateName: element.application.cv.candidate.user.fullName,
+      CandidateId: element.application.cv.candidateId,
+      CandidateUserId: element.application.cv.candidate.userId,
+      StartTime: element.itrsinterview.dateInterview,
+      Shift: element.itrsinterview.shift.shiftTimeStart,
+      Room: element.itrsinterview.room.roomName,
+      Status: element.candidate_Status,
+      Priority: element.company_Status,
+      DepartmentId: element.application.position.department.departmentId,
+      PositionId: element.application.position.positionId,
+    };
+  });
+  console.log("=========", output)
+  return output;
 }

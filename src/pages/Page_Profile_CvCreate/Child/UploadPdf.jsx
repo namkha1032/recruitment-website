@@ -10,6 +10,22 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 function UploadPdf(prop) {
+  function pdfToBinaryString(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+  
+      reader.onload = () => {
+        const binaryString = reader.result;
+        resolve(binaryString);
+      };
+  
+      reader.onerror = () => {
+        reject(new Error('Failed to read the PDF file'));
+      };
+  
+      reader.readAsBinaryString(file);
+    });
+  }
   const fileType = ["application/pdf"];
   const theme = useTheme()
   const isSm = useMediaQuery(theme.breakpoints.up('sm'));
@@ -38,16 +54,19 @@ function UploadPdf(prop) {
     }
   }
   function handleChange(e) {
-    console.log("open");
+    // console.log("open");
     let selectedFile = e.target.files[0];
+    prop.setPdf(selectedFile);
     if (selectedFile) {
       if (selectedFile && fileType.includes(selectedFile.type)) {
-        prop.setPdf(selectedFile);
+       
         let reader = new FileReader();
         reader.readAsDataURL(selectedFile);
         reader.onload = (e) => {
           // test view pdf without press view
           if (e.target.result !== null) {
+            // const base64String = reader.result.split(',')[1];
+            // prop.setPdf(base64String);
             prop.setViewPdf(e.target.result);
             prop.setPdfFile(e.target.result);
           } else {
@@ -64,7 +83,7 @@ function UploadPdf(prop) {
     } else {
       prop.setViewPdf(null);
       prop.setPdf(null);
-      console.log("please select");
+      // console.log("please select");
     }
   }
   return (

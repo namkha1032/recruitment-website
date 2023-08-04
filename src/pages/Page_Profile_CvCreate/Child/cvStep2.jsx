@@ -14,6 +14,7 @@ function CvStep2(prop) {
         <Grid container spacing={0} justifyContent="center" alignItems="center">
           <Grid item xs={12}>
             <ChooseSkill
+              handleSExp={prop.handleSExp}
               sInputValue={prop.sInputValue}
               setSInputValue={prop.setSInputValue}
               skillData={prop.skillData}

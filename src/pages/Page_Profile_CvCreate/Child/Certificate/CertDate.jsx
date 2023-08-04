@@ -17,15 +17,15 @@ const DateComp = (prop) => {
   const isSm = useMediaQuery(theme.breakpoints.up('sm'));
   const handleDateChange = (date) => {
     prop.setStart(date);
-    console.log(date);
+    // console.log(date);
   };
   function handleOrg(e) {
     prop.setOrganize(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   }
   function handleEnd(date) {
     prop.setEnd(date);
-    console.log(date);
+    // console.log(date);
   }
   return (
     <>

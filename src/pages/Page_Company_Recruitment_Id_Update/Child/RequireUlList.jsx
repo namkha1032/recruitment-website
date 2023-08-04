@@ -11,7 +11,7 @@ const RequireUlList = (prop) => {
   return (
     <>
       <Grid container spacing={1} justifyContent="center" alignItems="center">
-        {console.log(prop.skill)}
+        {/* {console.log(prop.skill)} */}
         
         {prop.comps.map((comp) => (
           <Grid key={comp.requirementId} item xs={isSm?3:6}>
