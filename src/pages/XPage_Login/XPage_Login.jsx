@@ -558,7 +558,7 @@ const XPage_Login = () => {
                       sx={{
                         height: "40px",
                         color: "white",
-                        borderRadius: "17.5px",
+                        borderRadius: "10px",
                         fontSize: "1em",
                         fontWeight: 600,
                         width: "90%",
