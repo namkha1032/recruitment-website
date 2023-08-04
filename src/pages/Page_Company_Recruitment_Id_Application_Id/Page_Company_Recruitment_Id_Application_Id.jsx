@@ -15,12 +15,13 @@ import MissingPage from "../../components/MissingPage/MissingPage";
 import Loading from "../../components/Loading/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import cleanStore from "../../utils/cleanStore";
+import useGetRole from "../../hooks/useGetRole";
 
 const Page_Company_Recruitment_Id_Application_Id = () => {
   const infoApplication = useSelector(state => state.infoApplication )
   const user = useSelector(state => state.user)
   const cv = useSelector(state => state.cv)
-
+  const role = useGetRole()
   const {applicationid,recruitmentid} = useParams()
   const dispatch = useDispatch()
   const [status,setStatus] = useState("Pending")
@@ -49,7 +50,8 @@ const Page_Company_Recruitment_Id_Application_Id = () => {
       xs={12}
       sx={{ display: "flex", justifyContent: "flex-end", padding: "15px" }}
     >
-    {status === "Pending" ? <>
+    {status === "Pending" ?   (role === "recruiter" ? <>
+      
       <Link to={`/company/interview/create?recruitmentid=${recruitmentid}&applicationid=${applicationid}`}>
         {" "} 
         <Button variant="contained" sx={{ marginRight: "50px" }}>
@@ -57,7 +59,7 @@ const Page_Company_Recruitment_Id_Application_Id = () => {
         </Button>
       </Link>
       <Button variant="contained" onClick={handleReject}> Reject </Button>
-      </> : status === "Rejected"  ? <Box component='h2' m={0} color="red">Rejected </Box> : <Box component='h2' m={0} color='blue'> Accepted </Box>}
+      </> : <Box component='h2' m={0} color="#1976d2">Pending </Box> ) : status === "Rejected"  ? <Box component='h2' m={0} color="#ed6c02">Rejected </Box> : <Box component='h2' m={0} color='#1b5e20'> Accepted </Box>}
     </Box>}
     </Container> : <MissingPage/>)) : <Loading/>
      

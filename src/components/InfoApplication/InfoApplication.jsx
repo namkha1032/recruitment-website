@@ -53,7 +53,7 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
 
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up("sm"));
-  let left = 3;
+  let left = 4;
   let right = 8;
   let gap = 1;
   let gridSx = {
@@ -83,7 +83,7 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
           </Box>
         )}
         <Grid container spacing={3} marginBottom={3}>
-          <Grid item xs={12} md={7}>
+          <Grid item xs={12} md={6}>
             <GigaCard>
               <GigaCardHeader>Postion</GigaCardHeader>
               <GigaCardBody>
@@ -91,7 +91,7 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
               </GigaCardBody>
             </GigaCard>
           </Grid>
-          <Grid item xs={12} md={5}>
+          <Grid item xs={12} md={6}>
             <GigaCard>
               <GigaCardHeader>Candidate</GigaCardHeader>
               <GigaCardBody>
@@ -104,7 +104,7 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
                 >
                   <Grid
                     item
-                    xs={2}
+                    xs={3}
                     md={left}
                     sx={{
                       ...gridSx,
@@ -134,7 +134,7 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
                   >
                     <Typography variant="h6">:</Typography>
                   </Grid>
-                  <Grid item xs={9} md={right} sx={gridSx}>
+                  <Grid item xs={8} md={right} sx={gridSx}>
                     <Typography
                       variant="h6"
                       sx={{ marginLeft: "8px", wordBreak: "break-word" }}
@@ -152,7 +152,7 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
                 >
                   <Grid
                     item
-                    xs={2}
+                    xs={3}
                     md={left}
                     sx={{
                       ...gridSx,
@@ -182,16 +182,15 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
                   >
                     <Typography variant="h6">:</Typography>
                   </Grid>
-                  <Grid item xs={9} md={right} sx={gridSx}>
+                  <Grid item xs={8} md={right} sx={gridSx}>
                     <Typography
                       variant="h6"
                       sx={{
                         marginLeft: "8px",
-                        whiteSpace: "pre",
-                        wordBreak: "break-all",
+                        wordBreak:'break-all'
                       }}
                     >
-                      {candidate.email.replace(/@/g, "@\n")}
+                      {candidate.email}
                     </Typography>
                   </Grid>
                 </Box>
@@ -204,7 +203,7 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
                 >
                   <Grid
                     item
-                    xs={2}
+                    xs={3}
                     md={left}
                     sx={{
                       ...gridSx,
@@ -234,7 +233,7 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
                   >
                     <Typography variant="h6">:</Typography>
                   </Grid>
-                  <Grid item xs={9} md={right} sx={gridSx}>
+                  <Grid item xs={8} md={right} sx={gridSx}>
                     <Typography
                       variant="h6"
                       sx={{ marginLeft: "8px", wordBreak: "break-word" }}
@@ -252,7 +251,7 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
                 >
                   <Grid
                     item
-                    xs={2}
+                    xs={3}
                     md={left}
                     sx={{
                       ...gridSx,
@@ -282,7 +281,7 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
                   >
                     <Typography variant="h6">:</Typography>
                   </Grid>
-                  <Grid item xs={9} md={right} sx={gridSx}>
+                  <Grid item xs={8} md={right} sx={gridSx}>
                     <Typography
                       variant="h6"
                       sx={{ marginLeft: "8px", wordBreak: "break-word" }}
