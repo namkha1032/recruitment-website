@@ -38,7 +38,7 @@ const View_detail = (props) => {
         // props.detail &&
         <>
 
-            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: 2 }}>
                 <Grid item xs={4} md={left} sx={{ ...gridSx, columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <RadarIcon />
@@ -67,7 +67,7 @@ const View_detail = (props) => {
                     </Typography>
                 </Grid>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: 2 }}>
                 <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <HourglassBottomRoundedIcon />
@@ -97,7 +97,7 @@ const View_detail = (props) => {
                     {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`} /> */}
                 </Grid>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: 2 }}>
                 <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <ZoomInIcon />
@@ -128,7 +128,7 @@ const View_detail = (props) => {
                     {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].hireMax}`} /> */}
                 </Grid>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: 2 }}>
                 <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <RecommendIcon />
@@ -164,7 +164,7 @@ const View_detail = (props) => {
                     </Stack>
                 </Grid>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: "5px" }}>
+            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: 2}}>
                 <Grid item xs ={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <LanguageIcon />

@@ -140,7 +140,7 @@ const Info_view = (props) => {
                     <Grid item xs={12} md={6} sm={12}>
                         <GigaCard>
                             <GigaCardBody>
-                                <img style={{ width: '100%', height: "100%" }} src="https://www.pvcfc.com.vn/Data/Sites/1/News/5510/mau-1.jpg" alt="Tuyển dụng" />
+                                <img style={{ width: '100%', height: "100%" }} src="https://www.pngkit.com/png/detail/117-1177668_job-search-remotive-home-find-a-job-cartoon.png" alt="Tuyển dụng" />
                             </GigaCardBody>
                         </GigaCard>
 
