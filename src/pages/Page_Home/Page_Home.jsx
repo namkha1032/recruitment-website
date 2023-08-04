@@ -15,6 +15,9 @@ import Carousel from '../../components/Carousel/Carousel'
 import { useDispatch, useSelector } from 'react-redux';
 import { useRef } from 'react';
 import picture from '../../assets/img/aboutUS.jpg'
+import picture2 from '../../assets/img/team.jpg'
+import { AttachMoneyRounded } from '@mui/icons-material';
+import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 
 //
 // import Swiper core and required modules
@@ -38,19 +41,7 @@ const defaultTheme = createTheme();
 //
 
 
-//footer 
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Team 4
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
+
 
 const Page_Home = () => {
   //
@@ -58,17 +49,23 @@ const Page_Home = () => {
   //
 
   const eventList = useSelector(state => state.eventList)
+  const positionList = useSelector((state) => state.positionList);
+  const skill = useSelector((state) => state.skill);
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const handleNavigateClick = (id) => {
     navigate(`/event/${id}`)
   }
-  const handleNavigateClick1 = () => {
-    navigate('/recruitment')
+  const handleNavigateClick1 = (id) => {
+    navigate(`/recruitment/${id}`)
   }
   React.useEffect(() => {
     dispatch({ type: 'eventSaga/getEventList' })
   }, [])
+  React.useEffect(()=>{
+    dispatch({type:'positionSaga/getPositionList'})
+    dispatch({ type: "saga/getSkill" });
+  },[])
   console.log(eventList)
   return (
     eventList && <Box>
@@ -91,15 +88,20 @@ const Page_Home = () => {
                 />
                 <Box sx={{ marginTop: '16px' }}>
                   <Typography
+                  fontWeight="bold"
+                  >
+                    {item.EventName}
+                  </Typography>
+                  <Typography
                     variant="subtitle1"
                     align="center"
                     color="text.secondary"
                     component="p"
                     sx={{ display: 'flex', justifyContent: 'flex-start' }}
                   >
-                    {item.EventName} • {item.EventDateTime.slice(0, 10)}
+                    {item.EventDateTime.slice(0, 10)}
                   </Typography>
-                  {item.EventDescription.slice(0, 30)}
+                  {/* {item.EventDescription.slice(0, 30)} */}
 
                 </Box>
               </Box>
@@ -123,15 +125,20 @@ const Page_Home = () => {
                       style={{ width: '100%' }}
                     />
                     <Typography
+                    fontWeight="bold"
+                    >
+                      {item.EventName}
+                    </Typography>
+                    <Typography
                       variant="subtitle2"
                       align="center"
                       color="text.secondary"
                       component="p"
                       sx={{ display: 'flex', justifyContent: 'flex-start' }}
                     >
-                      {item.EventName} • {item.EventDateTime.slice(0, 10)}
+                      {item.EventDateTime.slice(0, 10)}
                     </Typography>
-                    {item.EventDescription.slice(0, 30)}
+                    {/* {item.EventDescription.slice(0, 30)} */}
 
                   </Box>))}
 
@@ -144,6 +151,7 @@ const Page_Home = () => {
 
               >
                 {eventList.slice(5, 8).map((item, index) => (
+                  
                   <Box key={index} onClick={() => handleNavigateClick(item.EventId)}
                     sx={{ cursor: 'pointer' }}>
                     <img src="https://www.freecodecamp.org/news/content/images/2022/04/derick-mckinney-oARTWhz1ACc-unsplash.jpg"
@@ -151,15 +159,20 @@ const Page_Home = () => {
                       style={{ width: '100%' }}
                     />
                     <Typography
+                    fontWeight="bold"
+                    >
+                      {item.EventName}
+                    </Typography>
+                    <Typography
                       variant="subtitle2"
                       align="center"
                       color="text.secondary"
                       component="p"
                       sx={{ display: 'flex', justifyContent: 'flex-start' }}
                     >
-                      {item.EventName} • {item.EventDateTime.slice(0, 10)}
+                      {item.EventDateTime.slice(0, 10)}
                     </Typography>
-                    {item.EventDescription.slice(4,30)}
+                    {/* {item.EventDescription.slice(4,30)} */}
 
                   </Box>))}
 
@@ -182,59 +195,38 @@ const Page_Home = () => {
 
                   >
 
-                    Thông tin tuyển dụng
+                    Recruitment News
 
                   </Box>
-                  <Box sx={{
+
+                 {positionList&&positionList.slice(0, 5).map((card, index) =>(
+                  
+
+                 
+                  <Box key={index} onClick={() => handleNavigateClick1(card.PositionId) }
+                  style={{ cursor: 'pointer' }}
+                   sx={{
 
                     borderTop: '1px solid lightgrey',
                     // borderRight: '1px solid lightgrey,',
                     padding: '20px 10px 20px 10px'
                   }}>
-
-                    Game Designer
+                    <Box marginLeft='3px' marginBottom="5px">
                     <Typography
-                      variant="subtitle2"
-                      align="center"
-                      color="text.secondary"
-                      component="p"
-                      sx={{ display: 'flex', justifyContent: 'flex-start' }}
+                    variant="h7"
+                    align="left"
+                    color="#black"
+                    fontWeight='bold'
+                    component="p"
                     >
-                      C# • Python • Java
+                    {card.PositionName}
                     </Typography>
+                    </Box>
 
-                  </Box>
-                  <Box sx={{ borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', margin: 0, }}>
+                   
 
-                    Game Writer Contest
-                    <Typography
-                      variant="subtitle2"
-                      align="center"
-                      color="text.secondary"
-                      component="p"
-                      sx={{ display: 'flex', justifyContent: 'flex-start' }}
-                    >
-                      C# • Latex
-                    </Typography>
-
-
-                  </Box>
-                  <Box sx={{ borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', }}>
-                    BackEnd Developer
-                    <Typography
-                      variant="subtitle2"
-                      align="center"
-                      color="text.secondary"
-                      component="p"
-                      sx={{ display: 'flex', justifyContent: 'flex-start' }}
-                    >
-                      ReacJS • NodeJS
-                    </Typography>
-
-
-                  </Box>
-                  <Box sx={{ borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', }}>
-                    BackEnd Developer
+                <Box display="flex">
+                    <AttachMoneyRounded fontSize='small' />
 
                     <Typography
                       variant="subtitle2"
@@ -242,53 +234,42 @@ const Page_Home = () => {
                       color="text.secondary"
                       component="p"
                       sx={{ display: 'flex', justifyContent: 'flex-start' }}
+                     
                     >
-                      ReacJS • NodeJS
+                      {card.Salary}
                     </Typography>
-
-                  </Box>
-                  <Box sx={{ borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', }}>
-                    FrontEnd Developer
-
+                    </Box>
+                  
+                    <Box display="flex" >
+                      <AccessTimeOutlinedIcon fontSize='small' />
+                      <Box marginLeft="2px">
                     <Typography
                       variant="subtitle2"
                       align="center"
                       color="text.secondary"
                       component="p"
                       sx={{ display: 'flex', justifyContent: 'flex-start' }}
+                      
                     >
-                      ReacJS • NodeJS
+                      
+                      {card.EndDate.slice(0, 10)}
+                      
                     </Typography>
-
+                    </Box>
                   </Box>
-                  <Box sx={{ borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', }}>
-                    BackEnd Developer
 
-                    <Typography
-                      variant="subtitle2"
-                      align="center"
-                      color="text.secondary"
-                      component="p"
-                      sx={{ display: 'flex', justifyContent: 'flex-start' }}
-                    >
-                      ReacJS • NodeJS
-                    </Typography>
-
+                   
                   </Box>
-                  <Box sx={{ borderTop: '1px solid lightgrey', padding: '20px 10px 20px 10px', }}>
-                    BackEnd Developer
-                    <Typography
-                      variant="subtitle2"
-                      align="center"
-                      color="text.secondary"
-                      component="p"
-                      sx={{ display: 'flex', justifyContent: 'flex-start' }}
-                    >
-                      ReacJS • NodeJS
-                    </Typography>
+                  
+                 ))}
+                
+                 
+                
+                  
+                 
+                  
 
-
-                  </Box>
+                 
                 </Box>
 
               </Grid>
@@ -299,7 +280,7 @@ const Page_Home = () => {
       </Box>}
       <Box sx={{ padding: '24px', borderTop: '1px solid lightgrey' }} id='AboutUs'>
         <Box sx={{ padding: '0px 0px 30px 0px' }}>
-          <Typography align='center' variant='h3'>About us</Typography>
+          <Typography align='center' variant='h2' fontFamily="Arial" >About us</Typography>
 
         </Box>
         <Grid container spacing={1} >
@@ -321,6 +302,7 @@ const Page_Home = () => {
                   color="text.secondary"
                   component="p"
                   sx={{ display: 'flex', justifyContent: 'flex-start' }}
+                  
                 >
                   About us
                 </Typography>
@@ -341,7 +323,7 @@ const Page_Home = () => {
                   component="p"
                   sx={{ display: 'flex', justifyContent: 'flex-start' }}
                 >
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, perspiciatis repellat maxime, adipisci non ipsam at itaque rerum vitae, necessitatibus nulla animi expedita cumque provident inventore? Voluptatum in tempora earum deleniti, culpa odit veniam, ea reiciendis sunt ullam temporibus aut!
+                Teamwork is the heart of success in any organization. A team is a group of individuals who come together, united by a common goal, to collaborate and achieve objectives that would be difficult or impossible to accomplish alone. Effective teamwork fosters creativity, harnesses diverse perspectives, and maximizes individual strengths.
                 </Typography>
               </Box>
               <Box sx={{ padding: '10px 0px 0px 30px' }}>
@@ -351,7 +333,7 @@ const Page_Home = () => {
                   component="p"
                   sx={{ display: 'flex', justifyContent: 'flex-start' }}
                 >
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, perspiciatis repellat maxime, adipisci non ipsam at itaque rerum vitae, necessitatibus nulla animi expedita cumque provident inventore? Voluptatum in tempora earum deleniti, culpa odit veniam, ea reiciendis sunt ullam temporibus aut!
+                  Successful teams celebrate achievements together and learn from failures collectively. They value feedback and continuously seek opportunities for growth and improvement. By fostering a positive and inclusive team culture, organizations can harness the true potential of teamwork and achieve remarkable results.
                 </Typography>
               </Box>
             </Box>
@@ -393,7 +375,7 @@ const Page_Home = () => {
                   component="p"
                   sx={{ display: 'flex', justifyContent: 'flex-start' }}
                 >
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, perspiciatis repellat maxime, adipisci non ipsam at itaque rerum vitae, necessitatibus nulla animi expedita cumque provident inventore? Voluptatum in tempora earum deleniti, culpa odit veniam, ea reiciendis sunt ullam temporibus aut!
+                The importance of direction for Frontend developers. They need a strong foundation in HTML, CSS, and JavaScript, along with knowledge of modern frameworks like React, Angular, or Vue.js. Continuous learning, problem-solving skills, and adaptability are crucial traits. 
                 </Typography>
               </Box>
               <Box sx={{ padding: '10px 0px 0px 0px' }}>
@@ -403,7 +385,7 @@ const Page_Home = () => {
                   component="p"
                   sx={{ display: 'flex', justifyContent: 'flex-start' }}
                 >
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, perspiciatis repellat maxime, adipisci non ipsam at itaque rerum vitae, necessitatibus nulla animi expedita cumque provident inventore? Voluptatum in tempora earum deleniti, culpa odit veniam, ea reiciendis sunt ullam temporibus aut!
+                 Understanding design principles and effective communication with team members are also highlighted as essential for creating seamless user experiences in the constantly evolving field of Frontend development.
                 </Typography>
               </Box>
             </Box>
@@ -411,10 +393,11 @@ const Page_Home = () => {
 
           </Grid>
           <Grid item md={6.5}>
-            <Box sx={{ padding: '24px 0px 0px 20px' }}>
-              <img src="https://cutewallpaper.org/21/image/Image-Dimensions-Monterey-Regional-Airport.jpeg"
+            <Box sx={{ padding: '24px 0px 0px 20px'  }} >
+              <img src={picture2}
+                
                 alt=""
-                style={{ width: '100%' }}
+                style={{ width: '98%'}}
 
               />
             </Box>
