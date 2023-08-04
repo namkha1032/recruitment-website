@@ -55,7 +55,7 @@ const List_application = (props) => {
     //     return application.company_status === "Đang chờ"
     // }) : [];
     const passmain = props.applications ? props.applications.filter(application => {
-        return application.company_status === "Passed"
+        return application.company_status === "Accepted"
     }) : [];
     // const reject1 = props.applications ? props.applications.filter(application => {
     //     return application.company_Status === "Đã từ chối"
@@ -152,7 +152,7 @@ const List_application = (props) => {
                             <CloseRounded sx={{marginRight: "5px"}}></CloseRounded> Reject
                         </Button>
                         <Button size ={isMd ? "medium" : "small"} color="success" sx={{  marginLeft: "10px", borderRadius: 100 }} variant={currentTable == 2 ? 'contained' : 'outlined'} onClick={() => { setCurrentTable(2) }} >
-                            <DoneRounded sx={{marginRight: "5px"}}></DoneRounded> Pass
+                            <DoneRounded sx={{marginRight: "5px"}}></DoneRounded> Accept
                         </Button>
 
 
