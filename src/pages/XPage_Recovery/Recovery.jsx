@@ -10,12 +10,16 @@ import {
   Container,
   /* InputAdornment, */
   createTheme,
+  CircularProgress,
+  Stack
 } from "@mui/material";
 
 import imageBackground from "../../assets/img/background.jpg";
 import { alpha } from "@mui/material/styles";
 import { MailOutline } from "@mui/icons-material";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import HomeIcon from '@mui/icons-material/Home';
+
 
 // const style = {
 //   marginTop: "15px",
@@ -29,6 +33,8 @@ const theme = createTheme({
     },
   },
 });
+
+
 
 const Recovery = (props) => {
   return (
@@ -45,227 +51,261 @@ const Recovery = (props) => {
         alignItems: "center",
       }}
     >
-      <Container
-        component="main"
-        maxWidth="xs"
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Box
-          className="form-box"
-          //border={`2px solid ${alpha('#FFFFFF', 0.5)}`}
+      <Stack>
+        <Box 
           sx={{
-            position: "relative",
-            width: "100%",
-            height: "100%",
-            background: "transparent",
-            border: "2px solid rgba(255, 255, 255, 0.5)",
-            borderRadius: "20px",
-            backdropFilter: "blur(5px)",
-            backgroundColor: alpha("#FFFFFF", 0.8),
+            //backgroundColor: 'red',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: '5%',
+          }}
+        >
+          <Typography 
+            onClick={props.handleClickHome}
+            sx={{
+              color: 'white',
+              cursor: 'pointer',
+              fontWeight: '300',
+            }}
+          >
+            Back to home
+          </Typography>
+          <HomeIcon 
+            onClick={props.handleClickHome}
+            sx={{
+              //textDecoration: "none",
+              color: 'white',
+              cursor: 'pointer',
+              marginLeft: '3px'
+            }}
+          />
+        </Box>
+
+        <Container
+          component="main"
+          maxWidth="xs"
+          sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            boxShadow: "0px 0px 10px 10px rgba(255, 255, 255, 0.25)",
           }}
         >
           <Box
-            className="from value"
+            className="form-box"
+            //border={`2px solid ${alpha('#FFFFFF', 0.5)}`}
             sx={{
+              position: "relative",
+              width: "95%",
+              height: "100%",
+              background: "transparent",
+              border: "2px solid rgba(255, 255, 255, 0.5)",
+              borderRadius: "20px",
+              backdropFilter: "blur(5px)",
+              backgroundColor: alpha("#FFFFFF", 0.8),
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              paddingTop: "5%",
-              paddingBottom: "5%",
+              boxShadow: "0px 0px 10px 10px rgba(255, 255, 255, 0.25)",
             }}
           >
-            <form onSubmit={props.handleSubmit}>
-              <Typography
-                variant="h2"
-                sx={{
-                  fontSize: "3rem",
-                  color: "black",
-                  textAlign: "center",
-                  fontWeight: "450",
-                  marginBottom: "10px",
-                }}
-              >
-                Reset
-              </Typography>
-
-              <Grid
-                container
-                //spacing={2}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  paddingTop: "0px",
-                }}
-              >
-                <Grid
-                  item
-                  xs={12}
+            <Box
+              className="from value"
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingTop: "5%",
+                paddingBottom: "5%",
+              }}
+            >
+              <form onSubmit={props.handleSubmit}>
+                <Typography
+                  variant="h2"
                   sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginBottom: "0px",
+                    fontSize: "3rem",
+                    color: "black",
                     textAlign: "center",
-                    marginLeft: "10px",
-                    marginRight: "10px",
+                    fontWeight: "450",
+                    marginBottom: "10px",
                   }}
                 >
-                  <Typography variant="h5">Enter your email address</Typography>
-                </Grid>
+                  Reset
+                </Typography>
 
                 <Grid
-                  item
-                  xs={12}
+                  container
+                  //spacing={2}
                   sx={{
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    marginBottom: "5px",
-                    marginTop: "0px",
                     paddingTop: "0px",
                   }}
                 >
-                  <TextField
-                    variant="standard"
-                    //required
-                    fullWidth
-                    type="email"
-                    label={props.validEmail ? <Typography color={"black"}>Email</Typography> : <Typography color={"red"}>Email</Typography>}
-                    autoComplete="new-text"
-                    value={props.email}
-                    onChange={props.handleEmailChange}
-                    error={!props.validEmail}
-                    InputProps={{
-                      disableUnderline: true,
-                      endAdornment: (
-                        <MailOutline
-                          sx={{
-                            position: "absolute",
-                            right: "8px",
-                            color: props.validEmail ? "#000" : "red",
-                            fontSize: "1.2em",
-                          }}
-                        />
-                      ),
-                    }}
+                  <Grid
+                    item
+                    xs={12}
                     sx={{
-                      width: "90%",
-                      height: "50px",
-                      background: "transparent",
-                      outline: "none",
-                      fontSize: "1em",
-                      color: "#000",
-                      borderBottom: props.validEmail ? "2px solid black" : "2px solid red",
-                      borderBottomWidth: "2px",
-                    }}
-                  />
-                </Grid>
-
-                {!props.validEmail && (
-                    <Grid
-                      item
-                      xs={12}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "left",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Box
-                        color={"red"}
-                        display={"flex"}
-                        marginLeft={"16px"}
-                        marginRight={"15px"}
-                        marginBottom={"3px"}
-                      >
-                        <ErrorOutlineOutlinedIcon
-                          //color="red"
-                          sx={{
-                            fontSize: 15,
-                            paddingLeft: "2px",
-                            marginTop: "2px",
-                          }}
-                        />
-
-                        <Typography
-                          color="red"
-                          fontSize="12px"
-                          lineHeight="20px"
-                          paddingLeft={"5px"}
-                        >
-                          Must be a valid email
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  )}
-
-                <Grid
-                  item
-                  xs={12}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: '15px'
-                  }}
-                >
-                  <Button
-                    type="submit"
-                    theme={theme}
-                    variant="contained"
-                    color="secondary"
-                    sx={{
-                      height: "40px",
-                      color: "white",
-                      borderRadius: "20px",
-                      fontSize: "1em",
-                      fontWeight: 600,
-                      width: "90%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: "0px",
+                      textAlign: "center",
+                      marginLeft: "10px",
+                      marginRight: "10px",
                     }}
                   >
-                    Send
-                  </Button>
-                </Grid>
-              </Grid>
+                    <Typography variant="h5">Enter your email address</Typography>
+                  </Grid>
 
-              <Grid container justifyContent="center">
-                <Grid
-                  item
-                  xs={12}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    lineHeight: "15px",
-                    paddingTop: "15px",
-                    fontSize: ".9em",
-                  }}
-                >
-                  <Typography variant="small" sx={{ color: "black" }}>
-                    <Typography
-                      component={Link}
-                      to="/login"
-                      variant="small"
-                      sx={{ color: "black" }}
-                    >
-                      Back to sign in
-                    </Typography>
-                  </Typography>
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: "5px",
+                      marginTop: "0px",
+                      paddingTop: "0px",
+                    }}
+                  >
+                    <TextField
+                      variant="standard"
+                      //required
+                      fullWidth
+                      type="email"
+                      label={props.validEmail ? <Typography color={"black"}>Email</Typography> : <Typography color={"red"}>Email</Typography>}
+                      autoComplete="new-text"
+                      value={props.email}
+                      onChange={props.handleEmailChange}
+                      error={!props.validEmail}
+                      InputProps={{
+                        disableUnderline: true,
+                        endAdornment: (
+                          <MailOutline
+                            sx={{
+                              position: "absolute",
+                              right: "8px",
+                              color: props.validEmail ? "#000" : "red",
+                              fontSize: "1.2em",
+                            }}
+                          />
+                        ),
+                      }}
+                      sx={{
+                        width: "90%",
+                        height: "50px",
+                        background: "transparent",
+                        outline: "none",
+                        fontSize: "1em",
+                        color: "#000",
+                        borderBottom: props.validEmail ? "2px solid black" : "2px solid red",
+                        borderBottomWidth: "2px",
+                      }}
+                    />
+                  </Grid>
+
+                  {!props.validEmail && (
+                      <Grid
+                        item
+                        xs={12}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "left",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Box
+                          color={"red"}
+                          display={"flex"}
+                          marginLeft={"16px"}
+                          marginRight={"15px"}
+                          marginBottom={"3px"}
+                        >
+                          <ErrorOutlineOutlinedIcon
+                            //color="red"
+                            sx={{
+                              fontSize: 15,
+                              paddingLeft: "2px",
+                              marginTop: "2px",
+                            }}
+                          />
+
+                          <Typography
+                            color="red"
+                            fontSize="12px"
+                            lineHeight="20px"
+                            paddingLeft={"5px"}
+                          >
+                            Must be a valid email
+                          </Typography>
+                        </Box>
+                      </Grid>
+                    )}
+
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: '15px'
+                    }}
+                  >
+                    {props.loading ? <CircularProgress sx={{ color: "black" }} /> :
+                      <Button
+                        type="submit"
+                        theme={theme}
+                        variant="contained"
+                        color="secondary"
+                        sx={{
+                          height: "40px",
+                          color: "white",
+                          borderRadius: "20px",
+                          fontSize: "1em",
+                          fontWeight: 600,
+                          width: "90%",
+                        }}
+                      >
+                        Send
+                      </Button>
+                    }
+                  </Grid>
                 </Grid>
-              </Grid>
-            </form>
+
+                <Grid container justifyContent="center">
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      lineHeight: "15px",
+                      paddingTop: "15px",
+                      fontSize: ".9em",
+                    }}
+                  >
+                    <Typography variant="small" sx={{ color: "black" }}>
+                      <Typography
+                        component={Link}
+                        to="/login"
+                        variant="small"
+                        sx={{ color: "black" }}
+                      >
+                        Back to sign in
+                      </Typography>
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </form>
+            </Box>
           </Box>
-        </Box>
-      </Container>
+        </Container>
+      </Stack>
     </Box>
   );
 };

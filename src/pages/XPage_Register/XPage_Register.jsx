@@ -209,6 +209,36 @@ const XPage_Register = () => {
         alignItems: "center",
       }}
     >
+      <Stack>
+        <Box 
+          sx={{
+            //backgroundColor: 'red',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: '5%',
+          }}
+        >
+          <Typography 
+            onClick={handleClickHome}
+            sx={{
+              color: 'white',
+              cursor: 'pointer',
+              fontWeight: '300',
+            }}
+          >
+            Back to home
+          </Typography>
+          <HomeIcon 
+            onClick={handleClickHome}
+            sx={{
+              //textDecoration: "none",
+              color: 'white',
+              cursor: 'pointer',
+              marginLeft: '3px'
+            }}
+          />
+        </Box>
       <Container
         component="main"
         maxWidth="xs"
@@ -221,7 +251,7 @@ const XPage_Register = () => {
         <Box
           sx={{
             position: "relative",
-            width: "100%",
+            width: "95%",
             height: "100%",
             background: "transparent",
             border: "2px solid rgba(255, 255, 255, 0.5)",
@@ -234,496 +264,474 @@ const XPage_Register = () => {
             boxShadow: "0px 0px 10px 10px rgba(255, 255, 255, 0.25)",
           }}
         >
-          <Stack>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: "5px",
-              }}
-            >
-              <ArrowBackIcon 
-                onClick={handleClickHome}
-                sx={{
-                  cursor: 'pointer'
-                }}
-              />
-              <HomeIcon 
-                onClick={handleClickHome}
-                sx={{
-                  cursor: 'pointer'
-                }}
-              />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                paddingTop: "5%",
-                paddingBottom: "5%",
-              }}
-            >
-              <form onSubmit={handleRegister}>
-                <Typography
-                  variant="h2"
-                  sx={{
-                    fontSize: "3rem",
-                    color: "black",
-                    textAlign: "center",
-                    fontWeight: "450",
-                    //marginBottom: "5px",
-                  }}
-                >
-                  Sign Up
-                </Typography>
 
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingTop: "5%",
+              paddingBottom: "5%",
+            }}
+          >
+            <form onSubmit={handleRegister}>
+              <Typography
+                variant="h2"
+                sx={{
+                  fontSize: "3rem",
+                  color: "black",
+                  textAlign: "center",
+                  fontWeight: "450",
+                  //marginBottom: "5px",
+                }}
+              >
+                Sign Up
+              </Typography>
+
+              <Grid
+                container
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <Grid
-                  container
+                  item
+                  xs={12}
                   sx={{
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    marginBottom: "3px",
+                    //marginTop: '5px',
                   }}
                 >
-                  <Grid
-                    item
-                    xs={12}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginBottom: "2px",
-                      marginTop: '5px',
-                    }}
-                  >
-                    <TextField
-                      variant="standard"
-                      fullWidth
-                      type="text"
-                      label={validFullName ? <Typography color={"black"}>Fullname</Typography> : <Typography color={"red"}>Fullname</Typography>}
-                      autoComplete="new-text"
-                      value={fullName}
-                      onChange={handleFullNameChange}
-                      error={!validFullName}
-                      InputProps={{
-                        disableUnderline: true,
-                        endAdornment: (
-                          <AccountCircleOutlinedIcon
-                            sx={{
-                              position: "absolute",
-                              right: "8px",
-                              color: validFullName ? "black" : "red",
-                              fontSize: "1.2em",
-                            }}
-                          />
-                        ),
-                      }}
-                      sx={{
-                        width: "90%",
-                        height: "50px",
-                        background: "transparent",
-                        outline: "none",
-                        fontSize: "1em",
-                        color: "#000",
-                        borderBottom: validFullName ? "2px solid black" : "2px solid red",
-                        borderBottomWidth: "2px",
-                      }}
-                    />
-                  </Grid>
-
-                  {!validFullName && (
-                    <Grid
-                      item
-                      xs={12}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "left",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Box
-                        color={"red"}
-                        display={"flex"}
-                        marginLeft={"16px"}
-                        marginRight={"15px"}
-                        //marginBottom={"3px"}
-                      >
-                        <ErrorOutlineOutlinedIcon
+                  <TextField
+                    variant="standard"
+                    fullWidth
+                    type="text"
+                    label={validFullName ? <Typography color={"black"}>Fullname</Typography> : <Typography color={"red"}>Fullname</Typography>}
+                    autoComplete="new-text"
+                    value={fullName}
+                    onChange={handleFullNameChange}
+                    error={!validFullName}
+                    InputProps={{
+                      disableUnderline: true,
+                      endAdornment: (
+                        <AccountCircleOutlinedIcon
                           sx={{
-                            fontSize: 15,
-                            paddingLeft: "2px",
-                            marginTop: "2px",
+                            position: "absolute",
+                            right: "8px",
+                            color: validFullName ? "black" : "red",
+                            fontSize: "1.2em",
                           }}
                         />
-
-                        <Typography
-                          color="red"
-                          fontSize="12px"
-                          lineHeight="20px"
-                          paddingLeft={"5px"}
-                        >
-                          Full name must be at least 2 characters long
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  )}
-
-                  <Grid
-                    item
-                    xs={12}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginBottom: "2px",
-                      marginTop: '5px',
+                      ),
                     }}
-                  >
-                    <TextField
-                      variant="standard"
-                      fullWidth
-                      type="text"
-                      label={validUsername ? <Typography color={"black"}>Username</Typography> : <Typography color={"red"}>Username</Typography>}
-                      autoComplete="new-text"
-                      value={username}
-                      onChange={handleUsernameChange}
-                      error={!validUsername}
-                      InputProps={{
-                        disableUnderline: true,
-                        endAdornment: (
-                          <AccountCircleOutlinedIcon
-                            sx={{
-                              position: "absolute",
-                              right: "8px",
-                              color: validUsername ? "black" : "red",
-                              fontSize: "1.2em",
-                            }}
-                          />
-                        ),
-                        sx: {
-                          color: "#000",
-                        },
-                      }}
-                      sx={{
-                        width: "90%",
-                        height: "50px",
-                        background: "transparent",
-                        outline: "none",
-                        fontSize: "1em",
-                        color: "#000",
-                        borderBottom: validUsername ? "2px solid black" : "2px solid red",
-                        borderBottomWidth: "2px",
-                      }}
-                    />
-                  </Grid>
-
-                  {!validUsername && (
-                    <Grid
-                      item
-                      xs={12}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "left",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Box
-                        color={"red"}
-                        display={"flex"}
-                        marginLeft={"16px"}
-                        marginRight={"15px"}
-                        //marginBottom={"3px"}
-                      >
-                        <ErrorOutlineOutlinedIcon
-                          //color="red"
-                          sx={{
-                            fontSize: 15,
-                            paddingLeft: "2px",
-                            marginTop: "2px",
-                          }}
-                        />
-
-                        <Typography
-                          color="red"
-                          fontSize="12px"
-                          lineHeight="20px"
-                          paddingLeft={"5px"}
-                        >
-                          Username must be 3-20 characters long
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  )}
-
-                  <Grid
-                    item
-                    xs={12}
                     sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginBottom: "2px",
-                      marginTop: '5px',
+                      width: "90%",
+                      height: "50px",
+                      background: "transparent",
+                      outline: "none",
+                      fontSize: "1em",
+                      color: "#000",
+                      borderBottom: validFullName ? "2px solid black" : "2px solid red",
+                      borderBottomWidth: "2px",
                     }}
-                  >
-                    <TextField
-                      variant="standard"
-                      //required
-                      fullWidth
-                      type="email"
-                      label={validEmail ? <Typography color={"black"}>Email</Typography> : <Typography color={"red"}>Email</Typography>}
-                      autoComplete="new-email"
-                      value={email}
-                      onChange={handleEmailChange}
-                      error={!validEmail}
-                      InputProps={{
-                        disableUnderline: true,
-                        endAdornment: (
-                          <MailOutline
-                            sx={{
-                              position: "absolute",
-                              right: "8px",
-                              color: validEmail ? "black" : "red",
-                              fontSize: "1.2em",
-                              //top: '20px',
-                            }}
-                          />
-                        ),
-                        sx: {
-                          color: "#000",
-                        },
-                      }}
-                      sx={{
-                        width: "90%",
-                        height: "50px",
-                        background: "transparent",
-                        outline: "none",
-                        fontSize: "1em",
-                        color: "#000",
-                        borderBottom: validEmail ? "2px solid black" : "2px solid red",
-                        borderBottomWidth: "2px",
-                      }}
-                    />
-                  </Grid>
-
-                  {!validEmail && (
-                    <Grid
-                      item
-                      xs={12}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "left",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Box
-                        color={"red"}
-                        display={"flex"}
-                        marginLeft={"16px"}
-                        marginRight={"15px"}
-                        //marginBottom={"3px"}
-                      >
-                        <ErrorOutlineOutlinedIcon
-                          //color="red"
-                          sx={{
-                            fontSize: 15,
-                            paddingLeft: "2px",
-                            marginTop: "2px",
-                          }}
-                        />
-
-                        <Typography
-                          color="red"
-                          fontSize="12px"
-                          lineHeight="20px"
-                          paddingLeft={"5px"}
-                        >
-                          Must be a valid email
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  )}
-
-                  <Grid
-                    item
-                    xs={12}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginBottom: '2px',
-                      marginTop: '5px',
-                    }}
-                  >
-                    <TextField
-                      variant="standard"
-                      //required
-                      fullWidth
-                      type={showPassword ? "text" : "password"}
-                      label={validPassword ? <Typography color={"black"}>Password</Typography> : <Typography color={"red"}>Password</Typography>}
-                      autoComplete="new-password"
-                      value={password}
-                      onChange={handlePasswordChange}
-                      error={!validPassword}
-                      InputProps={{
-                        disableUnderline: true,
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton
-                              onClick={handleShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                            >
-                              {showPassword ? (
-                                <VisibilityOutlinedIcon
-                                  sx={{
-                                    position: "absolute",
-                                    right: "8px",
-                                    color: validPassword ? "black" : "red",
-                                    fontSize: "0.9em",
-                                    //top: '20px',
-                                  }}
-                                />
-                              ) : (
-                                <VisibilityOffOutlinedIcon
-                                  sx={{
-                                    position: "absolute",
-                                    right: "8px",
-                                    color: validPassword ? "black" : "red",
-                                    fontSize: "0.9em",
-                                    //top: '20px',
-                                  }}
-                                />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                        sx: {
-                          color: "#000",
-                        },
-                      }}
-                      sx={{
-                        width: "90%",
-                        height: "50px",
-                        background: "transparent",
-                        outline: "none",
-                        fontSize: "1em",
-                        color: "#fff",
-                        borderBottom: validPassword ? "2px solid black" : "2px solid red",
-                        borderBottomWidth: "2px",
-                      }}
-                    />
-                  </Grid>
-
-                  {!validPassword && (
-                    <Grid
-                      item
-                      xs={12}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "left",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Box
-                        color={"red"}
-                        display={"flex"}
-                        marginLeft={"16px"}
-                        marginRight={"15px"}
-                      >
-                        <ErrorOutlineOutlinedIcon
-                          //color="red"
-                          sx={{
-                            fontSize: 15,
-                            paddingLeft: "2px",
-                            marginTop: "2px",
-                          }}
-                        />
-
-                        <Typography
-                          color="red"
-                          fontSize="12px"
-                          lineHeight="20px"
-                          paddingLeft={"5px"}
-                        >
-                          Passwords must be at least 6 characters have at least
-                          one uppercase letter, lowercase, digit and special
-                          character
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  )}
-
-                  <Grid
-                    item
-                    xs={12}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginTop: '5px'
-                    }}
-                  >
-                    {loading ? <CircularProgress sx={{ color: "black" }} /> :
-                      <Button
-                        type="submit"
-                        theme={theme}
-                        variant="contained"
-                        color="secondary"
-                        sx={{
-                          height: "40px",
-                          color: "white",
-                          borderRadius: "20px",
-                          fontSize: "1em",
-                          fontWeight: 600,
-                          width: "90%",
-                          marginTop: "15px",
-                        }}
-                      >
-                        Sign Up
-                      </Button>
-                    }
-                  </Grid>
+                  />
                 </Grid>
 
-                <Grid container justifyContent="center">
+                {!validFullName && (
                   <Grid
                     item
                     xs={12}
                     sx={{
                       display: "flex",
-                      justifyContent: "center",
+                      justifyContent: "left",
                       alignItems: "center",
-                      lineHeight: "15px",
-                      paddingTop: "10px",
-                      fontSize: ".9em",
                     }}
                   >
-                    <Typography variant="small" sx={{ color: "black" }}>
-                      Already have account?{" "}
+                    <Box
+                      color={"red"}
+                      display={"flex"}
+                      marginLeft={"16px"}
+                      marginRight={"15px"}
+                      //marginBottom={"3px"}
+                    >
+                      <ErrorOutlineOutlinedIcon
+                        sx={{
+                          fontSize: 15,
+                          paddingLeft: "2px",
+                          marginTop: "2px",
+                        }}
+                      />
+
                       <Typography
-                        // component={Link}
-                        // to="/login"
-                        onClick={handleClickSignIn}
-                        variant="small"
-                        sx={{
-                          textDecoration: "underline",
-                          cursor: "pointer",
-                          color: "black",
-                        }}
+                        color="red"
+                        fontSize="12px"
+                        lineHeight="20px"
+                        paddingLeft={"5px"}
                       >
-                        Sign in
+                        Full name must be at least 2 characters long
                       </Typography>
-                    </Typography>
+                    </Box>
                   </Grid>
+                )}
+
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: "3px",
+                    marginTop: '5px',
+                  }}
+                >
+                  <TextField
+                    variant="standard"
+                    fullWidth
+                    type="text"
+                    label={validUsername ? <Typography color={"black"}>Username</Typography> : <Typography color={"red"}>Username</Typography>}
+                    autoComplete="new-text"
+                    value={username}
+                    onChange={handleUsernameChange}
+                    error={!validUsername}
+                    InputProps={{
+                      disableUnderline: true,
+                      endAdornment: (
+                        <AccountCircleOutlinedIcon
+                          sx={{
+                            position: "absolute",
+                            right: "8px",
+                            color: validUsername ? "black" : "red",
+                            fontSize: "1.2em",
+                          }}
+                        />
+                      ),
+                      sx: {
+                        color: "#000",
+                      },
+                    }}
+                    sx={{
+                      width: "90%",
+                      height: "50px",
+                      background: "transparent",
+                      outline: "none",
+                      fontSize: "1em",
+                      color: "#000",
+                      borderBottom: validUsername ? "2px solid black" : "2px solid red",
+                      borderBottomWidth: "2px",
+                    }}
+                  />
                 </Grid>
-              </form>
-            </Box>
-          </Stack>
+
+                {!validUsername && (
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "left",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      color={"red"}
+                      display={"flex"}
+                      marginLeft={"16px"}
+                      marginRight={"15px"}
+                      //marginBottom={"3px"}
+                    >
+                      <ErrorOutlineOutlinedIcon
+                        //color="red"
+                        sx={{
+                          fontSize: 15,
+                          paddingLeft: "2px",
+                          marginTop: "2px",
+                        }}
+                      />
+
+                      <Typography
+                        color="red"
+                        fontSize="12px"
+                        lineHeight="20px"
+                        paddingLeft={"5px"}
+                      >
+                        Username must be 3-20 characters long
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
+
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: "3px",
+                    marginTop: '5px',
+                  }}
+                >
+                  <TextField
+                    variant="standard"
+                    //required
+                    fullWidth
+                    type="email"
+                    label={validEmail ? <Typography color={"black"}>Email</Typography> : <Typography color={"red"}>Email</Typography>}
+                    autoComplete="new-email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    error={!validEmail}
+                    InputProps={{
+                      disableUnderline: true,
+                      endAdornment: (
+                        <MailOutline
+                          sx={{
+                            position: "absolute",
+                            right: "8px",
+                            color: validEmail ? "black" : "red",
+                            fontSize: "1.2em",
+                            //top: '20px',
+                          }}
+                        />
+                      ),
+                      sx: {
+                        color: "#000",
+                      },
+                    }}
+                    sx={{
+                      width: "90%",
+                      height: "50px",
+                      background: "transparent",
+                      outline: "none",
+                      fontSize: "1em",
+                      color: "#000",
+                      borderBottom: validEmail ? "2px solid black" : "2px solid red",
+                      borderBottomWidth: "2px",
+                    }}
+                  />
+                </Grid>
+
+                {!validEmail && (
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "left",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      color={"red"}
+                      display={"flex"}
+                      marginLeft={"16px"}
+                      marginRight={"15px"}
+                      //marginBottom={"3px"}
+                    >
+                      <ErrorOutlineOutlinedIcon
+                        //color="red"
+                        sx={{
+                          fontSize: 15,
+                          paddingLeft: "2px",
+                          marginTop: "2px",
+                        }}
+                      />
+
+                      <Typography
+                        color="red"
+                        fontSize="12px"
+                        lineHeight="20px"
+                        paddingLeft={"5px"}
+                      >
+                        Must be a valid email
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
+
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: '3px',
+                    marginTop: '5px',
+                  }}
+                >
+                  <TextField
+                    variant="standard"
+                    //required
+                    fullWidth
+                    type={showPassword ? "text" : "password"}
+                    label={validPassword ? <Typography color={"black"}>Password</Typography> : <Typography color={"red"}>Password</Typography>}
+                    autoComplete="new-password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    error={!validPassword}
+                    InputProps={{
+                      disableUnderline: true,
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            onClick={handleShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? (
+                              <VisibilityOutlinedIcon
+                                sx={{
+                                  position: "absolute",
+                                  right: "8px",
+                                  color: validPassword ? "black" : "red",
+                                  fontSize: "0.9em",
+                                  //top: '20px',
+                                }}
+                              />
+                            ) : (
+                              <VisibilityOffOutlinedIcon
+                                sx={{
+                                  position: "absolute",
+                                  right: "8px",
+                                  color: validPassword ? "black" : "red",
+                                  fontSize: "0.9em",
+                                  //top: '20px',
+                                }}
+                              />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                      sx: {
+                        color: "#000",
+                      },
+                    }}
+                    sx={{
+                      width: "90%",
+                      height: "50px",
+                      background: "transparent",
+                      outline: "none",
+                      fontSize: "1em",
+                      color: "#fff",
+                      borderBottom: validPassword ? "2px solid black" : "2px solid red",
+                      borderBottomWidth: "2px",
+                    }}
+                  />
+                </Grid>
+
+                {!validPassword && (
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "left",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      color={"red"}
+                      display={"flex"}
+                      marginLeft={"16px"}
+                      marginRight={"15px"}
+                    >
+                      <ErrorOutlineOutlinedIcon
+                        //color="red"
+                        sx={{
+                          fontSize: 15,
+                          paddingLeft: "2px",
+                          marginTop: "2px",
+                        }}
+                      />
+
+                      <Typography
+                        color="red"
+                        fontSize="12px"
+                        lineHeight="20px"
+                        paddingLeft={"5px"}
+                      >
+                        Passwords must be at least 6 characters have at least
+                        one uppercase letter, lowercase, digit and special
+                        character
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
+
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: '5px'
+                  }}
+                >
+                  {loading ? <CircularProgress sx={{ color: "black" }} /> :
+                    <Button
+                      type="submit"
+                      theme={theme}
+                      variant="contained"
+                      color="secondary"
+                      sx={{
+                        height: "40px",
+                        color: "white",
+                        borderRadius: "20px",
+                        fontSize: "1em",
+                        fontWeight: 600,
+                        width: "90%",
+                        marginTop: "15px",
+                      }}
+                    >
+                      Sign Up
+                    </Button>
+                  }
+                </Grid>
+              </Grid>
+
+              <Grid container justifyContent="center">
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    lineHeight: "15px",
+                    paddingTop: "10px",
+                    fontSize: ".9em",
+                  }}
+                >
+                  <Typography variant="small" sx={{ color: "black" }}>
+                    Already have account?{" "}
+                    <Typography
+                      // component={Link}
+                      // to="/login"
+                      onClick={handleClickSignIn}
+                      variant="small"
+                      sx={{
+                        textDecoration: "underline",
+                        cursor: "pointer",
+                        color: "black",
+                      }}
+                    >
+                      Sign in
+                    </Typography>
+                  </Typography>
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
         </Box>
       </Container>
-
+      </Stack>
       <Snackbar
         open={errorSnackbar}
         autoHideDuration={5000}
