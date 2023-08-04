@@ -43,10 +43,7 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
   useEffect(() => {
     dispatch({ type: "applicationSaga/getInfoApplication", payload:{applicationid:applicationid,token:user.token} });
     dispatch({ type: "skillSaga/getSkill" });
-    dispatch({ type: "positionSaga/getPosition", payload: recruitmentid });
-    return () => {
-      cleanStore(dispatch);
-    };
+    dispatch({ type: "positionSaga/getPosition", payload: {recruitmentid:recruitmentid} });
   }, []);
 
 

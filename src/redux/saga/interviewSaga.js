@@ -40,7 +40,7 @@ function* getAllInterview(action) {
     // const candidates = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Candidate");
 
     // const data = yield call(formatInterviewList, response.data, applications.data, itrsinterviews.data, rooms.data, shifts.data, recruiters.data, interviewers.data, candidates.data);
-    
+
     const data_draft = yield call(formatInterviewList, response.data);
     let data;
     if (action.payload.role !== "interviewer") {
@@ -124,7 +124,14 @@ function* getInterviewResult(action) {
     const config = {
       headers: { Authorization: token },
     }
-    const responseInterview = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview?id=${action.payload.interviewid}`, config)
+    const responseInterviewList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`, config)
+    let responseInterview = responseInterviewList.data.find((item) => {
+      return item.interviewId == action.payload.interviewid
+    })
+    responseInterview = {
+      data: responseInterview
+    }
+    console.log("resssss: ", responseInterview)
     const responsePosition = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${responseInterview.data.application.position.positionId}`, config)
     const responseQSList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill`, config);
 
@@ -133,7 +140,6 @@ function* getInterviewResult(action) {
     const responseCategoryList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion`, config)
     const responseSkillList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Skill`, config)
     const responseRoundList = yield call(axios.get, `${host.name}/data/roundfake.json`, config)
-
     console.log("responseInterview: ", responseInterview.data)
     console.log("responsePosition: ", responsePosition.data)
     console.log("responseQSList: ", responseQSList.data)
@@ -334,7 +340,7 @@ function* createInterview(action) {
 
 function* getInterviewInfo(action) {
   try {
-    
+
     const config = {
       headers: {
         Authorization: action.payload.token,
@@ -371,9 +377,9 @@ function* getInterviewInfo(action) {
     yield put({ type: 'interviewskill/setInterviewSkill', payload: skilllist })
   } catch (error) {
     console.log(error);
-    if (error.response.request.status === 400 || error.response.request.status === 404){
+    if (error.response.request.status === 400 || error.response.request.status === 404) {
 
-      yield put({type: 'interviewError/onError', payload: error.response.request.status})
+      yield put({ type: 'interviewError/onError', payload: error.response.request.status })
 
     }
   }

@@ -78,7 +78,7 @@ const Page_Company_Interview_Id = () => {
     return (
         interview && role
             ? <>
-                {/* <Page_Interview_Id /> */}
+                <Page_Interview_Id />
                 {role == "admin" || role == "interviewer"
                     ?
                     <>
@@ -92,7 +92,7 @@ const Page_Company_Interview_Id = () => {
                             handleSubmit={handleStart} />
                     </>
                     : null}
-                {(role == "admin" || role == "interviewer") ?
+                {(role == "admin" || role == "interviewer" || role == "recruiter") ?
                     <>
                         <TitleDivider>
                             RESULT OF THE INTERVIEW

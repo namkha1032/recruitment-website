@@ -39,7 +39,7 @@ const CV = ({ cvid,page }) => {
   const {profileid} = useParams()
   console.log(user)
   useEffect(() => {
-    dispatch({ type: "cvSaga/getCv", payload: {cvid:cvid,token:user.token,userid:user.profileid} });
+    dispatch({ type: "cvSaga/getCv", payload: {cvid:cvid,token:user.token,userid:profileid} });
     return () => {
       cleanStore(dispatch)
     };

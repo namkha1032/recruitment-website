@@ -202,7 +202,7 @@ function* getPosition(action) {
 
     console.log("param", action.payload)
     const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload.recruitmentid}`)
-
+    console.log("response1",response1.data)
     let skilllist = [];
     const response2 = yield call(
       axios.get,
@@ -218,6 +218,7 @@ function* getPosition(action) {
         }
       }
     }
+    console.log("response1.data",response1.data)
 
     console.log("skillinsaga", skilllist);
     yield put({ type: "position/setPosition", payload: response1.data });
