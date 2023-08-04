@@ -39,6 +39,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import cleanStore from '../../utils/cleanStore';
 import useGetRole from '../../hooks/useGetRole';
 import { transferDatetimeBack } from '../../utils/transferDatetime';
+import userEvent from '@testing-library/user-event';
 
 
 
@@ -54,9 +55,21 @@ const Page_Company_Event_Id = () => {
     console.log('company event id: ', eventid);
 
     const dispatch = useDispatch();
+
+    const user = useSelector(state => state.user)
     useEffect(() => {
-        dispatch({ type: "eventSaga/getEvent", payload: eventid })
-        dispatch({ type: "eventSaga/getAllCandidateOfEvent", payload: eventid })
+        dispatch({
+            type: "eventSaga/getEvent",
+            payload: {
+                eventid: eventid,
+                token: user.token
+        }})
+        dispatch({
+            type: "eventSaga/getAllCandidateOfEvent",
+            payload: { 
+                eventid: eventid,
+                token: user.token
+        }})
         return () => {
             cleanStore(dispatch)
         }

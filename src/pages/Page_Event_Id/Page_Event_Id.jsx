@@ -28,8 +28,7 @@ import { transferDatetimeBack } from '../../utils/transferDatetime';
 const Page_Event_Id = () => {
 
 
-    const [isRegistered, setIsRegistered] = useState(false)
-
+    // const [isRegistered, setIsRegistered] = useState(false)
 
     const role = useGetRole()
 
@@ -49,11 +48,14 @@ const Page_Event_Id = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch({ type: "eventSaga/getEvent", payload: eventid })
+        dispatch({ type: "eventSaga/checkCandidateJoinEvent", payload: { eventId: eventid, candidateId: candidateId } })
         // dispatch({ type: "eventSaga/getAllCandidateOfEvent", payload: eventid })
         return () => {
             cleanStore(dispatch)
         }
-    }, [])
+    }, [candidateId])
+
+    const isRegistered = useSelector(state => state.eventRegistered)
 
 
     const event = useSelector((state) => state.event)
@@ -78,10 +80,17 @@ const Page_Event_Id = () => {
     const rows = row_drafts ? row_drafts : []
 
 
-    const candidateList = useSelector(state => state.candidateJoinEvent)
+    const status = useSelector(state => state.eventIdStatus)
+    useEffect(() => {
+        if (status.status === "success") {
+            // setIsRegistered(true)
+            dispatch({ type: "eventIdStatus/onReset" })
+        }
+    }, [status])
+
 
     // handle events
-    const handleRegister = (e) => {
+    const handleRegister = () => {
         dispatch({
             type: "eventSaga/postCandidateJoinEvent",
             payload: {
@@ -90,11 +99,11 @@ const Page_Event_Id = () => {
             }
         });
         // alert("Register successfully!")
-        setIsRegistered(true)
+        // setIsRegistered(true)
         // alert(new Date())
     }
 
-    const handleRemoveRegister = (e) => {
+    const handleRemoveRegister = () => {
         dispatch({
             type: "eventSaga/deleteCandidateJoinEvent",
             payload: {
@@ -102,7 +111,7 @@ const Page_Event_Id = () => {
                 eventId: event.eventId
             }
         });
-        setIsRegistered(false)
+        // setIsRegistered(false)
     }
 
 

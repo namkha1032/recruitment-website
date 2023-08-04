@@ -59,6 +59,8 @@ import interviewSkillSlice from "./reducer/interviewSkillReducer";
 import interviewDepartmentSlice from "./reducer/interviewDepartmentReducer";
 import interviewPositionSlice from "./reducer/interviewPositionReducer";
 import recruiterIdCreateEventSlice from "./reducer/recruiterIdCreateEvent";
+import eventIdStatusSlice from "./reducer/eventIdStatusReducer";
+import eventRegisteredSlice from "./reducer/eventRegisteredReducer";
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
     reducer: {
@@ -113,7 +115,9 @@ const store = configureStore({
         interviewskill: interviewSkillSlice.reducer,
         interviewdepartment: interviewDepartmentSlice.reducer,
         interviewposition: interviewPositionSlice.reducer,
-        interviewListCandidate: interviewCandidateSlice.reducer
+        interviewListCandidate: interviewCandidateSlice.reducer,
+        eventIdStatus: eventIdStatusSlice.reducer,
+        eventRegistered: eventRegisteredSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]

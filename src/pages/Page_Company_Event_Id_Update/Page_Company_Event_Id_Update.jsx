@@ -49,7 +49,13 @@ const Page_Company_Event_Id_Update = () => {
     const userId = user ? user.userid : ""
     useEffect(() => {
         if (role === "recruiter") {
-            dispatch({ type: "eventSaga/getRecruiterIdCreateEvent", payload: userId })
+            dispatch({
+                type: "eventSaga/getRecruiterIdCreateEvent",
+                payload: {
+                    userId: userId,
+                    token: user.token
+                }
+            })
         }
     }, [role])
     const recruiterId = useSelector(state => state.recruiterIdCreateEvent)
@@ -59,7 +65,13 @@ const Page_Company_Event_Id_Update = () => {
     const { eventid } = useParams();
     console.log('company event id for update: ', eventid);
     useEffect(() => {
-        dispatch({ type: "eventSaga/getEvent", payload: eventid })
+        dispatch({
+            type: "eventSaga/getEvent",
+            payload: {
+                eventid: eventid,
+                token: user.token
+            }
+        })
         return () => {
             cleanStore(dispatch)
         }
@@ -179,6 +191,7 @@ const Page_Company_Event_Id_Update = () => {
                 datetimeEvent: re,
                 place: location,
                 // createdTime: "10:30 16/07/2023"
+                token: user.token
             }
         });
     }

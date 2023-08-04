@@ -47,7 +47,13 @@ const Page_Company_Event_Create = () => {
     const userId = user ? user.userid : ""
     useEffect(() => {
         if (role === "recruiter") {
-            dispatch({ type: "eventSaga/getRecruiterIdCreateEvent", payload: userId })
+            dispatch({
+                type: "eventSaga/getRecruiterIdCreateEvent",
+                payload: {
+                    userId: userId,
+                    token: user.token
+                }
+            })
         }
     }, [role])
     const recruiterId = useSelector(state => state.recruiterIdCreateEvent)
@@ -135,6 +141,7 @@ const Page_Company_Event_Create = () => {
                 datetimeEvent: re,
                 place: location,
                 // createdTime: "10:30 16/07/2023"
+                token: user.token
             }
         });
     }

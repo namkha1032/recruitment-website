@@ -102,8 +102,12 @@ function* getEventListWithFilter(action) {
 // ------------------------------------------------------------------------------------------------------------------------
 function* getEvent(action) {
   console.log("eid: ", action.payload)
+  let token = `Bearer ${action.payload.token}`
+  const config = {
+    headers: { Authorization: token },
+  }
   try {
-    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Event?id=${action.payload}`)
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Event?id=${action.payload.eventid}`, config)
 
     // // ----------------------------------------
     // // FAKE API FOR BACKEND
@@ -148,12 +152,16 @@ function* getAllCandidateOfEvent(action) {
   // console.log("res: ", response.data)
   // yield put({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: response.data })
   console.log("EventId: ", action.payload)
+  let token = `Bearer ${action.payload.token}`
+  const config = {
+    headers: { Authorization: token },
+  }
   try {
-    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`)
+    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`, config)
     console.log("Response 1: ", response1)
     const response2 = response1.data.filter(element => element.eventId === action.payload)
     console.log("Response 2: ", response2)
-    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`)
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`, config)
     const response3 = response.data
     console.log("Response 3: ", response3)
     let arr = []
@@ -183,6 +191,10 @@ function* getAllCandidateOfEvent(action) {
 
 function* postEvent(action) {
   console.log("EventData: ", action.payload)
+  let token = `Bearer ${action.payload.token}`
+  const config = {
+    headers: { Authorization: token },
+  }
   try {
     yield put({ type: "eventNavigate/onLoading" })
     const {
@@ -209,10 +221,10 @@ function* postEvent(action) {
     }
     const response = yield call(
       axios.post,
-      `https://leetun2k2-001-site1.gtempurl.com/api/Event`, request
+      `https://leetun2k2-001-site1.gtempurl.com/api/Event`, request, config
     );
 
-    const eventList = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event")
+    const eventList = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event", config)
 
     const eventId = eventList.data.filter(item => item.eventName === eventName && item.description === description)[0].eventId
     console.log('eId: ', eventId)
@@ -234,6 +246,10 @@ function* postEvent(action) {
 
 function* putEvent(action) {
   console.log("EventDataforPut: ", action.payload)
+  let token = `Bearer ${action.payload.token}`
+  const config = {
+    headers: { Authorization: token },
+  }
   try {
     yield put({ type: "eventNavigate/onLoading" })
     const {
@@ -259,10 +275,10 @@ function* putEvent(action) {
     }
     const response = yield call(
       axios.put,
-      `https://leetun2k2-001-site1.gtempurl.com/api/Event/${eventId}`, request
+      `https://leetun2k2-001-site1.gtempurl.com/api/Event/${eventId}`, request, config
     );
 
-    const eventList = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event")
+    const eventList = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event", config)
 
     const EventId = eventList.data.filter(item => item.eventName === eventName && item.description === description)[0].eventId
     console.log('eId: ', EventId)
@@ -275,8 +291,12 @@ function* putEvent(action) {
 
 
 function* getCandidateIdRegisterEvent(action) {
+  let token = `Bearer ${action.payload.token}`
+  const config = {
+    headers: { Authorization: token },
+  }
   try {
-    const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Candidate")
+    const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Candidate", config)
     // console.log("+++++++++++", response)
     // console.log("+++++++++++", action.payload)
     const response1 = response.data.filter(item => item.userId === action.payload)[0]
@@ -291,8 +311,12 @@ function* getCandidateIdRegisterEvent(action) {
 
 
 function* getRecruiterIdCreateEvent(action) {
+  let token = `Bearer ${action.payload.token}`
+  const config = {
+    headers: { Authorization: token },
+  }
   try {
-    const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Recruiter")
+    const response = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Recruiter", config)
     // console.log("+++++++++++", response)
     // console.log("+++++++++++", action.payload)
     const response1 = response.data.filter(item => item.userId === action.payload)[0]
@@ -308,8 +332,12 @@ function* getRecruiterIdCreateEvent(action) {
 
 function* postCandidateJoinEvent(action) {
   console.log("CandidateJoinEvent: ", action.payload)
+  let token = `Bearer ${action.payload.token}`
+  const config = {
+    headers: { Authorization: token },
+  }
   try {
-    yield put({ type: "eventNavigate/onLoading" })
+    yield put({ type: "eventIdStatus/onLoading" })
     const {
       candidateId,
       eventId
@@ -320,23 +348,30 @@ function* postCandidateJoinEvent(action) {
     }
     const response = yield call(
       axios.post,
-      `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`, request
+      `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`, request, config
     );
 
     // const eventList = yield call(axios.get, "https://leetun2k2-001-site1.gtempurl.com/api/Event")
 
     // const eventId = eventList.data.filter(item => item.eventName === eventName && item.description === description)[0].eventId
     // console.log('eId: ', eventId)
-    // yield put({ type: "eventNavigate/onSuccess", payload: eventId })
+    yield put({ type: "eventIdStatus/onSuccess", payload: "Register event" })
+    yield put({ type: "eventSaga/getEvent", payload: eventId })
+    yield put({ type: "eventRegistered/setEventRegistered", payload: true })
   }
   catch (error) {
     console.log(error)
+    yield put({ type: "eventIdStatus/onError", payload: error.message })
   }
 }
 
 
 function* deleteCandidateJoinEvent(action) {
   console.log("deleteCandidateJoinEvent: ", action.payload)
+  let token = `Bearer ${action.payload.token}`
+  const config = {
+    headers: { Authorization: token },
+  }
   try {
     const {
       candidateId,
@@ -344,10 +379,34 @@ function* deleteCandidateJoinEvent(action) {
     } = action.payload;
     const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`)
     const response2 = response1.data.filter(element => (element.candidateId === candidateId) && (element.eventId === eventId))[0]
-    yield call(axios.delete, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent/${response2.candidateJoinEventId}`);
+    yield call(axios.delete, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent/${response2.candidateJoinEventId}`, config);
+    yield put({ type: "eventRegistered/setEventRegistered", payload: false })
   }
   catch (error) {
     console.log(error)
+  }
+}
+
+
+function* checkCandidateJoinEvent(action) {
+  let token = `Bearer ${action.payload.token}`
+  const config = {
+    headers: { Authorization: token },
+  }
+  try {
+    console.log("ABCD: ", action.payload)
+    const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent`, config)
+    const response2 = response1.data.filter(element => (element.candidateId === action.payload.candidateId) && (element.eventId === action.payload.eventId))
+    console.log("MNOP: ", response2)
+    if (response2.length > 0) {
+      yield put({ type: "eventRegistered/setEventRegistered", payload: true })
+    }
+    else {
+      yield put({ type: "eventRegistered/setEventRegistered", payload: false })
+    }
+  }
+  catch (error) {
+
   }
 }
 // ------------------------------------------------------------------------------------------------------------------------
@@ -365,7 +424,8 @@ function* eventSaga() {
     takeEvery("eventSaga/getCandidateIdRegisterEvent", getCandidateIdRegisterEvent),
     takeEvery("eventSaga/getRecruiterIdCreateEvent", getRecruiterIdCreateEvent),
     takeEvery("eventSaga/postCandidateJoinEvent", postCandidateJoinEvent),
-    takeEvery("eventSaga/deleteCandidateJoinEvent", deleteCandidateJoinEvent)
+    takeEvery("eventSaga/deleteCandidateJoinEvent", deleteCandidateJoinEvent),
+    takeEvery("eventSaga/checkCandidateJoinEvent", checkCandidateJoinEvent)
     // takeEvery("saga/getEventListId", getEventListId),
   ]);
 }
