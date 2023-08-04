@@ -43,11 +43,16 @@ const StatusPostion = (props) => {
 
                     {status == true || props.detailposition.isDeleted == false ? (
                         <>
-                            <Chip sx={{ margin: "0px 0px 5px 6px" }} label="Active" variant='outlined' size='medium' color="info" />
+                            <Typography variant="h6" sx={{color: "blue", marginLeft: "8px"}}>
+                                Active
+                            </Typography>
+                           
                         </>
                     ) : (
                         <>
-                            <Chip sx={{ margin: "0px 0px 5px 6px" }} label="Inactive" variant='outlined' size='medium' />
+                            <Typography variant="h6" sx={{color: "red", marginLeft: "8px"}}>
+                                Inactive
+                            </Typography>
                         </>
                     )}
                 </Grid>

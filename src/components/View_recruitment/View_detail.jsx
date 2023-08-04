@@ -42,7 +42,7 @@ const View_detail = (props) => {
         <>
 
             <Box sx={{ display: "flex", flexDirection: "row", marginBottom: 2 }}>
-                <Grid item xs={4} md={left} sx={{ ...gridSx, columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
+                <Grid item xs={4} md={left} sx={{ ...gridSx, alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
                     <Box sx={gridSx}>
                         <RadarIcon />
                         {isMd ? (
