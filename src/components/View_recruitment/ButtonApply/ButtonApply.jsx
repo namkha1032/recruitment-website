@@ -231,7 +231,7 @@ const ButtonApply = (props) => {
             <Grid container spacing={2} >
                 {(role == "candidate" && status != true) ? (
                     <>
-                        {(appstatus.length > 0 && appstatus[0].company_Status == "Pending") || (appstatus.length == 0) ? (
+                        {(appstatus.length > 0 && (appstatus[0].company_Status == "Pending" || appstatus[0].company_Status == "Rejected")) || (appstatus.length == 0) ? (
                             <>
                                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
                                     {submitstatus === false ? (
