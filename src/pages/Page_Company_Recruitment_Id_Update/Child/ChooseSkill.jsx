@@ -25,8 +25,8 @@ export default function ChooseList(prop) {
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       const inputValue = event.target.value;
-      console.log(prop.value);
-      console.log(inputValue);
+      // console.log(prop.value);
+      // console.log(inputValue);
       if (prop.value === null) {
         if (inputValue.trim() !== "") {
           prop.setInputValue(null);
@@ -56,15 +56,15 @@ export default function ChooseList(prop) {
                   prop.setInputValue({
                     skillName: newValue.inputValue,
                   });
-                  console.log(newValue.skillName);
+                  // console.log(newValue.skillName);
                   if (newValue !== null) {
-                    console.log(newValue);
+                    // console.log(newValue);
                     prop.handleState(newValue);
                   }
                 } else {
                   prop.setInputValue(newValue);
                   if (newValue !== null) {
-                    console.log(newValue);
+                    // console.log(newValue);
                     prop.setSkillId(
                       prop.skill.filter(
                         (comp) => comp.skillName === newValue.skillName

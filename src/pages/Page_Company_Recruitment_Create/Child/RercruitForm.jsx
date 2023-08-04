@@ -15,16 +15,25 @@ import { Typography } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
+import Alert from "@mui/material/Alert";
+// import Alert from "@mui/material/Alert";
+import AlertDialog from "../../../components/AlertDialog/AlertDialog";
+
 const SkillAlert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
+
+// const RequiredAlert = React.forwardRef(function Alert(props, ref) {
+//   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+// });
 function RecruitForm() {
   const dispatch = useDispatch();
   // fetch Data
   useEffect(() => {
-    dispatch({ type: "departmentSaga/getDepartment" });
-    dispatch({ type: "languageSaga/getLanguage" });
-    dispatch({ type: "skillSaga/getSkill" });
+    
+    dispatch({ type: "departmentSaga/getDepartment" , payload:{ token: `Bearer ${userlocal.token}`}});
+    dispatch({ type: "saga/getLanguage", payload:{ token: `Bearer ${userlocal.token}`} });
+    dispatch({ type: "skillSaga/getSkill", payload:{ token: `Bearer ${userlocal.token}`} });
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });
       dispatch({ type: "language/setLanguage", payload: null });
@@ -35,6 +44,9 @@ function RecruitForm() {
   const skillList = useSelector((state) => state.skill);
   const languageList = useSelector((state) => state.language);
   const departmentList = useSelector((state) => state.department);
+  const newError = useSelector((state) => state.error);
+  const userlocal = useSelector((state) => state.user);
+  const recruiterId= userlocal.recruiterId
   // Skill data
   const [skill, setSkill] = useState([]);
   const [skillData, setSkillData] = useState([]);
@@ -78,6 +90,29 @@ function RecruitForm() {
     }
     setSkillOpen(false);
   };
+
+  let [errorSnackbar, setErrorSnackbar] = useState(false);
+  ////////////////////////////////////////////////////
+  useEffect(() => {
+    if (newError.status === "no") {
+      setTimeout(() => {
+        const idToNavigate = newError.message;
+        cleanStore(dispatch);
+        navigate(`/company/recruitment/${idToNavigate}`);
+      }, 2000);
+    }
+    if (newError.status === "yes") {
+      setErrorSnackbar(true);
+      setTimeout(() => {
+        setErrorSnackbar(false);
+        dispatch({
+          type: "error/setError",
+          payload: { status: "idle", message: "" },
+        });
+      }, 5000);
+    }
+  }, [newError]);
+
   const [languages, setLanguages] = useState(null);
   // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
   // const [status, setStatus] = useState(recruitInfo.status);
@@ -125,8 +160,8 @@ function RecruitForm() {
       // setDepartmentWeb(arr[0].departmentWebsite);
     }
   };
-  console.log(skill);
-  console.log(skillData);
+  // console.log(skill);
+  // console.log(skillData);
   function handleRname(e) {
     setRName(e.target.value);
   }
@@ -134,21 +169,27 @@ function RecruitForm() {
     setDescription(e.target.value);
   }
   function handleSalary(event) {
-    let midleScore = parseFloat(event.target.value) >= 0? parseFloat(event.target.value) : 0
+    let midleScore =
+      parseFloat(event.target.value) >= 0
+        ? parseFloat(event.target.value)
+        : "0";
     setSalary(midleScore);
   }
   function handleMaxHire(event) {
-    let midleScore = parseFloat(event.target.value) >= 0? parseFloat(event.target.value) : 0
+    let midleScore =
+      parseFloat(event.target.value) >= 0
+        ? parseFloat(event.target.value)
+        : "0";
     setMaxHire(midleScore);
   }
   function handleRequirementAdd() {
-    console.log(inputValue);
-    console.log(skillName);
+    // console.log(inputValue);
+    // console.log(skillName);
     let arr = skill.filter(
       (comp) =>
         comp.skillName === (inputValue !== null ? inputValue.skillName : "")
     );
-    console.log(arr);
+    // console.log(arr);
     if (arr[0] === undefined) {
       handleSetSkillOpen();
       setSkillId(null);
@@ -162,11 +203,11 @@ function RecruitForm() {
         positionId: "00000000-0000-0000-0000-000000000001",
         skillId: skillId,
         skillname: skillName,
-        experience: experience,
+        experience: experience.toString(),
         notes: note,
         isDeleted: false,
       };
-      console.log(newRequire);
+      // console.log(newRequire);
       setRequirement([...requirement, newRequire]);
       setSkill(skill.filter((prop) => prop.skillId !== skillId));
       setSkillName("");
@@ -190,34 +231,10 @@ function RecruitForm() {
 
     setSkill([...skill, newSkill[0]]);
   }
-
-  // function handleLanguageAdd() {
-  //   console.log(lInputValue);
-  //   console.log(languageName);
-  //   let arr = language.filter(
-  //     (comp) =>
-  //       comp.languageName ===
-  //       (lInputValue !== null ? lInputValue.languageName : "")
-  //   );
-  //   console.log(arr);
-  //   if (arr[0] === undefined) {
-  //     alert("wrong language");
-  //     // setLanguageId(null);
-  //     setLanguageName("");
-  //     setLInputValue("");
-  //   } else {
-  //     // const newLanguage = {
-  //     //   languageId: languageId,
-  //     //   languageName: languageName,
-  //     // };
-  //     // console.log(newLanguage);
-  //     // setLanguages(newLanguage);
-  //   }
-  // }
   function handleLanguageAdd2() {
-    console.log(lInputValue);
+    // console.log(lInputValue);
     let arr = language.filter((comp) => comp.languageName === lInputValue);
-    console.log(arr);
+    // console.log(arr);
     if (arr[0] === undefined) {
       alert("wrong language");
       // setLanguageId(null);
@@ -230,35 +247,117 @@ function RecruitForm() {
   }
   const handleStart = (date) => {
     setStartDate(date);
-    console.log(date);
+    // console.log(date);
   };
   function handleEnd(date) {
     setEndDate(date);
-    console.log(date);
+    // console.log(date);
   }
+  // console.log(departmentChoose);
+
+  // let [requireError, setRequireError] = useState(false);
+  // const handleRequiredOpen = () => {
+  //   setRequireError(true);
+  // };
+  // const handleRequiredClose = (event, reason) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+  //   setRequireError(false);
+  // };
+
+  // let [languageError, setLanguageError] = useState(false);
+  // const handleLanguageOpen = () => {
+  //   setLanguageError(true);
+  // };
+  // const handleLanguageClose = (event, reason) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+  //   setLanguageError(false);
+  // };
+
+  // let [departmentError, setDepartmentError] = useState(false);
+  // const handleDepartmentOpen = () => {
+  //   setDepartmentError(true);
+  // };
+  // const handleDepartmentClose = (event, reason) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+  //   setDepartmentError(false);
+  // };
+
+  // let [dateError, setDateError] = useState(false);
+  // const handleDateOpen = () => {
+  //   setDateError(true);
+  // };
+  // const handleDateClose = (event, reason) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+  //   setDateError(false);
+  // };
+
+  let [openAlert, setOpenAlert] = useState(false);
+
   function handleSubmit(e) {
+    let token = `Bearer ${userlocal.token}`;
     try {
       dispatch({
         type: "createPositionsaga/getCreatePosition",
         payload: {
+          token:token,
           positionName: RName,
           description: description,
           salary: salary,
           maxHiringQty: maxHire,
-          startDate: startDate.toJSON(),
+          startDate: startDate !== null ? startDate.toJSON() : startDate,
           endDate: endDate !== null ? endDate.toJSON() : endDate,
           departmentId: departmentChoose,
           languageId: languages,
-          recruiterId: "13b849af-bea9-49a4-a9e4-316d13b3a08a",
+          recruiterId: recruiterId,
           requirement: requirement,
         },
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
-    e.preventDefault();
-    cleanStore(dispatch);
-    navigate("/company/recruitment/:recruitmentid");
+
+    // cleanStore(dispatch);
+    // navigate("/company/recruitment/:recruitmentid");
+  }
+  function preProcessing() {
+    const messArr = [];
+    if (requirement.length === 0) {
+      messArr.push("Requirement");
+    }
+    if (languages == null) {
+      messArr.push("Language");
+    }
+    if (departmentChoose == null) {
+      messArr.push("Department");
+    }
+    if (startDate === null || endDate === null) {
+      messArr.push("Date");
+    }
+    let messString = "";
+    if (messArr.length > 0) {
+      messArr.forEach((x, index) => {
+        messString = messString + x;
+        if (index < messArr.length - 1) {
+          messString = messString + ", ";
+        } else {
+          messString = messString + ".";
+        }
+      });
+      dispatch({
+        type: "error/setError",
+        payload: { status: "yes", message: `please choose ${messString}` },
+      });
+    } else {
+      setOpenAlert(true);
+    }
   }
   return (
     <>
@@ -385,8 +484,12 @@ function RecruitForm() {
           </Grid>
           <Grid item xs={12}></Grid>
           <img src="./img/logo.png" alt="" />
-          <Button variant="contained" className="AddButton" type="submit">
-            Submit
+          <Button
+            variant="contained"
+            className="AddButton"
+            onClick={preProcessing}
+          >
+            Create
           </Button>
         </Grid>
       </form>
@@ -403,6 +506,87 @@ function RecruitForm() {
           Wrong skill's name
         </SkillAlert>
       </Snackbar>
+      <Snackbar
+        // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        open={errorSnackbar}
+        autoHideDuration={4000}
+        onClose={() => {
+          setErrorSnackbar(false);
+        }}
+        // message="I love snacks"
+        // key={vertical + horizontal}
+      >
+        <Alert
+          variant="filled"
+          onClose={() => {
+            setErrorSnackbar(false);
+          }}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {newError.message}
+        </Alert>
+      </Snackbar>
+      {/*
+      <Snackbar
+        open={requireError}
+        autoHideDuration={3000}
+        onClose={handleRequiredClose}
+      >
+        <RequiredAlert
+          onClose={handleRequiredClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Need at least one requirement
+        </RequiredAlert>
+      </Snackbar>
+      <Snackbar
+        open={languageError}
+        autoHideDuration={3000}
+        onClose={handleLanguageClose}
+      >
+        <RequiredAlert
+          onClose={handleLanguageClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Choose require language
+        </RequiredAlert>
+      </Snackbar>
+      <Snackbar
+        open={departmentError}
+        autoHideDuration={3000}
+        onClose={handleDepartmentClose}
+      >
+        <RequiredAlert
+          onClose={handleDepartmentClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Choose require department
+        </RequiredAlert>
+      </Snackbar>
+      <Snackbar
+        open={dateError}
+        autoHideDuration={3000}
+        onClose={handleDateClose}
+      >
+        <RequiredAlert
+          onClose={handleDateClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Choose date
+        </RequiredAlert>
+      </Snackbar> */}
+      <AlertDialog
+        openAlert={openAlert}
+        setOpenAlert={setOpenAlert}
+        alertMessage={"Are you sure you want to create?"}
+        successfulMessage={"Create successfully"}
+        handleSubmit={handleSubmit}
+      />
     </>
   );
 }

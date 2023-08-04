@@ -2,6 +2,8 @@
 import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 import host from "../host";
+import { delay } from "../../utils/delay";
+
 function* updatePosition(action) {
   try {
     const {
@@ -19,6 +21,10 @@ function* updatePosition(action) {
       delRequire,
       addRequire,
     } = action.payload;
+    const token = action.payload.token
+    const config = {
+      headers: { Authorization: token },
+    };
     const removeField = (certificatesArray, fieldToRemove) => {
       return certificatesArray.map(
         ({ [fieldToRemove]: removedField, ...rest }) => rest
@@ -40,17 +46,17 @@ function* updatePosition(action) {
       "positionId",
       positionId
     );
-    console.log("positionName: ", positionName);
-    console.log("description: ", description);
-    console.log("salary: ", salary);
-    console.log("maxHiringQty: ", maxHiringQty);
-    console.log("startDate: ", startDate);
-    console.log("endDate: ", endDate);
-    console.log("departmentId: ", departmentId);
-    console.log("languageId: ", languageId);
-    console.log("recruiterId: ", recruiterId);
-    console.log("delRequire: ", delRequire);
-    console.log("addRequire: ", addRequire);
+    // console.log("positionName: ", positionName);
+    // console.log("description: ", description);
+    // console.log("salary: ", salary);
+    // console.log("maxHiringQty: ", maxHiringQty);
+    // console.log("startDate: ", startDate);
+    // console.log("endDate: ", endDate);
+    // console.log("departmentId: ", departmentId);
+    // console.log("languageId: ", languageId);
+    // console.log("recruiterId: ", recruiterId);
+    // console.log("delRequire: ", delRequire);
+    // console.log("addRequire: ", addRequire);
   
     const response = yield call(
       axios.put,
@@ -67,9 +73,9 @@ function* updatePosition(action) {
         languageId: languageId,
         recruiterId: recruiterId,
         isDeleted: false,
-      }
+      },config
     );
-    console.log(response)
+    // console.log(response)
     for (let require of updatedAddRequired3) {
       const newrequire = {
         positionId: require.positionId,
@@ -81,20 +87,23 @@ function* updatePosition(action) {
       const response2 = yield call(
         axios.post,
         "https://leetun2k2-001-site1.gtempurl.com/api/Requirement",
-        newrequire
+        newrequire,config
       );
-      console.log(response2);
+      // console.log(response2);
     }
     for (let require of delRequire){
-      console.log(require.requirementId)
+      // console.log(require.requirementId)
       const response2 = yield call(
         axios.delete,
-        `https://leetun2k2-001-site1.gtempurl.com/api/Requirement/${require.requirementId}`
+        `https://leetun2k2-001-site1.gtempurl.com/api/Requirement/${require.requirementId}`,config
       );
-      console.log(response2);
+      // console.log(response2);
     }
-  } catch (error) {
-    console.log(error);
+    yield call(delay, 1000)
+    yield put({ type: "error/setError", payload: { status: "no", message: positionId } })
+  } catch (err) {
+    yield put({ type: "error/setError", payload: { status: "yes", message: err.response.data.error } })
+    // console.log("err: ", err)
   }
 }
 

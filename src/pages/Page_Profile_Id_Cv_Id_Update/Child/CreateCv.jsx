@@ -58,6 +58,7 @@ const CreateCv = (prop) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          marginBottom:"32px"
         }}
       >
         <Box className={`CVForm InputForm`}>
@@ -105,6 +106,7 @@ const CreateCv = (prop) => {
                     ) : activeStep === 1 ? (
                       <Grid item xs={12}>
                         <CvStep2
+                          handleSExp={prop.handleSExp}
                           skillOption={prop.skillOption}
                           sInputValue={prop.sInputValue}
                           setSInputValue={prop.setSInputValue}
@@ -181,7 +183,7 @@ const CreateCv = (prop) => {
                         <Button
                           variant="contained"
                           className="AddButton"
-                          onClick={prop.handleSubmit}
+                          onClick={prop.preProcessing}
                         >
                           Finish
                         </Button>
@@ -211,7 +213,7 @@ const CreateCv = (prop) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginTop: "16px",
+          marginTop: "32px",
         }}
       >
         <Box className={`CVForm InputForm`}>

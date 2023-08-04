@@ -18,7 +18,7 @@ export default function ChooseSkill(prop) {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
   function handleSExp(e) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     prop.setSExp(e.target.value);
   }
   const handleKeyDown = (event) => {
@@ -62,15 +62,15 @@ export default function ChooseSkill(prop) {
                   prop.setSInputValue({
                     skillName: newValue.inputValue,
                   });
-                  console.log(newValue.skillName);
+                  // console.log(newValue.skillName);
                   if (newValue !== null) {
-                    console.log(newValue);
+                    // console.log(newValue);
                     prop.handleState(newValue);
                   }
                 } else {
                   prop.setSInputValue(newValue);
                   if (newValue !== null) {
-                    console.log(newValue);
+                    // console.log(newValue);
                     prop.setSkillId(
                       prop.skillData.filter(
                         (comp) => comp.skillName === newValue.skillName
@@ -137,7 +137,7 @@ export default function ChooseSkill(prop) {
             value={prop.SExp}
             margin="0"
             marginLeft={isMd ? "6%" : "auto"}
-            handleState={handleSExp}
+            handleState={prop.handleSExp}
           />
         </Grid>
         <Button

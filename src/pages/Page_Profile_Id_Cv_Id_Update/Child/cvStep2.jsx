@@ -8,13 +8,14 @@ import CompHeader from "./compHeader";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 
 function CvStep2(prop) {
-  console.log(prop.skills);
+  // console.log(prop.skills);
   return (
     <>
       <Box sx={{ width: "80%", margin: "auto", marginTop: "50px" }}>
         <Grid container spacing={0} justifyContent="center" alignItems="center">
           <Grid item xs={12}>
             <ChooseSkill
+              handleSExp={prop.handleSExp}
               skillOption={prop.skillOption}
               sInputValue={prop.sInputValue}
               setSInputValue={prop.setSInputValue}
