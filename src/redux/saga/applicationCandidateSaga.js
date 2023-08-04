@@ -9,12 +9,12 @@ import { error } from "jquery"
 function* getAllApplicationCandidate(action) {
     try{
     console.log("Hello")
-    const candidateId = "db20f8d0-eb45-43af-9790-e89f48a1a587";
+    const candidateId = yield select((state) => state.user.candidateId);;
     //yield select((state) => state.user.candidateId);
-        const config = {
+    const config = {
             headers: { Authorization: action.payload.token },
-        }
-        console.log("CandidateIdOfUser", candidateId);
+    }
+    console.log("CandidateIdOfUser", candidateId);
     const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`,config)
     console.log("dataBeforeFilter",response.data)
     const filteredApplication = response.data.filter((application) => application.cv.candidateId === candidateId)

@@ -5,17 +5,18 @@ import { useNavigate } from 'react-router';
 import AddIcon from '@mui/icons-material/Add';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-
+import { useDispatch, useSelector } from "react-redux";
 export default function ProfileIdOneCv({ events ,img}) {
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const viewCV = useNavigate();
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+  const candidateId = useSelector(state => state.user.candidateId)
   const handleDetails = (eventId) => {
     // Perform action when the "Xem chi tiết" button is clicked for an event
     // You can implement this function to display detailed information about the event, e.g., show a popup, navigate to a new page, etc.
-    viewCV(`/profile/1/cv/${eventId}`);
+    viewCV(`/profile/${candidateId}/cv/${eventId}`);
   };
 
   const handleCreateCV = () => {

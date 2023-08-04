@@ -7,8 +7,11 @@ import {NoRowsOverlay,NoResultsOverlay} from '../../components/DataRick/DataRick
 export default function Page_Profile_Id_Interview(){
       const {profileid} = useParams();
       const dispatch = useDispatch();
+      const user = useSelector(state => state.user)
       useEffect(() => {
-        dispatch({type:"saga/getAllInterviewCandidate",payload :profileid});
+        dispatch({type:"saga/getAllInterviewCandidate",payload :{profileid,
+          token: `Bearer ${user.token}`,
+        }});
         return () => {
           cleanStore(dispatch);
         };

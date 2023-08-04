@@ -8,12 +8,14 @@ import { error } from "jquery"
 
 function* getAllEventCandidate(action) {
     try{
-        
-        // const candidateId = yield select((state) => state.user.candidateId);
+        const config = {
+            headers: { Authorization: action.payload.token },
+        }
+        const candidateId = yield select((state) => state.user.candidateId);
         //console.log("CandidateIdOfUser", candidateId);
-        const candidateId = "db20f8d0-eb45-43af-9790-e89f48a1a587";
+        //const candidateId = "db20f8d0-eb45-43af-9790-e89f48a1a587";
         // console.log("CanidateId:",candidateId);
-        const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent/JoinEventDetail/${candidateId}`);
+        const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent/JoinEventDetail/${candidateId}`,config);
         console.log("api event:",response.data);
     // console.log("Hello")
     // const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Event`)

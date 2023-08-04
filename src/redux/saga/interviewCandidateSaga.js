@@ -8,11 +8,12 @@ import { error } from "jquery"
 
 function* getAllInterviewCandidate(action) {
     try{
-    //const candidateId = yield select((state) => state.user.candidateId);
+    const candidateId = yield select((state) => state.user.candidateId);
+    console.log("candidateIdOfUser111: ",candidateId    );
     const config = {
         headers: { Authorization: action.payload.token },
     }
-    const candidateId = "db20f8d0-eb45-43af-9790-e89f48a1a587";
+    //const candidateId = "9fb97e9c-2394-4a32-a93f-7501c71b6971";
     const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`,config)
     console.log("InterviewList",response.data)
     const filterInterview = response.data.filter((interview) => interview.application.cv.candidateId === candidateId)
