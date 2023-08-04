@@ -29,7 +29,7 @@ function CVForm(prop) {
     // payload:cvid 
     payload:"d1c51600-6272-4c78-9b50-36af9d403a28"
   });
-    dispatch({ type: "saga/getLanguage" });
+    dispatch({ type: "languageSaga/getLanguage" });
     dispatch({ type: "skillSaga/getSkill" });
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });

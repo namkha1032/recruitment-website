@@ -1,5 +1,10 @@
 import { useMemo, useState, useEffect, useRef } from "react";
-import { Button, Autocomplete, TextField } from "@mui/material";
+import {
+  Button,
+  Autocomplete,
+  TextField,
+  CircularProgress,
+} from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -74,11 +79,18 @@ export default function Page_Company_Question() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user)
 
   useEffect(() => {
-    dispatch({ type: "questionSaga/getAllQuestion" });
-    dispatch({ type: "skillSaga/getSkill" });
-    dispatch({ type: "saga/getLanguage" });
+    dispatch({ type: "questionSaga/getAllQuestion", payload: {
+      token: `Bearer ${user.token}`
+    } });
+    dispatch({ type: "skillSaga/getSkill", payload: {
+      token: `Bearer ${user.token}`,
+    } });
+    dispatch({ type: "languageSaga/getLanguage", payload: {
+      token: `Bearer ${user.token}`,
+    }});
   }, []);
 
   const rows = useSelector((state) => state.questionList);
@@ -194,6 +206,7 @@ export default function Page_Company_Question() {
           languageId: null,
           languageName: null,
           softskill: true,
+          token: `Bearer ${user.token}`
         },
       });
     } else if (value === "Technology") {
@@ -206,6 +219,7 @@ export default function Page_Company_Question() {
           languageId: null,
           languageName: null,
           softskill: false,
+          token: `Bearer ${user.token}`
         },
       });
     } else if (value === "Language") {
@@ -218,6 +232,7 @@ export default function Page_Company_Question() {
           languageId: null,
           languageName: null,
           softskill: false,
+          token: `Bearer ${user.token}`
         },
       });
     } else {
@@ -230,6 +245,7 @@ export default function Page_Company_Question() {
           languageId: null,
           languageName: null,
           softskill: false,
+          token: `Bearer ${user.token}`
         },
       });
     }
@@ -254,6 +270,7 @@ export default function Page_Company_Question() {
         languageId: null,
         languageName: null,
         softskill: false,
+        token: `Bearer ${user.token}`
       },
     });
   }
@@ -269,6 +286,7 @@ export default function Page_Company_Question() {
         languageId: value ? value.languageId : null,
         languageName: value ? value.languageName : null,
         softskill: false,
+        token: `Bearer ${user.token}`
       },
     });
   }
@@ -298,6 +316,14 @@ export default function Page_Company_Question() {
         Category: value.category,
         TypeId: value.typeId,
         TypeName: value.typeName,
+        // Filter
+        categoryName: valueChoose,
+        skillId: skillChoose ? skillChoose.skillId : null,
+        skillName: skillChoose ? skillChoose.skillName : null,
+        languageId: languageChoose ? languageChoose.languageId : null,
+        languageName: languageChoose ? languageChoose.languageName : null,
+        softskill: valueChoose === "Soft Skills" ? true : false,
+        token: `Bearer ${user.token}`
       },
     });
   }
@@ -332,6 +358,14 @@ export default function Page_Company_Question() {
         Category: value.CategoryName,
         TypeId: value.TypeId,
         TypeName: value.TypeName,
+        // Filter
+        categoryName: valueChoose,
+        skillId: skillChoose ? skillChoose.skillId : null,
+        skillName: skillChoose ? skillChoose.skillName : null,
+        languageId: languageChoose ? languageChoose.languageId : null,
+        languageName: languageChoose ? languageChoose.languageName : null,
+        softskill: valueChoose === "Soft Skills" ? true : false,
+        token: `Bearer ${user.token}`
       },
     });
   }
@@ -351,6 +385,14 @@ export default function Page_Company_Question() {
       payload: {
         QuestionId: value.QuestionId,
         CategoryId: value.CategoryId,
+        // Filter
+        categoryName: valueChoose,
+        skillId: skillChoose ? skillChoose.skillId : null,
+        skillName: skillChoose ? skillChoose.skillName : null,
+        languageId: languageChoose ? languageChoose.languageId : null,
+        languageName: languageChoose ? languageChoose.languageName : null,
+        softskill: valueChoose === "Soft Skills" ? true : false,
+        token: `Bearer ${user.token}`
       },
     });
   }
@@ -935,12 +977,29 @@ export default function Page_Company_Question() {
         </Grid> */}
           </Grid>
 
-          <QuestionDataGrid
-            columns={columns}
-            rows={rows}
-            loading={loading}
-            handleModalOpen={handleModalOpen}
-          />
+          {rows ? (
+            <QuestionDataGrid
+              columns={columns}
+              rows={rows}
+              loading={loading}
+              handleModalOpen={handleModalOpen}
+            />
+          ) : (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: 50,
+              }}
+            >
+              <CircularProgress
+                sx={{
+                  color: "black",
+                }}
+              />
+            </Box>
+          )}
 
           <QuestionFormModal
             key={addModalStatus}

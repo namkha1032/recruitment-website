@@ -22,8 +22,8 @@ function RecruitForm() {
   const dispatch = useDispatch();
   // fetch Data
   useEffect(() => {
-    dispatch({ type: "saga/getDepartment" });
-    dispatch({ type: "saga/getLanguage" });
+    dispatch({ type: "departmentSaga/getDepartment" });
+    dispatch({ type: "languageSaga/getLanguage" });
     dispatch({ type: "skillSaga/getSkill" });
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });

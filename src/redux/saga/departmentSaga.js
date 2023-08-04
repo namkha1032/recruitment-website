@@ -7,7 +7,9 @@ function* getDepartment(action) {
   try {
     const response = yield call(
       axios.get,
-      "https://leetun2k2-001-site1.gtempurl.com/api/Department"
+      "https://leetun2k2-001-site1.gtempurl.com/api/Department", {
+        headers: { Authorization: action.payload.token },
+      }
     );
     // const response = yield call(
     //   axios.get,
@@ -21,7 +23,7 @@ function* getDepartment(action) {
 }
 
 function* departmentSaga() {
-  yield all([takeEvery("saga/getDepartment", getDepartment)]);
+  yield all([takeEvery("departmentSaga/getDepartment", getDepartment)]);
 }
 
 export default departmentSaga;
