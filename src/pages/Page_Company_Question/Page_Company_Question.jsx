@@ -85,8 +85,12 @@ export default function Page_Company_Question() {
     dispatch({ type: "questionSaga/getAllQuestion", payload: {
       token: `Bearer ${user.token}`
     } });
-    dispatch({ type: "skillSaga/getSkill" });
-    dispatch({ type: "languageSaga/getLanguage" });
+    dispatch({ type: "skillSaga/getSkill", payload: {
+      token: `Bearer ${user.token}`,
+    } });
+    dispatch({ type: "languageSaga/getLanguage", payload: {
+      token: `Bearer ${user.token}`,
+    }});
   }, []);
 
   const rows = useSelector((state) => state.questionList);
