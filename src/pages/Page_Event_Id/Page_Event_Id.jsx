@@ -36,7 +36,13 @@ const Page_Event_Id = () => {
     const userId = user ? user.userid : ""
     useEffect(() => {
         if (role === "candidate") {
-            dispatch({ type: "eventSaga/getCandidateIdRegisterEvent", payload: userId })
+            dispatch({
+                type: "eventSaga/getCandidateIdRegisterEvent",
+                payload: {
+                    userId: userId,
+                    token: user.token
+                }
+            })
         }
     }, [role])
     const candidateId = useSelector(state => state.candidateIdRegisterEvent)
@@ -47,8 +53,21 @@ const Page_Event_Id = () => {
     console.log('event id: ', eventid);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch({ type: "eventSaga/getEvent", payload: eventid })
-        dispatch({ type: "eventSaga/checkCandidateJoinEvent", payload: { eventId: eventid, candidateId: candidateId } })
+        dispatch({
+            type: "eventSaga/getEvent",
+            payload: {
+                eventid: eventid,
+                token: user.token
+            }
+        })
+        dispatch({
+            type: "eventSaga/checkCandidateJoinEvent",
+            payload: {
+                eventId: eventid,
+                candidateId: candidateId,
+                token: user.token
+            }
+        })
         // dispatch({ type: "eventSaga/getAllCandidateOfEvent", payload: eventid })
         return () => {
             cleanStore(dispatch)
@@ -71,7 +90,13 @@ const Page_Event_Id = () => {
 
 
     useEffect(() => {
-        dispatch({ type: "eventSaga/getAllCandidateOfEvent", payload: eventid })
+        dispatch({
+            type: "eventSaga/getAllCandidateOfEvent",
+            payload: {
+                eventid: eventid,
+                token: user.token
+            }
+        })
         return () => {
             cleanStore(dispatch)
         }
@@ -95,7 +120,8 @@ const Page_Event_Id = () => {
             type: "eventSaga/postCandidateJoinEvent",
             payload: {
                 candidateId: candidateId,
-                eventId: event.eventId
+                eventId: event.eventId,
+                token: user.token
             }
         });
         // alert("Register successfully!")
@@ -108,7 +134,8 @@ const Page_Event_Id = () => {
             type: "eventSaga/deleteCandidateJoinEvent",
             payload: {
                 candidateId: candidateId,
-                eventId: event.eventId
+                eventId: event.eventId,
+                token: user.token
             }
         });
         // setIsRegistered(false)
