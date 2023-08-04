@@ -69,7 +69,7 @@ function* userLogin(action) {
 
     }
     catch (error) {
-        yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
+        yield put({ type: "error/setError", payload: { status: "yes", message: error.message } })
         console.log("err: ", error.response.data.status)
     }
 }
