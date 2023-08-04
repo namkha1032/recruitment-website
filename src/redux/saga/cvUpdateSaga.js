@@ -7,6 +7,7 @@ function* updateCv(action) {
     const {
       Cvid,
       CvName,
+      candidateId,
       Introduction,
       Education,
       Experience,
@@ -21,19 +22,20 @@ function* updateCv(action) {
     const config = {
       headers: { Authorization: token },
     };
-    // console.log("CvName: ", CvName);
-    // console.log("Introduction: ", Introduction);
-    // console.log("Education: ", Education);
-    // console.log("Experience: ", Experience);
-    // console.log("Skills: ", Skills);
-    // console.log("Certificates: ", Certificates);
-    // console.log("Cvid: ", Cvid);
-    // console.log("addSkills: ", addSkills);
-    // console.log("delSkills: ",delSkills);
-    // console.log("Skills: ", Skills);
-    // console.log("Certificates: ", Certificates);
-    // console.log("delCerts: ", delCerts);
-    // console.log("addCerts: ", addCerts);
+    console.log("CvName: ", CvName);
+    console.log("Introduction: ", Introduction);
+    console.log("Education: ", Education);
+    console.log("Experience: ", Experience);
+    console.log("Skills: ", Skills);
+    console.log("Certificates: ", Certificates);
+    console.log("Cvid: ", Cvid);
+    console.log("addSkills: ", addSkills);
+    console.log("delSkills: ",delSkills);
+    console.log("Skills: ", Skills);
+    console.log("Certificates: ", Certificates);
+    console.log("delCerts: ", delCerts);
+    console.log("addCerts: ", addCerts);
+    console.log("candidateId: ", candidateId);
 
     const removeFieldFromCertificates = (certificatesArray, fieldToRemove) => {
       return certificatesArray.map(
@@ -50,14 +52,14 @@ function* updateCv(action) {
     const updatedSkills2 = removeFieldFromCertificates(updatedSkills, 'cvid');
     const updatedCertificates = changeFieldForCertificates(Certificates, 'certificateId', 'adcb4535-c141-4afa-97d0-f24560889d85');
     
-    // console.log(" new Certificates: ", updatedCertificates);
-    // console.log(" new Skills: ", updatedSkills2);
+    console.log(" new Certificates: ", updatedCertificates);
+    console.log(" new Skills: ", updatedSkills2);
     const response = yield call(
       axios.put,
-      `https://leetun2k2-001-site1.gtempurl.com/api/Cv/d1c51600-6272-4c78-9b50-36af9d403a28`,
+      `https://leetun2k2-001-site1.gtempurl.com/api/Cv/${Cvid}`,
       {
-        cvid: "d1c51600-6272-4c78-9b50-36af9d403a28",
-        candidateId:"00000000-0000-0000-0000-000000000001",
+        cvid: Cvid,
+        candidateId:candidateId,
         experience: Experience,
         cvPdf:"string",
         cvName:CvName,

@@ -24,7 +24,8 @@ const CertAlert = React.forwardRef(function Alert(props, ref) {
 function CVForm(prop) {
   const profileid = prop.profileid;
   // const cvid = prop.cvid;
-  const cvid ="d1c51600-6272-4c78-9b50-36af9d403a28";
+  const cvid = prop.cvid;
+  console.log(cvid);
   // console.log(cvid);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -33,10 +34,16 @@ function CVForm(prop) {
     dispatch({
       type: "cvInforsaga/getCvinfor",
       // payload:cvid
-      payload: "d1c51600-6272-4c78-9b50-36af9d403a28",
+      payload: cvid,
     });
-    dispatch({ type: "saga/getLanguage", payload:{ token: `Bearer ${userlocal.token}`} });
-    dispatch({ type: "skillSaga/getSkill", payload:{ token: `Bearer ${userlocal.token}`} });
+    dispatch({
+      type: "saga/getLanguage",
+      payload: { token: `Bearer ${userlocal.token}` },
+    });
+    dispatch({
+      type: "skillSaga/getSkill",
+      payload: { token: `Bearer ${userlocal.token}` },
+    });
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });
       dispatch({ type: "language/setLanguage", payload: null });
@@ -52,7 +59,7 @@ function CVForm(prop) {
   const cvSkill = useSelector((state) => state.cvHasSkill);
   const cvCertificate = useSelector((state) => state.cvHasCertificate);
   const newError = useSelector((state) => state.error);
- const userlocal = useSelector((state) => state.user);
+  const userlocal = useSelector((state) => state.user);
 
   let [errorSnackbar, setErrorSnackbar] = useState(false);
   ////////////////////////////////////////////////////
@@ -61,10 +68,11 @@ function CVForm(prop) {
       setTimeout(() => {
         const idToNavigate = newError.message;
         cleanStore(dispatch);
-        navigate(`/profile/${canid}/cv/${idToNavigate}`);
+        // navigate(`/profile/${canid}/cv/${idToNavigate}`);
+        navigate(`/profile/${profileid}/cv/${idToNavigate}`);
       }, 2000);
     }
-    const canid = userlocal.candidateId
+    const canid = userlocal.candidateId;
     if (newError.status == "yes") {
       setErrorSnackbar(true);
       setTimeout(() => {
@@ -351,7 +359,7 @@ function CVForm(prop) {
   let [openAlert, setOpenAlert] = useState(false);
   async function handleSubmit(e) {
     // e.preventDefault();
-    let token = userlocal.token
+    let token = userlocal.token;
     let handleToken = `Bearer ${userlocal.token}`;
     const config = {
       headers: { Authorization: handleToken },
@@ -360,8 +368,9 @@ function CVForm(prop) {
       dispatch({
         type: "updateCvsaga/getUpdateCv",
         payload: {
-          token:token,
+          token: token,
           Cvid: cvid,
+          candidateId: profileid,
           CvName: cvtitle,
           Introduction: intro,
           Education: education,
@@ -374,14 +383,15 @@ function CVForm(prop) {
           addCerts: addCerts,
         },
       });
-      
+
       const formData = new FormData();
       // console.log(formData)
       formData.append("File", pdf);
       if (pdf !== null) {
         const response3 = await axios.post(
           `https://leetun2k2-001-site1.gtempurl.com/api/Cv/UploadCvPdf/${cvid}`,
-          formData,config
+          formData,
+          config
         );
         // console.log(response3);
       }
@@ -533,33 +543,33 @@ function CVForm(prop) {
           </CertAlert>
         </Snackbar>
         <Snackbar
-        // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        open={errorSnackbar}
-        autoHideDuration={4000}
-        onClose={() => {
-          setErrorSnackbar(false);
-        }}
-        // message="I love snacks"
-        // key={vertical + horizontal}
-      >
-        <Alert
-          variant="filled"
+          // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+          open={errorSnackbar}
+          autoHideDuration={4000}
           onClose={() => {
             setErrorSnackbar(false);
           }}
-          severity="error"
-          sx={{ width: "100%" }}
+          // message="I love snacks"
+          // key={vertical + horizontal}
         >
-          {newError.message}
-        </Alert>
-      </Snackbar>
-      <AlertDialog
-        openAlert={openAlert}
-        setOpenAlert={setOpenAlert}
-        alertMessage={"Are you sure you want to update?"}
-        successfulMessage={"Update successfully"}
-        handleSubmit={handleSubmit}
-      />
+          <Alert
+            variant="filled"
+            onClose={() => {
+              setErrorSnackbar(false);
+            }}
+            severity="error"
+            sx={{ width: "100%" }}
+          >
+            {newError.message}
+          </Alert>
+        </Snackbar>
+        <AlertDialog
+          openAlert={openAlert}
+          setOpenAlert={setOpenAlert}
+          alertMessage={"Are you sure you want to update?"}
+          successfulMessage={"Update successfully"}
+          handleSubmit={handleSubmit}
+        />
       </Box>
     </>
   );
