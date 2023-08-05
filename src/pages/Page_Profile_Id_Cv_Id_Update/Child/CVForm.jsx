@@ -13,6 +13,7 @@ import axios from "axios";
 import { delay } from "../../../utils/delay";
 import Alert from "@mui/material/Alert";
 import AlertDialog from "../../../components/AlertDialog/AlertDialog";
+import CvSkeleton from "./cvSkeleton";
 // import ViewCv from "./ViewCv";
 //http://localhost:3000/profile/1/cv/d1c51600-6272-4c78-9b50-36af9d403a28/update
 const SkillAlert = React.forwardRef(function Alert(props, ref) {
@@ -446,6 +447,7 @@ function CVForm(prop) {
   //COMPS
   return (
     <>
+    {cv===null?<CvSkeleton></CvSkeleton>:
       <Box>
         <Grid container spacing={0} justifyContent="center" alignItems="center">
           <Grid item xs={12}>
@@ -571,6 +573,7 @@ function CVForm(prop) {
           handleSubmit={handleSubmit}
         />
       </Box>
+      }
     </>
   );
 }

@@ -46,7 +46,7 @@ const CreateCv = (prop) => {
         >
           <Typography
             variant="h3"
-            sx={{ fontWeight: "bold", marginBottom: "16px" }}
+            sx={{ fontWeight: "bold",marginTop:"", marginBottom: "16px" }}
           >
             Create CV
           </Typography>

@@ -18,6 +18,8 @@ import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
 import Alert from "@mui/material/Alert";
 import AlertDialog from "../../../components/AlertDialog/AlertDialog";
+import PositionSkeleton from "./positionSkeleton";
+
 const SkillAlert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -26,9 +28,18 @@ function RecruitForm(prop) {
   const dispatch = useDispatch();
   // fetch Data
   useEffect(() => {
-    dispatch({ type: "departmentSaga/getDepartment", payload:{ token: `Bearer ${userlocal.token}`} });
-    dispatch({ type: "languageSaga/getLanguage", payload:{ token: `Bearer ${userlocal.token}`} });
-    dispatch({ type: "skillSaga/getSkill", payload:{ token: `Bearer ${userlocal.token}`} });
+    dispatch({
+      type: "departmentSaga/getDepartment",
+      payload: { token: `Bearer ${userlocal.token}` },
+    });
+    dispatch({
+      type: "languageSaga/getLanguage",
+      payload: { token: `Bearer ${userlocal.token}` },
+    });
+    dispatch({
+      type: "skillSaga/getSkill",
+      payload: { token: `Bearer ${userlocal.token}` },
+    });
     dispatch({
       type: "positionInforsaga/getPositioninfor",
       payload: recruitmentid,
@@ -212,8 +223,8 @@ function RecruitForm(prop) {
   const departments = department.filter(
     (comp) => comp.departmentId === departmentChoose
   );
-  console.log(recruiterId)
-  console.log(oldRecruiter)
+  console.log(recruiterId);
+  console.log(oldRecruiter);
   console.log(skill);
   // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
   // const [status, setStatus] = useState(recruitInfo.status);
@@ -421,140 +432,151 @@ function RecruitForm(prop) {
   }
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <Grid container spacing={2} justifyContent="center" alignItems="center">
-          <Grid item xs={12}>
+      { positionInfor===null?<PositionSkeleton/>:
+        <form onSubmit={handleSubmit}>
+          <Grid
+            container
+            spacing={2}
+            justifyContent="center"
+            alignItems="center"
+          >
             <Grid
               item
               xs={12}
               sx={{
-                display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                display: "flex",
               }}
             >
               <Typography
                 variant="h3"
-                sx={{ fontWeight: "bold", marginBottom: "16px" }}
+                sx={{
+                  fontWeight: "bold",
+                  marginBottom: "16px",
+                  marginTop: "17px",
+                }}
               >
                 Update Position
               </Typography>
             </Grid>
-            <GigaCard>
-              <GigaCardBody>
-                <Grid
-                  container
-                  spacing={0}
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Grid item xs={10}>
-                    <Box1
-                      setDescription={setDescription}
-                      handleRname={handleRname}
-                      RName={RName}
-                      handleDescription={handleDescription}
-                      description={description}
-                    />
+            <Grid item xs={12} sx={{ marginBottom: "16px" }}>
+              <GigaCard>
+                <GigaCardBody>
+                  <Grid
+                    container
+                    spacing={0}
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Grid item xs={10}>
+                      <Box1
+                        setDescription={setDescription}
+                        handleRname={handleRname}
+                        RName={RName}
+                        handleDescription={handleDescription}
+                        description={description}
+                      />
+                    </Grid>
                   </Grid>
-                </Grid>
-              </GigaCardBody>
-            </GigaCard>
-          </Grid>
-          <Grid item xs={12}>
-            <TitleDivider>Detail</TitleDivider>
-          </Grid>
-          <Grid item xs={12}>
-            <GigaCard>
-              <GigaCardBody>
-                <Grid
-                  container
-                  spacing={0}
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Grid item xs={10}>
-                    <Box2
-                      handleSalary={handleSalary}
-                      salary={salary}
-                      handleChange={handleChange}
-                      departmentName={departmentName}
-                      express={express}
-                      departmentId={departmentId}
-                      departmentAddress={departmentAddress}
-                      departmentEmail={departmentEmail}
-                      departmentPhone={departmentPhone}
-                      departmentWeb={departmentWeb}
-                      handleEnd={handleEnd}
-                      handleStart={handleStart}
-                      startDate={startDate}
-                      endDate={endDate}
-                      handleMaxHire={handleMaxHire}
-                      maxHire={maxHire}
-                      department={department}
-                    />
+                </GigaCardBody>
+              </GigaCard>
+            </Grid>
+            <Grid item xs={12}>
+              <TitleDivider>Detail</TitleDivider>
+            </Grid>
+            <Grid item xs={12} sx={{ marginTop: "16px", marginBottom: "16px" }}>
+              <GigaCard>
+                <GigaCardBody>
+                  <Grid
+                    container
+                    spacing={0}
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Grid item xs={10}>
+                      <Box2
+                        handleSalary={handleSalary}
+                        salary={salary}
+                        handleChange={handleChange}
+                        departmentName={departmentName}
+                        express={express}
+                        departmentId={departmentId}
+                        departmentAddress={departmentAddress}
+                        departmentEmail={departmentEmail}
+                        departmentPhone={departmentPhone}
+                        departmentWeb={departmentWeb}
+                        handleEnd={handleEnd}
+                        handleStart={handleStart}
+                        startDate={startDate}
+                        endDate={endDate}
+                        handleMaxHire={handleMaxHire}
+                        maxHire={maxHire}
+                        department={department}
+                      />
+                    </Grid>
                   </Grid>
-                </Grid>
-              </GigaCardBody>
-            </GigaCard>
-          </Grid>
-          <Grid item xs={12}>
-            <TitleDivider>Requirement</TitleDivider>
-          </Grid>
-          <Grid item xs={12}>
-            <GigaCard>
-              <GigaCardBody>
-                <Grid
-                  container
-                  spacing={0}
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Grid item xs={10}>
-                    <Box3
-                      requirement={requirement}
-                      handleRequirementDelete={handleRequirementDelete}
-                      inputValue={inputValue}
-                      setInputValue={setInputValue}
-                      experience={experience}
-                      setExperience={setExperience}
-                      note={note}
-                      setNote={setNote}
-                      skill={skillData}
-                      SkillOption={skill}
-                      setSkillName={setSkillName}
-                      skillName={skillName}
-                      setSkillId={setSkillId}
-                      handleRequirementAdd={handleRequirementAdd}
-                      language={language}
-                      languages={languages}
-                      handleLanguageDelete={handleLanguageDelete}
-                      lInputValue={lInputValue}
-                      setLInputValue={setLInputValue}
-                      setLanguages={setLanguages}
-                      setLanguageName={setLanguageName}
-                      languageName={languageName}
-                      // setLanguageId={setLanguageId}
-                      lvalue={lvalue}
-                      handleLanguageAdd={handleLanguageAdd2}
-                    />
+                </GigaCardBody>
+              </GigaCard>
+            </Grid>
+            <Grid item xs={12}>
+              <TitleDivider>Requirement</TitleDivider>
+            </Grid>
+            <Grid item xs={12} sx={{ marginTop: "16px" }}>
+              <GigaCard>
+                <GigaCardBody>
+                  <Grid
+                    container
+                    spacing={0}
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Grid item xs={10}>
+                      <Box3
+                        requirement={requirement}
+                        handleRequirementDelete={handleRequirementDelete}
+                        inputValue={inputValue}
+                        setInputValue={setInputValue}
+                        experience={experience}
+                        setExperience={setExperience}
+                        note={note}
+                        setNote={setNote}
+                        skill={skillData}
+                        SkillOption={skill}
+                        setSkillName={setSkillName}
+                        skillName={skillName}
+                        setSkillId={setSkillId}
+                        handleRequirementAdd={handleRequirementAdd}
+                        language={language}
+                        languages={languages}
+                        handleLanguageDelete={handleLanguageDelete}
+                        lInputValue={lInputValue}
+                        setLInputValue={setLInputValue}
+                        setLanguages={setLanguages}
+                        setLanguageName={setLanguageName}
+                        languageName={languageName}
+                        // setLanguageId={setLanguageId}
+                        lvalue={lvalue}
+                        handleLanguageAdd={handleLanguageAdd2}
+                      />
+                    </Grid>
                   </Grid>
-                </Grid>
-              </GigaCardBody>
-            </GigaCard>
+                </GigaCardBody>
+              </GigaCard>
+            </Grid>
+            <Grid item xs={12}></Grid>
+            <img src="./img/logo.png" alt="" />
+            <Button
+              variant="contained"
+              className="AddButton"
+              // type="submit"
+              onClick={preProcessing}
+            >
+              Update
+            </Button>
           </Grid>
-          <Grid item xs={12}></Grid>
-          <img src="./img/logo.png" alt="" />
-          <Button
-            variant="contained"
-            className="AddButton"
-            // type="submit"
-            onClick={preProcessing}
-          >
-            Update
-          </Button>
-        </Grid>
-      </form>
+        </form>
+      }
       <Snackbar
         open={skillOpen}
         autoHideDuration={3000}
