@@ -278,12 +278,16 @@ const Page_Interview_Id = () => {
                                                     <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
                                                         {interviewidinfo[0].candidate_Status === "Not start" &&
                                                             <>
-                                                                <Chip sx={{ margin: "0px 0px 5px 6px" }} label="Not start" variant='outlined' size='medium' color="info" />
+                                                                <Typography variant="h6" sx={{ marginLeft: "6px", color: 'grey' }} >
+                                                                    Not start
+                                                                </Typography>
                                                             </>
                                                         }
                                                         {interviewidinfo[0].candidate_Status === "Finished" &&
                                                             <>
-                                                                <Chip sx={{ margin: "0px 0px 5px 6px" }} label="Finished" variant='outlined' size='medium' color="info" />
+                                                                <Typography variant="h6" sx={{ marginLeft: "6px", color: 'blue' }} >
+                                                                    Finished
+                                                                </Typography>
                                                             </>
                                                         }
 
@@ -297,9 +301,27 @@ const Page_Interview_Id = () => {
                                 </Grid>
                                 <Grid item md={6} xs={12}>
                                     <GigaCard>
-                                        <GigaCardHeader color={"black"} headerIcon={<AssignmentIndIcon sx={{ fontSize: "inherit" }} />}>
-                                            Interviewer
-                                        </GigaCardHeader>
+                                        <Box sx={{ paddingX: isMd ? 4 : 2, paddingTop: 4, paddingBottom: isMd ? 0 : 4 }}>
+                                            <Box sx={{ color: "black", display: "flex", flexDirection: "row", alignItems: "center", columnGap: 2 }}>
+                                                {/* <Avatar sx={{ backgroundColor: props.color }}> */}
+                                                <Box
+                                                    component="img"
+                                                    sx={{
+                                                        borderRadius: "50%",
+                                                        border: "1px solid #ccc",
+                                                        width: "150px",
+                                                        height: "150px",
+                                                    }}
+                                                    src={interviewidinfo[0].interviewer.user.imageUrl}
+                                                    alt=""
+                                                />
+                                                {/* </Avatar> */}
+                                                <Typography variant={isMd ? "h4" : "h5"} sx={{ fontWeight: "bold" }}>
+                                                    Interviewer
+                                                </Typography>
+                                            </Box>
+                                        </Box>
+
                                         <GigaCardBody>
                                             <Box sx={{ display: "flex", flexDirection: "row" }}>
                                                 <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>

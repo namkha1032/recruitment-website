@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Grid, Button, Modal, Box, Divider } from '@mui/material';
-import {LoadingButton }from '@mui/lab';
+import { LoadingButton } from '@mui/lab';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -24,6 +24,7 @@ import { useTheme } from '@mui/material/styles';
 import { getPositionStatus } from '../../../utils/getPositionStatus';
 import cleanStore from '../../../utils/cleanStore';
 import CircularProgress from '@mui/material/CircularProgress';
+import SwitchCameraIcon from '@mui/icons-material/SwitchCamera';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -55,9 +56,10 @@ const ButtonApply = (props) => {
     const [CV, setCV] = useState(null);
     const handleClose = () => setOpen(false);
     const [helperText, setHelperText] = useState('');
-    const [apply, setApply] = useState(false);
+    // const [applied, setApplied] = useState(null);
     const [submitstatus, setSubmitstatus] = useState(false);
     const [loading, setLoading] = useState(false);
+    
     const handleCVChange = (event) => {
         setCV(event.target.value);
         setHelperText('');
@@ -83,27 +85,25 @@ const ButtonApply = (props) => {
                     token: "haha"
                 },
             })
-        }
-
-        return () => {
-            dispatch({ type: 'applicationStatus/setApplicationStatus', payload: null })
-        }
-    }, [user])
+        }   
+    }, [submitstatus])
     useEffect(() => {
         if (appstatus !== null) {
             if (appstatus.length > 0) {
                 setSubmitstatus(true);
+                setCV(appstatus[0].cv.cvid);
+
             }
         }
     }, [appstatus])
     useEffect(() => {
-        if (submitNotify === "loading"){
+        if (submitNotify === "loading") {
             setLoading(true);
             setOpen(true);
         }
-        else{
-            if (submitNotify === "success")
-            {
+        else {
+
+            if (submitNotify === "success") {
                 toast.success('You submited successfully.', {
                     position: "top-center",
                     autoClose: 5000,
@@ -117,7 +117,10 @@ const ButtonApply = (props) => {
             }
             setLoading(false);
             setOpen(false);
-            dispatch({type: 'submitNotify/setSubmitNotify', payload: "no"})
+            dispatch({ type: 'submitNotify/setSubmitNotify', payload: "no" })
+
+
+
         }
     }, [submitNotify])
     // const countsubmit = useSelector(state => state.countSubmit);
@@ -200,17 +203,13 @@ const ButtonApply = (props) => {
                 setSubmitstatus(true)
                 // setApply(true);
                 setNotice(true);
-                setCV('')
+                // setCV('')
                 console.log(CV);
                 setSubmit(false);
                 // setTimeout(() => {
                 //     setOpen(false);
                 //     setNotice(false);
                 // }, 3000)
-
-                
-
-
             }
         }
         else {
@@ -221,6 +220,8 @@ const ButtonApply = (props) => {
     console.log('hiappstatus', appstatus);
     console.log("statussubmitbutton", submitstatus)
     const tabs = 1
+    console.log('appwithoutapplication', appstatus);
+    
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
@@ -240,26 +241,22 @@ const ButtonApply = (props) => {
                                             ":hover": {
                                                 backgroundColor: "grey",
                                             }
-                                        }}size="medium" variant='contained' onClick={handleOpen}>
+                                        }} size="medium" variant='contained' onClick={handleOpen}>
                                             <InsertDriveFileIcon></InsertDriveFileIcon>  Apply
                                         </Button>
                                     ) : (
                                         <>
-                                            <Box sx={{ display: "flex" }}>
-                                                <Typography variant="h6" sx={{ marginRight: 2 }}>
-                                                    You have applied this position
-                                                </Typography>
-                                                <Button sx={{
-                                                    backgroundColor: "black",
-                                                    ":hover": {
-                                                        backgroundColor: "grey",
-                                                    }
-                                                }} variant='contained' onClick={handleOpen}>
-                                                    <InsertDriveFileIcon></InsertDriveFileIcon>  Apply
-                                                </Button>
-                                            </Box>
-                                        </>
 
+                                            <Button sx={{
+                                                backgroundColor: "black",
+                                                ":hover": {
+                                                    backgroundColor: "grey",
+                                                }
+                                            }} size="medium" variant='contained' onClick={handleOpen}>
+                                                <SwitchCameraIcon sx={{ marginRight: 1 }}></SwitchCameraIcon>  Switch CV
+                                            </Button>
+
+                                        </>
                                     )}
 
                                 </Grid>
@@ -334,14 +331,14 @@ const ButtonApply = (props) => {
                                                             </Button>
                                                         </Grid>
                                                         <Grid item xs={6} md={6} sx={{ display: "flex", justifyContent: "flex-end", marginRight: isMd ? 2 : 0 }}>
-                                                            <LoadingButton 
-                                                            loading={loading}
-                                                            sx={{
-                                                                backgroundColor: "black",
-                                                                ":hover": {
-                                                                    backgroundColor: "grey",
-                                                                }
-                                                            }} size="medium" type="submit" variant="contained" onClick={hanldebutton}   >
+                                                            <LoadingButton
+                                                                loading={loading}
+                                                                sx={{
+                                                                    backgroundColor: "black",
+                                                                    ":hover": {
+                                                                        backgroundColor: "grey",
+                                                                    }
+                                                                }} size="medium" type="submit" variant="contained" onClick={hanldebutton}   >
                                                                 {isMd ? (
                                                                     <>
                                                                         <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit your CV

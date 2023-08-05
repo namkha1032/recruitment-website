@@ -35,9 +35,9 @@ const View_general = (props) => {
         <>
             <Grid container spacing={1} sx={{ marginTop: "0px", display: "flex", flexDirection: "column" }}>
                 <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
-                    <Box sx={{...gridSx, paddingTop: 1,  paddingBottom:  1 }}>
+                    <Box sx={{...gridSx, paddingTop: 1,  paddingBottom:  1 , paddingTop: 2 }}>
                         <DescriptionIcon color="black" />
-                        <Typography color="primary" variant='h5' sx={{ fontWeight: "bold", color: "black" }}>
+                        <Typography color="primary" variant='h4' sx={{ fontWeight: "bold", color: "black" }}>
                             Description
                         </Typography>
                     </Box>
@@ -50,12 +50,12 @@ const View_general = (props) => {
 
                 </Grid>
 
-                <Divider sx={{ marginY: 3,  borderColor: "1px" }} />
+                <Divider sx={{   borderColor: "1px" }} />
 
                 <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
-                    <Box sx={{...gridSx, paddingBottom:  1 }}>
+                    <Box sx={{...gridSx, paddingBottom:  1, paddingTop: 2 }}>
                         <LocationCityIcon color="black" />
-                        <Typography color="primary" variant='h5' sx={{ fontWeight: "bold", color: "black" }}>
+                        <Typography color="primary" variant='h4' sx={{ fontWeight: "bold", color: "black" }}>
                             Department
                         </Typography>
                     </Box>
@@ -84,7 +84,7 @@ const View_general = (props) => {
                 </Grid>
                 {/* <Grid item md={6} ></Grid> */}
                 <Grid item xs={12} md={12} sx={{ marginLeft: "15px", paddingTop: "0px", marginTop: "2px" }}>
-                    <Typography align='center' variant='subtitle1' sx={{ display: "flex" }}>
+                    <Typography align='left' variant='subtitle1' sx={{ display: "flex" }}>
                         <RoomIcon>  </RoomIcon>
                         <Box sx ={{marginLeft: "5px"}}>
                             {/* {props.department[0].address} */}

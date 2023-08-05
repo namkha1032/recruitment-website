@@ -45,10 +45,8 @@ const style = {
 
 const Page_Recruitment_Id = () => {
     const tabs = 1
-    return (
-       
+    return (  
             <>
-
                 <Grid container spacing={2} >
                     <Grid item xs={12} md={12} sm={12}>
                         {/* tabs={tabs} */}
