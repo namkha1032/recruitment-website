@@ -45,6 +45,7 @@ function* getCvinfor(action) {
           : null,
       };
     });
+    console.log(cv)
     // console.log((newCert))
     // const cvCertificate= cv[0].certificates
     yield put({ type: "cvInfor/setCvInfor", payload: cv });
@@ -67,7 +68,7 @@ function* getCvinfor(action) {
     //     console.log(error)
     //   }
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
