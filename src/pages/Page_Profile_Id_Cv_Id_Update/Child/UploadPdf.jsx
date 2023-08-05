@@ -130,7 +130,7 @@ function UploadPdf(prop) {
             alignItems="center"
           >
             <Box>
-              <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.15.349/build/pdf.worker.min.js">
+              <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js">
                 {prop.viewPdf ? (
                   <>
                     <GigaCard>
