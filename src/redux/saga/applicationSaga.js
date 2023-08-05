@@ -2,6 +2,7 @@ import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects";
 import axios from 'axios';
 import host from "../host";
 import { formatPositionList } from "../../utils/formatPositionList";
+import recommendCV from "../../utils/recommendCV";
 function* getApplication(action) {
     // const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/${action.payload}`);
     // const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload}`)
@@ -35,6 +36,7 @@ function* getApplication(action) {
             })
             candidatelist.push({ ...application[i], ...(yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate/${application[i].cv.candidateId}`, config)).data, findCv: findCv, findPosition: response1.data })
         }
+        yield call(recommendCV, candidatelist)
         // const test = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate/db20f8d0-eb45-43af-9790-e89f48a1a587`, config)
         // console.log('testcandidate', test.data.user.fullName);
         // candidatelist.push(mergeobject);

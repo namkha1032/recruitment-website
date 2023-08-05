@@ -39,6 +39,7 @@ const Page_Event_Id = () => {
     const role = useGetRole()
 
     const user = useSelector(state => state.user)
+    const newError = useSelector(state => state.error)
     const userId = user ? user.userid : ""
     useEffect(() => {
         if (role === "candidate") {
@@ -96,6 +97,13 @@ const Page_Event_Id = () => {
     }, [note])
     console.log("contentRef: ", contentRef);
 
+    useEffect(() => {
+        if (newError.status == "no") {
+            setTimeout(() => {
+                dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })
+            }, 2200)
+        }
+    }, [newError])
 
     useEffect(() => {
         if (user) {
