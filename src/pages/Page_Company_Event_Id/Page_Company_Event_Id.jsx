@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 
 // import MUI components
-import { Box, Chip, Container, Divider, Grid, Paper, Tab, Typography } from '@mui/material'
+import { Box, Chip, CircularProgress, Container, Divider, Grid, Paper, Tab, Typography } from '@mui/material'
 import React from 'react'
 import './Page_Company_Event_Id.scss'
 import { Button } from '@mui/material'
@@ -40,6 +40,7 @@ import cleanStore from '../../utils/cleanStore';
 import useGetRole from '../../hooks/useGetRole';
 import { transferDatetimeBack } from '../../utils/transferDatetime';
 import userEvent from '@testing-library/user-event';
+import { NoResultsOverlay, NoRowsOverlay } from '../../components/DataRick/DataRick';
 
 
 
@@ -58,22 +59,26 @@ const Page_Company_Event_Id = () => {
 
     const user = useSelector(state => state.user)
     useEffect(() => {
-        dispatch({
-            type: "eventSaga/getEvent",
-            payload: {
-                eventid: eventid,
-                token: user.token
-        }})
-        dispatch({
-            type: "eventSaga/getAllCandidateOfEvent",
-            payload: { 
-                eventid: eventid,
-                token: user.token
-        }})
-        return () => {
-            cleanStore(dispatch)
+        if (user) {
+            dispatch({
+                type: "eventSaga/getEvent",
+                payload: {
+                    eventid: eventid,
+                    token: user.token
+                }
+            })
+            dispatch({
+                type: "eventSaga/getAllCandidateOfEvent",
+                payload: {
+                    eventid: eventid,
+                    token: user.token
+                }
+            })
+            return () => {
+                cleanStore(dispatch)
+            }
         }
-    }, [])
+    }, [user])
 
     const event = useSelector((state) => state.event)
     const note = event ? event.content : ""
@@ -527,87 +532,114 @@ const Page_Company_Event_Id = () => {
                 </TabPanel>
 
                 <TabPanel value='2' sx={{ p: 0, mt: 2 }}>
-                    <Box sx={{ width: '100%' }}>
-                        {/* Data Grid */}
-                        <DataGrid
-                            rows={rows}
-                            columns={columns}
-                            sx={{
-                                "&.MuiDataGrid-root": {
-                                    borderRadius: 2,
-                                },
-                                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
-                                    outline: "none",
-                                },
-                                "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
-                                    outline: "none",
-                                },
-                                "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
-                                    // backgroundColor: "#1565C0",
-                                    backgroundColor: 'black',
-                                    color: "white",
-                                    fontWeight: 700,
-                                },
-                                "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
-                                    display: "none",
-                                },
-                                "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
-                                    color: "white",
-                                },
-                                "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                                    color: 'black'
-                                }
-                            }}
-                            // localeText={{
-                            //     footerRowSelected: (count) =>
-                            //         count > 1 ? `${count.toLocaleString()} hàng đã chọn` : `${count.toLocaleString()} hàng đã chọn`,
-                            //     footerTotalRows: 'Tổng:',
-                            //     footerTotalVisibleRows: (visibleCount, totalCount) =>
-                            //         `${visibleCount.toLocaleString()} / ${totalCount.toLocaleString()}`,
-                            //     footerTotalRows: 'Tổng:',
-                            //     labelRowsPerPage: 'Hàng mỗi trang:',
-                            //     labelDisplayedRows: ({ from, to, count }) =>
-                            //         `${from}–${to} trên ${count !== -1 ? count : `hơn ${to}`}`,
-                            // }}
-                            slots={{ toolbar: GridToolbar }}
-                            slotProps={{
-                                // pagination: {
-                                //     labelRowsPerPage: "Số lượng hiển thị",
-                                //     labelDisplayedRows: ({ from, to, count }) =>
-                                //         `${from}–${to} của ${count !== -1 ? count : `hơn ${to}`}`,
-                                // },
-                                toolbar: {
-                                    showQuickFilter: true,
-                                    quickFilterProps: {
-                                        debounceMs: 500, placeholder: "Search...", sx: {
-                                            width: 300,
-                                            marginBottom: 1,
+                    <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px', width: '100%', borderRadius: 3 }}>
+                        {rows ? (
+                            <Box
+                                // sx={{ width: '100%' }}
+                            >
+                                {/* Data Grid */}
+                                <DataGrid
+                                    rows={rows}
+                                    columns={columns}
+                                    sx={{
+                                        "&.MuiDataGrid-root": {
+                                            borderRadius: 2,
+                                        },
+                                        "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                                            outline: "none",
+                                        },
+                                        "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                                            outline: "none",
+                                        },
+                                        "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
+                                            // backgroundColor: "#1565C0",
+                                            backgroundColor: 'black',
+                                            color: "white",
+                                            fontWeight: 700,
+                                        },
+                                        "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                                            display: "none",
+                                        },
+                                        "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+                                            color: "white",
+                                        },
+                                        "&.MuiDataGrid-root .MuiCircularProgress-root": {
+                                            color: "black",
+                                        },
+                                        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                                            color: 'black'
                                         }
-                                    },
-                                    // csvOptions: { disableToolbarButton: true },
-                                    // printOptions: { disableToolbarButton: true }
-                                },
-                            }}
-                            disableColumnFilter
-                            disableColumnSelector
-                            // disableDensitySelector
-                            pagination
-                            pageSizeOptions={[5, 10, 25, 50, 100]}
-                            initialState={{
-                                pagination: {
-                                    paginationModel: {
-                                        pageSize: 25
-                                    },
-                                },
-                            }}
-                            getRowId={(row) => row.candidateId}
-                            onCellClick={(params, event) => {
-                                if (params.field === "candidateId" || params.field === "candidateFullName") {
-                                    handleDetailClick(params.row.candidateId);
-                                }
-                            }}>
-                        </DataGrid>
-                    </Box>
+                                    }}
+                                    // localeText={{
+                                    //     footerRowSelected: (count) =>
+                                    //         count > 1 ? `${count.toLocaleString()} hàng đã chọn` : `${count.toLocaleString()} hàng đã chọn`,
+                                    //     footerTotalRows: 'Tổng:',
+                                    //     footerTotalVisibleRows: (visibleCount, totalCount) =>
+                                    //         `${visibleCount.toLocaleString()} / ${totalCount.toLocaleString()}`,
+                                    //     footerTotalRows: 'Tổng:',
+                                    //     labelRowsPerPage: 'Hàng mỗi trang:',
+                                    //     labelDisplayedRows: ({ from, to, count }) =>
+                                    //         `${from}–${to} trên ${count !== -1 ? count : `hơn ${to}`}`,
+                                    // }}
+                                    slots={{
+                                        toolbar: GridToolbar,
+                                        noRowsOverlay: NoRowsOverlay,
+                                        noResultsOverlay: NoResultsOverlay,
+                                    }}
+                                    slotProps={{
+                                        // pagination: {
+                                        //     labelRowsPerPage: "Số lượng hiển thị",
+                                        //     labelDisplayedRows: ({ from, to, count }) =>
+                                        //         `${from}–${to} của ${count !== -1 ? count : `hơn ${to}`}`,
+                                        // },
+                                        toolbar: {
+                                            showQuickFilter: true,
+                                            quickFilterProps: {
+                                                debounceMs: 500, placeholder: "Search...", sx: {
+                                                    width: 300,
+                                                    marginBottom: 1,
+                                                }
+                                            },
+                                            // csvOptions: { disableToolbarButton: true },
+                                            // printOptions: { disableToolbarButton: true }
+                                        },
+                                    }}
+                                    disableColumnFilter
+                                    disableColumnSelector
+                                    // disableDensitySelector
+                                    pagination
+                                    pageSizeOptions={[5, 10, 25, 50, 100]}
+                                    initialState={{
+                                        pagination: {
+                                            paginationModel: {
+                                                pageSize: 25
+                                            },
+                                        },
+                                    }}
+                                    getRowId={(row) => row.candidateId}
+                                    onCellClick={(params, event) => {
+                                        if (params.field === "candidateId" || params.field === "candidateFullName") {
+                                            handleDetailClick(params.row.candidateId);
+                                        }
+                                    }}>
+                                </DataGrid>
+                            </Box>) :
+                            (<Box
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    height: 50,
+                                }}
+                            >
+                                <CircularProgress
+                                    sx={{
+                                        color: "black",
+                                    }}
+                                />
+                            </Box>
+                            )}
+                    </Paper>
                 </TabPanel>
             </TabContext>
         </Container >

@@ -23,10 +23,12 @@ import cleanStore from '../../utils/cleanStore';
 import useGetRole from '../../hooks/useGetRole';
 import { useParams } from 'react-router-dom';
 import { transferDatetimeBack } from '../../utils/transferDatetime';
+import AlertDialog from '../../components/AlertDialog/AlertDialog';
 
 
 const Page_Event_Id = () => {
 
+    let [openAlert, setOpenAlert] = useState(false)
 
     // const [isRegistered, setIsRegistered] = useState(false)
 
@@ -53,26 +55,28 @@ const Page_Event_Id = () => {
     console.log('event id: ', eventid);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch({
-            type: "eventSaga/getEvent",
-            payload: {
-                eventid: eventid,
-                token: user.token
-            }
-        })
-        dispatch({
-            type: "eventSaga/checkCandidateJoinEvent",
-            payload: {
-                eventId: eventid,
-                candidateId: candidateId,
-                token: user.token
-            }
-        })
+        if (user) {
+            dispatch({
+                type: "eventSaga/getEvent",
+                payload: {
+                    eventid: eventid,
+                    token: user.token
+                }
+            })
+            dispatch({
+                type: "eventSaga/checkCandidateJoinEvent",
+                payload: {
+                    eventId: eventid,
+                    candidateId: candidateId,
+                    token: user.token
+                }
+            })
+        }
         // dispatch({ type: "eventSaga/getAllCandidateOfEvent", payload: eventid })
         return () => {
             cleanStore(dispatch)
         }
-    }, [candidateId])
+    }, [candidateId, user])
 
     const isRegistered = useSelector(state => state.eventRegistered)
 
@@ -90,15 +94,17 @@ const Page_Event_Id = () => {
 
 
     useEffect(() => {
-        dispatch({
-            type: "eventSaga/getAllCandidateOfEvent",
-            payload: {
-                eventid: eventid,
-                token: user.token
+        if (user) {
+            dispatch({
+                type: "eventSaga/getAllCandidateOfEvent",
+                payload: {
+                    eventid: eventid,
+                    token: user.token
+                }
+            })
+            return () => {
+                cleanStore(dispatch)
             }
-        })
-        return () => {
-            cleanStore(dispatch)
         }
     }, [])
     const row_drafts = useSelector((state) => state.candidateJoinEvent)
@@ -127,6 +133,7 @@ const Page_Event_Id = () => {
         // alert("Register successfully!")
         // setIsRegistered(true)
         // alert(new Date())
+        // setOpenAlert(true)
     }
 
     const handleRemoveRegister = () => {
@@ -139,6 +146,7 @@ const Page_Event_Id = () => {
             }
         });
         // setIsRegistered(false)
+        // setOpenAlert(true)
     }
 
 
@@ -342,12 +350,16 @@ const Page_Event_Id = () => {
                                                 // className='btnregister'
                                                 // sx={{ mx: 3 }}
                                                 sx={{
-                                                    backgroundColor: "red",
+                                                    backgroundColor: "black",
+                                                    // backgroundColor: "red",
                                                     "&:hover": {
                                                         backgroundColor: "grey",
                                                     }
                                                 }}
-                                                onClick={handleRemoveRegister}
+                                                onClick={
+                                                    handleRegister
+                                                    // () => { setOpenAlert(true) }
+                                                }
                                             >
                                                 {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
                                                 {/* Đăng ký */}
@@ -366,7 +378,7 @@ const Page_Event_Id = () => {
                                                         backgroundColor: "grey",
                                                     }
                                                 }}
-                                                onClick={handleRegister}
+                                                onClick={() => { setOpenAlert(true) }}
                                             >
                                                 {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
                                                 {/* Đăng ký */}
@@ -379,9 +391,15 @@ const Page_Event_Id = () => {
                         </GigaCardBody>
                     </GigaCard>
                 </Box>
+                <AlertDialog
+                    openAlert={openAlert}
+                    setOpenAlert={setOpenAlert}
+                    alertMessage={"Are you sure you want to remove register?"}
+                    successfulMessage={"Remove register successfully"}
+                    handleSubmit={handleRemoveRegister}
+                />
             </Container >
-        )}
-        </>
+        )}</>
     )
 }
 

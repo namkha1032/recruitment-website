@@ -536,8 +536,8 @@ export default function Page_Company_Event() {
                 }}
                 slots={{
                   toolbar: GridToolbar,
-                  noRowsOverlay: NoRowsOverlay,
-                  noResultsOverlay: NoResultsOverlay,
+                  // noRowsOverlay: NoRowsOverlay,
+                  // noResultsOverlay: NoResultsOverlay,
                 }}
                 slotProps={{
                   toolbar: {

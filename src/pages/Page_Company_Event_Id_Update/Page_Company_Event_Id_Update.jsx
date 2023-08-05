@@ -91,7 +91,8 @@ const Page_Company_Event_Id_Update = () => {
         setMaxQuantity(event ? event.maxQuantity : 0)
         setLocation(event ? event.location : "")
         setContent(event ? event.content : "")
-        setTime(event ? dayjs(new Date(event.time + "Z")) : dayjs())
+        // setTime(event ? dayjs(new Date(event.time + "Z")) : dayjs())
+        setTime(event ? dayjs(new Date(event.time + "Z")) : null)
     }, [event])
 
 
