@@ -26,7 +26,7 @@
     "dayjs": "^1.11.9",
     "jquery": "^3.7.0",
     "mui-file-input": "^2.0.2",
-    "pdfjs-dist": "^2.15.349",
+    "pdfjs-dist": "^2.16.105",
     "plotly.js": "^2.24.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
