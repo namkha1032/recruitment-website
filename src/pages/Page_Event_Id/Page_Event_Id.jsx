@@ -24,11 +24,14 @@ import useGetRole from '../../hooks/useGetRole';
 import { useParams } from 'react-router-dom';
 import { transferDatetimeBack } from '../../utils/transferDatetime';
 import AlertDialog from '../../components/AlertDialog/AlertDialog';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
 
 
 const Page_Event_Id = () => {
 
-    let [openAlert, setOpenAlert] = useState(false)
+    // let [openAlert, setOpenAlert] = useState(false)
 
     // const [isRegistered, setIsRegistered] = useState(false)
 
@@ -148,6 +151,11 @@ const Page_Event_Id = () => {
         // setIsRegistered(false)
         // setOpenAlert(true)
     }
+
+
+    const theme = useTheme();
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.down('md'));
 
 
     return (
@@ -357,14 +365,14 @@ const Page_Event_Id = () => {
                                                     }
                                                 }}
                                                 onClick={
-                                                    handleRegister
+                                                    handleRemoveRegister
                                                     // () => { setOpenAlert(true) }
                                                 }
                                             >
                                                 {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
                                                 {/* Đăng ký */}
                                                 <DeleteIcon sx={{ marginRight: 1 }}></DeleteIcon>
-                                                Remove Register
+                                                Remove Registration
                                             </Button>
                                         ) : (
                                             <Button
@@ -378,7 +386,10 @@ const Page_Event_Id = () => {
                                                         backgroundColor: "grey",
                                                     }
                                                 }}
-                                                onClick={() => { setOpenAlert(true) }}
+                                                onClick={
+                                                    handleRegister
+                                                    // () => { setOpenAlert(true) }
+                                                }
                                             >
                                                 {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
                                                 {/* Đăng ký */}
@@ -391,13 +402,13 @@ const Page_Event_Id = () => {
                         </GigaCardBody>
                     </GigaCard>
                 </Box>
-                <AlertDialog
+                {/* <AlertDialog
                     openAlert={openAlert}
                     setOpenAlert={setOpenAlert}
                     alertMessage={"Are you sure you want to remove register?"}
                     successfulMessage={"Remove register successfully"}
                     handleSubmit={handleRemoveRegister}
-                />
+                /> */}
             </Container >
         )}</>
     )

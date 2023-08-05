@@ -557,7 +557,7 @@ const Page_Company_Event_Id_Update = () => {
                     {isSm && (
                         <>
                             <Box sx={{
-                                fontSize: 40,
+                                fontSize: 30,
                                 fontWeight: 600,
                                 // color: '#1565C0',
                                 display: 'flex',
