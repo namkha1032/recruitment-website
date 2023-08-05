@@ -4,7 +4,7 @@ import React from "react";
 const Loading = () => {
   return (
     <Box display='flex' justifyContent='center'>
-      <CircularProgress color="secondary" />{" "}
+      <CircularProgress color="inherit" />{" "}
     </Box>
   );
 };

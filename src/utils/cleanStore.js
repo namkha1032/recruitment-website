@@ -25,6 +25,7 @@ function cleanStore(dispatch) {
     dispatch({ type: "loading/offLoading" })
     dispatch({ type: "status/onReset" })
     dispatch({ type: "eventNavigate/onReset" })
+    dispatch({ type: "profile/setProfile", payload: null })
 }
 
 export default cleanStore

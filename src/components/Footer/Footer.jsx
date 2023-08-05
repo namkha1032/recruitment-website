@@ -33,7 +33,7 @@ const Footer = () => {
   console.log(eventFooter)
   return (
     eventFooter && <>
-      <Box sx={{ bgcolor: "#222222", color: "white", p: 6 }}>
+      <Box sx={{ bgcolor: "#222222", color: "white", p: isSm ? 6 : 0 }}>
         <Container>
           <Grid container spacing={3}>
             <Grid item md={5} xs={12} >
@@ -56,7 +56,7 @@ const Footer = () => {
                   component="p"
                   sx={{ display: "flex", justifyContent: "flex-start" }}
                 >
-                 Teamwork is the heart of success in any organization. A team is a group of individuals who come together, united by a common goal, to collaborate.
+                  Teamwork is the heart of success in any organization. A team is a group of individuals who come together, united by a common goal, to collaborate.
 
                 </Typography>
               </Box>
@@ -168,7 +168,7 @@ const Footer = () => {
                         sx={{
                           display: "flex", justifyContent: "flex-start", overFlow: 'hidden',
                           textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap'
+                          // whiteSpace: 'nowrap'
                         }}
                       >
                         {item.EventName}
@@ -200,7 +200,7 @@ const Footer = () => {
         </Container>
       </Box>
       <Box
-        sx={{ bgcolor: "black", color: "white", p: 6 }} component="footer"  >
+        sx={{ bgcolor: "black", color: "white", p: isSm ? 6 : 2 }} component="footer"  >
         <Typography variant="h6" align="center" >
           Team 4
         </Typography>
@@ -210,7 +210,7 @@ const Footer = () => {
           color="white"
           component="p"
         >
-          Something here to give the footer a purpose!
+          Siu cap vjp pro
         </Typography>
         <Copyright />
       </Box>

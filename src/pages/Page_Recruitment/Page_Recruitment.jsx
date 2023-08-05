@@ -39,6 +39,8 @@ import {
 } from "@mui/material";
 import { GridDeleteIcon } from "@mui/x-data-grid";
 
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 const cards1 = [1, 2, 3, 4, 5, 6];
 const cards2 = [1, 2, 3];
 const PageSize = 4;
@@ -71,6 +73,9 @@ const Page_Recruitment = () => {
   const [skillSelect, setSkillSelect] = useState(-1);
   const [block, setBlock] = useState('none')
   const dispatch = useDispatch();
+  const theme = useTheme()
+  const isMd = useMediaQuery(theme.breakpoints.up('md'));
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
 
   const [positionListSelect, setPositionListSelect] = useState(null);
   useEffect(() => {
@@ -129,7 +134,7 @@ const Page_Recruitment = () => {
 
       <main id="recruitment">
         {/* Hero unit */}
-        <Grid container spacing={3} p={3}>
+        <Grid container spacing={3}>
           <Grid item md={12} xs={12} textAlign='center' >
             <Box >
               <Box
@@ -143,7 +148,7 @@ const Page_Recruitment = () => {
                 }}
 
               >
-                <Box sx={{ position: 'relative', top: '150px', left: '30px' }}>
+                <Box sx={{ position: 'relative', top: '150px', left: '30px', width: "80%" }}>
                   <Box >
 
                     <Typography
@@ -165,6 +170,9 @@ const Page_Recruitment = () => {
                       align="left"
                       color="#EEEEEE"
                       fontFamily="Arial"
+                      sx={{
+                        wordWrap: "break-word"
+                      }}
                     >
                       Recruitment information is constantly updated
 
@@ -225,7 +233,7 @@ const Page_Recruitment = () => {
                             }}
                           >
                             <Grid container>
-                              <Grid item md={9} xs={9}>
+                              <Grid item md={10} xs={12}>
                                 <Box sx={{ margin: "15px", display: "flex" }}>
                                   <Box sx={{}}>
                                     <img
@@ -301,22 +309,24 @@ const Page_Recruitment = () => {
                               </Grid>
                               <Grid
                                 item
-                                md={3} xs={12} sm={12}
+                                md={2} xs={12} sm={12}
                                 sx={{
                                   display: "flex",
                                   flexDirection: "column",
-                                  justifyContent: "right",
+                                  justifyContent: "flex-end",
                                 }}
                               >
-                                <Box sx={{ margin: "15px" }}>
+                                {/* <Box sx={{ margin: "15px" }}>
                                   <Typography align="right"></Typography>
-                                </Box>
+                                </Box> */}
                                 <Box
                                   sx={{
-                                    padding: '30px 0px 0px 0px',
-                                    margin: "15px",
+                                    // padding: '30px 0px 0px 0px',
+                                    marginX: "15px",
+                                    // marginY: isMd ? "34px" : "0px",
+                                    marginBottom: isMd ? "34px" : "15px",
                                     display: "flex",
-                                    justifyContent: "end",
+                                    justifyContent: "flex-end",
                                   }}
                                 >
                                   <Button
@@ -347,7 +357,7 @@ const Page_Recruitment = () => {
                 )}
               </Paper>
             </Box>
-          </Grid>
+          </Grid >
           <Grid item md={3} xs={12}>
             <Box  >
               {skill && <Paper >
@@ -367,11 +377,11 @@ const Page_Recruitment = () => {
               </Paper>}
             </Box>
           </Grid>
-        </Grid>
-      </main>
+        </Grid >
+      </main >
       {/* Footer */}
 
-    </ThemeProvider>
+    </ThemeProvider >
   );
 };
 

@@ -52,12 +52,33 @@ function* getInfoApplication(action) {
     try {
         // const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload}`)
         const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`)
-        const data = response.data.filter(item => item.applicationId === action.payload)
-        console.log("data applicationid", data)
-        if (data.length === 0)
+        const data = response.data.filter(item => item.applicationId === action.payload.applicationid)
+        if(data.length ===0) 
             yield put({ type: 'infoApplication/setInfoApplication', payload: 'none' })
-        else
-            yield put({ type: 'infoApplication/setInfoApplication', payload: data[0] })
+        else{
+            const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`)
+            const data = response.data.filter(item => item.applicationId === action.payload.applicationid)
+            if(data.length ===0) 
+                yield put({ type: 'infoApplication/setInfoApplication', payload: 'none' })
+            else{
+                const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate/${data[0].cv.candidateId}`)
+                console.log(response2.data)
+                const response3 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Authentication/Profile/${response2.data.userId}`,{
+                    headers:{ Authorization: `Bearer ${action.payload.token}`}
+                })
+
+                const data1 = {
+                    name: response3.data.fullName,
+                    email:response3.data.email,
+                    phone:response3.data.phoneNumber,
+                    address:response3.data.address,
+                    image:response3.data.imageURL,
+                }
+                yield put({ type: "candidate/setCandidate", payload: data1 })
+                yield put({ type: 'infoApplication/setInfoApplication', payload: data[0] })
+            }
+        }
+            
     } catch (error) {
         console.log(error)
     }
@@ -128,6 +149,22 @@ function* getApplicationStatus(action) {
     }
 }
 
+
+function* rejectApplication(action) {
+    
+    try {
+        const response = yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Application/UpdateStatusApplication/${action.payload.applicationid}?Candidate_Status=${action.payload.candidate_Status}&Company_Status=Rejected`, action.payload,{
+        headers: {
+          Authorization: `Bearer ${action.payload.token}`
+        },
+      })
+      console.log(response.data)
+    } catch (error) {
+        console.log("error")
+    }
+
+}
+
 function* applicationSaga() {
     yield all([
         takeEvery('applicationSaga/updatesubmitCv', updatesubmitCv),
@@ -135,6 +172,7 @@ function* applicationSaga() {
         takeEvery('applicationSaga/submitCv', submitCv),
         takeEvery('applicationSaga/getApplication', getApplication),
         takeEvery('applicationSaga/getInfoApplication', getInfoApplication),
+        takeEvery('applicationSaga/rejectApplication', rejectApplication),
     ])
 }
 

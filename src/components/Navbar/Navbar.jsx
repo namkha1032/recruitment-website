@@ -38,7 +38,10 @@ import HomeIcon from '@mui/icons-material/Home';
 import WorkIcon from '@mui/icons-material/Work';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 let innerDrawerWidth;
-
+let backcolor = "white"
+let fontcolor = "black"
+// let backcolor = "black"
+// let fontcolor = "white"
 
 const NavbarContent = (props) => {
     const role = props.role
@@ -76,8 +79,8 @@ const NavbarContent = (props) => {
         <>
             <Container sx={{ display: "flex", alignItems: "center" }}>
                 {/* Logo */}
-                <Box sx={{ display: { xs: 'none', md: 'flex' }, height: "69px", alignItems: "center", cursor: "pointer", borderTop: "4px solid white", borderBottom: "4px solid white" }} onClick={() => { navigate("/home") }}>
-                    <FavoriteIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                <Box sx={{ display: { xs: 'none', md: 'flex' }, height: "69px", alignItems: "center", cursor: "pointer", borderTop: `4px solid ${backcolor}`, borderBottom: `4px solid ${backcolor}` }} onClick={() => { navigate("/home") }}>
+                    <FavoriteIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: fontcolor }} />
                     <Typography
                         variant="h6"
                         noWrap
@@ -88,7 +91,7 @@ const NavbarContent = (props) => {
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
-                            color: 'inherit',
+                            color: fontcolor,
                             textDecoration: 'none',
                         }}
                     >
@@ -103,7 +106,7 @@ const NavbarContent = (props) => {
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
                         onClick={(event) => { setAnchorElNav(event.currentTarget) }}
-                        color="inherit"
+                        sx={{ color: `${fontcolor}` }}
                     >
                         <MenuIcon />
                     </IconButton>
@@ -164,7 +167,7 @@ const NavbarContent = (props) => {
                     </Menu>
                 </Box>
                 {/* Logo responsive */}
-                <FavoriteIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                <FavoriteIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, color: fontcolor }} />
                 <Typography
                     variant="h5"
                     noWrap
@@ -177,7 +180,7 @@ const NavbarContent = (props) => {
                         fontFamily: 'monospace',
                         fontWeight: 700,
                         letterSpacing: '.3rem',
-                        color: 'inherit',
+                        color: fontcolor,
                         textDecoration: 'none',
                     }}
                 >
@@ -195,9 +198,9 @@ const NavbarContent = (props) => {
                                 navigate(navbarItem.to)
                             }}
                             sx={{
-                                "&:hover": { borderBottom: "4px solid black" },
-                                borderBottom: navbarItem.active ? "4px solid black" : "4px solid white",
-                                borderTop: "4px solid white",
+                                "&:hover": { borderBottom: `4px solid ${fontcolor}` },
+                                borderBottom: navbarItem.active ? `4px solid ${fontcolor}` : `4px solid ${backcolor}`,
+                                borderTop: `4px solid ${backcolor}`,
                                 height: "69px",
                                 cursor: "pointer",
                                 display: "flex", alignItems: "center"
@@ -211,6 +214,7 @@ const NavbarContent = (props) => {
                                     borderRadius: 3,
                                     marginLeft: 1,
                                     marginRight: 1,
+                                    color: fontcolor
                                 }}
                             >
                                 {navbarItem.name}
@@ -355,15 +359,26 @@ const NavbarContent = (props) => {
                                 </MenuItem>
                             </Menu>
                         </>
-                        : <Button variant="outlined" sx={{
-                            borderColor: "black", color: "black",
-                            "&:hover": {
-                                borderColor: "black"
-                            }
-                        }} onClick={() => {
-                            sessionStorage.setItem('previousPage', window.location.pathname);
-                            navigate("/login")
-                        }}>Log in</Button>}
+                        : <>
+                            {isSm ? <Button sx={{
+                                color: "black",
+                                marginRight: 2
+                            }}>
+                                Sign up
+                            </Button> : null}
+                            <Button variant="outlined" sx={{
+                                borderColor: "black", color: "black",
+                                backgroundColor:"white",
+                                "&:hover": {
+                                    borderColor: "black",
+                                    backgroundColor:"white",
+                                }
+                            }} onClick={() => {
+                                sessionStorage.setItem('previousPage', window.location.pathname);
+                                navigate("/login")
+                            }}>Log in</Button>
+                        </>
+                    }
                 </Box>
             </Container>
         </>
@@ -393,7 +408,7 @@ const Navbar = (props) => {
                             duration: theme.transitions.duration.enteringScreen,
                         }),
                     }),
-                    backgroundColor: "white",
+                    backgroundColor: backcolor,
                     color: "black",
                     height: "69px"
                     // boxShadow: 0
@@ -401,14 +416,14 @@ const Navbar = (props) => {
             >
                 <Toolbar sx={{ height: "100%" }}>
                     {props.showSidebar ? <IconButton
-                        color="inherit"
                         aria-label="open drawer"
                         onClick={() => props.setOpen(true)}
                         edge="start"
                         sx={{
                             position: { xs: "block", lg: "absolute" },
                             // zIndex: 2,
-                            ...(props.open && { display: 'none' })
+                            ...(props.open && { display: 'none' }),
+                            color: fontcolor
                         }}
                     >
                         <BusinessIcon />
