@@ -4,6 +4,7 @@ import {
   Autocomplete,
   TextField,
   CircularProgress,
+  Tooltip,
 } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
@@ -79,18 +80,27 @@ export default function Page_Company_Question() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user)
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    dispatch({ type: "questionSaga/getAllQuestion", payload: {
-      token: `Bearer ${user.token}`
-    } });
-    dispatch({ type: "skillSaga/getSkill", payload: {
-      token: `Bearer ${user.token}`,
-    } });
-    dispatch({ type: "languageSaga/getLanguage", payload: {
-      token: `Bearer ${user.token}`,
-    }});
+    dispatch({
+      type: "questionSaga/getAllQuestion",
+      payload: {
+        token: `Bearer ${user.token}`,
+      },
+    });
+    dispatch({
+      type: "skillSaga/getSkill",
+      payload: {
+        token: `Bearer ${user.token}`,
+      },
+    });
+    dispatch({
+      type: "languageSaga/getLanguage",
+      payload: {
+        token: `Bearer ${user.token}`,
+      },
+    });
   }, []);
 
   const rows = useSelector((state) => state.questionList);
@@ -206,7 +216,7 @@ export default function Page_Company_Question() {
           languageId: null,
           languageName: null,
           softskill: true,
-          token: `Bearer ${user.token}`
+          token: `Bearer ${user.token}`,
         },
       });
     } else if (value === "Technology") {
@@ -219,7 +229,7 @@ export default function Page_Company_Question() {
           languageId: null,
           languageName: null,
           softskill: false,
-          token: `Bearer ${user.token}`
+          token: `Bearer ${user.token}`,
         },
       });
     } else if (value === "Language") {
@@ -232,7 +242,7 @@ export default function Page_Company_Question() {
           languageId: null,
           languageName: null,
           softskill: false,
-          token: `Bearer ${user.token}`
+          token: `Bearer ${user.token}`,
         },
       });
     } else {
@@ -245,7 +255,7 @@ export default function Page_Company_Question() {
           languageId: null,
           languageName: null,
           softskill: false,
-          token: `Bearer ${user.token}`
+          token: `Bearer ${user.token}`,
         },
       });
     }
@@ -270,7 +280,7 @@ export default function Page_Company_Question() {
         languageId: null,
         languageName: null,
         softskill: false,
-        token: `Bearer ${user.token}`
+        token: `Bearer ${user.token}`,
       },
     });
   }
@@ -286,7 +296,7 @@ export default function Page_Company_Question() {
         languageId: value ? value.languageId : null,
         languageName: value ? value.languageName : null,
         softskill: false,
-        token: `Bearer ${user.token}`
+        token: `Bearer ${user.token}`,
       },
     });
   }
@@ -323,7 +333,7 @@ export default function Page_Company_Question() {
         languageId: languageChoose ? languageChoose.languageId : null,
         languageName: languageChoose ? languageChoose.languageName : null,
         softskill: valueChoose === "Soft Skills" ? true : false,
-        token: `Bearer ${user.token}`
+        token: `Bearer ${user.token}`,
       },
     });
   }
@@ -365,7 +375,7 @@ export default function Page_Company_Question() {
         languageId: languageChoose ? languageChoose.languageId : null,
         languageName: languageChoose ? languageChoose.languageName : null,
         softskill: valueChoose === "Soft Skills" ? true : false,
-        token: `Bearer ${user.token}`
+        token: `Bearer ${user.token}`,
       },
     });
   }
@@ -392,7 +402,7 @@ export default function Page_Company_Question() {
         languageId: languageChoose ? languageChoose.languageId : null,
         languageName: languageChoose ? languageChoose.languageName : null,
         softskill: valueChoose === "Soft Skills" ? true : false,
-        token: `Bearer ${user.token}`
+        token: `Bearer ${user.token}`,
       },
     });
   }
@@ -417,16 +427,18 @@ export default function Page_Company_Question() {
       renderCell: (params) => {
         if (params.value === undefined) return <NullString />;
         return (
-          <Box
-            sx={{
-              "&:hover": {
-                cursor: "pointer",
-                textDecoration: "underline",
-              },
-            }}
-          >
-            {params.value}
-          </Box>
+          <Tooltip title={params.value} arrow>
+            <Box
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                },
+              }}
+            >
+              {params.value.slice(0, 6) + "..."}
+            </Box>
+          </Tooltip>
         );
       },
     },
