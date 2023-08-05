@@ -34,6 +34,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
 
+
 const Page_Company_Event_Create = () => {
 
     // useNavigate
@@ -502,7 +503,7 @@ const Page_Company_Event_Create = () => {
                     {isSm && (
                         <>
                             <Box sx={{
-                                fontSize: 30,
+                                fontSize: 40,
                                 fontWeight: 600,
                                 // color: '#1565C0',
                                 display: 'flex',
