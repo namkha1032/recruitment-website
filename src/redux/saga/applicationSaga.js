@@ -25,18 +25,40 @@ function* getApplication(action) {
         // const reponse = yield call(axios.get, `${host.name}/data/applicationList.json`)
         const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload.recruitmentid}`, config)
         const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`, config)
+        const responseCandidateList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`, config)
+        const responseCvSkillList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CvHasSkill`, config)
         let mergeobject = {}
         let candidatelist = []
         let application = response2.data.filter((prop) => prop.position.positionId === response1.data.positionId);
         console.log("applyinsaga", application);
         const responseCvList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv`, config)
         for (let i = 0; i < application.length; i++) {
-            const findCv = responseCvList.data.find((item) => {
+            let findCv = responseCvList.data.find((item) => {
                 return item.cvid == application[i].cv.cvid
             })
-            candidatelist.push({ ...application[i], ...(yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate/${application[i].cv.candidateId}`, config)).data, findCv: findCv, findPosition: response1.data })
+            const findCandidate = responseCandidateList.data.find((item) => {
+                return item.candidateId == application[i].cv.candidateId
+            })
+            let cvSkillList = responseCvSkillList.data.filter((item) => {
+                return item.cvid == application[i].cv.cvid
+            })
+            let newSkillList = findCv.skills.map(skill => {
+                const findCvSkill = cvSkillList.find((cvsk) => {
+                    return cvsk.skillId == skill.skillId
+                })
+                let newSkill = {
+                    ...skill,
+                    years: findCvSkill.experienceYear
+                }
+                return newSkill
+            })
+            findCv = {
+                ...findCv,
+                skills: newSkillList
+            }
+            candidatelist.push({ ...application[i], ...findCandidate, findCv: findCv, findPosition: response1.data })
         }
-        yield call(recommendCV, candidatelist)
+        candidatelist = yield call(recommendCV, candidatelist)
         // const test = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate/db20f8d0-eb45-43af-9790-e89f48a1a587`, config)
         // console.log('testcandidate', test.data.user.fullName);
         // candidatelist.push(mergeobject);
