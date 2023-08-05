@@ -278,12 +278,16 @@ const Page_Interview_Id = () => {
                                                     <Stack direction="row" sx={{ display: "flex", flexWrap: "wrap" }}>
                                                         {interviewidinfo[0].candidate_Status === "Not start" &&
                                                             <>
-                                                                <Chip sx={{ margin: "0px 0px 5px 6px" }} label="Not start" variant='outlined' size='medium' color="info" />
+                                                                <Typography variant="h6" sx={{ marginLeft: "6px", color: 'grey' }} >
+                                                                    Not start
+                                                                </Typography>
                                                             </>
                                                         }
                                                         {interviewidinfo[0].candidate_Status === "Finished" &&
                                                             <>
-                                                                <Chip sx={{ margin: "0px 0px 5px 6px" }} label="Finished" variant='outlined' size='medium' color="info" />
+                                                                <Typography variant="h6" sx={{ marginLeft: "6px", color: 'blue' }} >
+                                                                    Finished
+                                                                </Typography>
                                                             </>
                                                         }
 

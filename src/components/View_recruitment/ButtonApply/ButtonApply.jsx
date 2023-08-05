@@ -56,9 +56,10 @@ const ButtonApply = (props) => {
     const [CV, setCV] = useState(null);
     const handleClose = () => setOpen(false);
     const [helperText, setHelperText] = useState('');
-    const [apply, setApply] = useState(false);
+    // const [applied, setApplied] = useState(null);
     const [submitstatus, setSubmitstatus] = useState(false);
     const [loading, setLoading] = useState(false);
+    
     const handleCVChange = (event) => {
         setCV(event.target.value);
         setHelperText('');
@@ -84,17 +85,14 @@ const ButtonApply = (props) => {
                     token: "haha"
                 },
             })
-        }
-        return () => {
-            dispatch({ type: 'applicationStatus/setApplicationStatus', payload: null })
-        }
-        
-    }, [])
+        }   
+    }, [submitstatus])
     useEffect(() => {
         if (appstatus !== null) {
             if (appstatus.length > 0) {
                 setSubmitstatus(true);
                 setCV(appstatus[0].cv.cvid);
+
             }
         }
     }, [appstatus])
@@ -223,6 +221,7 @@ const ButtonApply = (props) => {
     console.log("statussubmitbutton", submitstatus)
     const tabs = 1
     console.log('appwithoutapplication', appstatus);
+    
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
