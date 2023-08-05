@@ -151,6 +151,8 @@ function* getInterviewResult(action) {
     let interStruc = {
       interviewid: action.payload.interviewid,
       note: responseInterview.data.notes,
+      candidate_Status: responseInterview.data.candidate_Status,
+      company_Status: responseInterview.data.company_Status,
       round: []
     };
     // Soft Skill
@@ -303,8 +305,8 @@ function* scoreInterview(action) {
       headers: { Authorization: token },
     }
     console.log("input: ", JSON.stringify(action.payload))
-    // yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Interview/PostQuestionInterviewResult/${action.payload.interviewid}`, action.payload.result, config)
-    // yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Interview/UpdateStatusInterview/${action.payload.interviewid}?Candidate_Status=Finished&Company_Status=Pending`, null, config)
+    yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Interview/PostQuestionInterviewResult/${action.payload.interviewid}`, action.payload.result, config)
+    yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Interview/UpdateStatusInterview/${action.payload.interviewid}?Candidate_Status=Finished&Company_Status=Pending`, null, config)
     yield put({ type: "error/setError", payload: { status: "no", message: action.payload.interviewid } })
   }
   catch (error) {

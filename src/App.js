@@ -124,7 +124,7 @@ function App() {
               <Route path="/company/interview/:interviewid" element={<Page_Company_Interview_Id />} />
             </Route>
 
-            <Route element={<ProtectedRoute allowed={["interviewer"]} />}>
+            <Route element={<ProtectedRoute allowed={["interviewer", "admin"]} />}>
               <Route path="/company/question" element={<Page_Company_Question />} />
             </Route>
 

@@ -79,7 +79,7 @@ const Page_Company_Interview_Id = () => {
         interview && role
             ? <>
                 <Page_Interview_Id />
-                {role == "admin" || role == "interviewer"
+                {role == "interviewer"
                     ?
                     <>
                         <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 4, marginBottom: 4 }}>
@@ -92,11 +92,13 @@ const Page_Company_Interview_Id = () => {
                             handleSubmit={handleStart} />
                     </>
                     : null}
-                {(role == "admin" || role == "interviewer" || role == "recruiter") ?
+                {(interview.candidate_Status == "Finished") ?
                     <>
-                        <TitleDivider>
-                            RESULT OF THE INTERVIEW
-                        </TitleDivider>
+                        <Box sx={{ marginY: 4 }}>
+                            <TitleDivider>
+                                RESULT OF THE INTERVIEW
+                            </TitleDivider>
+                        </Box>
                         <Grid container spacing={4}>
                             <Grid item md={6} xs={12}>
                                 <GigaCard>

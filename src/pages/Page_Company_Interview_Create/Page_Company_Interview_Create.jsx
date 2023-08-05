@@ -89,7 +89,7 @@ const Page_Company_Interview_Create = () => {
         //     dispatch({ type: "shift/setShift", payload: null })
         // }
         return (() => {
-            cleanStore()
+            cleanStore(dispatch)
         })
     }, [])
 
