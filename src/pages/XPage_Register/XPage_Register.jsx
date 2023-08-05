@@ -66,6 +66,7 @@ const XPage_Register = () => {
   const [validPassword, setValidPassword] = useState(true);
 
   const [errorSnackbar, setErrorSnackbar] = useState(false);
+  const [successSnackbar, setSuccessSnackbar] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const dispatch = useDispatch();
@@ -88,11 +89,14 @@ const XPage_Register = () => {
   useEffect(() => {
     if (newError.status === "no") {
       setLoading(false)
-      dispatch({
-        type: "error/setError",
-        payload: { status: "idle", message: "" },
-      });
-      navigate("/login");
+      setSuccessSnackbar(true);
+      setTimeout(() => {
+        dispatch({
+          type: "error/setError",
+          payload: { status: "idle", message: "" },
+        });
+        navigate("/login");
+      }, 2000)
     }
     if (newError.status === "yes") {
       setLoading(false)
@@ -752,6 +756,7 @@ const XPage_Register = () => {
         </Box>
       </Container>
       </Stack>
+
       <Snackbar
         open={errorSnackbar}
         autoHideDuration={5000}
@@ -761,6 +766,17 @@ const XPage_Register = () => {
         <Alert severity="error" onClose={() => setErrorSnackbar(false)}>
           {/* {newError.message} */}
           Username or email already exists
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={successSnackbar}
+        autoHideDuration={2000}
+        onClose={() => setSuccessSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert severity="success" onClose={() => setSuccessSnackbar(false)}>
+          Sign up successful
         </Alert>
       </Snackbar>
     </Box>

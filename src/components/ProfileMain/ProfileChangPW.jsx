@@ -24,10 +24,10 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 
-const style = {
-  marginTop: "15px",
-  marginBottom: "15px",
-};
+// const style = {
+//   marginTop: "15px",
+//   marginBottom: "15px",
+// };
 
 const theme = createTheme({
   palette: {
@@ -50,6 +50,7 @@ const ProfileChangePW = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
   const [errorPasswordSnackbar, setErrorPasswordSnackbar] = useState(false);
+  const [successSnackbar, setSuccessSnackbar] = useState(false);
   const [messagePassword, setMessagePassword] = useState("");
 
   const [validUsername, setValidUsername] = useState(true);
@@ -66,19 +67,18 @@ const ProfileChangePW = () => {
   useEffect(() => {
     if (newError.status === "no") {
       setLoading(false)
-      dispatch({
-        type: "error/setError",
-        payload: { status: "idle", message: "" },
-      });
-      navigate("/profile/:profileid");
+      setSuccessSnackbar(true);
+      setTimeout(() => {
+        dispatch({
+          type: "error/setError",
+          payload: { status: "idle", message: "" },
+        });
+        navigate("/profile/:profileid");
+      }, 2000);
     }
     if (newError.status === "yes") {
       setLoading(false)
       setErrorSnackbar(true);
-      // setUsername("");
-      // setCurrentPassword("");
-      // setNewPassword("");
-      // setConfirmPassword("");
       setTimeout(() => {
         setErrorSnackbar(false);
         dispatch({
@@ -175,23 +175,6 @@ const ProfileChangePW = () => {
         setValidConfirmPassword(false)
       }
     }
-
-    // if (currentPassword === newPassword) {
-    //   setMessagePassword("New password cannot be same as old password");
-    //   setErrorPasswordSnackbar(true);
-    //   setNewPassword("");
-    //   setConfirmPassword("");
-    // } else if (newPassword !== confirmPassword) {
-    //   setMessagePassword("Passwords do not match");
-    //   setErrorPasswordSnackbar(true);
-    //   setNewPassword("");
-    //   setConfirmPassword("");
-    // } else {
-    //   dispatch({
-    //     type: "saga/userChangePassword",
-    //     payload: { username, currentPassword, newPassword, confirmPassword },
-    //   });
-    // }
   };
 
   return (
@@ -668,7 +651,7 @@ const ProfileChangePW = () => {
 
       <Snackbar
         open={errorSnackbar}
-        autoHideDuration={3000}
+        autoHideDuration={5000}
         onClose={() => setErrorSnackbar(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -680,12 +663,23 @@ const ProfileChangePW = () => {
 
       <Snackbar
         open={errorPasswordSnackbar}
-        autoHideDuration={3000}
+        autoHideDuration={5000}
         onClose={() => setErrorPasswordSnackbar(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert severity="error" onClose={() => setErrorPasswordSnackbar(false)}>
           {messagePassword}
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={successSnackbar}
+        autoHideDuration={2000}
+        onClose={() => setSuccessSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert severity="success" onClose={() => setSuccessSnackbar(false)}>
+          Password changed successfully
         </Alert>
       </Snackbar>
     </Box>
