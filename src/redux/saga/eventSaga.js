@@ -379,6 +379,7 @@ function* postCandidateJoinEvent(action) {
     yield put({ type: "eventIdStatus/onSuccess", payload: "Register event" })
     yield put({ type: "eventSaga/getEvent", payload: eventId })
     yield put({ type: "eventRegistered/setEventRegistered", payload: true })
+    yield put({ type: "error/setError", payload: { status: "no", message: "" } })
   }
   catch (error) {
     console.log(error)
@@ -402,6 +403,7 @@ function* deleteCandidateJoinEvent(action) {
     const response2 = response1.data.filter(element => (element.candidateId === candidateId) && (element.eventId === eventId))[0]
     yield call(axios.delete, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent/${response2.candidateJoinEventId}`, config);
     yield put({ type: "eventRegistered/setEventRegistered", payload: false })
+    yield put({ type: "error/setError", payload: { status: "no", message: "" } })
   }
   catch (error) {
     console.log(error)

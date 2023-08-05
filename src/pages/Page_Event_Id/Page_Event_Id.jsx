@@ -31,7 +31,8 @@ import { useTheme } from '@mui/material/styles';
 
 const Page_Event_Id = () => {
 
-    // let [openAlert, setOpenAlert] = useState(false)
+    let [openAlertRegister, setOpenAlertRegister] = useState(false)
+    let [openAlertRemove, setOpenAlertRemove] = useState(false)
 
     // const [isRegistered, setIsRegistered] = useState(false)
 
@@ -160,7 +161,7 @@ const Page_Event_Id = () => {
 
     return (
         <> {event && (
-            <Container sx={{ p: 0 }} className='eventid'>
+            <>
                 <Box sx={{
                     fontSize: 50,
                     fontWeight: 600,
@@ -365,8 +366,7 @@ const Page_Event_Id = () => {
                                                     }
                                                 }}
                                                 onClick={
-                                                    handleRemoveRegister
-                                                    // () => { setOpenAlert(true) }
+                                                    () => { setOpenAlertRemove(true) }
                                                 }
                                             >
                                                 {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
@@ -387,8 +387,7 @@ const Page_Event_Id = () => {
                                                     }
                                                 }}
                                                 onClick={
-                                                    handleRegister
-                                                    // () => { setOpenAlert(true) }
+                                                    () => { setOpenAlertRegister(true) }
                                                 }
                                             >
                                                 {/* <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon> */}
@@ -402,14 +401,21 @@ const Page_Event_Id = () => {
                         </GigaCardBody>
                     </GigaCard>
                 </Box>
-                {/* <AlertDialog
-                    openAlert={openAlert}
-                    setOpenAlert={setOpenAlert}
+                <AlertDialog
+                    openAlert={openAlertRegister}
+                    setOpenAlert={setOpenAlertRegister}
+                    alertMessage={"Are you sure you want to register this event?"}
+                    successfulMessage={"Remove register successfully"}
+                    handleSubmit={handleRegister}
+                />
+                <AlertDialog
+                    openAlert={openAlertRemove}
+                    setOpenAlert={setOpenAlertRemove}
                     alertMessage={"Are you sure you want to remove register?"}
                     successfulMessage={"Remove register successfully"}
                     handleSubmit={handleRemoveRegister}
-                /> */}
-            </Container >
+                />
+            </>
         )}</>
     )
 }
