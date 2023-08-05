@@ -187,7 +187,7 @@ const RenderCheckAccount = ({ params }) => {
                                         navigate("/company/account")
                                     }}
                                     sx={{
-                                        boxShadow: 7,
+                                        boxShadow: 3,
                                         backgroundColor: grey[900],
                                         '&:hover': {
                                             color: grey[900],

@@ -148,7 +148,7 @@ const Page_Company_Account_Create = () => {
                         color="primary"
                         onClick={handleCreateClick}
                         sx={{
-                            boxShadow: 5,
+                            boxShadow: 3,
                             backgroundColor: grey[900],
                             '&:hover': {
                                 color: grey[900],

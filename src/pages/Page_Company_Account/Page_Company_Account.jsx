@@ -731,7 +731,7 @@ const Page_Company_Account = () => {
                                             navigate("/company/account/create")
                                         }}
                                         sx={{
-                                            boxShadow: 7,
+                                            boxShadow: 3,
                                             minWidth: '120px',
                                             backgroundColor: grey[900],
                                             '&:hover': {
@@ -759,7 +759,7 @@ const Page_Company_Account = () => {
                                             navigate("/company/account/blacklist")
                                         }}
                                         sx={{
-                                            boxShadow: 7,
+                                            boxShadow: 3,
                                             minWidth: '120px',
                                             backgroundColor: grey[900],
                                             '&:hover': {
