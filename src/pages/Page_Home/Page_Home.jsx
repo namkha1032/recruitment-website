@@ -81,11 +81,11 @@ const Page_Home = () => {
   console.log(eventList)
   return (
     eventList && <Box>
-      <Box sx={{ padding: '24px' }}>
+      <Box sx={{ paddingY: '24px', paddingX: "0" }}>
         <Carousel />
       </Box>
 
-      {eventList && <Box sx={{ padding: '24px', borderTop: '1px solid lightgrey' }}>
+      {eventList && <Box sx={{ paddingY: '24px', paddingX: "0", borderTop: '1px solid lightgrey' }}>
         <Grid container spacing={3}>
           <Grid item md={4} sx={{ cursor: 'pointer' }}   >
 
@@ -290,7 +290,7 @@ const Page_Home = () => {
           </Grid>
         </Grid>
       </Box>}
-      <Box sx={{ padding: '24px', borderTop: '1px solid lightgrey' }} id='AboutUs'>
+      <Box sx={{ paddingY: '24px', paddingX: "0", borderTop: '1px solid lightgrey' }} id='AboutUs'>
         <Box sx={{ padding: '0px 0px 30px 0px' }}>
           <Typography align='center' variant='h2' fontFamily="Arial" >About us</Typography>
 
@@ -405,7 +405,7 @@ const Page_Home = () => {
 
           </Grid>
           <Grid item md={6.5}>
-            <Box sx={{ padding: '24px 0px 0px 20px' }} >
+            <Box sx={{ padding: '24px 0px 0px 20px', display: "flex", justifyContent: "flex-end" }} >
               <img src={picture2}
 
                 alt=""

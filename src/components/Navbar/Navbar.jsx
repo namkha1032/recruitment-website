@@ -359,15 +359,26 @@ const NavbarContent = (props) => {
                                 </MenuItem>
                             </Menu>
                         </>
-                        : <Button variant="outlined" sx={{
-                            borderColor: "black", color: "black",
-                            "&:hover": {
-                                borderColor: "black"
-                            }
-                        }} onClick={() => {
-                            sessionStorage.setItem('previousPage', window.location.pathname);
-                            navigate("/login")
-                        }}>Log in</Button>}
+                        : <>
+                            {isSm ? <Button sx={{
+                                color: "black",
+                                marginRight: 2
+                            }}>
+                                Sign up
+                            </Button> : null}
+                            <Button variant="outlined" sx={{
+                                borderColor: "black", color: "black",
+                                backgroundColor:"white",
+                                "&:hover": {
+                                    borderColor: "black",
+                                    backgroundColor:"white",
+                                }
+                            }} onClick={() => {
+                                sessionStorage.setItem('previousPage', window.location.pathname);
+                                navigate("/login")
+                            }}>Log in</Button>
+                        </>
+                    }
                 </Box>
             </Container>
         </>

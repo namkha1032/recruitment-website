@@ -79,7 +79,7 @@ const Page_Company_Interview_Id = () => {
         interview && role
             ? <>
                 <Page_Interview_Id />
-                {role == "interviewer"
+                {role == "admin" || role == "interviewer"
                     ?
                     <>
                         <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 4, marginBottom: 4 }}>

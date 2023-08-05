@@ -33,6 +33,8 @@ import { AccessTime, AccessTimeFilled, AccountCircle, Search } from "@mui/icons-
 import NoteField from "../Page_Company_Interview_Id/NoteField/NoteField";
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 //
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 const cards1 = [1, 2, 3, 4, 5, 6];
 const pageSize = 6;
 function Copyright() {
@@ -55,7 +57,9 @@ const Page_Event = () => {
 
   //
   const list = useSelector((state) => state.eventList);
-
+  const theme = useTheme()
+  const isMd = useMediaQuery(theme.breakpoints.up('md'));
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
   useEffect(() => {
     dispatch({ type: "eventSaga/getEventList", payload: { token: "goku" } });
   }, []);
@@ -86,7 +90,7 @@ const Page_Event = () => {
   return (
     eventListSearch && (
       <>
-        <Box sx={{ padding: "24px" }}>
+        <Box sx={{ paddingY: "24px", paddingX: "0px" }}>
           <Box
             sx={{
               backgroundImage:
@@ -96,7 +100,7 @@ const Page_Event = () => {
               boxShadow: 5,
             }}
           >
-            <Box sx={{ position: 'relative', top: '150px', left: '30px' }}>
+            <Box sx={{ position: 'relative', top: '150px', left: '30px', width: "80%" }}>
               <Box>
                 <Typography
                   variant="h3"
@@ -123,9 +127,9 @@ const Page_Event = () => {
           </Box>
         </Box>
         {eventList && (
-          <Box p="24px">
-            <Paper p="16px" sx={{ boxShadow: 5, padding: '0px 0px 10px 0px' }} >
-              <Box sx={{ p: "24px 48px 24px 48px" }}>
+          <Box sx={{ paddingY: "24px", paddingX: "0px" }}>
+            <Paper sx={{ boxShadow: 5 }} >
+              <Box sx={{ padding: isSm ? "24px 48px 24px 48px" : "16px 16px 16px 16px" }}>
                 {
                   /* End hero unit */
                   <Box pb="16px" display="flex" justifyContent="right">
