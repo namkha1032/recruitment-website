@@ -827,8 +827,9 @@ export default function Page_Company_Interview() {
                     color: "black",
                   },
                   "&.MuiDataGrid-root .MuiDataGrid-row": {
-                    cursor: "pointer",
+                   cursor: 'pointer',
                   },
+                  
                 }}
                 slots={{
                   toolbar: GridToolbar,

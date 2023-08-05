@@ -8,6 +8,9 @@ import { NotStart,Pending , Completed,Pass} from '../Label/LabelStatus';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import {NoRowsOverlay,NoResultsOverlay} from '../DataRick/DataRick';
+import { param } from 'jquery';
+import GigaCard from '../GigaCard/GigaCard';
+import GigaCardBody from '../GigaCardBody/GigaCardBody';
 export default function HistoryListApp({ events, NameList, namePage }) {
   console.log("eventAppli:", events)
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -34,25 +37,22 @@ export default function HistoryListApp({ events, NameList, namePage }) {
   const isSm = useMediaQuery(theme.breakpoints.up('sm'));
 
   const columns = [
-    { field: 'name', headerName: namePage, flex:  isSm ? 2 : 3,minWidth:'300px',valueGetter: (params) => params.row.positionName     },
-    { field: 'time', headerName: 'Time', flex: isSm ? 2 : 3,valueGetter: (params) => params.row.dateTime     },
+    { field: 'name', headerName: namePage, minWidth:200,flex: 0.4,valueGetter: (params) => params.row.positionName     },
+    { field: 'time', headerName: 'Time',minWidth:150,flex: 0.3 ,valueGetter: (params) => params.row.dateTime     },
     {
       field: 'status',
       headerName: 'Status',
-      flex: isSm ? 2 : 1,
+      minWidth:150,
+      flex: 0.2,
+      headerAlign: "center",
+      align: "center",
       valueGetter: (params) => params.row.Status,
       renderCell: (params) => {
         switch (params.value) {
-          case "Đang chờ":
+          case "Pending":
             return <Pending />;
-          case "Đã đậu":
+          case "Passed":
             return <Pass/>
-          case "Chưa phỏng vấn":
-            return <NotStart/>;
-          case "Đã phỏng vấn":
-            return <Completed/>;
-          case "Kết thúc":
-            return <Completed />;
           default:
             return <Pending />;
         }
@@ -61,7 +61,9 @@ export default function HistoryListApp({ events, NameList, namePage }) {
     {
       field: 'view',
       headerName: 'View',
-      flex: 1,
+      minWidth:150,
+      headerAlign: "center",
+      align: "center",
       renderCell: (params) => (
         <>
       {isSm ? (
@@ -80,11 +82,16 @@ export default function HistoryListApp({ events, NameList, namePage }) {
       ),
     },
   ].filter(Boolean);
-
+  const options = {
+    filterType: 'dropdown',
+    responsive: 'scrollMaxHeight',
+};
 
   return (
-    <>
-      <Grid container direction="column">
+    <Box>
+      <GigaCard>
+        <GigaCardBody>
+      
         <Grid item>
           <Typography variant="h4" gutterBottom>
             My Story
@@ -95,7 +102,7 @@ export default function HistoryListApp({ events, NameList, namePage }) {
         </Grid>
         <Grid item xs={12} md={10}>
           {/* Tăng chiều rộng của khung */}
-          <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px', width: '100%' }}>
+          <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px',minHeight:350 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
               <Typography variant="h5" gutterBottom sx={{margin:'0'}}>
                 {NameList}
@@ -106,8 +113,9 @@ export default function HistoryListApp({ events, NameList, namePage }) {
             </Box>
             <DataGrid
               rows={events === null ? [] : events}
+              
               columns={columns}
-              autoHeight={true}
+              autoHeight
               getRowId={(row) => row.applicationId}
               rowStyles={(params) => ({
                 backgroundColor: selectedEvent === params.applicationId ? '#ffdddd' : 'transparent',
@@ -118,7 +126,6 @@ export default function HistoryListApp({ events, NameList, namePage }) {
               onMouseLeave={handleEventLeave}
               selection={{ backgroundColor: '#1565C0', color: '#ffffff' }}
               sx={{
-                width: '100%',
                 "&.MuiDataGrid-root": {
                   borderRadius: 1,
                 },
@@ -129,11 +136,10 @@ export default function HistoryListApp({ events, NameList, namePage }) {
                   outline: "none",
                 },
                 "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
+                  // backgroundColor: "#1565C0",
                   backgroundColor: "black",
                   color: "white",
                   fontWeight: 700,
-                  fontSize: 14,
-                  border: "none",
                 },
                 "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
                   display: "none",
@@ -141,11 +147,16 @@ export default function HistoryListApp({ events, NameList, namePage }) {
                 "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
                   color: "white",
                 },
-                "&.MuiDataGrid-colCellTitle": {
-                  whiteSpace: "normal",
-                }
+                "&.MuiDataGrid-root .MuiCircularProgress-root": {
+                  color: "black",
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-row": {
+                  cursor: "pointer",
+                },
+                
               }}
               slots = {{
+        
                 noRowsOverlay:NoRowsOverlay,
                 noResultsOverlay:NoResultsOverlay,
                 
@@ -154,7 +165,10 @@ export default function HistoryListApp({ events, NameList, namePage }) {
             />
           </Paper>
         </Grid>
-      </Grid>
-    </>
+
+     
+      </GigaCardBody>
+      </GigaCard>
+      </Box>
   );
 }
