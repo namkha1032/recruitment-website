@@ -285,7 +285,7 @@ const XPage_Register = () => {
                   //marginBottom: "5px",
                 }}
               >
-                Register
+                Sign Up
               </Typography>
 
               <Grid
@@ -690,7 +690,7 @@ const XPage_Register = () => {
                         marginTop: "15px",
                       }}
                     >
-                      Register
+                      Sign up
                     </Button>
                   }
                 </Grid>

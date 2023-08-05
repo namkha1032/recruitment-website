@@ -592,7 +592,7 @@ const XPage_Login = () => {
                       variant="small"
                       sx={{ cursor: 'pointer' ,textDecoration: 'underline', color: "black" }}
                     >
-                      Register
+                      Sign up
                     </Typography>
                   </Typography>
                 </Grid>

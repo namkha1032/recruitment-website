@@ -363,7 +363,12 @@ const NavbarContent = (props) => {
                             {isSm ? <Button sx={{
                                 color: "black",
                                 marginRight: 2
-                            }}>
+                            }}
+                                onClick={() => {
+                                    sessionStorage.setItem('previousPage', window.location.pathname);
+                                    navigate("/register")
+                                }}
+                            >
                                 Sign up
                             </Button> : null}
                             <Button variant="outlined" sx={{
