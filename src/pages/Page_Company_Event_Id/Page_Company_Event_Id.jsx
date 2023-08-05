@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 
 // import MUI components
-import { Box, Chip, Container, Divider, Grid, Paper, Tab, Typography } from '@mui/material'
+import { Box, Chip, CircularProgress, Container, Divider, Grid, Paper, Tab, Typography } from '@mui/material'
 import React from 'react'
 import './Page_Company_Event_Id.scss'
 import { Button } from '@mui/material'
@@ -40,6 +40,9 @@ import cleanStore from '../../utils/cleanStore';
 import useGetRole from '../../hooks/useGetRole';
 import { transferDatetimeBack } from '../../utils/transferDatetime';
 import userEvent from '@testing-library/user-event';
+import { NoResultsOverlay, NoRowsOverlay } from '../../components/DataRick/DataRick';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 
 
@@ -58,22 +61,26 @@ const Page_Company_Event_Id = () => {
 
     const user = useSelector(state => state.user)
     useEffect(() => {
-        dispatch({
-            type: "eventSaga/getEvent",
-            payload: {
-                eventid: eventid,
-                token: user.token
-        }})
-        dispatch({
-            type: "eventSaga/getAllCandidateOfEvent",
-            payload: { 
-                eventid: eventid,
-                token: user.token
-        }})
-        return () => {
-            cleanStore(dispatch)
+        if (user) {
+            dispatch({
+                type: "eventSaga/getEvent",
+                payload: {
+                    eventid: eventid,
+                    token: user.token
+                }
+            })
+            dispatch({
+                type: "eventSaga/getAllCandidateOfEvent",
+                payload: {
+                    eventid: eventid,
+                    token: user.token
+                }
+            })
+            return () => {
+                cleanStore(dispatch)
+            }
         }
-    }, [])
+    }, [user])
 
     const event = useSelector((state) => state.event)
     const note = event ? event.content : ""
@@ -252,137 +259,143 @@ const Page_Company_Event_Id = () => {
     ]);
 
 
+    const theme = useTheme();
+    const isMd = useMediaQuery(theme.breakpoints.up('md'));
+    const isSm = useMediaQuery(theme.breakpoints.down('md'));
+
 
     return (
         <Container sx={{ p: 0 }} className='companyeventid'>
-            {/* <CelebrationRoundedIcon color='primary' fontSize='large' sx={{ marginRight: 1 }}></CelebrationRoundedIcon> */}
-            <Box sx={{
-                fontSize: 50,
-                fontWeight: 600,
-                // color: '#1565C0',
-                color: 'black',
-                display: 'flex',
-                justifyContent: 'start',
-                // justifyContent: 'center'
-                display: 'inline-block'
-            }}>
-                {/* Chi tiết sự kiện */}
-                Event Details
-            </Box>
-            <TabContext value={value}>
-                <Box>
-                    <TabList
-                        aria-label='Tabs menu'
-                        onChange={handleChange}
-                        textColor="primary"
-                        indicatorColor="primary"
-                        sx={{
-                            "& .MuiTabs-indicator": {
-                                backgroundColor: "black",
-                            },
-                        }}
-                    // centered
-                    >
-                        <Tab
-                            // label='Thông tin'
-                            label='Event Information'
-                            value='1'
-                            sx={{
-                                textTransform: "none",
-                                fontSize: 23,
-                                marginRight: 4,
-                                fontWeight: 600,
-                                color: "rgba(0, 0, 0, 0.85)",
-                                "&:hover": {
-                                    color: "rgba(190, 190, 190, 0.85)",
-                                },
-                                "&.Mui-selected": {
-                                    color: "black",
-                                },
-                            }}
-                            icon={<InfoRoundedIcon />}
-                            iconPosition='start'
-                        />
-                        <Tab
-                            // label='Danh sách đăng ký'
-                            label='Enrolment List'
-                            value='2'
-                            sx={{
-                                textTransform: "none",
-                                fontSize: 23,
-                                marginRight: 4,
-                                fontWeight: 600,
-                                color: "rgba(0, 0, 0, 0.85)",
-                                "&:hover": {
-                                    color: "rgba(190, 190, 190, 0.85)",
-                                },
-                                "&.Mui-selected": {
-                                    color: "black",
-                                },
-                            }}
-                            icon={<FormatListNumberedRoundedIcon />} iconPosition='start'
-                        />
-                    </TabList>
-                    <Divider sx={{ borderColor: 'lightgray' }}></Divider>
-                </Box>
+            {isMd && (
+                <>
+                    {/* <CelebrationRoundedIcon color='primary' fontSize='large' sx={{ marginRight: 1 }}></CelebrationRoundedIcon> */}
+                    <Box sx={{
+                        fontSize: 50,
+                        fontWeight: 600,
+                        // color: '#1565C0',
+                        color: 'black',
+                        display: 'flex',
+                        justifyContent: 'start',
+                        // justifyContent: 'center'
+                        display: 'inline-block'
+                    }}>
+                        {/* Chi tiết sự kiện */}
+                        Event Details
+                    </Box>
+                    <TabContext value={value}>
+                        <Box>
+                            <TabList
+                                aria-label='Tabs menu'
+                                onChange={handleChange}
+                                textColor="primary"
+                                indicatorColor="primary"
+                                sx={{
+                                    "& .MuiTabs-indicator": {
+                                        backgroundColor: "black",
+                                    },
+                                }}
+                            // centered
+                            >
+                                <Tab
+                                    // label='Thông tin'
+                                    label='Event Information'
+                                    value='1'
+                                    sx={{
+                                        textTransform: "none",
+                                        fontSize: 23,
+                                        marginRight: 4,
+                                        fontWeight: 600,
+                                        color: "rgba(0, 0, 0, 0.85)",
+                                        "&:hover": {
+                                            color: "rgba(190, 190, 190, 0.85)",
+                                        },
+                                        "&.Mui-selected": {
+                                            color: "black",
+                                        },
+                                    }}
+                                    icon={<InfoRoundedIcon />}
+                                    iconPosition='start'
+                                />
+                                <Tab
+                                    // label='Danh sách đăng ký'
+                                    label='Enrolment List'
+                                    value='2'
+                                    sx={{
+                                        textTransform: "none",
+                                        fontSize: 23,
+                                        marginRight: 4,
+                                        fontWeight: 600,
+                                        color: "rgba(0, 0, 0, 0.85)",
+                                        "&:hover": {
+                                            color: "rgba(190, 190, 190, 0.85)",
+                                        },
+                                        "&.Mui-selected": {
+                                            color: "black",
+                                        },
+                                    }}
+                                    icon={<FormatListNumberedRoundedIcon />} iconPosition='start'
+                                />
+                            </TabList>
+                            <Divider sx={{ borderColor: 'lightgray' }}></Divider>
+                        </Box>
 
-                <TabPanel value='1' sx={{ p: 0, mt: 2 }}>
-                    <>
-                        {event &&
-                            (<>
-                                <Box sx={{ mb: 2 }}>
-                                    <img src={picture}
-                                        alt="..."
-                                        style={{
-                                            width: '100%',
-                                            objectFit: 'cover',
-                                            border: '5px solid #555',
-                                            borderRadius: '5px'
-                                        }} />
-                                </Box>
-                                <GigaCard>
-                                    {/* <GigaCardHeader headerIcon={<PsychologyAltRoundedIcon fontSize='large'></PsychologyAltRoundedIcon>}>
+                        <TabPanel value='1' sx={{ p: 0, mt: 2 }}>
+                            <>
+                                {event &&
+                                    (<>
+                                        <Box sx={{ mb: 2 }}>
+                                            <img src={picture}
+                                                alt="..."
+                                                style={{
+                                                    width: '100%',
+                                                    objectFit: 'cover',
+                                                    border: '5px solid #555',
+                                                    borderRadius: '5px'
+                                                }} />
+                                        </Box>
+                                        <GigaCard>
+                                            {/* <GigaCardHeader headerIcon={<PsychologyAltRoundedIcon fontSize='large'></PsychologyAltRoundedIcon>}>
                             How To Think Critically and Avoid Fallacies
                         </GigaCardHeader>
                         <GigaCardHeader headerIcon={<CelebrationRoundedIcon fontSize='large'></CelebrationRoundedIcon>}>
                             How To Think Critically and Avoid Fallacies
                         </GigaCardHeader> */}
-                                    <Box sx={{ paddingLeft: 4, paddingTop: 4 }}>
-                                        <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
-                                            <Box sx={{ fontSize: 40, display: "flex", alignItems: "center" }}>
-                                                <CelebrationRoundedIcon
-                                                    fontSize='large'
-                                                    sx={{
-                                                        color: '#3f51b5'
-                                                        // color: '#1565C0'
-                                                    }}
-                                                >
-                                                </CelebrationRoundedIcon>
+                                            <Box sx={{ paddingLeft: 4, paddingTop: 4 }}>
+                                                <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
+                                                    <Box sx={{ fontSize: 40, display: "flex", alignItems: "center" }}>
+                                                        <CelebrationRoundedIcon
+                                                            fontSize='large'
+                                                            sx={{
+                                                                color: '#3f51b5'
+                                                                // color: '#1565C0'
+                                                            }}
+                                                        >
+                                                        </CelebrationRoundedIcon>
+                                                    </Box>
+                                                    <Box sx={{
+                                                        fontSize: 40,
+                                                        fontWeight: 600,
+                                                        color: '#3f51b5',
+                                                        // color: '#1565C0',
+                                                        display: 'flex',
+                                                        justifyContent: 'start',
+                                                        // justifyContent: 'center'
+                                                        display: 'inline-block',
+                                                        // marginBottom: 1
+                                                    }}>
+                                                        {event.eventName}
+                                                    </Box>
+                                                </Box>
                                             </Box>
-                                            <Box sx={{
-                                                fontSize: 40,
-                                                fontWeight: 600,
-                                                color: '#3f51b5',
-                                                // color: '#1565C0',
-                                                display: 'flex',
-                                                justifyContent: 'start',
-                                                // justifyContent: 'center'
-                                                display: 'inline-block',
-                                                // marginBottom: 1
-                                            }}>
-                                                {event.eventName}
-                                            </Box>
-                                        </Box>
-                                    </Box>
-                                    <GigaCardBody>
-                                        <Box sx={{ fontSize: '18px', fontStyle: 'italic', display: 'flex', justifyContent: 'flex-end', marginBottom: 3 }}>
-                                            <TodayRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></TodayRoundedIcon>
-                                            <span style={{ color: 'darkgray', fontSize: '17px' }}>{event.createdTime}</span>
-                                        </Box>
+                                            <GigaCardBody>
+                                                <Box sx={{ fontSize: '18px', fontStyle: 'italic', display: 'flex', justifyContent: 'flex-end', marginBottom: 3 }}>
+                                                    <TodayRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></TodayRoundedIcon>
+                                                    <span style={{ color: 'darkgray', fontSize: '17px' }}>{event.createdTime}</span>
+                                                </Box>
 
-                                        {/* <div> cannot appear as a descendant of <p> */}
-                                        {/* ---------------------------------------------------------------------- */}
-                                        {/* <p align='justify'>
+                                                {/* <div> cannot appear as a descendant of <p> */}
+                                                {/* ---------------------------------------------------------------------- */}
+                                                {/* <p align='justify'>
                                             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis recusandae sapiente deserunt sequi rerum animi eaque illo excepturi. Iusto saepe cumque ipsa cupiditate ab accusantium dolor soluta veritatis ex hic?<br />
                                             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae modi rerum enim voluptatibus voluptatem! Alias eum velit, animi harum at vitae! Atque, eum. Eos iste soluta vitae quidem itaque saepe?<br />
                                             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus rerum libero cupiditate voluptatem, doloremque quaerat culpa soluta! Soluta assumenda at sint et fugit quo natus id beatae! Et, saepe? Ratione!<br />
@@ -390,226 +403,688 @@ const Page_Company_Event_Id = () => {
                                             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit eum esse quisquam distinctio animi iure possimus omnis tempore dicta consectetur perspiciatis atque in, cupiditate nostrum numquam accusamus blanditiis velit libero!<br />
                                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure laborum, ullam necessitatibus harum distinctio similique itaque corrupti qui possimus incidunt quisquam, optio hic molestias et accusantium rem ipsum. Commodi, consequatur.<br />
                                         </p> */}
-                                        <Box ref={contentRef}></Box>
-                                        {/* ---------------------------------------------------------------------- */}
+                                                <Box ref={contentRef}></Box>
+                                                {/* ---------------------------------------------------------------------- */}
 
-                                        <Grid container sx={{ marginTop: 8 }}>
-                                            <Grid item md={3} sm={4} xs={6}>
-                                                <Box sx={{
-                                                    display: "flex",
-                                                    // alignItems: 'center',
-                                                    // marginTop: 6
-                                                }}>
-                                                    <PeopleAltRoundedIcon
-                                                        fontSize='large'
-                                                        sx={{
-                                                            marginRight: 2,
-                                                            color: '#3f51b5',
-                                                            // color: '#1565C0' 
-                                                        }}>
-                                                    </PeopleAltRoundedIcon>
-                                                    <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                <Grid container sx={{ marginTop: 8 }}>
+                                                    <Grid item md={3} sm={4} xs={6}>
                                                         <Box sx={{
-                                                            fontSize: 22,
-                                                            fontWeight: 600,
-                                                            color: '#3f51b5',
-                                                            // color: '#1565C0'
+                                                            display: "flex",
+                                                            // alignItems: 'center',
+                                                            // marginTop: 6
                                                         }}>
-                                                            {/* Số lượng */}
-                                                            Quantity
+                                                            <PeopleAltRoundedIcon
+                                                                fontSize='large'
+                                                                sx={{
+                                                                    marginRight: 2,
+                                                                    color: '#3f51b5',
+                                                                    // color: '#1565C0' 
+                                                                }}>
+                                                            </PeopleAltRoundedIcon>
+                                                            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                                <Box sx={{
+                                                                    fontSize: 22,
+                                                                    fontWeight: 600,
+                                                                    color: '#3f51b5',
+                                                                    // color: '#1565C0'
+                                                                }}>
+                                                                    {/* Số lượng */}
+                                                                    Quantity
+                                                                </Box>
+                                                                <Box sx={{
+                                                                    fontSize: 16,
+                                                                }}>
+                                                                    {/* {event.quantity} / {event.maxQuantity} */}
+                                                                    {rows.length} / {event.maxQuantity}
+                                                                </Box>
+                                                            </Box>
+                                                            {/* <p style={{ fontWeight: 600, fontSize: 20 }}>500/1000</p> */}
                                                         </Box>
+                                                    </Grid>
+                                                    <Grid item md={3} sm={4} xs={6}>
                                                         <Box sx={{
-                                                            fontSize: 16,
+                                                            display: "flex",
+                                                            // alignItems: 'center',
+                                                            // marginTop: 3
+                                                            // justifyContent: 'center'
                                                         }}>
-                                                            {/* {event.quantity} / {event.maxQuantity} */}
-                                                            {rows.length} / {event.maxQuantity}
+                                                            <AccessTimeRoundedIcon
+                                                                fontSize='large'
+                                                                sx={{
+                                                                    marginRight: 2,
+                                                                    color: '#3f51b5',
+                                                                    // color: '#1565C0'
+                                                                }}>
+                                                            </AccessTimeRoundedIcon>
+                                                            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                                <Box sx={{
+                                                                    fontSize: 22,
+                                                                    fontWeight: 600,
+                                                                    color: '#3f51b5',
+                                                                    // color: '#1565C0'
+                                                                }}>
+                                                                    {/* Thời gian */}
+                                                                    Time
+                                                                </Box>
+                                                                <Box sx={{
+                                                                    fontSize: 16,
+                                                                }}>
+                                                                    {transferDatetimeBack(event.time)}
+                                                                </Box>
+                                                            </Box>
+                                                            {/* <p style={{ fontWeight: 600, fontSize: 20 }}>21/07/2023</p> */}
                                                         </Box>
-                                                    </Box>
-                                                    {/* <p style={{ fontWeight: 600, fontSize: 20 }}>500/1000</p> */}
-                                                </Box>
-                                            </Grid>
-                                            <Grid item md={3} sm={4} xs={6}>
-                                                <Box sx={{
-                                                    display: "flex",
-                                                    // alignItems: 'center',
-                                                    // marginTop: 3
-                                                    // justifyContent: 'center'
-                                                }}>
-                                                    <AccessTimeRoundedIcon
-                                                        fontSize='large'
-                                                        sx={{
-                                                            marginRight: 2,
-                                                            color: '#3f51b5',
-                                                            // color: '#1565C0'
-                                                        }}>
-                                                    </AccessTimeRoundedIcon>
-                                                    <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                    </Grid>
+                                                    <Grid item md={6} sm={4} xs={12}>
                                                         <Box sx={{
-                                                            fontSize: 22,
-                                                            fontWeight: 600,
-                                                            color: '#3f51b5',
-                                                            // color: '#1565C0'
+                                                            display: "flex",
+                                                            // alignItems: 'center',
+                                                            // marginTop: 3
+                                                            // justifyContent: 'flex-end'
                                                         }}>
-                                                            {/* Thời gian */}
-                                                            Time
+                                                            <LocationOnRoundedIcon
+                                                                fontSize='large'
+                                                                sx={{
+                                                                    marginRight: 2,
+                                                                    color: '#3f51b5',
+                                                                    // color: '#1565C0' 
+                                                                }}>
+                                                            </LocationOnRoundedIcon>
+                                                            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                                <Box sx={{
+                                                                    fontSize: 22,
+                                                                    fontWeight: 600,
+                                                                    color: '#3f51b5',
+                                                                    // color: '#1565C0'
+                                                                }}>
+                                                                    {/* Địa điểm */}
+                                                                    Location
+                                                                </Box>
+                                                                <Box sx={{
+                                                                    fontSize: 16,
+                                                                }}>
+                                                                    {event.location}
+                                                                </Box>
+                                                            </Box>
+                                                            {/* <p style={{ fontWeight: 600, fontSize: 20 }}>268 Lý Thường Kiệt, phường 14, quận 10</p> */}
                                                         </Box>
-                                                        <Box sx={{
-                                                            fontSize: 16,
-                                                        }}>
-                                                            {transferDatetimeBack(event.time)}
-                                                        </Box>
-                                                    </Box>
-                                                    {/* <p style={{ fontWeight: 600, fontSize: 20 }}>21/07/2023</p> */}
-                                                </Box>
-                                            </Grid>
-                                            <Grid item md={6} sm={4} xs={12}>
-                                                <Box sx={{
-                                                    display: "flex",
-                                                    // alignItems: 'center',
-                                                    // marginTop: 3
-                                                    // justifyContent: 'flex-end'
-                                                }}>
-                                                    <LocationOnRoundedIcon
-                                                        fontSize='large'
-                                                        sx={{
-                                                            marginRight: 2,
-                                                            color: '#3f51b5',
-                                                            // color: '#1565C0' 
-                                                        }}>
-                                                    </LocationOnRoundedIcon>
-                                                    <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                                                        <Box sx={{
-                                                            fontSize: 22,
-                                                            fontWeight: 600,
-                                                            color: '#3f51b5',
-                                                            // color: '#1565C0'
-                                                        }}>
-                                                            {/* Địa điểm */}
-                                                            Location
-                                                        </Box>
-                                                        <Box sx={{
-                                                            fontSize: 16,
-                                                        }}>
-                                                            {event.location}
-                                                        </Box>
-                                                    </Box>
-                                                    {/* <p style={{ fontWeight: 600, fontSize: 20 }}>268 Lý Thường Kiệt, phường 14, quận 10</p> */}
-                                                </Box>
-                                            </Grid>
-                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
 
-                                        <Grid item xs={12} align='right' sx={{ marginTop: 8 }}>
-                                            {/* <Button variant='outlined' size='large' className='btnregister' sx={{ mx: 3 }} onClick={handleRegister}>
+                                                <Grid item xs={12} align='right' sx={{ marginTop: 8 }}>
+                                                    {/* <Button variant='outlined' size='large' className='btnregister' sx={{ mx: 3 }} onClick={handleRegister}>
                                     <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon>
                                     Đăng ký
                                 </Button> */}
-                                            <Button
-                                                variant='contained'
-                                                size='large'
-                                                // color='primary'
-                                                sx={{
-                                                    backgroundColor: "black",
-                                                    "&:hover": {
-                                                        backgroundColor: "grey",
-                                                    }
-                                                }}
-                                                onClick={handleEdit}
-                                            >
-                                                {/* Chỉnh sửa */}
-                                                <EditIcon sx={{ marginRight: 1 }}></EditIcon>
-                                                Edit
-                                            </Button>
-                                        </Grid>
-                                    </GigaCardBody>
-                                </GigaCard>
-                            </>)}
-                    </>
-                </TabPanel>
+                                                    <Button
+                                                        variant='contained'
+                                                        size='large'
+                                                        // color='primary'
+                                                        sx={{
+                                                            backgroundColor: "black",
+                                                            "&:hover": {
+                                                                backgroundColor: "grey",
+                                                            }
+                                                        }}
+                                                        onClick={handleEdit}
+                                                    >
+                                                        {/* Chỉnh sửa */}
+                                                        <EditIcon sx={{ marginRight: 1 }}></EditIcon>
+                                                        Edit
+                                                    </Button>
+                                                </Grid>
+                                            </GigaCardBody>
+                                        </GigaCard>
+                                    </>)}
+                            </>
+                        </TabPanel>
 
-                <TabPanel value='2' sx={{ p: 0, mt: 2 }}>
-                    <Box sx={{ width: '100%' }}>
-                        {/* Data Grid */}
-                        <DataGrid
-                            rows={rows}
-                            columns={columns}
-                            sx={{
-                                "&.MuiDataGrid-root": {
-                                    borderRadius: 2,
-                                },
-                                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
-                                    outline: "none",
-                                },
-                                "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
-                                    outline: "none",
-                                },
-                                "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
-                                    // backgroundColor: "#1565C0",
-                                    backgroundColor: 'black',
-                                    color: "white",
-                                    fontWeight: 700,
-                                },
-                                "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
-                                    display: "none",
-                                },
-                                "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
-                                    color: "white",
-                                },
-                                "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                                    color: 'black'
-                                }
-                            }}
-                            // localeText={{
-                            //     footerRowSelected: (count) =>
-                            //         count > 1 ? `${count.toLocaleString()} hàng đã chọn` : `${count.toLocaleString()} hàng đã chọn`,
-                            //     footerTotalRows: 'Tổng:',
-                            //     footerTotalVisibleRows: (visibleCount, totalCount) =>
-                            //         `${visibleCount.toLocaleString()} / ${totalCount.toLocaleString()}`,
-                            //     footerTotalRows: 'Tổng:',
-                            //     labelRowsPerPage: 'Hàng mỗi trang:',
-                            //     labelDisplayedRows: ({ from, to, count }) =>
-                            //         `${from}–${to} trên ${count !== -1 ? count : `hơn ${to}`}`,
-                            // }}
-                            slots={{ toolbar: GridToolbar }}
-                            slotProps={{
-                                // pagination: {
-                                //     labelRowsPerPage: "Số lượng hiển thị",
-                                //     labelDisplayedRows: ({ from, to, count }) =>
-                                //         `${from}–${to} của ${count !== -1 ? count : `hơn ${to}`}`,
-                                // },
-                                toolbar: {
-                                    showQuickFilter: true,
-                                    quickFilterProps: {
-                                        debounceMs: 500, placeholder: "Search...", sx: {
-                                            width: 300,
-                                            marginBottom: 1,
-                                        }
-                                    },
-                                    // csvOptions: { disableToolbarButton: true },
-                                    // printOptions: { disableToolbarButton: true }
-                                },
-                            }}
-                            disableColumnFilter
-                            disableColumnSelector
-                            // disableDensitySelector
-                            pagination
-                            pageSizeOptions={[5, 10, 25, 50, 100]}
-                            initialState={{
-                                pagination: {
-                                    paginationModel: {
-                                        pageSize: 25
-                                    },
-                                },
-                            }}
-                            getRowId={(row) => row.candidateId}
-                            onCellClick={(params, event) => {
-                                if (params.field === "candidateId" || params.field === "candidateFullName") {
-                                    handleDetailClick(params.row.candidateId);
-                                }
-                            }}>
-                        </DataGrid>
+                        <TabPanel value='2' sx={{ p: 0, mt: 2 }}>
+                            <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px', width: '100%', borderRadius: 3 }}>
+                                {rows ? (
+                                    <Box
+                                        sx={{
+                                            minHeight: 400,
+                                        }}
+                                    // sx={{ width: '100%' }}
+                                    >
+                                        {/* Data Grid */}
+                                        <DataGrid
+                                            rows={rows}
+                                            columns={columns}
+                                            sx={{
+                                                "&.MuiDataGrid-root": {
+                                                    borderRadius: 2,
+                                                },
+                                                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                                                    outline: "none",
+                                                },
+                                                "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                                                    outline: "none",
+                                                },
+                                                "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
+                                                    // backgroundColor: "#1565C0",
+                                                    backgroundColor: 'black',
+                                                    color: "white",
+                                                    fontWeight: 700,
+                                                },
+                                                "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                                                    display: "none",
+                                                },
+                                                "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+                                                    color: "white",
+                                                },
+                                                "&.MuiDataGrid-root .MuiCircularProgress-root": {
+                                                    color: "black",
+                                                },
+                                                "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                                                    color: 'black'
+                                                }
+                                            }}
+                                            // localeText={{
+                                            //     footerRowSelected: (count) =>
+                                            //         count > 1 ? `${count.toLocaleString()} hàng đã chọn` : `${count.toLocaleString()} hàng đã chọn`,
+                                            //     footerTotalRows: 'Tổng:',
+                                            //     footerTotalVisibleRows: (visibleCount, totalCount) =>
+                                            //         `${visibleCount.toLocaleString()} / ${totalCount.toLocaleString()}`,
+                                            //     footerTotalRows: 'Tổng:',
+                                            //     labelRowsPerPage: 'Hàng mỗi trang:',
+                                            //     labelDisplayedRows: ({ from, to, count }) =>
+                                            //         `${from}–${to} trên ${count !== -1 ? count : `hơn ${to}`}`,
+                                            // }}
+                                            slots={{
+                                                toolbar: GridToolbar,
+                                                noRowsOverlay: NoRowsOverlay,
+                                                noResultsOverlay: NoResultsOverlay,
+                                            }}
+                                            slotProps={{
+                                                // pagination: {
+                                                //     labelRowsPerPage: "Số lượng hiển thị",
+                                                //     labelDisplayedRows: ({ from, to, count }) =>
+                                                //         `${from}–${to} của ${count !== -1 ? count : `hơn ${to}`}`,
+                                                // },
+                                                toolbar: {
+                                                    showQuickFilter: true,
+                                                    quickFilterProps: {
+                                                        debounceMs: 500, placeholder: "Search...", sx: {
+                                                            width: 300,
+                                                            marginBottom: 1,
+                                                        }
+                                                    },
+                                                    // csvOptions: { disableToolbarButton: true },
+                                                    // printOptions: { disableToolbarButton: true }
+                                                },
+                                            }}
+                                            disableColumnFilter
+                                            disableColumnSelector
+                                            // disableDensitySelector
+                                            pagination
+                                            pageSizeOptions={[5, 10, 25, 50, 100]}
+                                            initialState={{
+                                                pagination: {
+                                                    paginationModel: {
+                                                        pageSize: 25
+                                                    },
+                                                },
+                                            }}
+                                            getRowId={(row) => row.candidateId}
+                                            onCellClick={(params, event) => {
+                                                if (params.field === "candidateId" || params.field === "candidateFullName") {
+                                                    handleDetailClick(params.row.candidateId);
+                                                }
+                                            }}>
+                                        </DataGrid>
+                                    </Box>) :
+                                    (<Box
+                                        sx={{
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            height: 50,
+                                        }}
+                                    >
+                                        <CircularProgress
+                                            sx={{
+                                                color: "black",
+                                            }}
+                                        />
+                                    </Box>
+                                    )}
+                            </Paper>
+                        </TabPanel>
+                    </TabContext>
+                </>
+            )}
+
+            {isSm && (
+                <>
+                    {/* <CelebrationRoundedIcon color='primary' fontSize='large' sx={{ marginRight: 1 }}></CelebrationRoundedIcon> */}
+                    <Box sx={{
+                        fontSize: 30,
+                        fontWeight: 600,
+                        // color: '#1565C0',
+                        color: 'black',
+                        display: 'flex',
+                        justifyContent: 'start',
+                        // justifyContent: 'center'
+                        display: 'inline-block'
+                    }}>
+                        {/* Chi tiết sự kiện */}
+                        Event Details
                     </Box>
-                </TabPanel>
-            </TabContext>
+                    <TabContext value={value}>
+                        <Box>
+                            <TabList
+                                aria-label='Tabs menu'
+                                onChange={handleChange}
+                                textColor="primary"
+                                indicatorColor="primary"
+                                sx={{
+                                    "& .MuiTabs-indicator": {
+                                        backgroundColor: "black",
+                                    },
+                                }}
+                            // centered
+                            >
+                                <Tab
+                                    // label='Thông tin'
+                                    label='Event Information'
+                                    value='1'
+                                    sx={{
+                                        textTransform: "none",
+                                        fontSize: 15,
+                                        // marginRight: 2,
+                                        fontWeight: 600,
+                                        color: "rgba(0, 0, 0, 0.85)",
+                                        "&:hover": {
+                                            color: "rgba(190, 190, 190, 0.85)",
+                                        },
+                                        "&.Mui-selected": {
+                                            color: "black",
+                                        },
+                                    }}
+                                    icon={<InfoRoundedIcon />}
+                                    iconPosition='start'
+                                />
+                                <Tab
+                                    // label='Danh sách đăng ký'
+                                    label='Enrolment List'
+                                    value='2'
+                                    sx={{
+                                        textTransform: "none",
+                                        fontSize: 15,
+                                        // marginRight: 2,
+                                        fontWeight: 600,
+                                        color: "rgba(0, 0, 0, 0.85)",
+                                        "&:hover": {
+                                            color: "rgba(190, 190, 190, 0.85)",
+                                        },
+                                        "&.Mui-selected": {
+                                            color: "black",
+                                        },
+                                    }}
+                                    icon={<FormatListNumberedRoundedIcon />} iconPosition='start'
+                                />
+                            </TabList>
+                            <Divider sx={{ borderColor: 'lightgray' }}></Divider>
+                        </Box>
+
+                        <TabPanel value='1' sx={{ p: 0, mt: 2 }}>
+                            <>
+                                {event &&
+                                    (<>
+                                        <Box sx={{ mb: 2 }}>
+                                            <img src={picture}
+                                                alt="..."
+                                                style={{
+                                                    width: '100%',
+                                                    objectFit: 'cover',
+                                                    border: '5px solid #555',
+                                                    borderRadius: '5px'
+                                                }} />
+                                        </Box>
+                                        <GigaCard>
+                                            {/* <GigaCardHeader headerIcon={<PsychologyAltRoundedIcon fontSize='large'></PsychologyAltRoundedIcon>}>
+                            How To Think Critically and Avoid Fallacies
+                        </GigaCardHeader>
+                        <GigaCardHeader headerIcon={<CelebrationRoundedIcon fontSize='large'></CelebrationRoundedIcon>}>
+                            How To Think Critically and Avoid Fallacies
+                        </GigaCardHeader> */}
+                                            <Box sx={{
+                                                paddingLeft: 1,
+                                                paddingTop: 1
+                                                // paddingLeft: 4,
+                                                // paddingTop: 4
+                                            }}>
+                                                <Box sx={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    columnGap: 1
+                                                    // columnGap: 2
+                                                }}>
+                                                    <Box sx={{
+                                                        fontSize: 20,
+                                                        display: "flex",
+                                                        alignItems: "center"
+                                                    }}>
+                                                        <CelebrationRoundedIcon
+                                                            fontSize='medium'
+                                                            // fontSize='large'
+                                                            sx={{
+                                                                color: '#3f51b5'
+                                                                // color: '#1565C0'
+                                                            }}
+                                                        >
+                                                        </CelebrationRoundedIcon>
+                                                    </Box>
+                                                    <Box sx={{
+                                                        fontSize: 20,
+                                                        fontWeight: 600,
+                                                        color: '#3f51b5',
+                                                        // color: '#1565C0',
+                                                        display: 'flex',
+                                                        justifyContent: 'start',
+                                                        // justifyContent: 'center'
+                                                        display: 'inline-block',
+                                                        // marginBottom: 1
+                                                    }}>
+                                                        {event.eventName}
+                                                    </Box>
+                                                </Box>
+                                            </Box>
+                                            <GigaCardBody>
+                                                <Box sx={{
+                                                    fontSize: '18px',
+                                                    fontStyle: 'italic',
+                                                    display: 'flex',
+                                                    justifyContent: 'flex-end',
+                                                    marginBottom: 1
+                                                    // marginBottom: 3
+                                                }}>
+                                                    <TodayRoundedIcon sx={{
+                                                        marginRight: 0.5,
+                                                        color: 'darkgray',
+                                                    }}
+                                                        fontSize='small'
+                                                    >
+                                                    </TodayRoundedIcon>
+                                                    <span style={{ color: 'darkgray', fontSize: '12px' }}>{event.createdTime}</span>
+                                                </Box>
+
+                                                {/* <div> cannot appear as a descendant of <p> */}
+                                                {/* ---------------------------------------------------------------------- */}
+                                                {/* <p align='justify'>
+                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis recusandae sapiente deserunt sequi rerum animi eaque illo excepturi. Iusto saepe cumque ipsa cupiditate ab accusantium dolor soluta veritatis ex hic?<br />
+                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae modi rerum enim voluptatibus voluptatem! Alias eum velit, animi harum at vitae! Atque, eum. Eos iste soluta vitae quidem itaque saepe?<br />
+                                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus rerum libero cupiditate voluptatem, doloremque quaerat culpa soluta! Soluta assumenda at sint et fugit quo natus id beatae! Et, saepe? Ratione!<br />
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum mollitia asperiores quis quos, ut fugiat harum. Voluptates vero animi alias sapiente odit cumque esse culpa, repudiandae error inventore, autem commodi!<br />
+                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit eum esse quisquam distinctio animi iure possimus omnis tempore dicta consectetur perspiciatis atque in, cupiditate nostrum numquam accusamus blanditiis velit libero!<br />
+                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure laborum, ullam necessitatibus harum distinctio similique itaque corrupti qui possimus incidunt quisquam, optio hic molestias et accusantium rem ipsum. Commodi, consequatur.<br />
+                                        </p> */}
+                                                <Box sx={{ fontSize: '15px' }} ref={contentRef}></Box>
+                                                {/* ---------------------------------------------------------------------- */}
+
+                                                <Grid container sx={{
+                                                    marginTop: 5
+                                                    // marginTop: 8
+                                                }}>
+                                                    <Grid item xs={12} sx={{ marginBottom: 2 }}>
+                                                        <Box sx={{
+                                                            display: "flex",
+                                                            // alignItems: 'center',
+                                                            // marginTop: 6
+                                                        }}>
+                                                            <PeopleAltRoundedIcon
+                                                                fontSize='medium'
+                                                                // fontSize='large'
+                                                                sx={{
+                                                                    marginRight: 1,
+                                                                    // marginRight: 2,
+                                                                    color: '#3f51b5',
+                                                                    // color: '#1565C0' 
+                                                                }}>
+                                                            </PeopleAltRoundedIcon>
+                                                            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                                <Box sx={{
+                                                                    fontSize: 18,
+                                                                    fontWeight: 600,
+                                                                    color: '#3f51b5',
+                                                                    // color: '#1565C0'
+                                                                }}>
+                                                                    {/* Số lượng */}
+                                                                    Quantity
+                                                                </Box>
+                                                                <Box sx={{
+                                                                    fontSize: 15,
+                                                                }}>
+                                                                    {/* {event.quantity} / {event.maxQuantity} */}
+                                                                    {rows.length} / {event.maxQuantity}
+                                                                </Box>
+                                                            </Box>
+                                                            {/* <p style={{ fontWeight: 600, fontSize: 20 }}>500/1000</p> */}
+                                                        </Box>
+                                                    </Grid>
+                                                    <Grid item xs={12} sx={{ marginBottom: 2 }}>
+                                                        <Box sx={{
+                                                            display: "flex",
+                                                            // alignItems: 'center',
+                                                            // marginTop: 3
+                                                            // justifyContent: 'center'
+                                                        }}>
+                                                            <AccessTimeRoundedIcon
+                                                                fontSize='medium'
+                                                                // fontSize='large'
+                                                                sx={{
+                                                                    marginRight: 1,
+                                                                    // marginRight: 2,
+                                                                    color: '#3f51b5',
+                                                                    // color: '#1565C0'
+                                                                }}>
+                                                            </AccessTimeRoundedIcon>
+                                                            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                                <Box sx={{
+                                                                    fontSize: 18,
+                                                                    fontWeight: 600,
+                                                                    color: '#3f51b5',
+                                                                    // color: '#1565C0'
+                                                                }}>
+                                                                    {/* Thời gian */}
+                                                                    Time
+                                                                </Box>
+                                                                <Box sx={{
+                                                                    fontSize: 15,
+                                                                }}>
+                                                                    {transferDatetimeBack(event.time)}
+                                                                </Box>
+                                                            </Box>
+                                                            {/* <p style={{ fontWeight: 600, fontSize: 20 }}>21/07/2023</p> */}
+                                                        </Box>
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <Box sx={{
+                                                            display: "flex",
+                                                            // alignItems: 'center',
+                                                            // marginTop: 3
+                                                            // justifyContent: 'flex-end'
+                                                        }}>
+                                                            <LocationOnRoundedIcon
+                                                                fontSize='medium'
+                                                                // fontSize='large'
+                                                                sx={{
+                                                                    marginRight: 1,
+                                                                    // marginRight: 2,
+                                                                    color: '#3f51b5',
+                                                                    // color: '#1565C0' 
+                                                                }}>
+                                                            </LocationOnRoundedIcon>
+                                                            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                                <Box sx={{
+                                                                    fontSize: 18,
+                                                                    fontWeight: 600,
+                                                                    color: '#3f51b5',
+                                                                    // color: '#1565C0'
+                                                                }}>
+                                                                    {/* Địa điểm */}
+                                                                    Location
+                                                                </Box>
+                                                                <Box sx={{
+                                                                    fontSize: 15,
+                                                                }}>
+                                                                    {event.location}
+                                                                </Box>
+                                                            </Box>
+                                                            {/* <p style={{ fontWeight: 600, fontSize: 20 }}>268 Lý Thường Kiệt, phường 14, quận 10</p> */}
+                                                        </Box>
+                                                    </Grid>
+                                                </Grid>
+
+                                                <Grid item xs={12} align='right' sx={{
+                                                    marginTop: 5
+                                                    // marginTop: 8
+                                                }}>
+                                                    {/* <Button variant='outlined' size='large' className='btnregister' sx={{ mx: 3 }} onClick={handleRegister}>
+                                    <AppRegistrationIcon sx={{ marginRight: 0.5 }}></AppRegistrationIcon>
+                                    Đăng ký
+                                </Button> */}
+                                                    <Button
+                                                        variant='contained'
+                                                        size='large'
+                                                        // color='primary'
+                                                        sx={{
+                                                            backgroundColor: "black",
+                                                            "&:hover": {
+                                                                backgroundColor: "grey",
+                                                            }
+                                                        }}
+                                                        onClick={handleEdit}
+                                                    >
+                                                        {/* Chỉnh sửa */}
+                                                        <EditIcon sx={{ marginRight: 1 }}></EditIcon>
+                                                        Edit
+                                                    </Button>
+                                                </Grid>
+                                            </GigaCardBody>
+                                        </GigaCard>
+                                    </>)}
+                            </>
+                        </TabPanel>
+
+                        <TabPanel value='2' sx={{ p: 0, mt: 2 }}>
+                            <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px', width: '100%', borderRadius: 3 }}>
+                                {rows ? (
+                                    <Box
+                                        sx={{
+                                            minHeight: 400,
+                                        }}
+                                    // sx={{ width: '100%' }}
+                                    >
+                                        {/* Data Grid */}
+                                        <DataGrid
+                                            rows={rows}
+                                            columns={columns}
+                                            sx={{
+                                                "&.MuiDataGrid-root": {
+                                                    borderRadius: 2,
+                                                },
+                                                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                                                    outline: "none",
+                                                },
+                                                "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within": {
+                                                    outline: "none",
+                                                },
+                                                "&.MuiDataGrid-root .MuiDataGrid-columnHeader": {
+                                                    // backgroundColor: "#1565C0",
+                                                    backgroundColor: 'black',
+                                                    color: "white",
+                                                    fontWeight: 700,
+                                                },
+                                                "&.MuiDataGrid-root .MuiDataGrid-columnSeparator": {
+                                                    display: "none",
+                                                },
+                                                "&.MuiDataGrid-root .MuiDataGrid-sortIcon": {
+                                                    color: "white",
+                                                },
+                                                "&.MuiDataGrid-root .MuiCircularProgress-root": {
+                                                    color: "black",
+                                                },
+                                                "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                                                    color: 'black'
+                                                }
+                                            }}
+                                            // localeText={{
+                                            //     footerRowSelected: (count) =>
+                                            //         count > 1 ? `${count.toLocaleString()} hàng đã chọn` : `${count.toLocaleString()} hàng đã chọn`,
+                                            //     footerTotalRows: 'Tổng:',
+                                            //     footerTotalVisibleRows: (visibleCount, totalCount) =>
+                                            //         `${visibleCount.toLocaleString()} / ${totalCount.toLocaleString()}`,
+                                            //     footerTotalRows: 'Tổng:',
+                                            //     labelRowsPerPage: 'Hàng mỗi trang:',
+                                            //     labelDisplayedRows: ({ from, to, count }) =>
+                                            //         `${from}–${to} trên ${count !== -1 ? count : `hơn ${to}`}`,
+                                            // }}
+                                            slots={{
+                                                toolbar: GridToolbar,
+                                                noRowsOverlay: NoRowsOverlay,
+                                                noResultsOverlay: NoResultsOverlay,
+                                            }}
+                                            slotProps={{
+                                                // pagination: {
+                                                //     labelRowsPerPage: "Số lượng hiển thị",
+                                                //     labelDisplayedRows: ({ from, to, count }) =>
+                                                //         `${from}–${to} của ${count !== -1 ? count : `hơn ${to}`}`,
+                                                // },
+                                                toolbar: {
+                                                    showQuickFilter: true,
+                                                    quickFilterProps: {
+                                                        debounceMs: 500, placeholder: "Search...", sx: {
+                                                            width: 300,
+                                                            marginBottom: 1,
+                                                        }
+                                                    },
+                                                    // csvOptions: { disableToolbarButton: true },
+                                                    // printOptions: { disableToolbarButton: true }
+                                                },
+                                            }}
+                                            disableColumnFilter
+                                            disableColumnSelector
+                                            // disableDensitySelector
+                                            pagination
+                                            pageSizeOptions={[5, 10, 25, 50, 100]}
+                                            initialState={{
+                                                pagination: {
+                                                    paginationModel: {
+                                                        pageSize: 25
+                                                    },
+                                                },
+                                            }}
+                                            getRowId={(row) => row.candidateId}
+                                            onCellClick={(params, event) => {
+                                                if (params.field === "candidateId" || params.field === "candidateFullName") {
+                                                    handleDetailClick(params.row.candidateId);
+                                                }
+                                            }}>
+                                        </DataGrid>
+                                    </Box>) :
+                                    (<Box
+                                        sx={{
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            height: 50,
+                                        }}
+                                    >
+                                        <CircularProgress
+                                            sx={{
+                                                color: "black",
+                                            }}
+                                        />
+                                    </Box>
+                                    )}
+                            </Paper>
+                        </TabPanel>
+                    </TabContext>
+                </>
+            )}
         </Container >
     )
 }
