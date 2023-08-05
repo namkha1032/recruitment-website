@@ -10,8 +10,13 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import dayjs from "dayjs";
+import { Grid } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const SmallUlList = (comp) => {
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.up("sm"));
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState("paper");
 
@@ -66,28 +71,175 @@ const SmallUlList = (comp) => {
         scroll={scroll}
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
+        sx={{ maxWidth: "700px", margin: "auto" }}
       >
         <DialogTitle id="scroll-dialog-title">
-          {comp.comp.certificateName}
+          <Grid container spacing={0} item xs={12}>
+            <Grid item xs={isSm ? 3 : 12}>
+              <Typography
+                sx={{
+                  margin: "0",
+                  minWidth: "10%",
+                  fontWeight: "bold",
+                  fontSize: 20,
+                }}
+              >
+                Certificate:
+              </Typography>
+            </Grid>
+            <Grid item xs={isSm ? 9 : 12}>
+              <Typography
+                variant="body1"
+                sx={{
+                  margin: "0",
+                  minWidth: "10%",
+                  fontSize: 20,
+                }}
+              >
+                {comp.comp.certificateName}
+              </Typography>
+            </Grid>
+          </Grid>
         </DialogTitle>
+
         <DialogContent dividers={scroll === "paper"}>
-          <Typography sx={{ fontSize: 20 }}>
-            {comp.comp.organizationName}
-          </Typography>
-          <Typography sx={{ fontSize: 16 }}>
-            From: {dayjs(comp.comp.dateEarned).format("MMMM D YYYY")}
-          </Typography>
-          {comp.comp.expirationDate !== null ? (
-            <Typography sx={{ fontSize: 16 }}>
-              To: {dayjs(comp.comp.expirationDate).format("MMMM D YYYY")}
-            </Typography>
-          ) : (
-            ""
-          )}
-          <Typography>Link: {comp.comp.link}</Typography>
-          <Typography sx={{ maxWidth: 500, wordWrap: "break-word" }}>
-            Detail: {comp.comp.description}
-          </Typography>
+          <Grid
+            container
+            spacing={0}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid container spacing={0} item xs={12}>
+              <Grid item xs={isSm ? 3 : 12}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    margin: "0",
+                    minWidth: "10%",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Organize:
+                </Typography>
+              </Grid>
+              <Grid item xs={isSm ? 9 : 12}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    margin: "0",
+                    minWidth: "10%",
+                  }}
+                >
+                  {comp.comp.organizationName}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item container xs={12}>
+              <Grid item xs={isSm ? 3 : 12}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    margin: "0",
+                    minWidth: "10%",
+                    fontWeight: "bold",
+                  }}
+                >
+                  From:
+                </Typography>
+              </Grid>
+              <Grid item xs={isSm ? 9 : 12}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    margin: "0",
+                    minWidth: "10%",
+                  }}
+                >
+                  {dayjs(comp.comp.dateEarned).format("MMMM D YYYY")}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item container xs={12}>
+              {comp.comp.expirationDate !== null ? (
+                <>
+                  <Grid item xs={isSm ? 3 : 12}>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        margin: "0",
+                        minWidth: "10%",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      To:
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs={isSm ? 9 : 12}>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        margin: "0",
+                        minWidth: "10%",
+                      }}
+                    >
+                      {dayjs(comp.comp.expirationDate).format("MMMM D YYYY")}
+                    </Typography>
+                  </Grid>
+                </>
+              ) : (
+                ""
+              )}
+            </Grid>
+            <Grid item container xs={12}>
+              <Grid item xs={isSm ? 3 : 12}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    margin: "0",
+                    minWidth: "10%",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Link:
+                </Typography>
+              </Grid>
+              <Grid item xs={isSm ? 9 : 12}>
+                <Typography
+                  variant="body1"
+                  sx={{ margin: "0", minWidth: "10%", wordWrap: "break-word" }}
+                >
+                  {comp.comp.link}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item container xs={12}>
+              <Grid item xs={isSm ? 3 : 12}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    margin: "0",
+                    minWidth: "10%",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Detail:
+                </Typography>
+              </Grid>
+              <Grid item xs={isSm ? 9 : 12}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    margin: "0",
+                    minWidth: "10%",
+                    wordWrap: "break-word",
+                  }}
+                >
+                  {comp.comp.description}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
         </DialogContent>
       </Dialog>
     </>

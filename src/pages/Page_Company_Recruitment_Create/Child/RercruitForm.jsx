@@ -32,7 +32,7 @@ function RecruitForm() {
   useEffect(() => {
     
     dispatch({ type: "departmentSaga/getDepartment" , payload:{ token: `Bearer ${userlocal.token}`}});
-    dispatch({ type: "saga/getLanguage", payload:{ token: `Bearer ${userlocal.token}`} });
+    dispatch({ type: "languageSaga/getLanguage", payload:{ token: `Bearer ${userlocal.token}`} });
     dispatch({ type: "skillSaga/getSkill", payload:{ token: `Bearer ${userlocal.token}`} });
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });
@@ -124,7 +124,7 @@ function RecruitForm() {
   const [skillId, setSkillId] = useState(null);
   const [skillName, setSkillName] = useState("");
   const [experience, setExperience] = useState(0);
-  const [note, setNote] = useState("");
+  const [note, setNote] = useState("Note");
   const [inputValue, setInputValue] = useState("");
   // Language comps
   const [languageName, setLanguageName] = useState("");
@@ -214,7 +214,7 @@ function RecruitForm() {
       setSkillId(null);
       setRId((prev) => (prev += 1));
       setExperience("");
-      setNote("");
+      // setNote("");
       setInputValue("");
     }
   }

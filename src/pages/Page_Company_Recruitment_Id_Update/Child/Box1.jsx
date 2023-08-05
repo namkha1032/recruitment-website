@@ -14,7 +14,7 @@ function Box1(prop) {
         <Grid item xs={12}>
           <InputText
             headerIcon={<CreateIcon />}
-            state={"Recuite Name"}
+            state={"Position Name"}
             handleState={prop.handleRname}
             width="100%"
             margin="0"
@@ -23,7 +23,7 @@ function Box1(prop) {
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ width: "100%", margin: "auto" }}>
-            <CompHeader headerIcon={<ArticleIcon />}>Education</CompHeader>
+            <CompHeader headerIcon={<ArticleIcon />}>Description</CompHeader>
             <ReactQuill
               theme="snow"
               style={{ marginTop:"8px" }}

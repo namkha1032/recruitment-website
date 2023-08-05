@@ -9,6 +9,7 @@ import CompHeader from "./compHeader";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+
 function UploadPdf(prop) {
   function pdfToBinaryString(file) {
     return new Promise((resolve, reject) => {
