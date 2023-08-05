@@ -7,7 +7,6 @@ function* getCv(action) {
     const res = action.payload.cvid === null ?  yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Authentication/User/${action.payload.userid}`,{
         headers:{ Authorization: `Bearer ${action.payload.token}`}
     }) : {}
-    console.log(res.data)
     const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv`)
     const data1 = action.payload.cvid !== null ? response1.data.filter(item => item.cvid ===action.payload.cvid) 
         : response1.data.filter(item => item.candidateId ===res.data.candidates[0].candidateId)
