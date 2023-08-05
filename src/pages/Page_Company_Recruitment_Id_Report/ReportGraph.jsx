@@ -108,7 +108,7 @@ export default function ReportGraph(props) {
             <Plot
               data={[
                 {
-                  x: props.data.Value,
+                  x: props.data,
                   type: "histogram",
                   // name: "General Score",
                   marker: {

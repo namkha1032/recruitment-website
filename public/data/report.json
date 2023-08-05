@@ -1,6 +1,6 @@
 [
     {
-        "InterviewId": 1,
+        "InterviewId": "1",
         "CandidateId": 2,
         "CandidateName": "Nguyễn Văn B",
         "InterviewerId": 2,
@@ -8,10 +8,13 @@
         "ApplyDate": "21/07/2023",
         "InterviewDate": "25/07/2023",
         "Status": "Pending",
-        "Score": 9.5
+        "Score": 9.5,
+        "TechnologyScore": 8,
+        "LanguageScore": 9.25,
+        "SoftSkillScore": 10
     },
     {
-        "InterviewId": 222222222,
+        "InterviewId": "222222222",
         "CandidateId": 2,
         "CandidateName": "Nguyễn Văn B",
         "InterviewerId": 2,
@@ -19,10 +22,13 @@
         "ApplyDate": "21/07/2023",
         "InterviewDate": "25/07/2023",
         "Status": "Pending",
-        "Score": 9.5
+        "Score": 9.5,
+        "TechnologyScore": 8,
+        "LanguageScore": 9.25,
+        "SoftSkillScore": 10
     },
     {
-        "InterviewId": 3,
+        "InterviewId": "3",
         "CandidateId": 2,
         "CandidateName": "Nguyễn Văn B",
         "InterviewerId": 2,
@@ -30,10 +36,13 @@
         "ApplyDate": "21/07/2023",
         "InterviewDate": "25/07/2023",
         "Status": "Pending",
-        "Score": 8.75
+        "Score": 8.75,
+        "TechnologyScore": 8,
+        "LanguageScore": 9.25,
+        "SoftSkillScore": 10
     },
     {
-        "InterviewId": 4,
+        "InterviewId": "4",
         "CandidateId": 2,
         "CandidateName": "Nguyễn Văn B",
         "InterviewerId": 2,
@@ -41,10 +50,13 @@
         "ApplyDate": "21/07/2023",
         "InterviewDate": "25/07/2023",
         "Status": "Pending",
-        "Score": 6
+        "Score": 6,
+        "TechnologyScore": 8,
+        "LanguageScore": 9.25,
+        "SoftSkillScore": 10
     },
     {
-        "InterviewId": 5,
+        "InterviewId": "5",
         "CandidateId": 2,
         "CandidateName": "Nguyễn Văn B",
         "InterviewerId": 2,
@@ -52,10 +64,13 @@
         "ApplyDate": "21/07/2023",
         "InterviewDate": "25/07/2023",
         "Status": "Pending",
-        "Score": 8
+        "Score": 8,
+        "TechnologyScore": 8,
+        "LanguageScore": 9.25,
+        "SoftSkillScore": 10
     },
     {
-        "InterviewId": 6,
+        "InterviewId": "6",
         "CandidateId": 2,
         "CandidateName": "Nguyễn Văn B",
         "InterviewerId": 2,
@@ -63,10 +78,13 @@
         "ApplyDate": "21/07/2023",
         "InterviewDate": "25/07/2023",
         "Status": "Pending",
-        "Score": 10
+        "Score": 10,
+        "TechnologyScore": 8,
+        "LanguageScore": 9.25,
+        "SoftSkillScore": 10
     },
     {
-        "InterviewId": 7,
+        "InterviewId": "7",
         "CandidateId": 2,
         "CandidateName": "Nguyễn Văn B",
         "InterviewerId": 2,
@@ -74,10 +92,13 @@
         "ApplyDate": "21/07/2023",
         "InterviewDate": "25/07/2023",
         "Status": "Pending",
-        "Score": 9.5
+        "Score": 9.5,
+        "TechnologyScore": 8,
+        "LanguageScore": 9.25,
+        "SoftSkillScore": 10
     },
     {
-        "InterviewId": 8,
+        "InterviewId": "8",
         "CandidateId": 2,
         "CandidateName": "Nguyễn Văn B",
         "InterviewerId": 2,
@@ -85,10 +106,13 @@
         "ApplyDate": "21/07/2023",
         "InterviewDate": "25/07/2023",
         "Status": "Pending",
-        "Score": 5
+        "Score": 5,
+        "TechnologyScore": 8,
+        "LanguageScore": 9.25,
+        "SoftSkillScore": 10
     },
     {
-        "InterviewId": 9,
+        "InterviewId": "9",
         "CandidateId": 2,
         "CandidateName": "Nguyễn Văn B",
         "InterviewerId": 2,
@@ -96,10 +120,13 @@
         "ApplyDate": "21/07/2023",
         "InterviewDate": "25/07/2023",
         "Status": "Pending",
-        "Score": 7
+        "Score": 7,
+        "TechnologyScore": 8,
+        "LanguageScore": 9.25,
+        "SoftSkillScore": 10
     },
     {
-        "InterviewId": 10,
+        "InterviewId": "10",
         "CandidateId": 2,
         "CandidateName": "Nguyễn Văn B",
         "InterviewerId": 2,
@@ -107,6 +134,9 @@
         "ApplyDate": "21/07/2023",
         "InterviewDate": "25/07/2023",
         "Status": "Pending",
-        "Score": 9
+        "Score": 9,
+        "TechnologyScore": 8,
+        "LanguageScore": 9.25,
+        "SoftSkillScore": 10
     }
 ]
