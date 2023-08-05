@@ -124,169 +124,157 @@ function* getInterviewResult(action) {
     const config = {
       headers: { Authorization: token },
     }
-    const responseInterviewList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`, config)
-    let responseInterview = responseInterviewList.data.find((item) => {
-      return item.interviewId == action.payload.interviewid
-    })
-    responseInterview = {
-      data: responseInterview
-    }
+    // const responseInterviewList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`, config)
+
+    let responseInterview = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview?id=${action.payload.interviewid}`)
     console.log("resssss: ", responseInterview)
     const responsePosition = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${responseInterview.data.application.position.positionId}`, config)
     const responseQSList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill`, config);
 
-    const responseAllQuestion = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Question`, config)
+    // const responseAllQuestion = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Question`, config)
 
     const responseCategoryList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion`, config)
     const responseSkillList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Skill`, config)
-    const responseRoundList = yield call(axios.get, `${host.name}/data/roundfake.json`, config)
+    // const responseRoundList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Round`, config)
+    const roundList = responseInterview.data.rounds
     console.log("responseInterview: ", responseInterview.data)
     console.log("responsePosition: ", responsePosition.data)
     console.log("responseQSList: ", responseQSList.data)
-    console.log("responseAllQuestion: ", responseAllQuestion.data)
+    // console.log("responseAllQuestion: ", responseAllQuestion.data)
     console.log("responseCategoryList: ", responseCategoryList.data)
     console.log("responseSkillList: ", responseSkillList.data)
-    console.log("responseRoundList: ", responseRoundList.data)
+    // console.log("responseRoundList: ", responseRoundList.data)
 
     let interStruc = {
       interviewid: action.payload.interviewid,
+      applicationid: responseInterview.data.application.applicationId,
       note: responseInterview.data.notes,
       candidate_Status: responseInterview.data.candidate_Status,
       company_Status: responseInterview.data.company_Status,
       round: []
     };
-    // Soft Skill
-    for (let cate of responseCategoryList.data) {
-      if (cate.categoryQuestionName == "Soft Skill") {
-        let newCate = {
-          categoryid: cate.categoryQuestionId,
-          categoryname: cate.categoryQuestionName,
-          questions: []
-        }
-        interStruc.round.push(newCate)
-        for (let softRo of responseRoundList.data) {
-          let findQues = null
-          findQues = responseAllQuestion.data.find((item) => {
-            return item.questionId == softRo.questionId && item.categoryQuestionId == cate.categoryQuestionId
-          })
-          if (findQues) {
-            const newRo = {
-              questionid: softRo.questionId,
-              questionstring: findQues.questionString,
-              score: softRo.score
-            }
-            interStruc.round[0].questions.push(newRo)
+    if (responseInterview.data.candidate_Status == "Finished") {
+      // Soft Skill
+      for (let cate of responseCategoryList.data) {
+        if (cate.categoryQuestionName == "Soft Skill") {
+          let newCate = {
+            categoryid: cate.categoryQuestionId,
+            categoryname: cate.categoryQuestionName,
+            questions: []
           }
-        }
-
-      }
-    }
-    // Language
-    for (let cate of responseCategoryList.data) {
-      if (cate.categoryQuestionName == "Language") {
-        let newCate = {
-          categoryid: cate.categoryQuestionId,
-          categoryname: cate.categoryQuestionName,
-          languages: []
-        }
-        interStruc.round.push(newCate)
-        let newLang = {
-          languageid: responsePosition.data.language.languageId,
-          languagename: responsePosition.data.language.languageName,
-          questions: []
-        }
-        interStruc.round[1].languages.push(newLang)
-        let prefix = ""
-        if (responsePosition.data.language.languageName == "English") {
-          prefix = "$eng$"
-        }
-        else if (responsePosition.data.language.languageName == "Chinese") {
-          prefix = "$chi$"
-        }
-        else if (responsePosition.data.language.languageName == "Italian") {
-          prefix = "$ita$"
-        }
-        else if (responsePosition.data.language.languageName == "Spanish") {
-          prefix = "$spa$"
-        }
-        else if (responsePosition.data.language.languageName == "French") {
-          prefix = "$fre$"
-        }
-        else if (responsePosition.data.language.languageName == "Russian") {
-          prefix = "$rus$"
-        }
-        else if (responsePosition.data.language.languageName == "Japanese") {
-          prefix = "$rus$"
-        }
-        else if (responsePosition.data.language.languageName == "Korean") {
-          prefix = "$kor$"
-        }
-        else if (responsePosition.data.language.languageName == "German") {
-          prefix = "$ger$"
-        }
-        else if (responsePosition.data.language.languageName == "Portuguese") {
-          prefix = "$por$"
-        }
-        else if (responsePosition.data.language.languageName == "Hindi") {
-          prefix = "$hin$"
-        }
-
-        for (let langRo of responseRoundList.data) {
-          let findLangQues = null
-          findLangQues = responseAllQuestion.data.find((item) => {
-            return langRo.questionId == item.questionId && item.categoryQuestionId == cate.categoryQuestionId
-          })
-          if (findLangQues) {
-            const newLangQues = {
-              questionid: langRo.questionId,
-              questionstring: findLangQues.questionString.slice(5),
-              score: langRo.score,
-            }
-            interStruc.round[1].languages[0].questions.push(newLangQues)
-          }
-        }
-
-      }
-    }
-    // Technology
-    for (let cate of responseCategoryList.data) {
-      if (cate.categoryQuestionName == "Technology") {
-        let newCate = {
-          categoryid: cate.categoryQuestionId,
-          categoryname: cate.categoryQuestionName,
-          skills: []
-        }
-        interStruc.round.push(newCate)
-        for (let skill of responseSkillList.data) {
-          for (let skillRequired of responsePosition.data.requirements) {
-            if (skill.skillId == skillRequired.skillId) {
-              let newSkill = {
-                skillid: skillRequired.skillId,
-                skillname: skill.skillName,
-                questions: []
+          interStruc.round.push(newCate)
+          for (let softRo of roundList) {
+            if (softRo.question.categoryQuestionId == cate.categoryQuestionId) {
+              const newRo = {
+                questionid: softRo.question.questionId,
+                questionstring: softRo.question.questionString,
+                score: softRo.score
               }
-              interStruc.round[2].skills.push(newSkill)
-              for (let QS of responseQSList.data) {
-                if (QS.skillId == skillRequired.skillId)
-                  for (let techRo of responseRoundList.data) {
-                    let findTechQues = null
-                    findTechQues = responseAllQuestion.data.find((item) => {
-                      return techRo.questionId == item.questionId && item.categoryQuestionId == cate.categoryQuestionId && item.questionId == QS.questionId
-                    })
-                    if (findTechQues) {
-                      const newTechRo = {
-                        questionid: techRo.questionId,
-                        questionstring: findTechQues.questionString,
-                        score: techRo.score,
+              interStruc.round[0].questions.push(newRo)
+            }
+          }
+
+        }
+      }
+      // Language
+      for (let cate of responseCategoryList.data) {
+        if (cate.categoryQuestionName == "Language") {
+          let newCate = {
+            categoryid: cate.categoryQuestionId,
+            categoryname: cate.categoryQuestionName,
+            languages: []
+          }
+          interStruc.round.push(newCate)
+          let newLang = {
+            languageid: responsePosition.data.language.languageId,
+            languagename: responsePosition.data.language.languageName,
+            questions: []
+          }
+          interStruc.round[1].languages.push(newLang)
+          let prefix = ""
+          if (responsePosition.data.language.languageName == "English") {
+            prefix = "$eng$"
+          }
+          else if (responsePosition.data.language.languageName == "Chinese") {
+            prefix = "$chi$"
+          }
+          else if (responsePosition.data.language.languageName == "Italian") {
+            prefix = "$ita$"
+          }
+          else if (responsePosition.data.language.languageName == "Spanish") {
+            prefix = "$spa$"
+          }
+          else if (responsePosition.data.language.languageName == "French") {
+            prefix = "$fre$"
+          }
+          else if (responsePosition.data.language.languageName == "Russian") {
+            prefix = "$rus$"
+          }
+          else if (responsePosition.data.language.languageName == "Japanese") {
+            prefix = "$rus$"
+          }
+          else if (responsePosition.data.language.languageName == "Korean") {
+            prefix = "$kor$"
+          }
+          else if (responsePosition.data.language.languageName == "German") {
+            prefix = "$ger$"
+          }
+          else if (responsePosition.data.language.languageName == "Portuguese") {
+            prefix = "$por$"
+          }
+          else if (responsePosition.data.language.languageName == "Hindi") {
+            prefix = "$hin$"
+          }
+
+          for (let langRo of roundList) {
+            if (langRo.question.categoryQuestionId == cate.categoryQuestionId) {
+              const newLangQues = {
+                questionid: langRo.question.questionId,
+                questionstring: langRo.question.questionString.slice(5),
+                score: langRo.score,
+              }
+              interStruc.round[1].languages[0].questions.push(newLangQues)
+            }
+          }
+
+        }
+      }
+      // Technology
+      for (let cate of responseCategoryList.data) {
+        if (cate.categoryQuestionName == "Technology") {
+          let newCate = {
+            categoryid: cate.categoryQuestionId,
+            categoryname: cate.categoryQuestionName,
+            skills: []
+          }
+          interStruc.round.push(newCate)
+          for (let skill of responseSkillList.data) {
+            for (let skillRequired of responsePosition.data.requirements) {
+              if (skill.skillId == skillRequired.skillId) {
+                let newSkill = {
+                  skillid: skillRequired.skillId,
+                  skillname: skill.skillName,
+                  questions: []
+                }
+                interStruc.round[2].skills.push(newSkill)
+                for (let QS of responseQSList.data) {
+                  if (QS.skillId == skillRequired.skillId)
+                    for (let techRo of roundList) {
+                      if (techRo.question.categoryQuestionId == cate.categoryQuestionId && techRo.question.questionId == QS.questionId) {
+                        const newTechRo = {
+                          questionid: techRo.question.questionId,
+                          questionstring: techRo.question.questionString,
+                          score: techRo.score,
+                        }
+                        interStruc.round[2].skills[interStruc.round[2].skills.length - 1].questions.push(newTechRo)
                       }
-                      interStruc.round[2].skills[interStruc.round[2].skills.length - 1].questions.push(newTechRo)
                     }
-                  }
+                }
               }
             }
           }
-        }
 
+        }
       }
     }
     yield put({ type: "interviewResult/setInterviewResult", payload: interStruc });
@@ -391,7 +379,161 @@ function* getInterviewInfo(action) {
   }
 }
 
-function* getDataForInterview(action) {
+function* getQuestionsForStartingIntervew(action) {
+  let token = `Bearer ${action.payload.token}`
+  const config = {
+    headers: { Authorization: token },
+  }
+  const responseInterviewList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`, config)
+  let responseInterview = responseInterviewList.data.find((item) => {
+    return item.interviewId == action.payload.interviewid
+  })
+  responseInterview = {
+    data: responseInterview
+  }
+  const responsePosition = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${responseInterview.data.application.position.positionId}`, config)
+  const responseSoftList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Question/GetAllSoftSkillQuestions/SoftSkill`, config);
+  const responseLangList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Question/GetAllLanguageQuestions/Language`, config);
+  const responseTechList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Question/GetAllTechnologyQuestions/Technology`, config);
+  const responseQSList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill`, config);
+
+  const responseAllQuestion = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Question`, config)
+
+  const responseCategoryList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion`, config)
+  const responseSkillList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Skill`, config)
+  console.log("quessoft: ", responseSoftList)
+  let quesStruc = [];
+  // Soft Skill
+  for (let cate of responseCategoryList.data) {
+    if (cate.categoryQuestionName == "Soft Skill") {
+      let newCate = {
+        categoryid: cate.categoryQuestionId,
+        categoryname: cate.categoryQuestionName,
+        questions: []
+      }
+      quesStruc.push(newCate)
+      for (let softQues of responseAllQuestion.data) {
+        if (softQues.categoryQuestionId == cate.categoryQuestionId) {
+          let newQuesObj = {
+            questionid: softQues.questionId,
+            questionstring: softQues.questionString
+          }
+          quesStruc[0].questions.push(newQuesObj)
+        }
+      }
+
+    }
+  }
+  // Language
+  for (let cate of responseCategoryList.data) {
+    if (cate.categoryQuestionName == "Language") {
+      let newCate = {
+        categoryid: cate.categoryQuestionId,
+        categoryname: cate.categoryQuestionName,
+        languages: []
+      }
+      quesStruc.push(newCate)
+      let newLang = {
+        languageid: responsePosition.data.language.languageId,
+        languagename: responsePosition.data.language.languageName,
+        questions: []
+      }
+      quesStruc[1].languages.push(newLang)
+      let prefix = ""
+      if (responsePosition.data.language.languageName == "English") {
+        prefix = "$eng$"
+      }
+      else if (responsePosition.data.language.languageName == "Chinese") {
+        prefix = "$chi$"
+      }
+      else if (responsePosition.data.language.languageName == "Italian") {
+        prefix = "$ita$"
+      }
+      else if (responsePosition.data.language.languageName == "Spanish") {
+        prefix = "$spa$"
+      }
+      else if (responsePosition.data.language.languageName == "French") {
+        prefix = "$fre$"
+      }
+      else if (responsePosition.data.language.languageName == "Russian") {
+        prefix = "$rus$"
+      }
+      else if (responsePosition.data.language.languageName == "Japanese") {
+        prefix = "$rus$"
+      }
+      else if (responsePosition.data.language.languageName == "Korean") {
+        prefix = "$kor$"
+      }
+      else if (responsePosition.data.language.languageName == "German") {
+        prefix = "$ger$"
+      }
+      else if (responsePosition.data.language.languageName == "Portuguese") {
+        prefix = "$por$"
+      }
+      else if (responsePosition.data.language.languageName == "Hindi") {
+        prefix = "$hin$"
+      }
+      for (let langQues of responseLangList.data) {
+        if (langQues.questionString.slice(0, 5) == prefix) {
+          let newQuesObj = {
+            questionid: langQues.questionId,
+            questionstring: langQues.questionString.slice(5)
+          }
+          quesStruc[1].languages[0].questions.push(newQuesObj)
+        }
+      }
+
+    }
+  }
+  // Technology
+  for (let cate of responseCategoryList.data) {
+    if (cate.categoryQuestionName == "Technology") {
+      let newCate = {
+        categoryid: cate.categoryQuestionId,
+        categoryname: cate.categoryQuestionName,
+        skills: []
+      }
+      quesStruc.push(newCate)
+      for (let skill of responseSkillList.data) {
+        for (let skillRequired of responsePosition.data.requirements) {
+          if (skill.skillId == skillRequired.skillId) {
+            let newSkill = {
+              skillid: skillRequired.skillId,
+              skillname: skill.skillName,
+              questions: []
+            }
+            quesStruc[2].skills.push(newSkill)
+            for (let QS of responseQSList.data) {
+              if (QS.skillId == skillRequired.skillId)
+                for (let techQues of responseTechList.data) {
+                  if (techQues.questionId == QS.questionId) {
+                    let newQues = {
+                      questionid: techQues.questionId,
+                      questionstring: techQues.questionString
+                    }
+                    quesStruc[2].skills[quesStruc[2].skills.length - 1].questions.push(newQues)
+                  }
+                }
+            }
+          }
+        }
+      }
+
+    }
+  }
+  yield put({ type: "question/setInterviewQuestion", payload: quesStruc });
+
+  // const responsefake = yield call(
+  //   axios.get,
+  //   `${host.name}/data/questionlist.json`
+  // );
+  // yield put({
+  //   type: "question/setInterviewQuestion",
+  //   payload: responsefake.data,
+  // });
+}
+
+function* getDataForCreatingInterview(action) {
   // const responseApplication = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload}`)
   // --------hàng tạm thời------------
   // get application infor
@@ -475,6 +617,47 @@ function* getDataForInterview(action) {
   yield put({ type: "shift/setShift", payload: shiftList });
 }
 
+function* acceptInterview(action) {
+  try {
+    let token = `Bearer ${action.payload.token}`
+    const config = {
+      headers: { Authorization: token },
+    }
+    // yield call(delay, 2000)
+    yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Interview/UpdateStatusInterview/${action.payload.interviewid}?Candidate_Status=Finished&Company_Status=Passed`, null, config)
+    yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Application/UpdateStatusApplication/${action.payload.applicationid}?Candidate_Status=Passed&Company_Status=Accepted`, null, config)
+    let newInterviewResult = {
+      ...action.payload.interviewResult,
+      company_Status: "Passed"
+    }
+    yield put({ type: "interviewResult/setInterviewResult", payload: newInterviewResult })
+    yield put({ type: "error/setError", payload: { status: "no", message: "" } })
+  }
+  catch (error) {
+    console.log("error")
+  }
+}
+
+function* rejectInterview(action) {
+  try {
+    let token = `Bearer ${action.payload.token}`
+    const config = {
+      headers: { Authorization: token },
+    }
+    // yield call(delay, 2000)
+    yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Interview/UpdateStatusInterview/${action.payload.interviewid}?Candidate_Status=Finished&Company_Status=Failed`, null, config)
+    let newInterviewResult = {
+      ...action.payload.interviewResult,
+      company_Status: "Failed"
+    }
+    yield put({ type: "interviewResult/setInterviewResult", payload: newInterviewResult })
+    yield put({ type: "error/setError", payload: { status: "no", message: "" } })
+  }
+  catch (error) {
+
+  }
+}
+
 function* interviewSaga() {
   yield all([
     takeEvery("interviewSaga/getInterviewInfo", getInterviewInfo),
@@ -482,9 +665,12 @@ function* interviewSaga() {
     takeEvery("interviewSaga/scoreInterview", scoreInterview),
     takeEvery("interviewSaga/getInterviewResult", getInterviewResult),
     takeEvery("interviewSaga/createInterview", createInterview),
+    takeEvery("interviewSaga/getQuestionsForStartingIntervew", getQuestionsForStartingIntervew),
+    takeEvery("interviewSaga/acceptInterview", acceptInterview),
+    takeEvery("interviewSaga/rejectInterview", rejectInterview),
     takeLatest("interviewSaga/getAllInterview", getAllInterview),
     takeLatest("interviewSaga/getInterviewWithFilter", getInterviewWithFilter),
-    takeEvery("interviewSaga/getDataForInterview", getDataForInterview),
+    takeEvery("interviewSaga/getDataForCreatingInterview", getDataForCreatingInterview),
   ]);
 }
 

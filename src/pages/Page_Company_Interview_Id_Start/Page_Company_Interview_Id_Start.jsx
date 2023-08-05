@@ -33,7 +33,7 @@ import cleanStore from '../../utils/cleanStore';
 import AlertDialog from '../../components/AlertDialog/AlertDialog';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-
+import Page_Interview_Id from '../Page_Interview_Id/Page_Interview_Id';
 export default function Page_Company_Interview_Id_Start() {
     const dispatch = useDispatch()
 
@@ -54,7 +54,7 @@ export default function Page_Company_Interview_Id_Start() {
     const noteRef = useRef()
     useEffect(() => {
         dispatch({
-            type: "questionSaga/getInterviewQuestion", payload: {
+            type: "interviewSaga/getQuestionsForStartingIntervew", payload: {
                 interviewid: interviewid,
                 token: user.token
             }
@@ -88,7 +88,7 @@ export default function Page_Company_Interview_Id_Start() {
     const navigate = useNavigate()
     function handleSubmit(e) {
         let newObj = {
-            interviewerId: user.interviewerId,
+            interviewerId: interviewid,
             notes: note,
             rounds: [
                 // rightSoft,
@@ -134,6 +134,7 @@ export default function Page_Company_Interview_Id_Start() {
     return (
         leftSoft ?
             <>
+                <Page_Interview_Id />
                 <TitleDivider>
                     Score Interview
                 </TitleDivider>

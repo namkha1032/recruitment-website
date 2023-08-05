@@ -33,7 +33,14 @@ export default function AlertDialog(props) {
             setOpenAlert(false)
             setLoading(false)
         }
+        if (error.status == "no") {
+            setTimeout(() => {
+                setOpenAlert(false)
+                setLoading(false)
+            }, 2000)
+        }
     }, [error])
+    console.log("checkgif: ", check)
     return (
         <>
             <div onClick={handleClickOpen}>
@@ -47,8 +54,8 @@ export default function AlertDialog(props) {
             >
                 {error.status == "no"
                     ? null
-                    : <DialogTitle sx={{ backgroundColor: "black", fontSize: 40, color: "white", display: "flex", alignItems: "center", columnGap: 1 }}>
-                        <WarningAmberRoundedIcon sx={{ fontSize: 60 }} />
+                    : <DialogTitle sx={{ backgroundColor: "black", fontSize: isSm ? 40 : 30, color: "white", display: "flex", alignItems: "center", columnGap: 1 }}>
+                        <WarningAmberRoundedIcon sx={{ fontSize: isSm ? 60 : 50 }} />
                         Warning
                     </DialogTitle>
                 }
@@ -73,7 +80,9 @@ export default function AlertDialog(props) {
                     <DialogActions sx={{ columnGap: 4 }}>
                         {loading
                             ?
-                            <CircularProgress sx={{ color: "black" }} />
+                            <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
+                                <CircularProgress sx={{ color: "black" }} />
+                            </Box>
                             :
                             <Box sx={{ display: "flex", justifyContent: "flex-end", columnGap: 2 }}>
 

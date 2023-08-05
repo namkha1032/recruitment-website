@@ -15,7 +15,7 @@ function* getApplication(action) {
     // console.log("res2", response2.data);
     // yield put({ type: 'application/setApplication', payload: application })
     try {
-        
+
         const config = {
             headers: {
                 Authorization: action.payload.token,
@@ -28,8 +28,12 @@ function* getApplication(action) {
         let candidatelist = []
         let application = response2.data.filter((prop) => prop.position.positionId === response1.data.positionId);
         console.log("applyinsaga", application);
+        const responseCvList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv`, config)
         for (let i = 0; i < application.length; i++) {
-            candidatelist.push({ ...application[i], ...(yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate/${application[i].cv.candidateId}`)).data, config })
+            const findCv = responseCvList.data.find((item) => {
+                return item.cvid == application[i].cv.cvid
+            })
+            candidatelist.push({ ...application[i], ...(yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate/${application[i].cv.candidateId}`, config)).data, findCv: findCv, findPosition: response1.data })
         }
         // const test = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate/db20f8d0-eb45-43af-9790-e89f48a1a587`, config)
         // console.log('testcandidate', test.data.user.fullName);
@@ -38,7 +42,7 @@ function* getApplication(action) {
 
         yield put({ type: 'application/setApplication', payload: candidatelist })
     } catch (error) {
-        console.log('++++',error)
+        console.log('++++', error)
         if (error) {
             console.log('-----', error.response.request.status)
             yield put({ type: 'applicationError/onError', payload: error.response.request.status })
@@ -53,32 +57,32 @@ function* getInfoApplication(action) {
         // const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload}`)
         const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`)
         const data = response.data.filter(item => item.applicationId === action.payload.applicationid)
-        if(data.length ===0) 
+        if (data.length === 0)
             yield put({ type: 'infoApplication/setInfoApplication', payload: 'none' })
-        else{
+        else {
             const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`)
             const data = response.data.filter(item => item.applicationId === action.payload.applicationid)
-            if(data.length ===0) 
+            if (data.length === 0)
                 yield put({ type: 'infoApplication/setInfoApplication', payload: 'none' })
-            else{
+            else {
                 const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate/${data[0].cv.candidateId}`)
                 console.log(response2.data)
-                const response3 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Authentication/Profile/${response2.data.userId}`,{
-                    headers:{ Authorization: `Bearer ${action.payload.token}`}
+                const response3 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Authentication/Profile/${response2.data.userId}`, {
+                    headers: { Authorization: `Bearer ${action.payload.token}` }
                 })
 
                 const data1 = {
                     name: response3.data.fullName,
-                    email:response3.data.email,
-                    phone:response3.data.phoneNumber,
-                    address:response3.data.address,
-                    image:response3.data.imageURL,
+                    email: response3.data.email,
+                    phone: response3.data.phoneNumber,
+                    address: response3.data.address,
+                    image: response3.data.imageURL,
                 }
                 yield put({ type: "candidate/setCandidate", payload: data1 })
                 yield put({ type: 'infoApplication/setInfoApplication', payload: data[0] })
             }
         }
-            
+
     } catch (error) {
         console.log(error)
     }
@@ -86,9 +90,9 @@ function* getInfoApplication(action) {
 
 }
 function* submitCv(action) {
-    yield put({type: 'submitNotify/setSubmitNotify', payload: 'loading'})
+    yield put({ type: 'submitNotify/setSubmitNotify', payload: 'loading' })
     try {
-        
+
         const config = {
             headers: {
                 Authorization: action.payload.token,
@@ -98,23 +102,23 @@ function* submitCv(action) {
         console.log('post', action.payload);
         console.log("submitsaga", reponse.data)
         yield put({ type: 'submitcv/setSubmitcv', payload: reponse.data })
-        yield put({type: 'submitNotify/setSubmitNotify', payload: 'success'})
+        yield put({ type: 'submitNotify/setSubmitNotify', payload: 'success' })
     } catch (error) {
         console.log("error")
     }
 }
 
 function* updatesubmitCv(action) {
-    yield put({type: 'submitNotify/setSubmitNotify', payload: 'loading'})
+    yield put({ type: 'submitNotify/setSubmitNotify', payload: 'loading' })
     try {
-        
+
         const config = {
             headers: {
                 Authorization: action.payload.token,
             }
         };
         const reponse = yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload.applicationId}`, action.payload, config)
-        yield put({type: 'submitNotify/setSubmitNotify', payload: 'success'})
+        yield put({ type: 'submitNotify/setSubmitNotify', payload: 'success' })
         console.log('update', reponse.data);
     } catch (error) {
         console.log(error)
@@ -123,7 +127,7 @@ function* updatesubmitCv(action) {
 
 function* getApplicationStatus(action) {
     try {
-        
+
         const config = {
             headers: {
                 Authorization: action.payload.token
@@ -151,14 +155,14 @@ function* getApplicationStatus(action) {
 
 
 function* rejectApplication(action) {
-    
+
     try {
-        const response = yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Application/UpdateStatusApplication/${action.payload.applicationid}?Candidate_Status=${action.payload.candidate_Status}&Company_Status=Rejected`, action.payload,{
-        headers: {
-          Authorization: `Bearer ${action.payload.token}`
-        },
-      })
-      console.log(response.data)
+        const response = yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Application/UpdateStatusApplication/${action.payload.applicationid}?Candidate_Status=${action.payload.candidate_Status}&Company_Status=Rejected`, action.payload, {
+            headers: {
+                Authorization: `Bearer ${action.payload.token}`
+            },
+        })
+        console.log(response.data)
     } catch (error) {
         console.log("error")
     }

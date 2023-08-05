@@ -76,7 +76,7 @@ const Page_Company_Interview_Create = () => {
     // fetch Data
     useEffect(() => {
         dispatch({
-            type: "interviewSaga/getDataForInterview", payload: {
+            type: "interviewSaga/getDataForCreatingInterview", payload: {
                 applicationid: applicationid,
                 recruitmentid: recruitmentid,
                 token: user.token

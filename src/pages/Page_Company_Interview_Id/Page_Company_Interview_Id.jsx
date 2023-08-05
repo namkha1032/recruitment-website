@@ -26,6 +26,10 @@ import QuestionTable from './QuestionTable/QuestionTable';
 import NoteField from './NoteField/NoteField';
 import Page_Interview_Id from "../Page_Interview_Id/Page_Interview_Id";
 import AlertDialog from '../../components/AlertDialog/AlertDialog';
+import Alert from '@mui/material/Alert';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 import GigaCard from '../../components/GigaCard/GigaCard';
 import GigaCardHeader from '../../components/GigaCardHeader/GigaCardHeader';
@@ -57,6 +61,16 @@ const Page_Company_Interview_Id = () => {
     const [openAlertReject, setOpenAlertReject] = useState(false)
     const { interviewid } = useParams()
     const user = useSelector(state => state.user)
+    const candidate = useSelector(state => state.candidate)
+    const interviewidInfo = useSelector(state => state.interviewidInfo)
+    const interviewskill = useSelector(state => state.interviewskill)
+    const interviewposition = useSelector(state => state.interviewposition)
+    const cv = useSelector(state => state.cv)
+    const interview = useSelector(state => state.interviewResult)
+
+    const condition = interview && role && candidate && interviewidInfo && interviewskill && interviewposition && cv
+    const viewPage = condition ? "block" : "none"
+    const viewLoading = condition ? false : true
     useEffect(() => {
         let newObj = {
             interviewid: interviewid,
@@ -64,123 +78,159 @@ const Page_Company_Interview_Id = () => {
         }
         dispatch({ type: "interviewSaga/getInterviewResult", payload: newObj })
     }, [])
-    const interview = useSelector(state => state.interviewResult)
     console.log("interview: ", interview)
     function handleStart() {
         navigate(`/company/interview/${interviewid}/start`)
     }
     function handleAccept() {
-        setOpenAlertAccept(false)
+        dispatch({
+            type: "interviewSaga/acceptInterview", payload: {
+                interviewid: interview.interviewid,
+                applicationid: interview.applicationid,
+                interviewResult: interview,
+                token: user.token
+            }
+        })
     }
     function handleReject() {
-        setOpenAlertReject(false)
+        dispatch({
+            type: "interviewSaga/rejectInterview", payload: {
+                interviewid: interview.interviewid,
+                applicationid: interview.applicationid,
+                interviewResult: interview,
+                token: user.token
+            }
+        })
     }
     return (
-        interview && role
-            ? <>
-                <Page_Interview_Id />
-                {role == "admin" || role == "interviewer"
-                    ?
+        <>
+            <Box sx={{ display: viewPage }}>
+                {interview && role ?
                     <>
-                        <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 4, marginBottom: 4 }}>
-                            <BlackContainedButton handleClick={() => { setOpenAlertStart(true) }}>Start</BlackContainedButton>
-                        </Box>
-                        <AlertDialog
-                            openAlert={openAlertStart} setOpenAlert={setOpenAlertStart}
-                            alertMessage={"Are you sure you want to start this interview?"}
-                            successfulMessage={""}
-                            handleSubmit={handleStart} />
+                        <Page_Interview_Id />
+                        {role == "interviewer" && interview.candidate_Status == "Not start"
+                            ?
+                            <Box>
+                                <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 4, marginBottom: 4 }}>
+                                    <BlackContainedButton handleClick={() => { setOpenAlertStart(true) }}>Start</BlackContainedButton>
+                                </Box>
+                                <AlertDialog
+                                    openAlert={openAlertStart} setOpenAlert={setOpenAlertStart}
+                                    alertMessage={"Are you sure you want to start this interview?"}
+                                    successfulMessage={""}
+                                    handleSubmit={handleStart} />
+                            </Box>
+                            : null}
+                        {(interview.candidate_Status == "Finished") ?
+                            <Box>
+                                <Box sx={{ marginY: 4 }}>
+                                    <TitleDivider>
+                                        RESULT OF THE INTERVIEW
+                                    </TitleDivider>
+                                </Box>
+                                <Grid container spacing={4}>
+                                    <Grid item md={6} xs={12}>
+                                        <GigaCard>
+                                            <GigaCardHeader color={"black"} headerIcon={<EditNoteIcon sx={{ fontSize: "inherit" }} />}>
+                                                Note
+                                            </GigaCardHeader>
+                                            <GigaCardBody>
+                                                <Divider />
+                                                <NoteField note={interview.note} />
+                                                <Divider />
+                                            </GigaCardBody>
+                                        </GigaCard >
+                                    </Grid>
+                                    <Grid item md={6} xs={12}>
+                                        <GigaCard>
+                                            <GigaCardHeader color={"black"} headerIcon={<QuestionMarkIcon sx={{ fontSize: "inherit" }} />}>
+                                                Questions
+                                            </GigaCardHeader>
+                                            <GigaCardBody>
+                                                <QuestionTable round={interview.round} />
+                                            </GigaCardBody>
+                                        </GigaCard>
+                                    </Grid>
+                                    <Grid item md={12} sx={{ width: "100%" }}>
+                                        <GigaCard>
+                                            <Grid container>
+                                                <Grid item md={6} xs={12} sx={{ display: "flex", flexDirection: "column" }}>
+                                                    <GigaCardHeader color={"black"} headerIcon={<TroubleshootIcon sx={{ fontSize: "inherit" }} />}>
+                                                        Analysis
+                                                    </GigaCardHeader>
+                                                    <GigaCardBody>
+                                                        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+                                                            <RadarPlot allResult={interview.round} />
+                                                        </Box>
+                                                    </GigaCardBody>
+                                                </Grid>
+                                                <Grid item md={6} xs={12} sx={{ display: "flex", flexDirection: "column" }}>
+                                                    <GigaCardHeader color={"black"} headerIcon={<SportsScoreIcon sx={{ fontSize: "inherit" }} />}>
+                                                        Final Score
+                                                    </GigaCardHeader>
+                                                    <GigaCardBody>
+                                                        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+                                                            <ScoreTable allResult={interview.round} />
+                                                        </Box>
+                                                    </GigaCardBody>
+                                                </Grid>
+                                            </Grid>
+                                        </GigaCard>
+                                    </Grid>
+                                    {role == "admin"
+                                        ? <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", columnGap: 4 }}>
+                                            {interview.company_Status == "Pending"
+                                                ? <>
+                                                    <Button
+                                                        onClick={() => { setOpenAlertReject(true) }}
+                                                        size={"large"} sx={{ backgroundColor: "white", width: isSm ? "auto" : "100%" }} color="error" variant="outlined" startIcon={<CloseIcon />}>
+                                                        Reject
+                                                    </Button>
+                                                    <Button
+                                                        onClick={() => { setOpenAlertAccept(true) }}
+                                                        size={"large"} sx={{ backgroundColor: "white", width: isSm ? "auto" : "100%" }} color="success" variant="outlined" startIcon={<CheckIcon />}>
+                                                        Accept
+                                                    </Button>
+                                                </>
+                                                : null}
+                                            {interview.company_Status == "Passed"
+                                                ? <Alert icon={<CheckCircleIcon fontSize="inherit" />} severity="success" variant="filled">
+                                                    ACCEPTED
+                                                </Alert>
+                                                : null}
+                                            {interview.company_Status == "Failed"
+                                                ? <Alert icon={<CancelIcon fontSize="inherit" />} severity="error" variant="filled">
+                                                    REJECTED
+                                                </Alert>
+                                                : null}
+                                        </Grid>
+                                        : null}
+
+                                </Grid>
+
+                                <AlertDialog
+                                    openAlert={openAlertAccept} setOpenAlert={setOpenAlertAccept}
+                                    alertMessage={"Are you sure you want to accept this candidate?"}
+                                    successfulMessage={"Candidate accepted successfully"}
+                                    handleSubmit={handleAccept} />
+                                <AlertDialog
+                                    openAlert={openAlertReject} setOpenAlert={setOpenAlertReject}
+                                    alertMessage={"Are you sure you want to reject this candidate?"}
+                                    successfulMessage={"Candidate rejected successfully"}
+                                    handleSubmit={handleReject} />
+                            </Box>
+                            : <Box />}
                     </>
                     : null}
-                {(interview.candidate_Status == "Finished") ?
-                    <>
-                        <Box sx={{ marginY: 4 }}>
-                            <TitleDivider>
-                                RESULT OF THE INTERVIEW
-                            </TitleDivider>
-                        </Box>
-                        <Grid container spacing={4}>
-                            <Grid item md={6} xs={12}>
-                                <GigaCard>
-                                    <GigaCardHeader color={"black"} headerIcon={<EditNoteIcon sx={{ fontSize: "inherit" }} />}>
-                                        Note
-                                    </GigaCardHeader>
-                                    <GigaCardBody>
-                                        <Divider />
-                                        <NoteField note={interview.note} />
-                                        <Divider />
-                                    </GigaCardBody>
-                                </GigaCard >
-                            </Grid>
-                            <Grid item md={6} xs={12}>
-                                <GigaCard>
-                                    <GigaCardHeader color={"black"} headerIcon={<QuestionMarkIcon sx={{ fontSize: "inherit" }} />}>
-                                        Questions
-                                    </GigaCardHeader>
-                                    <GigaCardBody>
-                                        <QuestionTable round={interview.round} />
-                                    </GigaCardBody>
-                                </GigaCard>
-                            </Grid>
-                            <Grid item md={12} sx={{ width: "100%" }}>
-                                <GigaCard>
-                                    <Grid container>
-                                        <Grid item md={6} xs={12} sx={{ display: "flex", flexDirection: "column" }}>
-                                            <GigaCardHeader color={"black"} headerIcon={<TroubleshootIcon sx={{ fontSize: "inherit" }} />}>
-                                                Analysis
-                                            </GigaCardHeader>
-                                            <GigaCardBody>
-                                                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
-                                                    <RadarPlot allResult={interview.round} />
-                                                </Box>
-                                            </GigaCardBody>
-                                        </Grid>
-                                        <Grid item md={6} xs={12} sx={{ display: "flex", flexDirection: "column" }}>
-                                            <GigaCardHeader color={"black"} headerIcon={<SportsScoreIcon sx={{ fontSize: "inherit" }} />}>
-                                                Final Score
-                                            </GigaCardHeader>
-                                            <GigaCardBody>
-                                                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
-                                                    <ScoreTable allResult={interview.round} />
-                                                </Box>
-                                            </GigaCardBody>
-                                        </Grid>
-                                    </Grid>
-                                </GigaCard>
-                            </Grid>
-                            <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", columnGap: 4 }}>
-                                <Button
-                                    onClick={() => { setOpenAlertReject(true) }}
-                                    size={"large"} sx={isSm ? null : { width: "100%" }} color="error" variant="contained" startIcon={<CloseIcon />}>
-                                    Reject
-                                </Button>
-                                <Button
-                                    onClick={() => { setOpenAlertAccept(true) }}
-                                    size={"large"} sx={isSm ? null : { width: "100%" }} color="success" variant="contained" startIcon={<CheckIcon />}>
-                                    Accept
-                                </Button>
-                            </Grid>
-                        </Grid>
 
-                        <AlertDialog
-                            openAlert={openAlertAccept} setOpenAlert={setOpenAlertAccept}
-                            alertMessage={"Are you sure you want to accept this candidate"}
-                            successfulMessage={""}
-                            handleSubmit={handleAccept} />
-                        <AlertDialog
-                            openAlert={openAlertReject} setOpenAlert={setOpenAlertReject}
-                            alertMessage={"Are you sure you want to reject this candidate"}
-                            successfulMessage={""}
-                            handleSubmit={handleReject} />
-                    </>
-                    : <Box />}
-            </>
-            : <Backdrop
+            </Box >
+            <Backdrop
                 sx={{ backgroundColor: theme.palette.grey[200] }}
-                open={true}
+                open={viewLoading}
             >
                 <CircularProgress color="inherit" />
             </Backdrop>
+        </>
     )
 }
 
