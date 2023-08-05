@@ -29,7 +29,11 @@ import HomeIcon from '@mui/icons-material/Home';
 
 import CircularProgress from "@mui/material/CircularProgress";
 
-import imageBackground from "../../assets/img/background.jpg";
+import imageBg1 from "../../assets/img/background1.png";
+import imageBg2 from "../../assets/img/background2.png";
+import imageBg3 from "../../assets/img/background3.png";
+// import imageBg4 from "../../assets/img/background4.png";
+// import imageBg5 from "../../assets/img/background5.png";
 
 const theme = createTheme({
   palette: {
@@ -43,6 +47,8 @@ const fullnameRegex = /^[a-zA-Z-' ]{2,}$/;
 const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{6,}$/;
+
+const images = [imageBg1, imageBg2, imageBg3]
 
 const XPage_Register = () => {
   const navigate = useNavigate();
@@ -60,10 +66,24 @@ const XPage_Register = () => {
   const [validPassword, setValidPassword] = useState(true);
 
   const [errorSnackbar, setErrorSnackbar] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const dispatch = useDispatch();
 
   const newError = useSelector((state) => state.error);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if(currentIndex === images.length - 1) {
+        setCurrentIndex(0);
+      } 
+      else {
+        setCurrentIndex(currentIndex + 1);
+      }
+    }, 6000)
+    
+    return () => clearInterval(intervalId);
+  }, [currentIndex])
 
   useEffect(() => {
     if (newError.status === "no") {
@@ -198,7 +218,7 @@ const XPage_Register = () => {
   return (
     <Box
       sx={{
-        backgroundImage: `url(${imageBackground})`,
+        backgroundImage: `url(${images[currentIndex]})`,
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",

@@ -45,6 +45,14 @@ const XPage_Recovery = () => {
     navigate("/home");
   };
 
+  const handleClickLogin = () => {
+    dispatch({
+      type: "error/setError",
+      payload: { status: "idle", message: "" },
+    });
+    navigate("/login");
+  }
+
   useEffect(() => {
     if (newError.status === "no") {
       if (!isEmailValid) {
@@ -172,24 +180,6 @@ const XPage_Recovery = () => {
         //setConfirmPassword("");
       }
     }
-
-
-    // if (!validNewPassword || newPassword == "" || confirmPassword == "") {
-    //   setNewPassword("");
-    //   setConfirmPassword("");
-    // } else {
-    //   if (newPassword !== confirmPassword) {
-    //     setMessage("Passwords do not match");
-    //     setErrorResetSnackbar(true);
-    //     //setNewPassword("");
-    //     setConfirmPassword("");
-    //   } else {
-    //     dispatch({
-    //       type: "saga/userResetPassword",
-    //       payload: { email, otp, newPassword },
-    //     });
-    //   }
-    // }
   };
 
   return (
@@ -202,6 +192,7 @@ const XPage_Recovery = () => {
           validEmail={validEmail}
           loading={loading}
           handleClickHome={handleClickHome}
+          handleClickLogin={handleClickLogin}
         />
       ) : (
         <>

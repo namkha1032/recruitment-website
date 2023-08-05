@@ -3,10 +3,6 @@ import {
   BrowserRouter,
   Routes, Route
 } from 'react-router-dom'
-import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
-import cleanStore from './utils/cleanStore';
 // import components
 import MainLayout from './components/MainLayout/MainLayout';
 // import pages
@@ -58,38 +54,12 @@ import PageTest4 from './pages/xpagetest4/PageTest4';
 
 import MissingPage from './components/MissingPage/MissingPage';
 import Unauthorized from './components/Unauthorized/Unauthorized';
-import RequireAuth from './components/RequireAuth/RequireAuth';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import TestLayout from './components/TestLayout/TestLayout';
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function App() {
-  // const dispatch = useDispatch();
-  // const [rememberMe, setRememberMe] = useState(false);
-  // const handleRememberMe = (event) => {
-  //   event.preventDefault();
-  //   setRememberMe(!rememberMe);
-  //   // window.localStorage.setItem("remember", JSON.stringify(!rememberMe))
-  // }
-  // console.log(rememberMe)
-  // useEffect(() => {
-  //   const handleBeforeUnload = (event) => {
-  //     if (!rememberMe /* && !window.localStorage.getItem('remember') */) {
-  //       setRememberMe(false)
-  //       window.localStorage.removeItem('user')
-  //       // window.localStorage.removeItem('remember') 
-  //       cleanStore(dispatch)
-  //       dispatch({ type: "user/setUser", payload: null })
-  //     }
-  //   };
-
-  //   window.addEventListener('beforeunload', handleBeforeUnload);
-
-  //   return () => {
-  //     window.removeEventListener('beforeunload', handleBeforeUnload);
-  //   };
-  // }, [rememberMe]);
 
   return (
     <div className="App">
@@ -182,6 +152,7 @@ function App() {
 
 
             <Route path="/unauthorized" element={<Unauthorized />} />
+            <Route path="*" element={<MissingPage />} />
           </Route>
 
           <Route path="/login" element={<XPage_Login />} />
@@ -190,7 +161,7 @@ function App() {
           <Route path="/test2" element={<PageTest2 />} />
           <Route path="/test3" element={<PageTest3 />} />
           <Route path="/test4" element={<PageTest4 />} />
-          <Route path="*" element={<MissingPage />} />
+          
 
         </Routes>
       </BrowserRouter>

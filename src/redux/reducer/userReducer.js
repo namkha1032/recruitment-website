@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const userSlice = createSlice({
     name: "user",
-    // Thay dòng 7 bằng null
     initialState: null,
     reducers: {
         setUser(state, action) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   TextField,
@@ -20,12 +20,13 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import HomeIcon from '@mui/icons-material/Home';
 
-import imageBackground from "../../assets/img/background.jpg";
+import imageBg1 from "../../assets/img/background1.png";
+import imageBg2 from "../../assets/img/background2.png";
+import imageBg3 from "../../assets/img/background3.png";
+// import imageBg4 from "../../assets/img/background4.png";
+// import imageBg5 from "../../assets/img/background5.png";
 
-// const style = {
-//   marginTop: "15px",
-//   marginBottom: "15px",
-// };
+const images = [imageBg1, imageBg2, imageBg3]
 
 const theme = createTheme({
   palette: {
@@ -36,8 +37,22 @@ const theme = createTheme({
 });
 
 const ResetPassword = (props) => {
-  const [showNewPassword, setShowNewPassword] = React.useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if(currentIndex === images.length - 1) {
+        setCurrentIndex(0);
+      } 
+      else {
+        setCurrentIndex(currentIndex + 1);
+      }
+    }, 6000)
+    
+    return () => clearInterval(intervalId);
+  }, [currentIndex])
 
   const handleClickShowNewPassword = () => {
     setShowNewPassword(!showNewPassword);
@@ -54,7 +69,7 @@ const ResetPassword = (props) => {
   return (
     <Box
       sx={{
-        backgroundImage: `url(${imageBackground})`,
+        backgroundImage: `url(${images[currentIndex]})`,
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
