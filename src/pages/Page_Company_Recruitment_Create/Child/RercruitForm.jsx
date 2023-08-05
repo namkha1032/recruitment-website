@@ -329,17 +329,20 @@ function RecruitForm() {
   }
   function preProcessing() {
     const messArr = [];
+    if (RName === "") {
+      messArr.push("position name");
+    }
     if (requirement.length === 0) {
-      messArr.push("Requirement");
+      messArr.push("requirement");
     }
     if (languages == null) {
-      messArr.push("Language");
+      messArr.push("language");
     }
     if (departmentChoose == null) {
-      messArr.push("Department");
+      messArr.push("department");
     }
     if (startDate === null || endDate === null) {
-      messArr.push("Date");
+      messArr.push("date");
     }
     let messString = "";
     if (messArr.length > 0) {
@@ -353,7 +356,7 @@ function RecruitForm() {
       });
       dispatch({
         type: "error/setError",
-        payload: { status: "yes", message: `please choose ${messString}` },
+        payload: { status: "yes", message: `Please choose ${messString}` },
       });
     } else {
       setOpenAlert(true);
