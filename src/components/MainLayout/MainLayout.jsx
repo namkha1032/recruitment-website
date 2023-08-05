@@ -84,6 +84,9 @@ function MainLayout() {
             const user = JSON.parse(userSession);
             dispatch({ type: "user/setUser", payload: user });
         }
+        return () => {
+            dispatch({type:'profile/setProfile',payload:null})
+        }
     }, []);
     // const navigate = useNavigate()
     // useEffect(() => {

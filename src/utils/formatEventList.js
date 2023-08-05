@@ -14,8 +14,12 @@ import { formatDatetime } from "./formatDate";
 import { getEventStatus } from "./getEventStatus";
 import { getNumOfCandidateEvent } from "./getNumOfCandidateEvent";
 
-export function formatEventList(input, candidatesEvent) {
+export function formatEventList(input, candidatesEvent,image,host) {
+  let i = -1; 
+  const n = image.length
   const output_draft = input.map((element) => {
+    i = i+1
+    if (i === n) i =0
     return {
       EventId: element.eventId,
       EventCampus: element.place,
@@ -25,6 +29,7 @@ export function formatEventList(input, candidatesEvent) {
       CreatedByName: element.recruiterId,
       EventDateTime: element.datetimeEvent,
       Status: getEventStatus(element.datetimeEvent),
+      Image:`${host}/${image[i]}`
     };
   });
   let output = []

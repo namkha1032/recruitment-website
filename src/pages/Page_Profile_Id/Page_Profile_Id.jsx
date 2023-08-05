@@ -14,9 +14,6 @@ const Profile = () => {
   const {profileid} = useParams()
   useEffect(() => {
     dispatch({type:'profileSaga/getProfile',payload:{token:user.token,userid:profileid}})
-    return () => {
-      cleanStore(dispatch)
-    }
   },[])
   console.log(profile)
   return (

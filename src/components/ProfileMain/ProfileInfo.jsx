@@ -63,11 +63,6 @@ const ProfileInfo = () => {
       setOpen(true);
     }
   }, [profile]);
-  useEffect(() => {
-    return () => {
-      cleanStore(dispatch);
-    };
-  }, []);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;

@@ -38,9 +38,6 @@ const ProfileMain = ({ page }) => {
 
   useEffect(() => {
     dispatch({ type: "positionSaga/getPositionList" });
-    return () => {
-      cleanStore(dispatch)
-    }
   }, []);
   const handleClickChangePW = () => {
     if (page !== "ChangePW") navigate(`/profile/${profileid}/changepassword`);
@@ -54,7 +51,6 @@ const ProfileMain = ({ page }) => {
   const handleClickHistory = () => {
     if (page !== "History") navigate("/profile/1/history");
   };
-  console.log(profile.id)
   return (
    
     profile === null ?  

@@ -158,7 +158,7 @@ const Footer = () => {
                     }}
                   >
                     <img
-                      src="https://cdn.vietnambiz.vn/2020/1/15/photo-1579090002241-15790900035601213027614.jpg"
+                      src={item.Image}
                       alt=""
                       style={{ width: "50px", height: '50px' }}
                     />

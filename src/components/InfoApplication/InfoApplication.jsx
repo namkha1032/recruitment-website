@@ -29,7 +29,7 @@ import cleanStore from "../../utils/cleanStore";
 import View_detail from "../View_recruitment/View_detail";
 import GigaCardHeader from "../GigaCardHeader/GigaCardHeader";
 import GigaCardBody from "../GigaCardBody/GigaCardBody";
-const InfoApplication = ({ applicationid, recruitmentid, page }) => {
+const InfoApplication = ({ applicationid, recruitmentid }) => {
   const infoApplication = useSelector((state) => state.infoApplication);
   const skill = useSelector((state) => state.skill);
   const detailposition = useSelector((state) => state.position);
@@ -67,20 +67,7 @@ const InfoApplication = ({ applicationid, recruitmentid, page }) => {
     skill &&
     candidate && (
       <>
-        {page === "normal" && (
-          <Box
-            xs={12}
-            sx={{
-              display: "flex",
-              justifyContent: "flex-start",
-              padding: "15px",
-            }}
-          >
-            <Typography variant="h5">
-              Date: {infoApplication.dateTime.slice(0, 10)}
-            </Typography>
-          </Box>
-        )}
+        
         <Grid container spacing={3} marginBottom={3}>
           <Grid item xs={12} md={6}>
             <GigaCard>

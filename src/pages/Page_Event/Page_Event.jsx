@@ -159,7 +159,7 @@ const Page_Event = () => {
                             // 16:9
                             pt: "58.25%",
                           }}
-                          image="https://greenwich.edu.vn/wp-content/uploads/2023/07/CF23web-940x400.png"
+                          image={card.Image}
                         />
                         <CardContent sx={{ flexGrow: 1 }}>
                           <Box sx={{ padding: "0px 0px 5px 5px" }}>

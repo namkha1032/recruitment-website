@@ -27,7 +27,7 @@ function cleanStore(dispatch) {
     dispatch({ type: "eventNavigate/onReset" })
     dispatch({ type: "infoApplication/setInfoApplication", payload: null })
     dispatch({ type: "requirement/setRequirement", payload: null })
-    dispatch({ type: "profile/setProfile", payload: null })
+    
 
 }
 
