@@ -35,3 +35,19 @@ export function formatDatetime(input) {
     })
     return output
 }
+
+export function formatToDate(input) {
+    // const yyyy = input.slice(0,4)
+    // const mm = input.slice(5,7)
+    // const dd = input.slice(8,10)
+    // const HH = input.slice(11,13)
+    // const MM = input.slice(14,16)
+    // const SS = input.slice(17,19)
+    // return `${dd}/${mm}/${yyyy} ${HH}:${MM}`
+    const output = new Date(input + "Z").toLocaleDateString('vi-VN', {
+        day: '2-digit', 
+        month: '2-digit',
+        year: 'numeric',
+    })
+    return output
+}

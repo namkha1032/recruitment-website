@@ -1,3 +1,7 @@
+function roundToTwo(num) {    
+  return +(Math.round(num + "e+2")  + "e-2");
+}
+
 function getMedian(arr) {
   if (arr.length == 0) {
     return; // 0.
@@ -8,7 +12,7 @@ function getMedian(arr) {
     arr.length % 2 === 1
       ? arr[midpoint] // 3.1. If odd length, just take midpoint
       : (arr[midpoint - 1] + arr[midpoint]) / 2; // 3.2. If even length, take median of midpoints
-  return median;
+  return roundToTwo(median);
 }
 
 function getMean(arr) {
@@ -19,7 +23,7 @@ function getMean(arr) {
   for (let i = 0; i < arr.length; i++) {
     total += arr[i];
   }
-  return total / arr.length;
+  return roundToTwo(total / arr.length);
 }
 
 function getMode(arr) {
@@ -42,7 +46,7 @@ function getMode(arr) {
     }
   }
 
-  return max;
+  return roundToTwo(max);
 }
 
 export function reportStatistic(input) {
@@ -75,8 +79,6 @@ export function reportStatistic(input) {
   const softMedian = getMedian(softScore);
   const softMode = getMode(softScore);
   const softNum = softScore.length;
-
-  console.log("-------", techMean)
 
   return {
     general: {
