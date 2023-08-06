@@ -110,7 +110,7 @@ function* getUpcomingInterview(action) {
   try {
     const response = yield call(
       axios.get,
-      `${host.name}/data/interviewlist.json`
+      `/data/interviewlist.json`
     );
     yield put({ type: "interview/setInterview", payload: response.data });
   } catch (error) {
@@ -282,11 +282,11 @@ function* getInterviewResult(action) {
   catch (error) {
     console.log("error: ", error)
   }
-  // const response = yield call(axios.get, `${host.name}/data/interviewid.json`);
+  // const response = yield call(axios.get, `/data/interviewid.json`);
 }
 
 function* scoreInterview(action) {
-  // const abc = yield call(axios.post, "http://localhost:3001/api/interview", action.payload)
+  // const abc = yield call(axios.post, "/api/interview", action.payload)
   try {
     let token = `Bearer ${action.payload.token}`
     const config = {
@@ -337,15 +337,15 @@ function* getInterviewInfo(action) {
         'Content-Type': 'application/json'
       }
     };
-    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`, config)
+    const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview?id=${action.payload.interviewid}`, config)
     // lấy position, sau đó lọc ra lấy skill và language
     console.log('response', response.data);
     console.log('payload', action.payload);
     //console.log('inteerviewidinsaga', response.data.application);
-    const interviewid = response.data.filter((props) => props.interviewId === action.payload.interviewid);
-    console.log('interid', interviewid);
-    const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${interviewid[0].application.position.positionId}`, config)
-    console.log("appinsaga", interviewid);
+    // const interviewid = response.data.filter((props) => props.interviewId === action.payload.interviewid);
+    // console.log('interid', interviewid);
+    const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${response.data.application.position.positionId}`, config)
+    // console.log("appinsaga", interviewid);
     let skilllist = []
     console.log("reponse2", response2.data);
     const response3 = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Skill', config);
@@ -367,15 +367,15 @@ function* getInterviewInfo(action) {
     // yield put({type: "interviewidInfo/setInterviewidInfo",payload: response1.data});
     yield put({ type: "interviewposition/setInterviewPosition", payload: response2.data });
     // yield put({type: 'skill/setSkill', payload: skilllist})
-    yield put({ type: "interviewidInfo/setInterviewidInfo", payload: interviewid });
+    yield put({ type: "interviewidInfo/setInterviewidInfo", payload: response.data });
     yield put({ type: 'interviewskill/setInterviewSkill', payload: skilllist })
   } catch (error) {
     console.log(error);
-    // if (error.response.request.status === 400 || error.response.request.status === 404){
+    if (error.response.request.status === 400 || error.response.request.status === 404){
 
-    //   yield put({type: 'interviewError/onError', payload: error.response.request.status})
+      yield put({type: 'interviewError/onError', payload: error.response.request.status})
 
-    // }
+    }
   }
 }
 
@@ -525,7 +525,7 @@ function* getQuestionsForStartingIntervew(action) {
 
   // const responsefake = yield call(
   //   axios.get,
-  //   `${host.name}/data/questionlist.json`
+  //   `/data/questionlist.json`
   // );
   // yield put({
   //   type: "question/setInterviewQuestion",

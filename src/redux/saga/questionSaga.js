@@ -16,7 +16,7 @@ function* getAllQuestion(action) {
   try {
     yield put({ type: "loading/onLoading" });
     // yield call(delay, 1500)
-    // const response = yield call(axios.get, `${host.name}/data/questionListR.json`)
+    // const response = yield call(axios.get, `/data/questionListR.json`)
     // yield put({ type: "questionList/setQuestionList", payload: response.data });
 
     const response = yield call(
@@ -95,7 +95,7 @@ function* getQuestionListWithFilter(action) {
   try {
     yield put({ type: "loading/onLoading" });
     // yield call(delay, 1500)
-    // const response = yield call(axios.get, `${host.name}/data/questionlist.json`)
+    // const response = yield call(axios.get, `/data/questionlist.json`)
     // yield put({ type: "questionList/setQuestionList", payload: response.data });
 
     const response = yield call(

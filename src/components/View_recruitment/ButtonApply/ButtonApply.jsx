@@ -59,7 +59,7 @@ const ButtonApply = (props) => {
     // const [applied, setApplied] = useState(null);
     const [submitstatus, setSubmitstatus] = useState(false);
     const [loading, setLoading] = useState(false);
-    
+
     const handleCVChange = (event) => {
         setCV(event.target.value);
         setHelperText('');
@@ -85,7 +85,7 @@ const ButtonApply = (props) => {
                     token: "haha"
                 },
             })
-        }   
+        }
     }, [submitstatus])
     useEffect(() => {
         if (appstatus !== null) {
@@ -93,6 +93,9 @@ const ButtonApply = (props) => {
                 setSubmitstatus(true);
                 setCV(appstatus[0].cv.cvid);
 
+            }
+            else{
+                setSubmitstatus(false);
             }
         }
     }, [appstatus])
@@ -105,6 +108,18 @@ const ButtonApply = (props) => {
 
             if (submitNotify === "success") {
                 toast.success('You submited successfully.', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+            }
+            else if (submitNotify === "updatesuccess"){
+                toast.success('You switched successfully.', {
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -221,7 +236,7 @@ const ButtonApply = (props) => {
     console.log("statussubmitbutton", submitstatus)
     const tabs = 1
     console.log('appwithoutapplication', appstatus);
-    
+
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
@@ -339,15 +354,33 @@ const ButtonApply = (props) => {
                                                                         backgroundColor: "grey",
                                                                     }
                                                                 }} size="medium" type="submit" variant="contained" onClick={hanldebutton}   >
-                                                                {isMd ? (
+                                                                {submitstatus === false ? (
                                                                     <>
-                                                                        <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit your CV
+                                                                        {isMd ? (
+                                                                            <>
+                                                                                <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit your CV
+                                                                            </>
+                                                                        ) : (
+                                                                            <>
+                                                                                <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit
+                                                                            </>
+                                                                        )}
                                                                     </>
                                                                 ) : (
                                                                     <>
-                                                                        <AssignmentTurnedInIcon></AssignmentTurnedInIcon> Submit
+                                                                        {isMd ? (
+                                                                            <>
+                                                                                <SwitchCameraIcon></SwitchCameraIcon> Switch your CV
+                                                                            </>
+                                                                        ) : (
+                                                                            <>
+                                                                                <SwitchCameraIcon></SwitchCameraIcon> Switch
+                                                                            </>
+                                                                        )}
                                                                     </>
+
                                                                 )}
+
 
                                                             </LoadingButton>
 

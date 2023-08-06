@@ -6,7 +6,7 @@ function* updateProfile(action) {
   try {
     const { data, token, userid } = action.payload;
     console.log(data.ImageFile)
-    const response1 =  yield call (axios.get, data.ImageFile!== '' ? data.ImageFile : "http://localhost:3000/data/avatar.png", { responseType: "blob" });
+    const response1 =  yield call (axios.get, data.ImageFile!== '' ? data.ImageFile : "/data/avatar.png", { responseType: "blob" });
     const blob = new Blob([response1.data], { type: "image/jpeg" });
     const formData = new FormData();
     formData.append("FullName", data.FullName);

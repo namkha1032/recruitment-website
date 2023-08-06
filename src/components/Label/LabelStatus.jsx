@@ -27,22 +27,22 @@ export function NotStart() {
     <>
       {isSm ? (
         <Chip
-        label="Not start"
-        variant="outlined"
-        sx={{
-          color: '#1565C0',
-          backgroundColor: 'white',
-          borderColor: '#1565C0',
-        }}
-        icon={
-          <EventNoteRoundedIcon
-          style = {{ color: '#1565C0'}}
-          />
-        }
-      />
+          label="Not start"
+          variant="outlined"
+          sx={{
+            color: 'black.400',
+            backgroundColor: 'white',
+            borderColor: 'black.400',
+          }}
+          icon={
+            <EventNoteRoundedIcon
+              style={{ color: 'black.400' }}
+            />
+          }
+        />
       ) : (
         <EventNoteRoundedIcon
-          style = {{ color: '#1565C0'}}
+          style={{ color: 'black.400' }}
         />
       )}
     </>
@@ -53,34 +53,34 @@ export function Pending() {
   const isSm = useMediaQuery(theme.breakpoints.up('sm'));
   return (
     <>
-    { isSm ? (
-      <Chip
-      label="Pending"
-      variant="outlined"
-      style={{
-        // color: "#E0E0E0",
-        color: "black.400",
-        backgroundColor: "white",
-        borderColor: "black.400",
-      }}
-      icon={
+      {isSm ? (
+        <Chip
+          label="Pending"
+          variant="outlined"
+          style={{
+            // color: "#E0E0E0",
+            color: "black.400",
+            backgroundColor: "white",
+            borderColor: "black.400",
+          }}
+          icon={
+            <MoreHorizRoundedIcon
+              style={{
+                color: "black.400",
+              }}
+            />
+          }
+        />
+      ) : (
         <MoreHorizRoundedIcon
           style={{
             color: "black.400",
           }}
         />
+      )
       }
-    />
-    ) : (
-        <MoreHorizRoundedIcon
-          style={{
-            color: "black.400",
-          }}
-        />
-    )
-  }
     </>
-    
+
   );
 }
 
@@ -91,34 +91,34 @@ export function Completed() {
     <>{
       isSm ? (
         <Chip
-        label="Finished"
-        variant="outlined"
-        style={{
-          // color: "#E0E0E0",
-          color: "black.400",
-          backgroundColor: "white",
-          // borderColor: "#E0E0E0",
-          borderColor: "black.400"
-        }}
-        icon={
+          label="Finished"
+          variant="outlined"
+          style={{
+            // color: "#E0E0E0",
+            color: "1565C0 ",
+            backgroundColor: "white",
+            // borderColor: "#E0E0E0",
+            borderColor: "1565C0 "
+          }}
+          icon={
+            <SportsScoreRoundedIcon
+              style={{
+                color: "1565C0 ",
+              }}
+            />
+          }
+        />
+      ) :
+        (
           <SportsScoreRoundedIcon
             style={{
-              color: "black.400",
+              color: "1565C0 ",
             }}
           />
-        }
-      />
-      ) :
-      (
-        <SportsScoreRoundedIcon
-            style={{
-              color: "black.400",
-            }}
-          />
-      )
+        )
     }
     </>
-    
+
   );
 }
 
@@ -130,32 +130,32 @@ export function Pass() {
     <>{
       isSm ? (
         <Chip
-        label="Passed"
-        variant="outlined"
-        style={{
-          color: "#008631",
-          backgroundColor: "white",
-          borderColor: "#008631",
-        }}
-        icon={
+          label="Passed"
+          variant="outlined"
+          style={{
+            color: "#008631",
+            backgroundColor: "white",
+            borderColor: "#008631",
+          }}
+          icon={
+            <DoneRounded
+              style={{
+                color: "#008631",
+              }}
+            />
+          }
+        />
+      ) :
+        (
           <DoneRounded
             style={{
               color: "#008631",
             }}
           />
-        }
-      />
-      ) :
-      (
-        <DoneRounded
-            style={{
-              color: "#008631",
-            }}
-          />
-      )
+        )
     }
     </>
-    
+
   );
 }
 

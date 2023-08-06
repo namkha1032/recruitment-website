@@ -63,6 +63,7 @@ const ProfileChangePW = () => {
   const dispatch = useDispatch();
 
   const newError = useSelector((state) => state.error);
+  const profileId = useSelector((state) => state.user.userid);
 
   useEffect(() => {
     if (newError.status === "no") {
@@ -73,8 +74,8 @@ const ProfileChangePW = () => {
           type: "error/setError",
           payload: { status: "idle", message: "" },
         });
-        navigate("/profile/:profileid");
-      }, 2000);
+        navigate(`/profile/${profileId}`);
+      }, 1000);
     }
     if (newError.status === "yes") {
       setLoading(false)
@@ -87,7 +88,7 @@ const ProfileChangePW = () => {
         });
       }, 5000);
     }
-  }, [newError]);
+  }, [newError, profileId]);
 
   const handleUsernameChange = (event) => {
     let value = event.target.value;
@@ -674,7 +675,7 @@ const ProfileChangePW = () => {
 
       <Snackbar
         open={successSnackbar}
-        autoHideDuration={2000}
+        autoHideDuration={1000}
         onClose={() => setSuccessSnackbar(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { getEventStatus } from "./getEventStatus";
 
 
-export function formatEventFooter(input,image,host) {
+export function formatEventFooter(input,image) {
     let i = -1; 
     const n = image.length
     const output_draft = input.map((element) => {
@@ -19,7 +19,7 @@ export function formatEventFooter(input,image,host) {
         CreatedByName: element.recruiterId,
         EventDateTime: element.datetimeEvent,
         Status: getEventStatus(element.datetimeEvent),
-        Image:`${host}/${image[i]}`
+        Image:`/${image[i]}`
       };
     });
  

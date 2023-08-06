@@ -10,8 +10,8 @@ import { formatReport } from "../../utils/formatReport";
 // }
 function* getReport(action) {
   //http://leetun2k2-001-site1.gtempurl.com/api/Skill
-  //http://localhost:3000/data/skillList.json
-  // `${host.name}/data/interviewAll.json`
+  ///data/skillList.json
+  ///data/interviewAll.json`
   console.log("REPORT: ", action.payload)
   try {
     // const response = yield call(
@@ -20,7 +20,7 @@ function* getReport(action) {
     // );
     // const response = yield call(
     //   axios.get,
-    //   `${host.name}/data/skillList.json`
+    //   `/data/skillList.json`
     // );
     yield put({ type: "loading/onLoading" });
     const response = yield call(

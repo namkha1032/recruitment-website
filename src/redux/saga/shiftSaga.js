@@ -21,7 +21,7 @@ function* getShift(action) {
     // });
     // console.log("newl sorted: ", newList)
     // yield put({ type: "shift/setShift", payload: newList })
-    const responsefake = yield call(axios.get, `${host.name}/data/shiftlist.json`)
+    const responsefake = yield call(axios.get, `/data/shiftlist.json`)
     yield put({ type: "shift/setShift", payload: responsefake.data })
 }
 function* shiftSaga() {

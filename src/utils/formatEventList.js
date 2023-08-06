@@ -14,7 +14,7 @@ import { formatDatetime } from "./formatDate";
 import { getEventStatus } from "./getEventStatus";
 import { getNumOfCandidateEvent } from "./getNumOfCandidateEvent";
 
-export function formatEventList(input, candidatesEvent, image, host) {
+export function formatEventList(input, candidatesEvent,image) {
   let i = -1; 
   const n = image.length
   console.log("------------------------")
@@ -30,7 +30,7 @@ export function formatEventList(input, candidatesEvent, image, host) {
       CreatedByName: element.recruiterId,
       EventDateTime: element.datetimeEvent,
       Status: getEventStatus(element.datetimeEvent),
-      Image:`${host}/${image[i]}`
+      Image:`/${image[i]}`
     };
   });
   let output = []

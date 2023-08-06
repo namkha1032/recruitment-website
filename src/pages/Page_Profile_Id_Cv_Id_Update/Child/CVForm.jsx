@@ -26,7 +26,7 @@ function CVForm(prop) {
   const profileid = prop.profileid;
   // const cvid = prop.cvid;
   const cvid = prop.cvid;
-  console.log(cvid);
+  // console.log(cvid);
   // console.log(cvid);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -194,9 +194,9 @@ function CVForm(prop) {
   const [languageName, setLanguageName] = useState("");
   const [lInputValue, setLInputValue] = useState("");
   // pdf form
-  const [pdfFile, setPdfFile] = useState(`http://localhost:3000/data/CA.pdf`);
-  const [viewPdf, setViewPdf] = useState(`http://localhost:3000/data/CA.pdf`);
-  const [pdf, setPdf] = useState(`http://localhost:3000/data/CA.pdf`);
+  const [pdfFile, setPdfFile] = useState(`/data/CA.pdf`);
+  const [viewPdf, setViewPdf] = useState(`/data/CA.pdf`);
+  const [pdf, setPdf] = useState(`/data/CA.pdf`);
   //FUNCTION
   function handleTitle(e) {
     setTitle(e.target.value);
@@ -384,17 +384,19 @@ function CVForm(prop) {
           addCerts: addCerts,
         },
       });
-
-      const formData = new FormData();
-      // console.log(formData)
-      formData.append("File", pdf);
-      if (pdf !== null) {
-        const response3 = await axios.post(
-          `https://leetun2k2-001-site1.gtempurl.com/api/Cv/UploadCvPdf/${cvid}`,
-          formData,
-          config
-        );
-        // console.log(response3);
+      if (typeof(pdf) !== "string") {
+        // console.log("up pdf")
+        const formData = new FormData();
+        // console.log(formData)
+        formData.append("File", pdf);
+        if (pdf !== null) {
+          const response3 = await axios.post(
+            `https://leetun2k2-001-site1.gtempurl.com/api/Cv/UploadCvPdf/${cvid}`,
+            formData,
+            config
+          );
+          // console.log(response3);
+        }
       }
       delay(1000);
       dispatch({
@@ -447,133 +449,140 @@ function CVForm(prop) {
   //COMPS
   return (
     <>
-    {cv===null?<CvSkeleton></CvSkeleton>:
-      <Box>
-        <Grid container spacing={0} justifyContent="center" alignItems="center">
-          <Grid item xs={12}>
-            <CreateCv
-              //////////Skill////////
-              preProcessing={preProcessing}
-              handleSExp={handleSExp}
-              skillOption={skillOption}
-              setSkillId={setSkillId}
-              intro={intro}
-              setIntro={setIntro}
-              education={education}
-              setEducation={setEducation}
-              experience={experience}
-              setExperience={setExperience}
-              certs={certs}
-              setCerts={setCerts}
-              skills={skills}
-              setSkills={setSkills}
-              Cid={Cid}
-              setCid={setCid}
-              Cname={Cname}
-              setCName={setCName}
-              organize={organize}
-              setOrganize={setOrganize}
-              startDate={startDate}
-              setStartDate={setStartDate}
-              endDate={endDate}
-              setEndDate={setEndDate}
-              detail={detail}
-              setDetail={setDetail}
-              link={link}
-              setLink={setLink}
-              open={open}
-              setOpen={setOpen}
-              name={sname}
-              setName={setSName}
-              Sid={Sid}
-              setSid={setSid}
-              SExp={SExp}
-              setSExp={setSExp}
-              sInputValue={sInputValue}
-              setSInputValue={setSInputValue}
-              handleIntro={handleIntro}
-              handleExp={handleExp}
-              handleSkillAdd={handleSkillAdd2}
-              handleSkilltDelete={handleSkilltDelete}
-              handleCertificateAdd={handleCertificateAdd}
-              handleCertDelete={handleCertDelete}
-              handleSetOpen={handleSetOpen}
-              handleClose={handleClose}
-              handleSubmit={handleSubmit}
-              languages={languages}
-              handleLanguageDelete={handleLanguageDelete}
-              lInputValue={lInputValue}
-              setLInputValue={setLInputValue}
-              setLanguageName={setLanguageName}
-              languageName={languageName}
-              setLanguageId={setLanguageId}
-              handleLanguageAdd={handleLanguageAdd}
-              cvtitle={cvtitle}
-              handleTitle={handleTitle}
-              skillData={skillData}
-              languageData={languageData}
-              // cvpfd
-              pdfFile={pdfFile}
-              setPdfFile={setPdfFile}
-              viewPdf={viewPdf}
-              setViewPdf={setViewPdf}
-              setPdf={setPdf}
-            />
+      {cv === null ? (
+        <CvSkeleton></CvSkeleton>
+      ) : (
+        <Box>
+          <Grid
+            container
+            spacing={0}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid item xs={12}>
+              <CreateCv
+                //////////Skill////////
+                preProcessing={preProcessing}
+                handleSExp={handleSExp}
+                skillOption={skillOption}
+                setSkillId={setSkillId}
+                intro={intro}
+                setIntro={setIntro}
+                education={education}
+                setEducation={setEducation}
+                experience={experience}
+                setExperience={setExperience}
+                certs={certs}
+                setCerts={setCerts}
+                skills={skills}
+                setSkills={setSkills}
+                Cid={Cid}
+                setCid={setCid}
+                Cname={Cname}
+                setCName={setCName}
+                organize={organize}
+                setOrganize={setOrganize}
+                startDate={startDate}
+                setStartDate={setStartDate}
+                endDate={endDate}
+                setEndDate={setEndDate}
+                detail={detail}
+                setDetail={setDetail}
+                link={link}
+                setLink={setLink}
+                open={open}
+                setOpen={setOpen}
+                name={sname}
+                setName={setSName}
+                Sid={Sid}
+                setSid={setSid}
+                SExp={SExp}
+                setSExp={setSExp}
+                sInputValue={sInputValue}
+                setSInputValue={setSInputValue}
+                handleIntro={handleIntro}
+                handleExp={handleExp}
+                handleSkillAdd={handleSkillAdd2}
+                handleSkilltDelete={handleSkilltDelete}
+                handleCertificateAdd={handleCertificateAdd}
+                handleCertDelete={handleCertDelete}
+                handleSetOpen={handleSetOpen}
+                handleClose={handleClose}
+                handleSubmit={handleSubmit}
+                languages={languages}
+                handleLanguageDelete={handleLanguageDelete}
+                lInputValue={lInputValue}
+                setLInputValue={setLInputValue}
+                setLanguageName={setLanguageName}
+                languageName={languageName}
+                setLanguageId={setLanguageId}
+                handleLanguageAdd={handleLanguageAdd}
+                cvtitle={cvtitle}
+                handleTitle={handleTitle}
+                skillData={skillData}
+                languageData={languageData}
+                // cvpfd
+                pdfFile={pdfFile}
+                setPdfFile={setPdfFile}
+                viewPdf={viewPdf}
+                setViewPdf={setViewPdf}
+                setPdf={setPdf}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-        {loading && <p>Loading...</p>}
-        <Snackbar
-          open={skillOpen}
-          autoHideDuration={3000}
-          onClose={handleSkillClose}
-        >
-          <SkillAlert
+          {loading && <p>Loading...</p>}
+          <Snackbar
+            open={skillOpen}
+            autoHideDuration={3000}
             onClose={handleSkillClose}
-            severity="error"
-            sx={{ width: "100%" }}
           >
-            Wrong skill's name
-          </SkillAlert>
-        </Snackbar>
-        <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-          <CertAlert
-            onClose={handleClose}
-            severity="error"
-            sx={{ width: "100%" }}
-          >
-            Lack of certificate's information
-          </CertAlert>
-        </Snackbar>
-        <Snackbar
-          // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-          open={errorSnackbar}
-          autoHideDuration={4000}
-          onClose={() => {
-            setErrorSnackbar(false);
-          }}
-          // message="I love snacks"
-          // key={vertical + horizontal}
-        >
-          <Alert
-            variant="filled"
+            <SkillAlert
+              onClose={handleSkillClose}
+              severity="error"
+              sx={{ width: "100%" }}
+            >
+              Wrong skill's name
+            </SkillAlert>
+          </Snackbar>
+          <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+            <CertAlert
+              onClose={handleClose}
+              severity="error"
+              sx={{ width: "100%" }}
+            >
+              Lack of certificate's information
+            </CertAlert>
+          </Snackbar>
+          <Snackbar
+            // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+            open={errorSnackbar}
+            autoHideDuration={4000}
             onClose={() => {
               setErrorSnackbar(false);
             }}
-            severity="error"
-            sx={{ width: "100%" }}
+            // message="I love snacks"
+            // key={vertical + horizontal}
           >
-            {newError.message}
-          </Alert>
-        </Snackbar>
-        <AlertDialog
-          openAlert={openAlert}
-          setOpenAlert={setOpenAlert}
-          alertMessage={"Are you sure you want to update?"}
-          successfulMessage={"Update successfully"}
-          handleSubmit={handleSubmit}
-        />
-      </Box>
-      }
+            <Alert
+              variant="filled"
+              onClose={() => {
+                setErrorSnackbar(false);
+              }}
+              severity="error"
+              sx={{ width: "100%" }}
+            >
+              {newError.message}
+            </Alert>
+          </Snackbar>
+          <AlertDialog
+            openAlert={openAlert}
+            setOpenAlert={setOpenAlert}
+            alertMessage={"Are you sure you want to update?"}
+            successfulMessage={"Update successfully"}
+            handleSubmit={handleSubmit}
+          />
+        </Box>
+      )}
     </>
   );
 }
