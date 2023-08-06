@@ -36,7 +36,7 @@ const  ModalCertificates = ({certificate}) => {
       // onMouseLeave={handleClose}
     >
     <Box onClick={handleClick}>
-      <Box> {certificate.dateEarned.slice(0,10)}</Box>
+      <Box> <b>{certificate.dateEarned.slice(0,10)}</b></Box>
       <Box>Name: {certificate.certificateName}</Box>  
       <Box>Decription: {certificate.description}</Box>  
       <Box display={open ? 'block' : 'none'}>Orgranizationname: {certificate.organizationName}</Box>

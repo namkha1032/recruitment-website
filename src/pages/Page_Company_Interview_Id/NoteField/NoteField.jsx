@@ -10,7 +10,7 @@ const NoteField = (props) => {
     }, [note])
     console.log("noteRef: ", noteRef)
     return (
-        <Box ref={noteRef} sx={{ overflowY: "scroll", maxHeight: "500px" }} />
+        <Box ref={noteRef} sx={{ overflowY: "scroll", maxHeight: "5000px" }} />
     )
 }
 
