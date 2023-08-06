@@ -120,7 +120,7 @@ const Recovery = (props) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              boxShadow: "0px 0px 10px 10px rgba(255, 255, 255, 0.25)",
+              boxShadow: "0px 0px 7px 7px rgba(255, 255, 255, 0.25)",
             }}
           >
             <Box
@@ -164,7 +164,7 @@ const Recovery = (props) => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      marginBottom: "0px",
+                      marginBottom: "5px",
                       textAlign: "center",
                       marginLeft: "10px",
                       marginRight: "10px",

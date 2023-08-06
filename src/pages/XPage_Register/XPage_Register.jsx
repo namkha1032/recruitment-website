@@ -285,7 +285,7 @@ const XPage_Register = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            boxShadow: "0px 0px 10px 10px rgba(255, 255, 255, 0.25)",
+            boxShadow: "0px 0px 7px 7px rgba(255, 255, 255, 0.25)",
           }}
         >
 
