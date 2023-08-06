@@ -391,7 +391,7 @@ export function Upcoming() {
     return (
       <EventNoteRoundedIcon
         style={{
-          color: "#E0E0E0",
+          color: "black.400",
         }}
       />
     );
@@ -401,14 +401,14 @@ export function Upcoming() {
       label="Upcoming"
       variant="outlined"
       style={{
-        color: "#E0E0E0",
+        color: "black.400",
         backgroundColor: "white",
-        borderColor: "#E0E0E0",
+        borderColor: "black.400",
       }}
       icon={
         <EventNoteRoundedIcon
           style={{
-            color: "#E0E0E0",
+            color: "black.400",
           }}
         />
       }

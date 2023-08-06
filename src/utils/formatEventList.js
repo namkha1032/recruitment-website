@@ -14,11 +14,12 @@ import { formatDatetime } from "./formatDate";
 import { getEventStatus } from "./getEventStatus";
 import { getNumOfCandidateEvent } from "./getNumOfCandidateEvent";
 
-export function formatEventList(input, candidatesEvent,image,host) {
+export function formatEventList(input, candidatesEvent, image, host) {
   let i = -1; 
   const n = image.length
+  console.log("------------------------")
   const output_draft = input.map((element) => {
-    i = i+1
+    i = i + 1
     if (i === n) i =0
     return {
       EventId: element.eventId,
