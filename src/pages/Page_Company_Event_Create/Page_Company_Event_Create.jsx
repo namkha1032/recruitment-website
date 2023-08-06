@@ -59,7 +59,7 @@ const Page_Company_Event_Create = () => {
         }
     }, [role])
     const recruiterId = useSelector(state => state.recruiterIdCreateEvent)
-    console.log("DebugC: ", recruiterId)
+    // console.log("DebugC: ", recruiterId)
 
 
     // useState
@@ -94,7 +94,7 @@ const Page_Company_Event_Create = () => {
     const contentRef = useRef()
     useEffect(() => {
         if (contentRef.current) {
-            console.log("contentRef", contentRef)
+            // console.log("contentRef", contentRef)
             contentRef.current.innerHTML = content
         }
     })
@@ -116,20 +116,20 @@ const Page_Company_Event_Create = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(name);
-        console.log(maxQuantity);
-        console.log(location);
+        // console.log(name);
+        // console.log(maxQuantity);
+        // console.log(location);
 
-        console.log(content);
-        console.log(time);
+        // console.log(content);
+        // console.log(time);
 
-        console.log(image);
+        // console.log(image);
 
         // ---------------------------------------
         const output = new Date(time.$d)
         const re = output.toJSON()
-        console.log("JSONformat: ", re)
-        console.log(typeof (re))
+        // console.log("JSONformat: ", re)
+        // console.log(typeof (re))
         // ---------------------------------------
 
         dispatch({
@@ -157,7 +157,7 @@ const Page_Company_Event_Create = () => {
     useEffect(() => {
         if (eventStatus.status === "success") {
             navigate(`/company/event/${eventStatus.message}`);
-            console.log("===== OK =====")
+            // console.log("===== OK =====")
             dispatch({ type: "eventNavigate/onReset" })
         }
     }, [eventStatus])

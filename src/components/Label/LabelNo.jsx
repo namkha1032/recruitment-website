@@ -288,17 +288,11 @@ export function Pass() {
     return (
         <Chip
             label="Passed"
-            variant="outlined"
-            style={{
-                color: "#008631",
-                backgroundColor: "white",
-                borderColor: "#008631",
-            }}
+            variant="filled"
+            size="large"
+            color="success"
             icon={
                 <DoneRounded
-                    style={{
-                        color: "#008631",
-                    }}
                 />
             }
         />
@@ -309,17 +303,11 @@ export function Fail() {
     return (
         <Chip
             label="Failed"
-            variant="outlined"
-            style={{
-                color: "#cc3300",
-                backgroundColor: "white",
-                borderColor: "#cc3300",
-            }}
+            variant="filled"
+            size="large"
+            color="error"
             icon={
                 <CloseRounded
-                    style={{
-                        color: "#cc3300",
-                    }}
                 />
             }
         />
@@ -347,7 +335,7 @@ export function Accepted() {
     );
 }
 
-export function Rejected() { 
+export function Rejected() {
     return (
         <Chip
             label="Rejected"

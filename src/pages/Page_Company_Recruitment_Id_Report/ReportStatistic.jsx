@@ -11,8 +11,8 @@ export default function ReportStatistic(props) {
   return (
     <Box
       sx={{
-        borderLeft: isMd ? "1px solid gray" : "",
-        border: isMd ? "" : "1px solid gray",
+        borderLeft: isMd ? "1px solid #d3d3d3" : "",
+        border: isMd ? "" : "1px solid #d3d3d3",
         borderRadius: isMd ? 0 : 1,
         paddingTop: isMd ? 0 : 2,
         paddingLeft: 2,

@@ -45,7 +45,7 @@ function* getPositioninfor(action) {
       payload: requirement,
     });
 
-    // const response1 = yield call(axios.get, `${host.name}/data/positionInfor.json`)
+    // const response1 = yield call(axios.get, `/data/positionInfor.json`)
     // const position = response1.data
 
     // yield put({ type: "positionInfor/setPositionInfor", payload: position })

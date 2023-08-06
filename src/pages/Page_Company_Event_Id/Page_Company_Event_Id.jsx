@@ -23,7 +23,7 @@ import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 // import PsychologyAltRoundedIcon from '@mui/icons-material/PsychologyAltRounded';
 import TodayRoundedIcon from '@mui/icons-material/TodayRounded';
 
-import picture from '../../assets/img/event.png'
+// import picture from '../../assets/img/event.png'
 import GigaCard from '../../components/GigaCard/GigaCard';
 import GigaCardHeader from '../../components/GigaCardHeader/GigaCardHeader';
 import GigaCardBody from '../../components/GigaCardBody/GigaCardBody';
@@ -44,10 +44,12 @@ import { NoResultsOverlay, NoRowsOverlay } from '../../components/DataRick/DataR
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
+import EditCalendarRoundedIcon from '@mui/icons-material/EditCalendarRounded';
+import picture from '../../assets/img/event2.png'
+
 
 
 const Page_Company_Event_Id = () => {
-
 
     // useNavigate
     const navigate = useNavigate()
@@ -55,7 +57,7 @@ const Page_Company_Event_Id = () => {
     const role = useGetRole()
 
     const { eventid } = useParams();
-    console.log('company event id: ', eventid);
+    // console.log('company event id: ', eventid);
 
     const dispatch = useDispatch();
 
@@ -87,11 +89,11 @@ const Page_Company_Event_Id = () => {
     const contentRef = useRef()
     useEffect(() => {
         if (note) {
-            console.log(note)
+            // console.log(note)
             contentRef.current.innerHTML = note
         }
     }, [note])
-    console.log("contentRef: ", contentRef);
+    // console.log("contentRef: ", contentRef);
 
     const row_drafts = useSelector((state) => state.candidateJoinEvent)
     const rows = row_drafts ? row_drafts : []
@@ -128,7 +130,7 @@ const Page_Company_Event_Id = () => {
     }
 
     const handleDetailClick = (value) => {
-        console.log(value);
+        // console.log(value);
         navigate(`/profile/${value}`);
     }
 
@@ -265,7 +267,8 @@ const Page_Company_Event_Id = () => {
 
 
     return (
-        <Container sx={{ p: 0 }} className='companyeventid'>
+        // <Container sx={{ p: 0 }} className='companyeventid'>
+        <>
             {isMd && (
                 <>
                     {/* <CelebrationRoundedIcon color='primary' fontSize='large' sx={{ marginRight: 1 }}></CelebrationRoundedIcon> */}
@@ -366,7 +369,8 @@ const Page_Company_Event_Id = () => {
                                                         <CelebrationRoundedIcon
                                                             fontSize='large'
                                                             sx={{
-                                                                color: '#3f51b5'
+                                                                color: '#black',
+                                                                // color: '#3f51b5'
                                                                 // color: '#1565C0'
                                                             }}
                                                         >
@@ -375,7 +379,8 @@ const Page_Company_Event_Id = () => {
                                                     <Box sx={{
                                                         fontSize: 40,
                                                         fontWeight: 600,
-                                                        color: '#3f51b5',
+                                                        color: '#black',
+                                                        // color: '#3f51b5',
                                                         // color: '#1565C0',
                                                         display: 'flex',
                                                         justifyContent: 'start',
@@ -389,8 +394,9 @@ const Page_Company_Event_Id = () => {
                                             </Box>
                                             <GigaCardBody>
                                                 <Box sx={{ fontSize: '18px', fontStyle: 'italic', display: 'flex', justifyContent: 'flex-end', marginBottom: 3 }}>
-                                                    <TodayRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></TodayRoundedIcon>
-                                                    <span style={{ color: 'darkgray', fontSize: '17px' }}>{event.createdTime}</span>
+                                                    {/* <TodayRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></TodayRoundedIcon> */}
+                                                    <EditCalendarRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></EditCalendarRoundedIcon>
+                                                    <span style={{ color: 'darkgray', fontSize: '18px' }}>{event.createdTime}</span>
                                                 </Box>
 
                                                 {/* <div> cannot appear as a descendant of <p> */}
@@ -403,7 +409,7 @@ const Page_Company_Event_Id = () => {
                                             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit eum esse quisquam distinctio animi iure possimus omnis tempore dicta consectetur perspiciatis atque in, cupiditate nostrum numquam accusamus blanditiis velit libero!<br />
                                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure laborum, ullam necessitatibus harum distinctio similique itaque corrupti qui possimus incidunt quisquam, optio hic molestias et accusantium rem ipsum. Commodi, consequatur.<br />
                                         </p> */}
-                                                <Box ref={contentRef}></Box>
+                                                <Box sx={{ fontSize: '18px' }} ref={contentRef}></Box>
                                                 {/* ---------------------------------------------------------------------- */}
 
                                                 <Grid container sx={{ marginTop: 8 }}>
@@ -417,22 +423,27 @@ const Page_Company_Event_Id = () => {
                                                                 fontSize='large'
                                                                 sx={{
                                                                     marginRight: 2,
-                                                                    color: '#3f51b5',
+                                                                    color: '#black',
+                                                                    // color: '#3f51b5',
                                                                     // color: '#1565C0' 
                                                                 }}>
                                                             </PeopleAltRoundedIcon>
                                                             <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                                                                 <Box sx={{
-                                                                    fontSize: 22,
+                                                                    fontSize: 25,
                                                                     fontWeight: 600,
-                                                                    color: '#3f51b5',
+                                                                    color: '#black',
+                                                                    // color: '#3f51b5',
                                                                     // color: '#1565C0'
                                                                 }}>
                                                                     {/* Số lượng */}
                                                                     Quantity
                                                                 </Box>
                                                                 <Box sx={{
-                                                                    fontSize: 16,
+                                                                    fontSize: 20,
+                                                                    fontWeight: 600,
+                                                                    color: "#6d4c41"
+                                                                    // color: "#FF9933"
                                                                 }}>
                                                                     {/* {event.quantity} / {event.maxQuantity} */}
                                                                     {rows.length} / {event.maxQuantity}
@@ -441,7 +452,7 @@ const Page_Company_Event_Id = () => {
                                                             {/* <p style={{ fontWeight: 600, fontSize: 20 }}>500/1000</p> */}
                                                         </Box>
                                                     </Grid>
-                                                    <Grid item md={3} sm={4} xs={6}>
+                                                    <Grid item md={4} sm={4} xs={6}>
                                                         <Box sx={{
                                                             display: "flex",
                                                             // alignItems: 'center',
@@ -452,22 +463,27 @@ const Page_Company_Event_Id = () => {
                                                                 fontSize='large'
                                                                 sx={{
                                                                     marginRight: 2,
-                                                                    color: '#3f51b5',
+                                                                    color: '#black',
+                                                                    // color: '#3f51b5',
                                                                     // color: '#1565C0'
                                                                 }}>
                                                             </AccessTimeRoundedIcon>
                                                             <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                                                                 <Box sx={{
-                                                                    fontSize: 22,
+                                                                    fontSize: 25,
                                                                     fontWeight: 600,
-                                                                    color: '#3f51b5',
+                                                                    color: '#black',
+                                                                    // color: '#3f51b5',
                                                                     // color: '#1565C0'
                                                                 }}>
                                                                     {/* Thời gian */}
                                                                     Time
                                                                 </Box>
                                                                 <Box sx={{
-                                                                    fontSize: 16,
+                                                                    fontSize: 20,
+                                                                    fontWeight: 600,
+                                                                    color: "#6d4c41"
+                                                                    // color: "#FF9933"
                                                                 }}>
                                                                     {transferDatetimeBack(event.time)}
                                                                 </Box>
@@ -475,7 +491,7 @@ const Page_Company_Event_Id = () => {
                                                             {/* <p style={{ fontWeight: 600, fontSize: 20 }}>21/07/2023</p> */}
                                                         </Box>
                                                     </Grid>
-                                                    <Grid item md={6} sm={4} xs={12}>
+                                                    <Grid item md={5} sm={4} xs={12}>
                                                         <Box sx={{
                                                             display: "flex",
                                                             // alignItems: 'center',
@@ -486,22 +502,27 @@ const Page_Company_Event_Id = () => {
                                                                 fontSize='large'
                                                                 sx={{
                                                                     marginRight: 2,
-                                                                    color: '#3f51b5',
+                                                                    color: '#black',
+                                                                    // color: '#3f51b5',
                                                                     // color: '#1565C0' 
                                                                 }}>
                                                             </LocationOnRoundedIcon>
                                                             <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                                                                 <Box sx={{
-                                                                    fontSize: 22,
+                                                                    fontSize: 25,
                                                                     fontWeight: 600,
-                                                                    color: '#3f51b5',
+                                                                    color: '#black',
+                                                                    // color: '#3f51b5',
                                                                     // color: '#1565C0'
                                                                 }}>
                                                                     {/* Địa điểm */}
                                                                     Location
                                                                 </Box>
                                                                 <Box sx={{
-                                                                    fontSize: 16,
+                                                                    fontSize: 20,
+                                                                    fontWeight: 600,
+                                                                    color: "#6d4c41"
+                                                                    // color: "#FF9933"
                                                                 }}>
                                                                     {event.location}
                                                                 </Box>
@@ -771,7 +792,7 @@ const Page_Company_Event_Id = () => {
                                                             fontSize='medium'
                                                             // fontSize='large'
                                                             sx={{
-                                                                color: '#3f51b5'
+                                                                // color: '#3f51b5'
                                                                 // color: '#1565C0'
                                                             }}
                                                         >
@@ -780,7 +801,7 @@ const Page_Company_Event_Id = () => {
                                                     <Box sx={{
                                                         fontSize: 20,
                                                         fontWeight: 600,
-                                                        color: '#3f51b5',
+                                                        // color: '#3f51b5',
                                                         // color: '#1565C0',
                                                         display: 'flex',
                                                         justifyContent: 'start',
@@ -801,14 +822,21 @@ const Page_Company_Event_Id = () => {
                                                     marginBottom: 1
                                                     // marginBottom: 3
                                                 }}>
-                                                    <TodayRoundedIcon sx={{
+                                                    {/* <TodayRoundedIcon sx={{
                                                         marginRight: 0.5,
                                                         color: 'darkgray',
                                                     }}
                                                         fontSize='small'
                                                     >
-                                                    </TodayRoundedIcon>
-                                                    <span style={{ color: 'darkgray', fontSize: '12px' }}>{event.createdTime}</span>
+                                                    </TodayRoundedIcon> */}
+                                                    <EditCalendarRoundedIcon sx={{
+                                                        marginRight: 0.5,
+                                                        color: 'darkgray',
+                                                    }}
+                                                        fontSize='small'
+                                                    >
+                                                    </EditCalendarRoundedIcon>
+                                                    <span style={{ color: 'darkgray', fontSize: '13px' }}>{event.createdTime}</span>
                                                 </Box>
 
                                                 {/* <div> cannot appear as a descendant of <p> */}
@@ -840,15 +868,19 @@ const Page_Company_Event_Id = () => {
                                                                 sx={{
                                                                     marginRight: 1,
                                                                     // marginRight: 2,
-                                                                    color: '#3f51b5',
+                                                                    // color: '#3f51b5',
                                                                     // color: '#1565C0' 
                                                                 }}>
                                                             </PeopleAltRoundedIcon>
-                                                            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                            <Box sx={{
+                                                                display: "flex",
+                                                                flexDirection: "column",
+                                                                justifyContent: "center"
+                                                            }}>
                                                                 <Box sx={{
                                                                     fontSize: 18,
                                                                     fontWeight: 600,
-                                                                    color: '#3f51b5',
+                                                                    // color: '#3f51b5',
                                                                     // color: '#1565C0'
                                                                 }}>
                                                                     {/* Số lượng */}
@@ -856,6 +888,8 @@ const Page_Company_Event_Id = () => {
                                                                 </Box>
                                                                 <Box sx={{
                                                                     fontSize: 15,
+                                                                    fontWeight: 600,
+                                                                    color: "#6d4c41"
                                                                 }}>
                                                                     {/* {event.quantity} / {event.maxQuantity} */}
                                                                     {rows.length} / {event.maxQuantity}
@@ -877,15 +911,19 @@ const Page_Company_Event_Id = () => {
                                                                 sx={{
                                                                     marginRight: 1,
                                                                     // marginRight: 2,
-                                                                    color: '#3f51b5',
+                                                                    // color: '#3f51b5',
                                                                     // color: '#1565C0'
                                                                 }}>
                                                             </AccessTimeRoundedIcon>
-                                                            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                            <Box sx={{
+                                                                display: "flex",
+                                                                flexDirection: "column",
+                                                                justifyContent: "center"
+                                                            }}>
                                                                 <Box sx={{
                                                                     fontSize: 18,
                                                                     fontWeight: 600,
-                                                                    color: '#3f51b5',
+                                                                    // color: '#3f51b5',
                                                                     // color: '#1565C0'
                                                                 }}>
                                                                     {/* Thời gian */}
@@ -893,6 +931,8 @@ const Page_Company_Event_Id = () => {
                                                                 </Box>
                                                                 <Box sx={{
                                                                     fontSize: 15,
+                                                                    fontWeight: 600,
+                                                                    color: "#6d4c41"
                                                                 }}>
                                                                     {transferDatetimeBack(event.time)}
                                                                 </Box>
@@ -913,15 +953,19 @@ const Page_Company_Event_Id = () => {
                                                                 sx={{
                                                                     marginRight: 1,
                                                                     // marginRight: 2,
-                                                                    color: '#3f51b5',
+                                                                    // color: '#3f51b5',
                                                                     // color: '#1565C0' 
                                                                 }}>
                                                             </LocationOnRoundedIcon>
-                                                            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                            <Box sx={{
+                                                                display: "flex",
+                                                                flexDirection: "column",
+                                                                justifyContent: "center"
+                                                            }}>
                                                                 <Box sx={{
                                                                     fontSize: 18,
                                                                     fontWeight: 600,
-                                                                    color: '#3f51b5',
+                                                                    // color: '#3f51b5',
                                                                     // color: '#1565C0'
                                                                 }}>
                                                                     {/* Địa điểm */}
@@ -929,6 +973,8 @@ const Page_Company_Event_Id = () => {
                                                                 </Box>
                                                                 <Box sx={{
                                                                     fontSize: 15,
+                                                                    fontWeight: 600,
+                                                                    color: "#6d4c41"
                                                                 }}>
                                                                     {event.location}
                                                                 </Box>
@@ -1085,7 +1131,8 @@ const Page_Company_Event_Id = () => {
                     </TabContext>
                 </>
             )}
-        </Container >
+        </>
+        // </Container >
     )
 }
 

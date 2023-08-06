@@ -11,7 +11,7 @@ function* getLanguage(action) {
     );
     // const response = yield call(
     //   axios.get,
-    //   `${host.name}/data/languageList.json`
+    //   `/data/languageList.json`
     // );
     const data = filterIsDeleted(response.data);
     yield put({ type: "language/setLanguage", payload: data });

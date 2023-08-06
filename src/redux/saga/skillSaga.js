@@ -3,7 +3,7 @@ import axios from "axios";
 import host from "../host";
 function* getSkill(action) {
   //http://leetun2k2-001-site1.gtempurl.com/api/Skill
-  //http://localhost:3000/data/skillList.json
+  ///data/skillList.json
   try {
     const response = yield call(
       axios.get,
@@ -11,7 +11,7 @@ function* getSkill(action) {
     );
     // const response = yield call(
     //   axios.get,
-    //   `${host.name}/data/skillList.json`
+    //   `/data/skillList.json`
     // );
     yield put({ type: "skill/setSkill", payload: response.data });
     // yield put({

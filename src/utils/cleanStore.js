@@ -18,18 +18,16 @@ function cleanStore(dispatch) {
     dispatch({ type: "shift/setShift", payload: null })
     dispatch({ type: "skill/setSkill", payload: null })
     dispatch({ type: "event/setEvent", payload: null })
-    dispatch({ type: "interviewListCandidate/setInterviewList", payload: null})
-    dispatch({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: null})
-    dispatch({ type: "interviewidInfo/setInterviewidInfo", payload: null})
+    dispatch({ type: "interviewListCandidate/setInterviewList", payload: null })
+    dispatch({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: null })
+    dispatch({ type: "interviewidInfo/setInterviewidInfo", payload: null })
     dispatch({ type: "cvCandidate/setCvCandidate", payload: null })
     dispatch({ type: "loading/offLoading" })
     dispatch({ type: "status/onReset" })
     dispatch({ type: "eventNavigate/onReset" })
     dispatch({ type: "infoApplication/setInfoApplication", payload: null })
     dispatch({ type: "requirement/setRequirement", payload: null })
-    
-
-    dispatch({ type: "profile/setProfile", payload: null })
+    dispatch({ type: "report/setReport", payload: null })
 }
 
 export default cleanStore

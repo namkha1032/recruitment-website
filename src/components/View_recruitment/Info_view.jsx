@@ -26,6 +26,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useGetRole from '../../hooks/useGetRole';
 import StatusPostion from './StatusPosittion/StatusPosition';
 import MissingPage from '../MissingPage/MissingPage';
+import Info_viewSkeleton from './TestSkeleton/Info_viewSkeleton';
 const Info_view = (props) => {
     const { recruitmentid } = useParams();
     console.log("number", recruitmentid);
@@ -316,26 +317,15 @@ const Info_view = (props) => {
                                     </Box>
                                 </Grid>
                             </Grid>
-                            <ToastContainer
-                                position="top-center"
-                                autoClose={5000}
-                                hideProgressBar={false}
-                                newestOnTop={false}
-                                closeOnClick
-                                rtl={false}
-                                pauseOnFocusLoss
-                                draggable
-                                pauseOnHover={false}
-                                theme="colored"
-                            />
                         </>
                     )
                     :
                     (
                         <>
-                            <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                            {/* <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                 <CircularProgress color="inherit" />
-                            </Box>
+                            </Box> */}
+                            <Info_viewSkeleton tabs ={props.tabs} />
                         </>
                     )}
             </>

@@ -12,6 +12,10 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
+import {
+  NoRowsOverlay,
+  NoResultsOverlay,
+} from "../../components/DataRick/DataRick";
 import TableViewIcon from "@mui/icons-material/TableView";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
@@ -34,6 +38,7 @@ import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 import { useDispatch, useSelector } from "react-redux";
 import cleanStore from "../../utils/cleanStore";
 import { reportStatistic } from "../../utils/reportStatistic";
+import { formatDate, formatToDate } from "../../utils/formatDate";
 
 // JSON <- getReportList
 // {
@@ -143,6 +148,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
 
   const rows = useSelector((state) => state.report);
   const loading = useSelector((state) => state.loading);
+  const user = useSelector((state) => state.user);
 
   const data_draft = rows ? rows : [];
   const data = reportStatistic(data_draft);
@@ -152,6 +158,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       type: "reportSaga/getReport",
       payload: {
         positionId: positionId,
+        token: `Bearer ${user.token}`,
       },
     });
     return () => cleanStore(dispatch);
@@ -172,17 +179,17 @@ export default function Page_Company_Recruitment_Id_Report(props) {
   }
 
   function handleCandidateClick(value) {
-    navigate(`/profile/${value}`);
+    window.open(`/profile/${value}`);
   }
 
   function handleInterviewerClick(value) {
-    navigate(`/profile/${value}`);
+    window.open(`/profile/${value}`);
   }
 
   const columns = useMemo(() => [
     {
       field: "InterviewId",
-      type: "number",
+      type: "string",
       headerAlign: "left",
       align: "left",
       width: 40,
@@ -200,7 +207,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
                 },
               }}
             >
-              {params.value.slice(0, 6)}
+              {params.value.slice(0, 4) + "..."}
             </Box>
           </Tooltip>
         );
@@ -240,6 +247,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       flex: 0.3,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
+        return formatToDate(params.value);
       },
     },
     {
@@ -276,6 +284,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       flex: 0.3,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
+        return formatDate(params.value);
       },
     },
     {
@@ -286,7 +295,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       renderHeader: () => <span>Status</span>,
       renderCell: (params) => {
         switch (params.value) {
-          case "Pending":
+          case "Not start":
             return <Pending />;
           case "Finished":
             return <Completed />;
@@ -446,7 +455,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
             </Grid>
           </Grid>
 
-          {tabValue === "0" && (
+          {tabValue === "0" && rows !== null && (
             <ReportDataGrid
               columns={columns}
               rows={rows}
@@ -457,7 +466,24 @@ export default function Page_Company_Recruitment_Id_Report(props) {
             />
           )}
 
-          {tabValue === "1" && (
+          {tabValue === "0" && rows === null && (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: 50,
+              }}
+            >
+              <CircularProgress
+                sx={{
+                  color: "black",
+                }}
+              />
+            </Box>
+          )}
+
+          {tabValue === "1" && rows !== null && (
             <Box>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={8}>
@@ -536,6 +562,104 @@ export default function Page_Company_Recruitment_Id_Report(props) {
                     Median={data.softskill.softMedian}
                     Mode={data.softskill.softMode}
                   />
+                </Grid>
+              </Grid>
+            </Box>
+          )}
+
+          {tabValue === "1" && rows === null && (
+            <Box>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={12}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: 50,
+                    }}
+                  >
+                    <CircularProgress
+                      sx={{
+                        color: "black",
+                      }}
+                    />
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Divider
+                    sx={{
+                      borderColor: "gray.100",
+                    }}
+                  ></Divider>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: 50,
+                    }}
+                  >
+                    <CircularProgress
+                      sx={{
+                        color: "black",
+                      }}
+                    />
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Divider
+                    sx={{
+                      borderColor: "gray.100",
+                    }}
+                  ></Divider>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: 50,
+                    }}
+                  >
+                    <CircularProgress
+                      sx={{
+                        color: "black",
+                      }}
+                    />
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Divider
+                    sx={{
+                      borderColor: "gray.100",
+                    }}
+                  ></Divider>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: 50,
+                    }}
+                  >
+                    <CircularProgress
+                      sx={{
+                        color: "black",
+                      }}
+                    />
+                  </Box>
                 </Grid>
               </Grid>
             </Box>

@@ -169,7 +169,7 @@ export default function ReportGraph(props) {
                           },
                   },
                   showline: false,
-                  domain: [0, 10],
+                  domain: [0.00, 10.00],
                 },
                 transition: {
                   duration: 500,

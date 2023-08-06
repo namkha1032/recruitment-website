@@ -28,7 +28,7 @@ const Footer = () => {
   React.useEffect(() => {
     dispatch({ type: "eventSaga/getEventFooter" });
     return () => {
-      dispatch({ type: "eventFooter/setEventFooter",payload: null });
+      dispatch({ type: "eventFooter/setEventFooter", payload: null });
     }
   }, []);
   const handleNavigateClick = (id) => {
@@ -69,16 +69,24 @@ const Footer = () => {
               </Box>
               <Box sx={{ padding: "15px 0px 0px 30px" }}>
                 {isSm ?
-                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d489.9388456390998!2d106.65759870694123!3d10.772137569304396!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ec3c161a3fb%3A0xef77cd47a1cc691e!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBCw6FjaCBraG9hIC0gxJDhuqFpIGjhu41jIFF14buRYyBnaWEgVFAuSENN!5e0!3m2!1svi!2s!4v1690777122848!5m2!1svi!2s"
+                  // <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d489.9388456390998!2d106.65759870694123!3d10.772137569304396!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ec3c161a3fb%3A0xef77cd47a1cc691e!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBCw6FjaCBraG9hIC0gxJDhuqFpIGjhu41jIFF14buRYyBnaWEgVFAuSENN!5e0!3m2!1svi!2s!4v1690777122848!5m2!1svi!2s"
+                  //   width="430"
+                  //   height="350"
+                  //   style={{ border: 0 }}
+                  //   // allowfullscreen=""
+                  //   loading="lazy"
+                  // // referrerpolicy="no-referrer-when-downgrade"
+                  // ></iframe>
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2263.6149350810506!2d106.79675591495992!3d10.850824773456436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527374c43baad%3A0xb8b244d75d12213e!2zRlBUIFNvZnR3YXJlIEjhu5MgQ2jDrSBNaW5o!5e0!3m2!1sen!2s!4v1691310552331!5m2!1sen!2s"
                     width="430"
                     height="350"
-                    style={{ border: 0 }}
+                    style={{
+                      border: 0
+                    }}
                     // allowfullscreen=""
                     loading="lazy"
                   // referrerpolicy="no-referrer-when-downgrade"
-                  >
-
-                  </iframe> : null}
+                  ></iframe> : null}
               </Box>
             </Grid>
             <Grid item md={3} xs={12} >
