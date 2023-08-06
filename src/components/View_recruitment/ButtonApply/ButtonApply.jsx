@@ -261,15 +261,17 @@ const ButtonApply = (props) => {
                                         </Button>
                                     ) : (
                                         <>
-
-                                            <Button sx={{
-                                                backgroundColor: "black",
-                                                ":hover": {
-                                                    backgroundColor: "grey",
-                                                }
-                                            }} size="medium" variant='contained' onClick={handleOpen}>
-                                                <SwitchCameraIcon sx={{ marginRight: 1 }}></SwitchCameraIcon>  Switch CV
-                                            </Button>
+                                            {loading === false && (
+                                                <Button sx={{
+                                                    backgroundColor: "black",
+                                                    ":hover": {
+                                                        backgroundColor: "grey",
+                                                    }
+                                                }} size="medium" variant='contained' onClick={handleOpen}>
+                                                    <SwitchCameraIcon sx={{ marginRight: 1 }}></SwitchCameraIcon>  Switch CV
+                                                </Button>
+                                            )}
+                                            
 
                                         </>
                                     )}
