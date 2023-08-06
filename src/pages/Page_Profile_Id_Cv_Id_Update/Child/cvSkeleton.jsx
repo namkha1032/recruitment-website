@@ -32,7 +32,7 @@ const CvSkeleton = () => {
               marginBottom: "32px",
             }}
           >
-            <Box className={` InputForm`}>
+            <Box className={`CVForm InputForm`}>
               <GigaCard>
                 <Grid
                   item

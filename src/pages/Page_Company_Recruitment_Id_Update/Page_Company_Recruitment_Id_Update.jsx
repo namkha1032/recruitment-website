@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import PositionSkeleton from "./Child/positionSkeleton";
 const Page_Company_Recruitment_Create = () => {
     const {recruitmentid} = useParams()
-    console.log(recruitmentid)
+    // console.log(recruitmentid)
     return(
         <Box className="CreateRecruit">
             {/* <PositionSkeleton></PositionSkeleton> */}
