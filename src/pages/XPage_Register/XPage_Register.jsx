@@ -43,7 +43,7 @@ const theme = createTheme({
   },
 });
 
-const fullnameRegex = /^[a-zA-Z-' ]{2,}$/;
+const fullnameRegex = /^[A-Za-zÀ-ỹĐđ\s]{1,}$/;
 const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{6,}$/;
@@ -193,7 +193,7 @@ const XPage_Register = () => {
       dispatch({
         type: "saga/userRegister",
         payload: {
-          fullNam: fullName,
+          fullName: fullName,
           username: username,
           email: email,
           password: password,
@@ -226,6 +226,7 @@ const XPage_Register = () => {
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
+        transition: 'background-image 0.3s ease-in-out',
         width: "100vw",
         height: "100vh",
         display: "flex",
@@ -285,7 +286,7 @@ const XPage_Register = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            boxShadow: "0px 0px 10px 10px rgba(255, 255, 255, 0.25)",
+            boxShadow: "0px 0px 7px 7px rgba(255, 255, 255, 0.25)",
           }}
         >
 
@@ -397,7 +398,7 @@ const XPage_Register = () => {
                         lineHeight="20px"
                         paddingLeft={"5px"}
                       >
-                        Full name must be at least 2 characters long
+                        Full name required and contain only letters
                       </Typography>
                     </Box>
                   </Grid>

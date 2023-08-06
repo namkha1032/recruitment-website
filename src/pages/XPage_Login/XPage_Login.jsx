@@ -17,6 +17,8 @@ import {
   Stack,
 } from "@mui/material";
 
+import makeStyles from "@mui/material/styles";
+
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 
@@ -35,6 +37,7 @@ import imageBg3 from "../../assets/img/background3.png";
 import HomeIcon from '@mui/icons-material/Home';
 
 import CircularProgress from "@mui/material/CircularProgress";
+import { CSSTransition } from 'react-transition-group';
 
 const theme = createTheme({
   palette: {
@@ -72,7 +75,7 @@ const XPage_Login = () => {
       else {
         setCurrentIndex(currentIndex + 1);
       }
-    }, 6000)
+    }, 5000)
     
     return () => clearInterval(intervalId);
   }, [currentIndex])
@@ -179,12 +182,22 @@ const XPage_Login = () => {
   };
 
   return (
+    // <CSSTransition
+    //   in={!!images[currentIndex]}
+    //   timeout={1000}
+    //   classNames="fade"
+    //   unmountOnExit
+    // >
+
+
     <Box
       sx={{
         backgroundImage: `url(${images[currentIndex]})`,
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
+        transition: 'background-image 0.3s ease-in-out',
+        //transition: 'background-position 0.3s ease-in-out',
         width: "100vw",
         height: "100vh",
         display: "flex",
@@ -242,7 +255,7 @@ const XPage_Login = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            boxShadow: "0px 0px 10px 10px rgba(255, 255, 255, 0.25)",
+            boxShadow: "0px 0px 7px 7px rgba(255, 255, 255, 0.25)",
           }}
         >
           <Box
@@ -618,6 +631,9 @@ const XPage_Login = () => {
         </Alert>
       </Snackbar>
     </Box>
+
+
+    // </CSSTransition>
   );
 };
 

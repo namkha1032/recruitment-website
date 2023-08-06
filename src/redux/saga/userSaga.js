@@ -15,6 +15,8 @@ function* userLogin(action) {
 
         const responseUserInformation = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/UserLogin', config)
 
+        //console.log("responseUserInformation: ", responseUserInformation)
+
         const responseRole = yield call(axios.get, 'https://leetun2k2-001-site1.gtempurl.com/api/Authentication/GetRole', config)
 
         let userObj = {
