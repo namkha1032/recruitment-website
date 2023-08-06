@@ -9,6 +9,10 @@ import {
   Chip,
   IconButton,
 } from "@mui/material";
+import {
+  NoRowsOverlay,
+  NoResultsOverlay,
+} from "../../components/DataRick/DataRick";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import TableViewIcon from "@mui/icons-material/TableView";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
@@ -69,7 +73,11 @@ export default function ReportDataGrid(props) {
             color: "black",
           },
         }}
-        slots={{ toolbar: GridToolbar }}
+        slots={{
+          toolbar: GridToolbar,
+          noRowsOverlay: NoRowsOverlay,
+          noResultsOverlay: NoResultsOverlay,
+        }}
         slotProps={{
           // pagination: {
           //   labelRowsPerPage: "Số lượng hiển thị",
@@ -107,9 +115,9 @@ export default function ReportDataGrid(props) {
         getRowId={(row) => row.InterviewId}
         onCellClick={(params, event) => {
           if (params.field === "InterviewerName") {
-            props.handleInterviewerClick(params.row.InterviewerId);
+            props.handleInterviewerClick(params.row.InterviewerUserId);
           } else if (params.field === "CandidateName") {
-            props.handleCandidateClick(params.row.CandidateId);
+            props.handleCandidateClick(params.row.CandidateUserId);
           } else {
             props.handleDetailClick(params.row.InterviewId);
           }
