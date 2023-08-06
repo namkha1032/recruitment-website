@@ -19,6 +19,10 @@ function* getEventList(action) {
         headers: { Authorization: action.payload.token },
       }
     );
+    const response1 = yield call(
+      axios.get,
+      `${host.name}/data/image.json`
+    );
     // const response = yield call(
     //   axios.get,
     //   "https://leetun2k2-001-site1.gtempurl.com/api/Event"
@@ -35,7 +39,7 @@ function* getEventList(action) {
         headers: { Authorization: action.payload.token },
       }
     );
-    const data = formatEventList(response.data, candidatesEvent.data);
+    const data = formatEventList(response.data, candidatesEvent.data,response1.data,host.name);
     yield put({ type: "eventList/setEventList", payload: data });
     yield put({ type: "loading/offLoading" });
     // yield put({
@@ -64,9 +68,12 @@ function* getEventFooter() {
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/Event"
     );
+    const response1 = yield call(
+      axios.get,
+      `${host.name}/data/image.json`
+    );
     console.log("-------------------------------------------");
-    console.log(response.data);
-    const data = formatEventFooter(response.data);
+    const data = formatEventFooter(response.data,response1.data,host.name);
     console.log(data);
     console.log("-------------------------------------------");
     yield put({ type: "eventFooter/setEventFooter", payload: data });

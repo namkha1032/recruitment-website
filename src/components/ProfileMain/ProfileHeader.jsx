@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom/dist";
 import cleanStore from "../../utils/cleanStore";
 
-const ProfileHeader = ({  id, profile }) => {
+const ProfileHeader = () => {
+  const profile = useSelector(state => state.profile)
   const {profileid} = useParams();
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
@@ -21,18 +22,20 @@ const ProfileHeader = ({  id, profile }) => {
     }setOpen(false);
   };
   const handleFileChange = (event) => {
+    
     const file = event.target.files[0];
+    console.log('a')
     if (file) {
       const fileType = file.type;
       const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/bmp'];
       if (validImageTypes.includes(fileType)){
         setLoading(true)
       const data = {
-        FullName: profile.name!== null ? profile.name : '',
-        DateOfBirth:profile.birth,
+        FullName: profile.name!== null ? profile.fullName : '',
+        DateOfBirth:profile.dateOfBirth,
         Address:profile.address!== null ? profile.address : '',
         ImageFile:URL.createObjectURL(file),
-        PhoneNumber:profile.phone!== null ? profile.phone : ''
+        PhoneNumber:profile.phone!== null ? profile.phoneNumber : ''
       }
       console.log(data)
       dispatch({type:'profileSaga/updateProfile',payload: {data,userid:user.userid,token:user.token}})
@@ -43,14 +46,18 @@ const ProfileHeader = ({  id, profile }) => {
     }
   };
   useEffect(() => {
+    console.log("change11111")
+    console.log(profile.imageURL)
     if(loading===true){
       setLoading(false)
       setOpen(true)
     }
+  },[profile])
+  useEffect(() => {
     return () => {
-      cleanStore(dispatch)
+        cleanStore(dispatch)
     }
-  },[user])
+  },[])
   return (
     <>
     <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>

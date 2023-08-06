@@ -94,7 +94,7 @@ const Page_Home = () => {
               <Box key={index} onClick={() => handleNavigateClick(item.EventId)}
                 sx={{ padding: '0px 16px 0px 0px', borderRight: '1px solid lightgrey', cursor: 'pointer' }}>
 
-                <img src="https://cdn.vietnambiz.vn/2020/1/15/photo-1579090002241-15790900035601213027614.jpg"
+                <img src={item.Image}
                   alt=""
                   style={{ width: '100%' }}
                 />
@@ -132,7 +132,7 @@ const Page_Home = () => {
                 {eventList.slice(2, 5).map((item, index) => (
                   <Box key={index} onClick={() => handleNavigateClick(item.EventId)}
                     sx={{ cursor: 'pointer' }}>
-                    <img src="https://www.freecodecamp.org/news/content/images/2022/04/derick-mckinney-oARTWhz1ACc-unsplash.jpg"
+                    <img src={item.Image}
                       alt=""
                       style={{ width: '100%' }}
                     />
@@ -166,7 +166,7 @@ const Page_Home = () => {
 
                   <Box key={index} onClick={() => handleNavigateClick(item.EventId)}
                     sx={{ cursor: 'pointer' }}>
-                    <img src="https://www.freecodecamp.org/news/content/images/2022/04/derick-mckinney-oARTWhz1ACc-unsplash.jpg"
+                    <img src={item.Image}
                       alt=""
                       style={{ width: '100%' }}
                     />

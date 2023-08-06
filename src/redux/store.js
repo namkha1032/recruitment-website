@@ -136,7 +136,7 @@ const store = configureStore({
         updatesubmitcv: updatesubmitcvSlice.reducer,
         submitNotify: submitNotifySlice.reducer,
         candidateInfo : candidateInfoSlice.reducer,
-        // statusApplication : statusApplicationSlice.reducer
+
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]
