@@ -266,7 +266,7 @@ const Page_Event_Id = () => {
                                             <EditCalendarRoundedIcon
                                                 sx={{ marginRight: 0.5, color: "darkgray" }}
                                             ></EditCalendarRoundedIcon>
-                                            <span style={{ color: "darkgray", fontSize: "17px" }}>
+                                            <span style={{ color: "darkgray", fontSize: "18px" }}>
                                                 {event.createdTime}
                                             </span>
                                         </Box>
@@ -281,7 +281,7 @@ const Page_Event_Id = () => {
                                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit eum esse quisquam distinctio animi iure possimus omnis tempore dicta consectetur perspiciatis atque in, cupiditate nostrum numquam accusamus blanditiis velit libero!<br />
                                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure laborum, ullam necessitatibus harum distinctio similique itaque corrupti qui possimus incidunt quisquam, optio hic molestias et accusantium rem ipsum. Commodi, consequatur.<br />
                             </p> */}
-                                        <Box ref={contentRef}></Box>
+                                        <Box sx={{ fontSize: '18px' }} ref={contentRef}></Box>
                                         {/* ---------------------------------------------------------------------- */}
 
                                         <Grid container sx={{ marginTop: 8 }}>
@@ -310,7 +310,7 @@ const Page_Event_Id = () => {
                                                     >
                                                         <Box
                                                             sx={{
-                                                                fontSize: 22,
+                                                                fontSize: 25,
                                                                 fontWeight: 600,
                                                                 color: "#3f51b5",
                                                                 // color: '#1565C0'
@@ -321,8 +321,10 @@ const Page_Event_Id = () => {
                                                         </Box>
                                                         <Box
                                                             sx={{
-                                                                fontSize: 16,
-                                                                fontWeight: 600
+                                                                fontSize: 20,
+                                                                fontWeight: 600,
+                                                                // color: "#FF9933"
+                                                                color: "#00838f"
                                                             }}
                                                         >
                                                             {/* {event.quantity} / {event.maxQuantity} */}
@@ -333,7 +335,7 @@ const Page_Event_Id = () => {
                                                 </Box>
                                             </Grid>
 
-                                            <Grid item md={3} sm={4} xs={6}>
+                                            <Grid item md={4} sm={4} xs={6}>
                                                 <Box
                                                     sx={{
                                                         display: "flex",
@@ -359,7 +361,7 @@ const Page_Event_Id = () => {
                                                     >
                                                         <Box
                                                             sx={{
-                                                                fontSize: 22,
+                                                                fontSize: 25,
                                                                 fontWeight: 600,
                                                                 color: "#3f51b5",
                                                                 // color: '#1565C0'
@@ -370,8 +372,10 @@ const Page_Event_Id = () => {
                                                         </Box>
                                                         <Box
                                                             sx={{
-                                                                fontSize: 16,
-                                                                fontWeight: 600
+                                                                fontSize: 20,
+                                                                fontWeight: 600,
+                                                                // color: "#FF9933"
+                                                                color: "#00838f"
                                                             }}
                                                         >
                                                             {transferDatetimeBack(event.time)}
@@ -381,7 +385,7 @@ const Page_Event_Id = () => {
                                                 </Box>
                                             </Grid>
 
-                                            <Grid item md={6} sm={4} xs={12}>
+                                            <Grid item md={5} sm={4} xs={12}>
                                                 <Box
                                                     sx={{
                                                         display: "flex",
@@ -407,7 +411,7 @@ const Page_Event_Id = () => {
                                                     >
                                                         <Box
                                                             sx={{
-                                                                fontSize: 22,
+                                                                fontSize: 25,
                                                                 fontWeight: 600,
                                                                 color: "#3f51b5",
                                                                 // color: '#1565C0'
@@ -418,8 +422,10 @@ const Page_Event_Id = () => {
                                                         </Box>
                                                         <Box
                                                             sx={{
-                                                                fontSize: 16,
-                                                                fontWeight: 600
+                                                                fontSize: 20,
+                                                                fontWeight: 600,
+                                                                // color: "#FF9933"
+                                                                color: "#00838f"
                                                             }}
                                                         >
                                                             {event.location}
@@ -668,7 +674,8 @@ const Page_Event_Id = () => {
                                                         <Box
                                                             sx={{
                                                                 fontSize: 15,
-                                                                fontWeight: 600
+                                                                fontWeight: 600,
+                                                                color: "#00838f"
                                                             }}
                                                         >
                                                             {/* {event.quantity} / {event.maxQuantity} */}
@@ -719,7 +726,8 @@ const Page_Event_Id = () => {
                                                         <Box
                                                             sx={{
                                                                 fontSize: 15,
-                                                                fontWeight: 600
+                                                                fontWeight: 600,
+                                                                color: "#00838f"
                                                             }}
                                                         >
                                                             {transferDatetimeBack(event.time)}
@@ -768,7 +776,8 @@ const Page_Event_Id = () => {
                                                         <Box
                                                             sx={{
                                                                 fontSize: 15,
-                                                                fontWeight: 600
+                                                                fontWeight: 600,
+                                                                color: "#00838f"
                                                             }}
                                                         >
                                                             {event.location}
