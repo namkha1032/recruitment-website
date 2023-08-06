@@ -48,6 +48,8 @@ import BlackContainedButton from '../../components/BlackContainedButton/BlackCon
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+
+import { Pass, Fail } from '../../components/Label/LabelNo';
 // import { useNavItem } from '@restart/ui/esm/NavItem';
 const Page_Company_Interview_Id = () => {
     const navigate = useNavigate()
@@ -183,25 +185,21 @@ const Page_Company_Interview_Id = () => {
                                                 ? <>
                                                     <Button
                                                         onClick={() => { setOpenAlertReject(true) }}
-                                                        size={"large"} sx={{ backgroundColor: "white", width: isSm ? "auto" : "100%" }} color="error" variant="outlined" startIcon={<CloseIcon />}>
+                                                        size={"large"} sx={{ width: isSm ? "auto" : "100%" }} color="error" variant="contained" startIcon={<CloseIcon />}>
                                                         Reject
                                                     </Button>
                                                     <Button
                                                         onClick={() => { setOpenAlertAccept(true) }}
-                                                        size={"large"} sx={{ backgroundColor: "white", width: isSm ? "auto" : "100%" }} color="success" variant="outlined" startIcon={<CheckIcon />}>
+                                                        size={"large"} sx={{ width: isSm ? "auto" : "100%" }} color="success" variant="contained" startIcon={<CheckIcon />}>
                                                         Accept
                                                     </Button>
                                                 </>
                                                 : null}
                                             {interview.company_Status == "Passed"
-                                                ? <Alert icon={<CheckCircleIcon fontSize="inherit" />} severity="success" variant="filled">
-                                                    ACCEPTED
-                                                </Alert>
+                                                ? <Pass />
                                                 : null}
                                             {interview.company_Status == "Failed"
-                                                ? <Alert icon={<CancelIcon fontSize="inherit" />} severity="error" variant="filled">
-                                                    REJECTED
-                                                </Alert>
+                                                ? <Fail />
                                                 : null}
                                         </Grid>
                                         : null}
