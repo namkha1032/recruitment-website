@@ -43,7 +43,7 @@ const theme = createTheme({
   },
 });
 
-const fullnameRegex = /^[a-zA-Z-' ]{2,}$/;
+const fullnameRegex = /^[A-Za-zÀ-ỹĐđ\s]{2,}$/;
 const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{6,}$/;
@@ -193,7 +193,7 @@ const XPage_Register = () => {
       dispatch({
         type: "saga/userRegister",
         payload: {
-          fullNam: fullName,
+          fullName: fullName,
           username: username,
           email: email,
           password: password,
