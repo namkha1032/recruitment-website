@@ -43,7 +43,7 @@ const theme = createTheme({
   },
 });
 
-const fullnameRegex = /^[A-Za-zÀ-ỹĐđ\s]{2,}$/;
+const fullnameRegex = /^[A-Za-zÀ-ỹĐđ\s]{1,}$/;
 const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{6,}$/;
@@ -397,7 +397,7 @@ const XPage_Register = () => {
                         lineHeight="20px"
                         paddingLeft={"5px"}
                       >
-                        Full name must be at least 2 characters long
+                        Full name required and contain only letters
                       </Typography>
                     </Box>
                   </Grid>
