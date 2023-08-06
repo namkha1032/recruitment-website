@@ -52,8 +52,8 @@ const theme = createTheme({
 
 export default function TabInProfile() {
   const location = useLocation();
-  const CandidateId = useSelector(state => state.user.candidateId);
-  console.log(CandidateId);
+  const CandidateId = useSelector(state => state.user.userid);
+  console.log("CandidateIdTab:",CandidateId);
   return (
     <ThemeProvider theme={theme}>
       <Box mt={2} mb={5}> {/* Add margin (10px) on top and bottom */}
