@@ -48,7 +48,6 @@ import { useTheme } from '@mui/material/styles';
 
 const Page_Company_Event_Id = () => {
 
-
     // useNavigate
     const navigate = useNavigate()
 
@@ -265,7 +264,8 @@ const Page_Company_Event_Id = () => {
 
 
     return (
-        <Container sx={{ p: 0 }} className='companyeventid'>
+        // <Container sx={{ p: 0 }} className='companyeventid'>
+        <>
             {isMd && (
                 <>
                     {/* <CelebrationRoundedIcon color='primary' fontSize='large' sx={{ marginRight: 1 }}></CelebrationRoundedIcon> */}
@@ -844,7 +844,11 @@ const Page_Company_Event_Id = () => {
                                                                     // color: '#1565C0' 
                                                                 }}>
                                                             </PeopleAltRoundedIcon>
-                                                            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                            <Box sx={{
+                                                                display: "flex",
+                                                                flexDirection: "column",
+                                                                justifyContent: "center"
+                                                            }}>
                                                                 <Box sx={{
                                                                     fontSize: 18,
                                                                     fontWeight: 600,
@@ -881,7 +885,11 @@ const Page_Company_Event_Id = () => {
                                                                     // color: '#1565C0'
                                                                 }}>
                                                             </AccessTimeRoundedIcon>
-                                                            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                            <Box sx={{
+                                                                display: "flex",
+                                                                flexDirection: "column",
+                                                                justifyContent: "center"
+                                                            }}>
                                                                 <Box sx={{
                                                                     fontSize: 18,
                                                                     fontWeight: 600,
@@ -917,7 +925,11 @@ const Page_Company_Event_Id = () => {
                                                                     // color: '#1565C0' 
                                                                 }}>
                                                             </LocationOnRoundedIcon>
-                                                            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                                                            <Box sx={{
+                                                                display: "flex",
+                                                                flexDirection: "column",
+                                                                justifyContent: "center"
+                                                            }}>
                                                                 <Box sx={{
                                                                     fontSize: 18,
                                                                     fontWeight: 600,
@@ -1085,7 +1097,8 @@ const Page_Company_Event_Id = () => {
                     </TabContext>
                 </>
             )}
-        </Container >
+        </>
+        // </Container >
     )
 }
 

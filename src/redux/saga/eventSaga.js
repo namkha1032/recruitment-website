@@ -123,7 +123,7 @@ function* getEventListWithFilter(action) {
 
 // ------------------------------------------------------------------------------------------------------------------------
 function* getEvent(action) {
-  console.log("eid: ", action.payload.eventid)
+  // console.log("eid: ", action.payload.eventid)
   try {
     let token = `Bearer ${action.payload.token}`
     const config = {
