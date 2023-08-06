@@ -23,6 +23,7 @@ import CVProfile from "../CV/CVProfile";
 import { useParams } from "react-router-dom/dist";
 import MissingPage from "../MissingPage/MissingPage";
 import cleanStore from "../../utils/cleanStore";
+import Loading from "../Loading/Loading";
 
 const ProfileMain = ({ page }) => {
   const navigate = useNavigate();
@@ -35,10 +36,10 @@ const ProfileMain = ({ page }) => {
   // const profile = null
   const userId = useSelector(state => state.user.userid)
   console.log(profile)
-
+  const user = useSelector(state => state.user)
   useEffect(() => {
-    dispatch({ type: "positionSaga/getPositionList" });
-  }, []);
+    dispatch({type:'profileSaga/getProfile',payload:{token:user.token,userid:profileid}})
+  },[profileid])
   const handleClickChangePW = () => {
     if (page !== "ChangePW") navigate(`/profile/${profileid}/changepassword`);
   };
@@ -52,18 +53,11 @@ const ProfileMain = ({ page }) => {
     if (page !== "History") navigate("/profile/1/history");
   };
   return (
-   
-    profile === null ?  
+    profile === null  || profile.id!==profileid ? <Loading/> :
     
-    <Box sx={{position:'sticky',top:'300px',display:'flex',justifyContent:'center'}}>  
-  
-            <Box><CircularProgress color="secondary" /> </Box>      
-     
-    </Box>
-    : 
     profile.id === profileid ?
     (
-      <Container mb={3}>
+      <Box mb={3}>
         <Box sx={{ paddingTop: "40px", paddingBottom: "20px" }}>
           <ProfileHeader />
         </Box>
@@ -131,7 +125,7 @@ const ProfileMain = ({ page }) => {
             )}
           </Grid>
         </Grid>
-      </Container>
+      </Box>
     ) : <MissingPage/>
              
         

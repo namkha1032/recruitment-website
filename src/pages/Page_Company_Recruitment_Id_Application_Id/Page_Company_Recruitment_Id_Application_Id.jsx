@@ -18,32 +18,35 @@ import cleanStore from "../../utils/cleanStore";
 import useGetRole from "../../hooks/useGetRole";
 
 const Page_Company_Recruitment_Id_Application_Id = () => {
-  const infoApplication = useSelector(state => state.infoApplication )
-  const user = useSelector(state => state.user)
+  const infoApplication = useSelector((state) => state.infoApplication);
+  const user = useSelector((state) => state.user);
 
-
-  const {applicationid,recruitmentid} = useParams()
-  const dispatch = useDispatch()
+  const { applicationid, recruitmentid } = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({type:'applicationSaga/getInfoApplication',payload:{applicationid:applicationid,token:user.token}})
+    dispatch({
+      type: "applicationSaga/getInfoApplication",
+      payload: { applicationid: applicationid, token: user.token },
+    });
     return () => {
-      cleanStore(dispatch)
+      cleanStore(dispatch);
     };
-  },[])
-  
-  console.log(infoApplication)
-  
-  return (
-    infoApplication!== null ? ( infoApplication === 'none' ? <MissingPage/> :
-      ( infoApplication.position.positionId === recruitmentid  ?
-    <Container>
-      <Application cvid={infoApplication.cv.cvid}/>
-      
-    </Container> : <MissingPage/>)) : <Loading/>
-     
+  }, []);
+
+  console.log(infoApplication);
+
+  return infoApplication !== null ? (
+    infoApplication === "none" ? (
+      <MissingPage />
+    ) : infoApplication.position.positionId === recruitmentid ? (
+      <Application cvid={infoApplication.cv.cvid} />
+    ) : (
+      <MissingPage />
+    )
+  ) : (
+    <Loading />
   );
- 
 };
 
 export default Page_Company_Recruitment_Id_Application_Id;

@@ -9,30 +9,32 @@ import { useEffect } from "react";
 import Loading from "../../components/Loading/Loading";
 import cleanStore from "../../utils/cleanStore";
 
-
-
 const Page_Recruitment_Id_Application_Id = () => {
-  const infoApplication = useSelector(state => state.infoApplication )
-  const {applicationid,recruitmentid} = useParams()
-  const user = useSelector(state => state.user)
-  const dispatch = useDispatch()
+  const infoApplication = useSelector((state) => state.infoApplication);
+  const { applicationid, recruitmentid } = useParams();
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch({type:'applicationSaga/getInfoApplication',payload:{applicationid:applicationid,token:user.token}})
+    dispatch({
+      type: "applicationSaga/getInfoApplication",
+      payload: { applicationid: applicationid, token: user.token },
+    });
     return () => {
-      cleanStore(dispatch)
+      cleanStore(dispatch);
     };
-  },[])
-  console.log(infoApplication)
-  return (
-    infoApplication!== null ? ( infoApplication === 'none' ? <MissingPage/> :
-      ( infoApplication.position.positionId === recruitmentid  ?
-    <Container>
-      <Application cvid={infoApplication.cv.cvid} page="normal"/>
-    
-    </Container> : <MissingPage/>)) : <Loading/>
-     
+  }, []);
+  console.log(infoApplication);
+  return infoApplication !== null ? (
+    infoApplication === "none" ? (
+      <MissingPage />
+    ) : infoApplication.position.positionId === recruitmentid ? (
+      <Application cvid={infoApplication.cv.cvid} page="normal" />
+    ) : (
+      <MissingPage />
+    )
+  ) : (
+    <Loading />
   );
 };
 
 export default Page_Recruitment_Id_Application_Id;
-

@@ -17,9 +17,9 @@ const Profile = () => {
   },[profileid])
   console.log(profile)
   return (
-  user && profile ? profile==='none' ? <MissingPage/> :
+  user  ? 
 
-  <ProfileMain page="Profile" />  : <Loading/>
+  <ProfileMain page="Profile" />  : <MissingPage/>
   );
 };
 

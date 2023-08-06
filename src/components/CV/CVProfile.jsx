@@ -90,7 +90,7 @@ import cleanStore from "../../utils/cleanStore";
                     
                       }}
                     >
-                      <Box m={0} component='h4'>{skill.skillName} • 1 năm kinh nghiệm</Box>
+                      <Box m={0} component='h4'>{skill.skillName} • {skill.experienceYear} năm kinh nghiệm</Box>
                       <Box>{skill.description}</Box> 
                     </Box>
                   ))}
