@@ -371,9 +371,9 @@ function* getInterviewInfo(action) {
     yield put({ type: 'interviewskill/setInterviewSkill', payload: skilllist })
   } catch (error) {
     console.log(error);
-    if (error.response.request.status === 400 || error.response.request.status === 404){
+    if (error.response.request.status === 400 || error.response.request.status === 404) {
 
-      yield put({type: 'interviewError/onError', payload: error.response.request.status})
+      yield put({ type: 'interviewError/onError', payload: error.response.request.status })
 
     }
   }
@@ -522,6 +522,7 @@ function* getQuestionsForStartingIntervew(action) {
     }
   }
   yield put({ type: "question/setInterviewQuestion", payload: quesStruc });
+  yield put({ type: "interviewStart/setInterviewStart", payload: responseInterview.data });
 
   // const responsefake = yield call(
   //   axios.get,
@@ -548,7 +549,13 @@ function* getDataForCreatingInterview(action) {
   // const findDepartment = findPosition.department
   // get upcoming interview
   // sửa lại chỗ này
-  const responseInterviewList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`, config)
+  let responseInterviewList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`, config)
+  responseInterviewList = responseInterviewList.data.filter((item) => {
+    return item.candidate_Status == "Not start"
+  })
+  responseInterviewList = {
+    data: responseInterviewList
+  }
   let interviewList = []
   for (let resInter of responseInterviewList.data) {
     // const responseItrsList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Itrsinterview?id=${resInter.itrsinterviewId}`)
