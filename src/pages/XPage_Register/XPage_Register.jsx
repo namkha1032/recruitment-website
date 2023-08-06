@@ -226,6 +226,7 @@ const XPage_Register = () => {
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
+        transition: 'background-image 0.3s ease-in-out',
         width: "100vw",
         height: "100vh",
         display: "flex",

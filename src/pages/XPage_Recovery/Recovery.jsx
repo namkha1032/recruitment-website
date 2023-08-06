@@ -46,7 +46,7 @@ const Recovery = (props) => {
       else {
         setCurrentIndex(currentIndex + 1);
       }
-    }, 6000)
+    }, 5000)
     
     return () => clearInterval(intervalId);
   }, [currentIndex])
@@ -58,6 +58,7 @@ const Recovery = (props) => {
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
+        transition: 'background-image 0.3s ease-in-out',
         width: "100vw",
         height: "100vh",
         display: "flex",
