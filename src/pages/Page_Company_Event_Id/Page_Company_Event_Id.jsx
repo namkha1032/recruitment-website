@@ -23,7 +23,7 @@ import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 // import PsychologyAltRoundedIcon from '@mui/icons-material/PsychologyAltRounded';
 import TodayRoundedIcon from '@mui/icons-material/TodayRounded';
 
-import picture from '../../assets/img/event.png'
+// import picture from '../../assets/img/event.png'
 import GigaCard from '../../components/GigaCard/GigaCard';
 import GigaCardHeader from '../../components/GigaCardHeader/GigaCardHeader';
 import GigaCardBody from '../../components/GigaCardBody/GigaCardBody';
@@ -44,6 +44,9 @@ import { NoResultsOverlay, NoRowsOverlay } from '../../components/DataRick/DataR
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
+import EditCalendarRoundedIcon from '@mui/icons-material/EditCalendarRounded';
+import picture from '../../assets/img/event2.png'
+
 
 
 const Page_Company_Event_Id = () => {
@@ -54,7 +57,7 @@ const Page_Company_Event_Id = () => {
     const role = useGetRole()
 
     const { eventid } = useParams();
-    console.log('company event id: ', eventid);
+    // console.log('company event id: ', eventid);
 
     const dispatch = useDispatch();
 
@@ -86,11 +89,11 @@ const Page_Company_Event_Id = () => {
     const contentRef = useRef()
     useEffect(() => {
         if (note) {
-            console.log(note)
+            // console.log(note)
             contentRef.current.innerHTML = note
         }
     }, [note])
-    console.log("contentRef: ", contentRef);
+    // console.log("contentRef: ", contentRef);
 
     const row_drafts = useSelector((state) => state.candidateJoinEvent)
     const rows = row_drafts ? row_drafts : []
@@ -127,7 +130,7 @@ const Page_Company_Event_Id = () => {
     }
 
     const handleDetailClick = (value) => {
-        console.log(value);
+        // console.log(value);
         navigate(`/profile/${value}`);
     }
 
@@ -389,7 +392,8 @@ const Page_Company_Event_Id = () => {
                                             </Box>
                                             <GigaCardBody>
                                                 <Box sx={{ fontSize: '18px', fontStyle: 'italic', display: 'flex', justifyContent: 'flex-end', marginBottom: 3 }}>
-                                                    <TodayRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></TodayRoundedIcon>
+                                                    {/* <TodayRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></TodayRoundedIcon> */}
+                                                    <EditCalendarRoundedIcon sx={{ marginRight: 0.5, color: 'darkgray' }}></EditCalendarRoundedIcon>
                                                     <span style={{ color: 'darkgray', fontSize: '17px' }}>{event.createdTime}</span>
                                                 </Box>
 
@@ -433,6 +437,7 @@ const Page_Company_Event_Id = () => {
                                                                 </Box>
                                                                 <Box sx={{
                                                                     fontSize: 16,
+                                                                    fontWeight: 600
                                                                 }}>
                                                                     {/* {event.quantity} / {event.maxQuantity} */}
                                                                     {rows.length} / {event.maxQuantity}
@@ -468,6 +473,7 @@ const Page_Company_Event_Id = () => {
                                                                 </Box>
                                                                 <Box sx={{
                                                                     fontSize: 16,
+                                                                    fontWeight: 600
                                                                 }}>
                                                                     {transferDatetimeBack(event.time)}
                                                                 </Box>
@@ -502,6 +508,7 @@ const Page_Company_Event_Id = () => {
                                                                 </Box>
                                                                 <Box sx={{
                                                                     fontSize: 16,
+                                                                    fontWeight: 600
                                                                 }}>
                                                                     {event.location}
                                                                 </Box>
@@ -801,14 +808,21 @@ const Page_Company_Event_Id = () => {
                                                     marginBottom: 1
                                                     // marginBottom: 3
                                                 }}>
-                                                    <TodayRoundedIcon sx={{
+                                                    {/* <TodayRoundedIcon sx={{
                                                         marginRight: 0.5,
                                                         color: 'darkgray',
                                                     }}
                                                         fontSize='small'
                                                     >
-                                                    </TodayRoundedIcon>
-                                                    <span style={{ color: 'darkgray', fontSize: '12px' }}>{event.createdTime}</span>
+                                                    </TodayRoundedIcon> */}
+                                                    <EditCalendarRoundedIcon sx={{
+                                                        marginRight: 0.5,
+                                                        color: 'darkgray',
+                                                    }}
+                                                        fontSize='small'
+                                                    >
+                                                    </EditCalendarRoundedIcon>
+                                                    <span style={{ color: 'darkgray', fontSize: '13px' }}>{event.createdTime}</span>
                                                 </Box>
 
                                                 {/* <div> cannot appear as a descendant of <p> */}
@@ -860,6 +874,7 @@ const Page_Company_Event_Id = () => {
                                                                 </Box>
                                                                 <Box sx={{
                                                                     fontSize: 15,
+                                                                    fontWeight: 600
                                                                 }}>
                                                                     {/* {event.quantity} / {event.maxQuantity} */}
                                                                     {rows.length} / {event.maxQuantity}
@@ -901,6 +916,7 @@ const Page_Company_Event_Id = () => {
                                                                 </Box>
                                                                 <Box sx={{
                                                                     fontSize: 15,
+                                                                    fontWeight: 600
                                                                 }}>
                                                                     {transferDatetimeBack(event.time)}
                                                                 </Box>
@@ -941,6 +957,7 @@ const Page_Company_Event_Id = () => {
                                                                 </Box>
                                                                 <Box sx={{
                                                                     fontSize: 15,
+                                                                    fontWeight: 600
                                                                 }}>
                                                                     {event.location}
                                                                 </Box>

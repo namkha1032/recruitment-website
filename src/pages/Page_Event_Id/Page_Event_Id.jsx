@@ -20,7 +20,7 @@ import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
 import TodayRoundedIcon from "@mui/icons-material/TodayRounded";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import picture from "../../assets/img/event.png";
+// import picture from "../../assets/img/event.png";
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
@@ -33,6 +33,9 @@ import { transferDatetimeBack } from "../../utils/transferDatetime";
 import AlertDialog from "../../components/AlertDialog/AlertDialog";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+
+import EditCalendarRoundedIcon from '@mui/icons-material/EditCalendarRounded';
+import picture from "../../assets/img/event1.png";
 
 
 
@@ -114,7 +117,7 @@ const Page_Event_Id = () => {
 
     useEffect(() => {
         if (note) {
-            console.log(note);
+            // console.log(note);
             contentRef.current.innerHTML = note;
         }
     }, [note]);
@@ -257,9 +260,12 @@ const Page_Event_Id = () => {
                                                 marginBottom: 3,
                                             }}
                                         >
-                                            <TodayRoundedIcon
+                                            {/* <TodayRoundedIcon
                                                 sx={{ marginRight: 0.5, color: "darkgray" }}
-                                            ></TodayRoundedIcon>
+                                            ></TodayRoundedIcon> */}
+                                            <EditCalendarRoundedIcon
+                                                sx={{ marginRight: 0.5, color: "darkgray" }}
+                                            ></EditCalendarRoundedIcon>
                                             <span style={{ color: "darkgray", fontSize: "17px" }}>
                                                 {event.createdTime}
                                             </span>
@@ -316,6 +322,7 @@ const Page_Event_Id = () => {
                                                         <Box
                                                             sx={{
                                                                 fontSize: 16,
+                                                                fontWeight: 600
                                                             }}
                                                         >
                                                             {/* {event.quantity} / {event.maxQuantity} */}
@@ -364,6 +371,7 @@ const Page_Event_Id = () => {
                                                         <Box
                                                             sx={{
                                                                 fontSize: 16,
+                                                                fontWeight: 600
                                                             }}
                                                         >
                                                             {transferDatetimeBack(event.time)}
@@ -411,6 +419,7 @@ const Page_Event_Id = () => {
                                                         <Box
                                                             sx={{
                                                                 fontSize: 16,
+                                                                fontWeight: 600
                                                             }}
                                                         >
                                                             {event.location}
@@ -587,13 +596,20 @@ const Page_Event_Id = () => {
                                                 // marginBottom: 3
                                             }}
                                         >
-                                            <TodayRoundedIcon sx={{
+                                            {/* <TodayRoundedIcon sx={{
                                                 marginRight: 0.5,
                                                 color: "darkgray"
                                             }}
                                                 fontSize='small'>
-                                            </TodayRoundedIcon>
-                                            <span style={{ color: "darkgray", fontSize: "12px" }}>{event.createdTime}</span>
+                                            </TodayRoundedIcon> */}
+                                            <EditCalendarRoundedIcon sx={{
+                                                marginRight: 0.5,
+                                                color: "darkgray"
+                                            }}
+                                                fontSize='small'
+                                            >
+                                            </EditCalendarRoundedIcon>
+                                            <span style={{ color: "darkgray", fontSize: "13px" }}>{event.createdTime}</span>
                                         </Box>
 
                                         {/* <div> cannot appear as a descendant of <p> */}
@@ -652,6 +668,7 @@ const Page_Event_Id = () => {
                                                         <Box
                                                             sx={{
                                                                 fontSize: 15,
+                                                                fontWeight: 600
                                                             }}
                                                         >
                                                             {/* {event.quantity} / {event.maxQuantity} */}
@@ -702,6 +719,7 @@ const Page_Event_Id = () => {
                                                         <Box
                                                             sx={{
                                                                 fontSize: 15,
+                                                                fontWeight: 600
                                                             }}
                                                         >
                                                             {transferDatetimeBack(event.time)}
@@ -750,6 +768,7 @@ const Page_Event_Id = () => {
                                                         <Box
                                                             sx={{
                                                                 fontSize: 15,
+                                                                fontWeight: 600
                                                             }}
                                                         >
                                                             {event.location}
