@@ -72,7 +72,7 @@ const XPage_Recovery = () => {
             payload: { status: "idle", message: "" },
           });
           navigate("/login");
-        }, 2000);
+        }, 1000);
       }
     }
     if (newError.status === "yes") {
@@ -241,7 +241,7 @@ const XPage_Recovery = () => {
 
       <Snackbar
         open={successSnackbar}
-        autoHideDuration={2000}
+        autoHideDuration={1000}
         onClose={() => setSuccessSnackbar(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >

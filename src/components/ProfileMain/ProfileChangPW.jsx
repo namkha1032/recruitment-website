@@ -74,7 +74,7 @@ const ProfileChangePW = () => {
           payload: { status: "idle", message: "" },
         });
         navigate("/profile/:profileid");
-      }, 2000);
+      }, 1000);
     }
     if (newError.status === "yes") {
       setLoading(false)
@@ -674,7 +674,7 @@ const ProfileChangePW = () => {
 
       <Snackbar
         open={successSnackbar}
-        autoHideDuration={2000}
+        autoHideDuration={1000}
         onClose={() => setSuccessSnackbar(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
