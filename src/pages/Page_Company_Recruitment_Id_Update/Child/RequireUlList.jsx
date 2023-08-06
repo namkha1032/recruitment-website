@@ -32,7 +32,7 @@ const RequireUlList = (prop) => {
             }}
             variant="outlined"
             onDelete={() => {
-              prop.handleDelete(comp.cvSkillsId);
+              prop.handleDelete(comp.requirementId);
             }}
           />
         ))}
