@@ -118,7 +118,7 @@ const Page_Event_Id = () => {
                 cleanStore(dispatch)
             }
         }
-    }, [])
+    }, [isRegistered])
     const row_drafts = useSelector((state) => state.candidateJoinEvent)
     const rows = row_drafts ? row_drafts : []
 
