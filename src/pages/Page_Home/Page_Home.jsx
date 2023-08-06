@@ -211,7 +211,7 @@ const Page_Home = () => {
 
                   </Box>
 
-                  {positionList && positionList.slice(0, 5).map((card, index) => (
+                  {positionList && positionList.slice(0, 4).map((card, index) => (
 
 
 
@@ -275,13 +275,6 @@ const Page_Home = () => {
 
                   ))}
 
-
-
-
-
-
-
-
                 </Box>
 
               </Grid>
@@ -292,7 +285,7 @@ const Page_Home = () => {
       </Box>}
       <Box sx={{ paddingY: '24px', paddingX: "0", borderTop: '1px solid lightgrey' }} id='AboutUs'>
         <Box sx={{ padding: '0px 0px 30px 0px' }}>
-          <Typography align='center' variant='h2' fontFamily="Arial" >About us</Typography>
+          <Typography align='center' variant='h2' fontFamily="Arial" fontWeight="bold" >About us</Typography>
 
         </Box>
         <Grid container spacing={1} >
@@ -398,6 +391,16 @@ const Page_Home = () => {
                   sx={{ display: 'flex', justifyContent: 'flex-start' }}
                 >
                   Understanding design principles and effective communication with team members are also highlighted as essential for creating seamless user experiences in the constantly evolving field of Frontend development.
+                </Typography>
+              </Box>
+              <Box sx={{ padding: '15px 0px 0px 0px' }}>
+                <Typography
+                  variant='body1'
+                  color="black"
+                  component="p"
+                  sx={{ display: 'flex', justifyContent: 'flex-start' }}
+                >
+                  The importance of direction for Frontend developers. They need a strong foundation in HTML, CSS, and JavaScript, along with knowledge of modern frameworks like React, Angular, or Vue.js. Continuous learning, problem-solving skills, and adaptability are crucial traits.
                 </Typography>
               </Box>
             </Box>
