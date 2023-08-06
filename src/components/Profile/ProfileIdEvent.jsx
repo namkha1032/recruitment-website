@@ -8,6 +8,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import {NoRowsOverlay,NoResultsOverlay} from '../DataRick/DataRick';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import GigaCard from '../GigaCard/GigaCard';
+import GigaCardBody from '../GigaCardBody/GigaCardBody';
 export default function EventList({ events}) {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [totalPositions, setTotalPositions] = useState(0);
@@ -32,15 +34,17 @@ export default function EventList({ events}) {
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.up('sm'));
   const columns = [
-    { field: 'name', headerName: 'Event', flex:isSm ? 2 : 4 },
-    isSm ? { field: 'time', headerName: 'Time', flex: isSm ? 2 : 3} : null,
+    { field: 'name', headerName: 'Event',minWidth:200,flex: 0.4,},
+    isSm ? { field: 'time', headerName: 'Time', minWidth:150,flex: 0.3 } : null,
     isSm ? {
-      field: 'place', headerName: 'Place', flex: isSm ? 2 : 3
+      field: 'place', headerName: 'Place', minWidth:150,flex: 0.3 
     } : null,
     {
       field: 'view',
       headerName: 'View',
-      flex: 1,
+      minWidth:150,
+      headerAlign: "center",
+      align: "center",
       renderCell: (params) => (
         <>
         {isSm ? (
@@ -71,7 +75,9 @@ export default function EventList({ events}) {
   });
 
   return (
-    <Grid container direction="column">
+    <Box>
+    <GigaCard>
+      <GigaCardBody>
       <Grid item>
         <Typography variant="h4" gutterBottom>
           My Story
@@ -136,6 +142,9 @@ export default function EventList({ events}) {
       
         </Paper>
       </Grid>
-    </Grid>
+     
+    </GigaCardBody>
+      </GigaCard>
+      </Box>
   );
 }

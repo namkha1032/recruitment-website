@@ -7,6 +7,8 @@ import TabInProfile from './TabInProfile/TabInProfile';
 import { NotStart,Pending , Completed,Pass} from '../Label/LabelStatus';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import GigaCard from '../GigaCard/GigaCard';
+import GigaCardBody from '../GigaCardBody/GigaCardBody';
 import {NoRowsOverlay,NoResultsOverlay} from '../DataRick/DataRick';
 export default function HistoryList({ events, pathnavigate, NameList, namePage }) {
 
@@ -33,25 +35,22 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.up('sm'));
   const columns = [
-    { field: 'name', headerName: namePage, flex:  isSm ? 2 : 3,minWidth:'300px',valueGetter: (params) => params.row.positionName },
-    { field: 'time', headerName: 'Time', flex: isSm ? 2 : 3,valueGetter: (params) => params.row.dateTime },
+    { field: 'name', headerName: namePage, flex: 0.4,minWidth:200,valueGetter: (params) => params.row.positionName },
+    { field: 'time', headerName: 'Time', minWidth:150,flex: 0.3 ,valueGetter: (params) => params.row.dateTime },
     {
       field: 'status',
       headerName: 'Status',
+      minWidth:150,
+      flex: 0.2,
+      headerAlign: "center",
+      align: "center",
       valueGetter: (params) => params.row.Status,
-      flex: isSm ? 2 : 1,
       renderCell: (params) => {
         switch (params.value) {
-          case "Đang chờ":
+          case "Not start":
             return <Pending />;
-          case "Đã đậu":
+          case "Finished":
             return <Pass/>
-          case "Chưa phỏng vấn":
-            return <NotStart/>;
-          case "Đã phỏng vấn":
-            return <Completed/>;
-          case "Kết thúc":
-            return <Completed />;
           default:
             return <Pending />;
         }
@@ -60,7 +59,9 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
     {
       field: 'view',
       headerName: 'View',
-      flex: 1,
+      minWidth:150,
+      headerAlign: "center",
+      align: "center",
       renderCell: (params) => (
         <>
       {isSm ? (
@@ -82,8 +83,9 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
 
 
   return (
-    <>
-      <Grid container direction="column">
+    <Box>
+      <GigaCard>
+        <GigaCardBody>
         <Grid item>
           <Typography variant="h4" gutterBottom>
             My Story
@@ -152,7 +154,8 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
             />
           </Paper>
         </Grid>
-      </Grid>
-    </>
+      </GigaCardBody>
+      </GigaCard>
+      </Box>
   );
 }

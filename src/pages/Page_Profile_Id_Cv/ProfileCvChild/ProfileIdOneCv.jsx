@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Button, Typography, Grid, Paper, IconButton } from '@mui/material';
+import { Button, Typography, Grid, Paper, IconButton ,Box} from '@mui/material';
 import { FirstPage, LastPage } from '@mui/icons-material';
 import { useNavigate } from 'react-router';
 import AddIcon from '@mui/icons-material/Add';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from "react-redux";
+import GigaCard from '../../../components/GigaCard/GigaCard';
+import GigaCardBody from '../../../components/GigaCardBody/GigaCardBody';
 export default function ProfileIdOneCv({ events ,img}) {
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
@@ -51,7 +53,11 @@ export default function ProfileIdOneCv({ events ,img}) {
   }
 
   return (
-    <Grid container justifyContent='space-between' spacing={2} >
+
+    <Box>
+      <GigaCard>
+        <GigaCardBody>
+      
         <Grid item sx = {{margin:'20px 0'}}>
           <Typography variant="h4" gutterBottom>
             My CVs
@@ -85,7 +91,7 @@ export default function ProfileIdOneCv({ events ,img}) {
       </Grid>
     </Grid>
       <Grid item xs={12} md={12} sx={{ margin: '0 0px',width:'100%'}}>
-        <Grid container  wrap="wrap" sx={{justifyContent: isSm ? "flex-start": 'center',gap:"16px"}}>
+        <Grid container  wrap="wrap" sx={{justifyContent: isSm ? "flex-start": 'center', columnGap:'115px'}}>
           {displayedEvents.map((event) => (
             <Paper
               key={event.cvid}
@@ -103,6 +109,7 @@ export default function ProfileIdOneCv({ events ,img}) {
                 alignItems:'center',
                 flexBasis: '250px',
                 cursor: 'pointer',
+              
                 '&:hover': {
                   backgroundColor: 'black', // Màu xám khi hover
                 },
@@ -110,19 +117,17 @@ export default function ProfileIdOneCv({ events ,img}) {
               onClick={() => handleDetails(event.cvid)}
             >
               <Grid item sx={{ margin: '0 auto', marginBlockStart: '0' }}>
-  <Paper variant="outlined" sx={{ p: 2, minHeight: '80px', width: '200px', padding: '0', whiteSpace: 'nowrap', overflow: 'hidden',backgroundColor:'black'}}>
+  <Paper variant="outlined" sx={{ p: 2, minHeight: '60px', width: '200px', padding: '0', whiteSpace: 'nowrap', overflow: 'hidden',backgroundColor: 'rgba(255, 255, 255, 0.8)'}}>
     <Grid container direction="column" height="100%">
       <Grid item>
-        <Typography variant="body1" fontWeight="bold" sx={{color:'white'}}>
+        <Typography variant="body1" fontWeight="bold" sx={{color:'black'}}>
           {event.cvName}
         </Typography>
 
-        <Typography variant="body1" component="div" sx={{ textOverflow: 'ellipsis', color:'white' }}>
+        <Typography variant="body1" component="div" sx={{ textOverflow: 'ellipsis', color:'black' }}>
           Skill: {event && event.skills && event.skills.length > 0 ? event.skills.map((skill) => skill.skillName).join(', ') : ''}
         </Typography>
-        <Typography variant="body1" component="div" sx={{ textOverflow: 'ellipsis', color:'white' }}>
-          Kinh nghiệm: {event.experience}
-        </Typography>
+        
       </Grid>
     </Grid>
   </Paper>
@@ -176,6 +181,8 @@ export default function ProfileIdOneCv({ events ,img}) {
         </Grid>
       </Grid>
       </Paper>
-    </Grid>
+      </GigaCardBody>
+      </GigaCard>
+      </Box>
   );
 }
