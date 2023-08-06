@@ -41,6 +41,7 @@ const CreateCv = (prop) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            marginTop:"32px"
           }}
         >
           <Typography

@@ -34,7 +34,7 @@ function CvStep1(prop) {
             />
           </Grid>
           <Grid item xs={12}>
-            <Box sx={{width: "100%", margin: "auto" }}>
+            <Box sx={{width: "100%", margin: "auto",marginBottom:"32px"}}>
               <CompHeader headerIcon={<BookIcon />}>Education</CompHeader>
               <ReactQuill
                 id="education"

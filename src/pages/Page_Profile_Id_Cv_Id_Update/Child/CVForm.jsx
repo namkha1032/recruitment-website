@@ -13,6 +13,7 @@ import axios from "axios";
 import { delay } from "../../../utils/delay";
 import Alert from "@mui/material/Alert";
 import AlertDialog from "../../../components/AlertDialog/AlertDialog";
+import CvSkeleton from "./cvSkeleton";
 // import ViewCv from "./ViewCv";
 //http://localhost:3000/profile/1/cv/d1c51600-6272-4c78-9b50-36af9d403a28/update
 const SkillAlert = React.forwardRef(function Alert(props, ref) {
@@ -193,9 +194,9 @@ function CVForm(prop) {
   const [languageName, setLanguageName] = useState("");
   const [lInputValue, setLInputValue] = useState("");
   // pdf form
-  const [pdfFile, setPdfFile] = useState(null);
-  const [viewPdf, setViewPdf] = useState(null);
-  const [pdf, setPdf] = useState(null);
+  const [pdfFile, setPdfFile] = useState(`http://localhost:3000/data/CA.pdf`);
+  const [viewPdf, setViewPdf] = useState(`http://localhost:3000/data/CA.pdf`);
+  const [pdf, setPdf] = useState(`http://localhost:3000/data/CA.pdf`);
   //FUNCTION
   function handleTitle(e) {
     setTitle(e.target.value);
@@ -446,6 +447,7 @@ function CVForm(prop) {
   //COMPS
   return (
     <>
+    {cv===null?<CvSkeleton></CvSkeleton>:
       <Box>
         <Grid container spacing={0} justifyContent="center" alignItems="center">
           <Grid item xs={12}>
@@ -571,6 +573,7 @@ function CVForm(prop) {
           handleSubmit={handleSubmit}
         />
       </Box>
+      }
     </>
   );
 }

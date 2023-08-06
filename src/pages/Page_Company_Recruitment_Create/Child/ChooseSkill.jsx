@@ -135,9 +135,9 @@ export default function ChooseList(prop) {
             handleState={handleRExp}
           />
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <EmptyTextarea marginLeft="1%" value={prop.note} setDetail={prop.setNote} />
-        </Grid>
+        </Grid> */}
         <Button
           sx={{
             margin: "auto",
