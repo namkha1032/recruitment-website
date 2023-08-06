@@ -142,7 +142,7 @@ function* updatesubmitCv(action) {
             }
         };
         const reponse = yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload.applicationId}`, action.payload, config)
-        yield put({ type: 'submitNotify/setSubmitNotify', payload: 'success' })
+        yield put({ type: 'submitNotify/setSubmitNotify', payload: 'updatesuccess' })
         console.log('update', reponse.data);
     } catch (error) {
         console.log(error)

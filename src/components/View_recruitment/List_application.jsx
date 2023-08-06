@@ -103,6 +103,12 @@ const List_application = (props) => {
             minWidth: 200
         },
         {
+            field: "point",
+            headerName: "Estimated Point",
+            flex: 1,
+            minWidth: 100
+        },
+        {
             field: "Detail",
             type: "action",
             renderCell: (cellValues) => {
@@ -194,11 +200,11 @@ const List_application = (props) => {
                         initialState={{
                             pagination: {
                                 paginationModel: {
-                                    pageSize: 5,
+                                    pageSize: 10,
                                 },
                             },
                         }}
-                        pageSizeOptions={[5]}
+                        pageSizeOptions={[5, 10, 25, 50, 100]}
                         disableColumnMenu
 
                     />
@@ -271,11 +277,11 @@ const List_application = (props) => {
                         initialState={{
                             pagination: {
                                 paginationModel: {
-                                    pageSize: 5,
+                                    pageSize: 10,
                                 },
                             },
                         }}
-                        pageSizeOptions={[5]}
+                        pageSizeOptions={[10]}
                         disableColumnMenu
                     />
                 ) : null}
