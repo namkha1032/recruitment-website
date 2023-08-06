@@ -163,16 +163,18 @@ export default function Page_Company_Event() {
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
         return (
-          <Box
-            sx={{
-              "&:hover": {
-                cursor: "pointer",
-                textDecoration: "underline",
-              },
-            }}
-          >
-            {params.value}
-          </Box>
+          <Tooltip title={params.value} arrow>
+            <Box
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                },
+              }}
+            >
+              {params.value.slice(0, 6) + "..."}
+            </Box>
+          </Tooltip>
         );
       },
     },

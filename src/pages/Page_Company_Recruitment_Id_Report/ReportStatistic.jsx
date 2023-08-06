@@ -56,10 +56,10 @@ export default function ReportStatistic(props) {
                 alignItems: "center",
               }}
             >
-              <Box>Applied Total:</Box>
+              <Box>Total:</Box>
               <Box sx={{
                 fontWeight: 600
-              }}>{props.data.AppliedTotal}</Box>
+              }}>{props.Total}</Box>
             </ListItem>
             <ListItem
               sx={{
@@ -71,7 +71,7 @@ export default function ReportStatistic(props) {
               <Box>Average:</Box>
               <Box sx={{
                 fontWeight: 600
-              }}>{props.data.Average}</Box>
+              }}>{props.Mean}</Box>
             </ListItem>
             <ListItem
               sx={{
@@ -83,7 +83,7 @@ export default function ReportStatistic(props) {
               <Box>Median:</Box>
               <Box sx={{
                 fontWeight: 600
-              }}>{props.data.Median}</Box>
+              }}>{props.Median}</Box>
             </ListItem>
             <ListItem
               sx={{
@@ -95,7 +95,7 @@ export default function ReportStatistic(props) {
               <Box>Mode:</Box>
               <Box sx={{
                 fontWeight: 600
-              }}>{props.data.Mode}</Box>
+              }}>{props.Mode}</Box>
             </ListItem>
           </List>
         </Grid>

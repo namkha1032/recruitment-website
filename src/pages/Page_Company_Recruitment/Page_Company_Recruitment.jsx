@@ -100,7 +100,7 @@ export default function Page_Company_Recruitment() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const role = useGetRole();
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch({
@@ -311,16 +311,18 @@ export default function Page_Company_Recruitment() {
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
         return (
-          <Box
-            sx={{
-              "&:hover": {
-                cursor: "pointer",
-                textDecoration: "underline",
-              },
-            }}
-          >
-            {params.row.PositionId}
-          </Box>
+          <Tooltip title={params.value} arrow>
+            <Box
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                },
+              }}
+            >
+              {params.value.slice(0, 6) + "..."}
+            </Box>
+          </Tooltip>
         );
       },
     },

@@ -89,7 +89,7 @@ export default function Page_Company_Interview() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
   const role = useGetRole();
 
   useEffect(() => {
@@ -274,16 +274,18 @@ export default function Page_Company_Interview() {
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
         return (
-          <Box
-            sx={{
-              "&:hover": {
-                cursor: "pointer",
-                textDecoration: "underline",
-              },
-            }}
-          >
-            {params.value}
-          </Box>
+          <Tooltip title={params.value} arrow>
+            <Box
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                },
+              }}
+            >
+              {params.value.slice(0, 6) + "..."}
+            </Box>
+          </Tooltip>
         );
       },
     },
@@ -359,9 +361,27 @@ export default function Page_Company_Interview() {
       headerAlign: "center",
       align: "center",
       renderHeader: () => <span>Shift</span>,
-      width: 80,
+      width: 90,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
+        switch (params.value) {
+          case 8:
+            return "8:00";
+          case 9:
+            return "9:00";
+          case 10:
+            return "10:00";
+          case 11:
+            return "11:00";
+          case 13:
+            return "13:00";
+          case 14:
+            return "14:00";
+          case 15:
+            return "15:00";
+          case 16:
+            return "16:00";
+        }
       },
     },
     {
@@ -531,143 +551,90 @@ export default function Page_Company_Interview() {
             onChange={(event, value) => handleChooseValue(value)}
           />
         </Grid> */}
-          {role !== null && 
-            <Grid item xs={12} md={12}>
-              <Grid container spacing={2}>
-                {role !== "interviewer" &&
-                <>
-                <Grid
-                  item
-                  xs={12}
-                  sm={12}
-                  md={3}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                  }}
-                >
-                  <Autocomplete
-                    disablePortal
-                    id="filter-type"
-                    options={departments}
-                    sx={{ width: "100%" }}
-                    renderInput={(params) => (
-                      <TextField {...params} label="Department..." />
-                    )}
-                    getOptionLabel={(option) => option.departmentName || ""}
-                    renderOption={(props, option) => (
-                      <li {...props} key={option.departmentId}>
-                        {option.departmentName}
-                      </li>
-                    )}
-                    isOptionEqualToValue={(option, value) => {
-                      return option.departmentId === value.departmentId;
-                    }}
-                    value={departmentChoose}
-                    onChange={(event, value) => handleChooseDepartment(value)}
-                  />
-                </Grid>
-                {departmentChoose !== null && (
-                  <Grid
-                    item
-                    xs={12}
-                    sm={12}
-                    md={5}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Autocomplete
-                      disablePortal
-                      id="filter-type"
-                      options={positions}
-                      sx={{ width: "100%" }}
-                      renderInput={(params) => (
-                        <TextField {...params} label="Position..." />
-                      )}
-                      getOptionLabel={(option) => option.PositionName || ""}
-                      renderOption={(props, option) => (
-                        <li {...props} key={option.PositionId}>
-                          {option.PositionId + " - " + option.PositionName}
-                        </li>
-                      )}
-                      isOptionEqualToValue={(option, value) => {
-                        return option.PositionId === value.PositionId;
-                      }}
-                      value={positionChoose}
-                      onChange={(event, value) => handleChoosePosition(value)}
-                    />
-                  </Grid>
-                )}
-                </>
-                }
-                <Grid
-                  item
-                  xs={6}
-                  sm={6}
-                  md={2}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                  }}
-                >
-                  <Autocomplete
-                    disablePortal
-                    id="filter-type"
-                    options={["Not start", "Finished"]}
-                    sx={{ width: { md: 200, sm: "100%", xs: "100%" } }}
-                    renderInput={(params) => (
-                      <TextField {...params} label="Status..." />
-                    )}
-                    renderOption={(props, option) => {
-                      if (option === "Not start") {
-                        return (
-                          <Box
-                            component="li"
-                            {...props}
-                            sx={{
-                              // color: "#E0E0E0",
-                              color: "black.400",
+            {role !== null && (
+              <Grid item xs={12} md={12}>
+                <Grid container spacing={2}>
+                  {role !== "interviewer" && (
+                    <>
+                      <Grid
+                        item
+                        xs={12}
+                        sm={12}
+                        md={3}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Autocomplete
+                          disablePortal
+                          id="filter-type"
+                          options={departments}
+                          sx={{ width: "100%" }}
+                          renderInput={(params) => (
+                            <TextField {...params} label="Department..." />
+                          )}
+                          getOptionLabel={(option) =>
+                            option.departmentName || ""
+                          }
+                          renderOption={(props, option) => (
+                            <li {...props} key={option.departmentId}>
+                              {option.departmentName}
+                            </li>
+                          )}
+                          isOptionEqualToValue={(option, value) => {
+                            return option.departmentId === value.departmentId;
+                          }}
+                          value={departmentChoose}
+                          onChange={(event, value) =>
+                            handleChooseDepartment(value)
+                          }
+                        />
+                      </Grid>
+                      {departmentChoose !== null && (
+                        <Grid
+                          item
+                          xs={12}
+                          sm={12}
+                          md={5}
+                          sx={{
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Autocomplete
+                            disablePortal
+                            id="filter-type"
+                            options={positions}
+                            sx={{ width: "100%" }}
+                            renderInput={(params) => (
+                              <TextField {...params} label="Position..." />
+                            )}
+                            getOptionLabel={(option) =>
+                              option.PositionName || ""
+                            }
+                            renderOption={(props, option) => (
+                              <li {...props} key={option.PositionId}>
+                                {option.PositionId.slice(0, 6) +
+                                  "..." +
+                                  " - " +
+                                  option.PositionName}
+                              </li>
+                            )}
+                            isOptionEqualToValue={(option, value) => {
+                              return option.PositionId === value.PositionId;
                             }}
-                          >
-                            <EventNoteRounded
-                              sx={{
-                                color: "black.400",
-                                marginRight: 1,
-                              }}
-                            />
-                            Not start
-                          </Box>
-                        );
-                      } else {
-                        return (
-                          <Box
-                            component="li"
-                            {...props}
-                            sx={{
-                              color: "#1565C0",
-                            }}
-                          >
-                            <SportsScoreRounded
-                              sx={{
-                                color: "#1565C0",
-                                marginRight: 1,
-                              }}
-                            />
-                            Finished
-                          </Box>
-                        );
-                      }
-                    }}
-                    value={statusChoose}
-                    onChange={(event, value) => handleChooseStatus(value)}
-                  />
-                </Grid>
-                {statusChoose === "Finished" && (
+                            value={positionChoose}
+                            onChange={(event, value) =>
+                              handleChoosePosition(value)
+                            }
+                          />
+                        </Grid>
+                      )}
+                    </>
+                  )}
                   <Grid
                     item
                     xs={6}
@@ -681,47 +648,30 @@ export default function Page_Company_Interview() {
                   >
                     <Autocomplete
                       disablePortal
-                      id="filter-type3"
-                      options={["Pending", "Passed", "Failed"]}
-                      sx={{ width: "100%" }}
+                      id="filter-type"
+                      options={["Not start", "Finished"]}
+                      sx={{ width: { md: 200, sm: "100%", xs: "100%" } }}
                       renderInput={(params) => (
-                        <TextField {...params} label="Result..." />
+                        <TextField {...params} label="Status..." />
                       )}
                       renderOption={(props, option) => {
-                        if (option === "Pending") {
+                        if (option === "Not start") {
                           return (
                             <Box
                               component="li"
                               {...props}
                               sx={{
+                                // color: "#E0E0E0",
                                 color: "black.400",
                               }}
                             >
-                              <MoreHorizRounded
+                              <EventNoteRounded
                                 sx={{
                                   color: "black.400",
                                   marginRight: 1,
                                 }}
                               />
-                              Pending
-                            </Box>
-                          );
-                        } else if (option === "Passed") {
-                          return (
-                            <Box
-                              component="li"
-                              {...props}
-                              sx={{
-                                color: "#008631",
-                              }}
-                            >
-                              <DoneRounded
-                                sx={{
-                                  color: "#008631",
-                                  marginRight: 1,
-                                }}
-                              />
-                              Passed
+                              Not start
                             </Box>
                           );
                         } else {
@@ -730,28 +680,109 @@ export default function Page_Company_Interview() {
                               component="li"
                               {...props}
                               sx={{
-                                color: "#cc3300",
+                                color: "#1565C0",
                               }}
                             >
-                              <CloseRounded
+                              <SportsScoreRounded
                                 sx={{
-                                  color: "#cc3300",
+                                  color: "#1565C0",
                                   marginRight: 1,
                                 }}
                               />
-                              Failed
+                              Finished
                             </Box>
                           );
                         }
                       }}
-                      value={priorityChoose}
-                      onChange={(event, value) => handleChooseResult(value)}
+                      value={statusChoose}
+                      onChange={(event, value) => handleChooseStatus(value)}
                     />
                   </Grid>
-                )}
+                  {statusChoose === "Finished" && (
+                    <Grid
+                      item
+                      xs={6}
+                      sm={6}
+                      md={2}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Autocomplete
+                        disablePortal
+                        id="filter-type3"
+                        options={["Pending", "Passed", "Failed"]}
+                        sx={{ width: "100%" }}
+                        renderInput={(params) => (
+                          <TextField {...params} label="Result..." />
+                        )}
+                        renderOption={(props, option) => {
+                          if (option === "Pending") {
+                            return (
+                              <Box
+                                component="li"
+                                {...props}
+                                sx={{
+                                  color: "black.400",
+                                }}
+                              >
+                                <MoreHorizRounded
+                                  sx={{
+                                    color: "black.400",
+                                    marginRight: 1,
+                                  }}
+                                />
+                                Pending
+                              </Box>
+                            );
+                          } else if (option === "Passed") {
+                            return (
+                              <Box
+                                component="li"
+                                {...props}
+                                sx={{
+                                  color: "#008631",
+                                }}
+                              >
+                                <DoneRounded
+                                  sx={{
+                                    color: "#008631",
+                                    marginRight: 1,
+                                  }}
+                                />
+                                Passed
+                              </Box>
+                            );
+                          } else {
+                            return (
+                              <Box
+                                component="li"
+                                {...props}
+                                sx={{
+                                  color: "#cc3300",
+                                }}
+                              >
+                                <CloseRounded
+                                  sx={{
+                                    color: "#cc3300",
+                                    marginRight: 1,
+                                  }}
+                                />
+                                Failed
+                              </Box>
+                            );
+                          }
+                        }}
+                        value={priorityChoose}
+                        onChange={(event, value) => handleChooseResult(value)}
+                      />
+                    </Grid>
+                  )}
+                </Grid>
               </Grid>
-            </Grid>
-          }
+            )}
 
             {/* <Grid
           item
@@ -790,7 +821,7 @@ export default function Page_Company_Interview() {
         </Grid> */}
           </Grid>
 
-          {(rows !== null && role !== null) ? (
+          {rows !== null && role !== null ? (
             <Box
               sx={{
                 minHeight: 350,
