@@ -25,7 +25,7 @@ function* getAllApplicationCandidate(action) {
         cvid: item.cv.cvid,
         positionId: item.position.positionId,
         dateTime: item.dateTime,
-        Status: item.company_Status,
+        Status: item.candidate_Status,
         priority: item.priority,
       }));
       console.log("trànormdata",transformedData)
