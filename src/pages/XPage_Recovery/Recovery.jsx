@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Grid,
@@ -14,17 +14,16 @@ import {
   Stack
 } from "@mui/material";
 
-import imageBackground from "../../assets/img/background.jpg";
 import { alpha } from "@mui/material/styles";
 import { MailOutline } from "@mui/icons-material";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import HomeIcon from '@mui/icons-material/Home';
 
-
-// const style = {
-//   marginTop: "15px",
-//   marginBottom: "15px",
-// };
+import imageBg1 from "../../assets/img/background1.png";
+import imageBg2 from "../../assets/img/background2.png";
+import imageBg3 from "../../assets/img/background3.png";
+// import imageBg4 from "../../assets/img/background4.png";
+// import imageBg5 from "../../assets/img/background5.png";
 
 const theme = createTheme({
   palette: {
@@ -34,13 +33,28 @@ const theme = createTheme({
   },
 });
 
-
+const images = [imageBg1, imageBg2, imageBg3]
 
 const Recovery = (props) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if(currentIndex === images.length - 1) {
+        setCurrentIndex(0);
+      } 
+      else {
+        setCurrentIndex(currentIndex + 1);
+      }
+    }, 6000)
+    
+    return () => clearInterval(intervalId);
+  }, [currentIndex])
+
   return (
     <Box
       sx={{
-        backgroundImage: `url(${imageBackground})`,
+        backgroundImage: `url(${images[currentIndex]})`,
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
@@ -264,7 +278,7 @@ const Recovery = (props) => {
                         sx={{
                           height: "40px",
                           color: "white",
-                          borderRadius: "20px",
+                          borderRadius: "10px",
                           fontSize: "1em",
                           fontWeight: 600,
                           width: "90%",
@@ -291,10 +305,15 @@ const Recovery = (props) => {
                   >
                     <Typography variant="small" sx={{ color: "black" }}>
                       <Typography
-                        component={Link}
-                        to="/login"
+                        // component={Link}
+                        // to="/login"
+                        onClick={props.handleClickLogin}
                         variant="small"
-                        sx={{ color: "black" }}
+                        sx={{ 
+                          color: "black",
+                          cursor: 'pointer',
+                          textDecoration: "underline", 
+                        }}
                       >
                         Back to sign in
                       </Typography>

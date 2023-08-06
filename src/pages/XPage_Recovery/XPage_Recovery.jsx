@@ -29,6 +29,7 @@ const XPage_Recovery = () => {
 
   const [errorSnackbar, setErrorSnackbar] = useState(false);
   const [errorResetSnackbar, setErrorResetSnackbar] = useState(false);
+  const [successSnackbar, setSuccessSnackbar] = useState(false);
   const [message, setMessage] = useState("");
 
   const [loading, setLoading] = useState(false)
@@ -45,6 +46,14 @@ const XPage_Recovery = () => {
     navigate("/home");
   };
 
+  const handleClickLogin = () => {
+    dispatch({
+      type: "error/setError",
+      payload: { status: "idle", message: "" },
+    });
+    navigate("/login");
+  }
+
   useEffect(() => {
     if (newError.status === "no") {
       if (!isEmailValid) {
@@ -56,11 +65,14 @@ const XPage_Recovery = () => {
         setIsEmailValid(true);
       } else {
         setLoading(false)
-        dispatch({
-          type: "error/setError",
-          payload: { status: "idle", message: "" },
-        });
-        navigate("/login");
+        setSuccessSnackbar(true);
+        setTimeout(() => {
+          dispatch({
+            type: "error/setError",
+            payload: { status: "idle", message: "" },
+          });
+          navigate("/login");
+        }, 2000);
       }
     }
     if (newError.status === "yes") {
@@ -172,24 +184,6 @@ const XPage_Recovery = () => {
         //setConfirmPassword("");
       }
     }
-
-
-    // if (!validNewPassword || newPassword == "" || confirmPassword == "") {
-    //   setNewPassword("");
-    //   setConfirmPassword("");
-    // } else {
-    //   if (newPassword !== confirmPassword) {
-    //     setMessage("Passwords do not match");
-    //     setErrorResetSnackbar(true);
-    //     //setNewPassword("");
-    //     setConfirmPassword("");
-    //   } else {
-    //     dispatch({
-    //       type: "saga/userResetPassword",
-    //       payload: { email, otp, newPassword },
-    //     });
-    //   }
-    // }
   };
 
   return (
@@ -202,6 +196,7 @@ const XPage_Recovery = () => {
           validEmail={validEmail}
           loading={loading}
           handleClickHome={handleClickHome}
+          handleClickLogin={handleClickLogin}
         />
       ) : (
         <>
@@ -241,6 +236,17 @@ const XPage_Recovery = () => {
       >
         <Alert severity="error" onClose={() => setErrorResetSnackbar(false)}>
           {message}
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={successSnackbar}
+        autoHideDuration={2000}
+        onClose={() => setSuccessSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert severity="success" onClose={() => setSuccessSnackbar(false)}>
+          Password reset successful
         </Alert>
       </Snackbar>
     </>

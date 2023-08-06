@@ -25,19 +25,16 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import imageBackground from "../../assets/img/background.jpg";
-//import videoBg from "./nightwall.webm";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
+import imageBg1 from "../../assets/img/background1.png";
+import imageBg2 from "../../assets/img/background2.png";
+import imageBg3 from "../../assets/img/background3.png";
+// import imageBg4 from "../../assets/img/background4.png";
+// import imageBg5 from "../../assets/img/background5.png";
+
 import HomeIcon from '@mui/icons-material/Home';
 
 import CircularProgress from "@mui/material/CircularProgress";
-
-//import ErrorIcon from '@mui/icons-material/Error';
-
-// const style = {
-//   marginTop: "15px",
-//   marginBottom: "15px",
-// };bg
 
 const theme = createTheme({
   palette: {
@@ -47,11 +44,11 @@ const theme = createTheme({
   },
 });
 
-const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+// const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+const images = [imageBg1, imageBg2, imageBg3]
 
 const XPage_Login = () => {
   const navigate = useNavigate();
-  // const history = useHistory();
   const [username, setUsername] = useState("");
   const [validUsername, setValidUsername] = useState(true);
   const [password, setPassword] = useState("");
@@ -60,9 +57,25 @@ const XPage_Login = () => {
   const [check, setCheck] = useState(false);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
   const [loading, setLoading] = useState(false)
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   const dispatch = useDispatch();
 
   const newError = useSelector((state) => state.error);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if(currentIndex === images.length - 1) {
+        setCurrentIndex(0);
+      } 
+      else {
+        setCurrentIndex(currentIndex + 1);
+      }
+    }, 6000)
+    
+    return () => clearInterval(intervalId);
+  }, [currentIndex])
 
   useEffect(() => {
     if (newError.status === "no") {
@@ -74,14 +87,10 @@ const XPage_Login = () => {
       const previousPage = sessionStorage.getItem("previousPage") || "/home";
       sessionStorage.removeItem("previousPage");
       navigate(previousPage);
-
-      // navigate("/home");
     }
     if (newError.status === "yes") {
       setLoading(false)
       setErrorSnackbar(true);
-      //setUsername("");
-      //setPassword("");
       setTimeout(() => {
         setErrorSnackbar(false);
         dispatch({
@@ -172,14 +181,13 @@ const XPage_Login = () => {
   return (
     <Box
       sx={{
-        backgroundImage: `url(${imageBackground})`,
+        backgroundImage: `url(${images[currentIndex]})`,
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         width: "100vw",
         height: "100vh",
         display: "flex",
-        //flexDirection: 'column',
         justifyContent: "center",
         alignItems: "center",
       }}
@@ -187,7 +195,6 @@ const XPage_Login = () => {
       <Stack>
       <Box 
         sx={{
-          //backgroundColor: 'red',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -195,8 +202,6 @@ const XPage_Login = () => {
         }}
       >
         <Typography 
-          // color="white"
-          // fontWeight="300"
           onClick={handleClickHome}
           sx={{
             color: 'white',
@@ -209,7 +214,6 @@ const XPage_Login = () => {
         <HomeIcon 
           onClick={handleClickHome}
           sx={{
-            //textDecoration: "none",
             color: 'white',
             cursor: 'pointer',
             marginLeft: '3px'
@@ -261,7 +265,7 @@ const XPage_Login = () => {
                   //marginBottom: "5px",
                 }}
               >
-                Sign In
+                Log In
               </Typography>
 
               <Grid
@@ -558,13 +562,13 @@ const XPage_Login = () => {
                       sx={{
                         height: "40px",
                         color: "white",
-                        borderRadius: "17.5px",
+                        borderRadius: "10px",
                         fontSize: "1em",
                         fontWeight: 600,
                         width: "90%",
                       }}
                     >
-                      Sign in
+                      Log in
                     </Button>}
                   {/* <CircularProgress /> */}
                 </Grid>

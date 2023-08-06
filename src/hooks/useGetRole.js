@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import host from "../redux/host";
-//import { useLayoutEffect } from "react";
+// import host from "../redux/host";
 // -------------------README !!!---------------------------
 // Hook này có thể trả về 1 trong 5 giá trị:
 // - "admin"
@@ -16,9 +15,7 @@ import host from "../redux/host";
 
 function useGetRole() {
     const userlocal = useSelector(state => state.user)
-    //console.log("userLocal: ", userlocal)
     const dispatch = useDispatch()
-    // const userlocal = JSON.parse(window.localStorage.getItem("user"))
     const [role, setRole] = useState(null)
     useEffect(() => {
         if (userlocal) {
@@ -28,7 +25,6 @@ function useGetRole() {
             }
 
             axios.get('https://leetun2k2-001-site1.gtempurl.com/api/Authentication/GetRole', config).then(response => {
-                console.log("response is: ", response.data)
                 if (response.data == "Admin") {
                     setRole("admin")
                 }
@@ -42,7 +38,6 @@ function useGetRole() {
                     setRole("candidate")
                 }
                 else {
-                    //console.log("set null 1")
                     setRole(null)
                 }
             }).catch(error => {
@@ -51,7 +46,6 @@ function useGetRole() {
             });
         }
         else {
-            //console.log("set null 2")
             setRole(null)
         }
 
@@ -60,58 +54,6 @@ function useGetRole() {
 }
 
 export default useGetRole
-
-
-// function useGetRole() {
-//     const user = useSelector(state => state.user)
-//     const [role, setRole] = useState(null)
-//     useEffect(() => {
-//         if (user) {
-//             // -----------------------------------------------------------
-//             let api = ""
-//             if (user.token == "hentai.jav.admin") {
-//                 api = `${host.name}/data/roleAdmin.json`
-//             }
-//             else if (user.token == "hentai.jav.recruiter") {
-//                 api = `${host.name}/data/roleRecruiter.json`
-//             }
-//             else if (user.token == "hentai.jav.interviewer") {
-//                 api = `${host.name}/data/roleInterviewer.json`
-//             }
-//             else if (user.token == "hentai.jav.candidate") {
-//                 api = `${host.name}/data/roleCandidate.json`
-//             }
-//             // -----------------------------------------------------------
-//             let token = `Bearer ${user.token}`
-//             const config = {
-//                 headers: { Authorization: token },
-//             }
-//             axios.get(api, config).then(response => {
-//                 if (response.data.roleName == "admin") {
-//                     setRole("admin")
-//                 }
-//                 else if (response.data.roleName == "recruiter") {
-//                     setRole("recruiter")
-//                 }
-//                 else if (response.data.roleName == "interviewer") {
-//                     setRole("interviewer")
-//                 }
-//                 else if (response.data.roleName == "candidate") {
-//                     setRole("candidate")
-//                 }
-//                 else {
-//                     setRole(null)
-//                 }
-//             })
-//         }
-//         else {
-//             setRole(null)
-//         }
-//     }, [user])
-//     return role
-// }
-
-// export default useGetRole
 
 
 
