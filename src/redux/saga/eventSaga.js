@@ -95,7 +95,11 @@ function* getEventListWithFilter(action) {
         headers: { Authorization: action.payload.token },
       }
     );
-    // --- Get Recruiter name
+    
+    const response1 = yield call(
+      axios.get,
+      `${host.name}/data/image.json`
+    );
 
     // --- Filter and format
     const candidatesEvent = yield call(
@@ -105,7 +109,8 @@ function* getEventListWithFilter(action) {
         headers: { Authorization: action.payload.token },
       }
     );
-    const draft = formatEventList(response.data, candidatesEvent.data);
+
+    const draft = formatEventList(response.data, candidatesEvent.data, response1.data, host.name);
     const data = filterEventList(draft, action.payload);
     yield put({ type: "eventList/setEventList", payload: data });
     yield put({ type: "loading/offLoading" });
@@ -117,6 +122,7 @@ function* getEventListWithFilter(action) {
     //   },
     // });
   } catch (error) {
+    console.log(error)
     yield put({ type: "loading/offLoading" });
     // yield put({
     //   type: "error/setError",
