@@ -105,15 +105,15 @@ export default function ReportDataGrid(props) {
           },
         }}
         getRowId={(row) => row.InterviewId}
-        // onCellClick={(params, event) => {
-        //   if (params.field === "InterviewerName") {
-        //     props.handleInterviewerClick(params.row.InterviewerId);
-        //   } else if (params.field === "CandidateName") {
-        //     props.handleCandidateClick(params.row.CandidateId);
-        //   } else {
-        //     props.handleDetailClick(params.row.InterviewId);
-        //   }
-        // }}
+        onCellClick={(params, event) => {
+          if (params.field === "InterviewerName") {
+            props.handleInterviewerClick(params.row.InterviewerUserId);
+          } else if (params.field === "CandidateName") {
+            props.handleCandidateClick(params.row.CandidateUserId);
+          } else {
+            props.handleDetailClick(params.row.InterviewId);
+          }
+        }}
       />
     </Box>
   );

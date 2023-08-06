@@ -1,5 +1,5 @@
-function roundToTwo(num) {    
-  return +(Math.round(num + "e+2")  + "e-2");
+function roundToTwo(num) {
+  return +(Math.round(num + "e+2") + "e-2");
 }
 
 function getMedian(arr) {
@@ -55,10 +55,12 @@ export function reportStatistic(input) {
   let langScore = [];
   let softScore = [];
   for (let i = 0; i < input.length; i++) {
-    generalScore.push(input[i].Score);
-    techScore.push(input[i].TechnologyScore);
-    langScore.push(input[i].LanguageScore);
-    softScore.push(input[i].SoftSkillScore);
+    if (input[i].Status === "Finished") {
+      generalScore.push(input[i].Score);
+      techScore.push(input[i].TechnologyScore);
+      langScore.push(input[i].LanguageScore);
+      softScore.push(input[i].SoftSkillScore);
+    }
   }
   const generalMean = getMean(generalScore);
   const generalMedian = getMedian(generalScore);

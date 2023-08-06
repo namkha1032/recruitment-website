@@ -175,11 +175,11 @@ export default function Page_Company_Recruitment_Id_Report(props) {
   }
 
   function handleCandidateClick(value) {
-    navigate(`/profile/${value}`);
+    window.open(`/profile/${value}`);
   }
 
   function handleInterviewerClick(value) {
-    navigate(`/profile/${value}`);
+    window.open(`/profile/${value}`);
   }
 
   const columns = useMemo(() => [
@@ -203,7 +203,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
                 },
               }}
             >
-              {params.value.slice(0, 6)}
+              {params.value.slice(0, 4) + "..."}
             </Box>
           </Tooltip>
         );
@@ -243,7 +243,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       flex: 0.3,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
-        return formatToDate(params.value)
+        return formatToDate(params.value);
       },
     },
     {
@@ -280,7 +280,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       flex: 0.3,
       renderCell: (params) => {
         if (params.value === undefined) return NullString();
-        return formatDate(params.value)
+        return formatDate(params.value);
       },
     },
     {
@@ -479,7 +479,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
             </Box>
           )}
 
-          {tabValue === "1" && (
+          {tabValue === "1" && rows !== null && (
             <Box>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={8}>
@@ -558,6 +558,104 @@ export default function Page_Company_Recruitment_Id_Report(props) {
                     Median={data.softskill.softMedian}
                     Mode={data.softskill.softMode}
                   />
+                </Grid>
+              </Grid>
+            </Box>
+          )}
+
+          {tabValue === "1" && rows === null && (
+            <Box>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={12}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: 50,
+                    }}
+                  >
+                    <CircularProgress
+                      sx={{
+                        color: "black",
+                      }}
+                    />
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Divider
+                    sx={{
+                      borderColor: "gray.100",
+                    }}
+                  ></Divider>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: 50,
+                    }}
+                  >
+                    <CircularProgress
+                      sx={{
+                        color: "black",
+                      }}
+                    />
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Divider
+                    sx={{
+                      borderColor: "gray.100",
+                    }}
+                  ></Divider>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: 50,
+                    }}
+                  >
+                    <CircularProgress
+                      sx={{
+                        color: "black",
+                      }}
+                    />
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Divider
+                    sx={{
+                      borderColor: "gray.100",
+                    }}
+                  ></Divider>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: 50,
+                    }}
+                  >
+                    <CircularProgress
+                      sx={{
+                        color: "black",
+                      }}
+                    />
+                  </Box>
                 </Grid>
               </Grid>
             </Box>
