@@ -98,7 +98,7 @@ function* getEventListWithFilter(action) {
     
     const response1 = yield call(
       axios.get,
-      `${host.name}/data/image.json`
+      `/data/image.json`
     );
 
     // --- Filter and format
@@ -110,7 +110,7 @@ function* getEventListWithFilter(action) {
       }
     );
 
-    const draft = formatEventList(response.data, candidatesEvent.data, response1.data, host.name);
+    const draft = formatEventList(response.data, candidatesEvent.data, response1.data);
     const data = filterEventList(draft, action.payload);
     yield put({ type: "eventList/setEventList", payload: data });
     yield put({ type: "loading/offLoading" });
