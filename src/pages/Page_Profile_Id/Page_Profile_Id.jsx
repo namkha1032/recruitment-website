@@ -14,7 +14,7 @@ const Profile = () => {
   const {profileid} = useParams()
   useEffect(() => {
     dispatch({type:'profileSaga/getProfile',payload:{token:user.token,userid:profileid}})
-  },[])
+  },[profileid])
   console.log(profile)
   return (
   user && profile ? profile==='none' ? <MissingPage/> :

@@ -63,6 +63,7 @@ const ProfileChangePW = () => {
   const dispatch = useDispatch();
 
   const newError = useSelector((state) => state.error);
+  const profileId = useSelector((state) => state.user.userid);
 
   useEffect(() => {
     if (newError.status === "no") {
@@ -73,7 +74,7 @@ const ProfileChangePW = () => {
           type: "error/setError",
           payload: { status: "idle", message: "" },
         });
-        navigate("/profile/:profileid");
+        navigate(`/profile/${profileId}`);
       }, 1000);
     }
     if (newError.status === "yes") {
@@ -87,7 +88,7 @@ const ProfileChangePW = () => {
         });
       }, 5000);
     }
-  }, [newError]);
+  }, [newError, profileId]);
 
   const handleUsernameChange = (event) => {
     let value = event.target.value;
