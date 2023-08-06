@@ -31,6 +31,7 @@ const PositionSkeleton = () => {
               justifyContent: "center",
               alignItems: "center",
               marginBottom: "32px",
+              
             }}
           >
             <Box sx={{ width: "100%" }}>
@@ -41,7 +42,7 @@ const PositionSkeleton = () => {
                   xs={12}
                   justifyContent="center"
                   alignItems="center"
-                  sx={{ marginTop: "30px" }}
+                  sx={{ marginTop: "30px",width:"100%" }}
                 >
                   <Box sx={{ width: "80%" }}>
                     <Grid item xs={12}>
