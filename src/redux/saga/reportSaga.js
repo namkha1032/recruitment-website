@@ -4,6 +4,10 @@ import host from "../host";
 import { delay } from "../../utils/delay";
 import { formatReport } from "../../utils/formatReport";
 
+// payload: {
+//  positionId: positionId,
+//  token: `Bearer ${user.token}`,
+// }
 function* getReport(action) {
   //http://leetun2k2-001-site1.gtempurl.com/api/Skill
   //http://localhost:3000/data/skillList.json
@@ -34,8 +38,9 @@ function* getReport(action) {
         headers: { Authorization: action.payload.token },
       }
     );
-
-    const data = yield call(formatReport, response.data, categorys.data)
+    // Filter
+    const data_draft = response.data.filter(element => element.application.position.positionId === action.payload.positionId)
+    const data = yield call(formatReport, data_draft, categorys.data)
     yield put({ type: "report/setReport", payload: data });
     yield put({ type: "loading/offLoading" });
     // yield put({
@@ -46,6 +51,7 @@ function* getReport(action) {
     //   },
     // });
   } catch (error) {
+    console.log(error)
     yield put({ type: "loading/offLoading" });
     // yield put({
     //   type: "error/setError",

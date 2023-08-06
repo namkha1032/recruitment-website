@@ -9,6 +9,10 @@ import {
   Chip,
   IconButton,
 } from "@mui/material";
+import {
+  NoRowsOverlay,
+  NoResultsOverlay,
+} from "../../components/DataRick/DataRick";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import TableViewIcon from "@mui/icons-material/TableView";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
@@ -69,7 +73,11 @@ export default function ReportDataGrid(props) {
             color: "black",
           },
         }}
-        slots={{ toolbar: GridToolbar }}
+        slots={{
+          toolbar: GridToolbar,
+          noRowsOverlay: NoRowsOverlay,
+          noResultsOverlay: NoResultsOverlay,
+        }}
         slotProps={{
           // pagination: {
           //   labelRowsPerPage: "Số lượng hiển thị",

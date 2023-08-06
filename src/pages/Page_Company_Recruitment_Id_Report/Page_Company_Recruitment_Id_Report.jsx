@@ -12,6 +12,10 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
+import {
+  NoRowsOverlay,
+  NoResultsOverlay,
+} from "../../components/DataRick/DataRick";
 import TableViewIcon from "@mui/icons-material/TableView";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";

@@ -27,6 +27,9 @@ function getMean(arr) {
 }
 
 function getMode(arr) {
+  if (arr.length === 0) {
+    return;
+  }
   const mode = {};
   let max = 0,
     count = 0;
