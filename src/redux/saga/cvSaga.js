@@ -56,7 +56,7 @@ function* getCvList(action) {
         console.log('id', cvlist.data);
         console.log('payload', action.payload);
         // const reponse1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/GetCandidateCvs`) 
-        // const reponse = yield call(axios.get, `${host.name}/data/CVList.json`)
+        // const reponse = yield call(axios.get, `/data/CVList.json`)
         // const reponse = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv`)
         yield put({ type: 'cvlist/setCvList', payload: cvlist.data })
     } catch (error) {

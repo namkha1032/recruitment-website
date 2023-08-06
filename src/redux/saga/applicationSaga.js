@@ -22,7 +22,7 @@ function* getApplication(action) {
                 Authorization: action.payload.token,
             }
         };
-        // const reponse = yield call(axios.get, `${host.name}/data/applicationList.json`)
+        // const reponse = yield call(axios.get, `/data/applicationList.json`)
         const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${action.payload.recruitmentid}`, config)
         const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`, config)
         const responseCandidateList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`, config)

@@ -55,7 +55,7 @@ function* getCvinfor(action) {
       payload: newCert,
     });
     //   try {
-    //     const response1 = yield call(axios.get, `${host.name}/data/cvinfor.json`);
+    //     const response1 = yield call(axios.get, `/data/cvinfor.json`);
     //     const cv = response1.data;
 
     //     yield put({ type: "cvInfor/setCvInfor", payload: cv });

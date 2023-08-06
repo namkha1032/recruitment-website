@@ -14,7 +14,7 @@ function* getRoom(action) {
     //     newList = newList.concat(newObj)
     // }
     // yield put({ type: "room/setRoom", payload: newList })
-    const responsefake = yield call(axios.get, `${host.name}/data/roomlist.json`)
+    const responsefake = yield call(axios.get, `/data/roomlist.json`)
     yield put({ type: "room/setRoom", payload: responsefake.data })
 }
 

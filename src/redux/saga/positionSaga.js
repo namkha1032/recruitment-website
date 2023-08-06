@@ -8,11 +8,11 @@ import { filterPositionList } from "../../utils/filterPositionList";
 function* getPositionList(action) {
   console.log("Get All Position");
   // yield call(delay, 1500)
-  // const response = yield call(axios.get, `${host.name}/data/positionList.json`)
+  // const response = yield call(axios.get, `/data/positionList.json`)
   try {
     yield put({ type: "loading/onLoading" });
-    // const response = yield call(axios.get, `${host.name}/data/positionList.json`)
-    // const response = yield call(axios.get, `${host.name}/data/positionList.json`)
+    // const response = yield call(axios.get, `/data/positionList.json`)
+    // const response = yield call(axios.get, `/data/positionList.json`)
     // yield put({ type: "positionList/setPositionList", payload: response.data });
     let response
     if (action.payload) {
@@ -68,7 +68,7 @@ function* getPositionListWithFilter(action) {
   console.log("Filter by: ", action.payload);
   try {
     yield put({ type: "loading/onLoading" });
-    // const response = yield call(axios.get, `${host.name}/data/positionListD.json`)
+    // const response = yield call(axios.get, `/data/positionListD.json`)
     // yield put({ type: "positionList/setPositionList", payload: response.data });
 
     const response = yield call(
@@ -196,7 +196,7 @@ function* getPosition(action) {
     // yield put({ type: 'skill/setSkill', payload: mainskill })
     // yield put({ type: 'language/setLanguage', payload: response2.data })
     // yield put({ type: 'department/setDepartment', payload: department })
-    // const response1 = yield call(axios.get, `${host.name}/data/detailposition.json`)
+    // const response1 = yield call(axios.get, `/data/detailposition.json`)
     
     
 
@@ -235,7 +235,7 @@ function* getPosition(action) {
 
 
 // function* getDetailPosition(action){
-//     const reponse = yield call(axios.get, `http://localhost:3001/positions?PositionId=${action.payload}`)
+//     const reponse = yield call(axios.get, `/positions?PositionId=${action.payload}`)
 //     yield put({ type: 'detail/setDetail', payload: reponse.data})
 // }
 

@@ -11,7 +11,7 @@ function* getEventList(action) {
   try {
     yield put({ type: "loading/onLoading" });
     // yield call(delay, 1500)
-    // const response = yield call(axios.get, `${host.name}/data/eventList.json`)
+    // const response = yield call(axios.get, `/data/eventList.json`)
     const response = yield call(
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/Event",
@@ -21,7 +21,7 @@ function* getEventList(action) {
     );
     const response1 = yield call(
       axios.get,
-      `${host.name}/data/image.json`
+      `/data/image.json`
     );
     // const response = yield call(
     //   axios.get,
@@ -39,7 +39,7 @@ function* getEventList(action) {
         headers: { Authorization: action.payload.token },
       }
     );
-    const data = formatEventList(response.data, candidatesEvent.data,response1.data,host.name);
+    const data = formatEventList(response.data, candidatesEvent.data,response1.data);
     yield put({ type: "eventList/setEventList", payload: data });
     yield put({ type: "loading/offLoading" });
     // yield put({
@@ -63,17 +63,17 @@ function* getEventList(action) {
 function* getEventFooter() {
   try {
     yield put({ type: "loading/onLoading" });
-    // const response = yield call(axios.get, `${host.name}/data/eventList.json`)
+    // const response = yield call(axios.get, `/data/eventList.json`)
     const response = yield call(
       axios.get,
       "https://leetun2k2-001-site1.gtempurl.com/api/Event"
     );
     const response1 = yield call(
       axios.get,
-      `${host.name}/data/image.json`
+      `/data/image.json`
     );
     console.log("-------------------------------------------");
-    const data = formatEventFooter(response.data,response1.data,host.name);
+    const data = formatEventFooter(response.data,response1.data);
     console.log(data);
     console.log("-------------------------------------------");
     yield put({ type: "eventFooter/setEventFooter", payload: data });
@@ -140,7 +140,7 @@ function* getEvent(action) {
 
     // // ----------------------------------------
     // // FAKE API FOR BACKEND
-    // const response = yield call(axios.get, `${host.name}/data/eventid.json`)
+    // const response = yield call(axios.get, `/data/eventid.json`)
     // // ----------------------------------------
 
     console.log("res: ", response.data);
@@ -174,7 +174,7 @@ function* getEvent(action) {
 
 function* getAllCandidateOfEvent(action) {
   // console.log("eid: ", action.payload)
-  // const response = yield call(axios.get, `${host.name}/data/candidateJoinEvent.json`)
+  // const response = yield call(axios.get, `/data/candidateJoinEvent.json`)
   // console.log("res: ", response.data)
   // yield put({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: response.data })
   console.log("EventId: ", action.payload.eventid)

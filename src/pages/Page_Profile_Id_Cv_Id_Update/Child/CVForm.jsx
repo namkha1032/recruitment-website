@@ -194,9 +194,9 @@ function CVForm(prop) {
   const [languageName, setLanguageName] = useState("");
   const [lInputValue, setLInputValue] = useState("");
   // pdf form
-  const [pdfFile, setPdfFile] = useState(`http://localhost:3000/data/CA.pdf`);
-  const [viewPdf, setViewPdf] = useState(`http://localhost:3000/data/CA.pdf`);
-  const [pdf, setPdf] = useState(`http://localhost:3000/data/CA.pdf`);
+  const [pdfFile, setPdfFile] = useState(`/data/CA.pdf`);
+  const [viewPdf, setViewPdf] = useState(`/data/CA.pdf`);
+  const [pdf, setPdf] = useState(`/data/CA.pdf`);
   //FUNCTION
   function handleTitle(e) {
     setTitle(e.target.value);

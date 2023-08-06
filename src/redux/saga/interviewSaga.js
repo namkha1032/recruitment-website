@@ -110,7 +110,7 @@ function* getUpcomingInterview(action) {
   try {
     const response = yield call(
       axios.get,
-      `${host.name}/data/interviewlist.json`
+      `/data/interviewlist.json`
     );
     yield put({ type: "interview/setInterview", payload: response.data });
   } catch (error) {
@@ -282,11 +282,11 @@ function* getInterviewResult(action) {
   catch (error) {
     console.log("error: ", error)
   }
-  // const response = yield call(axios.get, `${host.name}/data/interviewid.json`);
+  // const response = yield call(axios.get, `/data/interviewid.json`);
 }
 
 function* scoreInterview(action) {
-  // const abc = yield call(axios.post, "http://localhost:3001/api/interview", action.payload)
+  // const abc = yield call(axios.post, "/api/interview", action.payload)
   try {
     let token = `Bearer ${action.payload.token}`
     const config = {
@@ -525,7 +525,7 @@ function* getQuestionsForStartingIntervew(action) {
 
   // const responsefake = yield call(
   //   axios.get,
-  //   `${host.name}/data/questionlist.json`
+  //   `/data/questionlist.json`
   // );
   // yield put({
   //   type: "question/setInterviewQuestion",
