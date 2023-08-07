@@ -55,18 +55,24 @@ function* createCv(action) {
     // );
     // console.log(response);
     /////////////////////////////////////////////////////////////////////
+    console.log('12233')
     const response = yield call(
         axios.post,
         `https://leetun2k2-001-site1.gtempurl.com/api/Cv`,
         {
-          candidateId:"daa3769b-5dd9-47f7-97de-f97e4e705971",
+          candidateId:"bf02c9a4-17fb-47e0-a930-6f409f41e54",
           experience: Experience,
           cvPdf:"",
           cvName:CvName,
           introduction:Introduction,
           education:Education,
           isDeleted:false,
-          skills:updatedSkills,
+          skills:[{experienceYear
+            : 
+            2,
+            skillId
+            : 
+            "c5d67ab3-39d6-4116-bbda-6e3e56d3bc52"}],
           certificates:updatedCertificates
         }
       );

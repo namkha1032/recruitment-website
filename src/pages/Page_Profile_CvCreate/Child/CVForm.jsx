@@ -228,6 +228,7 @@ function CVForm() {
       // setLoading(true);
       const formData = new FormData();
       formData.append("File", pdf);
+      console.log("abs")
       const response = await axios.post(
         `https://leetun2k2-001-site1.gtempurl.com/api/Cv`,
         {
@@ -238,7 +239,12 @@ function CVForm() {
           introduction: intro,
           education: education,
           isDeleted: false,
-          skills: updatedSkills,
+          skills: [{experienceYear
+            : 
+            2,
+            skillId
+            : 
+            "c5d67ab3-39d6-4116-bbda-6e3e56d3bc52"}],
           certificates: updatedCertificates,
         }, config
       );
