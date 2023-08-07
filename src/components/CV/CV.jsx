@@ -182,7 +182,7 @@ const CV = ({ cvid,page }) => {
                   
                     }}
                   >
-                    <Box m={0} component='h4'>{skill.skillName} • {skill.experienceYear} năm kinh nghiệm</Box>
+                    <Box m={0} component='h4'>{skill.skillName} • {skill.experienceYear} {skill.experienceYear > 1 ? " years of experience" : " year of experience"}</Box>
                     <Box>{skill.description}</Box> 
                   </Box>
                 ))}
@@ -291,7 +291,7 @@ const CV = ({ cvid,page }) => {
 
         { page !== 'Profile' && <Box p={3}>
         <Box m={0} component='h2' textAlign='center'> CV PDF</Box>
-        <iframe style={{width:'100%',height:'800px'}} src="/data/2019_MT_KTM.pdf" ></iframe>
+        <iframe style={{width:'100%',height:'800px'}} src="/data/CA.pdf" ></iframe>
       </Box>}
         </GigaCard>
          {page === "profile_cv" && <Box sx={{ display: "flex", justifyContent: "flex-end", marginY: 4 }}>

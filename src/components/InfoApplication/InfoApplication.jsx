@@ -100,7 +100,7 @@ const InfoApplication = ({ applicationid, recruitmentid }) => {
                     }}
                   >
                     <Box sx={{ ...gridSx, alignItems: "flex-start" }}>
-                      <Person />{" "}
+                      <Box mt="3px"><Person/></Box>
                       {isMd && (
                         <Typography variant="h6" sx={{ marginLeft: "5px" }}>
                           Name
@@ -148,7 +148,7 @@ const InfoApplication = ({ applicationid, recruitmentid }) => {
                     }}
                   >
                     <Box sx={{ ...gridSx, alignItems: "flex-start" }}>
-                      <Email />{" "}
+                     <Box mt="3px"><Email /></Box>
                       {isMd && (
                         <Typography variant="h6" sx={{ marginLeft: "5px" }}>
                           Email
@@ -199,7 +199,7 @@ const InfoApplication = ({ applicationid, recruitmentid }) => {
                     }}
                   >
                     <Box sx={{ ...gridSx, alignItems: "flex-start" }}>
-                      <Phone />{" "}
+                   <Box mt="1px"> <Phone /></Box>
                       {isMd && (
                         <Typography variant="h6" sx={{ marginLeft: "5px" }}>
                           Phone
@@ -247,7 +247,8 @@ const InfoApplication = ({ applicationid, recruitmentid }) => {
                     }}
                   >
                     <Box sx={{ ...gridSx, alignItems: "flex-start" }}>
-                      <LocationOn />{" "}
+                    <Box mt="1px"> <LocationOn /></Box>
+
                       {isMd && (
                         <Typography variant="h6" sx={{ marginLeft: "5px" }}>
                           Address

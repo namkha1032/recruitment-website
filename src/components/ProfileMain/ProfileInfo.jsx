@@ -152,8 +152,8 @@ const ProfileInfo = () => {
               >
                 <Person />
                 <TextField
-                  required
-                  error={name===""}
+    
+                  error={name==="" && profileid === user.userid}
                   fullWidth
                   InputProps={{ readOnly: block }}
                   size="small"
@@ -180,7 +180,7 @@ const ProfileInfo = () => {
                       <DatePicker
                       
                         format="DD/MM/YYYY"
-                        label="Birth *"
+                        label="Birth"
                         minDate={dayjs('01-01-1900')}
                         maxDate={dayjs('01-01-2099')}
                         value={birth}
@@ -224,8 +224,8 @@ const ProfileInfo = () => {
 
                 <TextField
                   fullWidth
-                  required
-                  error={phone===""}
+           
+                  error={phone==="" && profileid === user.userid}
                   InputProps={{ readOnly: block }}
                   size="small"
                   label="Phone"
@@ -245,8 +245,7 @@ const ProfileInfo = () => {
 
                 <TextField
                   fullWidth
-                  required
-                  error={address===""}
+                  error={address==="" && profileid === user.userid}
                   InputProps={{ readOnly: block }}
                   multiline
                   size="small"
