@@ -57,7 +57,7 @@ const ButtonApply = (props) => {
     const handleClose = () => setOpen(false);
     const [helperText, setHelperText] = useState('');
     // const [applied, setApplied] = useState(null);
-    const [submitstatus, setSubmitstatus] = useState(false);
+    const [submitstatus, setSubmitstatus] = useState(null);
     const [loading, setLoading] = useState(false);
     const [submitclick, setSubmitclick] = useState(false);
     const handleCVChange = (event) => {
