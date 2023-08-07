@@ -8,7 +8,7 @@ import {
   /* Link, */
   Box,
   Container,
-  /* InputAdornment, */
+  InputAdornment,
   createTheme,
   CircularProgress,
   Stack
@@ -199,14 +199,16 @@ const Recovery = (props) => {
                       InputProps={{
                         disableUnderline: true,
                         endAdornment: (
-                          <MailOutline
-                            sx={{
-                              position: "absolute",
-                              right: "8px",
-                              color: props.validEmail ? "#000" : "red",
-                              fontSize: "1.2em",
-                            }}
-                          />
+                          <InputAdornment position="end">
+                            <MailOutline
+                              sx={{
+                                position: "absolute",
+                                right: "0px",
+                                color: props.validEmail ? "#000" : "red",
+                                fontSize: "1.2em",
+                              }}
+                            />
+                          </InputAdornment>
                         ),
                       }}
                       sx={{

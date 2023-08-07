@@ -316,15 +316,17 @@ const XPage_Login = () => {
                     InputProps={{
                       disableUnderline: true,
                       endAdornment: (
+                        <InputAdornment position="end">
                         <AccountCircleOutlinedIcon
                           sx={{
                             position: "absolute",
-                            right: "8px",
+                            right: "0px",
                             color: validUsername ? "black" : "red",
                             fontSize: "1.2em",
                             //top: '20px',
                           }}
                         />
+                        </InputAdornment>
                       ),
                       sx: {
                         color: "#000",
@@ -413,7 +415,7 @@ const XPage_Login = () => {
                               <VisibilityOutlinedIcon
                                 sx={{
                                   position: "absolute",
-                                  right: "8px",
+                                  right: "0px",
                                   color: validPassword ? 'black' : 'red',
                                   fontSize: "0.9em",
                                   //top: '20px',
@@ -423,7 +425,7 @@ const XPage_Login = () => {
                               <VisibilityOffOutlinedIcon
                                 sx={{
                                   position: "absolute",
-                                  right: "8px",
+                                  right: "0px",
                                   color: validPassword ? 'black' : 'red',
                                   fontSize: "0.9em",
                                   //top: '20px',
