@@ -45,6 +45,7 @@ const InterviewerDialog = (props) => {
     const languagename = props.languagename
     // --------------------------------------
     const interviewerid = params.row.interviewerid
+    const userid = params.row.userid
     const interviewername = params.row.interviewername
     const dob = params.row.dob
     const email = params.row.email
@@ -101,7 +102,7 @@ const InterviewerDialog = (props) => {
                             </Typography>
                         </Box>
                         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                            <a href="/home" target="_blank">
+                            <a href={`/profile/${userid}`} target="_blank">
                                 <BlackOutlinedButton handleClick={() => { console.log("") }}>
                                     View profile
                                 </BlackOutlinedButton>

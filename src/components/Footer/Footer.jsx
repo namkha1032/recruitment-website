@@ -222,7 +222,7 @@ const Footer = () => {
           color="white"
           component="p"
         >
-          Siu cap vjp pro
+          All rights reserved
         </Typography>
         <Copyright />
       </Box>
