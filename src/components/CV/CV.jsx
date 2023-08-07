@@ -182,7 +182,7 @@ const CV = ({ cvid,page }) => {
                   
                     }}
                   >
-                    <Box m={0} component='h4'>{skill.skillName} • {skill.experienceYear} năm kinh nghiệm</Box>
+                    <Box m={0} component='h4'>{skill.skillName} • {skill.experienceYear} {skill.experienceYear > 1 ? " years of experience" : " year of experience"}</Box>
                     <Box>{skill.description}</Box> 
                   </Box>
                 ))}
