@@ -95,6 +95,7 @@ const ButtonApply = (props) => {
     useEffect(() => {
         if (appstatus !== null) {
             if (appstatus.length > 0) {
+                console.log('updateappstatus')
                 setSubmitstatus(true);
                 setCV(appstatus[0].cv.cvid);
 
@@ -184,6 +185,7 @@ const ButtonApply = (props) => {
             else {
                 console.log("hello")
                 if (submitstatus === false) {
+                    console.log('submit');
                     setSubmitclick(!submitclick)
                     dispatch({
                         type: 'applicationSaga/submitCv',
@@ -194,9 +196,11 @@ const ButtonApply = (props) => {
                             token: "haha"
                         }
                     })
-                   
+                    setSubmitstatus(true)
+                    console.log('finish update')
                 }
                 else {
+                    console.log('update')
                     console.log('hielse');
                     console.log('appwithoutapplication', appstatus);
                     console.log('app', appstatus[0]);
@@ -222,8 +226,9 @@ const ButtonApply = (props) => {
                         }
                     })
                     setSubmitclick(!submitclick)
+                    setSubmitstatus(true)
                 }
-                setSubmitstatus(true)
+               
                 // setApply(true);
                 setNotice(true);
                 // setCV('')
