@@ -157,7 +157,7 @@ const ButtonApply = (props) => {
 
 
     const handleTextClick = (id) => {
-        window.open(`/profile/:profileid/cv/${id}`);
+        window.open(`/profile/${userid}/cv/${id}`);
     };
 
 
