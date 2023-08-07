@@ -35,8 +35,9 @@ import { useTheme } from "@mui/material/styles";
 
 import EditCalendarRoundedIcon from '@mui/icons-material/EditCalendarRounded';
 // import picture from "../../assets/img/event1.png";
-import picture from "../../assets/img/eventcandidate.jpg";
+// import picture from "../../assets/img/eventcandidate.jpg";
 import NoteField from "../../pages/Page_Company_Interview_Id/NoteField/NoteField";
+import picture from "../../assets/img/Autumn-Arena-WEB.png";
 
 
 
