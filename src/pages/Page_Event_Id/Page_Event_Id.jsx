@@ -40,6 +40,7 @@ import NoteField from "../../pages/Page_Company_Interview_Id/NoteField/NoteField
 import picture from "../../assets/img/Autumn-Arena-WEB.png";
 
 
+
 const Page_Event_Id = () => {
 
     const [openAlertRegister, setOpenAlertRegister] = useState(false);

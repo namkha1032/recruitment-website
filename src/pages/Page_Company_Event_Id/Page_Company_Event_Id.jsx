@@ -48,7 +48,9 @@ import EditCalendarRoundedIcon from '@mui/icons-material/EditCalendarRounded';
 // import picture from '../../assets/img/event2.png'
 // import picture from '../../assets/img/eventcompany.jpg'
 import NoteField from "../../pages/Page_Company_Interview_Id/NoteField/NoteField";
-import picture from '../../assets/img/Fanpage-1web-01-2048x872.png'
+// import picture from '../../assets/img/Fanpage-1web-01-2048x872.png'
+import picture from '../../assets/img/HER-DREAM-web-2048x872.png'
+
 
 
 const Page_Company_Event_Id = () => {
