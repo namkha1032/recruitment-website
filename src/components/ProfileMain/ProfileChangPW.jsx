@@ -163,16 +163,16 @@ const ProfileChangePW = () => {
         });
       }
     } else {
-      if (validUsername || username === "") {
+      if (!validUsername || username === "") {
         setValidUsername(false)
       }
-      if (validCurrentPassword || currentPassword === "") {
+      if (!validCurrentPassword || currentPassword === "") {
         setValidCurrentPassword(false)
       }
-      if (validNewPassword || newPassword === "") {
+      if (!validNewPassword || newPassword === "") {
         setValidNewPassword(false)
       }
-      if (validConfirmPassword || confirmPassword === "") {
+      if (!validConfirmPassword || confirmPassword === "") {
         setValidConfirmPassword(false)
       }
     }
