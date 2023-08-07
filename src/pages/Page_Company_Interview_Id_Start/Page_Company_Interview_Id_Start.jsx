@@ -117,7 +117,7 @@ export default function Page_Company_Interview_Id_Start() {
     }, [user, interviewStart])
     function handleSubmit(e) {
         let newObj = {
-            interviewerId: interviewid,
+            interviewId: interviewid,
             notes: note,
             rounds: [
                 // rightSoft,
