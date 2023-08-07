@@ -4,6 +4,7 @@ import {
     Dialog,
     DialogContent,
     DialogTitle,
+    DialogActions,
     Typography,
     Box
 } from "@mui/material";
@@ -33,7 +34,7 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
-
+import BlackOutlinedButton from "../../../components/BlackOutlinedButton/BlackOutlinedButton";
 // import utils
 import transformDateOnly from "../../../utils/transformDateOnly";
 const InterviewerDialog = (props) => {
@@ -98,6 +99,13 @@ const InterviewerDialog = (props) => {
                             <Typography variant="button" sx={{ color: "grey.700" }}>
                                 Interviewer
                             </Typography>
+                        </Box>
+                        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                            <a href="/home" target="_blank">
+                                <BlackOutlinedButton handleClick={() => { console.log("") }}>
+                                    View profile
+                                </BlackOutlinedButton>
+                            </a>
                         </Box>
                     </Box>
                 </DialogTitle>
@@ -181,6 +189,8 @@ const InterviewerDialog = (props) => {
                         </Grid>
                     </Grid>
                 </DialogContent>
+                <DialogActions sx={{ columnGap: 4 }}>
+                </DialogActions>
             </Dialog>
             <Avatar onClick={() => setOpen(true)} sx={{ width: 30, height: 30, cursor: "pointer" }} src={avatar}>
                 K
