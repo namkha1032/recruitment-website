@@ -49,7 +49,7 @@ const ResetPassword = (props) => {
       else {
         setCurrentIndex(currentIndex + 1);
       }
-    }, 5000)
+    }, 15000)
     
     return () => clearInterval(intervalId);
   }, [currentIndex])
@@ -196,14 +196,16 @@ const ResetPassword = (props) => {
                       InputProps={{
                         disableUnderline: true,
                         endAdornment: (
-                          <PasswordOutlinedIcon
-                            sx={{
-                              position: "absolute",
-                              right: "8px",
-                              color: props.validOTP ? "black" : "red",
-                              fontSize: "1.2em",
-                            }}
-                          />
+                          <InputAdornment position="end">
+                            <PasswordOutlinedIcon
+                              sx={{
+                                position: "absolute",
+                                right: "0px",
+                                color: props.validOTP ? "black" : "red",
+                                fontSize: "1.2em",
+                              }}
+                            />
+                          </InputAdornment>
                         ),
                       }}
                       sx={{
@@ -291,7 +293,7 @@ const ResetPassword = (props) => {
                                 <VisibilityOutlinedIcon
                                   sx={{
                                     position: "absolute",
-                                    right: "8px",
+                                    right: "0px",
                                     color: props.validNewPassword ? "black" : "red",
                                     fontSize: "0.9em",
                                     //top: '20px',
@@ -301,7 +303,7 @@ const ResetPassword = (props) => {
                                 <VisibilityOffOutlinedIcon
                                   sx={{
                                     position: "absolute",
-                                    right: "8px",
+                                    right: "0px",
                                     color: props.validNewPassword ? "black" : "red",
                                     fontSize: "0.9em",
                                     //top: '20px',
@@ -397,7 +399,7 @@ const ResetPassword = (props) => {
                                 <VisibilityOutlinedIcon
                                   sx={{
                                     position: "absolute",
-                                    right: "8px",
+                                    right: "0px",
                                     color: props.validConfirmPassword ? "black" : "red",
                                     fontSize: "0.9em",
                                     //top: '20px',
@@ -407,7 +409,7 @@ const ResetPassword = (props) => {
                                 <VisibilityOffOutlinedIcon
                                   sx={{
                                     position: "absolute",
-                                    right: "8px",
+                                    right: "0px",
                                     color: props.validConfirmPassword ? "black" : "red",
                                     fontSize: "0.9em",
                                     //top: '20px',

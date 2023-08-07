@@ -163,16 +163,16 @@ const ProfileChangePW = () => {
         });
       }
     } else {
-      if (validUsername || username === "") {
+      if (!validUsername || username === "") {
         setValidUsername(false)
       }
-      if (validCurrentPassword || currentPassword === "") {
+      if (!validCurrentPassword || currentPassword === "") {
         setValidCurrentPassword(false)
       }
-      if (validNewPassword || newPassword === "") {
+      if (!validNewPassword || newPassword === "") {
         setValidNewPassword(false)
       }
-      if (validConfirmPassword || confirmPassword === "") {
+      if (!validConfirmPassword || confirmPassword === "") {
         setValidConfirmPassword(false)
       }
     }
@@ -230,15 +230,17 @@ const ProfileChangePW = () => {
                     InputProps={{
                       disableUnderline: true,
                       endAdornment: (
-                        <AccountCircleOutlinedIcon
-                          sx={{
-                            position: "absolute",
-                            right: "8px",
-                            color: validUsername ? "black" : "red",
-                            fontSize: "1.2em",
-                            //top: '20px',
-                          }}
-                        />
+                        <InputAdornment position="end">
+                          <AccountCircleOutlinedIcon
+                            sx={{
+                              position: "absolute",
+                              right: "0px",
+                              color: validUsername ? "black" : "red",
+                              fontSize: "1.2em",
+                              //top: '20px',
+                            }}
+                          />
+                        </InputAdornment>
                       ),
                       sx: {
                         color: "#000",
@@ -326,7 +328,7 @@ const ProfileChangePW = () => {
                               <VisibilityOutlinedIcon
                                 sx={{
                                   position: "absolute",
-                                  right: "8px",
+                                  right: "0px",
                                   color: validCurrentPassword ? "black" : "red",
                                   fontSize: "0.9em",
                                   //top: '20px',
@@ -336,7 +338,7 @@ const ProfileChangePW = () => {
                               <VisibilityOffOutlinedIcon
                                 sx={{
                                   position: "absolute",
-                                  right: "8px",
+                                  right: "0px",
                                   color: validCurrentPassword ? "black" : "red",
                                   fontSize: "0.9em",
                                   //top: '20px',
@@ -432,7 +434,7 @@ const ProfileChangePW = () => {
                               <VisibilityOutlinedIcon
                                 sx={{
                                   position: "absolute",
-                                  right: "8px",
+                                  right: "0px",
                                   color: validNewPassword ? "black" : "red",
                                   fontSize: "0.9em",
                                   //top: '20px',
@@ -442,7 +444,7 @@ const ProfileChangePW = () => {
                               <VisibilityOffOutlinedIcon
                                 sx={{
                                   position: "absolute",
-                                  right: "8px",
+                                  right: "0px",
                                   color: validNewPassword ? "black" : "red",
                                   fontSize: "0.9em",
                                   //top: '20px',
@@ -537,7 +539,7 @@ const ProfileChangePW = () => {
                               <VisibilityOutlinedIcon
                                 sx={{
                                   position: "absolute",
-                                  right: "8px",
+                                  right: "0px",
                                   color: validConfirmPassword ? "black" : "red",
                                   fontSize: "0.9em",
                                   //top: '20px',
@@ -547,7 +549,7 @@ const ProfileChangePW = () => {
                               <VisibilityOffOutlinedIcon
                                 sx={{
                                   position: "absolute",
-                                  right: "8px",
+                                  right: "0px",
                                   color: validConfirmPassword ? "black" : "red",
                                   fontSize: "0.9em",
                                   //top: '20px',
