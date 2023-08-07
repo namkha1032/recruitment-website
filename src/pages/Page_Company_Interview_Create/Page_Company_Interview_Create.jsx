@@ -144,6 +144,17 @@ const Page_Company_Interview_Create = () => {
         }
         if (newError.status == "yes") {
             setErrorSnackbar(true)
+            setChosenInterviewer(null)
+            setChosenRoom(null)
+            setChosenDate(null)
+            setChosenShift(null)
+            dispatch({
+                type: "interviewSaga/getDataForCreatingInterview", payload: {
+                    applicationid: applicationid,
+                    recruitmentid: recruitmentid,
+                    token: user.token
+                }
+            })
             setTimeout(() => {
                 setErrorSnackbar(false)
                 dispatch({ type: "error/setError", payload: { status: "idle", message: "" } })

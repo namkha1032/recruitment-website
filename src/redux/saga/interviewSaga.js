@@ -324,7 +324,7 @@ function* createInterview(action) {
     yield put({ type: "error/setError", payload: { status: "no", message: findInterview.interviewId } })
   }
   catch (err) {
-    yield put({ type: "error/setError", payload: { status: "yes", message: "Conflict" } })
+    yield put({ type: "error/setError", payload: { status: "yes", message: "This schedule is conflict with another interview. Please choose again" } })
     console.log("err: ", err)
   }
 }
