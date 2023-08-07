@@ -579,6 +579,7 @@ const Page_Company_Event_Id = () => {
                                     >
                                         {/* Data Grid */}
                                         <DataGrid
+                                            autoHeight
                                             rows={rows}
                                             columns={columns}
                                             sx={{
@@ -1035,6 +1036,7 @@ const Page_Company_Event_Id = () => {
                                     >
                                         {/* Data Grid */}
                                         <DataGrid
+                                            autoHeight
                                             rows={rows}
                                             columns={columns}
                                             sx={{
