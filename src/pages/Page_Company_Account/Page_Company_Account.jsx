@@ -1,5 +1,6 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {
+    Alert,
     Box,
     Button,
     CircularProgress,
@@ -7,7 +8,7 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle,
+    DialogTitle, Snackbar,
     TextField,
     Typography
 } from "@mui/material"
@@ -54,6 +55,35 @@ function CandidateTable(props) {
     const RenderAddToBlacklist = ({params}) => {
         const [open, setOpen] = React.useState(false);
         const [reason, setReason] = React.useState('');
+        // const newError = useSelector((state) => state.error);
+        // const [errorSnackbar, setErrorSnackbar] = useState(false);
+        // const [errorMessage, setErrorMessage] = useState("");
+        // const [alertType, setAlertType] = useState("success");
+        // useEffect(() => {
+        //     console.log("error toast start", newError)
+        //     if (newError.status=="no"){
+        //         setErrorMessage("Account OK!")
+        //         setErrorSnackbar(true);
+        //         setTimeout(() => {
+        //             setErrorSnackbar(false);
+        //             dispatch({type: "error/setError",payload: {
+        //                     status: "idle",
+        //                     message: ""
+        //                 }})
+        //         },3000)
+        //     }
+        //     if (newError.status=="yes"){
+        //         setErrorMessage(newError.message)
+        //         setErrorSnackbar(true);
+        //         setTimeout(() => {
+        //             setErrorSnackbar(false);
+        //             dispatch({type: "error/setError",payload: {
+        //                     status: "idle",
+        //                     message: ""
+        //                 }})
+        //         },3000)
+        //     }
+        // }, [newError]);
         const handleGoToAccount = () => {
             const userId = params.row.userId;
             window.location.href = `/profile/${userId}`;
@@ -64,6 +94,7 @@ function CandidateTable(props) {
             dispatch({type: "saga/addToBlacklist", payload: {reason: reason, candidateId: params.row.candidateId}});
             console.log(reason, params.row.candidateId);
             setOpen(false);
+
         };
         return (
             <strong>
@@ -123,6 +154,7 @@ function CandidateTable(props) {
                     </DialogActions>
                 </Dialog>
             </strong>
+
         )
     }
     const {children, value, index, ...other} = props;
@@ -676,10 +708,40 @@ function FullWidthTabs() {
 
 const Page_Company_Account = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     const isXs = useMediaQuery(theme.breakpoints.up('xs'));
+    const newError = useSelector((state) => state.error);
+    const [errorSnackbar, setErrorSnackbar] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [alertType, setAlertType] = useState("success");
+    useEffect(() => {
+        console.log("error toast start", newError)
+        if (newError.status=="no"){
+            setErrorMessage("Account Added!")
+            setErrorSnackbar(true);
+            setTimeout(() => {
+                setErrorSnackbar(false);
+                dispatch({type: "error/setError",payload: {
+                        status: "idle",
+                        message: ""
+                    }})
+            },3000)
+        }
+        if (newError.status=="yes"){
+            setErrorMessage(newError.message)
+            setErrorSnackbar(true);
+            setTimeout(() => {
+                setErrorSnackbar(false);
+                dispatch({type: "error/setError",payload: {
+                        status: "idle",
+                        message: ""
+                    }})
+            },3000)
+        }
+    }, [newError]);
 
     // if (useGetRole()=="admin") {
     return (
@@ -813,6 +875,17 @@ const Page_Company_Account = () => {
             <Grid item xs={12} mb="10vh">
                 <FullWidthTabs/>
             </Grid>
+            <Snackbar
+                open={errorSnackbar}
+                autoHideDuration={5000}
+                onClose={() => setErrorSnackbar(false)}
+                anchorOrigin={{vertical: "bottom", horizontal: "center"}}
+            >
+                <Alert severity={alertType} onClose={() => setErrorSnackbar(false)}>
+                    {/* {newError.message} */}
+                    {errorMessage}
+                </Alert>
+            </Snackbar>
         </Grid>
 
     );
