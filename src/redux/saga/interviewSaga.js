@@ -212,7 +212,7 @@ function* getInterviewResult(action) {
             prefix = "$rus$"
           }
           else if (responsePosition.data.language.languageName == "Japanese") {
-            prefix = "$rus$"
+            prefix = "$jap$"
           }
           else if (responsePosition.data.language.languageName == "Korean") {
             prefix = "$kor$"
@@ -460,7 +460,7 @@ function* getQuestionsForStartingIntervew(action) {
         prefix = "$rus$"
       }
       else if (responsePosition.data.language.languageName == "Japanese") {
-        prefix = "$rus$"
+        prefix = "$jap$"
       }
       else if (responsePosition.data.language.languageName == "Korean") {
         prefix = "$kor$"
