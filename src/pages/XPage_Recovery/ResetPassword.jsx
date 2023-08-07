@@ -49,7 +49,7 @@ const ResetPassword = (props) => {
       else {
         setCurrentIndex(currentIndex + 1);
       }
-    }, 5000)
+    }, 15000)
     
     return () => clearInterval(intervalId);
   }, [currentIndex])

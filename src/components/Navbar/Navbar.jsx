@@ -350,7 +350,7 @@ const NavbarContent = (props) => {
                                     setAnchorElUser(null)
                                     cleanStore(dispatch)
                                     dispatch({ type: "saga/userLogout" })
-                                    // sessionStorage.setItem('previousPage', window.location.pathname);
+                                    sessionStorage.setItem('previousPage', window.location.pathname);
                                     navigate("/login")
                                 }}>
                                     <ListItemIcon>

@@ -81,7 +81,7 @@ const XPage_Register = () => {
       else {
         setCurrentIndex(currentIndex + 1);
       }
-    }, 6000)
+    }, 15000)
     
     return () => clearInterval(intervalId);
   }, [currentIndex])
