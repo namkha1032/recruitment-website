@@ -26,7 +26,9 @@ import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
-
+import BusinessIcon from '@mui/icons-material/Business';
+import EmailIcon from '@mui/icons-material/Email';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -153,25 +155,25 @@ const InterviewerDialog = (props) => {
                             <MenuList>
                                 <MenuItem sx={{ paddingX: 0 }}>
                                     <ListItemIcon>
-                                        <TungstenIcon fontSize="small" />
+                                        <BusinessIcon fontSize="small" />
                                     </ListItemIcon>
                                     <ListItemText>{departmentaddress}</ListItemText>
                                 </MenuItem>
                                 <MenuItem sx={{ paddingX: 0 }}>
                                     <ListItemIcon>
-                                        <TungstenIcon fontSize="small" />
+                                        <EmailIcon fontSize="small" />
                                     </ListItemIcon>
                                     <ListItemText>{departmentemail}</ListItemText>
                                 </MenuItem>
                                 <MenuItem sx={{ paddingX: 0 }}>
                                     <ListItemIcon>
-                                        <TungstenIcon fontSize="small" />
+                                        <LocalPhoneIcon fontSize="small" />
                                     </ListItemIcon>
                                     <ListItemText>{departmentphone}</ListItemText>
                                 </MenuItem>
                                 <MenuItem sx={{ paddingX: 0 }}>
                                     <ListItemIcon>
-                                        <TungstenIcon fontSize="small" />
+                                        <LanguageIcon fontSize="small" />
                                     </ListItemIcon>
                                     <ListItemText>{departmentwebsite}</ListItemText>
                                 </MenuItem>

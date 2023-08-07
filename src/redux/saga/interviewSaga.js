@@ -147,6 +147,7 @@ function* getInterviewResult(action) {
 
     let interStruc = {
       interviewid: action.payload.interviewid,
+      interviewerid: responseInterview.data.interviewer.interviewerId,
       applicationid: responseInterview.data.application.applicationId,
       note: responseInterview.data.notes,
       candidate_Status: responseInterview.data.candidate_Status,

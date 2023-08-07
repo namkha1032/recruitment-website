@@ -109,6 +109,9 @@ const Sidebar = (props) => {
                     else if (role != "admin" && role != "recruiter" && role != "interviewer") {
                         return < Box key={index} />
                     }
+                    else if (role != "admin" && role != "interviewer" && ( index == 4)) {
+                        return < Box key={index} />
+                    }
                     else {
                         return (
                             <ListItem key={index} disablePadding onClick={() => {

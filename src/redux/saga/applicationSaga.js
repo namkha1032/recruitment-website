@@ -186,6 +186,12 @@ function* rejectApplication(action) {
                 Authorization: `Bearer ${action.payload.token}`
             },
         })
+        let newInfoApp = {
+            ...action.payload.infoApplication,
+            company_Status: "Rejected"
+        }
+        yield put({ type: "error/setError", payload: { status: "no", message: "" } })
+        yield put({ type: 'infoApplication/setInfoApplication', payload: newInfoApp })
         console.log(response.data)
     } catch (error) {
         console.log("error")
