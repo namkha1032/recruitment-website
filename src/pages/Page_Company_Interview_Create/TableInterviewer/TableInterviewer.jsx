@@ -39,6 +39,7 @@ const TableInterviewer = (props) => {
     const interviewerRows = interviewerList.map(inter => (
         {
             interviewerid: inter.interviewerid,
+            userid: inter.userid,
             interviewername: inter.user.fullName,
             dob: inter.user.dateOfBirth,
             email: inter.user.email,
@@ -54,6 +55,7 @@ const TableInterviewer = (props) => {
     ))
     const interviewerColumns = [
         { field: 'interviewerid', headerName: 'ID', flex: 0 },
+        { field: 'userid', headerName: 'userID', flex: 0 },
         { field: 'interviewername', headerName: 'Name', flex: 3 },
         { field: 'dob', headerName: 'Dob', flex: 0 },
         { field: 'email', headerName: 'Email', flex: 0 },
@@ -132,6 +134,7 @@ const TableInterviewer = (props) => {
                     columns: {
                         columnVisibilityModel: {
                             interviewerid: false,
+                            userid: false,
                             dob: false,
                             email: false,
                             departmentname: false,

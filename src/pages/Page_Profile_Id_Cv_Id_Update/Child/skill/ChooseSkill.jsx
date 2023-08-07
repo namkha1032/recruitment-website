@@ -133,7 +133,7 @@ export default function ChooseSkill(prop) {
           <NotRInputText
             headerIcon={<TimerIcon />}
             type="number"
-            state={"Experiece(Year)"}
+            state={"Experience(Year)"}
             width={isMd ? "94%" : "100%"}
             value={prop.SExp}
             margin="0"

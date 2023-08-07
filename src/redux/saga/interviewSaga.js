@@ -147,6 +147,7 @@ function* getInterviewResult(action) {
 
     let interStruc = {
       interviewid: action.payload.interviewid,
+      interviewerid: responseInterview.data.interviewer.interviewerId,
       applicationid: responseInterview.data.application.applicationId,
       note: responseInterview.data.notes,
       candidate_Status: responseInterview.data.candidate_Status,
@@ -211,7 +212,7 @@ function* getInterviewResult(action) {
             prefix = "$rus$"
           }
           else if (responsePosition.data.language.languageName == "Japanese") {
-            prefix = "$rus$"
+            prefix = "$jap$"
           }
           else if (responsePosition.data.language.languageName == "Korean") {
             prefix = "$kor$"
@@ -323,7 +324,7 @@ function* createInterview(action) {
     yield put({ type: "error/setError", payload: { status: "no", message: findInterview.interviewId } })
   }
   catch (err) {
-    yield put({ type: "error/setError", payload: { status: "yes", message: "Conflict" } })
+    yield put({ type: "error/setError", payload: { status: "yes", message: "This schedule is conflict with another interview. Please choose again" } })
     console.log("err: ", err)
   }
 }
@@ -371,9 +372,9 @@ function* getInterviewInfo(action) {
     yield put({ type: 'interviewskill/setInterviewSkill', payload: skilllist })
   } catch (error) {
     console.log(error);
-    if (error.response.request.status === 400 || error.response.request.status === 404){
+    if (error.response.request.status === 400 || error.response.request.status === 404) {
 
-      yield put({type: 'interviewError/onError', payload: error.response.request.status})
+      yield put({ type: 'interviewError/onError', payload: error.response.request.status })
 
     }
   }
@@ -459,7 +460,7 @@ function* getQuestionsForStartingIntervew(action) {
         prefix = "$rus$"
       }
       else if (responsePosition.data.language.languageName == "Japanese") {
-        prefix = "$rus$"
+        prefix = "$jap$"
       }
       else if (responsePosition.data.language.languageName == "Korean") {
         prefix = "$kor$"
@@ -522,6 +523,7 @@ function* getQuestionsForStartingIntervew(action) {
     }
   }
   yield put({ type: "question/setInterviewQuestion", payload: quesStruc });
+  yield put({ type: "interviewStart/setInterviewStart", payload: responseInterview.data });
 
   // const responsefake = yield call(
   //   axios.get,
@@ -548,7 +550,13 @@ function* getDataForCreatingInterview(action) {
   // const findDepartment = findPosition.department
   // get upcoming interview
   // sửa lại chỗ này
-  const responseInterviewList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`, config)
+  let responseInterviewList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`, config)
+  responseInterviewList = responseInterviewList.data.filter((item) => {
+    return item.candidate_Status == "Not start"
+  })
+  responseInterviewList = {
+    data: responseInterviewList
+  }
   let interviewList = []
   for (let resInter of responseInterviewList.data) {
     // const responseItrsList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Itrsinterview?id=${resInter.itrsinterviewId}`)

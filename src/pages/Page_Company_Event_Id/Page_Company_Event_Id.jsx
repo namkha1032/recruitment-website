@@ -45,7 +45,11 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
 import EditCalendarRoundedIcon from '@mui/icons-material/EditCalendarRounded';
-import picture from '../../assets/img/event2.png'
+// import picture from '../../assets/img/event2.png'
+// import picture from '../../assets/img/eventcompany.jpg'
+import NoteField from "../../pages/Page_Company_Interview_Id/NoteField/NoteField";
+// import picture from '../../assets/img/Fanpage-1web-01-2048x872.png'
+import picture from '../../assets/img/HER-DREAM-web-2048x872.png'
 
 
 
@@ -85,14 +89,19 @@ const Page_Company_Event_Id = () => {
     }, [user])
 
     const event = useSelector((state) => state.event)
+    // console.log("myEvent: ", event)
     const note = event ? event.content : ""
-    const contentRef = useRef()
-    useEffect(() => {
-        if (note) {
-            // console.log(note)
-            contentRef.current.innerHTML = note
-        }
-    }, [note])
+    // const contentRef = useRef()
+    // console.log("MY EVENT: ", contentRef.current)
+    // useEffect(() => {
+    //     if (event) {
+    //         contentRef.current.innerHTML = note
+    //     }
+    //     // if (note) {
+    //     // console.log(note)
+    //     // contentRef.current.innerHTML = note
+    //     // }
+    // }, [event])
     // console.log("contentRef: ", contentRef);
 
     const row_drafts = useSelector((state) => state.candidateJoinEvent)
@@ -256,7 +265,7 @@ const Page_Company_Event_Id = () => {
                 <GridActionsCellItem
                     icon={<FindInPageIcon></FindInPageIcon>}
                     label="Detail"
-                    onClick={() => handleDetailClick(params.row.candidateId)} />,]
+                    onClick={() => handleDetailClick(params.row.candidateUserId)} />,]
         }
     ]);
 
@@ -305,7 +314,7 @@ const Page_Company_Event_Id = () => {
                                     value='1'
                                     sx={{
                                         textTransform: "none",
-                                        fontSize: 23,
+                                        fontSize: 25,
                                         marginRight: 4,
                                         fontWeight: 600,
                                         color: "rgba(0, 0, 0, 0.85)",
@@ -325,7 +334,7 @@ const Page_Company_Event_Id = () => {
                                     value='2'
                                     sx={{
                                         textTransform: "none",
-                                        fontSize: 23,
+                                        fontSize: 25,
                                         marginRight: 4,
                                         fontWeight: 600,
                                         color: "rgba(0, 0, 0, 0.85)",
@@ -369,8 +378,8 @@ const Page_Company_Event_Id = () => {
                                                         <CelebrationRoundedIcon
                                                             fontSize='large'
                                                             sx={{
-                                                                color: '#black',
-                                                                // color: '#3f51b5'
+                                                                // color: '#black',
+                                                                color: '#3f51b5'
                                                                 // color: '#1565C0'
                                                             }}
                                                         >
@@ -379,8 +388,8 @@ const Page_Company_Event_Id = () => {
                                                     <Box sx={{
                                                         fontSize: 40,
                                                         fontWeight: 600,
-                                                        color: '#black',
-                                                        // color: '#3f51b5',
+                                                        // color: '#black',
+                                                        color: '#3f51b5',
                                                         // color: '#1565C0',
                                                         display: 'flex',
                                                         justifyContent: 'start',
@@ -409,7 +418,8 @@ const Page_Company_Event_Id = () => {
                                             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit eum esse quisquam distinctio animi iure possimus omnis tempore dicta consectetur perspiciatis atque in, cupiditate nostrum numquam accusamus blanditiis velit libero!<br />
                                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure laborum, ullam necessitatibus harum distinctio similique itaque corrupti qui possimus incidunt quisquam, optio hic molestias et accusantium rem ipsum. Commodi, consequatur.<br />
                                         </p> */}
-                                                <Box sx={{ fontSize: '18px' }} ref={contentRef}></Box>
+                                                {/* <Box sx={{ fontSize: '18px' }} ref={contentRef}></Box> */}
+                                                <Box sx={{ fontSize: '18px' }}><NoteField note={note}></NoteField></Box>
                                                 {/* ---------------------------------------------------------------------- */}
 
                                                 <Grid container sx={{ marginTop: 8 }}>
@@ -423,8 +433,8 @@ const Page_Company_Event_Id = () => {
                                                                 fontSize='large'
                                                                 sx={{
                                                                     marginRight: 2,
-                                                                    color: '#black',
-                                                                    // color: '#3f51b5',
+                                                                    // color: '#black',
+                                                                    color: '#3f51b5',
                                                                     // color: '#1565C0' 
                                                                 }}>
                                                             </PeopleAltRoundedIcon>
@@ -432,8 +442,8 @@ const Page_Company_Event_Id = () => {
                                                                 <Box sx={{
                                                                     fontSize: 25,
                                                                     fontWeight: 600,
-                                                                    color: '#black',
-                                                                    // color: '#3f51b5',
+                                                                    // color: '#black',
+                                                                    color: '#3f51b5',
                                                                     // color: '#1565C0'
                                                                 }}>
                                                                     {/* Số lượng */}
@@ -442,7 +452,7 @@ const Page_Company_Event_Id = () => {
                                                                 <Box sx={{
                                                                     fontSize: 20,
                                                                     fontWeight: 600,
-                                                                    color: "#6d4c41"
+                                                                    // color: "#6d4c41"
                                                                     // color: "#FF9933"
                                                                 }}>
                                                                     {/* {event.quantity} / {event.maxQuantity} */}
@@ -464,7 +474,7 @@ const Page_Company_Event_Id = () => {
                                                                 sx={{
                                                                     marginRight: 2,
                                                                     color: '#black',
-                                                                    // color: '#3f51b5',
+                                                                    color: '#3f51b5',
                                                                     // color: '#1565C0'
                                                                 }}>
                                                             </AccessTimeRoundedIcon>
@@ -473,7 +483,7 @@ const Page_Company_Event_Id = () => {
                                                                     fontSize: 25,
                                                                     fontWeight: 600,
                                                                     color: '#black',
-                                                                    // color: '#3f51b5',
+                                                                    color: '#3f51b5',
                                                                     // color: '#1565C0'
                                                                 }}>
                                                                     {/* Thời gian */}
@@ -482,7 +492,7 @@ const Page_Company_Event_Id = () => {
                                                                 <Box sx={{
                                                                     fontSize: 20,
                                                                     fontWeight: 600,
-                                                                    color: "#6d4c41"
+                                                                    // color: "#6d4c41"
                                                                     // color: "#FF9933"
                                                                 }}>
                                                                     {transferDatetimeBack(event.time)}
@@ -502,8 +512,8 @@ const Page_Company_Event_Id = () => {
                                                                 fontSize='large'
                                                                 sx={{
                                                                     marginRight: 2,
-                                                                    color: '#black',
-                                                                    // color: '#3f51b5',
+                                                                    // color: '#black',
+                                                                    color: '#3f51b5',
                                                                     // color: '#1565C0' 
                                                                 }}>
                                                             </LocationOnRoundedIcon>
@@ -511,8 +521,8 @@ const Page_Company_Event_Id = () => {
                                                                 <Box sx={{
                                                                     fontSize: 25,
                                                                     fontWeight: 600,
-                                                                    color: '#black',
-                                                                    // color: '#3f51b5',
+                                                                    // color: '#black',
+                                                                    color: '#3f51b5',
                                                                     // color: '#1565C0'
                                                                 }}>
                                                                     {/* Địa điểm */}
@@ -521,7 +531,7 @@ const Page_Company_Event_Id = () => {
                                                                 <Box sx={{
                                                                     fontSize: 20,
                                                                     fontWeight: 600,
-                                                                    color: "#6d4c41"
+                                                                    // color: "#6d4c41"
                                                                     // color: "#FF9933"
                                                                 }}>
                                                                     {event.location}
@@ -571,6 +581,7 @@ const Page_Company_Event_Id = () => {
                                     >
                                         {/* Data Grid */}
                                         <DataGrid
+                                            autoHeight
                                             rows={rows}
                                             columns={columns}
                                             sx={{
@@ -651,7 +662,7 @@ const Page_Company_Event_Id = () => {
                                             getRowId={(row) => row.candidateId}
                                             onCellClick={(params, event) => {
                                                 if (params.field === "candidateId" || params.field === "candidateFullName") {
-                                                    handleDetailClick(params.row.candidateId);
+                                                    handleDetailClick(params.row.candidateUserId);
                                                 }
                                             }}>
                                         </DataGrid>
@@ -792,7 +803,7 @@ const Page_Company_Event_Id = () => {
                                                             fontSize='medium'
                                                             // fontSize='large'
                                                             sx={{
-                                                                // color: '#3f51b5'
+                                                                color: '#3f51b5'
                                                                 // color: '#1565C0'
                                                             }}
                                                         >
@@ -801,7 +812,7 @@ const Page_Company_Event_Id = () => {
                                                     <Box sx={{
                                                         fontSize: 20,
                                                         fontWeight: 600,
-                                                        // color: '#3f51b5',
+                                                        color: '#3f51b5',
                                                         // color: '#1565C0',
                                                         display: 'flex',
                                                         justifyContent: 'start',
@@ -849,7 +860,8 @@ const Page_Company_Event_Id = () => {
                                             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit eum esse quisquam distinctio animi iure possimus omnis tempore dicta consectetur perspiciatis atque in, cupiditate nostrum numquam accusamus blanditiis velit libero!<br />
                                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure laborum, ullam necessitatibus harum distinctio similique itaque corrupti qui possimus incidunt quisquam, optio hic molestias et accusantium rem ipsum. Commodi, consequatur.<br />
                                         </p> */}
-                                                <Box sx={{ fontSize: '15px' }} ref={contentRef}></Box>
+                                                {/* <Box sx={{ fontSize: '15px' }} ref={contentRef}></Box> */}
+                                                <Box sx={{ fontSize: '15px' }}><NoteField note={note}></NoteField></Box>
                                                 {/* ---------------------------------------------------------------------- */}
 
                                                 <Grid container sx={{
@@ -868,7 +880,7 @@ const Page_Company_Event_Id = () => {
                                                                 sx={{
                                                                     marginRight: 1,
                                                                     // marginRight: 2,
-                                                                    // color: '#3f51b5',
+                                                                    color: '#3f51b5',
                                                                     // color: '#1565C0' 
                                                                 }}>
                                                             </PeopleAltRoundedIcon>
@@ -880,7 +892,7 @@ const Page_Company_Event_Id = () => {
                                                                 <Box sx={{
                                                                     fontSize: 18,
                                                                     fontWeight: 600,
-                                                                    // color: '#3f51b5',
+                                                                    color: '#3f51b5',
                                                                     // color: '#1565C0'
                                                                 }}>
                                                                     {/* Số lượng */}
@@ -889,7 +901,7 @@ const Page_Company_Event_Id = () => {
                                                                 <Box sx={{
                                                                     fontSize: 15,
                                                                     fontWeight: 600,
-                                                                    color: "#6d4c41"
+                                                                    // color: "#6d4c41"
                                                                 }}>
                                                                     {/* {event.quantity} / {event.maxQuantity} */}
                                                                     {rows.length} / {event.maxQuantity}
@@ -911,7 +923,7 @@ const Page_Company_Event_Id = () => {
                                                                 sx={{
                                                                     marginRight: 1,
                                                                     // marginRight: 2,
-                                                                    // color: '#3f51b5',
+                                                                    color: '#3f51b5',
                                                                     // color: '#1565C0'
                                                                 }}>
                                                             </AccessTimeRoundedIcon>
@@ -923,7 +935,7 @@ const Page_Company_Event_Id = () => {
                                                                 <Box sx={{
                                                                     fontSize: 18,
                                                                     fontWeight: 600,
-                                                                    // color: '#3f51b5',
+                                                                    color: '#3f51b5',
                                                                     // color: '#1565C0'
                                                                 }}>
                                                                     {/* Thời gian */}
@@ -932,7 +944,7 @@ const Page_Company_Event_Id = () => {
                                                                 <Box sx={{
                                                                     fontSize: 15,
                                                                     fontWeight: 600,
-                                                                    color: "#6d4c41"
+                                                                    // color: "#6d4c41"
                                                                 }}>
                                                                     {transferDatetimeBack(event.time)}
                                                                 </Box>
@@ -953,7 +965,7 @@ const Page_Company_Event_Id = () => {
                                                                 sx={{
                                                                     marginRight: 1,
                                                                     // marginRight: 2,
-                                                                    // color: '#3f51b5',
+                                                                    color: '#3f51b5',
                                                                     // color: '#1565C0' 
                                                                 }}>
                                                             </LocationOnRoundedIcon>
@@ -965,7 +977,7 @@ const Page_Company_Event_Id = () => {
                                                                 <Box sx={{
                                                                     fontSize: 18,
                                                                     fontWeight: 600,
-                                                                    // color: '#3f51b5',
+                                                                    color: '#3f51b5',
                                                                     // color: '#1565C0'
                                                                 }}>
                                                                     {/* Địa điểm */}
@@ -974,7 +986,7 @@ const Page_Company_Event_Id = () => {
                                                                 <Box sx={{
                                                                     fontSize: 15,
                                                                     fontWeight: 600,
-                                                                    color: "#6d4c41"
+                                                                    // color: "#6d4c41"
                                                                 }}>
                                                                     {event.location}
                                                                 </Box>
@@ -1026,6 +1038,7 @@ const Page_Company_Event_Id = () => {
                                     >
                                         {/* Data Grid */}
                                         <DataGrid
+                                            autoHeight
                                             rows={rows}
                                             columns={columns}
                                             sx={{
@@ -1106,7 +1119,7 @@ const Page_Company_Event_Id = () => {
                                             getRowId={(row) => row.candidateId}
                                             onCellClick={(params, event) => {
                                                 if (params.field === "candidateId" || params.field === "candidateFullName") {
-                                                    handleDetailClick(params.row.candidateId);
+                                                    handleDetailClick(params.row.candidateUserId);
                                                 }
                                             }}>
                                         </DataGrid>

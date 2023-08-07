@@ -204,6 +204,7 @@ function* getAllCandidateOfEvent(action) {
             ...response2[i],
             candidateFullName: response3[j].user.fullName,
             candidateEmail: response3[j].user.email,
+            candidateUserId: response3[j].userId
           });
         }
       }
@@ -214,6 +215,7 @@ function* getAllCandidateOfEvent(action) {
         candidateId: element.candidateId,
         candidateFullName: element.candidateFullName,
         candidateEmail: element.candidateEmail,
+        candidateUserId: element.candidateUserId
       };
     });
     yield put({

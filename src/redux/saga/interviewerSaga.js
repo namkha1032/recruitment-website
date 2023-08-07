@@ -18,7 +18,7 @@ function* getAllInterviewCandidate() {
 function* interviewerSaga() {
     yield all([
         takeEvery("saga/getDepartmentInterviewer", getDepartmentInterviewer),
-        takeEvery("saga/getAllInterviewCandidate", getAllInterviewCandidate)
+        takeEvery("sagatest/getAllInterviewCandidate", getAllInterviewCandidate)
     ])
 }
 

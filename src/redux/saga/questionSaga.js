@@ -324,6 +324,7 @@ function* putQuestion(action) {
 
     // Category Not Change
     if (ques_old.data[0].categoryQuestionId === ques_draft.CategoryId) {
+      console.log("Helllloooooo")
       const quesId = yield call(
         axios.put,
         `https://leetun2k2-001-site1.gtempurl.com/api/Question/${action.payload.QuestionId}`,
@@ -447,6 +448,7 @@ function* putQuestion(action) {
     //     message: "message" in error ? error.message : error.response.data,
     //   },
     // });
+    console.log(error)
     yield put({ type: "loading/offLoading" });
     yield put({
       type: "status/onError",
