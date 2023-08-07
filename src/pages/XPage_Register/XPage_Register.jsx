@@ -489,7 +489,7 @@ const XPage_Register = () => {
                         lineHeight="20px"
                         paddingLeft={"5px"}
                       >
-                        Username must be 3-20 characters long
+                        Username must be 3-20 characters long and not contain any special characters
                       </Typography>
                     </Box>
                   </Grid>
