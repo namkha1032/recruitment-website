@@ -54,7 +54,7 @@ function* userLogin(action) {
     }
     catch (error) {
         yield put({ type: "error/setError", payload: { status: "yes", message: error.message } })
-        // console.log("err: ", error)
+        console.log("err: ", error)
     }
 }
 
@@ -65,7 +65,7 @@ function* userRegister(action) {
     }
     catch (error) {
         yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
-        // console.log("err: ", error)
+        console.log("err: ", error)
     }
 }
 
@@ -78,7 +78,7 @@ function* emailRecovery(action) {
     }
     catch (error) {
         yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
-        // console.log("err: ", error)
+        console.log("err: ", error)
     }
 }
 
@@ -91,7 +91,7 @@ function* userResetPassword(action) {
     }
     catch (error) {
         yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
-        // console.log("err: ", error)
+        console.log("err: ", error)
     }
 }
 
@@ -110,7 +110,7 @@ function* userChangePassword(action) {
     }
     catch (error) {
         yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
-        // console.log("err: ", error)
+        console.log("err: ", error)
     }
 }
 
