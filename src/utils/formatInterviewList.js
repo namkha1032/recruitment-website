@@ -216,6 +216,5 @@ export function formatInterviewList(input) {
       PositionId: element.application.position.positionId,
     };
   });
-  console.log("=========", output)
   return output;
 }
