@@ -3,8 +3,8 @@ import {
     Button,
     FormControl,
     FormControlLabel,
-    FormLabel,
-    MenuItem,
+    FormLabel, IconButton, InputAdornment, InputLabel,
+    MenuItem, OutlinedInput,
     Radio,
     RadioGroup,
     TextField,
@@ -21,6 +21,7 @@ import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 
 const Page_Company_Account_Create = () => {
@@ -38,6 +39,13 @@ const Page_Company_Account_Create = () => {
     const [role, setRole] = useState('Recruiter');
     const [departmentSelected, setDepartment] = useState('');
     const [alertType, setAlertType] = useState("success");
+    const [showPassword, setShowPassword] = React.useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
 
 
     const department = useSelector(state => state.admin.department)
@@ -111,8 +119,30 @@ const Page_Company_Account_Create = () => {
                                onChange={e => setEmail(e.target.value)}/>
                 </Grid>
                 <Grid item xs={12} alignItems="center" justifyContent="left" display="flex">
-                    <TextField id="password" label="Password" variant="outlined" fullWidth value={password}
-                               onChange={e => setPassword(e.target.value)}/>
+                    {/*<TextField id="password" label="Password" variant="outlined" fullWidth value={password}*/}
+                    {/*           onChange={e => setPassword(e.target.value)}/>*/}
+                    <FormControl fullWidth>
+                        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                        <OutlinedInput
+                            id="outlined-adornment-password"
+                            type={showPassword ? 'text' : 'password'}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                        edge="end"
+                                    >
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                            label="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </FormControl>
                 </Grid>
                 <Grid item xs={12} display="flex">
                     <FormControl component="fieldset">
