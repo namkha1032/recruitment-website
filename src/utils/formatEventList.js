@@ -14,13 +14,12 @@ import { formatDatetime } from "./formatDate";
 import { getEventStatus } from "./getEventStatus";
 import { getNumOfCandidateEvent } from "./getNumOfCandidateEvent";
 
-export function formatEventList(input, candidatesEvent,image) {
-  let i = -1; 
-  const n = image.length
-  console.log("------------------------")
+export function formatEventList(input, candidatesEvent, image) {
+  let i = -1;
+  const n = image.length;
   const output_draft = input.map((element) => {
-    i = i + 1
-    if (i === n) i =0
+    i = i + 1;
+    if (i === n) i = 0;
     return {
       EventId: element.eventId,
       EventCampus: element.place,
@@ -30,15 +29,21 @@ export function formatEventList(input, candidatesEvent,image) {
       CreatedByName: element.recruiterId,
       EventDateTime: element.datetimeEvent,
       Status: getEventStatus(element.datetimeEvent),
-      Image:`/${image[i]}`
+      Image: `/${image[i]}`,
+      Sts: element.isDeleted,
     };
   });
-  let output = []
+  let output = [];
   for (let i = 0; i < output_draft.length; i++) {
-    output.push({
-      ...output_draft[i],
-      NumOfJoined: getNumOfCandidateEvent(output_draft[i].EventId, candidatesEvent),
-    })
+    if (output_draft[i].Sts !== true) {
+      output.push({
+        ...output_draft[i],
+        NumOfJoined: getNumOfCandidateEvent(
+          output_draft[i].EventId,
+          candidatesEvent
+        ),
+      });
+    }
   }
-  return output
+  return output;
 }

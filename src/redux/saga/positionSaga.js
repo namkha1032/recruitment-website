@@ -6,7 +6,6 @@ import { formatPositionList } from "../../utils/formatPositionList";
 import { filterPositionList } from "../../utils/filterPositionList";
 
 function* getPositionList(action) {
-  console.log("Get All Position");
   // yield call(delay, 1500)
   // const response = yield call(axios.get, `/data/positionList.json`)
   try {
@@ -49,6 +48,7 @@ function* getPositionList(action) {
     //   },
     // });
   } catch (error) {
+    console.log("Error: ", error.message)
     yield put({ type: "loading/offLoading" });
     // yield put({
     //   type: "error/setError",
@@ -65,7 +65,6 @@ function* getPositionList(action) {
 //   status: statusChoose,
 // }
 function* getPositionListWithFilter(action) {
-  console.log("Filter by: ", action.payload);
   try {
     yield put({ type: "loading/onLoading" });
     // const response = yield call(axios.get, `/data/positionListD.json`)
@@ -97,6 +96,7 @@ function* getPositionListWithFilter(action) {
     //   },
     // });
   } catch (error) {
+    console.log("Error: ", error.message)
     yield put({ type: "loading/offLoading" });
     // yield put({
     //   type: "error/setError",
@@ -131,6 +131,7 @@ function* updatePositionList(action) {
       },
     });
   } catch (error) {
+    console.log("Error: ", error.message)
     yield put({
       type: "status/onError",
       payload: error.message

@@ -28,6 +28,8 @@ import {
   Pending,
   Completed,
   Postpone,
+  Fail,
+  Pass,
 } from "../../components/Label/Label";
 import { useLocation, useNavigate } from "react-router-dom";
 import ReportDataGrid from "./ReportDataGrid";
@@ -135,6 +137,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
   const location = useLocation();
 
   const positionId = useMemo(() => location.state.positionId, [location]);
+  const positionName = useMemo(() => location.state.positionName, [location]);
 
   // -- Navigate in Company/Recruitment
   // navigate(`./${value}/report`, {
@@ -295,10 +298,12 @@ export default function Page_Company_Recruitment_Id_Report(props) {
       renderHeader: () => <span>Status</span>,
       renderCell: (params) => {
         switch (params.value) {
-          case "Not start":
+          case "Pending":
             return <Pending />;
-          case "Finished":
-            return <Completed />;
+          case "Passed":
+            return <Pass />;
+          case "Failed":
+            return <Fail />
         }
       },
     },
@@ -374,7 +379,7 @@ export default function Page_Company_Recruitment_Id_Report(props) {
                 }}
                 onClick={handlePositionIdClick}
               >
-                {positionId}
+                {positionName.length > 25 ? positionName.slice(0,25) + "..." : positionName}
               </Box>{" "}
               - Report
             </Grid>

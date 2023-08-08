@@ -20,7 +20,6 @@ import { filterInterviewList } from "../../utils/filterInterviewList";
 //   token: `Bearer ${user.token}`,
 // }
 function* getAllInterview(action) {
-  console.log("Get All Interview");
   try {
     yield put({ type: "loading/onLoading" });
     const response = yield call(
@@ -56,6 +55,7 @@ function* getAllInterview(action) {
     });
     yield put({ type: "loading/offLoading" });
   } catch (error) {
+    console.log("Error: ", error.message)
     yield put({ type: "loading/offLoading" });
   }
 }
@@ -70,7 +70,6 @@ function* getAllInterview(action) {
 
 function* getInterviewWithFilter(action) {
   yield put({ type: "loading/onLoading" });
-  console.log("Filter By: ", action.payload);
   try {
     const response = yield call(
       axios.get,
@@ -102,6 +101,7 @@ function* getInterviewWithFilter(action) {
     });
     yield put({ type: "loading/offLoading" });
   } catch (error) {
+    console.log("Error: ", error.message)
     yield put({ type: "loading/offLoading" });
   }
 }
