@@ -128,7 +128,8 @@ function* submitCv(action) {
         yield put({ type: 'submitcv/setSubmitcv', payload: reponse.data })
         yield put({ type: 'submitNotify/setSubmitNotify', payload: 'success' })
     } catch (error) {
-        console.log("error")
+        yield put({ type: 'submitNotify/setSubmitNotify', payload: 'errorsubmit' })
+        console.log(error)
     }
 }
 
@@ -145,6 +146,7 @@ function* updatesubmitCv(action) {
         yield put({ type: 'submitNotify/setSubmitNotify', payload: 'updatesuccess' })
         console.log('update', reponse.data);
     } catch (error) {
+        yield put({ type: 'submitNotify/setSubmitNotify', payload: 'errorupdate' })
         console.log(error)
     }
 }

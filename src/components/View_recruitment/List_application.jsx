@@ -3,8 +3,6 @@ import { Grid, Box, Button } from '@mui/material';
 import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import PendingIcon from '@mui/icons-material/Pending';
-import FmdBadIcon from '@mui/icons-material/FmdBad';
-import GradingIcon from '@mui/icons-material/Grading';
 import cleanStore from '../../utils/cleanStore';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
@@ -15,8 +13,6 @@ function QuickSearchToolbar() {
     return (
         <Box
             sx={{
-                // p: 0.5,
-                // pb: 0,
                 display: "flex",
                 justifyContent: "flex-end",
                 alignItems: "flex-end",
@@ -30,8 +26,6 @@ function QuickSearchToolbar() {
 
 const other = {
     autoHeight: true
-    // showCellVerticalBorder: true
-    // showColumnVerticalBorder: true,
 };
 
 const List_application = (props) => {
@@ -40,26 +34,10 @@ const List_application = (props) => {
     const navigate = useNavigate();
     const { recruitmentid } = useParams();
     let [currentTable, setCurrentTable] = useState(0)
-    // const applications = useSelector(state => state.application);
     const dispatch = useDispatch();
-    // useEffect(() => {
-    //     dispatch({ type: 'saga/getApplication' })
-    //     return () => {
-    //         cleanStore(dispatch);
-    //     }
-    // }, [])
-
-    // const detail = useSelector(state => state.position);
-    
-    // const pending1 = props.applications ? props.applications.filter(application => {
-    //     return application.company_status === "Đang chờ"
-    // }) : [];
     const passmain = props.applications ? props.applications.filter(application => {
         return application.company_Status === "Accepted"
     }) : [];
-    // const reject1 = props.applications ? props.applications.filter(application => {
-    //     return application.company_Status === "Đã từ chối"
-    // }) : [];
     const pass = passmain.map((item) => item = {
         ...item,
         fullName: item.user.fullName
@@ -81,10 +59,6 @@ const List_application = (props) => {
         fullName: item.user.fullName
     } )
     console.log("application", props.applications);
-    // console.log("status", pendingmain);
-    // console.log("chờ", pending1);
-    // console.log("đậu", pass1);
-    // console.log("chối", reject1);
     const handleEditClick = (params) => {
         navigate(`/company/recruitment/${recruitmentid}/application/${params.id}`);
     }
@@ -135,15 +109,10 @@ const List_application = (props) => {
     return (
         props.applications &&
         <>
-            {/* <Box sx={{ padding: "0" }}> */}
             <Box
                 display="flex"
-
-                
                 flexDirection="column"
                 sx={{ width: "100%" }}>
-
-
                 <Grid container spacing={2} sx ={{marginBottom: 2, marginTop: 1}} >
                     <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-start" }}>
 
@@ -286,7 +255,6 @@ const List_application = (props) => {
                     />
                 ) : null}
             </Box>
-            {/* </Box> */}
         </>
 
     );

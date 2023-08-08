@@ -13,8 +13,6 @@ import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-
-// import useGetRole from '../../hooks/useGetRole';
 import useGetRole from '../../../hooks/useGetRole';
 import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
@@ -22,33 +20,26 @@ import 'react-toastify/dist/ReactToastify.css';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { getPositionStatus } from '../../../utils/getPositionStatus';
-import cleanStore from '../../../utils/cleanStore';
-import CircularProgress from '@mui/material/CircularProgress';
 import SwitchCameraIcon from '@mui/icons-material/SwitchCamera';
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    // width: 600,
     width: "50%",
     maxHeight: "60%",
     bgcolor: 'background.paper',
-    // // border: '2px solid #000',
-    // // borderRadius: 5,
     boxShadow: 10,
     borderRadius: 3,
-    // p: 4,
     display: "flex",
     flexDirection: "column",
-    // overflowY: "auto"
+
 };
 
 
 const ButtonApply = (props) => {
 
     const navigate = useNavigate();
-    const [showCV, setShowCV] = useState(false);
     const [open, setOpen] = useState(false);
     const [submit, setSubmit] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -56,18 +47,13 @@ const ButtonApply = (props) => {
     const [CV, setCV] = useState(null);
     const handleClose = () => setOpen(false);
     const [helperText, setHelperText] = useState('');
-    // const [applied, setApplied] = useState(null);
-    const [submitstatus, setSubmitstatus] = useState(null);
+    const [submitstatus, setSubmitstatus] = useState(false);
     const [loading, setLoading] = useState(false);
     const [submitclick, setSubmitclick] = useState(false);
     const handleCVChange = (event) => {
         setCV(event.target.value);
         setHelperText('');
     };
-    const handleCloseCV = () => setShowCV(true);
-    // const list_CV_draft = useSelector(state => state.cvlist);
-    // const position = useSelector(state => state.position)
-    // const list_CV = list_CV_draft ? list_CV_draft : []
     const user = useSelector(state => state.user);
     const userid = user ? user.userid : '';
     console.log('idinsaga', userid);
@@ -75,7 +61,6 @@ const ButtonApply = (props) => {
     const { recruitmentid } = useParams();
     const appstatus = useSelector(state => state.applicationStatus);
     const submitNotify = useSelector(state => state.submitNotify);
-    // const statusmain = appstatus ? appstatus : [];
     useEffect(() => {
         if (user !== null) {
             dispatch({
@@ -98,10 +83,6 @@ const ButtonApply = (props) => {
                 console.log('updateappstatus')
                 setSubmitstatus(true);
                 setCV(appstatus[0].cv.cvid);
-
-            }
-            else {
-                setSubmitstatus(false);
             }
         }
     }, [appstatus])
@@ -136,6 +117,32 @@ const ButtonApply = (props) => {
                     theme: "colored",
                 });
             }
+            else if (submitNotify === "errorsubmit"){
+                toast.error('You submitted failed.', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+
+            }
+            else if (submitNotify === "errorupdate"){
+                toast.error('You updated failed.', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+
+            }
             setLoading(false);
             setOpen(false);
             dispatch({ type: 'submitNotify/setSubmitNotify', payload: "no" })
@@ -144,34 +151,18 @@ const ButtonApply = (props) => {
 
         }
     }, [submitNotify])
-    // const countsubmit = useSelector(state => state.countSubmit);
-    // const submitstatus = countsubmit ? countsubmit : '';
-
-    // console.log('appstatus', statusmain);
     let enddate = props.position ? props.position.endDate : '';
-
-    console.log('status', getPositionStatus(enddate));
     let status_applied = getPositionStatus(enddate);
     let role = useGetRole();
-    console.log("hi", role);
-    console.log("Cvlist", props.list_CV);
-
-
     const handleTextClick = (id) => {
         window.open(`/profile/${userid}/cv/${id}`);
     };
-
-
     const hanldebutton = () => {
         setSubmit(true);
     }
     const handlecreate = () => {
         navigate('/profile/cv-create');
     }
-    const submitcv = useSelector(state => state.submitcv);
-    // const error = useSelector(state => state.error);
-
-    // console.log("submit", submitcv);
     console.log("mainid", recruitmentid);
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -185,8 +176,9 @@ const ButtonApply = (props) => {
             else {
                 console.log("hello")
                 if (submitstatus === false) {
-                    console.log('submit');
+                  
                     setSubmitclick(!submitclick)
+                    setSubmitstatus(true)
                     dispatch({
                         type: 'applicationSaga/submitCv',
                         payload: {
@@ -196,21 +188,11 @@ const ButtonApply = (props) => {
                             token: "haha"
                         }
                     })
-                    setSubmitstatus(true)
-                    console.log('finish update')
+                    
                 }
                 else {
-                    console.log('update')
-                    console.log('hielse');
-                    console.log('appwithoutapplication', appstatus);
-                    console.log('app', appstatus[0]);
-                    // console.log('testappid', appstatus[0].applicationId);
-                    // console.log('testcanid', appstatus[0].cv.candidateId);
-                    // console.log('testposid', appstatus[0].position.positionId);
-                    // console.log('dateTime', appstatus[0].dateTime );
-                    // console.log('comstatus',  appstatus[0].company_Status);
-                    // console.log('priority', appstatus[0].candidate_Status);
-                    console.log('testcvid', CV);
+                    
+                    setSubmitstatus(true)
                     dispatch({
                         type: 'applicationSaga/updatesubmitCv',
                         payload: {
@@ -226,18 +208,10 @@ const ButtonApply = (props) => {
                         }
                     })
                     setSubmitclick(!submitclick)
-                    setSubmitstatus(true)
+                    
                 }
-               
-                // setApply(true);
-                setNotice(true);
-                // setCV('')
-                console.log(CV);
+                setNotice(true);           
                 setSubmit(false);
-                // setTimeout(() => {
-                //     setOpen(false);
-                //     setNotice(false);
-                // }, 3000)
             }
         }
         else {
@@ -245,16 +219,17 @@ const ButtonApply = (props) => {
             setHelperText('');
         }
     };
-    console.log('hiappstatus', appstatus);
-    console.log("statussubmitbutton", submitstatus)
+    
     const tabs = 1
-    console.log('appwithoutapplication', appstatus);
+    
+    //
 
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     return (
-        appstatus && submitstatus != null &&
+        // appstatus && submitstatus != null &&
+        appstatus &&
         <>
 
             <Grid container spacing={2} >
@@ -322,9 +297,7 @@ const ButtonApply = (props) => {
                                                                 <Box sx={{ display: "flex", flexDirection: "column" }}>
                                                                     {props.list_CV.map((CV) => (
                                                                         <Button key={CV.cvid} sx={{
-
-                                                                            backgroundColor: "black",
-                                                                            // top right bottom left
+                                                                            backgroundColor: "black",             
                                                                             margin: "0px 0px 6px 8px",
                                                                             ":hover": {
                                                                                 backgroundColor: "grey",

@@ -15,13 +15,9 @@ import dayjs from 'dayjs';
 import './Info_view.css';
 
 const View_detail = (props) => {
-    // console.log("hello" , props.detailposition.description);
-    // console.log("hi", props.detailposition.departmentName);
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
-    const requires = require('../../data/View_recruitment/requires.json');
-    // const languages = require('../../data/View_recruitment/languages.json');
     let left = 5
     let right = 6
     let gap = 1
@@ -30,15 +26,8 @@ const View_detail = (props) => {
     }
     const startDate = props.detailposition ? dayjs(convertDate(props.detailposition.startDate)).format('DD/MM/YYYY') : [];
     const endDate = props.detailposition ? dayjs(convertDate(props.detailposition.endDate)).format('DD/MM/YYYY') : [];
-    console.log("hello", props.detailposition);
-    // console.log("hellode", props.department);
-    console.log("left", left);
-    console.log("skill", props.skill);
-    console.log("isSm", isSm);
-    
     return (
         props.detailposition &&
-        // props.detail &&
         <>
 
             <Box sx={{ display: "flex", flexDirection: "row", marginBottom: 2 }}>
@@ -64,9 +53,7 @@ const View_detail = (props) => {
                 </Grid>
                 <Grid item xs={7} md={right} sx={gridSx}>
                     <Typography variant="h6" sx={{ marginLeft: "5px" }}>
-                        {/* {detailposition[0].positionName} */}
                         {props.detailposition.positionName}
-                        {/* {detail[recruitmentid].PositionName} */}
                     </Typography>
                 </Grid>
             </Box>
@@ -92,12 +79,8 @@ const View_detail = (props) => {
                 </Grid>
                 <Grid item xs={7} md={right} sx={gridSx}>
                     <Typography variant="h6" sx={{ marginLeft: "5px" }}>
-                        {/* {`${props.detailposition.startTime}${' - '}${props.detailposition.endTime}`} */}
-                        {/* {`${detail[recruitmentid].StartDate}${' - '}${detail[recruitmentid].EndDate}`} */}
-                        {/* {`${detailposition.startDate}${' - '}${detailposition.endDate}`} */}
                         {`${startDate}${' - '}${endDate}`}
                     </Typography>
-                    {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`} /> */}
                 </Grid>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row", marginBottom: 2 }}>
@@ -158,12 +141,6 @@ const View_detail = (props) => {
 
                             <Chip key={require.skillId} sx={{ margin: "0px 0px 5px 5px" }} label={require.skillName} variant='outlined' size='medium' color="warning" />
                         ))}
-
-                        {/* {requires.map((require) => (
-
-                        <Chip key={require.id} sx={{ margin: "0px 0px 5px 8px" }} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
-                    ))} */}
-
                     </Stack>
                 </Grid>
             </Box>
