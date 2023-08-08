@@ -1,7 +1,6 @@
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
-import Alert from "@mui/material/Alert";
 
 const RequiredAlert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;

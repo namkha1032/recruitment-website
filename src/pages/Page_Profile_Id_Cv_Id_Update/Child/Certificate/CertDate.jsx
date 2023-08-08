@@ -10,7 +10,6 @@ import BusinessIcon from "@mui/icons-material/Business";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import dayjs from "dayjs";
 
 const DateComp = (prop) => {
 

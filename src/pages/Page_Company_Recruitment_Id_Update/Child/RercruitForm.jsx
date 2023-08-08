@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import recruitInfo from "./RecruitData";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
@@ -61,20 +60,13 @@ function RecruitForm(prop) {
   const newError = useSelector((state) => state.error);
   const userlocal = useSelector((state) => state.user);
   const recruiterId = userlocal.recruiterId;
-  // const skill = skillList ? skillList : [];
-  // const language = languageList ? languageList : [];
-  // const department = departmentList ? departmentList : [];
-  // console.log(positionRequire);
-  // Recruiment comps
   const [RName, setRName] = useState("");
   const [description, setDescription] = useState("");
   const [salary, setSalary] = useState("");
   const [maxHire, setMaxHire] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [departmentChoose, setDepartmentChoose] = useState(
-    recruitInfo.departmentId
-  );
+  const [departmentChoose, setDepartmentChoose] = useState(null);
   const [languages, setLanguages] = useState("");
   const [skill, setSkill] = useState([]);
   const [skillData, setSkillData] = useState([]);
@@ -87,6 +79,51 @@ function RecruitForm(prop) {
   const [addRequire, setAddRequire] = useState([]);
   const [skillOpen, setSkillOpen] = useState(false);
   const [oldRecruiter, setOldRecruiter] = useState("");
+
+  const departments = department.filter(
+    (comp) => comp.departmentId === departmentChoose
+  );
+
+  // Requirement comps
+  const [rId, setRId] = useState(
+    requirement.length > 0 ? requirement.length : 0
+  );
+  const [skillId, setSkillId] = useState(null);
+  const [skillName, setSkillName] = useState("");
+  const [experience, setExperience] = useState(0);
+  const [note, setNote] = useState("Note");
+  const [inputValue, setInputValue] = useState("");
+  // Language comps
+  const [languageName, setLanguageName] = useState("");
+  const lvalues = language.filter((prop) => prop.languageId === languages);
+  let lvalue = lvalues[0] ? lvalues[0].languageName : "";
+  const [lInputValue, setLInputValue] = useState("");
+  // Department comps
+  let express = departments[0] ? true : false;
+  let departmentName = departments[0] ? departments[0].departmentName : "";
+  let departmentId = departments[0] ? departments[0].departmentId : null;
+  let departmentAddress = departments[0] ? departments[0].address : "";
+  let departmentEmail = departments[0] ? departments[0].email : "";
+  let departmentPhone = departments[0] ? departments[0].phone : "";
+  let departmentWeb = departments[0] ? departments[0].website : "";
+  const navigate = useNavigate();
+  //FUNCTION
+  useEffect(() => {
+    if (positionRequire) {
+      setRequirement(
+        positionRequire ? (positionRequire !== [] ? positionRequire : []) : []
+      );
+      setSkill(
+        skillData.filter(
+          (item1) =>
+            !positionRequire.some((item2) => item1.skillId === item2.skillId)
+        )
+      );
+      setBaseRequire(
+        positionRequire ? (positionRequire !== [] ? positionRequire : []) : []
+      );
+    }
+  }, [positionRequire, skillData]);
   const handleSetSkillOpen = () => {
     setSkillOpen(true);
   };
@@ -202,57 +239,6 @@ function RecruitForm(prop) {
       );
     }
   }, [positionInfor]);
-  // console.log(languages);
-  useEffect(() => {
-    if (positionRequire) {
-      setRequirement(
-        positionRequire ? (positionRequire !== [] ? positionRequire : []) : []
-      );
-      setSkill(
-        skillData.filter(
-          (item1) =>
-            !positionRequire.some((item2) => item1.skillId === item2.skillId)
-        )
-      );
-      setBaseRequire(
-        positionRequire ? (positionRequire !== [] ? positionRequire : []) : []
-      );
-    }
-  }, [positionRequire, skillData]);
-  // console.log(requirement);
-  const departments = department.filter(
-    (comp) => comp.departmentId === departmentChoose
-  );
-  // console.log(recruiterId);
-  // console.log(oldRecruiter);
-  // console.log(skill);
-  // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
-  // const [status, setStatus] = useState(recruitInfo.status);
-
-  // Requirement comps
-  const [rId, setRId] = useState(
-    requirement.length > 0 ? requirement.length : 0
-  );
-  const [skillId, setSkillId] = useState(null);
-  const [skillName, setSkillName] = useState("");
-  const [experience, setExperience] = useState(0);
-  const [note, setNote] = useState("Note");
-  const [inputValue, setInputValue] = useState("");
-  // Language comps
-  const [languageName, setLanguageName] = useState("");
-  const lvalues = language.filter((prop) => prop.languageId === languages);
-  let lvalue = lvalues[0] ? lvalues[0].languageName : "";
-  const [lInputValue, setLInputValue] = useState("");
-  // Department comps
-  let express = departments[0] ? true : false;
-  let departmentName = departments[0] ? departments[0].departmentName : "";
-  let departmentId = departments[0] ? departments[0].departmentId : null;
-  let departmentAddress = departments[0] ? departments[0].address : "";
-  let departmentEmail = departments[0] ? departments[0].email : "";
-  let departmentPhone = departments[0] ? departments[0].phone : "";
-  let departmentWeb = departments[0] ? departments[0].website : "";
-  const navigate = useNavigate();
-  //FUNCTION
 
   const handleChange = (event) => {
     if (event.target.value === "") {
@@ -281,8 +267,6 @@ function RecruitForm(prop) {
     setMaxHire(midleScore);
   }
   function handleRequirementAdd() {
-    // console.log(inputValue);
-    // console.log(skillName);
     let arr = skill.filter(
       (comp) =>
         comp.skillName === (inputValue !== null ? inputValue.skillName : "")
@@ -304,7 +288,6 @@ function RecruitForm(prop) {
         notes: note,
         isDeleted: false,
       };
-      // console.log(newRequire);
       setRequirement([...requirement, newRequire]);
       setAddRequire([...addRequire, newRequire]);
       setSkill(skill.filter((prop) => prop.skillId !== skillId));
@@ -316,9 +299,6 @@ function RecruitForm(prop) {
       setInputValue("");
     }
   }
-  // console.log(requirement);
-  // console.log(delRequire);
-  // console.log(addRequire);
   function handleRequirementDelete(id) {
     let delReq = requirement.filter(
       (component) => component.requirementId === id
@@ -333,24 +313,18 @@ function RecruitForm(prop) {
     let delRequirement = baseRequire.filter(
       (prop) => prop.requirementId === id
     );
-    // console.log(delRequirement);
     if (delRequirement[0]) {
-      // console.log("add delete");
       setDelRequire([...delRequire, delRequirement[0]]);
     } else {
-      // console.log("delete add");
       setAddRequire(
         addRequire.filter((component) => component.requirementId !== id)
       );
     }
   }
   function handleLanguageAdd2() {
-    // console.log(lInputValue);
     let arr = language.filter((comp) => comp.languageName === lInputValue);
-    // console.log(arr);
     if (arr[0] === undefined) {
       alert("wrong language");
-      // setLanguageId(null);
       setLanguageName("");
       setLInputValue("");
     }
@@ -360,11 +334,9 @@ function RecruitForm(prop) {
   }
   const handleStart = (date) => {
     setStartDate(date);
-    // console.log(date);
   };
   function handleEnd(date) {
     setEndDate(date);
-    // console.log(date);
   }
 
   let [openAlert, setOpenAlert] = useState(false);
@@ -395,8 +367,6 @@ function RecruitForm(prop) {
     } catch (error) {
       console.log(error);
     }
-    // cleanStore(dispatch);
-    // navigate(`/company/recruitment/${recruitmentid}`);
   }
   function preProcessing() {
     const messArr = [];
@@ -435,7 +405,9 @@ function RecruitForm(prop) {
   }
   return (
     <>
-      { positionInfor===null?<PositionSkeleton/>:
+      {positionInfor === null ? (
+        <PositionSkeleton />
+      ) : (
         <form onSubmit={handleSubmit}>
           <Grid
             container
@@ -558,7 +530,6 @@ function RecruitForm(prop) {
                         setLanguages={setLanguages}
                         setLanguageName={setLanguageName}
                         languageName={languageName}
-                        // setLanguageId={setLanguageId}
                         lvalue={lvalue}
                         handleLanguageAdd={handleLanguageAdd2}
                       />
@@ -572,14 +543,13 @@ function RecruitForm(prop) {
             <Button
               variant="contained"
               className="AddButton"
-              // type="submit"
               onClick={preProcessing}
             >
               Update
             </Button>
           </Grid>
         </form>
-      }
+      )}
       <Snackbar
         open={skillOpen}
         autoHideDuration={3000}
@@ -594,14 +564,11 @@ function RecruitForm(prop) {
         </SkillAlert>
       </Snackbar>
       <Snackbar
-        // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         open={errorSnackbar}
         autoHideDuration={4000}
         onClose={() => {
           setErrorSnackbar(false);
         }}
-        // message="I love snacks"
-        // key={vertical + horizontal}
       >
         <Alert
           variant="filled"

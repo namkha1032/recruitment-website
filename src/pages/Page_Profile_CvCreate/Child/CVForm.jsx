@@ -37,44 +37,11 @@ function CVForm() {
   const languageList = useSelector((state) => state.language);
   const newError = useSelector((state) => state.error);
   const userlocal = useSelector((state) => state.user);
-
   let [errorSnackbar, setErrorSnackbar] = useState(false);
   ////////////////////////////////////////////////////
-  useEffect(() => {
-    if (newError.status == "no") {
-      setTimeout(() => {
-        const idToNavigate = newError.message;
-        cleanStore(dispatch);
-        navigate(`/profile/${canid}/cv/${idToNavigate}`);
-      }, 2000);
-    }
-    if (newError.status == "yes") {
-      setErrorSnackbar(true);
-      setTimeout(() => {
-        setErrorSnackbar(false);
-        dispatch({
-          type: "error/setError",
-          payload: { status: "idle", message: "" },
-        });
-      }, 5000);
-    }
-  }, [newError]);
-
   const [skillData, setSkillData] = useState([]);
   const [skillOption, setSkillOption] = useState([]);
   const [languageData, setLanguage] = useState([]);
-  useEffect(() => {
-    if (languageList) {
-      setLanguage(
-        languageList ? (languageList !== [] ? languageList : []) : []
-      );
-    }
-    if (skillList) {
-      setSkillData(skillList ? (skillList !== [] ? skillList : []) : []);
-      setSkillOption(skillList ? (skillList !== [] ? skillList : []) : []);
-    }
-  }, [skillList, languageList]);
-  const [loading, setLoading] = useState(false);
   const [cvtitle, setTitle] = useState("");
   const [intro, setIntro] = useState("");
   const [education, setEducation] = useState("");
@@ -95,23 +62,50 @@ function CVForm() {
   const [skillId, setSkillId] = useState(null);
   const [Sid, setSid] = useState(0);
   const [SExp, setSExp] = useState(0);
+
+  const [sInputValue, setSInputValue] = useState("");
+  const [pdfFile, setPdfFile] = useState(null);
+  const [viewPdf, setViewPdf] = useState(null);
+  const [pdf, setPdf] = useState(null);
+
+  let [openAlert, setOpenAlert] = useState(false);
+  const [skillOpen, setSkillOpen] = useState(false);
+  //FUNCTION
+  useEffect(() => {
+    if (languageList) {
+      setLanguage(
+        languageList ? (languageList !== [] ? languageList : []) : []
+      );
+    }
+    if (skillList) {
+      setSkillData(skillList ? (skillList !== [] ? skillList : []) : []);
+      setSkillOption(skillList ? (skillList !== [] ? skillList : []) : []);
+    }
+  }, [skillList, languageList]);
   function handleSExp(event) {
     let midleScore =
       parseFloat(event.target.value) >= 0 ? parseFloat(event.target.value) : 0;
     setSExp(midleScore);
   }
-  const [sInputValue, setSInputValue] = useState("");
-  // Language comps
-  // const [lId, setLId] = useState(0);
-  // const [languageId, setLanguageId] = useState(null);
-  // const [languageName, setLanguageName] = useState("");
-  // const [lInputValue, setLInputValue] = useState("");
-  // PDF
-  const [pdfFile, setPdfFile] = useState(null);
-  const [viewPdf, setViewPdf] = useState(null);
-  const [pdf, setPdf] = useState(null);
-
-  //FUNCTION
+  useEffect(() => {
+    if (newError.status == "no") {
+      setTimeout(() => {
+        const idToNavigate = newError.message;
+        cleanStore(dispatch);
+        navigate(`/profile/${canid}/cv/${idToNavigate}`);
+      }, 2000);
+    }
+    if (newError.status == "yes") {
+      setErrorSnackbar(true);
+      setTimeout(() => {
+        setErrorSnackbar(false);
+        dispatch({
+          type: "error/setError",
+          payload: { status: "idle", message: "" },
+        });
+      }, 5000);
+    }
+  }, [newError]);
   function handleTitle(e) {
     setTitle(e.target.value);
   }
@@ -199,7 +193,7 @@ function CVForm() {
     }
     setOpen(false);
   };
-  const [skillOpen, setSkillOpen] = useState(false);
+
   const handleSetSkillOpen = () => {
     setSkillOpen(true);
   };
@@ -211,7 +205,6 @@ function CVForm() {
   };
   const canid = userlocal.candidateId
 
-  let [openAlert, setOpenAlert] = useState(false);
   async function handleSubmit(e) {
     let token = `Bearer ${userlocal.token}`;
     const config = {
@@ -378,7 +371,6 @@ function CVForm() {
           />
         </Grid>
       </Grid>
-      {loading && <p>Loading...</p>}
       <Snackbar
         open={skillOpen}
         autoHideDuration={3000}
@@ -402,14 +394,11 @@ function CVForm() {
         </CertAlert>
       </Snackbar>
       <Snackbar
-        // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         open={errorSnackbar}
         autoHideDuration={4000}
         onClose={() => {
           setErrorSnackbar(false);
         }}
-        // message="I love snacks"
-        // key={vertical + horizontal}
       >
         <Alert
           variant="filled"

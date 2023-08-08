@@ -31,12 +31,6 @@ function Box1(prop) {
               onChange={prop.setDescription}
               className="QuillCss"
             />
-            {/* <InputText
-            state={"Description"}
-            handleState={prop.handleDescription}
-            width="98%"
-            value={prop.description}
-          /> */}
           </Box>
         </Grid>
       </Box>

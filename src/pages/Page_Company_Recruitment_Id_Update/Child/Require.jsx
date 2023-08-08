@@ -5,8 +5,6 @@ import { Box } from "@mui/material";
 function Require(prop) {
   return (
     <>
-      {/* <div className="parentFlex">
-        <div className="leftFlex"> */}
       <Box sx={{ width: "100%", margin: "auto" }}>
         <RequireUlList
           skill={prop.skill}
@@ -27,8 +25,6 @@ function Require(prop) {
           setSkillId={prop.setSkillId}
           onPress={prop.handleRequirementAdd}
         />
-        {/* </div>
-      </div> */}
       </Box>
     </>
   );
