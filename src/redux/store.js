@@ -72,6 +72,7 @@ import submitNotifySlice from "./reducer/submitNotifyReducer";
 import candidateInfoSlice from "./reducer/candidateInfoReducer";
 import statusApplicationSlice from "./reducer/statusApplicationReducer";
 import interviewStartSlice from "./reducer/interviewStartReducer";
+import eventErrorSlice from "./reducer/eventErrorReducer";
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
     reducer: {
@@ -138,7 +139,7 @@ const store = configureStore({
         submitNotify: submitNotifySlice.reducer,
         candidateInfo: candidateInfoSlice.reducer,
         interviewStart: interviewStartSlice.reducer,
-
+        eventError: eventErrorSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]

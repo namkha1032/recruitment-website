@@ -39,7 +39,7 @@ function* getEventList(action) {
         headers: { Authorization: action.payload.token },
       }
     );
-    const data = formatEventList(response.data, candidatesEvent.data,response1.data);
+    const data = formatEventList(response.data, candidatesEvent.data, response1.data);
     yield put({ type: "eventList/setEventList", payload: data });
     yield put({ type: "loading/offLoading" });
     // yield put({
@@ -73,7 +73,7 @@ function* getEventFooter() {
       axios.get,
       `/data/image.json`
     );
-    const data = formatEventFooter(response.data,response1.data);
+    const data = formatEventFooter(response.data, response1.data);
     yield put({ type: "eventFooter/setEventFooter", payload: data });
     yield put({ type: "loading/offLoading" });
   } catch (error) {
@@ -92,7 +92,7 @@ function* getEventListWithFilter(action) {
         headers: { Authorization: action.payload.token },
       }
     );
-    
+
     const response1 = yield call(
       axios.get,
       `/data/image.json`
@@ -171,7 +171,12 @@ function* getEvent(action) {
     // console.log("new object: ", newObj);
     yield put({ type: "event/setEvent", payload: newObj });
   } catch (error) {
+    console.log("Error: ", error.message)
     // console.log(error);
+
+    if (error.response.request.status === 400 || error.response.request.status === 404) {
+      yield put({ type: 'eventError/onError', payload: error.response.request.status })
+    }
   }
 }
 
@@ -220,6 +225,7 @@ function* getAllCandidateOfEvent(action) {
       payload: formatArr,
     });
   } catch (error) {
+    console.log("Error: ", error.message)
     // console.log(error);
   }
 }
@@ -267,6 +273,7 @@ function* postEvent(action) {
     // console.log("eId: ", eventId);
     yield put({ type: "eventNavigate/onSuccess", payload: eventId });
   } catch (error) {
+    console.log("Error: ", error.message)
     // console.log(error);
   }
 }
@@ -320,6 +327,7 @@ function* putEvent(action) {
     // console.log("eId: ", EventId);
     yield put({ type: "eventNavigate/onSuccess", payload: EventId });
   } catch (error) {
+    console.log("Error: ", error.message)
     // console.log(error);
   }
 }
@@ -339,6 +347,7 @@ function* getCandidateIdRegisterEvent(action) {
     // console.log("Debug2: ", response1.candidateId)
   }
   catch (error) {
+    console.log("Error: ", error.message)
     // console.log(error)
   }
 }
@@ -359,6 +368,7 @@ function* getRecruiterIdCreateEvent(action) {
     // console.log("DebugB: ", response1.recruiterId)
   }
   catch (error) {
+    console.log("Error: ", error.message)
     // console.log(error)
   }
 }
@@ -389,11 +399,17 @@ function* postCandidateJoinEvent(action) {
     // const eventId = eventList.data.filter(item => item.eventName === eventName && item.description === description)[0].eventId
     // console.log('eId: ', eventId)
     yield put({ type: "eventIdStatus/onSuccess", payload: "Register event" })
-    yield put({ type: "eventSaga/getEvent", payload: eventId })
+    yield put({
+      type: "eventSaga/getEvent", payload: {
+        eventid: eventId,
+        token: "abcdef",
+      },
+    })
     yield put({ type: "eventRegistered/setEventRegistered", payload: true })
     yield put({ type: "error/setError", payload: { status: "no", message: "" } })
   }
   catch (error) {
+    console.log("Error: ", error.message)
     // console.log(error)
     yield put({ type: "eventIdStatus/onError", payload: error.message })
   }
@@ -418,6 +434,7 @@ function* deleteCandidateJoinEvent(action) {
     yield put({ type: "error/setError", payload: { status: "no", message: "" } })
   }
   catch (error) {
+    console.log("Error: ", error.message)
     // console.log(error)
   }
 }
@@ -441,7 +458,7 @@ function* checkCandidateJoinEvent(action) {
     }
   }
   catch (error) {
-
+    console.log("Error: ", error.message)
   }
 }
 // ------------------------------------------------------------------------------------------------------------------------
