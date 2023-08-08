@@ -56,11 +56,11 @@ const ButtonApply = (props) => {
     };
     const user = useSelector(state => state.user);
     const userid = user ? user.userid : '';
-    console.log('idinsaga', userid);
     const dispatch = useDispatch();
     const { recruitmentid } = useParams();
     const appstatus = useSelector(state => state.applicationStatus);
     const submitNotify = useSelector(state => state.submitNotify);
+    const applicationStatusError = useSelector(state => state.applicationStatusError);
     useEffect(() => {
         if (user !== null) {
             dispatch({
@@ -152,7 +152,9 @@ const ButtonApply = (props) => {
         }
     }, [submitNotify])
     let enddate = props.position ? props.position.endDate : '';
-    let status_applied = getPositionStatus(enddate);
+    let status_enddate = getPositionStatus(enddate);
+    let startdate = props.position ? props.position.startDate : '';
+    let status_startdate = getPositionStatus(startdate);
     let role = useGetRole();
     const handleTextClick = (id) => {
         window.open(`/profile/${userid}/cv/${id}`);
@@ -233,7 +235,7 @@ const ButtonApply = (props) => {
         <>
 
             <Grid container spacing={2} >
-                {(role == "candidate" && status_applied != true) ? (
+                {(role == "candidate" && status_enddate != true && status_startdate != false) ? (
                     <>
                         {(appstatus.length > 0 && (appstatus[0].company_Status == "Pending" || appstatus[0].company_Status == "Rejected")) || (appstatus.length == 0) ? (
                             <>

@@ -25,6 +25,8 @@ import useGetRole from '../../hooks/useGetRole';
 import StatusPostion from './StatusPosittion/StatusPosition';
 import MissingPage from '../MissingPage/MissingPage';
 import Info_viewSkeleton from './TestSkeleton/Info_viewSkeleton';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const Info_view = (props) => {
     const { recruitmentid } = useParams();
     console.log("number", recruitmentid);
@@ -67,16 +69,20 @@ const Info_view = (props) => {
             cleanStore(dispatch);
         }
     }, [])
-    const error = useSelector(state => state.positionError)
+    const error = useSelector(state => state.positionError);
+    const cvListError = useSelector( state => state.cvListError);
+    const applicationError = useSelector(state => state.applicationError);
     console.log('.....', error);
     useEffect(() => {
         if (error.status === 'error') {
-            if (error.message === 400 || error.message === 404) {
+            if (error.message === 400 || error.message === 404 || error.message === 'error' ) {
                 setPage(false);
                 dispatch({ type: 'positionError/onReset' })
             }
         }
     }, [error])
+    
+
     const skill = useSelector(state => state.skill);
 
     let left = 5
@@ -253,12 +259,24 @@ const Info_view = (props) => {
                                     </Box>
                                 </Grid>
                             </Grid>
+                            <ToastContainer
+                                    position="top-center"
+                                    autoClose={5000}
+                                    hideProgressBar={false}
+                                    newestOnTop={false}
+                                    closeOnClick
+                                    rtl={false}
+                                    pauseOnFocusLoss
+                                    draggable
+                                    pauseOnHover={false}
+                                    theme="colored"
+                                />
                         </>
                     )
                     :
                     (
                         <>
-                            <Info_viewSkeleton tabs ={props.tabs} />
+                            <Info_viewSkeleton tabs={props.tabs} />
                         </>
                     )}
             </>

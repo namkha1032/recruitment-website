@@ -21,7 +21,6 @@ import CV from "../../components/CV/CV"
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { formatDate } from "../../utils/formatDate";
 import cleanStore from "../../utils/cleanStore";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -29,6 +28,8 @@ import { convertDate } from "../../utils/convertDate";
 import dayjs from 'dayjs';
 import CircularProgress from '@mui/material/CircularProgress';
 import MissingPage from "../../components/MissingPage/MissingPage";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const Page_Interview_Id = () => {
     const user = useSelector(state => state.user)
     const navigate = useNavigate();
@@ -54,7 +55,7 @@ const Page_Interview_Id = () => {
     }, [])
     useEffect(() => {
         if (interviewerror.status === 'error') {
-            if (interviewerror.message === 400 || interviewerror.message === 404) {
+            if (interviewerror.message === 400 || interviewerror.message === 404 || interviewerror.message === 'Not found') {
 
                 setPage(false);
                 dispatch({ type: 'interviewError/onReset' })
@@ -396,6 +397,18 @@ const Page_Interview_Id = () => {
 
                                 </Grid>
                             </Grid >
+                            <ToastContainer
+                                position="top-center"
+                                autoClose={5000}
+                                hideProgressBar={false}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover={false}
+                                theme="colored"
+                            />
                         </>
                     ) :
                     (

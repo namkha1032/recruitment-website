@@ -398,6 +398,7 @@ function* postCandidateJoinEvent(action) {
   }
   catch (error) {
     // console.log(error)
+    
     yield put({ type: "eventIdStatus/onError", payload: error.message })
   }
 }

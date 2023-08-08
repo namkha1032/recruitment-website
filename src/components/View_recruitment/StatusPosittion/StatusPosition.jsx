@@ -14,8 +14,15 @@ const StatusPostion = (props) => {
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     let enddate = props.detailposition ? props.detailposition.endDate : '';
-    let status = getPositionStatus(enddate);
-    console.log('status', getPositionStatus(enddate));
+    const startdate = props.detailposition ? props.detailposition.startDate : '';
+    let status_enddate = getPositionStatus(enddate);
+    let status_startdate = getPositionStatus(startdate);
+    console.log('start',startdate );
+    console.log('end', enddate);
+    console.log('status_startdate', status_startdate );
+    console.log('status_enddate', status_enddate );
+
+    
     return (
         props.detailposition &&
         <>
@@ -28,7 +35,7 @@ const StatusPostion = (props) => {
                                 Status
                             </Typography>
                         ) : (
-                            <Typography variant="h6"  sx={{ marginLeft: "5px" }}>
+                            <Typography variant="h6" sx={{ marginLeft: "5px" }}>
                                 Sta
                             </Typography>
                         )}
@@ -41,16 +48,28 @@ const StatusPostion = (props) => {
                 </Grid>
                 <Grid item xs={7} md={right} sx={gridSx}>
 
-                    {status == true || props.detailposition.isDeleted == false ? (
+                    {props.detailposition.isDeleted == false ? (
                         <>
-                            <Typography variant="h6" sx={{color: "blue", marginLeft: "8px"}}>
-                                Active
-                            </Typography>
-                           
+                            {(status_enddate == false) && (status_startdate == true) ?
+                                (
+                                    <Typography variant="h6" sx={{ color: "blue", marginLeft: "8px" }}>
+                                        Active
+                                    </Typography>
+                                )
+                                :
+                                (
+                                    <>
+                                        <Typography variant="h6" sx={{ color: "red", marginLeft: "8px" }}>
+                                            Inactive
+                                        </Typography>
+                                    </>
+                                )}
+
                         </>
+
                     ) : (
                         <>
-                            <Typography variant="h6" sx={{color: "red", marginLeft: "8px"}}>
+                            <Typography variant="h6" sx={{ color: "red", marginLeft: "8px" }}>
                                 Inactive
                             </Typography>
                         </>
