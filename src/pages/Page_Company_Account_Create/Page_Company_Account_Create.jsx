@@ -95,7 +95,7 @@ const Page_Company_Account_Create = () => {
     }, [dispatch]);
 
     return (
-        <Card raised="true" sx={{padding: 5, boxShadow: 5, mt: '5vh'}}>
+        <Card raised={true} sx={{padding: 5, boxShadow: 5, mt: '5vh'}}>
             <Grid container rowSpacing={2.5} alignItems="center">
                 <Grid item xs={12} md={1}>
                     <AccountCircleIcon sx={isSm ? {fontSize: 80} : {fontSize: 60}}/>
