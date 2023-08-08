@@ -36,7 +36,7 @@ const CV = ({ cvid,page }) => {
   const cv = useSelector((state) => state.cv);
   const candidate = useSelector((state) => state.candidate);
   const user = useSelector(state => state.user)
-  // const {profileid} = useParams()
+  const {profileid} = useParams()
   // console.log(user)
   useEffect(() => {
     dispatch({ type: "cvSaga/getCv", payload: {cvid:cvid,token:user.token,userid:profileid} });
