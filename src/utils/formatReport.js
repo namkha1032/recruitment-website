@@ -104,13 +104,13 @@ export function formatReport(input, categorys) {
       CandidateUserId: element.application.cv.candidate.userId,
       ApplyDate: element.application.dateTime,
       InterviewDate: element.itrsinterview.dateInterview,
-      Status: element.candidate_Status,
+      Status: element.company_Status,
       Score: element.candidate_Status === "Not start" ? null : roundToTwo(totalScore),
       TechnologyScore: roundToTwo(techScore),
       LanguageScore: roundToTwo(langScore),
       SoftSkillScore: roundToTwo(softScore),
+      Sts: element.candidate_Status,
     };
   });
-  console.log("==========", output)
   return output;
 }

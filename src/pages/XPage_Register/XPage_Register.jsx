@@ -81,7 +81,7 @@ const XPage_Register = () => {
       else {
         setCurrentIndex(currentIndex + 1);
       }
-    }, 6000)
+    }, 15000)
     
     return () => clearInterval(intervalId);
   }, [currentIndex])
@@ -344,14 +344,16 @@ const XPage_Register = () => {
                     InputProps={{
                       disableUnderline: true,
                       endAdornment: (
-                        <AccountCircleOutlinedIcon
-                          sx={{
-                            position: "absolute",
-                            right: "8px",
-                            color: validFullName ? "black" : "red",
-                            fontSize: "1.2em",
-                          }}
-                        />
+                        <InputAdornment position="end">
+                          <AccountCircleOutlinedIcon
+                            sx={{
+                              position: "absolute",
+                              right: "0px",
+                              color: validFullName ? "black" : "red",
+                              fontSize: "1.2em",
+                            }}
+                          />
+                        </InputAdornment>
                       ),
                     }}
                     sx={{
@@ -427,14 +429,16 @@ const XPage_Register = () => {
                     InputProps={{
                       disableUnderline: true,
                       endAdornment: (
-                        <AccountCircleOutlinedIcon
-                          sx={{
-                            position: "absolute",
-                            right: "8px",
-                            color: validUsername ? "black" : "red",
-                            fontSize: "1.2em",
-                          }}
-                        />
+                        <InputAdornment position="end">
+                          <AccountCircleOutlinedIcon
+                            sx={{
+                              position: "absolute",
+                              right: "0px",
+                              color: validUsername ? "black" : "red",
+                              fontSize: "1.2em",
+                            }}
+                          />
+                        </InputAdornment>
                       ),
                       sx: {
                         color: "#000",
@@ -485,7 +489,7 @@ const XPage_Register = () => {
                         lineHeight="20px"
                         paddingLeft={"5px"}
                       >
-                        Username must be 3-20 characters long
+                        Username must be 3-20 characters long and not contain any special characters
                       </Typography>
                     </Box>
                   </Grid>
@@ -515,15 +519,17 @@ const XPage_Register = () => {
                     InputProps={{
                       disableUnderline: true,
                       endAdornment: (
-                        <MailOutline
-                          sx={{
-                            position: "absolute",
-                            right: "8px",
-                            color: validEmail ? "black" : "red",
-                            fontSize: "1.2em",
-                            //top: '20px',
-                          }}
-                        />
+                        <InputAdornment position="end">
+                          <MailOutline
+                            sx={{
+                              position: "absolute",
+                              right: "0px",
+                              color: validEmail ? "black" : "red",
+                              fontSize: "1.2em",
+                              //top: '20px',
+                            }}
+                          />
+                        </InputAdornment>
                       ),
                       sx: {
                         color: "#000",
@@ -613,7 +619,7 @@ const XPage_Register = () => {
                               <VisibilityOutlinedIcon
                                 sx={{
                                   position: "absolute",
-                                  right: "8px",
+                                  right: "0px",
                                   color: validPassword ? "black" : "red",
                                   fontSize: "0.9em",
                                   //top: '20px',
@@ -623,7 +629,7 @@ const XPage_Register = () => {
                               <VisibilityOffOutlinedIcon
                                 sx={{
                                   position: "absolute",
-                                  right: "8px",
+                                  right: "0px",
                                   color: validPassword ? "black" : "red",
                                   fontSize: "0.9em",
                                   //top: '20px',

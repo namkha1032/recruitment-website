@@ -12,7 +12,6 @@ import { getQuestionSkillInfo } from "../../utils/getQuestionSkillInfo";
 //   token: `Bearer ${user.token}`
 // }
 function* getAllQuestion(action) {
-  console.log("GET ALL Question");
   try {
     yield put({ type: "loading/onLoading" });
     // yield call(delay, 1500)
@@ -64,7 +63,6 @@ function* getAllQuestion(action) {
       skills.data,
       languages.data
     );
-    console.log(data);
     yield put({ type: "questionList/setQuestionList", payload: data });
     yield put({ type: "loading/offLoading" });
     // yield put({
@@ -75,6 +73,7 @@ function* getAllQuestion(action) {
     //   },
     // });
   } catch (error) {
+    console.log("Error: ", error.message)
     // yield put({
     //   type: "error/setError",
     //   payload: {
@@ -91,7 +90,6 @@ function* getAllQuestion(action) {
 }
 
 function* getQuestionListWithFilter(action) {
-  console.log("FILTER BY: ", action.payload);
   try {
     yield put({ type: "loading/onLoading" });
     // yield call(delay, 1500)
@@ -156,6 +154,7 @@ function* getQuestionListWithFilter(action) {
     //   },
     // });
   } catch (error) {
+    console.log("Error: ", error.message)
     // yield put({
     //   type: "error/setError",
     //   payload: {
@@ -179,7 +178,6 @@ function* getQuestionListWithFilter(action) {
 // }
 
 function* postQuestion(action) {
-  console.log("POST: ", action.payload);
   try {
     yield put({
       type: "status/onLoading",
@@ -260,6 +258,7 @@ function* postQuestion(action) {
     //   },
     // });
   } catch (error) {
+    console.log("Error: ", error.message)
     yield put({ type: "loading/offLoading" });
     yield put({
       type: "status/onError",
@@ -283,7 +282,6 @@ function* postQuestion(action) {
 //   }
 
 function* putQuestion(action) {
-  console.log("PUT: ", action.payload);
   try {
     yield put({
       type: "status/onLoading",
@@ -324,6 +322,7 @@ function* putQuestion(action) {
 
     // Category Not Change
     if (ques_old.data[0].categoryQuestionId === ques_draft.CategoryId) {
+      console.log("Helllloooooo")
       const quesId = yield call(
         axios.put,
         `https://leetun2k2-001-site1.gtempurl.com/api/Question/${action.payload.QuestionId}`,
@@ -369,7 +368,6 @@ function* putQuestion(action) {
     }
     // Category Change
     else {
-      console.log("HELLLOOOOO")
       const quesId = yield call(
         axios.put,
         `https://leetun2k2-001-site1.gtempurl.com/api/Question/${action.payload.QuestionId}`,
@@ -447,6 +445,7 @@ function* putQuestion(action) {
     //     message: "message" in error ? error.message : error.response.data,
     //   },
     // });
+    console.log("Error: ", error.message)
     yield put({ type: "loading/offLoading" });
     yield put({
       type: "status/onError",
@@ -461,7 +460,6 @@ function* putQuestion(action) {
 // }
 
 function* deleteQuestion(action) {
-  console.log("DELETE: ", action.payload);
   try {
     // Delete QuestionSkill (if have)
     yield put({
@@ -529,6 +527,7 @@ function* deleteQuestion(action) {
     //   },
     // });
   } catch (error) {
+    console.log("Error: ", error.message)
     // yield put({
     //   type: "error/setError",
     //   payload: {

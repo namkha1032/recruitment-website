@@ -57,9 +57,9 @@ const ButtonApply = (props) => {
     const handleClose = () => setOpen(false);
     const [helperText, setHelperText] = useState('');
     // const [applied, setApplied] = useState(null);
-    const [submitstatus, setSubmitstatus] = useState(false);
+    const [submitstatus, setSubmitstatus] = useState(null);
     const [loading, setLoading] = useState(false);
-
+    const [submitclick, setSubmitclick] = useState(false);
     const handleCVChange = (event) => {
         setCV(event.target.value);
         setHelperText('');
@@ -86,7 +86,12 @@ const ButtonApply = (props) => {
                 },
             })
         }
-    }, [submitstatus])
+    }, [submitclick])
+    useEffect(() => {
+        return () => {
+            dispatch({ type: "applicationStatus/setApplicationStatus", payload: null })
+        }
+    }, [])
     useEffect(() => {
         if (appstatus !== null) {
             if (appstatus.length > 0) {
@@ -94,7 +99,7 @@ const ButtonApply = (props) => {
                 setCV(appstatus[0].cv.cvid);
 
             }
-            else{
+            else {
                 setSubmitstatus(false);
             }
         }
@@ -118,7 +123,7 @@ const ButtonApply = (props) => {
                     theme: "colored",
                 });
             }
-            else if (submitNotify === "updatesuccess"){
+            else if (submitNotify === "updatesuccess") {
                 toast.success('You switched successfully.', {
                     position: "top-center",
                     autoClose: 5000,
@@ -145,14 +150,14 @@ const ButtonApply = (props) => {
     let enddate = props.position ? props.position.endDate : '';
 
     console.log('status', getPositionStatus(enddate));
-    let status = getPositionStatus(enddate);
+    let status_applied = getPositionStatus(enddate);
     let role = useGetRole();
     console.log("hi", role);
     console.log("Cvlist", props.list_CV);
 
 
     const handleTextClick = (id) => {
-        window.open(`/profile/:profileid/cv/${id}`);
+        window.open(`/profile/${userid}/cv/${id}`);
     };
 
 
@@ -179,6 +184,7 @@ const ButtonApply = (props) => {
             else {
                 console.log("hello")
                 if (submitstatus === false) {
+                    setSubmitclick(!submitclick)
                     dispatch({
                         type: 'applicationSaga/submitCv',
                         payload: {
@@ -188,6 +194,7 @@ const ButtonApply = (props) => {
                             token: "haha"
                         }
                     })
+                   
                 }
                 else {
                     console.log('hielse');
@@ -214,6 +221,7 @@ const ButtonApply = (props) => {
                             token: "haha"
                         }
                     })
+                    setSubmitclick(!submitclick)
                 }
                 setSubmitstatus(true)
                 // setApply(true);
@@ -241,16 +249,16 @@ const ButtonApply = (props) => {
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     return (
-        appstatus &&
+        appstatus && submitstatus != null &&
         <>
 
             <Grid container spacing={2} >
-                {(role == "candidate" && status != true) ? (
+                {(role == "candidate" && status_applied != true) ? (
                     <>
                         {(appstatus.length > 0 && (appstatus[0].company_Status == "Pending" || appstatus[0].company_Status == "Rejected")) || (appstatus.length == 0) ? (
                             <>
                                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
-                                    {submitstatus === false ? (
+                                    {submitstatus === false && (
                                         <Button sx={{
                                             backgroundColor: "black",
                                             ":hover": {
@@ -259,19 +267,17 @@ const ButtonApply = (props) => {
                                         }} size="medium" variant='contained' onClick={handleOpen}>
                                             <InsertDriveFileIcon></InsertDriveFileIcon>  Apply
                                         </Button>
-                                    ) : (
-                                        <>
+                                    )}
 
-                                            <Button sx={{
-                                                backgroundColor: "black",
-                                                ":hover": {
-                                                    backgroundColor: "grey",
-                                                }
-                                            }} size="medium" variant='contained' onClick={handleOpen}>
-                                                <SwitchCameraIcon sx={{ marginRight: 1 }}></SwitchCameraIcon>  Switch CV
-                                            </Button>
-
-                                        </>
+                                    {(submitstatus === true) && (loading === false) && (
+                                        <Button sx={{
+                                            backgroundColor: "black",
+                                            ":hover": {
+                                                backgroundColor: "grey",
+                                            }
+                                        }} size="medium" variant='contained' onClick={handleOpen}>
+                                            <SwitchCameraIcon sx={{ marginRight: 1 }}></SwitchCameraIcon>  Switch CV
+                                        </Button>
                                     )}
 
                                 </Grid>

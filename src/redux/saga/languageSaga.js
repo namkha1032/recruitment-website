@@ -23,6 +23,7 @@ function* getLanguage(action) {
     //   },
     // });
   } catch (error) {
+    console.log("Error: ", error.message)
     // yield put({
     //   type: "error/setError",
     //   payload: {

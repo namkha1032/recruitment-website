@@ -58,7 +58,7 @@ export function reportStatistic(input) {
   let langScore = [];
   let softScore = [];
   for (let i = 0; i < input.length; i++) {
-    if (input[i].Status === "Finished") {
+    if (input[i].Sts === "Finished") {
       generalScore.push(input[i].Score);
       techScore.push(input[i].TechnologyScore);
       langScore.push(input[i].LanguageScore);

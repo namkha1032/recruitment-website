@@ -127,7 +127,7 @@ export default function ChooseList(prop) {
         <Grid item xs={isMd?3:(isSm?6:12)}>
           <NotRInputText
             headerIcon={<TimerIcon />}
-            state={"Experiece(Year)"}
+            state={"Experience(Year)"}
             width="100%"
             type="number"
             value={prop.experience}

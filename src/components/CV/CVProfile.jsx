@@ -90,7 +90,7 @@ import cleanStore from "../../utils/cleanStore";
                     
                       }}
                     >
-                      <Box m={0} component='h4'>{skill.skillName} • 1 năm kinh nghiệm</Box>
+                      <Box m={0} component='h4'>{skill.skillName} • {skill.experienceYear} năm kinh nghiệm</Box>
                       <Box>{skill.description}</Box> 
                     </Box>
                   ))}
@@ -170,7 +170,7 @@ import cleanStore from "../../utils/cleanStore";
   
            <Box p={3}>
           <Box m={0} component='h2' textAlign='center'> CV PDF</Box>
-          <iframe style={{width:'100%',height:'800px'}} src="/data/2019_MT_KTM.pdf" ></iframe>
+          <iframe style={{width:'100%',height:'800px'}} src="/data/CA.pdf" ></iframe>
         </Box>
           </GigaCard>
           </Grid>}

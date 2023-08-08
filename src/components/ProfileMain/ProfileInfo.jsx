@@ -69,14 +69,13 @@ const ProfileInfo = () => {
     }
     setOpen(false);
   };
-  console.log(birth);
+
   function handleSave() {
     if (
       name === "" ||
       address === "" ||
       phone === "" ||
-      !birth ||
-      isNaN(birth.date())
+      birth.isAfter(dayjs('01-01-2099')) || birth.isBefore(dayjs('01-01-1900'))
     ) {
       setFaild(true);
       setOpen(true);
@@ -100,7 +99,8 @@ const ProfileInfo = () => {
   const handleEdit = () => {
     setBlock(false);
   };
-  console.log(profile);
+  console.log(birth.isAfter(dayjs('01-01-2099')) || birth.isBefore(dayjs('01-01-1900')));
+  
   return (
     <>
       {" "}
@@ -111,7 +111,12 @@ const ProfileInfo = () => {
           elevation={6}
           variant="filled"
         >
-          {faild ? <> Không thành công</> : <>Thành công !</>}
+          {faild ? <> 
+            {(name === '' || phone === '' || address === '') && <> Please fill in the required information {name === '' ? "(Full Name)" : ''} {address === ''? "(Address)" :""} {phone ===''? "(Phone Number)" : ''}.<br></br></>}
+            
+            {birth.isAfter(dayjs('01-01-2099')) || birth.isBefore(dayjs('01-01-1900')) ? "Date of birth is valid." :""}
+            
+            </> : <>Success!</>}
         </Alert>
       </Snackbar>
       <Box>
@@ -147,6 +152,8 @@ const ProfileInfo = () => {
               >
                 <Person />
                 <TextField
+    
+                  error={name==="" && profileid === user.userid}
                   fullWidth
                   InputProps={{ readOnly: block }}
                   size="small"
@@ -171,8 +178,11 @@ const ProfileInfo = () => {
                   >
                     <DemoContainer components={["DatePicker", "DatePicker"]}>
                       <DatePicker
+                      
                         format="DD/MM/YYYY"
                         label="Birth"
+                        minDate={dayjs('01-01-1900')}
+                        maxDate={dayjs('01-01-2099')}
                         value={birth}
                         readOnly={block}
                         height=""
@@ -214,6 +224,8 @@ const ProfileInfo = () => {
 
                 <TextField
                   fullWidth
+           
+                  error={phone==="" && profileid === user.userid}
                   InputProps={{ readOnly: block }}
                   size="small"
                   label="Phone"
@@ -233,6 +245,7 @@ const ProfileInfo = () => {
 
                 <TextField
                   fullWidth
+                  error={address==="" && profileid === user.userid}
                   InputProps={{ readOnly: block }}
                   multiline
                   size="small"

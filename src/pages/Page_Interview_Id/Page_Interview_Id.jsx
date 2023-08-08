@@ -313,7 +313,7 @@ const Page_Interview_Id = () => {
                                                                 width: "150px",
                                                                 height: "150px",
                                                             }}
-                                                            src={interviewidinfo.interviewer.user.imageUrl}
+                                                            src={interviewidinfo.interviewer.user.imageURL}
                                                             alt=""
                                                         />
                                                         {/* </Avatar> */}

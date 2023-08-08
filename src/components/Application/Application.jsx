@@ -18,21 +18,27 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import { CalendarIcon } from "@mui/x-date-pickers";
 import useGetRole from "../../hooks/useGetRole";
 import { Accepted, Rejected, Pending, Pass } from "../Label/LabelNo";
-
+import { useNavigate } from "react-router-dom";
+import AlertDialog from "../AlertDialog/AlertDialog";
+import cleanStore from "../../utils/cleanStore";
 const Application = ({ cvid, page }) => {
   const theme = useTheme()
+  const [openAlertCreate, setOpenAlertCreate] = useState(false)
+  const [openAlertReject, setOpenAlertReject] = useState(false)
   const { recruitmentid, applicationid } = useParams();
   const isSm = useMediaQuery(theme.breakpoints.up('sm'));
   const infoApplication = useSelector((state) => state.infoApplication);
   const skill = useSelector((state) => state.skill);
   const detailposition = useSelector((state) => state.position);
   const candidate = useSelector((state) => state.candidate);
+  const newError = useSelector(state => state.error)
   const cv = useSelector(state => state.cv)
   const role = useGetRole()
   const [status, setStatus] = useState("Pending")
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
   const location = useLocation()
+  const navigate = useNavigate()
   const path = location.pathname
   console.log("path: ", path)
   console.log("include?: ", path.includes("company"))
@@ -42,8 +48,21 @@ const Application = ({ cvid, page }) => {
 
   }, [infoApplication])
   const handleReject = () => {
-    dispatch({ type: 'applicationSaga/rejectApplication', payload: { applicationid: applicationid, candidate_Status: infoApplication.candidate_Status, token: user.token } })
+    dispatch({
+      type: 'applicationSaga/rejectApplication', payload: {
+        applicationid: applicationid,
+        candidate_Status: infoApplication.candidate_Status,
+        token: user.token,
+        infoApplication: infoApplication
+      }
+    })
     setStatus("Rejected")
+  }
+  function handleCreate() {
+    const recid = recruitmentid
+    const appid = applicationid
+    cleanStore(dispatch)
+    navigate(`/company/interview/create?recruitmentid=${recid}&applicationid=${appid}`)
   }
   console.log(recruitmentid);
   return (
@@ -84,14 +103,12 @@ const Application = ({ cvid, page }) => {
                     ? <Box
                       sx={{ display: "flex", justifyContent: "flex-end" }}
                     >
-                      <Link to={`/company/interview/create?recruitmentid=${recruitmentid}&applicationid=${applicationid}`}>
-                        {" "}
-                        <Button variant="contained" color="primary"
-                          style={{ textTransform: "none", backgroundColor: "black" }} sx={{ marginRight: "50px" }} >
-                          CREATE INTERVIEW{" "}
-                        </Button>
-                      </Link>
-                      <Button variant="contained" onClick={handleReject} style={{ textTransform: "none", backgroundColor: "black" }} > REJECT</Button>
+                      <Button variant="contained" color="primary"
+                        style={{ textTransform: "none", backgroundColor: "black" }} sx={{ marginRight: "50px" }}
+                        onClick={() => setOpenAlertCreate(true)}>
+                        CREATE INTERVIEW{" "}
+                      </Button>
+                      <Button variant="contained" onClick={() => { setOpenAlertReject(true) }} style={{ textTransform: "none", backgroundColor: "black" }} > REJECT</Button>
                     </Box>
                     : null}
                   {infoApplication.company_Status == "Accepted"
@@ -135,6 +152,16 @@ const Application = ({ cvid, page }) => {
               <Button variant="contained" onClick={handleReject} style={{ textTransform: "none", backgroundColor: "black" }} > REJECT</Button>
             </Box>}
           </Grid> */}
+          <AlertDialog
+            openAlert={openAlertCreate} setOpenAlert={setOpenAlertCreate}
+            alertMessage={"Are you sure you want to create an interview for this candidate?"}
+            successfulMessage={""}
+            handleSubmit={handleCreate} />
+          <AlertDialog
+            openAlert={openAlertReject} setOpenAlert={setOpenAlertReject}
+            alertMessage={"Are you sure you want to reject this candidate?"}
+            successfulMessage={"Candidate rejected successfully"}
+            handleSubmit={handleReject} />
         </Grid>}
 
     </>

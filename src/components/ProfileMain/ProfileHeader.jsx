@@ -62,7 +62,7 @@ const ProfileHeader = () => {
     <>
     <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
     <Alert onClose={handleClose} severity={faild ? "error" : "success"} elevation={6} variant="filled">
-      {faild ?<> Không thành công</> :<>Thành công !</>  }
+      {faild ?<> Wrong image format </> :<>Success !</>  }
     </Alert>
   </Snackbar>
     

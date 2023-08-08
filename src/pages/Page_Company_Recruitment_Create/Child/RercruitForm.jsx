@@ -213,7 +213,7 @@ function RecruitForm() {
       setSkillName("");
       setSkillId(null);
       setRId((prev) => (prev += 1));
-      setExperience("");
+      setExperience(0);
       // setNote("");
       setInputValue("");
     }

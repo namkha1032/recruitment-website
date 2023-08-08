@@ -113,9 +113,13 @@ const Page_Company_Interview_Id = () => {
                         {role == "interviewer" && interview.candidate_Status == "Not start"
                             ?
                             <Box>
-                                <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 4, marginBottom: 4 }}>
-                                    <BlackContainedButton handleClick={() => { setOpenAlertStart(true) }}>Start</BlackContainedButton>
-                                </Box>
+                                {user.interviewerId == interview.interviewerid
+                                    ?
+                                    <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 4, marginBottom: 4 }}>
+                                        <BlackContainedButton handleClick={() => { setOpenAlertStart(true) }}>Start</BlackContainedButton>
+                                    </Box>
+                                    : null
+                                }
                                 <AlertDialog
                                     openAlert={openAlertStart} setOpenAlert={setOpenAlertStart}
                                     alertMessage={"Are you sure you want to start this interview?"}

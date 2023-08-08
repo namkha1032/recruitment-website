@@ -8,18 +8,30 @@ function* getCv(action) {
         headers:{ Authorization: `Bearer ${action.payload.token}`}
     }) : {}
     const response1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv`)
+    console.log(response1.data)
     const data1 = action.payload.cvid !== null ? response1.data.filter(item => item.cvid ===action.payload.cvid) 
-        : response1.data.filter(item => item.candidateId ===res.data.candidates[0].candidateId)
-    console.log(data1)
+        : response1.data.filter(item => item.candidateId ===res.data.candidates[0].candidateId&& item.cvName === "My Cv" )
     const data = data1.length >= 1  ? data1[0] : null;
     if (data1.length >= 1 ) {
-        
-        const compareDates = (date1, date2) => {
-            return new Date(date1.expirationDate.slice(0,10)) - new Date(date2.expirationDate.slice(0,10));
+
+        const compareDates = (date1, date2)  => {
+            console.log(date1,"  ====  ",date2)
+            return new Date(date1.dateEarned) - new Date(date2.dateEarned);
         };
-        data.certificates.sort(compareDates)
-        console.log(data.certificates)
-        yield put({ type: "cv/setCv", payload: data })
+        if (data.certificates.length>1){
+            data.certificates.sort(compareDates)
+        }  
+        const response4 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CvHasSkill`)
+        const skillsExp = response4.data.filter(item => item.cvid === data.cvid && (() => { 
+
+            for (let i =0 ;i< data.skills.length;i++)
+                if (item.skillId===data.skills.skillId)
+                    return true
+
+            return false}))
+        const skillsNew = data.skills.map((item,index) =>{ return {...item,experienceYear:skillsExp[index].experienceYear}})
+        const data2=  {...data,skills:skillsNew}
+        yield put({ type: "cv/setCv", payload: data2 })
         const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate/${data.candidateId}`)
         const response3 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Authentication/Profile/${response2.data.userId}`,{
             headers:{ Authorization: `Bearer ${action.payload.token}`}

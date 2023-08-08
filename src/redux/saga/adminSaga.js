@@ -150,8 +150,16 @@ function* doAddToBlacklist(action) {
             dateTime,
         };
         const res = yield call(axios.post, 'https://leetun2k2-001-site1.gtempurl.com/api/BlackList', data, config);
+        yield put({type: "error/setError" , payload: {
+                status: "no",
+                message: "Account Added Successfully"
+            }})
     } catch (error) {
         console.log(error);
+        yield put({type: "error/setError", payload:{
+                status: "yes",
+                message: "Error code: " + error.response.status + " : " + error.message,
+            }})
     }
 }
 

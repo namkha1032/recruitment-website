@@ -36,13 +36,13 @@ const  ModalCertificates = ({certificate}) => {
       // onMouseLeave={handleClose}
     >
     <Box onClick={handleClick}>
-      <Box> {certificate.dateEarned.slice(0,10)}</Box>
-      <Box>Name: {certificate.certificateName}</Box>  
-      <Box>Decription: {certificate.description}</Box>  
-      <Box display={open ? 'block' : 'none'}>Orgranizationname: {certificate.organizationName}</Box>
+      <Box> <b>{certificate.dateEarned.slice(0,10)}</b></Box>
+      <Box sx={{wordBreak:'break-word',maxWidth:'400px'}}>Name: {certificate.certificateName}</Box>  
+      <Box sx={{wordBreak:'break-word',maxWidth:'400px'}}>Decription: {certificate.description}</Box>  
+      <Box display={open ? 'block' : 'none'} sx={{wordBreak:'break-word',maxWidth:'400px'}}>Orgranizationname: {certificate.organizationName}</Box>
       <Box display={open ? 'block' : 'none'}>ExpirationDate: {certificate.expirationDate.slice(0,10)}</Box>
       </Box>
-      <Box display={open ? 'block' : 'none'}> Link: <a target="_blank" style={{textDecoration:'none',color:'black'}} href={`https://${certificate.link}`}>{certificate.link}</a></Box>
+      <Box display={open ? 'block' : 'none'} sx={{wordBreak:'break-word',maxWidth:'400px'}}> Link: <a target="_blank" style={{textDecoration:'none',color:'black'}} href={`https://${certificate.link}`}>{certificate.link}</a></Box>
     </Box>
     {console.log(isMd)}
     <Box display='flex' flexDirection='column' justifyContent='flex-end'><Box sx={{display: isMd ? 'none' : 'block', cursor:'pointer'}} onClick={handleClick}> { open ?'See less' : 'See more...'}</Box></Box>
