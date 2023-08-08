@@ -87,12 +87,12 @@ function CandidateTable(props) {
         const handleGoToAccount = () => {
             const userId = params.row.userId;
             window.location.href = `/profile/${userId}`;
-            console.log(userId)
+            // console.log(userId)
             setOpen(false);
         };
         const handleAddClick = () => {
             dispatch({type: "saga/addToBlacklist", payload: {reason: reason, candidateId: params.row.candidateId}});
-            console.log(reason, params.row.candidateId);
+            // console.log(reason, params.row.candidateId);
             setOpen(false);
 
         };
@@ -165,7 +165,7 @@ function CandidateTable(props) {
         // console.log("end dispatch")
     }, [dispatch]);
     const candidate = useSelector(state => state.admin.candidate)
-    console.log("state: ", candidate)
+    // console.log("state: ", candidate)
 
     function QuickSearchToolbar() {
         return (
@@ -276,7 +276,7 @@ function InterviewerTable(props) {
         const handleGoToAccount = () => {
             const userId = params.row.userId;
             window.location.href = `/profile/${userId}`;
-            console.log(userId)
+            // console.log(userId)
             setOpen(false);
         };
         return (
@@ -453,7 +453,7 @@ function RecruiterTable(props) {
         const handleGoToAccount = () => {
             const userId = params.row.userId;
             window.location.href = `/profile/${userId}`;
-            console.log(userId)
+            // console.log(userId)
             setOpen(false);
         };
         return (
@@ -718,7 +718,7 @@ const Page_Company_Account = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [alertType, setAlertType] = useState("success");
     useEffect(() => {
-        console.log("error toast start", newError)
+        // console.log("error toast start", newError)
         if (newError.status=="no"){
             setErrorMessage("Account Added!")
             setErrorSnackbar(true);

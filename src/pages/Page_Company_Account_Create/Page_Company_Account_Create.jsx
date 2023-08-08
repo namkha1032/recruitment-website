@@ -55,7 +55,7 @@ const Page_Company_Account_Create = () => {
     };
 
     useEffect(() => {
-        console.log("error toast start", newError)
+        // console.log("error toast start", newError)
         if (newError.status=="no"){
             setErrorMessage("Account created successfully. Check your account list for updates")
             setErrorSnackbar(true);
