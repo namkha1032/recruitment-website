@@ -36,8 +36,8 @@ const CV = ({ cvid,page }) => {
   const cv = useSelector((state) => state.cv);
   const candidate = useSelector((state) => state.candidate);
   const user = useSelector(state => state.user)
-  const {profileid} = useParams()
-  console.log(user)
+  // const {profileid} = useParams()
+  // console.log(user)
   useEffect(() => {
     dispatch({ type: "cvSaga/getCv", payload: {cvid:cvid,token:user.token,userid:profileid} });
     return () => {
@@ -45,7 +45,7 @@ const CV = ({ cvid,page }) => {
     };
   }, []);
   
-  console.log("CV :" , cv)
+  // console.log("CV :" , cv)
   return (
     cv === "none" ? <MissingPage/> :
     cv &&
@@ -207,7 +207,7 @@ const CV = ({ cvid,page }) => {
                 <Box
               
                 >
-                  {console.log("Certificate",cv.certificates)}
+                  {/*console.log("Certificate",cv.certificates)*/}
                   
                   {cv.certificates.map((certificate, index) => (
                   

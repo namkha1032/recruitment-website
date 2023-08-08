@@ -89,7 +89,7 @@ const ButtonApply = (props) => {
     }, [submitclick])
     useEffect(() => {
         return () => {
-            dispatch({ type: "applicationStatus/setApplicationStatus", payload: null })
+            // dispatch({ type: "applicationStatus/setApplicationStatus", payload: null })
         }
     }, [])
     useEffect(() => {
@@ -97,10 +97,6 @@ const ButtonApply = (props) => {
             if (appstatus.length > 0) {
                 setSubmitstatus(true);
                 setCV(appstatus[0].cv.cvid);
-
-            }
-            else {
-                setSubmitstatus(false);
             }
         }
     }, [appstatus])
