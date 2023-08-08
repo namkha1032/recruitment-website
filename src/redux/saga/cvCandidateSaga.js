@@ -1,10 +1,8 @@
 // import libraries
 import { takeEvery, put, all, call, select } from "redux-saga/effects"
 import axios from 'axios'
-import { delay } from "../../utils/delay"
-import host from "../host"
+
 import { error } from "jquery"
-// const fs = require("fs");
 
 function* getAllCvCandidate(action) {
     try{

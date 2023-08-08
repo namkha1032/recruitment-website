@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Typography, Button, Paper, Box } from '@mui/material';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import TabInProfile from './TabInProfile/TabInProfile';
-import { NotStart, Pending, Completed, Pass } from '../Label/LabelStatus';
+import { NotStart, Completed } from '../Label/LabelStatus';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import GigaCard from '../GigaCard/GigaCard';

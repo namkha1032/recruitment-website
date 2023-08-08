@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import AddIcon from '@mui/icons-material/Add';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import GigaCard from '../../../components/GigaCard/GigaCard';
 import GigaCardBody from '../../../components/GigaCardBody/GigaCardBody';
 export default function ProfileIdOneCv({ events ,img}) {

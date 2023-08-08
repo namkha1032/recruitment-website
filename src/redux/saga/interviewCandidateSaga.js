@@ -1,8 +1,6 @@
 // import libraries
-import { takeEvery, put, all, call, takeLatest, select } from "redux-saga/effects"
+import { takeEvery, put, all, call, select } from "redux-saga/effects"
 import axios from 'axios'
-import { delay } from "../../utils/delay"
-import host from "../host"
 import { error } from "jquery"
 import transformDateOnly from "../../utils/transformDateOnly"
 // const fs = require("fs");
@@ -47,7 +45,7 @@ function* getAllInterviewCandidate(action) {
 
 function* interviewCandidateSaga() {
     yield all([
-        takeLatest("saga/getAllInterviewCandidate", getAllInterviewCandidate),
+        takeEvery("saga/getAllInterviewCandidate", getAllInterviewCandidate),
     ])
 }
 
