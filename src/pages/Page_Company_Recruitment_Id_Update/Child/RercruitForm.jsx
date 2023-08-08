@@ -393,7 +393,7 @@ function RecruitForm(prop) {
         },
       });
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
     // cleanStore(dispatch);
     // navigate(`/company/recruitment/${recruitmentid}`);

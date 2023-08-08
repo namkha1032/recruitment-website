@@ -110,7 +110,7 @@ function CVForm() {
   const [pdfFile, setPdfFile] = useState(null);
   const [viewPdf, setViewPdf] = useState(null);
   const [pdf, setPdf] = useState(null);
-  // console.log(pdf);
+
   //FUNCTION
   function handleTitle(e) {
     setTitle(e.target.value);
@@ -122,13 +122,11 @@ function CVForm() {
     setExperience(e.target.value);
   }
   function handleSkillAdd2() {
-    // console.log(lInputValue);
-    // console.log(languageName);
     let arr = skillData.filter(
       (comp) =>
         comp.skillName === (sInputValue !== null ? sInputValue.skillName : "")
     );
-    // console.log(arr);
+
     if (arr[0] === undefined) {
       handleSetSkillOpen();
       setSkillId(null);
@@ -139,9 +137,9 @@ function CVForm() {
       const newSkill = {
         cvSkillsId: Sid,
         skillId: skillId,
-        experienceYear: SExp.toString(),
+        experienceYear: SExp,
       };
-      // console.log(newSkill);
+
       setSkills([...skills, newSkill]);
       setSkillOption(skillOption.filter((prop) => prop.skillId !== skillId));
       setSkillId(null);
@@ -160,8 +158,8 @@ function CVForm() {
     setSkillOption([...skillOption, newSkill[0]]);
   }
   function handleCertificateAdd() {
-    // console.log(startDate);
-    if (Cname !== "" && organize !== "" && startDate !== null && link !== "") {
+
+    if (Cname !== "" && organize !== "" && startDate !== null && link !== "" && endDate !== null) {
       const newCert = {
         certificateId: Cid,
         certificateName: Cname,
@@ -212,7 +210,7 @@ function CVForm() {
     setSkillOpen(false);
   };
   const canid = userlocal.candidateId
-  // console.log(canid)
+
   let [openAlert, setOpenAlert] = useState(false);
   async function handleSubmit(e) {
     let token = `Bearer ${userlocal.token}`;
@@ -224,6 +222,7 @@ function CVForm() {
       certs,
       "certificateId"
     );
+    
     try {
       // setLoading(true);
       const formData = new FormData();
@@ -242,12 +241,12 @@ function CVForm() {
           certificates: updatedCertificates,
         }, config
       );
-      // console.log("FINISHED!!!!!!!!!!!!");
-      // console.log(response);
+
+
       const response2 = await axios.get(
         `https://leetun2k2-001-site1.gtempurl.com/api/Cv`,config
       );
-      // console.log(response2.data);
+
       const cv = response2.data.filter(
         (prop) =>
           prop.cvName === cvtitle &&
@@ -256,27 +255,24 @@ function CVForm() {
           prop.isDeleted === false
       );
       if (pdf !== null) {
-        // console.log(formData);
+
         const response3 = await axios.post(
           `https://leetun2k2-001-site1.gtempurl.com/api/Cv/UploadCvPdf/${cv[0].cvid}`,
           formData,config
         );
-        // console.log(response3);
+
       }
       delay(1000);
       dispatch({
         type: "error/setError",
         payload: { status: "no", message: cv[0].cvid },
       });
-      //   setLoading(false);
-      //   cleanStore(dispatch);
-      // navigate(`/profile/:profileid/cv/${cv[0].cvid}`);
     } catch (err) {
       dispatch({
         type: "error/setError",
         payload: { status: "yes", message: err.response.data.error },
       });
-      // console.log("err: ", err);
+
     }
   }
   //COMPS
