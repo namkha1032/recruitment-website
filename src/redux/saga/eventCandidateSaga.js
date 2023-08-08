@@ -12,13 +12,8 @@ function* getAllEventCandidate(action) {
             headers: { Authorization: action.payload.token },
         }
         const candidateId = yield select((state) => state.user.candidateId);
-        //console.log("CandidateIdOfUser", candidateId);
-        //const candidateId = "db20f8d0-eb45-43af-9790-e89f48a1a587";
-        // console.log("CanidateId:",candidateId);
         const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CandidateJoinEvent/JoinEventDetail/${candidateId}`,config);
-        console.log("api event:",response.data);
-    // console.log("Hello")
-    // const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Event`)
+   
     yield put({ type: "eventCandidate/setEventList", payload: response.data })
     }
     catch{

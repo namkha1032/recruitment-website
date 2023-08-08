@@ -12,7 +12,7 @@ import { param } from 'jquery';
 import GigaCard from '../GigaCard/GigaCard';
 import GigaCardBody from '../GigaCardBody/GigaCardBody';
 export default function HistoryListApp({ events, NameList, namePage }) {
-  console.log("eventAppli:", events)
+ 
   const [selectedEvent, setSelectedEvent] = useState(null);
   const navigate = useNavigate();
   const [totalPositions, setTotalPositions] = useState(0);
@@ -20,7 +20,7 @@ export default function HistoryListApp({ events, NameList, namePage }) {
     setTotalPositions(events.length);
   }, [events]);
   const handleDetails = (event) => {
-   console.log("applicationId",event);
+
     navigate(`/recruitment/${event.positionId}/application/${event.applicationId}`);
    
   };

@@ -17,7 +17,7 @@ export default function EventList({ events}) {
     setTotalPositions(events.length);
   }, [events]);
   const navigate = useNavigate();
-  console.log(events);
+
   const handleDetails = (eventId) => {
     navigate(`/event/${eventId}`);
     // Perform action when the "View Details" button is clicked for an event
@@ -65,7 +65,7 @@ export default function EventList({ events}) {
   ].filter(Boolean);
 
   const rows = events.map((event) => {
-    console.log("EventId",event.event.eventId); // Thêm dòng này để kiểm tra giá trị của eventId
+   
     return {
       id: event.event.eventId,
       name: event.event.eventName,

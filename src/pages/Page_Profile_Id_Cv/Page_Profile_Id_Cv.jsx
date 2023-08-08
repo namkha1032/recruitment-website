@@ -13,7 +13,6 @@ export default function Page_Profile_Id_Cv(){
       const rows_draft = useSelector((state => state.cvCandidate));
      
       const rows = rows_draft ? rows_draft : [];
-      console.log("test CV:", rows_draft);
       const img =  "https://www.topcv.vn/images/cv/screenshots/vi/mau-cv-ambitious.png?v=1.0.1";
       return(
         

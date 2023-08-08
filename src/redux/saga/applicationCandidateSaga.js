@@ -8,17 +8,17 @@ import { error } from "jquery"
 
 function* getAllApplicationCandidate(action) {
     try{
-    console.log("Hello")
+    
     const candidateId = yield select((state) => state.user.candidateId);;
     //yield select((state) => state.user.candidateId);
     const config = {
             headers: { Authorization: action.payload.token },
     }
-    console.log("CandidateIdOfUser", candidateId);
+   
     const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`,config)
-    console.log("dataBeforeFilter",response.data)
+  
     const filteredApplication = response.data.filter((application) => application.cv.candidateId === candidateId)
-    console.log("filterApplication",filteredApplication)
+  
     const transformedData = filteredApplication.map((item) => ({
         applicationId: item.applicationId,
         positionName: item.position.positionName,
@@ -28,7 +28,7 @@ function* getAllApplicationCandidate(action) {
         Status: item.candidate_Status,
         priority: item.priority,
       }));
-      console.log("trànormdata",transformedData)
+    
     yield put({ type: "applicationCandidate/setApplicationList", payload: transformedData })
     }
     catch{

@@ -19,7 +19,6 @@ export default function HistoryList({ events, pathnavigate, NameList, namePage }
     setTotalPositions(events.length);
   }, [events]);
   const handleDetails = (eventId) => {
-    console.log(eventId);
     navigate(`${pathnavigate}/${eventId}`);
 
   };
