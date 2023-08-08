@@ -1,6 +1,6 @@
 import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects"
 import axios from 'axios'
-import host from "../host"
+// import host from "../host"
 
 function* userLogin(action) {
     try {
@@ -42,7 +42,6 @@ function* userLogin(action) {
             userObj.departmentId = responseProfile.data.departmentId
         } 
 
-        console.log("userobj: ", userObj)
         if (check) {
             window.localStorage.setItem("user", JSON.stringify(userObj))
         }
@@ -55,7 +54,7 @@ function* userLogin(action) {
     }
     catch (error) {
         yield put({ type: "error/setError", payload: { status: "yes", message: error.message } })
-        console.log("err: ", error)
+        // console.log("err: ", error)
     }
 }
 
@@ -66,7 +65,7 @@ function* userRegister(action) {
     }
     catch (error) {
         yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
-        console.log("err: ", error)
+        // console.log("err: ", error)
     }
 }
 
@@ -79,7 +78,7 @@ function* emailRecovery(action) {
     }
     catch (error) {
         yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
-        console.log("err: ", error)
+        // console.log("err: ", error)
     }
 }
 
@@ -92,7 +91,7 @@ function* userResetPassword(action) {
     }
     catch (error) {
         yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
-        console.log("err: ", error)
+        // console.log("err: ", error)
     }
 }
 
@@ -111,7 +110,7 @@ function* userChangePassword(action) {
     }
     catch (error) {
         yield put({ type: "error/setError", payload: { status: "yes", message: error.response.data.error } })
-        console.log("err: ", error)
+        // console.log("err: ", error)
     }
 }
 

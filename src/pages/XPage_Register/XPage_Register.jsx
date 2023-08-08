@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate/* , Link */ } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
@@ -24,7 +24,7 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { MailOutline } from "@mui/icons-material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import HomeIcon from '@mui/icons-material/Home';
 
 import CircularProgress from "@mui/material/CircularProgress";
@@ -90,6 +90,11 @@ const XPage_Register = () => {
     if (newError.status === "no") {
       setLoading(false)
       setSuccessSnackbar(true);
+      // dispatch({
+      //   type: "error/setError",
+      //   payload: { status: "idle", message: "" },
+      // });
+      // navigate("/login");
       setTimeout(() => {
         dispatch({
           type: "error/setError",
