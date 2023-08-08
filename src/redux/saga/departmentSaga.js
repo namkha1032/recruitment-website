@@ -18,7 +18,7 @@ function* getDepartment(action) {
     yield put({ type: "department/setDepartment", payload: response.data });
     
   } catch (error) {
-    
+    console.log("Error: ", error.message)
   }
 }
 

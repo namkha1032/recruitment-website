@@ -258,11 +258,12 @@ export default function Page_Company_Recruitment() {
     navigate(`./${value}`);
   }
 
-  function handleReportClick(value) {
-    setValueReport(value);
-    navigate(`./${value}/report`, {
+  function handleReportClick(id, name) {
+    setValueReport(id);
+    navigate(`./${id}/report`, {
       state: {
-        positionId: value,
+        positionId: id,
+        positionName: name
       },
     });
   }
@@ -416,7 +417,7 @@ export default function Page_Company_Recruitment() {
       headerAlign: "right",
       align: "right",
       getActions: (params) => {
-        if (role === "admin") {
+        if (role === "admin" || role === "recruiter") {
           if (params.row.Status === true) {
             return [
               <GridActionsCellItem
@@ -447,7 +448,7 @@ export default function Page_Company_Recruitment() {
                 sx={{
                   color: "black",
                 }}
-                onClick={() => handleReportClick(params.row.PositionId)}
+                onClick={() => handleReportClick(params.row.PositionId, params.row.PositionName)}
                 showInMenu
               />,
               <GridActionsCellItem
@@ -506,7 +507,7 @@ export default function Page_Company_Recruitment() {
                 sx={{
                   color: "black",
                 }}
-                onClick={() => handleReportClick(params.row.PositionId)}
+                onClick={() => handleReportClick(params.row.PositionId, params.row.PositionName)}
                 showInMenu
               />,
               <GridActionsCellItem

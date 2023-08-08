@@ -50,6 +50,7 @@ function* getEventList(action) {
     //   },
     // });
   } catch (error) {
+    console.log("Error: ", error.message)
     yield put({ type: "loading/offLoading" });
     // yield put({
     //   type: "error/setError",
@@ -84,7 +85,6 @@ function* getEventFooter() {
 }
 
 function* getEventListWithFilter(action) {
-  console.log("Filter: ", action.payload);
   try {
     yield put({ type: "loading/onLoading" });
     // yield call(delay, 1500)
@@ -122,7 +122,7 @@ function* getEventListWithFilter(action) {
     //   },
     // });
   } catch (error) {
-    console.log(error)
+    console.log("Error: ", error.message)
     yield put({ type: "loading/offLoading" });
     // yield put({
     //   type: "error/setError",
