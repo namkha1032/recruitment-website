@@ -72,10 +72,7 @@ function* getEventFooter() {
       axios.get,
       `/data/image.json`
     );
-    console.log("-------------------------------------------");
     const data = formatEventFooter(response.data,response1.data);
-    console.log(data);
-    console.log("-------------------------------------------");
     yield put({ type: "eventFooter/setEventFooter", payload: data });
     yield put({ type: "loading/offLoading" });
   } catch (error) {
