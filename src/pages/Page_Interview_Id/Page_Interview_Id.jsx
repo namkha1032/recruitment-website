@@ -63,7 +63,6 @@ const Page_Interview_Id = () => {
         }
     }, [interviewerror])
     const shift = useSelector(state => state.interviewshift);
-    console.log("interviewid", interviewidinfo);
     let left = 5
     let right = 6
     let gap = 2
