@@ -25,8 +25,14 @@ function CVForm() {
   const dispatch = useDispatch();
   // fetch Data
   useEffect(() => {
-    dispatch({ type: "saga/getLanguage", payload:{ token: `Bearer ${userlocal.token}`} });
-    dispatch({ type: "skillSaga/getSkill", payload:{ token: `Bearer ${userlocal.token}`} });
+    dispatch({
+      type: "saga/getLanguage",
+      payload: { token: `Bearer ${userlocal.token}` },
+    });
+    dispatch({
+      type: "skillSaga/getSkill",
+      payload: { token: `Bearer ${userlocal.token}` },
+    });
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });
       dispatch({ type: "language/setLanguage", payload: null });
@@ -152,8 +158,13 @@ function CVForm() {
     setSkillOption([...skillOption, newSkill[0]]);
   }
   function handleCertificateAdd() {
-
-    if (Cname !== "" && organize !== "" && startDate !== null && link !== "" && endDate !== null) {
+    if (
+      Cname !== "" &&
+      organize !== "" &&
+      startDate !== null &&
+      link !== "" &&
+      endDate !== null
+    ) {
       const newCert = {
         certificateId: Cid,
         certificateName: Cname,
@@ -197,13 +208,16 @@ function CVForm() {
   const handleSetSkillOpen = () => {
     setSkillOpen(true);
   };
+  console.log(
+    "UPLOAD CV ( đã upload lên được và trả về link nhưng link bên back end không hoạt động được)"
+  );
   const handleSkillClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setSkillOpen(false);
   };
-  const canid = userlocal.candidateId
+  const canid = userlocal.candidateId;
 
   async function handleSubmit(e) {
     let token = `Bearer ${userlocal.token}`;
@@ -215,7 +229,7 @@ function CVForm() {
       certs,
       "certificateId"
     );
-    
+
     try {
       // setLoading(true);
       const formData = new FormData();
@@ -232,12 +246,13 @@ function CVForm() {
           isDeleted: false,
           skills: updatedSkills,
           certificates: updatedCertificates,
-        }, config
+        },
+        config
       );
 
-
       const response2 = await axios.get(
-        `https://leetun2k2-001-site1.gtempurl.com/api/Cv`,config
+        `https://leetun2k2-001-site1.gtempurl.com/api/Cv`,
+        config
       );
 
       const cv = response2.data.filter(
@@ -248,12 +263,12 @@ function CVForm() {
           prop.isDeleted === false
       );
       if (pdf !== null) {
-
+        /////////// UPLOAD CV ( đã upload lên được và trả về link nhưng link bên back end không hoạt động được)
         const response3 = await axios.post(
           `https://leetun2k2-001-site1.gtempurl.com/api/Cv/UploadCvPdf/${cv[0].cvid}`,
-          formData,config
+          formData,
+          config
         );
-
       }
       delay(1000);
       dispatch({
@@ -265,7 +280,6 @@ function CVForm() {
         type: "error/setError",
         payload: { status: "yes", message: err.response.data.error },
       });
-
     }
   }
   //COMPS

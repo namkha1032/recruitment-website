@@ -63,7 +63,7 @@ function CVForm(prop) {
   const [skillData, setSkillData] = useState([]);
   const [skillOption, setSkillOption] = useState([]);
   const [languageData, setLanguage] = useState([]);
-  
+
   const [cvtitle, setTitle] = useState("");
   const [intro, setIntro] = useState("");
   const [education, setEducation] = useState("");
@@ -330,7 +330,7 @@ function CVForm(prop) {
     }
     setOpen(false);
   };
-  
+
   const handleSetSkillOpen = () => {
     setSkillOpen(true);
   };
@@ -340,6 +340,9 @@ function CVForm(prop) {
     }
     setSkillOpen(false);
   };
+  console.log(
+    "UPLOAD CV ( đã upload lên được và trả về link nhưng link bên back end không hoạt động được)"
+  );
   async function handleSubmit(e) {
     // e.preventDefault();
     let token = userlocal.token;
@@ -366,6 +369,7 @@ function CVForm(prop) {
           addCerts: addCerts,
         },
       });
+
       if (typeof pdf !== "string") {
         const formData = new FormData();
 
