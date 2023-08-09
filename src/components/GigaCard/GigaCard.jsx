@@ -1,4 +1,4 @@
-import { Box, Typography, Paper } from "@mui/material";
+import { Paper } from "@mui/material";
 
 const GigaCard = (props) => {
     return (

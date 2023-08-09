@@ -1,20 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import Box from "@mui/material/Box";
-import { useSearchParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Container } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import { DrawerHeader } from "../../components/Sidebar/Sidebar";
-import { styled, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import useGetRole from "../../hooks/useGetRole";
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
 import SkeletonDemo from "../SkeletonDemo/SkeletonDemo";
 const drawerWidth = 240;
 
@@ -74,7 +70,6 @@ function MainLayout() {
     //     dispatch({ type: "sidebar/setSidebar", payload: value })
     // }
     useEffect(() => {
-        console.log("run useEffect in MainLayout")
         const userLocal = window.localStorage.getItem("user");
         const userSession = window.sessionStorage.getItem("user");
         if (userLocal) {
@@ -85,7 +80,7 @@ function MainLayout() {
             dispatch({ type: "user/setUser", payload: user });
         }
         return () => {
-            dispatch({type:'profile/setProfile',payload:null})
+            dispatch({ type: 'profile/setProfile', payload: null })
         }
     }, []);
     // const navigate = useNavigate()

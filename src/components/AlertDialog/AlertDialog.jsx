@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
-import { Typography, Box } from '@mui/material';
+import {  Box } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import CircularProgress from "@mui/material/CircularProgress";
@@ -19,7 +18,6 @@ export default function AlertDialog(props) {
     const [loading, setLoading] = useState(false)
     const error = useSelector(state => state.error)
     const theme = useTheme()
-    const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     const handleClickOpen = () => {
         setOpenAlert(true);
@@ -40,7 +38,6 @@ export default function AlertDialog(props) {
             }, 2000)
         }
     }, [error])
-    console.log("checkgif: ", check)
     return (
         <>
             <div onClick={handleClickOpen}>

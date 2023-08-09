@@ -47,15 +47,10 @@ import XPage_Login from './pages/XPage_Login/XPage_Login';
 import XPage_Register from './pages/XPage_Register/XPage_Register';
 import XPage_Recovery from './pages/XPage_Recovery/XPage_Recovery';
 
-import PageTest from './pages/xpagetest/PageTest';
-import PageTest2 from './pages/xpagetest2/PageTest2';
-import PageTest3 from './pages/xpagetest3/PageTest3';
-import PageTest4 from './pages/xpagetest4/PageTest4';
 
 import MissingPage from './components/MissingPage/MissingPage';
 import Unauthorized from './components/Unauthorized/Unauthorized';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-import TestLayout from './components/TestLayout/TestLayout';
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -4,8 +4,6 @@ import useGetRole from "../../hooks/useGetRole";
 import Unauthorized from "../Unauthorized/Unauthorized";
 // import Missing from "../MissingPage/MissingPage";
 
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 

@@ -10,28 +10,19 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import VideoChatIcon from '@mui/icons-material/VideoChat';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import LogoutIcon from '@mui/icons-material/Logout';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import Grid from '@mui/material/Grid';
 import BusinessIcon from '@mui/icons-material/Business';
 import Container from '@mui/material/Container';
 import { Divider } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import useGetRole from '../../hooks/useGetRole';
-import { grey } from '@mui/material/colors';
-import { unstable_createCssVarsTheme } from '@mui/system';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import cleanStore from '../../utils/cleanStore';
 import HomeIcon from '@mui/icons-material/Home';
@@ -57,7 +48,6 @@ const NavbarContent = (props) => {
     url = url.pathname
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
-    console.log("role: ", role)
     const navbarNavigate = [
         {
             name: "Home",
@@ -374,10 +364,10 @@ const NavbarContent = (props) => {
                             </Button> : null}
                             <Button variant="outlined" sx={{
                                 borderColor: "black", color: "black",
-                                backgroundColor:"white",
+                                backgroundColor: "white",
                                 "&:hover": {
                                     borderColor: "black",
-                                    backgroundColor:"white",
+                                    backgroundColor: "white",
                                 }
                             }} onClick={() => {
                                 sessionStorage.setItem('previousPage', window.location.pathname);
