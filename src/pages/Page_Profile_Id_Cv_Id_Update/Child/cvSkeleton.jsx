@@ -2,12 +2,8 @@ import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
 import Box from "@mui/material/Box";
 import GigaCard from "../../../components/GigaCard/GigaCard";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material/styles";
 
 const CvSkeleton = () => {
-  const theme = useTheme();
-  const isMd = useMediaQuery(theme.breakpoints.up("md"));
   return (
     <>
       <Grid

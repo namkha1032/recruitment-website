@@ -7,7 +7,6 @@ import { useTheme } from "@mui/material/styles";
 
 const PositionSkeleton = () => {
   const theme = useTheme();
-  const isMd = useMediaQuery(theme.breakpoints.up("md"));
   const isSm = useMediaQuery(theme.breakpoints.up("sm"));
   return (
     <>

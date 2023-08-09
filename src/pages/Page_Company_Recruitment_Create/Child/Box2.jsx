@@ -41,7 +41,6 @@ function Box2(prop) {
   return (
     <>
       <Box
-      // sx={{ height: "343.88px" }}
       >
         <Grid item container spacing={1} xs={12} sx={{ marginTop: "16px" }}>
           <Grid item xs={isMd ? 8 : 12}>

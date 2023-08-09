@@ -10,8 +10,6 @@ export default function ChooseLanguage(prop) {
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       const inputValue = event.target.value;
-      // console.log(prop.value);
-      // console.log(inputValue);
       if (prop.value === null) {
         if (inputValue.trim() !== "") {
           prop.setInputValue(null);
@@ -39,15 +37,12 @@ export default function ChooseLanguage(prop) {
                 prop.setInputValue({
                   languageName: newValue.inputValue,
                 });
-                // console.log(newValue.languageName)
                 if (newValue !== null) {
-                  // console.log(newValue);
                   prop.handleState(newValue);
                 }
               } else {
                 prop.setInputValue(newValue);
                 if (newValue !== null) {
-                  // console.log(newValue);
                   prop.setSkillId(prop.language.filter((comp) => comp.languageName === newValue.languageName)[0].languageId);
                   prop.handleState(newValue.languageName);
                 }

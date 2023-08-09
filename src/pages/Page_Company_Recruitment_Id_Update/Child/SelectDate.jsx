@@ -12,7 +12,6 @@ import { useTheme } from "@mui/material/styles";
 const SelectDate = (prop) => {
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.up("sm"));
-  const isDm = useMediaQuery(theme.breakpoints.up("md"));
   return (
     <>
       <Grid container spacing={2}>

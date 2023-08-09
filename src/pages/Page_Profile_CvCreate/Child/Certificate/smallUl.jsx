@@ -43,10 +43,10 @@ const SmallUlList = (comp) => {
         sx={{ minWidth: 120, maxWidth: 200, boxShadow: 10, borderRadius: 3 }}
       >
         <CardContent>
-          <Typography sx={{ fontSize: 20 }}>
+          <Typography sx={{ fontSize: 20,wordWrap: "break-word", }}>
             {comp.comp.certificateName}
           </Typography>
-          <Typography sx={{ fontSize: 20 }}>
+          <Typography sx={{ fontSize: 20,wordWrap: "break-word", }}>
             {comp.comp.organizationName}
           </Typography>
         </CardContent>
@@ -93,7 +93,7 @@ const SmallUlList = (comp) => {
                 sx={{
                   margin: "0",
                   minWidth: "10%",
-                  fontSize: 20,
+                  wordWrap: "break-word",
                 }}
               >
                 {comp.comp.certificateName}
@@ -128,6 +128,7 @@ const SmallUlList = (comp) => {
                   sx={{
                     margin: "0",
                     minWidth: "10%",
+                    wordWrap: "break-word",
                   }}
                 >
                   {comp.comp.organizationName}

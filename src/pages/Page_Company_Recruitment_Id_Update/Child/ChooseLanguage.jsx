@@ -35,16 +35,13 @@ export default function ChooseLanguage(prop) {
                   prop.setInputValue({
                     languageName: newValue.inputValue,
                   });
-                  // console.log(newValue.languageName);
                   if (newValue !== null) {
-                    // console.log(newValue);
                     prop.handleState(newValue);
                     prop.onPress();
                   }
                 } else {
                   prop.setInputValue(newValue);
                   if (newValue !== null) {
-                    // console.log(newValue);
                     prop.setLanguages(
                       prop.language.filter(
                         (comp) => comp.languageName === newValue.languageName
@@ -52,7 +49,6 @@ export default function ChooseLanguage(prop) {
                     );
                     prop.handleState(newValue.languageName);
                   } else {
-                    // console.log(newValue);
                     prop.setLanguages(null);
                   }
                 }

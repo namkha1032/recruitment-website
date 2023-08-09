@@ -17,25 +17,9 @@ const filter = createFilterOptions();
 export default function ChooseSkill(prop) {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
-  function handleSExp(e) {
-    // console.log(e.target.value);
-    prop.setSExp(e.target.value);
-  }
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      // const inputValue = event.target.value;
-      // console.log(prop.lInputValue);
-      // console.log(inputValue);
-      // if (prop.sInputValue === null) {
-      //   if (inputValue.trim() !== "") {
-      //     prop.setSInputValue(null);
-      //     prop.handleState(inputValue);
-      //   }
-      // } else {
-      //   prop.setSInputValue(null);
-      //   return prop.onPress();
-      // }
     }
   };
   return (
@@ -48,7 +32,7 @@ export default function ChooseSkill(prop) {
         />
         <Grid item xs={12}></Grid>
         <Grid item xs={isMd ? 9 : 12}>
-          <Box sx={{marginTop: "8px" }}>
+          <Box sx={{ marginTop: "8px" }}>
             <CompHeader headerIcon={<ConstructionIcon />}>Skill</CompHeader>
 
             <Autocomplete
@@ -63,15 +47,12 @@ export default function ChooseSkill(prop) {
                   prop.setSInputValue({
                     skillName: newValue.inputValue,
                   });
-                  // console.log(newValue.skillName);
                   if (newValue !== null) {
-                    // console.log(newValue);
                     prop.handleState(newValue);
                   }
                 } else {
                   prop.setSInputValue(newValue);
                   if (newValue !== null) {
-                    // console.log(newValue);
                     prop.setSkillId(
                       prop.skillData.filter(
                         (comp) => comp.skillName === newValue.skillName

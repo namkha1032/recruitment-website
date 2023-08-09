@@ -10,7 +10,6 @@ import StepConnector, {
 
 export const QontoStepIconRoot = styled("div")(({ theme, ownerState }) => ({
   color:
-    // theme.palette.mode === "dark" ? theme.palette.grey[700] :
     "#eaeaf0",
   display: "flex",
   height: 22,
@@ -119,7 +118,6 @@ export const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     height: 3,
     border: 0,
     backgroundColor:
-      // theme.palette.mode === "dark" ? theme.palette.grey[800] :
       "#eaeaf0",
     borderRadius: 1,
   },

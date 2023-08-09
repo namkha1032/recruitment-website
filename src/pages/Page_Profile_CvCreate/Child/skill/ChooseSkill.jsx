@@ -17,25 +17,9 @@ const filter = createFilterOptions();
 export default function ChooseSkill(prop) {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
-  function handleSExp(e) {
-    // console.log(e.target.value);
-    prop.setSExp(e.target.value);
-  }
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      // const inputValue = event.target.value;
-      // console.log(prop.lInputValue);
-      // console.log(inputValue);
-      // if (prop.sInputValue === null) {
-      //   if (inputValue.trim() !== "") {
-      //     prop.setSInputValue(null);
-      //     prop.handleState(inputValue);
-      //   }
-      // } else {
-      //   prop.setSInputValue(null);
-      //   return prop.onPress();
-      // }
     }
   };
   return (

@@ -1,5 +1,4 @@
 import Grid from "@mui/material/Grid";
-// import FreeSoloCreateOptionDialog from "./skill/ChooseList";
 import Box from "@mui/material/Box";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";

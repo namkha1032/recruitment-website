@@ -25,8 +25,14 @@ function CVForm() {
   const dispatch = useDispatch();
   // fetch Data
   useEffect(() => {
-    dispatch({ type: "saga/getLanguage", payload:{ token: `Bearer ${userlocal.token}`} });
-    dispatch({ type: "skillSaga/getSkill", payload:{ token: `Bearer ${userlocal.token}`} });
+    dispatch({
+      type: "saga/getLanguage",
+      payload: { token: `Bearer ${userlocal.token}` },
+    });
+    dispatch({
+      type: "skillSaga/getSkill",
+      payload: { token: `Bearer ${userlocal.token}` },
+    });
     return () => {
       dispatch({ type: "skill/setSkill", payload: null });
       dispatch({ type: "language/setLanguage", payload: null });
@@ -37,44 +43,11 @@ function CVForm() {
   const languageList = useSelector((state) => state.language);
   const newError = useSelector((state) => state.error);
   const userlocal = useSelector((state) => state.user);
-
   let [errorSnackbar, setErrorSnackbar] = useState(false);
   ////////////////////////////////////////////////////
-  useEffect(() => {
-    if (newError.status == "no") {
-      setTimeout(() => {
-        const idToNavigate = newError.message;
-        cleanStore(dispatch);
-        navigate(`/profile/${canid}/cv/${idToNavigate}`);
-      }, 2000);
-    }
-    if (newError.status == "yes") {
-      setErrorSnackbar(true);
-      setTimeout(() => {
-        setErrorSnackbar(false);
-        dispatch({
-          type: "error/setError",
-          payload: { status: "idle", message: "" },
-        });
-      }, 5000);
-    }
-  }, [newError]);
-
   const [skillData, setSkillData] = useState([]);
   const [skillOption, setSkillOption] = useState([]);
   const [languageData, setLanguage] = useState([]);
-  useEffect(() => {
-    if (languageList) {
-      setLanguage(
-        languageList ? (languageList !== [] ? languageList : []) : []
-      );
-    }
-    if (skillList) {
-      setSkillData(skillList ? (skillList !== [] ? skillList : []) : []);
-      setSkillOption(skillList ? (skillList !== [] ? skillList : []) : []);
-    }
-  }, [skillList, languageList]);
-  const [loading, setLoading] = useState(false);
   const [cvtitle, setTitle] = useState("");
   const [intro, setIntro] = useState("");
   const [education, setEducation] = useState("");
@@ -95,23 +68,50 @@ function CVForm() {
   const [skillId, setSkillId] = useState(null);
   const [Sid, setSid] = useState(0);
   const [SExp, setSExp] = useState(0);
+
+  const [sInputValue, setSInputValue] = useState("");
+  const [pdfFile, setPdfFile] = useState(null);
+  const [viewPdf, setViewPdf] = useState(null);
+  const [pdf, setPdf] = useState(null);
+
+  let [openAlert, setOpenAlert] = useState(false);
+  const [skillOpen, setSkillOpen] = useState(false);
+  //FUNCTION
+  useEffect(() => {
+    if (languageList) {
+      setLanguage(
+        languageList ? (languageList !== [] ? languageList : []) : []
+      );
+    }
+    if (skillList) {
+      setSkillData(skillList ? (skillList !== [] ? skillList : []) : []);
+      setSkillOption(skillList ? (skillList !== [] ? skillList : []) : []);
+    }
+  }, [skillList, languageList]);
   function handleSExp(event) {
     let midleScore =
       parseFloat(event.target.value) >= 0 ? parseFloat(event.target.value) : 0;
     setSExp(midleScore);
   }
-  const [sInputValue, setSInputValue] = useState("");
-  // Language comps
-  // const [lId, setLId] = useState(0);
-  // const [languageId, setLanguageId] = useState(null);
-  // const [languageName, setLanguageName] = useState("");
-  // const [lInputValue, setLInputValue] = useState("");
-  // PDF
-  const [pdfFile, setPdfFile] = useState(null);
-  const [viewPdf, setViewPdf] = useState(null);
-  const [pdf, setPdf] = useState(null);
-  // console.log(pdf);
-  //FUNCTION
+  useEffect(() => {
+    if (newError.status == "no") {
+      setTimeout(() => {
+        const idToNavigate = newError.message;
+        cleanStore(dispatch);
+        navigate(`/profile/${canid}/cv/${idToNavigate}`);
+      }, 2000);
+    }
+    if (newError.status == "yes") {
+      setErrorSnackbar(true);
+      setTimeout(() => {
+        setErrorSnackbar(false);
+        dispatch({
+          type: "error/setError",
+          payload: { status: "idle", message: "" },
+        });
+      }, 5000);
+    }
+  }, [newError]);
   function handleTitle(e) {
     setTitle(e.target.value);
   }
@@ -122,13 +122,11 @@ function CVForm() {
     setExperience(e.target.value);
   }
   function handleSkillAdd2() {
-    // console.log(lInputValue);
-    // console.log(languageName);
     let arr = skillData.filter(
       (comp) =>
         comp.skillName === (sInputValue !== null ? sInputValue.skillName : "")
     );
-    // console.log(arr);
+
     if (arr[0] === undefined) {
       handleSetSkillOpen();
       setSkillId(null);
@@ -139,9 +137,9 @@ function CVForm() {
       const newSkill = {
         cvSkillsId: Sid,
         skillId: skillId,
-        experienceYear: SExp.toString(),
+        experienceYear: SExp,
       };
-      // console.log(newSkill);
+
       setSkills([...skills, newSkill]);
       setSkillOption(skillOption.filter((prop) => prop.skillId !== skillId));
       setSkillId(null);
@@ -160,8 +158,13 @@ function CVForm() {
     setSkillOption([...skillOption, newSkill[0]]);
   }
   function handleCertificateAdd() {
-    // console.log(startDate);
-    if (Cname !== "" && organize !== "" && startDate !== null && link !== "") {
+    if (
+      Cname !== "" &&
+      organize !== "" &&
+      startDate !== null &&
+      link !== "" &&
+      endDate !== null
+    ) {
       const newCert = {
         certificateId: Cid,
         certificateName: Cname,
@@ -201,19 +204,21 @@ function CVForm() {
     }
     setOpen(false);
   };
-  const [skillOpen, setSkillOpen] = useState(false);
+
   const handleSetSkillOpen = () => {
     setSkillOpen(true);
   };
+  console.log(
+    "UPLOAD CV ( đã upload lên được và trả về link nhưng link bên back end không hoạt động được)"
+  );
   const handleSkillClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setSkillOpen(false);
   };
-  const canid = userlocal.candidateId
-  // console.log(canid)
-  let [openAlert, setOpenAlert] = useState(false);
+  const canid = userlocal.candidateId;
+
   async function handleSubmit(e) {
     let token = `Bearer ${userlocal.token}`;
     const config = {
@@ -224,6 +229,7 @@ function CVForm() {
       certs,
       "certificateId"
     );
+
     try {
       // setLoading(true);
       const formData = new FormData();
@@ -240,14 +246,15 @@ function CVForm() {
           isDeleted: false,
           skills: updatedSkills,
           certificates: updatedCertificates,
-        }, config
+        },
+        config
       );
-      // console.log("FINISHED!!!!!!!!!!!!");
-      // console.log(response);
+
       const response2 = await axios.get(
-        `https://leetun2k2-001-site1.gtempurl.com/api/Cv`,config
+        `https://leetun2k2-001-site1.gtempurl.com/api/Cv`,
+        config
       );
-      // console.log(response2.data);
+
       const cv = response2.data.filter(
         (prop) =>
           prop.cvName === cvtitle &&
@@ -256,27 +263,23 @@ function CVForm() {
           prop.isDeleted === false
       );
       if (pdf !== null) {
-        // console.log(formData);
+        /////////// UPLOAD CV ( đã upload lên được và trả về link nhưng link bên back end không hoạt động được)
         const response3 = await axios.post(
           `https://leetun2k2-001-site1.gtempurl.com/api/Cv/UploadCvPdf/${cv[0].cvid}`,
-          formData,config
+          formData,
+          config
         );
-        // console.log(response3);
       }
       delay(1000);
       dispatch({
         type: "error/setError",
         payload: { status: "no", message: cv[0].cvid },
       });
-      //   setLoading(false);
-      //   cleanStore(dispatch);
-      // navigate(`/profile/:profileid/cv/${cv[0].cvid}`);
     } catch (err) {
       dispatch({
         type: "error/setError",
         payload: { status: "yes", message: err.response.data.error },
       });
-      // console.log("err: ", err);
     }
   }
   //COMPS
@@ -382,7 +385,6 @@ function CVForm() {
           />
         </Grid>
       </Grid>
-      {loading && <p>Loading...</p>}
       <Snackbar
         open={skillOpen}
         autoHideDuration={3000}
@@ -406,14 +408,11 @@ function CVForm() {
         </CertAlert>
       </Snackbar>
       <Snackbar
-        // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         open={errorSnackbar}
         autoHideDuration={4000}
         onClose={() => {
           setErrorSnackbar(false);
         }}
-        // message="I love snacks"
-        // key={vertical + horizontal}
       >
         <Alert
           variant="filled"

@@ -1,5 +1,4 @@
 import { Box, Grid, Button } from "@mui/material";
-import { useState } from "react";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { Viewer, Worker } from "@react-pdf-viewer/core";
@@ -13,32 +12,16 @@ function UploadPdf(prop) {
   const fileType = ["application/pdf"];
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.up("sm"));
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (prop.pdfFile !== null) {
-  //     prop.setViewPdf(prop.pdfFile);
-  //   } else {
-  //     prop.setPdfFile(null);
-  //   }
-  // };
-  // console.log(prop.viewPdf);
   function handleDelete(e) {
     prop.setViewPdf(null);
-
-    // Reset the pdfFile state to null to remove the selected PDF file
     prop.setPdfFile(null);
-
-    // Reset the pdf state to null to remove the selected PDF file
     prop.setPdf(null);
-
-    // Reset the file input element to allow selecting the same file again
     const fileInput = document.getElementById("cvpdf");
     if (fileInput) {
       fileInput.value = "";
     }
   }
   function handleChange(e) {
-    // console.log("open");
     let selectedFile = e.target.files[0];
     if (selectedFile) {
       if (selectedFile && fileType.includes(selectedFile.type)) {
@@ -46,7 +29,6 @@ function UploadPdf(prop) {
         let reader = new FileReader();
         reader.readAsDataURL(selectedFile);
         reader.onload = (e) => {
-          // test view pdf without press view
           if (e.target.result !== null) {
             prop.setViewPdf(e.target.result);
             prop.setPdfFile(e.target.result);
@@ -54,7 +36,6 @@ function UploadPdf(prop) {
             prop.setPdfFile(null);
             prop.setPdf(null);
           }
-          ////////////////////////////////////////
         };
       } else {
         prop.setViewPdf(null);
@@ -64,7 +45,6 @@ function UploadPdf(prop) {
     } else {
       prop.setViewPdf(null);
       prop.setPdf(null);
-      // console.log("please select");
     }
   }
   return (
@@ -108,20 +88,6 @@ function UploadPdf(prop) {
               ></Button>
             </Box>
           </Grid>
-          {/*           
-          <Button
-            sx={{
-              margin: "auto",
-            }}
-            color="primary"
-            size="medium"
-            variant="outlined"
-            className="AddCompButton"
-            startIcon={<AddIcon />}
-            onClick={handleSubmit}
-          >
-            Upload
-          </Button> */}
           <Grid
             item
             sx={{ marginTop: "32px" }}

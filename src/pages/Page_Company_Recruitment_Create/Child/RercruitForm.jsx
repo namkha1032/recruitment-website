@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import recruitInfo from "./RecruitData";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
@@ -16,16 +15,12 @@ import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
 import Alert from "@mui/material/Alert";
-// import Alert from "@mui/material/Alert";
 import AlertDialog from "../../../components/AlertDialog/AlertDialog";
 
 const SkillAlert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-// const RequiredAlert = React.forwardRef(function Alert(props, ref) {
-//   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-// });
 function RecruitForm() {
   const dispatch = useDispatch();
   // fetch Data
@@ -53,22 +48,7 @@ function RecruitForm() {
 
   const [language, setLanguage] = useState([]);
   const [department, setDepartment] = useState([]);
-  useEffect(() => {
-    if (departmentList) {
-      setDepartment(
-        departmentList ? (departmentList !== [] ? departmentList : []) : []
-      );
-    }
-    if (languageList) {
-      setLanguage(
-        languageList ? (languageList !== [] ? languageList : []) : []
-      );
-    }
-    if (skillList) {
-      setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
-      setSkillData(skillList ? (skillList !== [] ? skillList : []) : []);
-    }
-  }, [departmentList, skillList, languageList]);
+
   // Recruiment comps
   const [RName, setRName] = useState("");
   const [description, setDescription] = useState("");
@@ -81,6 +61,32 @@ function RecruitForm() {
     (comp) => comp.departmentId === departmentChoose
   );
   const [skillOpen, setSkillOpen] = useState(false);
+  const [languages, setLanguages] = useState(null);
+  const [requirement, setRequirement] = useState([]);
+  // Requirement comps
+  const [rId, setRId] = useState(
+    requirement.length > 0 ? requirement.length : 0
+  );
+  const [skillId, setSkillId] = useState(null);
+  const [skillName, setSkillName] = useState("");
+  const [experience, setExperience] = useState(0);
+  const [note, setNote] = useState("Note");
+  const [inputValue, setInputValue] = useState("");
+  // Language comps
+  const [languageName, setLanguageName] = useState("");
+  const lvalues = language.filter((prop) => prop.languageId === languages);
+  let lvalue = lvalues[0] ? lvalues[0].languageName : "";
+  const [lInputValue, setLInputValue] = useState("");
+  // Department comps
+  let express = departments[0] ? true : false;
+  let departmentName = departments[0] ? departments[0].departmentName : "";
+  let departmentId = departments[0] ? departments[0].departmentId : null;
+  let departmentAddress = departments[0] ? departments[0].address : "";
+  let departmentEmail = departments[0] ? departments[0].email : "";
+  let departmentPhone = departments[0] ? departments[0].phone : "";
+  let departmentWeb = departments[0] ? departments[0].website : "";
+  const navigate = useNavigate();
+  //FUNCTION
   const handleSetSkillOpen = () => {
     setSkillOpen(true);
   };
@@ -112,56 +118,32 @@ function RecruitForm() {
       }, 5000);
     }
   }, [newError]);
-
-  const [languages, setLanguages] = useState(null);
-  // const [recruiterId, setRecruiterId] = useState(recruitInfo.recruiterId);
-  // const [status, setStatus] = useState(recruitInfo.status);
-  const [requirement, setRequirement] = useState(recruitInfo.requirement);
-  // Requirement comps
-  const [rId, setRId] = useState(
-    requirement.length > 0 ? requirement.length : 0
-  );
-  const [skillId, setSkillId] = useState(null);
-  const [skillName, setSkillName] = useState("");
-  const [experience, setExperience] = useState(0);
-  const [note, setNote] = useState("Note");
-  const [inputValue, setInputValue] = useState("");
-  // Language comps
-  const [languageName, setLanguageName] = useState("");
-  const lvalues = language.filter((prop) => prop.languageId === languages);
-  let lvalue = lvalues[0] ? lvalues[0].languageName : "";
-  const [lInputValue, setLInputValue] = useState("");
-  // Department comps
-  let express = departments[0] ? true : false;
-  let departmentName = departments[0] ? departments[0].departmentName : "";
-  let departmentId = departments[0] ? departments[0].departmentId : null;
-  let departmentAddress = departments[0] ? departments[0].address : "";
-  let departmentEmail = departments[0] ? departments[0].email : "";
-  let departmentPhone = departments[0] ? departments[0].phone : "";
-  let departmentWeb = departments[0] ? departments[0].website : "";
-  const navigate = useNavigate();
-  //FUNCTION
+  useEffect(() => {
+    if (departmentList) {
+      setDepartment(
+        departmentList ? (departmentList !== [] ? departmentList : []) : []
+      );
+    }
+    if (languageList) {
+      setLanguage(
+        languageList ? (languageList !== [] ? languageList : []) : []
+      );
+    }
+    if (skillList) {
+      setSkill(skillList ? (skillList !== [] ? skillList : []) : []);
+      setSkillData(skillList ? (skillList !== [] ? skillList : []) : []);
+    }
+  }, [departmentList, skillList, languageList]);
   const handleChange = (event) => {
     if (event.target.value === "") {
-      // setExpress(false);
       setDepartmentChoose(null);
-      // setDeparmentName(event.target.value);
     } else {
-      // setExpress(true);
-      // setDeparmentName(event.target.value);
       let arr = department.filter(
         (comp) => comp.departmentName === event.target.value
       );
       setDepartmentChoose(arr[0].departmentId);
-      // setDepartmentId(arr[0].departmentId);
-      // setDepartmentAddress(arr[0].departmentAddress);
-      // setDepartmentEmail(arr[0].departmentEmail);
-      // setDepartmentPhone(arr[0].departmentPhone);
-      // setDepartmentWeb(arr[0].departmentWebsite);
     }
   };
-  // console.log(skill);
-  // console.log(skillData);
   function handleRname(e) {
     setRName(e.target.value);
   }
@@ -183,8 +165,6 @@ function RecruitForm() {
     setMaxHire(midleScore);
   }
   function handleRequirementAdd() {
-    // console.log(inputValue);
-    // console.log(skillName);
     let arr = skill.filter(
       (comp) =>
         comp.skillName === (inputValue !== null ? inputValue.skillName : "")
@@ -214,7 +194,6 @@ function RecruitForm() {
       setSkillId(null);
       setRId((prev) => (prev += 1));
       setExperience(0);
-      // setNote("");
       setInputValue("");
     }
   }
@@ -232,12 +211,9 @@ function RecruitForm() {
     setSkill([...skill, newSkill[0]]);
   }
   function handleLanguageAdd2() {
-    // console.log(lInputValue);
     let arr = language.filter((comp) => comp.languageName === lInputValue);
-    // console.log(arr);
     if (arr[0] === undefined) {
       alert("wrong language");
-      // setLanguageId(null);
       setLanguageName("");
       setLInputValue("");
     }
@@ -247,57 +223,10 @@ function RecruitForm() {
   }
   const handleStart = (date) => {
     setStartDate(date);
-    // console.log(date);
   };
   function handleEnd(date) {
     setEndDate(date);
-    // console.log(date);
   }
-  // console.log(departmentChoose);
-
-  // let [requireError, setRequireError] = useState(false);
-  // const handleRequiredOpen = () => {
-  //   setRequireError(true);
-  // };
-  // const handleRequiredClose = (event, reason) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-  //   setRequireError(false);
-  // };
-
-  // let [languageError, setLanguageError] = useState(false);
-  // const handleLanguageOpen = () => {
-  //   setLanguageError(true);
-  // };
-  // const handleLanguageClose = (event, reason) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-  //   setLanguageError(false);
-  // };
-
-  // let [departmentError, setDepartmentError] = useState(false);
-  // const handleDepartmentOpen = () => {
-  //   setDepartmentError(true);
-  // };
-  // const handleDepartmentClose = (event, reason) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-  //   setDepartmentError(false);
-  // };
-
-  // let [dateError, setDateError] = useState(false);
-  // const handleDateOpen = () => {
-  //   setDateError(true);
-  // };
-  // const handleDateClose = (event, reason) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-  //   setDateError(false);
-  // };
 
   let [openAlert, setOpenAlert] = useState(false);
 
@@ -321,11 +250,8 @@ function RecruitForm() {
         },
       });
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
-
-    // cleanStore(dispatch);
-    // navigate("/company/recruitment/:recruitmentid");
   }
   function preProcessing() {
     const messArr = [];
@@ -510,14 +436,11 @@ function RecruitForm() {
         </SkillAlert>
       </Snackbar>
       <Snackbar
-        // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         open={errorSnackbar}
         autoHideDuration={4000}
         onClose={() => {
           setErrorSnackbar(false);
         }}
-        // message="I love snacks"
-        // key={vertical + horizontal}
       >
         <Alert
           variant="filled"
@@ -530,59 +453,6 @@ function RecruitForm() {
           {newError.message}
         </Alert>
       </Snackbar>
-      {/*
-      <Snackbar
-        open={requireError}
-        autoHideDuration={3000}
-        onClose={handleRequiredClose}
-      >
-        <RequiredAlert
-          onClose={handleRequiredClose}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          Need at least one requirement
-        </RequiredAlert>
-      </Snackbar>
-      <Snackbar
-        open={languageError}
-        autoHideDuration={3000}
-        onClose={handleLanguageClose}
-      >
-        <RequiredAlert
-          onClose={handleLanguageClose}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          Choose require language
-        </RequiredAlert>
-      </Snackbar>
-      <Snackbar
-        open={departmentError}
-        autoHideDuration={3000}
-        onClose={handleDepartmentClose}
-      >
-        <RequiredAlert
-          onClose={handleDepartmentClose}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          Choose require department
-        </RequiredAlert>
-      </Snackbar>
-      <Snackbar
-        open={dateError}
-        autoHideDuration={3000}
-        onClose={handleDateClose}
-      >
-        <RequiredAlert
-          onClose={handleDateClose}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          Choose date
-        </RequiredAlert>
-      </Snackbar> */}
       <AlertDialog
         openAlert={openAlert}
         setOpenAlert={setOpenAlert}
