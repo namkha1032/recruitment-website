@@ -12,7 +12,6 @@ function* getReport(action) {
   //http://leetun2k2-001-site1.gtempurl.com/api/Skill
   ///data/skillList.json
   ///data/interviewAll.json`
-  console.log("REPORT: ", action.payload)
   try {
     // const response = yield call(
     //   axios.get,
@@ -51,7 +50,7 @@ function* getReport(action) {
     //   },
     // });
   } catch (error) {
-    console.log(error)
+    console.log("Error: ", error.message)
     yield put({ type: "loading/offLoading" });
     // yield put({
     //   type: "error/setError",
