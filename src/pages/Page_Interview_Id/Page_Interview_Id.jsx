@@ -81,7 +81,6 @@ const Page_Interview_Id = () => {
     const checkuserid = canid === userid;
     const checkinterviwerid = idviewer === userid
     let role = useGetRole();
-    console.log('role', role);
     return (
 
         page === true ?
