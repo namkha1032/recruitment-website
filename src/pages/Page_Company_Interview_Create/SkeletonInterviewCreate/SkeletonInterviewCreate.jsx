@@ -1,23 +1,6 @@
-// import libraries
-import axios from "axios"
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
 // import MUI components
 import {
-    Typography,
-    Button,
-    Autocomplete,
-    TextField,
-    Paper,
-    Box,
-    Chip,
-    Card,
-    CardHeader,
-    CardContent,
-    FormControl,
-    Select,
-    InputLabel,
-    MenuItem,
     Skeleton
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
@@ -25,13 +8,8 @@ import Grid from "@mui/material/Grid";
 
 
 
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
 
 const SkeletonInterviewCreate = (props) => {
-    const theme = useTheme()
-    const isMd = useMediaQuery(theme.breakpoints.up('md'));
-    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     return (
         <>
             <Grid container spacing={4}>

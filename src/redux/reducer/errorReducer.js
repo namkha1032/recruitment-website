@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // status có 3 giá trị:
 // - idle: chưa có lỗi
 // - yes : vừa bắt được lỗi
-// - no  : ko có lỗi, có thể navigate trang khác
+// - no  : ko có lỗi
 const errorSlice = createSlice({
     name: "error",
     initialState: {

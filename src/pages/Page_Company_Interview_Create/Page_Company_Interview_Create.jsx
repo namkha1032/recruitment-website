@@ -1,23 +1,10 @@
 // import libraries
-import axios from "axios"
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import MUI components
 import {
-    Typography,
     Button,
-    Autocomplete,
-    TextField,
-    Paper,
     Box,
-    Chip,
-    Card,
-    CardHeader,
-    CardContent,
-    FormControl,
-    Select,
-    InputLabel,
-    MenuItem
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -38,11 +25,9 @@ import RoomIcon from '@mui/icons-material/Room';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import TitleDivider from "../../components/TitleDivider/TitleDivider";
 import AlertDialog from "../../components/AlertDialog/AlertDialog";
-import SkeletonInterviewCreate from "./SkeletonInterviewCreate/SkeletonInterviewCreate";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import InfoApplication from "../../components/InfoApplication/InfoApplication";
@@ -63,14 +48,10 @@ const Page_Company_Interview_Create = () => {
     let [searchParams, setSearchParams] = useSearchParams();
     let applicationid = searchParams.get("applicationid")
     let recruitmentid = searchParams.get("recruitmentid")
-    console.log("appid: ", applicationid)
-    console.log("recid: ", recruitmentid)
 
     const dispatch = useDispatch()
     const theme = useTheme()
 
-    const isMd = useMediaQuery(theme.breakpoints.up('md'));
-    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
 
 
     // fetch Data
@@ -109,9 +90,6 @@ const Page_Company_Interview_Create = () => {
 
     // set busyInterviewer and busyRoom
     useEffect(() => {
-        console.log("useEffect set busyInterviewer and busyRoom")
-        console.log("chosenDate: ", chosenDate)
-        console.log("chosenShift: ", chosenShift)
         setBusyInterviewer(oldList => [])
         setBusyRoom(oldList => [])
         if (chosenShift) {

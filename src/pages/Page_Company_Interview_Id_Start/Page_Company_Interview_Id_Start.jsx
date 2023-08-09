@@ -157,6 +157,40 @@ export default function Page_Company_Interview_Id_Start() {
         })
     }
     function preprocessing() {
+        if (rightSoft.questions.length == 0) {
+            dispatch({ type: "error/setError", payload: { status: "yes", message: `Please ask some Soft Skill questions.` } })
+            return;
+        }
+        if (rightLang.languages[0].questions.length == 0) {
+            dispatch({ type: "error/setError", payload: { status: "yes", message: `Please ask some Language questions.` } })
+            return;
+        }
+        for (let skill of rightTech.skills) {
+            if (skill.questions.length == 0) {
+                dispatch({ type: "error/setError", payload: { status: "yes", message: `Please ask some ${skill.skillname} questions.` } })
+                return;
+            }
+        }
+        for (let softRes of rightSoft.questions) {
+            if (softRes.score == "") {
+                dispatch({ type: "error/setError", payload: { status: "yes", message: `Please give a score for question '${softRes.questionstring}'` } })
+                return
+            }
+        }
+        for (let langRes of rightLang.languages[0].questions) {
+            if (langRes.score == "") {
+                dispatch({ type: "error/setError", payload: { status: "yes", message: `Please give a score for question '${langRes.questionstring}'` } })
+                return
+            }
+        }
+        for (let skill of rightTech.skills) {
+            for (let techRes of skill.questions) {
+                if (techRes.score == "") {
+                    dispatch({ type: "error/setError", payload: { status: "yes", message: `Please give a score for question '${techRes.questionstring}'` } })
+                    return
+                }
+            }
+        }
         setOpenAlert(true)
     }
     console.log("note: ", note)

@@ -1,32 +1,12 @@
-// import libraries
-import axios from "axios"
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
 // import MUI components
 import {
     Typography,
-    Button,
-    Autocomplete,
-    TextField,
-    Paper,
-    Box,
     Chip,
-    Card,
-    CardHeader,
-    CardContent,
-    FormControl,
-    Select,
-    InputLabel,
-    MenuItem,
     Divider,
     Avatar
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import { DatePicker } from '@mui/x-date-pickers';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { useNavigate } from "react-router-dom";
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import DomainIcon from '@mui/icons-material/Domain';
@@ -48,7 +28,6 @@ const TableResult = (props) => {
         shiftStart = chosenShift.shiftstart < 10 ? startSmallTen : startLargeTen
         shiftEnd = chosenShift.shiftend < 10 ? endSmallTen : endLargeTen
     }
-    console.log('choseninterviewer: ', chosenInterviewer)
     return (
         <>
             <Grid container spacing={2} columns={12}>

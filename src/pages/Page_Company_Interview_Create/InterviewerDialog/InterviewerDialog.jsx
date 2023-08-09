@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-    IconButton,
     Dialog,
     DialogContent,
     DialogTitle,
@@ -9,21 +8,14 @@ import {
     Box
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import CategoryIcon from '@mui/icons-material/Category';
+
 import Grid3x3Icon from '@mui/icons-material/Grid3x3';
-import SourceIcon from '@mui/icons-material/Source';
 import Divider from "@mui/material/Divider";
-import PsychologyIcon from '@mui/icons-material/Psychology';
-import PublicIcon from '@mui/icons-material/Public';
-import { Global } from "@emotion/react";
 import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import LanguageIcon from '@mui/icons-material/Language';
 import TungstenIcon from '@mui/icons-material/Tungsten';
 import TextField from "@mui/material/TextField";
-import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
@@ -41,8 +33,6 @@ const InterviewerDialog = (props) => {
     // --------------------------------------
     const params = props.params
     const cate = props.cate
-    const skillname = props.skillname
-    const languagename = props.languagename
     // --------------------------------------
     const interviewerid = params.row.interviewerid
     const userid = params.row.userid
@@ -57,33 +47,7 @@ const InterviewerDialog = (props) => {
     const avatar = params.row.avatar
 
 
-    const theme = useTheme()
-    const isMd = useMediaQuery(theme.breakpoints.up('md'));
-    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
-    let left = isSm ? 4 : 5
-    let right = isSm ? 7 : 6
-    let gap = 1
-    let gridSx = {
-        display: "flex", alignItems: "center", columnGap: gap
-    }
-    let categoryName
-    let categoryIcon
-    let chipColor
-    if (cate == 0) {
-        categoryName = "Soft Skills"
-        categoryIcon = <HandshakeIcon />
-        chipColor = "secondary"
-    }
-    else if (cate == 1) {
-        categoryName = "Language"
-        categoryIcon = <LanguageIcon />
-        chipColor = "success"
-    }
-    else if (cate == 2) {
-        categoryName = "Technology"
-        categoryIcon = <TungstenIcon />
-        chipColor = "warning"
-    }
+    
     let [open, setOpen] = useState(false)
     return (
         <>

@@ -148,7 +148,6 @@ function App() {
               <Route path="/recruitment/:recruitmentid/application/:applicationid" element={<Page_Recruitment_Id_Application_Id />} />
             </Route>
 
-            <Route path="/test" element={<PageTest />} />
 
 
             <Route path="/unauthorized" element={<Unauthorized />} />
@@ -158,10 +157,7 @@ function App() {
           <Route path="/login" element={<XPage_Login />} />
           <Route path="/recovery" element={<XPage_Recovery />} />
           <Route path="/register" element={<XPage_Register />} />
-          <Route path="/test2" element={<PageTest2 />} />
-          <Route path="/test3" element={<PageTest3 />} />
-          <Route path="/test4" element={<PageTest4 />} />
-          
+
 
         </Routes>
       </BrowserRouter>
