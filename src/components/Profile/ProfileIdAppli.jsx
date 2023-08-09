@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Typography, Button, Paper,Box } from '@mui/material';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid} from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import TabInProfile from './TabInProfile/TabInProfile';
-import { NotStart,Pending , Completed,Pass} from '../Label/LabelStatus';
+import {Pending,Pass} from '../Label/LabelStatus';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import {NoRowsOverlay,NoResultsOverlay} from '../DataRick/DataRick';
-import { param } from 'jquery';
+
 import GigaCard from '../GigaCard/GigaCard';
 import GigaCardBody from '../GigaCardBody/GigaCardBody';
 export default function HistoryListApp({ events, NameList, namePage }) {
-  console.log("eventAppli:", events)
+ 
   const [selectedEvent, setSelectedEvent] = useState(null);
   const navigate = useNavigate();
   const [totalPositions, setTotalPositions] = useState(0);
@@ -20,7 +20,7 @@ export default function HistoryListApp({ events, NameList, namePage }) {
     setTotalPositions(events.length);
   }, [events]);
   const handleDetails = (event) => {
-   console.log("applicationId",event);
+
     navigate(`/recruitment/${event.positionId}/application/${event.applicationId}`);
    
   };
@@ -82,10 +82,6 @@ export default function HistoryListApp({ events, NameList, namePage }) {
       ),
     },
   ].filter(Boolean);
-  const options = {
-    filterType: 'dropdown',
-    responsive: 'scrollMaxHeight',
-};
 
   return (
     <Box>
@@ -101,7 +97,6 @@ export default function HistoryListApp({ events, NameList, namePage }) {
           <TabInProfile />
         </Grid>
         <Grid item xs={12} md={10}>
-          {/* Tăng chiều rộng của khung */}
           <Paper elevation={3} sx={{ padding: '20px', marginBottom: '20px',minHeight:350 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
               <Typography variant="h5" gutterBottom sx={{margin:'0'}}>

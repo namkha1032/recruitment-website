@@ -18,7 +18,6 @@ export default function Page_Profile_Id_Event(){
     }
   }, [])
   const rows_draft = useSelector((state => state.eventCandidate));
-  console.log("Test:",rows_draft);
   const rows = rows_draft ? rows_draft : [];
       return(
         <EventList events={rows} />

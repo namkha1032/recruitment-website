@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Typography, Button, Paper, Box } from '@mui/material';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import TabInProfile from './TabInProfile/TabInProfile';
@@ -17,11 +17,9 @@ export default function EventList({ events}) {
     setTotalPositions(events.length);
   }, [events]);
   const navigate = useNavigate();
-  console.log(events);
+
   const handleDetails = (eventId) => {
     navigate(`/event/${eventId}`);
-    // Perform action when the "View Details" button is clicked for an event
-    // You can implement this function to display detailed information about the event, e.g., show a popup, navigate to a new page, etc.
   };
 
   const handleEventHover = (event) => {
@@ -65,7 +63,7 @@ export default function EventList({ events}) {
   ].filter(Boolean);
 
   const rows = events.map((event) => {
-    console.log("EventId",event.event.eventId); // Thêm dòng này để kiểm tra giá trị của eventId
+   
     return {
       id: event.event.eventId,
       name: event.event.eventName,

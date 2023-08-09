@@ -1,8 +1,6 @@
 // import libraries
-import { takeEvery, put, all, call, takeLatest, select } from "redux-saga/effects"
+import { takeEvery, put, all, call, select } from "redux-saga/effects"
 import axios from 'axios'
-import { delay } from "../../utils/delay"
-import host from "../host"
 import { error } from "jquery"
 import transformDateOnly from "../../utils/transformDateOnly"
 // const fs = require("fs");
@@ -10,15 +8,12 @@ import transformDateOnly from "../../utils/transformDateOnly"
 function* getAllInterviewCandidate(action) {
     try {
         const candidateId = yield select((state) => state.user.candidateId);
-        console.log("candidateIdOfUser111: ", candidateId);
         const config = {
             headers: { Authorization: action.payload.token },
         }
         //const candidateId = "9fb97e9c-2394-4a32-a93f-7501c71b6971";
         const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`, config)
-        console.log("InterviewList", response.data)
         const filterInterview = response.data.filter((interview) => interview.application.cv.candidateId === candidateId)
-        console.log("filterInterview", filterInterview)
         const interviewList = filterInterview.map((item) => {
             let shift = {
                 shiftstart: item.itrsinterview.shift.shiftTimeStart,
@@ -41,7 +36,6 @@ function* getAllInterviewCandidate(action) {
             }
             return newInterview
         })
-        console.log("interviewListaftermap", interviewList)
         yield put({ type: "interviewListCandidate/setInterviewListCandidate", payload: interviewList })
     }
     catch {
@@ -51,7 +45,7 @@ function* getAllInterviewCandidate(action) {
 
 function* interviewCandidateSaga() {
     yield all([
-        takeLatest("saga/getAllInterviewCandidate", getAllInterviewCandidate),
+        takeEvery("saga/getAllInterviewCandidate", getAllInterviewCandidate),
     ])
 }
 

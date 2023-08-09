@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import HistoryListApp from '../../components/Profile/ProfileIdAppli';
 import { useDispatch, useSelector } from "react-redux";
 import cleanStore from '../../utils/cleanStore';

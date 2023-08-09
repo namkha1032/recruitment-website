@@ -18,7 +18,7 @@ function cleanStore(dispatch) {
     dispatch({ type: "shift/setShift", payload: null })
     dispatch({ type: "skill/setSkill", payload: null })
     dispatch({ type: "event/setEvent", payload: null })
-    dispatch({ type: "interviewListCandidate/setInterviewList", payload: null })
+    dispatch({ type: "interviewListCandidate/setInterviewListCandidate", payload: null })
     dispatch({ type: "candidateJoinEvent/setCandidateJoinEvent", payload: null })
     dispatch({ type: "interviewidInfo/setInterviewidInfo", payload: null })
     dispatch({ type: "cvCandidate/setCvCandidate", payload: null })
@@ -28,6 +28,8 @@ function cleanStore(dispatch) {
     dispatch({ type: "infoApplication/setInfoApplication", payload: null })
     dispatch({ type: "requirement/setRequirement", payload: null })
     dispatch({ type: "report/setReport", payload: null })
+    dispatch({ type: "eventCandidate/setEventList",payload: null})
+    dispatch({ type: "applicationCandidate/setApplicationList",payload: null})
 }
 
 export default cleanStore
