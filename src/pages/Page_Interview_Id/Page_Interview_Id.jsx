@@ -31,6 +31,7 @@ import MissingPage from "../../components/MissingPage/MissingPage";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Unauthorized from "../../components/Unauthorized/Unauthorized";
+import useGetRole from '../../hooks/useGetRole';
 const Page_Interview_Id = () => {
     const user = useSelector(state => state.user)
     const navigate = useNavigate();
@@ -79,13 +80,14 @@ const Page_Interview_Id = () => {
     const userid = user ? user.userid : '';
     const checkuserid = canid === userid;
     const checkinterviwerid = idviewer === userid
+    let role = useGetRole();
     return (
 
         page === true ?
         <>
             {interviewidinfo && skill_list  ? (
                 <>
-                    {checkuserid === true || checkinterviwerid === true ? (
+                    {checkuserid === true || checkinterviwerid === true || role === "admin" || role === "recruiter" ? (
                         <>
                             <Grid container spacing={3}>
                                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
