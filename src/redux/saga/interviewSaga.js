@@ -127,7 +127,6 @@ function* getInterviewResult(action) {
     // const responseInterviewList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview`, config)
 
     let responseInterview = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Interview?id=${action.payload.interviewid}`)
-    console.log("resssss: ", responseInterview)
     const responsePosition = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Position/GetPositionById?positionId=${responseInterview.data.application.position.positionId}`, config)
     const responseQSList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/QuestionSkill`, config);
 
@@ -137,13 +136,6 @@ function* getInterviewResult(action) {
     const responseSkillList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Skill`, config)
     // const responseRoundList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Round`, config)
     const roundList = responseInterview.data.rounds
-    console.log("responseInterview: ", responseInterview.data)
-    console.log("responsePosition: ", responsePosition.data)
-    console.log("responseQSList: ", responseQSList.data)
-    // console.log("responseAllQuestion: ", responseAllQuestion.data)
-    console.log("responseCategoryList: ", responseCategoryList.data)
-    console.log("responseSkillList: ", responseSkillList.data)
-    // console.log("responseRoundList: ", responseRoundList.data)
 
     let interStruc = {
       interviewid: action.payload.interviewid,
@@ -394,7 +386,6 @@ function* getQuestionsForStartingIntervew(action) {
 
   const responseCategoryList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CategoryQuestion`, config)
   const responseSkillList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Skill`, config)
-  console.log("quessoft: ", responseSoftList)
   let quesStruc = [];
   // Soft Skill
   for (let cate of responseCategoryList.data) {

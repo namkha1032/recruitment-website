@@ -1,14 +1,4 @@
-import { useState, useEffect } from 'react';
 import {
-    Tabs,
-    Tab,
-    Typography,
-    Box,
-    Button,
-    TextField,
-    Card,
-    CardHeader,
-    CardContent,
     Table,
     TableCell,
     TableContainer,
@@ -19,10 +9,6 @@ import {
 } from '@mui/material';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
 import calculateScore from '../../utils/calculateScore';
@@ -40,22 +26,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
-}));
 
 
 
 const ScoreTable = (props) => {
 
     const theme = useTheme()
-    const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
 
     let rightSoft = props.allResult[0]

@@ -5,7 +5,6 @@ const questionSlice = createSlice({
     initialState: null,
     reducers: {
         setInterviewQuestion(state, action) {
-            console.log("actionpayload: ", action.payload)
             return {
                 left: action.payload,
                 right: action.payload.map((cate, index) => {

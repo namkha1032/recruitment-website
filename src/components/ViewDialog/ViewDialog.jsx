@@ -15,7 +15,6 @@ import SourceIcon from '@mui/icons-material/Source';
 import Divider from "@mui/material/Divider";
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import PublicIcon from '@mui/icons-material/Public';
-import { Global } from "@emotion/react";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import HandshakeIcon from '@mui/icons-material/Handshake';

@@ -5,7 +5,6 @@ import { useTheme } from '@mui/material/styles';
 const TitleDivider = (props) => {
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
-    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     return (
         <Divider sx={{
             "&::before, &::after": {
