@@ -1,6 +1,6 @@
 import { takeEvery, put, all, call, takeLatest } from "redux-saga/effects"
 import axios from 'axios'
-import host from "../host"
+// import host from "../host"
 
 function* userLogin(action) {
     try {
@@ -42,7 +42,6 @@ function* userLogin(action) {
             userObj.departmentId = responseProfile.data.departmentId
         } 
 
-        console.log("userobj: ", userObj)
         if (check) {
             window.localStorage.setItem("user", JSON.stringify(userObj))
         }

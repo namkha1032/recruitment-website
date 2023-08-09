@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate/* , useParams */ } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
@@ -14,20 +14,12 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-// import { toast } from "react-toastify";
-// import { ToastContainer } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
 import { Snackbar, Alert } from "@mui/material";
 
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-
-// const style = {
-//   marginTop: "15px",
-//   marginBottom: "15px",
-// };
 
 const theme = createTheme({
   palette: {
@@ -181,43 +173,62 @@ const ProfileChangePW = () => {
   return (
     <Box
       sx={{
-        height: "100%",
         width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <Container
-        sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+        component="main"
+        maxWidth="xs"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
-        <Grid
-          container
+        <Box
           sx={{
-            paddingTop: "10px",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
+            position: "relative",
             width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <Grid item md={8} sx={{ display: "flex", justifyContent: "center" }}>
-            <Grid
-              item
-              md={9}
-              sx={{
-                borderRadius: "10px",
-                padding: "20px",
-                paddingTop: "10px",
-                paddingBottom: "10px",
-                backgroundColor: "white",
-                opacity: "100%",
-                left: "15%",
-                right: "15%",
-              }}
-            >
-              <form onSubmit={handleSubmit}>
-                <Grid item xs={12} md={12} 
-                  sx={{ 
-                    marginBottom: "3px",
-                    marginTop: '5px', 
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingTop: "5%",
+              paddingBottom: "5%",
+            }}
+          >
+            <form onSubmit={handleSubmit}>
+
+              <Grid
+                container
+                //spacing={2}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingTop: "0px",
+                }}
+              >
+
+                <Grid item
+                  xs={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: '3px',
+                    marginTop: '5px',
                   }}
                 >
                   <TextField
@@ -300,10 +311,14 @@ const ProfileChangePW = () => {
                     </Grid>
                   )}
 
-                <Grid item xs={12} md={12} 
-                  sx={{ 
-                    marginBottom: "3px",
-                    marginTop: '5px', 
+                <Grid item
+                  xs={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: '3px',
+                    marginTop: '5px',
                   }}
                 >
                   <TextField
@@ -406,10 +421,14 @@ const ProfileChangePW = () => {
                     </Grid>
                   )}
 
-                <Grid item xs={12} md={12} 
-                  sx={{ 
-                    marginBottom: "3px",
-                    marginTop: '5px', 
+                <Grid item
+                  xs={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: '3px',
+                    marginTop: '5px',
                   }}
                 >
                   <TextField
@@ -511,10 +530,14 @@ const ProfileChangePW = () => {
                     </Grid>
                   )}
 
-                <Grid item xs={12} md={12} 
-                  sx={{ 
-                    marginBottom: "3px",
-                    marginTop: '5px', 
+                <Grid item
+                  xs={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: '3px',
+                    marginTop: '5px',
                   }}
                 >
                   <TextField
@@ -620,8 +643,8 @@ const ProfileChangePW = () => {
                   sx={{
                     display: "flex",
                     justifyContent: "center",
-                    marginBottom: "15px",
-                    marginTop: "25px",
+                    alignItems: "center",
+                    marginTop: '20px'
                   }}
                 >
                   {loading ? <CircularProgress sx={{ color: "black" }} /> :
@@ -645,11 +668,12 @@ const ProfileChangePW = () => {
                   </Button>
                   }
                 </Grid>
-              </form>
 
-            </Grid>
-          </Grid>
-        </Grid>
+              </Grid>
+            </form>
+
+          </Box>
+        </Box>
       </Container>
 
       <Snackbar
