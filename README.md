@@ -12,7 +12,8 @@ This project will be implemented within the scope of serving a company or organi
 - Redux Saga
 - Material UI
 # How to run
-The deploy version of the website can be found [at this link](https://intern-team4.vercel.app/home)
+The deploy version of the website can be found [at this link](https://intern-team4.vercel.app/home) or via this QR code:
+![QR code](https://gitlab.com/namkha1032/intern-team4/-/raw/main/src/assets/img/qrcode.png)
 
 If you wish to run the website locally on your machine, first you need Node installed on your computer. The latest version of Node can be found [here](https://nodejs.org/en)
 # Installation
