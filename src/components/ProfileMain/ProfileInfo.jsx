@@ -4,14 +4,12 @@ import {
   Button,
   CircularProgress,
   Grid,
-  Paper,
   Snackbar,
   TextField,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import CV from "../CV/CV";
 import {
   Edit,
   Email,
@@ -29,7 +27,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LoadingButton } from "@mui/lab";
 import { useParams } from "react-router-dom/dist";
-import cleanStore from "../../utils/cleanStore";
 
 const ProfileInfo = () => {
   const user = useSelector((state) => state.user);
@@ -37,7 +34,6 @@ const ProfileInfo = () => {
 
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.down("md"));
-  const isSm = useMediaQuery(theme.breakpoints.down("sm"));
   const dispatch = useDispatch();
   const { profileid } = useParams();
   const [block, setBlock] = useState(true);
@@ -56,7 +52,6 @@ const ProfileInfo = () => {
   const [faild, setFaild] = useState(false);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    console.log("change");
     if (loading === true) {
       setLoading(false);
       setBlock(true);
@@ -75,7 +70,8 @@ const ProfileInfo = () => {
       name === "" ||
       address === "" ||
       phone === "" ||
-      birth.isAfter(dayjs('01-01-2099')) || birth.isBefore(dayjs('01-01-1900'))
+      birth.isAfter(dayjs("01-01-2099")) ||
+      birth.isBefore(dayjs("01-01-1900"))
     ) {
       setFaild(true);
       setOpen(true);
@@ -89,7 +85,6 @@ const ProfileInfo = () => {
         ImageFile: profile.imageURL ? profile.imageURL : "",
         PhoneNumber: phone,
       };
-      console.log(data);
       dispatch({
         type: "profileSaga/updateProfile",
         payload: { data, userid: user.userid, token: user.token },
@@ -99,8 +94,7 @@ const ProfileInfo = () => {
   const handleEdit = () => {
     setBlock(false);
   };
-  console.log(birth.isAfter(dayjs('01-01-2099')) || birth.isBefore(dayjs('01-01-1900')));
-  
+
   return (
     <>
       {" "}
@@ -111,12 +105,26 @@ const ProfileInfo = () => {
           elevation={6}
           variant="filled"
         >
-          {faild ? <> 
-            {(name === '' || phone === '' || address === '') && <> Please fill in the required information {name === '' ? "(Full Name)" : ''} {address === ''? "(Address)" :""} {phone ===''? "(Phone Number)" : ''}.<br></br></>}
-            
-            {birth.isAfter(dayjs('01-01-2099')) || birth.isBefore(dayjs('01-01-1900')) ? "Date of birth is valid." :""}
-            
-            </> : <>Success!</>}
+          {faild ? (
+            <>
+              {(name === "" || phone === "" || address === "") && (
+                <>
+                  {" "}
+                  Please fill in the required information{" "}
+                  {name === "" ? "(Full Name)" : ""}{" "}
+                  {address === "" ? "(Address)" : ""}{" "}
+                  {phone === "" ? "(Phone Number)" : ""}.<br></br>
+                </>
+              )}
+
+              {birth.isAfter(dayjs("01-01-2099")) ||
+              birth.isBefore(dayjs("01-01-1900"))
+                ? "Date of birth is valid."
+                : ""}
+            </>
+          ) : (
+            <>Success!</>
+          )}
         </Alert>
       </Snackbar>
       <Box>
@@ -132,12 +140,12 @@ const ProfileInfo = () => {
               }}
             >
               Detail{" "}
-              {user.userid === profileid ? (
+              {user.userid === profileid ? (<Box sx={{ ':hover':{color:'#3399FF'}, cursor: "pointer" }} onClick={handleEdit}> Edit
                 <Edit
-                  onClick={handleEdit}
+                  
                   fontSize="small"
-                  sx={{ ml: "5px", color: "black", cursor: "pointer" }}
-                />
+                  sx={{ ml: "5px",':hover':{color:'#3399FF'}}}
+                /></Box>
               ) : (
                 <></>
               )}
@@ -152,8 +160,7 @@ const ProfileInfo = () => {
               >
                 <Person />
                 <TextField
-    
-                  error={name==="" && profileid === user.userid}
+                  error={name === "" && profileid === user.userid}
                   fullWidth
                   InputProps={{ readOnly: block }}
                   size="small"
@@ -178,11 +185,10 @@ const ProfileInfo = () => {
                   >
                     <DemoContainer components={["DatePicker", "DatePicker"]}>
                       <DatePicker
-                      
                         format="DD/MM/YYYY"
                         label="Birth"
-                        minDate={dayjs('01-01-1900')}
-                        maxDate={dayjs('01-01-2099')}
+                        minDate={dayjs("01-01-1900")}
+                        maxDate={dayjs("01-01-2099")}
                         value={birth}
                         readOnly={block}
                         height=""
@@ -224,8 +230,7 @@ const ProfileInfo = () => {
 
                 <TextField
                   fullWidth
-           
-                  error={phone==="" && profileid === user.userid}
+                  error={phone === "" && profileid === user.userid}
                   InputProps={{ readOnly: block }}
                   size="small"
                   label="Phone"
@@ -245,7 +250,7 @@ const ProfileInfo = () => {
 
                 <TextField
                   fullWidth
-                  error={address==="" && profileid === user.userid}
+                  error={address === "" && profileid === user.userid}
                   InputProps={{ readOnly: block }}
                   multiline
                   size="small"

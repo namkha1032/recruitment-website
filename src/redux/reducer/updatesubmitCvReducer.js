@@ -5,6 +5,7 @@ const updatesubmitcvSlice = createSlice({
   initialState: false,
   reducers: {
     setUpdatesubmitcv(state, action) {
+      console.log(action.payload)
       return action.payload
     }
   }

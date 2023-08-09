@@ -35,9 +35,6 @@ const InfoApplication = ({ applicationid, recruitmentid }) => {
   const detailposition = useSelector((state) => state.position);
   const candidate = useSelector((state) => state.candidate);
   const user = useSelector(state => state.user)
-
-  console.log(detailposition)
-
   const dispatch = useDispatch();
   
   useEffect(() => {

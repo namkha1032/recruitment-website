@@ -8,19 +8,7 @@ import { useParams } from "react-router-dom/dist";
 import cleanStore from "../../utils/cleanStore";
 
 const Profile = () => {
-  const dispatch = useDispatch()
-  const user = useSelector(state => state.user)
-  const profile = useSelector((state) => state.profile);
-  const {profileid} = useParams()
-  useEffect(() => {
-    dispatch({type:'profileSaga/getProfile',payload:{token:user.token,userid:profileid}})
-  },[profileid])
-  console.log(profile)
-  return (
-  user  ? 
-
-  <ProfileMain page="Profile" />  : <MissingPage/>
-  );
+  return <ProfileMain page="Profile" />;
 };
 
 export default Profile;

@@ -78,7 +78,6 @@ function* getApplication(action) {
 
 function* getInfoApplication(action) {
     try {
-        // const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload}`)
         const response = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`)
         const data = response.data.filter(item => item.applicationId === action.payload.applicationid)
         if (data.length === 0)
@@ -90,7 +89,6 @@ function* getInfoApplication(action) {
                 yield put({ type: 'infoApplication/setInfoApplication', payload: 'none' })
             else {
                 const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate/${data[0].cv.candidateId}`)
-                console.log(response2.data)
                 const response3 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Authentication/Profile/${response2.data.userId}`, {
                     headers: { Authorization: `Bearer ${action.payload.token}` }
                 })
