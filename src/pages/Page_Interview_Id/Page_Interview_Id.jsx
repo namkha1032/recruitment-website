@@ -30,6 +30,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import MissingPage from "../../components/MissingPage/MissingPage";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import Unauthorized from "../../components/Unauthorized/Unauthorized";
 const Page_Interview_Id = () => {
     const user = useSelector(state => state.user)
     const navigate = useNavigate();
@@ -73,13 +74,18 @@ const Page_Interview_Id = () => {
     const skill_list = useSelector(state => state.interviewskill);
     const birthdate = interviewidinfo ? dayjs(convertDate(interviewidinfo.interviewer.user.dateOfBirth)).format('DD/MM/YYYY') : [];
     const date = interviewidinfo ? dayjs(convertDate(interviewidinfo.itrsinterview.dateInterview)).format('DD/MM/YYYY') : [];
-
+    const canid = interviewidinfo ? interviewidinfo.application.cv.candidate.userId : '';
+    const idviewer = interviewidinfo ? interviewidinfo.interviewer.userId : '';
+    const userid = user ? user.userid : '';
+    const checkuserid = canid === userid;
+    const checkinterviwerid = idviewer === userid
     return (
 
         page === true ?
-            <>
-                {interviewidinfo && skill_list ?
-                    (
+        <>
+            {interviewidinfo && skill_list  ? (
+                <>
+                    {checkuserid === true ? (
                         <>
                             <Grid container spacing={3}>
                                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -408,20 +414,29 @@ const Page_Interview_Id = () => {
                                 pauseOnHover={false}
                                 theme="colored"
                             />
+
                         </>
-                    ) :
-                    (
-
-                        <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                            <CircularProgress color="inherit" />
-                        </Box>
+                    ) : (
+                        <>
+                            <Unauthorized />
+                        </>
                     )}
-            </>
-            :
-            <>
-                <MissingPage />
-            </>
+                </>
+            ) : (
+                <>
+                
+                    <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        <CircularProgress color="inherit" />
+                    </Box>
+                </>
+            )}
 
+
+        </>
+        :
+        <>
+            <MissingPage />
+        </>
 
     )
 }
