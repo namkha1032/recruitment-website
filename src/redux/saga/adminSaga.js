@@ -4,9 +4,9 @@ import axios from 'axios';
 function* doGetCandidate(action) {
     try {
         let userlocal = window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")) : JSON.parse(window.sessionStorage.getItem("user"))
-        console.log(userlocal)
+        // console.log(userlocal)
         let token = `Bearer ${userlocal.token}`
-        console.log(token)
+        // console.log(token)
         const config = {
             headers: {
                 Authorization: token,
@@ -18,16 +18,16 @@ function* doGetCandidate(action) {
         yield put({type: "admin/getCandidate", payload: res.data})
         // console.log("data: ", res.data)
     } catch (error) {
-        console.log(error)
+        // console.log(error)
     }
 }
 
 function* doGetRecruiter(action) {
     try {
         let userlocal = window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")) : JSON.parse(window.sessionStorage.getItem("user"))
-        console.log(userlocal)
+        // console.log(userlocal)
         let token = `Bearer ${userlocal.token}`
-        console.log(token)
+        // console.log(token)
         const config = {
             headers: {
                 Authorization: token,
@@ -44,16 +44,16 @@ function* doGetRecruiter(action) {
         //         message: "message" in error ? error.message : error.response.data,
         //     },
         // });
-        console.log(error)
+        // console.log(error)
     }
 }
 
 function* doGetInterviewer(action) {
     try {
         let userlocal = window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")) : JSON.parse(window.sessionStorage.getItem("user"))
-        console.log(userlocal)
+        // console.log(userlocal)
         let token = `Bearer ${userlocal.token}`
-        console.log(token)
+        // console.log(token)
         const config = {
             headers: {
                 Authorization: token,
@@ -70,16 +70,16 @@ function* doGetInterviewer(action) {
         //         message: "message" in error ? error.message : error.response.data,
         //     },
         // });
-        console.log(error)
+        // console.log(error)
     }
 }
 
 function* doGetBlacklist(action) {
     try {
         let userlocal = window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")) : JSON.parse(window.sessionStorage.getItem("user"))
-        console.log(userlocal)
+        // console.log(userlocal)
         let token = `Bearer ${userlocal.token}`
-        console.log(token)
+        // console.log(token)
         const config = {
             headers: {
                 Authorization: token,
@@ -96,16 +96,16 @@ function* doGetBlacklist(action) {
         //         message: "message" in error ? error.message : error.response.data,
         //     },
         // });
-        console.log(error)
+        // console.log(error)
     }
 }
 
 function* doGetDepartment(action) {
     try {
         let userlocal = window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")) : JSON.parse(window.sessionStorage.getItem("user"))
-        console.log(userlocal)
+        // console.log(userlocal)
         let token = `Bearer ${userlocal.token}`
-        console.log(token)
+        // console.log(token)
         const config = {
             headers: {
                 Authorization: token,
@@ -122,16 +122,16 @@ function* doGetDepartment(action) {
         //         message: "message" in error ? error.message : error.response.data,
         //     },
         // });
-        console.log(error)
+        // console.log(error)
     }
 }
 
 function* doAddToBlacklist(action) {
     try {
         let userlocal = window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")) : JSON.parse(window.sessionStorage.getItem("user"))
-        console.log(userlocal)
+        // console.log(userlocal)
         let token = `Bearer ${userlocal.token}`
-        console.log(token)
+        // console.log(token)
         const config = {
             headers: {
                 Authorization: token,
@@ -155,7 +155,7 @@ function* doAddToBlacklist(action) {
                 message: "Account Added Successfully"
             }})
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         yield put({type: "error/setError", payload:{
                 status: "yes",
                 message: "Error code: " + error.response.status + " : " + error.message,
@@ -166,9 +166,9 @@ function* doAddToBlacklist(action) {
 function* doAddAccount(action) {
     try {
         let userlocal = window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")) : JSON.parse(window.sessionStorage.getItem("user"))
-        console.log(userlocal)
+        // console.log(userlocal)
         let token = `Bearer ${userlocal.token}`
-        console.log(token)
+        // console.log(token)
         const config = {
             headers: {
                 Authorization: token,
@@ -191,9 +191,9 @@ function* doAddAccount(action) {
             password: password,
             departmentId: departmentId,
         };
-        console.log(data)
+        // console.log(data)
         const res = yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Admin/Create?role=${role}`, data, config);
-        // console.log(res,data,`https://leetun2k2-001-site1.gtempurl.com/api/Admin/Create?role=${role}`)
+        // // console.log(res,data,`https://leetun2k2-001-site1.gtempurl.com/api/Admin/Create?role=${role}`)
         // return res.data
         yield put({type: "error/setError" , payload: {
                 status: "no",
@@ -205,8 +205,8 @@ function* doAddAccount(action) {
         //         name: error.name,
         //         code: error.code,
         //     }})
-        // console.log(error);
-        console.log("Error log: ",error)
+        // // console.log(error);
+        // console.log("Error log: ",error)
         yield put({type: "error/setError", payload:{
                 status: "yes",
                 message: "Error code: " + error.response.status + " : " + error.message,
@@ -217,7 +217,7 @@ function* doAddAccount(action) {
 
 
 function* adminSaga() {
-    // console.log("saga init")
+    // // console.log("saga init")
     yield takeEvery('saga/getCandidateAdmin', doGetCandidate);
     yield takeEvery('saga/getInterviewerAdmin', doGetInterviewer);
     yield takeEvery('saga/getRecruiterAdmin', doGetRecruiter);
@@ -225,7 +225,7 @@ function* adminSaga() {
     yield takeEvery('saga/getDepartmentAdmin', doGetDepartment);
     yield takeEvery('saga/addToBlacklist', doAddToBlacklist);
     yield takeEvery('saga/addAdvancedAccount', doAddAccount);
-    // console.log("saga end")
+    // // console.log("saga end")
 }
 
 export default adminSaga

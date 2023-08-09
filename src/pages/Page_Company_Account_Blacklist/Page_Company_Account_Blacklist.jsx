@@ -140,7 +140,7 @@ const RenderCheckAccount = ({ params }) => {
     return (
         <Grid item xs={12} mb="10vh">
             <Card
-                raised="true"
+                raised={true}
                 sx={{
                     // display:'flex',
                     // border: "1px solid black",
@@ -205,7 +205,7 @@ const RenderCheckAccount = ({ params }) => {
                 </Grid>
             </Card>
             <Card
-                raised="true"
+                raised={true}
                 sx={{
                     // width:'77vw',
                     display: 'flex',

@@ -87,12 +87,12 @@ function CandidateTable(props) {
         const handleGoToAccount = () => {
             const userId = params.row.userId;
             window.location.href = `/profile/${userId}`;
-            console.log(userId)
+            // console.log(userId)
             setOpen(false);
         };
         const handleAddClick = () => {
             dispatch({type: "saga/addToBlacklist", payload: {reason: reason, candidateId: params.row.candidateId}});
-            console.log(reason, params.row.candidateId);
+            // console.log(reason, params.row.candidateId);
             setOpen(false);
 
         };
@@ -165,7 +165,7 @@ function CandidateTable(props) {
         // console.log("end dispatch")
     }, [dispatch]);
     const candidate = useSelector(state => state.admin.candidate)
-    console.log("state: ", candidate)
+    // console.log("state: ", candidate)
 
     function QuickSearchToolbar() {
         return (
@@ -276,7 +276,7 @@ function InterviewerTable(props) {
         const handleGoToAccount = () => {
             const userId = params.row.userId;
             window.location.href = `/profile/${userId}`;
-            console.log(userId)
+            // console.log(userId)
             setOpen(false);
         };
         return (
@@ -453,7 +453,7 @@ function RecruiterTable(props) {
         const handleGoToAccount = () => {
             const userId = params.row.userId;
             window.location.href = `/profile/${userId}`;
-            console.log(userId)
+            // console.log(userId)
             setOpen(false);
         };
         return (
@@ -645,19 +645,20 @@ function FullWidthTabs() {
 
     return (
         <Card
-            raised="true"
+            raised={true}
             sx={{
                 padding: 4,
                 mt: 4
             }}
         >
-            <Grid container>
+            <Grid container >
                 <AppBar position="static" sx={{backgroundColor: '#ffffff'}}>
                     <Tabs
                         display="flex"
                         value={value}
                         onChange={handleChange}
                         variant="fullWidth"
+                        // width="70vw"
                         aria-label="selectTableRoles"
                         TabIndicatorProps={{
                             style: {
@@ -718,7 +719,7 @@ const Page_Company_Account = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [alertType, setAlertType] = useState("success");
     useEffect(() => {
-        console.log("error toast start", newError)
+        // console.log("error toast start", newError)
         if (newError.status=="no"){
             setErrorMessage("Account Added!")
             setErrorSnackbar(true);
@@ -748,7 +749,7 @@ const Page_Company_Account = () => {
         <Grid container>
             <Grid item xs={12}>
                 <Card
-                    raised="true"
+                    raised={true}
                     sx={{
                         // display:'flex',
                         // border: "1px solid black",
@@ -760,7 +761,7 @@ const Page_Company_Account = () => {
                         <Grid item xs={7} sm={12}>
                             <Grid container display="flex">
                                 <Grid item md={0.8} xs={12} display="flex">
-                                    <ViewListIcon sx={isMd ? {fontSize: 60} : {fontSize: 40}}/>
+                                    <ViewListIcon  sx={isMd ? {fontSize: 60} : {fontSize: 40}}/>
                                 </Grid>
                                 <Grid item md={11} xs={12}
                                       display="flex"
@@ -777,7 +778,7 @@ const Page_Company_Account = () => {
                             </Grid>
                         </Grid>
                         <Grid item xs={5} sm={12}>
-                            <Grid container spacing={{xs: 0, sm: 3}} rowSpacing={{xs: 1, sm: 0}} display="flex">
+                            <Grid container columnSpacing={{xs: 0, sm: 3}} rowSpacing={{xs: 1, sm: 0}} display="flex">
                                 <Grid
                                     item
                                     xs={12}
@@ -834,39 +835,6 @@ const Page_Company_Account = () => {
                                         Access Blacklist
                                     </Button>
                                 </Grid>
-                                {/*<Grid*/}
-                                {/*    item*/}
-                                {/*    xs={12}*/}
-                                {/*    sm={3}*/}
-                                {/*    lg={3}*/}
-                                {/*    display="flex"*/}
-                                {/*    justifyContent="left">*/}
-                                {/*    <FormControl*/}
-                                {/*        display="flex"*/}
-                                {/*        sx={{*/}
-                                {/*            width: '250px',*/}
-                                {/*            minWidth:'50px',*/}
-                                {/*            maxHeight:'55px',*/}
-                                {/*            boxShadow:7*/}
-                                {/*        }}*/}
-                                {/*    >*/}
-                                {/*        <InputLabel id="accountSelect">Select Account</InputLabel>*/}
-                                {/*        <Select*/}
-                                {/*            display="flex"*/}
-                                {/*            labelId="selectaccount"*/}
-                                {/*            id="selectaccount"*/}
-                                {/*            label="Select Account"*/}
-                                {/*            value={account}*/}
-                                {/*            onChange={e => setAccount(e.target.value)}*/}
-                                {/*            displayEmpty={true}*/}
-                                {/*            variant="outlined"*/}
-                                {/*        >*/}
-                                {/*            <MenuItem value={"candidate"}>Candidate</MenuItem>*/}
-                                {/*            <MenuItem value={"interviewer"}>Interviewer</MenuItem>*/}
-                                {/*            <MenuItem value={"recruiter"}>Recruiter</MenuItem>*/}
-                                {/*        </Select>*/}
-                                {/*    </FormControl>*/}
-                                {/*</Grid>*/}
                             </Grid>
                         </Grid>
                     </Grid>
