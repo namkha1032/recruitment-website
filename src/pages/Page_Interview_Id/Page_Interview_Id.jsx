@@ -85,7 +85,7 @@ const Page_Interview_Id = () => {
         <>
             {interviewidinfo && skill_list  ? (
                 <>
-                    {checkuserid === true ? (
+                    {checkuserid === true || checkinterviwerid === true ? (
                         <>
                             <Grid container spacing={3}>
                                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
