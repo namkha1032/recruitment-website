@@ -34,7 +34,6 @@ const Footer = () => {
   const handleNavigateClick = (id) => {
     navigate(`/event/${id}`);
   };
-  console.log(eventFooter)
   return (
     eventFooter && <>
       <Box sx={{ bgcolor: "#222222", color: "white", p: isSm ? 6 : 0 }}>

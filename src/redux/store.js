@@ -74,6 +74,7 @@ import statusApplicationSlice from "./reducer/statusApplicationReducer";
 import interviewStartSlice from "./reducer/interviewStartReducer";
 import cvListErrorSlice from "./reducer/cvListErrorReducer";
 import applicationStatusErrorSlice from "./reducer/applicationStatusErrorReducer";
+import eventErrorSlice from "./reducer/eventErrorReducer";
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
     reducer: {
@@ -141,8 +142,8 @@ const store = configureStore({
         candidateInfo: candidateInfoSlice.reducer,
         interviewStart: interviewStartSlice.reducer,
         cvListError: cvListErrorSlice.reducer,
-        applicationStatusError: applicationStatusErrorSlice.reducer
-
+        applicationStatusError: applicationStatusErrorSlice.reducer,
+        eventError: eventErrorSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
     // middleware: [sagaMiddleware]
