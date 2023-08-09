@@ -23,7 +23,6 @@ const Page_Recruitment_Id_Application_Id = () => {
       cleanStore(dispatch);
     };
   }, []);
-  console.log(infoApplication);
   return infoApplication !== null ? (
     infoApplication === "none" ? (
       <MissingPage />

@@ -40,8 +40,7 @@ const Application = ({ cvid, page }) => {
   const location = useLocation()
   const navigate = useNavigate()
   const path = location.pathname
-  console.log("path: ", path)
-  console.log("include?: ", path.includes("company"))
+
   useEffect(() => {
 
     setStatus(infoApplication ? infoApplication.company_Status : "Pending")
@@ -64,7 +63,6 @@ const Application = ({ cvid, page }) => {
     cleanStore(dispatch)
     navigate(`/company/interview/create?recruitmentid=${recid}&applicationid=${appid}`)
   }
-  console.log(recruitmentid);
   return (
     <>
 

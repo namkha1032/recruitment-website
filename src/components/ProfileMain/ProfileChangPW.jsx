@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
@@ -22,7 +22,7 @@ import { Snackbar, Alert } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 
 // const style = {
 //   marginTop: "15px",
@@ -58,7 +58,7 @@ const ProfileChangePW = () => {
   const [validNewPassword, setValidNewPassword] = useState(true);
   const [validConfirmPassword, setValidConfirmPassword] = useState(true);
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -67,7 +67,7 @@ const ProfileChangePW = () => {
 
   useEffect(() => {
     if (newError.status === "no") {
-      setLoading(false)
+      setLoading(false);
       setSuccessSnackbar(true);
       setTimeout(() => {
         dispatch({
@@ -78,7 +78,7 @@ const ProfileChangePW = () => {
       }, 1000);
     }
     if (newError.status === "yes") {
-      setLoading(false)
+      setLoading(false);
       setErrorSnackbar(true);
       setTimeout(() => {
         setErrorSnackbar(false);
@@ -149,14 +149,22 @@ const ProfileChangePW = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (validUsername && username !== "" && validCurrentPassword && currentPassword !== "" && validNewPassword && newPassword !== "" && validConfirmPassword && confirmPassword !== "") {
-
+    if (
+      validUsername &&
+      username !== "" &&
+      validCurrentPassword &&
+      currentPassword !== "" &&
+      validNewPassword &&
+      newPassword !== "" &&
+      validConfirmPassword &&
+      confirmPassword !== ""
+    ) {
       if (confirmPassword !== newPassword) {
         setMessagePassword("Confirm password don't match with new password");
         setErrorPasswordSnackbar(true);
         setConfirmPassword("");
       } else {
-        setLoading(true)
+        setLoading(true);
         dispatch({
           type: "saga/userChangePassword",
           payload: { username, currentPassword, newPassword, confirmPassword },
@@ -164,16 +172,16 @@ const ProfileChangePW = () => {
       }
     } else {
       if (validUsername || username === "") {
-        setValidUsername(false)
+        setValidUsername(false);
       }
       if (validCurrentPassword || currentPassword === "") {
-        setValidCurrentPassword(false)
+        setValidCurrentPassword(false);
       }
       if (validNewPassword || newPassword === "") {
-        setValidNewPassword(false)
+        setValidNewPassword(false);
       }
       if (validConfirmPassword || confirmPassword === "") {
-        setValidConfirmPassword(false)
+        setValidConfirmPassword(false);
       }
     }
   };
@@ -214,16 +222,25 @@ const ProfileChangePW = () => {
               }}
             >
               <form onSubmit={handleSubmit}>
-                <Grid item xs={12} md={12} 
-                  sx={{ 
+                <Grid
+                  item
+                  xs={12}
+                  md={12}
+                  sx={{
                     marginBottom: "3px",
-                    marginTop: '5px', 
+                    marginTop: "5px",
                   }}
                 >
                   <TextField
                     fullWidth
                     variant="standard"
-                    label={validUsername ? <Typography color={"black"}>Username</Typography> : <Typography color={"red"}>Username</Typography>}
+                    label={
+                      validUsername ? (
+                        <Typography color={"black"}>Username</Typography>
+                      ) : (
+                        <Typography color={"red"}>Username</Typography>
+                      )
+                    }
                     type="text"
                     value={username}
                     autoComplete="new-usename"
@@ -253,7 +270,9 @@ const ProfileChangePW = () => {
                       fontSize: "1em",
                       //padding: '0 5px 0 5px',
                       color: "#000",
-                      borderBottom: validUsername ? "2px solid black" : "2px solid red",
+                      borderBottom: validUsername
+                        ? "2px solid black"
+                        : "2px solid red",
                       borderBottomWidth: "2px",
                     }}
                     onChange={handleUsernameChange}
@@ -261,47 +280,50 @@ const ProfileChangePW = () => {
                 </Grid>
 
                 {!validUsername && (
-                    <Grid
-                      item
-                      xs={12}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "left",
-                        alignItems: "center",
-                      }}
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "left",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      color={"red"}
+                      display={"flex"}
+                      //marginLeft={"16px"}
+                      //marginRight={"15px"}
+                      //marginBottom={"3px"}
                     >
-                      <Box
-                        color={"red"}
-                        display={"flex"}
-                        //marginLeft={"16px"}
-                        //marginRight={"15px"}
-                        //marginBottom={"3px"}
+                      <ErrorOutlineOutlinedIcon
+                        //color="red"
+                        sx={{
+                          fontSize: 14,
+                          //paddingLeft: "2px",
+                          marginTop: "2px",
+                        }}
+                      />
+
+                      <Typography
+                        color="red"
+                        fontSize="12px"
+                        lineHeight="20px"
+                        paddingLeft={"5px"}
                       >
-                        <ErrorOutlineOutlinedIcon
-                          //color="red"
-                          sx={{
-                            fontSize: 14,
-                            //paddingLeft: "2px",
-                            marginTop: "2px",
-                          }}
-                        />
+                        Username cannot be empty
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
 
-                        <Typography
-                          color="red"
-                          fontSize="12px"
-                          lineHeight="20px"
-                          paddingLeft={"5px"}
-                        >
-                          Username cannot be empty
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  )}
-
-                <Grid item xs={12} md={12} 
-                  sx={{ 
+                <Grid
+                  item
+                  xs={12}
+                  md={12}
+                  sx={{
                     marginBottom: "3px",
-                    marginTop: '5px', 
+                    marginTop: "5px",
                   }}
                 >
                   <TextField
@@ -309,7 +331,13 @@ const ProfileChangePW = () => {
                     //required
                     variant="standard"
                     label={
-                      validCurrentPassword ? <Typography color={"black"}>Current Password</Typography> : <Typography color={"red"}>Current Password</Typography>
+                      validCurrentPassword ? (
+                        <Typography color={"black"}>
+                          Current Password
+                        </Typography>
+                      ) : (
+                        <Typography color={"red"}>Current Password</Typography>
+                      )
                     }
                     type={showOldPassword ? "text" : "password"}
                     value={currentPassword}
@@ -359,7 +387,9 @@ const ProfileChangePW = () => {
                       fontSize: "1em",
                       //padding: '0 5px 0 5px',
                       color: "#fff",
-                      borderBottom: validCurrentPassword ? "2px solid black" : "2px solid red",
+                      borderBottom: validCurrentPassword
+                        ? "2px solid black"
+                        : "2px solid red",
                       borderBottomWidth: "2px",
                     }}
                     onChange={handleCurrentPasswordChange}
@@ -367,47 +397,50 @@ const ProfileChangePW = () => {
                 </Grid>
 
                 {!validCurrentPassword && (
-                    <Grid
-                      item
-                      xs={12}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "left",
-                        alignItems: "center",
-                      }}
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "left",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      color={"red"}
+                      display={"flex"}
+                      // marginLeft={"16px"}
+                      // marginRight={"15px"}
+                      // marginBottom={"3px"}
                     >
-                      <Box
-                        color={"red"}
-                        display={"flex"}
-                        // marginLeft={"16px"}
-                        // marginRight={"15px"}
-                        // marginBottom={"3px"}
+                      <ErrorOutlineOutlinedIcon
+                        //color="red"
+                        sx={{
+                          fontSize: 14,
+                          //paddingLeft: "2px",
+                          marginTop: "2px",
+                        }}
+                      />
+
+                      <Typography
+                        color="red"
+                        fontSize="12px"
+                        lineHeight="20px"
+                        paddingLeft={"5px"}
                       >
-                        <ErrorOutlineOutlinedIcon
-                          //color="red"
-                          sx={{
-                            fontSize: 14,
-                            //paddingLeft: "2px",
-                            marginTop: "2px",
-                          }}
-                        />
+                        Current password cannot be empty
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
 
-                        <Typography
-                          color="red"
-                          fontSize="12px"
-                          lineHeight="20px"
-                          paddingLeft={"5px"}
-                        >
-                          Current password cannot be empty
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  )}
-
-                <Grid item xs={12} md={12} 
-                  sx={{ 
+                <Grid
+                  item
+                  xs={12}
+                  md={12}
+                  sx={{
                     marginBottom: "3px",
-                    marginTop: '5px', 
+                    marginTop: "5px",
                   }}
                 >
                   <TextField
@@ -415,7 +448,11 @@ const ProfileChangePW = () => {
                     //required
                     variant="standard"
                     label={
-                      validNewPassword ? <Typography color={"black"}>New Password</Typography> : <Typography color={"red"}>New Password</Typography>
+                      validNewPassword ? (
+                        <Typography color={"black"}>New Password</Typography>
+                      ) : (
+                        <Typography color={"red"}>New Password</Typography>
+                      )
                     }
                     type={showNewPassword ? "text" : "password"}
                     value={newPassword}
@@ -462,7 +499,9 @@ const ProfileChangePW = () => {
                       fontSize: "1em",
                       //padding: '0 5px 0 5px',
                       color: "#fff",
-                      borderBottom: validNewPassword ? "2px solid black" : "2px solid red",
+                      borderBottom: validNewPassword
+                        ? "2px solid black"
+                        : "2px solid red",
                       borderBottomWidth: "2px",
                     }}
                     onChange={handleNewPasswordChange}
@@ -470,49 +509,52 @@ const ProfileChangePW = () => {
                 </Grid>
 
                 {!validNewPassword && (
-                    <Grid
-                      item
-                      xs={12}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "left",
-                        alignItems: "center",
-                      }}
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "left",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      color={"red"}
+                      display={"flex"}
+                      // marginLeft={"16px"}
+                      // marginRight={"15px"}
+                      // marginBottom={"3px"}
                     >
-                      <Box
-                        color={"red"}
-                        display={"flex"}
-                        // marginLeft={"16px"}
-                        // marginRight={"15px"}
-                        // marginBottom={"3px"}
+                      <ErrorOutlineOutlinedIcon
+                        //color="red"
+                        sx={{
+                          fontSize: 14,
+                          //paddingLeft: "2px",
+                          marginTop: "2px",
+                        }}
+                      />
+
+                      <Typography
+                        color="red"
+                        fontSize="12px"
+                        lineHeight="20px"
+                        paddingLeft={"5px"}
                       >
-                        <ErrorOutlineOutlinedIcon
-                          //color="red"
-                          sx={{
-                            fontSize: 14,
-                            //paddingLeft: "2px",
-                            marginTop: "2px",
-                          }}
-                        />
+                        New passwords must be at least 6 characters have at
+                        least one uppercase letter, lowercase, digit and special
+                        character
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
 
-                        <Typography
-                          color="red"
-                          fontSize="12px"
-                          lineHeight="20px"
-                          paddingLeft={"5px"}
-                        >
-                          New passwords must be at least 6 characters have at least
-                          one uppercase letter, lowercase, digit and special
-                          character
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  )}
-
-                <Grid item xs={12} md={12} 
-                  sx={{ 
+                <Grid
+                  item
+                  xs={12}
+                  md={12}
+                  sx={{
                     marginBottom: "3px",
-                    marginTop: '5px', 
+                    marginTop: "5px",
                   }}
                 >
                   <TextField
@@ -520,7 +562,13 @@ const ProfileChangePW = () => {
                     //required
                     variant="standard"
                     label={
-                      validConfirmPassword ? <Typography color={"black"}>Confirm Password</Typography> : <Typography color={"red"}>Confirm Password</Typography>
+                      validConfirmPassword ? (
+                        <Typography color={"black"}>
+                          Confirm Password
+                        </Typography>
+                      ) : (
+                        <Typography color={"red"}>Confirm Password</Typography>
+                      )
                     }
                     type={showConfirmPassword ? "text" : "password"}
                     value={confirmPassword}
@@ -567,7 +615,9 @@ const ProfileChangePW = () => {
                       fontSize: "1em",
                       //padding: '0 5px 0 5px',
                       color: "#fff",
-                      borderBottom: validConfirmPassword ? "2px solid black" : "2px solid red",
+                      borderBottom: validConfirmPassword
+                        ? "2px solid black"
+                        : "2px solid red",
                       borderBottomWidth: "2px",
                     }}
                     onChange={handleConfirmPasswordChange}
@@ -575,42 +625,42 @@ const ProfileChangePW = () => {
                 </Grid>
 
                 {!validConfirmPassword && (
-                    <Grid
-                      item
-                      xs={12}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "left",
-                        alignItems: "center",
-                      }}
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "left",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      color={"red"}
+                      display={"flex"}
+                      // marginLeft={"16px"}
+                      // marginRight={"15px"}
+                      // marginBottom={"3px"}
                     >
-                      <Box
-                        color={"red"}
-                        display={"flex"}
-                        // marginLeft={"16px"}
-                        // marginRight={"15px"}
-                        // marginBottom={"3px"}
-                      >
-                        <ErrorOutlineOutlinedIcon
-                          //color="red"
-                          sx={{
-                            fontSize: 14,
-                            //paddingLeft: "2px",
-                            marginTop: "2px",
-                          }}
-                        />
+                      <ErrorOutlineOutlinedIcon
+                        //color="red"
+                        sx={{
+                          fontSize: 14,
+                          //paddingLeft: "2px",
+                          marginTop: "2px",
+                        }}
+                      />
 
-                        <Typography
-                          color="red"
-                          fontSize="12px"
-                          lineHeight="20px"
-                          paddingLeft={"5px"}
-                        >
-                          Confirm password cannot be empty
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  )}
+                      <Typography
+                        color="red"
+                        fontSize="12px"
+                        lineHeight="20px"
+                        paddingLeft={"5px"}
+                      >
+                        Confirm password cannot be empty
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
 
                 <Grid
                   item
@@ -622,29 +672,30 @@ const ProfileChangePW = () => {
                     marginTop: "25px",
                   }}
                 >
-                  {loading ? <CircularProgress sx={{ color: "black" }} /> :
+                  {loading ? (
+                    <CircularProgress sx={{ color: "black" }} />
+                  ) : (
                     <Button
-                    type="submit"
-                    theme={theme}
-                    variant="contained"
-                    color="secondary"
-                    sx={{
-                      height: "40px",
-                      color: "white",
-                      borderRadius: "10px",
-                      fontSize: "1em",
-                      fontWeight: 600,
-                      width: "100%",
+                      type="submit"
+                      theme={theme}
+                      variant="contained"
+                      color="secondary"
+                      sx={{
+                        height: "40px",
+                        color: "white",
+                        borderRadius: "10px",
+                        fontSize: "1em",
+                        fontWeight: 600,
+                        width: "100%",
 
-                      //textTransform: "none"
-                    }}
-                  >
-                    change
-                  </Button>
-                  }
+                        //textTransform: "none"
+                      }}
+                    >
+                      change
+                    </Button>
+                  )}
                 </Grid>
               </form>
-
             </Grid>
           </Grid>
         </Grid>

@@ -8,10 +8,7 @@ import { useParams } from "react-router-dom/dist";
 import cleanStore from "../../utils/cleanStore";
 
 const Profile = () => {
-
-  return (
-      <ProfileMain page="Profile" /> 
-  );
+  return <ProfileMain page="Profile" />;
 };
 
 export default Profile;
