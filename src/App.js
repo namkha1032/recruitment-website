@@ -121,24 +121,25 @@ function App() {
             <Route path="/event" element={<Page_Event />} />
             <Route path="/event/:eventid" element={<Page_Event_Id />} />
             <Route path="/home" element={<Page_Home />} />
-            <Route path="/interview/:interviewid" element={<Page_Interview_Id />} />
+
+            <Route element={<ProtectedRoute allowed={["candidate"]} />}>
+              <Route path="/interview/:interviewid" element={<Page_Interview_Id />} />
+            </Route>
 
             <Route element={<ProtectedRoute allowed={["candidate"]} />}>
               <Route path="/profile/cv-create" element={<Page_Profile_CvCreate />} />
               <Route path="/profile/:profileid/cv" element={<Page_Profile_Id_Cv />} />
               <Route path="/profile/:profileid/cv/:cvid" element={<Page_Profile_Id_Cv_Id />} />
               <Route path="/profile/:profileid/cv/:cvid/update" element={<Page_Profile_Id_Cv_Id_Update />} />
+
+              <Route path="/profile/:profileid/interview" element={<Page_Profile_Id_Interview />} />
+              <Route path="/profile/:profileid/event" element={<Page_Profile_Id_Event />} />
+              <Route path="/profile/:profileid/application" element={<Page_Profile_Id_Application />} />
             </Route>
 
             <Route element={<ProtectedRoute allowed={["admin", "recruiter", "interviewer", "candidate"]} />}>
               <Route path="/profile/:profileid" element={<Page_Profile_Id />} />
               <Route path="/profile/:profileid/changepassword" element={<Page_Profile_Id_ChangePassword />} />
-              <Route path="/profile/:profileid/event" element={<Page_Profile_Id_Event />} />
-              <Route path="/profile/:profileid/application" element={<Page_Profile_Id_Application />} />
-            </Route>
-
-            <Route element={<ProtectedRoute allowed={["candidate"]} />}>
-              <Route path="/profile/:profileid/interview" element={<Page_Profile_Id_Interview />} />
             </Route>
 
             <Route path="/recruitment" element={<Page_Recruitment />} />
