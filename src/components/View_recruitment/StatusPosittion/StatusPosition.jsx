@@ -3,6 +3,7 @@ import AssistantIcon from '@mui/icons-material/Assistant';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { getPositionStatus } from '../../../utils/getPositionStatus';
+import { convertDate } from '../../../utils/convertDate';
 const StatusPostion = (props) => {
     let left = 5
     let right = 6
@@ -13,15 +14,11 @@ const StatusPostion = (props) => {
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
-    let enddate = props.detailposition ? props.detailposition.endDate : '';
-    const startdate = props.detailposition ? props.detailposition.startDate : '';
+    let enddate = props.detailposition ? convertDate(props.detailposition.endDate) :  '' ;
+    const startdate = props.detailposition ? convertDate(props.detailposition.startDate) : '';
     let status_enddate = getPositionStatus(enddate);
     let status_startdate = getPositionStatus(startdate);
-    console.log('start',startdate );
-    console.log('end', enddate);
-    console.log('status_startdate', status_startdate );
-    console.log('status_enddate', status_enddate );
-
+    
     
     return (
         props.detailposition &&

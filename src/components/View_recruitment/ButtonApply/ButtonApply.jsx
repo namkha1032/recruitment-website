@@ -21,6 +21,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { getPositionStatus } from '../../../utils/getPositionStatus';
 import SwitchCameraIcon from '@mui/icons-material/SwitchCamera';
+import { convertDate } from '../../../utils/convertDate';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -95,7 +96,7 @@ const ButtonApply = (props) => {
 
             if (submitNotify === "success") {
                 toast.success('You submited successfully.', {
-                    position: "top-center",
+                    position:    "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
                     closeOnClick: true,
@@ -146,14 +147,12 @@ const ButtonApply = (props) => {
             setLoading(false);
             setOpen(false);
             dispatch({ type: 'submitNotify/setSubmitNotify', payload: "no" })
-
-
-
         }
     }, [submitNotify])
-    let enddate = props.position ? props.position.endDate : '';
+    
+    let enddate = props.position ? convertDate(props.position.endDate) : '';
     let status_enddate = getPositionStatus(enddate);
-    let startdate = props.position ? props.position.startDate : '';
+    let startdate = props.position ? convertDate(props.position.startDate) : '';
     let status_startdate = getPositionStatus(startdate);
     let role = useGetRole();
     const handleTextClick = (id) => {
@@ -229,6 +228,8 @@ const ButtonApply = (props) => {
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+    console.log('enddate', status_enddate);
+    console.log('startdate', status_startdate);
     return (
         // appstatus && submitstatus != null &&
         appstatus &&
