@@ -71,7 +71,7 @@ function UploadPdf(prop) {
               variant="body2"
               sx={{ marginTop: "", marginBottom: "16px" }}
             >
-              *Cv fpd hiện giờ đang được set cứng
+              *Cv pdf hiện giờ đang được set cứng
 
             </Typography>
           </Grid>
