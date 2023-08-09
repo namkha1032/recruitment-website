@@ -68,7 +68,7 @@ export default function EventList({ events}) {
       id: event.event.eventId,
       name: event.event.eventName,
       place: event.event.place,
-      time: event.event.datetimeEvent,
+      time: new Date(event.event.datetimeEvent).toLocaleString(),
     };
   });
 
