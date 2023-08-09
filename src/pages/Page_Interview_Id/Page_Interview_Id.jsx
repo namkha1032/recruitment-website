@@ -8,27 +8,19 @@ import ScheduleIcon from '@mui/icons-material/Schedule';
 import RoomIcon from '@mui/icons-material/Room';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import EmailIcon from '@mui/icons-material/Email';
-import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
-import HomeIcon from '@mui/icons-material/Home';
 import './Page_Interview_Id.css'
 import Divider from "@mui/material/Divider";
-import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward';
 import ArticleIcon from '@mui/icons-material/Article';
-import DetailsIcon from '@mui/icons-material/Details';
-// import gigacard
 import GigaCard from "../../components/GigaCard/GigaCard";
 import GigaCardBody from "../../components/GigaCardBody/GigaCardBody";
 import GigaCardHeader from "../../components/GigaCardHeader/GigaCardHeader";
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import AssistantIcon from '@mui/icons-material/Assistant';
 import CakeIcon from '@mui/icons-material/Cake';
-// import Page_Profile_Id_Cv_Id from "../Page_Profile_Id_Cv_Id/Page_Profile_Id_Cv"
 import CV from "../../components/CV/CV"
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { formatDate } from "../../utils/formatDate";
 import cleanStore from "../../utils/cleanStore";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -36,14 +28,14 @@ import { convertDate } from "../../utils/convertDate";
 import dayjs from 'dayjs';
 import CircularProgress from '@mui/material/CircularProgress';
 import MissingPage from "../../components/MissingPage/MissingPage";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const Page_Interview_Id = () => {
     const user = useSelector(state => state.user)
     const navigate = useNavigate();
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
     let { interviewid } = useParams();
-    const requires = require('../../data/View_recruitment/requires.json');
-    const languages = require('../../data/View_recruitment/languages.json');
     const interviewidinfo = useSelector(state => state.interviewidInfo);
     const dispatch = useDispatch();
     const interviewerror = useSelector(state => state.interviewError)
@@ -63,7 +55,7 @@ const Page_Interview_Id = () => {
     }, [])
     useEffect(() => {
         if (interviewerror.status === 'error') {
-            if (interviewerror.message === 400 || interviewerror.message === 404) {
+            if (interviewerror.message === 400 || interviewerror.message === 404 || interviewerror.message === 'Not found') {
 
                 setPage(false);
                 dispatch({ type: 'interviewError/onReset' })
@@ -71,25 +63,16 @@ const Page_Interview_Id = () => {
         }
     }, [interviewerror])
     const shift = useSelector(state => state.interviewshift);
-    console.log("interviewid", interviewidinfo);
     let left = 5
     let right = 6
     let gap = 2
     let gridSx = {
         display: "flex", alignItems: "center", columnGap: gap
     }
-    //const room = useSelector(state => state.interviewroom);
-    //const interviewer = useSelector(state => state.interviewinterviewer);
-    //const department = useSelector(state => state.interviewdepartment);
     const position = useSelector(state => state.interviewposition)
     const skill_list = useSelector(state => state.interviewskill);
-    console.log("skillinmain", skill_list);
-    console.log("interid", interviewidinfo) 
-    console.log("positionmain", position);
-    // const requirements = interviewidinfo ? interviewidinfo[0].requirement : [];
     const birthdate = interviewidinfo ? dayjs(convertDate(interviewidinfo.interviewer.user.dateOfBirth)).format('DD/MM/YYYY') : [];
     const date = interviewidinfo ? dayjs(convertDate(interviewidinfo.itrsinterview.dateInterview)).format('DD/MM/YYYY') : [];
-    // console.log("interview", interviewid);
 
     return (
 
@@ -134,10 +117,7 @@ const Page_Interview_Id = () => {
                                                         </Grid>
                                                         <Grid item xs={7} md={right} sx={gridSx}>
                                                             <Typography variant="h6" sx={{ marginLeft: "6px" }}>
-                                                                {/* 14:00 25/07/2023 */}
-                                                                {/* {`${interviewidinfo[0].date}${' '}${interviewidinfo[0].time}`} */}
                                                                 {`${date}${' '}${interviewidinfo.itrsinterview.shift.shiftTimeStart}${'h'}${' - '}${interviewidinfo.itrsinterview.shift.shiftTimeEnd}${'h'}`}
-                                                                {/* {`${date}`} */}
                                                             </Typography>
                                                         </Grid>
                                                     </Box>
@@ -157,8 +137,6 @@ const Page_Interview_Id = () => {
                                                         </Grid>
                                                         <Grid item xs={7} md={right} sx={gridSx}>
                                                             <Typography variant="h6" sx={{ marginLeft: "6px" }}>
-                                                                {/* {interviewidinfo[0].room} */}
-                                                                {/* 202B4 */}
                                                                 {interviewidinfo.itrsinterview.room.roomName}
                                                             </Typography>
                                                         </Grid>
@@ -186,9 +164,7 @@ const Page_Interview_Id = () => {
                                                         </Grid>
                                                         <Grid item xs={7} md={right} sx={gridSx}>
                                                             <Typography variant="h6" sx={{ marginLeft: "6px" }} >
-                                                                {/* Front-end Development  */}
                                                                 {interviewidinfo.application.position.positionName}
-                                                                {/* {interviewidinfo[0].positionName} */}
                                                             </Typography>
                                                         </Grid>
                                                     </Box>
@@ -219,11 +195,6 @@ const Page_Interview_Id = () => {
                                                                     <Chip key={skill.skillId} sx={{ margin: "0px 0px 5px 6px" }} value={skill.skillName} label={skill.skillName} variant='outlined' size='medium' color="warning" />
 
                                                                 ))}
-                                                                {/* {requires.map((require) => (
-
-                                                    <Chip key={require.id} sx={{ margin: "0px 0px 5px 8px" }} value={require.name} label={require.name} variant='outlined' size='medium' color="warning" />
-
-                                                ))} */}
                                                             </Stack>
                                                         </Grid>
                                                     </Box>
@@ -304,7 +275,6 @@ const Page_Interview_Id = () => {
                                             <GigaCard>
                                                 <Box sx={{ paddingX: isMd ? 4 : 2, paddingTop: 4, paddingBottom: isMd ? 0 : 4 }}>
                                                     <Box sx={{ color: "black", display: "flex", flexDirection: "row", alignItems: "center", columnGap: 2 }}>
-                                                        {/* <Avatar sx={{ backgroundColor: props.color }}> */}
                                                         <Box
                                                             component="img"
                                                             sx={{
@@ -316,7 +286,6 @@ const Page_Interview_Id = () => {
                                                             src={interviewidinfo.interviewer.user.imageURL}
                                                             alt=""
                                                         />
-                                                        {/* </Avatar> */}
                                                         <Typography variant={isMd ? "h4" : "h5"} sx={{ fontWeight: "bold" }}>
                                                             Interviewer
                                                         </Typography>
@@ -340,8 +309,6 @@ const Page_Interview_Id = () => {
                                                         </Grid>
                                                         <Grid item xs={7} md={right} sx={gridSx}>
                                                             <Typography variant="h6" sx={{ marginLeft: "6px" }} >
-                                                                {/* Cong Pham Quoc Viet */}
-                                                                {/* {interviewidinfo[0].interviewername} */}
                                                                 {interviewidinfo.interviewer.user.fullName}
                                                             </Typography>
                                                         </Grid>
@@ -362,8 +329,6 @@ const Page_Interview_Id = () => {
                                                         </Grid>
                                                         <Grid item xs={7} md={right} sx={gridSx}>
                                                             <Typography variant="h6" sx={{ marginLeft: "5px", wordBreak: "break-word" }}>
-                                                                {/* vietcpq@fpt.com */}
-                                                                {/* {interviewidinfo[0].intervieweremail} */}
                                                                 {interviewidinfo.interviewer.user.email}
                                                             </Typography>
                                                         </Grid>
@@ -390,8 +355,6 @@ const Page_Interview_Id = () => {
                                                         </Grid>
                                                         <Grid item xs={7} md={right} sx={gridSx}>
                                                             <Typography variant="h6" sx={{ marginLeft: "6px" }} >
-                                                                {/* {interviewidinfo[0].interviewerphone} */}
-                                                                {/* 123456789 */}
                                                                 {birthdate}
                                                             </Typography>
                                                         </Grid>
@@ -418,32 +381,10 @@ const Page_Interview_Id = () => {
                                                         </Grid>
                                                         <Grid item xs={7} md={right} sx={gridSx}>
                                                             <Typography variant="h6" sx={{ marginLeft: "6px" }} >
-                                                                {/* {interviewidinfo[0].departmentName} */}
-                                                                {/* {interviewidinfo.position.department.departmentName} */}
-                                                                {/* {department[0].departmentName} */}
                                                                 {interviewidinfo.application.position.department.departmentName}
                                                             </Typography>
                                                         </Grid>
                                                     </Box>
-                                                    {/* <Box sx={{ display: "flex", flexDirection: "row" }}>
-                                        <Grid item md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
-                                            <Box sx={gridSx}>
-                                                <AssistantIcon />
-                                                <Typography variant="h6">
-                                                    Status
-                                                </Typography>
-                                            </Box>
-                                        </Grid>
-                                        <Grid item md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
-                                            <Typography variant="h6">
-                                                :
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item md={right} sx={gridSx}>
-                                            <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label="Pending" />
-                                        </Grid>
-                                    </Box> */}
-
                                                 </GigaCardBody>
                                             </GigaCard>
                                         </Grid>
@@ -455,6 +396,18 @@ const Page_Interview_Id = () => {
 
                                 </Grid>
                             </Grid >
+                            <ToastContainer
+                                position="top-center"
+                                autoClose={5000}
+                                hideProgressBar={false}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover={false}
+                                theme="colored"
+                            />
                         </>
                     ) :
                     (

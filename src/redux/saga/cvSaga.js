@@ -61,11 +61,18 @@ function* getCvList(action) {
             }
         };
         const candidate = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`, config)
+        // const test = candidate.data.filter((prop) => prop.userId === 'bf39957a-5fad-4e81-a8bd-2c2afa10d15a');
+        // console.log('test', test);
 
         const cvlist = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/GetCandidateCvs/${(candidate.data.filter((props) => props.userId === action.payload.userid))[0].candidateId}`, config)
+
+        // const reponse1 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv/GetCandidateCvs`) 
+        // const reponse = yield call(axios.get, `/data/CVList.json`)
+        // const reponse = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv`)
         yield put({ type: 'cvlist/setCvList', payload: cvlist.data })
     } catch (error) {
-        console.log(error)
+        // console.log(error)
+        yield put({ type: 'cvListError/onError', payload: 'error' })
     }
 
 }

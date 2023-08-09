@@ -8,7 +8,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import "./Page_Company_Recruitment_Id.css"
 import cleanStore from "../../utils/cleanStore";
 import { useDispatch } from "react-redux";
-//// update final
 
 const Page_Company_Recruitment_Id = () => {
     const {recruitmentid} = useParams();
@@ -30,20 +29,8 @@ const Page_Company_Recruitment_Id = () => {
         <div className="page_company_recruitment_id">
             <Grid container spacing={1} >
                 <Grid item xs={12}>
-                    {/* tabs = {tabs} */}
                     <Info_view tabs={tabs} />
                 </Grid>
-                {/* <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", marginTop: "16px" }}>
-                    <Button sx={{
-                        backgroundColor: "black",
-                        ":hover": {
-                            backgroundColor: "grey",
-                        }
-                    }} variant='contained' onClick={handleEdit}>
-                        <EditIcon></EditIcon> EDIT
-                    </Button>
-
-                </Grid> */}
             </Grid>
 
         </div>

@@ -1,12 +1,10 @@
-import { Box, Grid, Skeleton, Tab, Tabs, Typography, Divider } from "@mui/material"
+import { Box, Grid, Skeleton } from "@mui/material"
 import GigaCard from "../../GigaCard/GigaCard"
 import GigaCardHeader from "../../GigaCardHeader/GigaCardHeader"
 import GigaCardBody from "../../GigaCardBody/GigaCardBody"
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
-import TableViewIcon from "@mui/icons-material/TableView";
-import ViewTimelineIcon from '@mui/icons-material/ViewTimeline';
 
 const Info_viewSkeleton = (props) => {
     const theme = useTheme();
@@ -93,30 +91,6 @@ const Info_viewSkeleton = (props) => {
                                     ) : (
                                         <Skeleton animation="wave"variant="text" sx={{ fontSize: '1rem' }} width="100%" />
                                     )}
-                                    {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].startTime}${' - '}${detailposition[0].endTime}`} /> */}
-                                </Grid>
-                            </Box>
-                            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: 2 }}>
-                                <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "12px" }}>
-
-                                    {isMd ? (
-                                        <Skeleton animation="wave"variant="text" sx={{ fontSize: '2rem' }} width="100%" />
-                                    ) : (
-                                        <Skeleton animation="wave"variant="text" sx={{ fontSize: '1rem' }} width="100%" />
-                                    )}
-
-
-                                </Grid>
-                                <Grid item xs={1} md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
-
-                                </Grid>
-                                <Grid item xs={7} md={right} sx={gridSx}>
-                                    {isMd ? (
-                                        <Skeleton animation="wave"variant="text" sx={{ fontSize: '2rem' }} width="100%" />
-                                    ) : (
-                                        <Skeleton animation="wave"variant="text" sx={{ fontSize: '1rem' }} width="100%" />
-                                    )}
-                                    {/* <Chip variant='outlined' color="info" sx={{ display: "flex", margin: "0px 0px 5px 8px" }} label={`${detailposition[0].hireMax}`} /> */}
                                 </Grid>
                             </Box>
                             <Box sx={{ display: "flex", flexDirection: "row", marginBottom: 2 }}>
@@ -172,6 +146,7 @@ const Info_viewSkeleton = (props) => {
                                         <Skeleton animation="wave"variant="text" sx={{ fontSize: '1rem' }} width="100%" />
                                     )}
 
+
                                 </Grid>
                                 <Grid item xs={1} md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
 
@@ -182,10 +157,29 @@ const Info_viewSkeleton = (props) => {
                                     ) : (
                                         <Skeleton animation="wave"variant="text" sx={{ fontSize: '1rem' }} width="100%" />
                                     )}
-                                    {/* <Chip sx={{ padding: "0px", marginLeft: "5px" }} label={`${detailposition[0].salary}`} variant="outlined" color='info' size="medium" /> */}
                                 </Grid>
                             </Box>
-                            {/* <View_detail detailposition={detailposition[0]}  /> */}
+                            <Box sx={{ display: "flex", flexDirection: "row", marginBottom: 2 }}>
+                                <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "12px" }}>
+
+                                    {isMd ? (
+                                        <Skeleton animation="wave"variant="text" sx={{ fontSize: '2rem' }} width="100%" />
+                                    ) : (
+                                        <Skeleton animation="wave"variant="text" sx={{ fontSize: '1rem' }} width="100%" />
+                                    )}
+
+                                </Grid>
+                                <Grid item xs={1} md={1} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap }}>
+
+                                </Grid>
+                                <Grid item xs={7} md={right} sx={gridSx}>
+                                    {isMd ? (
+                                        <Skeleton animation="wave"variant="text" sx={{ fontSize: '2rem' }} width="100%" />
+                                    ) : (
+                                        <Skeleton animation="wave"variant="text" sx={{ fontSize: '1rem' }} width="100%" />
+                                    )}                 
+                                </Grid>
+                            </Box>
                             <Box sx={{ display: "flex", flexDirection: "row" }}>
                                 <Grid item xs={4} md={left} sx={{ display: "flex", alignItems: "flex-start", columnGap: gap, marginLeft: isSm ? 0 : "10px" }}>
 
@@ -256,12 +250,6 @@ const Info_viewSkeleton = (props) => {
                                             )}
                                         </>
                                     )}
-
-
-
-
-
-
                                 </Box>
 
                                 <Box>
@@ -308,7 +296,6 @@ const Info_viewSkeleton = (props) => {
                                                 <Skeleton animation="wave"variant="text" sx={{ fontSize: '1rem' }} width="100%" />
                                             )}
                                         </Grid>
-                                        {/* <Grid item md={6} ></Grid> */}
                                         <Grid item xs={12} md={12} sx={{ marginLeft: "15px", paddingTop: "0px", marginTop: "2px" }}>
                                             {isMd ? (
                                                 <Skeleton animation="wave"variant="text" sx={{ fontSize: '2rem' }} width="100%" />
@@ -331,13 +318,8 @@ const Info_viewSkeleton = (props) => {
                                                 <Skeleton animation="wave"variant="text" sx={{ fontSize: '1rem' }} width="100%" />
                                             )}
                                         </Grid>
-                                        {/* <Grid item md={6} ></Grid> */}
                                     </Grid>
                                 </Box>
-
-
-
-
                             </GigaCardBody>
                         </GigaCard>
 

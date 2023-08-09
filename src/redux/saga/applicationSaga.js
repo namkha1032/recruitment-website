@@ -27,10 +27,9 @@ function* getApplication(action) {
         const response2 = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`, config)
         const responseCandidateList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`, config)
         const responseCvSkillList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/CvHasSkill`, config)
-        let mergeobject = {}
         let candidatelist = []
         let application = response2.data.filter((prop) => prop.position.positionId === response1.data.positionId);
-        console.log("applyinsaga", application);
+
         const responseCvList = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Cv`, config)
         for (let i = 0; i < application.length; i++) {
             let findCv = responseCvList.data.find((item) => {
@@ -62,14 +61,11 @@ function* getApplication(action) {
         // const test = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate/db20f8d0-eb45-43af-9790-e89f48a1a587`, config)
         // console.log('testcandidate', test.data.user.fullName);
         // candidatelist.push(mergeobject);
-        console.log("listinsaga", candidatelist);
 
         yield put({ type: 'application/setApplication', payload: candidatelist })
     } catch (error) {
-        console.log('++++', error)
         if (error) {
-            console.log('-----', error.response.request.status)
-            yield put({ type: 'applicationError/onError', payload: error.response.request.status })
+            yield put({ type: 'applicationError/onError', payload: 'error' })
         }
     }
 
@@ -121,19 +117,17 @@ function* submitCv(action) {
             }
         };
         const reponse = yield call(axios.post, `https://leetun2k2-001-site1.gtempurl.com/api/Application`, action.payload, config)
-        console.log('post', action.payload);
-        console.log("submitsaga", reponse.data)
         yield put({ type: 'submitcv/setSubmitcv', payload: reponse.data })
         yield put({ type: 'submitNotify/setSubmitNotify', payload: 'success' })
     } catch (error) {
-        console.log("error")
+        yield put({ type: 'submitNotify/setSubmitNotify', payload: 'errorsubmit' })
+        console.log(error)
     }
 }
 
 function* updatesubmitCv(action) {
     yield put({ type: 'submitNotify/setSubmitNotify', payload: 'loading' })
     try {
-
         const config = {
             headers: {
                 Authorization: action.payload.token,
@@ -141,9 +135,8 @@ function* updatesubmitCv(action) {
         };
         const reponse = yield call(axios.put, `https://leetun2k2-001-site1.gtempurl.com/api/Application/${action.payload.applicationId}`, action.payload, config)
         yield put({ type: 'submitNotify/setSubmitNotify', payload: 'updatesuccess' })
-        console.log('update', reponse.data);
     } catch (error) {
-        console.log(error)
+        yield put({ type: 'submitNotify/setSubmitNotify', payload: 'errorupdate' })
     }
 }
 
@@ -158,20 +151,10 @@ function* getApplicationStatus(action) {
         const application = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Application`, config);
         const allcandidate = yield call(axios.get, `https://leetun2k2-001-site1.gtempurl.com/api/Candidate`, config);
         const candidate = allcandidate.data.filter((prop) => prop.user.id === action.payload.userid);
-        console.log('payload', action.payload);
-        console.log('applicationinsaga', application);
-        console.log('idcaninsaga', candidate);
         const application_status = application.data.filter((prop) => prop.cv.candidateId === candidate[0].candidateId && prop.position.positionId === action.payload.positionId)
-
-        console.log('statusapp', application_status);
-        // let submit = false;
-        // if (application_status.length > 0){
-        //     submit = true;
-        // }
-        // yield put({ type: 'countSubmit/setCountSubmit', payload: submit});
         yield put({ type: 'applicationStatus/setApplicationStatus', payload: application_status, config })
     } catch (error) {
-        console.log(error)
+        yield put({ type: 'applicationStatusError/onError', payload: 'error' })
     }
 }
 

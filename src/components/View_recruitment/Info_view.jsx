@@ -19,14 +19,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate, useParams } from 'react-router-dom';
 import TableViewIcon from "@mui/icons-material/TableView";
 import ViewTimelineIcon from '@mui/icons-material/ViewTimeline';
-import CircularProgress from '@mui/material/CircularProgress';
 import ButtonApply from './ButtonApply/ButtonApply';
-import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import useGetRole from '../../hooks/useGetRole';
 import StatusPostion from './StatusPosittion/StatusPosition';
 import MissingPage from '../MissingPage/MissingPage';
 import Info_viewSkeleton from './TestSkeleton/Info_viewSkeleton';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const Info_view = (props) => {
     const { recruitmentid } = useParams();
     console.log("number", recruitmentid);
@@ -39,14 +39,11 @@ const Info_view = (props) => {
     const handleTab2 = (event, newValue) => {
         setTab2(newValue);
     };
-    // const language = useSelector(state => state.language);
     const user = useSelector(state => state.user);
     const userid = user ? user.userid : '';
-    console.log('idinsaga', userid);
     const detailposition = useSelector(state => state.position);
     const applications = useSelector(state => state.application);
     const dispatch = useDispatch();
-    console.log('userinfo', user);
     useEffect(() => {
 
         dispatch({
@@ -72,44 +69,21 @@ const Info_view = (props) => {
             cleanStore(dispatch);
         }
     }, [])
-    const error = useSelector(state => state.positionError)
+    const error = useSelector(state => state.positionError);
+    const cvListError = useSelector( state => state.cvListError);
+    const applicationError = useSelector(state => state.applicationError);
     console.log('.....', error);
     useEffect(() => {
         if (error.status === 'error') {
-            if (error.message === 400 || error.message === 404) {
+            if (error.message === 400 || error.message === 404 || error.message === 'error' ) {
                 setPage(false);
                 dispatch({ type: 'positionError/onReset' })
             }
         }
     }, [error])
+    
 
-    console.log('ERROR', error);
     const skill = useSelector(state => state.skill);
-    console.log("skillinmain", skill); // ['react','c++']
-
-    // useEffect(() => {
-    //     dispatch({ type: 'saga/getPosition' })
-    //     return () => {
-    //         dispatch({ type: "positon/setPosition", payload: null })
-    //     }
-    // }, [])
-    // console.log("mainlanguage", language)
-    // const detail = useSelector(state => state.detail)
-    // useEffect(() => {
-    //     dispatch({ type: 'saga/getDetailPosition', payload: recruitmentid })
-    //     return () => {
-    //         dispatch({ type: "detail/setDetail", payload: null })
-    //     }
-    // }, [])
-    console.log("number", recruitmentid)
-    // console.log("detail", detail);
-    // const requires = detail ? detail[recruitmentid].requirement : [];
-
-    // const requirements = detailposition ? detailposition[0].requirement : [];
-    // console.log("require", requirements);
-    // const requires = require('../../data/View_recruitment/requires.json');
-    // console.log("requires", applications)
-    console.log("father", detailposition);
 
     let left = 5
     let right = 6
@@ -117,12 +91,6 @@ const Info_view = (props) => {
     let gridSx = {
         display: "flex", alignItems: "center", columnGap: gap
     }
-    console.log("skillininfo", skill);
-    // const department = useSelector(state => state.department);
-    const startDate = detailposition ? detailposition.startDate.slice(0, 10) : [];
-    const endDate = detailposition ? detailposition.endDate.slice(0, 10) : [];
-    console.log("date", startDate);
-    // console.log("department", department);
     // BUTTON APPLY
     const list_CV_draft = useSelector(state => state.cvlist);
     const list_CV = list_CV_draft ? list_CV_draft : [];
@@ -134,9 +102,6 @@ const Info_view = (props) => {
     }
     let role = useGetRole();
     return (
-        // detailposition && language && skill && department &&
-        // detailposition && applications &&
-        // detailposition && skill && applications && list_CV ?
         page === true ?
             <>
                 {detailposition && skill ?
@@ -165,7 +130,6 @@ const Info_view = (props) => {
                                         <GigaCardBody >
 
                                             <View_detail detailposition={detailposition} skill={skill} />
-                                            {/* <View_detail detailposition={detailposition[0]}  /> */}
                                             <StatusPostion detailposition={detailposition} />
                                         </GigaCardBody>
                                     </GigaCard>
@@ -220,29 +184,17 @@ const Info_view = (props) => {
                                                                 />
 
                                                             </Tabs>
-
                                                         </Box>
                                                         {tab1 === "1" && (
                                                             <Box>
                                                                 <View_general detailposition={detailposition} />
                                                             </Box>
                                                         )}
-                                                        {/* <TabPanel value="1" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
-                                        <Box> */}
 
-                                                        {/* <View_detail detail={detail[recruitmentid]} /> */}
-                                                        {/* <View_general detailposition={detailposition[0]} /> */}
-                                                        {/* </Box>
-                                    </TabPanel> */}
                                                         {tab1 === "2" && (
                                                             <List_application applications={applications} />
 
                                                         )}
-                                                        {/* <TabPanel value="2" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}>
-                                        
-                                    </TabPanel> */}
-
-
                                                     </GigaCardBody>
                                                 </GigaCard>
                                                 <Grid item xs={12} sx={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end", marginTop: 2 }}>
@@ -258,11 +210,8 @@ const Info_view = (props) => {
                                                             <EditIcon></EditIcon> EDIT
                                                         </Button>
                                                     )}
-
-
                                                 </Grid>
                                             </>
-
                                         ) : (
                                             <>
                                                 <GigaCard>
@@ -299,33 +248,35 @@ const Info_view = (props) => {
                                                         {tab2 === "3" && (
                                                             <View_general detailposition={detailposition} />
                                                         )}
-                                                        {/* <TabPanel value="3" sx={{ display: "flex", flexDirection: "flex-start", padding: "0px" }}> */}
-
-                                                        {/* <View_detail detail={detail[recruitmentid]} /> */}
-                                                        {/* <View_general  detailposition={detailposition[0]} /> */}
-                                                        {/* </TabPanel> */}
-
                                                     </GigaCardBody>
                                                 </GigaCard>
                                                 <Box sx={{ marginTop: 2 }}>
                                                     <ButtonApply position={detailposition} list_CV={list_CV} />
                                                 </Box>
                                             </>
-
                                         )}
 
                                     </Box>
                                 </Grid>
                             </Grid>
+                            <ToastContainer
+                                    position="top-center"
+                                    autoClose={5000}
+                                    hideProgressBar={false}
+                                    newestOnTop={false}
+                                    closeOnClick
+                                    rtl={false}
+                                    pauseOnFocusLoss
+                                    draggable
+                                    pauseOnHover={false}
+                                    theme="colored"
+                                />
                         </>
                     )
                     :
                     (
                         <>
-                            {/* <Box sx={{ minHeight: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                <CircularProgress color="inherit" />
-                            </Box> */}
-                            <Info_viewSkeleton tabs ={props.tabs} />
+                            <Info_viewSkeleton tabs={props.tabs} />
                         </>
                     )}
             </>
