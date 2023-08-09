@@ -1,23 +1,10 @@
-import { useState, useEffect } from 'react';
 import {
     Tabs,
     Tab,
-    Typography,
-    Box,
-    Button,
-    TextField,
-    Card,
-    CardHeader,
-    CardContent,
-    IconButton
+    Box
 } from '@mui/material';
-import Grid from '@mui/material/Grid';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import 'katex/dist/katex.min.css';
-import { InlineMath } from 'react-katex';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import ViewDialog from '../../../components/ViewDialog/ViewDialog';
 const LeftTable = (props) => {
     const { leftTable, cate,

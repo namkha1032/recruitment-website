@@ -3,8 +3,6 @@ import { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { useDispatch } from 'react-redux';
 
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
 // import components
 import LeftTable from '../LeftTable/LeftTable';
 import RightTable from '../../../components/RightTable/RightTable';
@@ -14,9 +12,6 @@ const QuestionTransfer = (props) => {
     const dispatch = useDispatch()
     let [currentSubTab, setCurrentSubTab] = useState(0);
     let [currentQues, setCurrentQues] = useState([])
-    const theme = useTheme()
-    const isMd = useMediaQuery(theme.breakpoints.up('md'));
-    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     function handleTransfer() {
         let newQues = {
             categoryOrder: cate,

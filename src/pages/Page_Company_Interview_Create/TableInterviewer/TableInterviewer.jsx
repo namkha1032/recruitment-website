@@ -2,21 +2,8 @@
 import { useSelector } from "react-redux";
 // import MUI components
 import {
-    Typography,
     Button,
-    Autocomplete,
-    TextField,
-    Paper,
-    Box,
-    Chip,
-    Card,
-    CardHeader,
-    CardContent,
-    FormControl,
-    Select,
-    InputLabel,
-    MenuItem,
-    Avatar
+    Chip
 } from "@mui/material";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';

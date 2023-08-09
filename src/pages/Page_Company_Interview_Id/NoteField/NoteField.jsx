@@ -8,7 +8,6 @@ const NoteField = (props) => {
     useEffect(() => {
         noteRef.current.innerHTML = note
     }, [note])
-    console.log("noteRef: ", noteRef)
     return (
         <Box ref={noteRef} sx={{ overflowY: "scroll", maxHeight: "5000px" }} />
     )

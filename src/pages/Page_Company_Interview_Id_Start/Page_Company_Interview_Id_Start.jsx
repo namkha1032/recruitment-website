@@ -1,14 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import {
-    Typography,
     Box,
-    Button,
-    TextField,
-    Card,
-    CardHeader,
-    CardContent,
-    Paper,
-    Divider
+    Button
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useSelector, useDispatch } from 'react-redux';
@@ -39,7 +32,6 @@ import Unauthorized from '../../components/Unauthorized/Unauthorized';
 
 import useGetRole from '../../hooks/useGetRole';
 
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 export default function Page_Company_Interview_Id_Start() {
     const dispatch = useDispatch()

@@ -1,22 +1,12 @@
 import { useState, useEffect } from 'react';
 import {
-    Tabs,
-    Tab,
-    Typography,
     Box,
     Button,
-    TextField,
-    Card,
-    CardHeader,
-    CardContent,
-    Divider,
-    Chip
+    Divider
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import Plot from 'react-plotly.js';
 import useGetRole from '../../hooks/useGetRole';
 // import components
 // import ScoreTable from '../Page_Company_Interview_Id_Start/ScoreTable/ScoreTable';
@@ -26,10 +16,6 @@ import QuestionTable from './QuestionTable/QuestionTable';
 import NoteField from './NoteField/NoteField';
 import Page_Interview_Id from "../Page_Interview_Id/Page_Interview_Id";
 import AlertDialog from '../../components/AlertDialog/AlertDialog';
-import Alert from '@mui/material/Alert';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
 
 import GigaCard from '../../components/GigaCard/GigaCard';
 import GigaCardHeader from '../../components/GigaCardHeader/GigaCardHeader';
@@ -80,7 +66,6 @@ const Page_Company_Interview_Id = () => {
         }
         dispatch({ type: "interviewSaga/getInterviewResult", payload: newObj })
     }, [])
-    console.log("interview: ", interview)
     function handleStart() {
         navigate(`/company/interview/${interviewid}/start`)
     }

@@ -1,5 +1,4 @@
 import { IconButton } from "@mui/material";
-import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 
@@ -10,7 +9,6 @@ const ButtonTransfer = (props) => {
     let { currentChosen, handleTransfer } = props
     const theme = useTheme()
     const isMd = useMediaQuery(theme.breakpoints.up('md'));
-    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
     return (
         <IconButton
             disabled={currentChosen.length == 0}
