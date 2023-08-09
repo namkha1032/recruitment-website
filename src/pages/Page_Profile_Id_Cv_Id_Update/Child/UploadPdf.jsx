@@ -8,6 +8,7 @@ import CompHeader from "./compHeader";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { Typography } from "@mui/material";
 function UploadPdf(prop) {
   const fileType = ["application/pdf"];
   const theme = useTheme();
@@ -57,6 +58,23 @@ function UploadPdf(prop) {
           container
           xs={12}
         >
+          <Grid
+            item
+            xs={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              variant="body2"
+              sx={{ marginTop: "", marginBottom: "16px" }}
+            >
+              *Cv pdf hiện giờ đang được set cứng
+
+            </Typography>
+          </Grid>
           <Grid
             item
             justifyContent="center"

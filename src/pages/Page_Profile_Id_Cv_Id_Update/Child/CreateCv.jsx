@@ -41,7 +41,24 @@ const CreateCv = (prop) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            marginTop:"32px"
+          }}
+        >
+          <Typography
+            variant="body2"
+            sx={{ marginTop: "", marginBottom: "16px" }}
+          >
+            *UPLOAD CV PDF ( đã upload lên được và trả về link nhưng link bên back
+            end không hoạt động được)
+          </Typography>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "32px",
           }}
         >
           <Typography
@@ -59,7 +76,7 @@ const CreateCv = (prop) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginBottom:"32px"
+          marginBottom: "32px",
         }}
       >
         <Box className={`CVForm InputForm`}>

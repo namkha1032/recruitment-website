@@ -7,17 +7,17 @@ import GigaCard from "../../../components/GigaCard/GigaCard";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import CompHeader from "./compHeader";
 import DeleteIcon from "@mui/icons-material/Delete";
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import { Typography } from "@mui/material";
 function UploadPdf(prop) {
   const fileType = ["application/pdf"];
-  const theme = useTheme()
-  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.up("sm"));
   function handleDelete(e) {
     prop.setViewPdf(null);
     prop.setPdfFile(null);
-    prop.setPdf(null)
+    prop.setPdf(null);
     const fileInput = document.getElementById("cvpdf");
     if (fileInput) {
       fileInput.value = "";
@@ -28,7 +28,6 @@ function UploadPdf(prop) {
     prop.setPdf(selectedFile);
     if (selectedFile) {
       if (selectedFile && fileType.includes(selectedFile.type)) {
-       
         let reader = new FileReader();
         reader.readAsDataURL(selectedFile);
         reader.onload = (e) => {
@@ -60,6 +59,23 @@ function UploadPdf(prop) {
           container
           xs={12}
         >
+          <Grid
+            item
+            xs={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              variant="body2"
+              sx={{ marginTop: "", marginBottom: "16px" }}
+            >
+              *UPLOAD CV PDF ( đã upload lên được và trả về link nhưng link bên back
+              end không hoạt động được)
+            </Typography>
+          </Grid>
           <Grid
             item
             justifyContent="center"
@@ -105,7 +121,7 @@ function UploadPdf(prop) {
                     <GigaCard>
                       <Box
                         sx={{
-                          height:isSm? "940px":"420px",
+                          height: isSm ? "940px" : "420px",
                           width: "100%",
                           margin: "auto",
                           marginBottom: "16px",

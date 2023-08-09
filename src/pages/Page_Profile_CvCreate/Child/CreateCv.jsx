@@ -35,6 +35,22 @@ const CreateCv = (prop) => {
   return (
     <form onSubmit={prop.handleSubmit}>
       <Grid container>
+      <Grid
+          item
+          xs={12}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            variant="body2"
+            sx={{marginTop:"", marginBottom: "16px" }}
+          >
+           *UPLOAD CV PDF ( đã upload lên được và trả về link nhưng link bên back end không hoạt động được)
+          </Typography>
+        </Grid>
         <Grid
           item
           xs={12}
